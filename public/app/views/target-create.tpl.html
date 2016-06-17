@@ -1,0 +1,86 @@
+
+<!--<div ng-repeat="vehicle in vehicles"><br />-->
+<form role="form" class="form-horizontal" name="targetForm" ng-submit="submitTarget(targetForm)" novalidate>
+
+    <div>
+        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+    </div>
+
+    <fieldset>
+        <div class="form-group" ng-class="{'has-error': targetForm.name.$error.required && !targetForm.name.$pristine}">
+            <label for="name" class="control-label col-sm-4">Target Name</label>
+            <div class="col-sm-7">
+                <input class=" form-control" ng-model="target.name" autocomplete="off" ng-pattern="/^[a-zA-Z \-]+$/" type="text" name="name" id="name" required/>
+                <span ng-show="!targetForm.name.$pristine &amp;&amp; targetForm.name.$error.required" class="text-danger">This field is required</span>
+                <span ng-show="!targetForm.name.$pristine &amp;&amp; targetForm.name.$error.pattern" class="text-danger">This field must be a valid name (Alphabets)</span>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="form-group" ng-class="{'has-error': targetForm.start_date.$error.required && !targetForm.start_date.$pristine}">
+            <label class="control-label col-sm-4">Target start date</label>
+                <div class="col-sm-7">
+                    <p class="input-group">
+                        <input type="text" ng-readonly="true" name="start_date" required="" uib-datepicker-popup="{{format}}" ng-model="target.start_date" is-open="opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                               close-text="Close" class="form-control" />
+                              <span class="input-group-btn">
+                                 <button type="button" ng-click="open($event)" class="btn btn-default">
+                                     <em class="fa fa-calendar"></em>
+                                 </button>
+                              </span>
+                    </p>
+                    <span ng-show="!targetForm.start_date.$pristine &amp;&amp; targetForm.start_date.$error.required" class="text-danger">This field is required</span>
+                </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="form-group" ng-class="{'has-error': targetForm.duration.$error.required && !targetForm.duration.$pristine}">
+            <label for="duration" class="control-label col-sm-4">Duration (in days)</label>
+            <div class="col-sm-7">
+                <input class=" form-control" ng-model="target.duration" type="text" name="duration" id="duration" ng-pattern="/^[0-9]+$/"  required/>
+                <span ng-show="!targetForm.duration.$pristine &amp;&amp; targetForm.duration.$error.required" class="text-danger">This field is required</span>
+                <span ng-show="!targetForm.duration.$pristine &amp;&amp; targetForm.duration.$error.pattern" class="text-danger">This field must be a valid days (Integer)</span>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="form-group" ng-class="{'has-error': targetForm.marketer.$error.required && !targetForm.marketer.$pristine}">
+            <label for="marketer" class="control-label col-sm-4">Marketer</label>
+            <div class="col-sm-7">
+                <select class=" form-control" ng-model="target.user_id" name="marketer" id="marketer" required>
+                    <option value="">--Choose--</option>
+                    <option ng-repeat="marketer in marketers" value="{{marketer.id}}">{{marketer.lastname+', '+marketer.firstname}}</option>
+                </select>
+                <span ng-show="!targetForm.marketer.$pristine &amp;&amp; targetForm.marketer.$error.required" class="text-danger">This field is required</span>
+            </div>
+            <!--<div class="col-sm-7">{{target.marketer}}-->
+                <!--<ui-select ng-model="target.marketer.selected" theme="bootstrap" ng-disabled="disabled" required>-->
+                    <!--<ui-select-match placeholder="Choose Marketer...">{{$select.selected.lastname +', '+ $select.selected.firstname}}</ui-select-match>-->
+                    <!--<ui-select-choices  repeat="marketer in marketers | propsFilter: {lastname: $select.search, email: $select.search}">-->
+                        <!--<div ng-bind-html="marketer.lastname | highlight: $select.search"></div>-->
+                        <!--<small>email: {{marketer.email}}</small>-->
+                    <!--</ui-select-choices>-->
+                <!--</ui-select>-->
+            <!--</div>-->
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="form-group" ng-class="{'has-error': targetForm.amount.$error.required && !targetForm.amount.$pristine}">
+            <label for="amount" class="control-label col-sm-4">Amount (NGN)</label>
+            <div class="col-sm-7">
+                <input class=" form-control" ng-model="target.amount" type="text" name="amount" id="amount" required />
+                <span ng-show="!targetForm.amount.$pristine &amp;&amp; targetForm.amount.$error.required" class="text-danger">This field is required</span>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="form-group">
+        <button type="submit" ng-disabled="targetForm.$invalid" class="btn btn-info col-sm-offset-4"><em class="fa fa-save fa-lg"></em> Save</button>
+        <!--<button ng-disabled="vehicles.length == 1" ng-click="closeAll(vehicles)" class="btn btn-danger btn-sm"><em class="icon-close"> Close All</em></button>-->
+    </div>
+
+</form>

@@ -1,0 +1,83 @@
+[
+  {
+    "text": "Menu Heading",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "Dashboard",
+    "sref": "app.dashboard",
+    "icon": "fa fa-dashboard",
+    "translate": "sidebar.nav.DASHBOARD"
+  },
+  {
+    "text": "Send Mail",
+    "sref": "app.mail",
+    "icon": "fa fa-mail-forward",
+    "translate": "sidebar.nav.MAIL"
+  },
+  {
+    "text": "Send Sms",
+    "sref": "app.sms",
+    "icon": "fa fa-envelope-o",
+    "translate": "sidebar.nav.SMS"
+  },
+  {
+    "text": "Client",
+    "sref": "#",
+    "icon": "icon-user-following",
+    "submenu": [
+      { "text": "View and Search", "sref": "app.client", "translate": "sidebar.nav.client.VIEW" },
+      { "text": "Register", "sref": "app.client.create", "translate": "sidebar.nav.client.REGISTER"}
+    ],
+    "translate": "sidebar.nav.client.MENU"
+  },
+  {
+    "text": "Airtime",
+    "sref": "#",
+    "icon": "fa fa-reorder",
+    "submenu": [
+      { "text": "View and Search", "sref": "app.airtime", "translate": "sidebar.nav.airtime.VIEW"},
+      { "text": "Generate", "sref": "app.airtime.create", "translate": "sidebar.nav.airtime.CREATE"}
+    ],
+    "translate": "sidebar.nav.airtime.MENU"
+  },
+
+  {
+    "text": "People",
+    "sref": "#",
+    "icon": "icon-people",
+    "submenu": [
+      { "text": "View", "sref": "app.people", "translate": "sidebar.nav.people.VIEW"},
+      { "text": "View", "sref": "app.people.adduser", "translate": "sidebar.nav.people.REGISTER"}
+    ],
+    "translate": "sidebar.nav.people.MENU"
+  },
+
+  {
+    "text": "Report Heading",
+    "heading": "true",
+    "translate": "report.heading.HEADER"
+  },
+  {
+    "text": "Report",
+    "permission" : "generate.report",
+    "sref": "app.report",
+    "icon": "fa fa-file-text",
+    "translate": "report.nav.report.MENU"
+  },
+  {
+    "text": "Target",
+    "permission" : "manage.target",
+    "sref": "app.target",
+    "icon": "icon-target",
+    "translate": "report.nav.target.MENU"
+  },
+  {
+    "text": "Vehicles",
+    "permission" : "manage.vehicle",
+    "sref": "app.vehicles",
+    "icon": "fa fa-truck",
+    "translate": "report.nav.vehicle.MENU"
+  }
+]

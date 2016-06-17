@@ -1,0 +1,104 @@
+<h3>
+    Generate Airtime
+</h3>
+<div class="row">
+
+    <form form-wizard="" class="form-horizontal" validate-steps="true" role="form" steps="4" name="airtimeForm" novalidate ng-submit="submitOrder()">
+        <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+        <!-- START panel-->
+        <div class="panel panel-default" ng-class="{'col-md-7':!wizard.active(4), 'col-md-12':wizard.active(4) }">
+            <div class="panel-heading">
+                <paneltool tool-refresh="line back-and-forth grow"></paneltool>
+            </div>
+            <div class="panel-body">
+                <div class="form-wizard wizard-horizontal">
+                    <!-- START wizard steps indicator-->
+                    <ol class="row">
+                        <li ng-class="{'active':wizard.active(1)}" class="col-md-3">
+                            <h4>Client</h4>
+                            <small class="text-muted">Choose client and marketer</small>
+                        </li>
+                        <li ng-class="{'active':wizard.active(2)}" class="col-md-3">
+                            <h4>Products</h4>
+                            <small class="text-muted">Add products and slots.</small>
+                        </li>
+                        <li ng-class="{'active':wizard.active(3)}" class="col-md-3">
+                            <h4>Remarks</h4>
+                            <small class="text-muted">Add remarks.</small>
+                        </li>
+                        <li ng-class="{'active':wizard.active(4)}" class="col-md-3">
+                            <h4>Review!</h4>
+                            <small class="text-muted">Confirm Your Order.</small>
+                        </li>
+                    </ol>
+                    <!-- END wizard steps indicator-->
+
+                    <div class="col-sm-12">
+                        <!-- START Wizard Step inputs -->
+                        <div ng-show="wizard.active(1)">
+
+                            <div ng-include="'app/views/airtime-stages/client-marketer.html'"></div>
+
+                            <ul class="pager" ng-show="airtimeForm.marketer.$valid && airtimeForm.clientName.$valid">
+                                <li class="next"><a href="#"  ng-click="wizard.go(2)">Next <span>&rarr;</span></a></li>
+                            </ul>
+                        </div>
+                        <!-- END Wizard Step inputs -->
+                        <!-- START Wizard Step inputs -->
+                        <div ng-show="wizard.active(2)">
+
+                            <div ng-include="'app/views/airtime-stages/product-slot.html'" ></div>
+
+                            <ul class="pager">
+                                <li class="previous">
+                                    <a href="#" ng-click="wizard.go(1)">
+                                        <span>&larr; Previous</span>
+                                    </a>
+                                </li>
+                                <li class="next"><a ng-show="!cart.length">Next <span>&rarr;</span></a></li>
+                                <li class="next"><a href="#" ng-show="cart.length" ng-click="wizard.go(3)">Next <span>&rarr;</span></a></li>
+                            </ul>
+                        </div>
+                        <!-- END Wizard Step inputs -->
+                        <!-- START Wizard Step inputs -->
+                        <div ng-show="wizard.active(3)">
+
+                            <div ng-include="'app/views/airtime-stages/remark.html'"></div>
+
+                            <ul class="pager">
+                                <li class="previous">
+                                    <a href="#" ng-click="wizard.go(2)">
+                                        <span>&larr; Previous</span>
+                                    </a>
+                                </li>
+                                <li class="next"><a ng-show="!form.agree">Next <span>&rarr;</span></a></li>
+                                <li class="next"><a href="#" ng-show="form.agree" ng-click="wizard.go(4)">Next <span>&rarr;</span></a></li>
+                            </ul>
+                        </div>
+                        <!-- END Wizard Step inputs -->
+                        <!-- START Wizard Step inputs -->
+                        <div ng-show="wizard.active(4)">
+
+                            <div ng-include="'app/views/airtime-stages/confirmation.html'"></div>
+
+                            <ul class="pager">
+                                <li class="previous">
+                                    <a href="#" ng-click="wizard.go(3)">
+                                        <span>&larr; Previous</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- END Wizard Step inputs -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END panel -->
+        <!-- START Cart-->
+        <div ng-show="!wizard.active(4)" ng-class="{'col-md-5':!wizard.active(4)}">
+            <div ng-include="'app/views/airtime-stages/cart.html'"></div>
+        </div>
+        <!-- END Cart-->
+    </form>
+</div>

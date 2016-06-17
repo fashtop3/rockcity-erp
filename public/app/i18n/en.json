@@ -1,0 +1,60 @@
+{
+  "dashboard": {
+    "WELCOME": "Welcome to {{appName}}"
+  },
+  "topbar": {
+    "search": {
+      "PLACEHOLDER": "Type and hit enter.."
+    }
+  },
+  "sidebar": {
+    "WELCOME": "Welcome",
+    "heading": {
+      "HEADER": "Main Navigation"
+    },
+    "nav": {
+      "DASHBOARD": "Dashboard",
+      "MAIL": "Send Mail",
+      "SMS": "Send Sms",
+      "REPORT": "Report",
+
+      "client": {
+        "MENU": "Client",
+        "VIEW": "View and Search",
+        "REGISTER": "Register"
+      },
+
+      "airtime": {
+        "MENU": "Airtime",
+        "VIEW": "View and Search",
+        "CREATE": "Generate Airtime"
+      },
+
+      "people": {
+        "MENU": "People",
+        "VIEW": "View and Search",
+        "REGISTER": "Register"
+      }
+    }
+  },
+
+  "report": {
+    "WELCOME": "Welcome",
+    "heading": {
+      "HEADER": "Report Navigation"
+    },
+    "nav": {
+      "report": {
+        "MENU": "Report"
+      },
+
+      "target": {
+        "MENU": "Target"
+      },
+
+      "vehicle": {
+        "MENU": "Vehicle"
+      }
+    }
+  }
+}

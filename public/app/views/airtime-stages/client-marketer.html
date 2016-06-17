@@ -1,0 +1,45 @@
+<div id="client-marketer" class="tab-pane">
+
+    <br />
+    <!-- START panel-->
+    <div id="clientPanel" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':clientPanel}" class="panel-heading">Client Details
+            <paneltool tool-collapse="tool-collapse" ng-init="clientPanel=false"></paneltool>
+        </div>
+        <!-- .panel-wrapper is the element to be collapsed-->
+        <div uib-collapse="clientPanel" class="panel-wrapper">
+            <div class="panel-body">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="form-group" ng-class="{'has-error': airtimeForm.clientName.$error.required && !airtimeForm.clientName.$pristine}">
+                        <label class="control-label">Client's Name <abbr class="text-danger" title="required">*</abbr></label>
+                        <ui-select ng-model="client.selected" name="clientName" theme="bootstrap" reset-search-input="false" data-parsley-group="step1" required="required">
+                            <ui-select-match placeholder="Select or search a client...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="client in clients | propsFilter: {name: $select.search, mobile: $select.search}" refresh="refreshClient($select.search)" refresh-delay="0">
+                                <div ng-bind-html="client.name | highlight: $select.search"></div>
+                                <small><b>Email:</b> <em>{{client.email}}</em>, <b>Contact:</b>
+                                    <span ng-bind-html="''+client.mobile | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span ng-show="airtimeForm.clientName.$error.required && !airtimeForm.clientName.$pristine" class="help-block">Client's name is required. </span>
+                    </div>
+                    <div permission permission-only="'admin'" class="form-group" ng-class="{'has-error': airtimeForm.marketer.$error.required && !airtimeForm.marketer.$pristine}">
+                        <label class="control-label">Marketer in Charge <abbr class="text-danger" title="required">*</abbr></label>
+                        <ui-select ng-model="marketer.selected" name="marketer" theme="bootstrap" data-parsley-group="step1" required>
+                            <ui-select-match placeholder="Select or search a client...">{{$select.selected.lastname +', '+ $select.selected.firstname}}</ui-select-match>
+                            <ui-select-choices repeat="marketer in marketers | propsFilter: {firstname: $select.search, lastname: $select.search}">
+                                <div ng-bind-html="(marketer.lastname + ', ' + marketer.firstname) | highlight: $select.search"></div>
+                                <small>email: {{marketer.email}} Mobile:
+                                    <span ng-bind-html="''+marketer.id | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span ng-show="airtimeForm.marketer.$error.required && !airtimeForm.marketer.$pristine" class="help-block">Please select a marketer. </span>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="panel-footer">Panel Footer</div>-->
+        </div>
+    </div>
+    <!-- END panel-->
+</div>

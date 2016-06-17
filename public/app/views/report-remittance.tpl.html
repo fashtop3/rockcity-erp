@@ -1,0 +1,47 @@
+<div ng-repeat="remittance in remittances">
+    <fieldset te>
+        <div class="form-group">
+            <label for="target" class="control-label col-sm-4">Target Name</label>
+            <div class="col-sm-7">
+                <!--<select class="form-control" ng-model="remittance.target" name="target" id="target">-->
+                    <!--<option value="">&#45;&#45;choose&#45;&#45;</option>-->
+                <!--</select>-->
+                <ui-select ng-model="remittance.target" id="target" theme="bootstrap" ng-disabled="disabled" required>
+                    <ui-select-match placeholder="Choose your target...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices  repeat="target in targets | propsFilter: {name: $select.search, startDate: $select.search, days: $select.search}">
+                        <div ng-bind-html="target.name | highlight: $select.search"></div>
+                        <small>Start Date: {{target.startDate}}, Days:{{target.days}}, Amount:N{{target.amount}}</small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <div class="form-group">
+            <label for="client" class="control-label col-sm-4">Client Name (Example - Mediareach, VLBC.)</label>
+            <div class="col-sm-7">
+                <input class=" form-control" type="text" ng-model="remittance.client" name="client" id="client" />
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="form-group">
+            <label for="amount" class="control-label col-sm-4">Amount (Enter value without commas(,))</label>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" ng-model="remittance.amount" name="amount" id="amount" />
+            </div>
+        </div>
+    </fieldset>
+
+    <a ng-if="$index > 0" ng-click="closeField($index, remittances)" class="btn btn-danger btn-sm pull-right"><em class="icon-close"> {{$index + 1}}</em></a>
+
+    <div class="clearfix"></div>
+    <hr class="row" />
+</div>
+
+<div class="">
+    <a ng-click="addField(remittances)" class="btn btn-info btn-sm"><em class="icon-plus"> Add</em></a>
+    <a ng-disabled="remittances.length == 1" ng-click="closeAll(remittances)" class="btn btn-danger btn-sm"><em class="icon-close"> Close All</em></a>
+</div>

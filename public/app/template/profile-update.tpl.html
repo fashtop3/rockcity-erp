@@ -1,0 +1,91 @@
+    <div>
+        <ol class="breadcrumb">
+            <li><a ui-sref="app.dashboard">Dashboard</a></li>
+            <!--<li><a ui-sref="app.dashboard.profile">Profile</a></li>-->
+            <li>Update</li>
+        </ol>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Update Profile</div>
+        <div class="panel-body">
+            <!--{{auth}}-->
+            <form class="form-horizontal" role="form" name="profileForm" ng-submit="updateProfile()" novalidate>
+                <div>
+                    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+                </div>
+                <div class="form-group has-feedback">
+                    <label class="col-sm-2 control-label">First name <abbr class="text-danger" title="First name">*</abbr></label>
+                    <div class="col-sm-8">
+                        <input type="text" name="firstname" placeholder="Enter First name" ng-pattern="/^[a-zA-Z]{1,}$/" autocomplete="off" ng-model="profile.firstname" required="" class="form-control" />
+                        <span class="fa fa-tag form-control-feedback text-muted"></span>
+                        <span ng-show="profileForm.firstname.$dirty &amp;&amp; profileForm.firstname.$error.required" class="text-danger">This field is required</span>
+                        <span ng-show="profileForm.firstname.$dirty &amp;&amp; profileForm.firstname.$error.pattern" class="text-danger">This field must be a valid name</span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label class="col-sm-2 control-label">Last name <abbr class="text-danger" title="Last name">*</abbr></label>
+                    <div class="col-sm-8">
+                        <input type="text" name="lastname" placeholder="Enter Last name" ng-pattern="/^[a-zA-Z]{1,}$/" autocomplete="off" ng-model="profile.lastname" required="" class="form-control" />
+                        <span class="fa fa-tag form-control-feedback text-muted"></span>
+                        <span ng-show="profileForm.lastname.$dirty &amp;&amp; profileForm.lastname.$error.required" class="text-danger">This field is required</span>
+                        <span ng-show="profileForm.lastname.$dirty &amp;&amp; profileForm.lastname.$error.pattern" class="text-danger">This field must be a valid name</span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label class="col-sm-2 control-label">Email <abbr class="text-danger" title="Email">*</abbr></label>
+                    <div class="col-sm-8">
+                        <input type="email" name="email" placeholder="Enter email" autocomplete="off" ng-model="profile.email" ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i" required="" class="form-control" />
+                        <span class="fa fa-envelope form-control-feedback text-muted"></span>
+                        <span ng-show="profileForm.email.$dirty &amp;&amp; profileForm.email.$error.required" class="text-danger">This field is required</span>
+                        <span ng-show="profileForm.email.$dirty &amp;&amp; profileForm.email.$error.email" class="text-danger">This field must be a valid email address</span>
+                    </div>
+                </div>
+                <!--<div class="form-group" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">-->
+                    <!--<hr/>-->
+                    <!--<label class="control-label col-sm-2">Picture Upload</label>-->
+                    <!--<div class="col-sm-8">-->
+                        <!--<input filestyle="" type="file" data-button-text="Single" name="myFile" data-class-button="btn btn-default" data-classinput="form-control inline" nv-file-select="" uploader="uploader" class="form-control" />-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button class="btn btn-primary" ng-disabled="profileForm.$invalid" type="submit">Save Data</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <!--<div class="panel panel-default">-->
+        <!--<div class="panel-heading">Change Password</div>-->
+        <!--<div class="panel-body">-->
+            <!--&lt;!&ndash;{{auth}}&ndash;&gt;-->
+            <!--<form class="form-horizontal" role="form" ng-submit="updatePassword()" name="pwdForm" novalidate>-->
+                <!--<div class="form-group has-feedback">-->
+                    <!--<label class="col-sm-2">Password <abbr class="text-danger" title="Password">*</abbr></label>-->
+                    <!--<div class="col-sm-8">-->
+                        <!--<input id="id-password" placeholder="Enter password" type="password" name="password" ng-model="register.password" ng-pattern="/^[a-zA-Z0-9]{6,10}$/" required="" class="form-control" />-->
+                        <!--<span class="fa fa-lock form-control-feedback text-muted"></span>-->
+                        <!--<span ng-show="pwdForm.password.$dirty &amp;&amp; pwdForm.password.$error.required" class="text-danger">This field is required</span>-->
+                        <!--<span ng-show="pwdForm.password.$dirty &amp;&amp; pwdForm.password.$error.pattern" class="text-danger">Input should match 'a-zA-Z0-9' and 6-8 length</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group has-feedback">-->
+                    <!--<label class="col-sm-2">Retype Password <abbr class="text-danger" title="Confirm password">*</abbr></label>-->
+                    <!--<div class="col-sm-8">-->
+                        <!--<input type="password" placeholder="Confirm password" name="password_confirm" ng-model="register.password_confirm" ui-validate="'$value==register.password'" ui-validate-watch="'password'" class="form-control" />-->
+                        <!--<span class="fa fa-lock form-control-feedback text-muted"></span>-->
+                        <!--<span ng-show="pwdForm.password_confirm.$dirty &amp;&amp; pwdForm.password_confirm.$error.validator" class="text-danger">Password does Not match</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<div class="col-sm-4 col-sm-offset-2">-->
+                        <!--<button class="btn btn-primary" ng-disabled="pwdForm.$invalid" type="submit">Save Data</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->

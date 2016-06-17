@@ -1,0 +1,33 @@
+<h3>
+    Report
+</h3>
+
+<div ui-view="" autoscroll="false" class="ng-zoomBackDown ng-fluid">
+    <!--<div ng-include="'app/template/profile.tpl.html'"></div>-->
+
+    <form role="form" class="form-horizontal" name="reportForm" ng-submit="submitReport(reportForm)" novalidate>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" ng-class="{active:isSelected(1)}"><a ng-click="select(1)" aria-controls="Tasks">Tasks</a></li>
+                    <li role="presentation" ng-class="{active:isSelected(2)}"><a ng-click="select(2)" aria-controls="Challenge">Challenge</a></li>
+                    <li role="presentation" ng-class="{active:isSelected(3)}"><a ng-click="select(3)" aria-controls="Remittance">Remittance</a></li>
+                    <li role="presentation" ng-class="{active:isSelected(4)}"><a ng-click="select(4)" aria-controls="Uploads">Uploads</a></li>
+                    <li role="presentation" ng-class="{active:isSelected(5)}"><a ng-click="select(5)" aria-controls="Vehicle">Vehicle</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(1)}" ng-if="isSelected(1)" ng-include="'app/views/report-task.tpl.html'"></div>
+                    <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(2)}" ng-if="isSelected(2)" ng-include="'app/views/report-challenge.tpl.html'"></div>
+                    <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(3)}" ng-if="isSelected(3)" ng-include="'app/views/report-remittance.tpl.html'"></div>
+                    <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(4)}" ng-if="isSelected(4)" ng-include="'app/views/report-upload.tpl.html'"></div>
+                    <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(5)}" ng-if="isSelected(5)" ng-include="'app/views/report-vehicle.tpl.html'"></div>
+                </div>
+
+            </div>
+            <div class="panel-footer">
+                <button type="submit" class="btn btn-block btn-primary btn-lg">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

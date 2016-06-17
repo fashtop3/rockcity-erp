@@ -1,0 +1,59 @@
+<ul class="nav ng-scope">
+    <!-- START user info-->
+    <li class="has-user-block">
+        <div uib-collapse="userBlockVisible" ng-controller="UserBlockController" class="ng-scope collapse" aria-expanded="false" aria-hidden="true" style="height: 0px;">
+            <div class="item user-block">
+                <!-- User picture-->
+                <div class="user-block-picture">
+                    <div class="user-block-status">
+                        <img ng-src="app/img/user/04.jpg" alt="Avatar" class="img-thumbnail img-circle" src="app/img/user/04.jpg">
+                        <div class="circle circle-success circle-lg"></div>
+                    </div>
+                </div>
+                <!-- Name and Job-->
+                <div class="user-block-info">
+                    <span class="user-block-name ng-binding">Welcome Olanrewaju</span>
+                    <span class="user-block-role ng-binding">Administrator</span>
+                </div>
+            </div>
+        </div>
+    </li>
+    <!-- END user info-->
+    
+    <!-- Iterates over all sidebar items-->
+    <li>
+    <!-- ngIf: item.heading --><span ng-if="item.heading" class="ng-binding ng-scope">Main Navigation</span><!-- end ngIf: item.heading --><!-- ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><li>
+    <a ng-if="!item.heading" ng-href="#/app/dashboard" title="Dashboard" class="ng-scope" href="#/app/dashboard"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="fa fa-dashboard"></em><!-- end ngIf: item.icon --><span class="ng-binding">Dashboard</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><li>
+    <a ng-if="!item.heading" ng-href="#/app/mail" title="Send Mail" class="ng-scope" href="#/app/mail"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="fa fa-mail-forward"></em><!-- end ngIf: item.icon --><span class="ng-binding">Send Mail</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><li>
+    <a ng-if="!item.heading" ng-href="#/app/sms" title="Send Sms" class="ng-scope" href="#/app/sms"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="fa fa-envelope-o"></em><!-- end ngIf: item.icon --><span class="ng-binding">Send Sms</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><li>
+    <a ng-if="!item.heading" ng-href="" title="Client" class="ng-scope"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="icon-user-following"></em><!-- end ngIf: item.icon --><span class="ng-binding">Client</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu --><ul ng-if="item.submenu" uib-collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav ng-scope collapse" style="height: 0px;"><li class="sidebar-subnav-header ng-binding">Client</li><!-- ngRepeat: item in item.submenu --><!-- ngInclude: 'sidebar-renderer.html' --><li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer.html'" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" ng-click="toggleCollapse(pIndex)" class="ng-scope">
+    <a ng-if="!item.heading" ng-href="#/app/client" title="View and Search" class="ng-scope" href="#/app/client"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><span class="ng-binding">View and Search</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><!-- end ngRepeat: item in item.submenu --><!-- ngInclude: 'sidebar-renderer.html' --><li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer.html'" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" ng-click="toggleCollapse(pIndex)" class="ng-scope">
+    <a ng-if="!item.heading" ng-href="#/app/client/create" title="Register" class="ng-scope" href="#/app/client/create"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><span class="ng-binding">Register</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><!-- end ngRepeat: item in item.submenu --></ul><!-- end ngIf: item.submenu -->
+</li><li class="ng-scope  active">
+    <a ng-if="!item.heading" ng-href="" title="Airtime" class="ng-scope"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="fa fa-reorder"></em><!-- end ngIf: item.icon --><span class="ng-binding">Airtime</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu --><ul ng-if="item.submenu" uib-collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav ng-scope in collapse" aria-expanded="true" aria-hidden="false" style="height: auto;"><li class="sidebar-subnav-header ng-binding">Airtime</li><!-- ngRepeat: item in item.submenu --><!-- ngInclude: 'sidebar-renderer.html' --><li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer.html'" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" ng-click="toggleCollapse(pIndex)" class="ng-scope  active">
+    <a ng-if="!item.heading" ng-href="#/app/airtime" title="View and Search" class="ng-scope" href="#/app/airtime"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><span class="ng-binding">View and Search</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><!-- end ngRepeat: item in item.submenu --><!-- ngInclude: 'sidebar-renderer.html' --><li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer.html'" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" ng-click="toggleCollapse(pIndex)" class="ng-scope">
+    <a ng-if="!item.heading" ng-href="#/app/airtime/create" title="Generate" class="ng-scope" href="#/app/airtime/create"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><span class="ng-binding">Generate Airtime</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><!-- end ngRepeat: item in item.submenu --></ul><!-- end ngIf: item.submenu -->
+</li><li>
+    <a ng-if="!item.heading" ng-href="" title="People" class="ng-scope"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="icon-people"></em><!-- end ngIf: item.icon --><span class="ng-binding">People</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu --><ul ng-if="item.submenu" uib-collapse="isCollapse(pIndex)" ng-init="addCollapse(pIndex, item)" class="nav sidebar-subnav ng-scope collapse" style="height: 0px;"><li class="sidebar-subnav-header ng-binding">People</li><!-- ngRepeat: item in item.submenu --><!-- ngInclude: 'sidebar-renderer.html' --><li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer.html'" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" ng-click="toggleCollapse(pIndex)" class="ng-scope">
+    <a ng-if="!item.heading" ng-href="#/app/people" title="View" class="ng-scope" href="#/app/people"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><span class="ng-binding">View and Search</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><!-- end ngRepeat: item in item.submenu --><!-- ngInclude: 'sidebar-renderer.html' --><li ng-repeat="item in item.submenu" ng-include="'sidebar-renderer.html'" ng-class="getMenuItemPropClasses(item)" ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true" ng-click="toggleCollapse(pIndex)" class="ng-scope">
+    <a ng-if="!item.heading" ng-href="#/app/people/create" title="View" class="ng-scope" href="#/app/people/create"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><span class="ng-binding">Register User</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><!-- end ngRepeat: item in item.submenu --></ul><!-- end ngIf: item.submenu -->
+</li><li>
+    <!-- ngIf: item.heading --><span ng-if="item.heading" class="ng-binding ng-scope">Report Navigation</span><!-- end ngIf: item.heading --><!-- ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><li>
+    <a ng-if="!item.heading" ng-href="#/app/report" title="Report" class="ng-scope" href="#/app/report"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="fa fa-file-text"></em><!-- end ngIf: item.icon --><span class="ng-binding">Report</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><li>
+    <a ng-if="!item.heading" ng-href="#/app/target" title="Target" class="ng-scope" href="#/app/target"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="icon-target"></em><!-- end ngIf: item.icon --><span class="ng-binding">Target</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><li>
+    <a ng-if="!item.heading" ng-href="#/app/vehicles" title="Vehicles" class="ng-scope" href="#/app/vehicles"><!-- ngIf: item.alert --><!-- ngIf: item.icon --><em ng-if="item.icon" class="fa fa-truck"></em><!-- end ngIf: item.icon --><span class="ng-binding">Vehicle</span></a><!-- end ngIf: !item.heading --><!-- ngIf: item.submenu -->
+</li><!-- end ngRepeat: item in menuItems -->
+</ul>

@@ -1,0 +1,132 @@
+<div class="modal-header bg-info">
+    <button type="button" ng-click="cancel()" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+    <h4 id="myModalLabel" class="modal-title"> Your Shopping Cart ({{cart.length}} Product(s))</h4>
+</div>
+<div class="modal-body" portlet="portlet">
+    <div ng-if="cart.length" ng-repeat="item in cart track by $index">
+        <!-- START panel-->
+        <div id="product{{item.id}}" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':false}" class="panel-heading">{{item.name}}
+                <button type="button" aria-hidden="true" title="Delete Product" class="close" ng-click="deleteCartItem(cart.indexOf(item))"><em class="fa fa-md fa-trash-o"></em></button>
+                <paneltool tool-collapse="tool-collapse"></paneltool>
+                <!--<paneltool tool-refresh="standard" tool-collapse="tool-collapse" tool-dismiss="tool-dismiss"></paneltool>-->
+            </div>
+            <div uib-collapse="product{{item.id}}" class="panel-wrapper">
+                <div class="panel-body">
+                    <div ng-repeat="sub in item.subscriptions">
+                        <div class="list-group" ng-if="sub.broadcast && sub.broadcast > 0">
+                            <div class="list-group-item">
+                                <table class="wd-wide table-responsive">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="ph">
+                                                <span class="label label-info pull-right">{{sub.period}}</span>
+                                                <h4 class="media-box-heading">BULK</h4>
+                                                <small class="text-muted text-inverse">
+                                                    <b>Start :</b> ({{sub.bulk_start_date | date:'MMM d, y h:mm a'}})
+                                                    <b>End :</b> ({{sub.bulk_end_date | date:'MMM d, y h:mm a'}} )
+                                                </small>
+                                            </div>
+                                        </td>
+                                        <td class="wd-sm">
+                                            <div class="ph text-center">
+                                                <!--<p class="m0">QTY</p>-->
+                                                <a href="" ng-click="minusBroadcast(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-minus"></em></a>
+                                                <small class="m0">-({{sub.broadcast}})-</small>
+                                                <a href="" ng-click="plusBroadcast(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-plus"></em></a>
+                                            </div>
+                                        </td>
+                                        <td class="wd-xs hidden-xs hidden-sm">
+                                            <div class="ph">
+                                                <p class="m0 text-muted">
+                                                    <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-trash-o"></em></a>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td class="wd-sm">
+                                            <div class="ph">
+                                                <!--<p class="m0">Price</p>-->
+                                                <small class="m0 text-info">
+                                                    ₦{{(sub.amount * sub.broadcast) | number:2}}</small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="list-group" ng-if="!sub.broadcast">
+                            <div class="list-group-item">
+                                <table class="wd-wide table-responsive">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="ph">
+                                                <span class="label label-info pull-right">{{sub.period}}</span>
+                                                <h4 class="media-box-heading">SLOT <small ng-if="sub.fixedSpot" class="text-muted">(Fixed)</small></h4>
+                                                <small class="text-muted text-inverse">
+                                                    <b>Date :</b> ({{sub.trans_date | date:'MMM d, y'}})
+                                                    <b>Time :</b> ({{sub.trans_time | date:'h:mm a'}})
+                                                    <b>Length : </b> ({{sub.duration}})
+                                                </small>
+                                            </div>
+                                        </td>
+                                        <td class="wd-sm"> <!--hidden-xs hidden-sm-->
+                                            <div class="ph text-center">
+                                                <!--<p class="m0">QTY</p>-->
+                                                <div ng-if="sub.fixedSpot"><small class="text-muted">(Fixed)</small></div>
+                                                <small class="text-purple">Surcharge : ({{sub.subCharge}}%)</small>
+                                            </div>
+                                        </td>
+                                        <td class="wd-xs">
+                                            <div class="ph">
+                                                <p class="m0 text-muted">
+                                                    <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><i class="fa fa-lg fa-trash-o"></i></a>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td class="wd-sm">
+                                            <div class="ph">
+                                                <!--<p class="m0">Price</p>-->
+                                                <small class="m0 text-info">
+                                                    ₦{{sub.amount | number:2}}</small>
+                                        <span class="label label-inverse">
+                                            +Subcharge: ₦{{sub.subChargePrice | number:2}}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="list-group-item">
+                        <div class="media-box">
+                            <div class="pull-left">
+                                 <span class="fa-stack">
+                                    <em class="fa fa-circle fa-stack-2x text-purple"></em>
+                                    <em class="fa fa-money fa-stack-1x fa-inverse text-white"></em>
+                                 </span>
+                            </div>
+                            <div class="media-box-body clearfix">
+                                <p class="m0 pull-right text-inverse"> ₦{{calProductSubscription(cart.indexOf(item)) | number:2}}
+                                </p>
+                                <div class="media-box-heading pull-left"><span class="text-purple m0">Total Amount: </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- END panel-->
+    </div>
+</div>
+<!--<div class="modal-footer">-->
+<!--<button ng-click="ok()" class="btn btn-primary">OK</button>-->
+<!--<button ng-click="cancel()" class="btn btn-warning">Cancel</button>-->
+<!--</div>-->

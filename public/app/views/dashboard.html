@@ -1,0 +1,19 @@
+<h3>
+    <div class="pull-right">
+        <div class="btn-group" role="group" aria-label="...">
+            <!--<a class="btn btn-primary" ui-sref="app.dashboard.profile"><i class="fa fa-user"></i> Profile</a>-->
+            <a class="btn btn-info" ui-sref="app.dashboard.update"><i class="fa fa-edit"></i> Edit</a>
+            <!--<a class="btn btn-success" ui-sref="app.dashboard.permissions"><i class="fa fa-pied-piper"></i> Permissions</a>-->
+        </div>
+    </div>
+    <!-- END Menu list    -->
+    Dashboard
+    <small>{{ 'dashboard.WELCOME' | translate:{ appName: app.name } }} !</small>
+</h3>
+
+<div class="row">
+</div>
+
+<div ui-view="" autoscroll="false" class="ng-zoomBackDown ng-fluid">
+    <div ng-include="'app/template/profile.tpl.html'"></div>
+</div>

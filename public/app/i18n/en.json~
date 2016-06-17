@@ -1,0 +1,25 @@
+{
+  "dashboard": {
+    "WELCOME": "Welcome to {{appName}}"
+  },
+  "topbar": {
+    "search": {
+      "PLACEHOLDER": "Type and hit enter.."
+    }
+  },
+  "sidebar": {
+    "WELCOME": "Welcome",
+    "heading": {
+      "HEADER": "Main Navigation"
+    },
+    "nav": {
+      "SINGLEVIEW": "Dashboard",
+      "SINGLEVIEW": "Mail",
+      "SINGLEVIEW": "Sms",
+      "menu": {
+        "MENU": "Marketer",
+        "SUBMENU": "Sub Menu"
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+<div ng-repeat="vehicle in vehicles"><br />
+
+    <div class="form-group">
+        <label for="vehicle" class="control-label col-sm-4">Vehicle</label>
+        <div class="col-sm-7" ng-class="{'has-error': reportForm.brand.$error.required && !reportForm.brand.$pristine}">
+            <!--<select class="form-control" ng-model="vehicle.brand" name="vehicle" id="vehicle">-->
+                <!--<option value="">&#45;&#45;choose&#45;&#45;</option>-->
+            <!--</select>-->
+            <ui-select  ng-model="vehicle.brand" id="vehicle" theme="bootstrap" ng-disabled="disabled" required>
+                <ui-select-match name="brand" placeholder="Select vehicle...">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices  repeat="vehicle in motors | propsFilter: {name: $select.search, reg: $select.search, colour: $select.search}">
+                    <div ng-bind-html="vehicle.name | highlight: $select.search"></div>
+                    <small><b>Reg No:</b> {{vehicle.reg}}, <b>Color:</b> {{vehicle.colour}}</small>
+                </ui-select-choices>
+            </ui-select>
+            <span ng-show="!reportForm.brand.$pristine &amp;&amp; reportForm.brand.$error.required" class="text-danger">This field is required</span>
+            <!--<span ng-show="!reportForm.brand.$pristine &amp;&amp; reportForm.brand.$error.pattern" class="text-danger">This field must be a valid name</span>-->
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="driver" class="control-label col-sm-4">Driver Name</label>
+        <div class="col-sm-7" ng-class="{'has-error': reportForm.driver.$error.required && !reportForm.driver.$pristine}">
+            <input class=" form-control" autocomplete="off" ng-model="vehicle.driver" type="text" name="driver" id="driver" required/>
+            <span ng-show="!reportForm.driver.$pristine &amp;&amp; reportForm.driver.$error.required" class="text-danger">This field is required</span>
+            <!--<span ng-show="!reportForm.driver.$pristine &amp;&amp; reportForm.driver.$error.pattern" class="text-danger">This field must be a valid name</span>-->
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="passenger" class="control-label col-sm-4">Passenger Name</label>
+        <div class="col-sm-7">
+            <input class=" form-control" autocomplete="off" ng-model="vehicle.passenger" type="text" name="passenger" id="passenger" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="destination" class="control-label col-sm-4">Destination</label>
+        <div class="col-sm-7">
+            <input class=" form-control" autocomplete="off" type="text" ng-model="vehicle.destination" name="destination" id="destination" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="millage_bl" class="control-label col-sm-4">Mileage before leaving office</label>
+        <div class="col-sm-7">
+            <input class=" form-control" autocomplete="off" type="text" ng-model="vehicle.millageBefore" name="millage_bl" id="millage_bl" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="millage_rt" class="control-label col-sm-4">Mileage on return to office</label>
+        <div class="col-sm-7">
+            <input class=" form-control" autocomplete="off" type="text" ng-model="vehicle.millageAfter" name="millage_rt" id="millage_rt" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="time_out" class="control-label col-sm-4">Time the vehicle left office</label>
+        <div class="col-sm-7">
+            <input class=" form-control" autocomplete="off" type="text" ng-model="vehicle.timeBefore" name="time_out" id="time_out" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="time_back" class="control-label col-sm-4">Time the vehicle returned to office</label>
+        <div class="col-sm-7">
+            <input class=" form-control" autocomplete="off" type="text" ng-model="vehicle.timeAfter" name="time_back" id="time_back" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fuel_bl" class="control-label col-sm-4">Fuel Gauge before leaving</label>
+        <div class="col-sm-7">
+            <input class=" form-control" autocomplete="off" type="text" ng-model="vehicle.fuelBefore" name="fuel_bl" id="fuel_bl" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fuel_bk" class="control-label col-sm-4">Fuel Gauge on return</label>
+        <div class="col-sm-7">
+            <input class=" form-control" autocomplete="off" type="text" ng-model="vehicle.fuelAfter" name="fuel_bk" id="fuel_bk" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2">
+            <label class="control-label">Further Notes </label>
+        </div>
+
+        <div class="col-sm-9">
+            <!-- Wysiswyg editor-->
+            <div text-angular="" ng-model="vehicle.htmlText" class="btn-group-small"></div>
+        </div>
+    </div>
+
+    <a ng-if="$index > 0" ng-click="closeField($index, vehicles)" class="btn btn-danger btn-sm pull-right"><em class="icon-close"> {{$index + 1}}</em></a>
+
+    <div class="clearfix"></div>
+    <hr class="row" />
+</div>
+
+<div class="">
+    <a ng-click="addField(vehicles)" class="btn btn-info btn-sm"><em class="icon-plus"> Add</em></a>
+    <a ng-disabled="vehicles.length == 1" ng-click="closeAll(vehicles)" class="btn btn-danger btn-sm"><em class="icon-close"> Close All</em></a>
+</div>

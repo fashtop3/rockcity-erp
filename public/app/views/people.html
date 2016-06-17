@@ -1,0 +1,89 @@
+<h3>
+    <div class="pull-right">
+        <div class="btn-group" role="group" aria-label="...">
+            <a class="btn btn-primary" ui-sref="app.people"><i class="fa fa-user"></i> People</a>
+            <a permission permission-only="'register.staff'" class="btn btn-info" ui-sref="app.people.adduser"><i class="fa fa-plus"></i> Add User</a>
+            <!--<a class="btn btn-success" ui-sref="app.dashboard.permissions"><i class="fa fa-pied-piper"></i> Permissions</a>-->
+        </div>
+    </div>
+    People
+</h3>
+<div ui-view="" autoscroll="false" class="ng-zoomBackDown ng-fluid">
+
+    <div>
+
+        <div class="row">
+
+            <div class="panel panel-default" >
+                <div class="panel-heading">Filter</div>
+                <div class="panel-body">
+
+                    <form class="form-inline" name="filterForm" submit="submitFilter()" role="form" novalidate>
+                        <div class="form-group">
+                            <select name="role" id="role" ng-model="search.roles.name" class="form-control">
+                                <option value="" selected>--role--</option>
+                                <option value="{{role.name}}" ng-repeat="(id, role) in roles">{{role.name}}</option>
+                            </select>
+                            <select name="permission" id="permission" ng-model="search.permissions.name" class="form-control">
+                                <option value="" selected>--permission--</option>
+                                <option value="{{permission.name}}" ng-repeat="(id, permission) in permissions">{{permission.name}}</option>
+                            </select>
+                            <select name="status" id="status" ng-model="search.status" class="form-control" selected>
+                                <option value="">--status--</option>
+                                <option value="0">Active</option>
+                                <option value="1">Blocked</option>
+                            </select>
+                            <button class="btn btn-info" ng-click="search = {}">Reset</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <!--<div class="col-xs-12 col-sm-12">-->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th permission permission-only="'register.staff'"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="user in people | filter:search">
+                                <td class="text-muted"><a href="#">{{user.lastname+', '+user.firstname}}</a></td>
+                                <td><strong>{{user.email}}</strong></td>
+                                <td class="text-muted">{{user.status == '1' ? 'Blocked' : 'Active'}}</td>
+                                <td class="text-muted">{{user.created_at | date:'MMM d, y h:mm a'}}</td>
+                                <td permission permission-only="'register.staff'">
+                                    <a class="btn btn-sm btn-warning" ui-sref="app.people.edit({id: user.id})">
+                                        <em class="fa fa-edit"></em>
+                                    </a>
+
+                                    <button type="button" ng-click="removeUser($index)" class="btn btn-sm btn-danger">
+                                        <em class="fa fa-trash-o"></em>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+
+</div>

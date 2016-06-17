@@ -1,0 +1,38 @@
+<div class="panel" ng-controller="VehicleManageController">
+    <!--<div class="panel-heading">Targets-->
+        <!--&lt;!&ndash;<small>Chaning data</small>&ndash;&gt;-->
+    <!--</div>-->
+    <div class="panel-body">
+        <div>
+            <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+        </div>
+
+        <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+            <thead>
+            <tr>
+                <th>Vehicle</th>
+                <th>Registration No.</th>
+                <th>Engine No.</th>
+                <th>Colour</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="vehicle in vehicles">
+                <td>{{ vehicle.name }}</td>
+                <td>{{ vehicle.reg }}</td>
+                <td>{{ vehicle.eng }}</td>
+                <td>{{ vehicle.colour }}</td>
+                <td>
+                    <button type="button" ng-click="modifyVehicle($index)" class="btn btn-sm btn-warning">
+                        <em class="fa fa-edit"></em>
+                    </button>
+                    <button type="button" ng-click="removeVehicle($index)" class="btn btn-sm btn-danger">
+                        <em class="fa fa-trash-o"></em>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

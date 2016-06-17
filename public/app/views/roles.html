@@ -1,0 +1,84 @@
+<h3>
+   Roles/Permissions
+</h3>
+<div class="row">
+   <div class="col-sm-12">
+       <div class="panel panel-default" ng-controller="RolesController as roleCtrl">
+           <div class="panel-body">
+               <!-- Modal inline template-->
+               <script type="text/ng-template" id="/roleModal.html">
+                   <!-- role edit -->
+                   <form class="form-inline"  novalidate>
+                       <div class="modal-header">
+                           <button type="button" ng-click="cancel()" aria-hidden="true" class="close">×</button>
+                           <h4 id="myModalLabel" class="modal-title">Edit({{title}})</h4></div>
+                       <div class="modal-body">
+                           <div class="form-group">
+                               <label for="role" class="control-label">Role:</label>
+                               <input type="text" class="form-control" ng-model="role.name" id="role" name="role" />
+                           </div>
+                       </div>
+                       <div class="modal-footer">
+                           <button ng-click="ok();" class="btn btn-primary">OK</button>
+                           <button ng-click="cancel();" class="btn btn-warning">Cancel</button>
+                       </div>
+                   </form>
+               </script>
+               <script type="text/ng-template" id="/permissionModal.html">
+                   <!-- permission dialog-->
+                   <form class="form-inline" novalidate>
+                       <div class="modal-header">
+                           <button type="button" ng-click="cancel()" aria-hidden="true" class="close">×</button>
+                           <h4 id="myModalLabel" class="modal-title">Edit Permissions on ({{role.name | uppercase}})</h4></div>
+                       <div class="modal-body">
+                           <!-- permosion lists here-->
+                           <table class="table table-bordered table-striped">
+                               <thead>
+                               <th>NAME</th>
+                               <th colspan="3">ACTIONS</th>
+                               </thead>
+                               <tbody>
+                               <tr ng-if="!showPermissions">
+                                   <td colspan="2">{{permMessage}}</td>
+                               </tr>
+                               <tr ng-if="showPermissions" ng-repeat="permission in permissions">
+                                   <td>{{permission.name}}</td>
+                                   <td align="center"><input type="checkbox" name="role" value="{{permission.id}}" /></td>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                       <div class="modal-footer">
+                           <button ng-click="ok();" class="btn btn-primary">OK</button>
+                           <button ng-click="cancel();" class="btn btn-warning">Cancel</button>
+                       </div>
+                   </form>
+               </script>
+               <form class="form-horizontal" novalidate>
+                   <table class="table table-bordered table-striped">
+                       <thead>
+                       <th>NAME</th>
+                       <th colspan="3">ACTIONS</th>
+                       </thead>
+                       <tbody>
+                       <tr ng-if="!showRoles">
+                           <td colspan="2">{{roleMessage}}</td>
+                       </tr>
+                       <tr ng-if="showRoles" ng-repeat="role in roles">
+                           <td>{{role.name}}</td>
+                           <td><a ng-click="editRole('sm', role);"><i class="fa fa-edit"></i> edit role</a></td>
+                           <td><a ng-click="editPermission('lg', role)"> <i class="fa fa-edit"></i> edit permissions</a></td>
+                           <td align="center"><input type="checkbox" name="role" value="{{role.id}}" /></td>
+                       </tr>
+                       </tbody>
+                   </table>
+
+                   <button class="btn btn-primary" type="submit">Save Role</button>
+                   <!-- Button trigger modal -->
+                   <!--<div id="modal-state"></div>-->
+
+               </form>
+           </div>
+       </div>
+   </div>
+</div>

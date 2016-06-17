@@ -1,0 +1,50 @@
+<div ng-controller="RecoverPasswordController" class="block-center mt-xl wd-xl">
+    <!-- START panel-->
+    <div class="panel panel-dark panel-flat">
+        <div class="panel-heading text-center">
+            <a href="#">
+                Rockcity FM Radio
+                <!--<img src="app/img/logo.jpg" alt="Image" class="block-center img-rounded" />-->
+            </a>
+        </div>
+        <div class="panel-body helicopter" ng-class="{whirl:disableView}">
+            <p class="text-center pv">PASSWORD RESET</p>
+            <form role="form" name="changePwdForm" novalidate="" ng-submit="submitChangePwd()" class="form-validate mb-lg">
+                <div ng-show="showError" class="alert alert-danger text-center">{{authMsg}}</div>
+                <div ng-show="showSuccess" class="alert alert-success text-center">{{authMsg}}</div>
+
+                <input type="hidden" name="token" ng-model="recover.token" value="" required>
+
+                <div class="form-group has-feedback">
+                    <label class="text-muted">Email address <abbr class="text-danger" title="Email">*</abbr></label>
+                    <input type="email" name="email" disabled="disabled" placeholder="Enter email" autocomplete="off" ng-model="recover.email" ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i" required="" class="form-control" />
+                    <span class="fa fa-envelope form-control-feedback text-muted"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <label class="text-muted">Password <abbr class="text-danger" title="Password">*</abbr></label>
+                    <input id="id-password" placeholder="Enter password" type="password" name="password" ng-model="recover.password" ng-pattern="/^[a-zA-Z0-9]{6,10}$/" required="" class="form-control" />
+                    <span class="fa fa-lock form-control-feedback text-muted"></span>
+                    <span ng-show="changePwdForm.password.$dirty &amp;&amp; changePwdForm.password.$error.required" class="text-danger">This field is required</span>
+                    <span ng-show="changePwdForm.password.$dirty &amp;&amp; changePwdForm.password.$error.pattern" class="text-danger">Input should match 'a-zA-Z0-9' and 6-10 length</span>
+                </div>
+                <div class="form-group has-feedback">
+                    <label class="text-muted">Retype Password <abbr class="text-danger" title="Confirm password">*</abbr></label>
+                    <input type="password" placeholder="Confirm password" name="password_confirm" ng-model="recover.password_confirm" ui-validate="'$value==recover.password'" ui-validate-watch="'password'" class="form-control" />
+                    <span class="fa fa-lock form-control-feedback text-muted"></span>
+                    <span ng-show="changePwdForm.password_confirm.$dirty &amp;&amp; changePwdForm.password_confirm.$error.validator" class="text-danger">Password does Not match</span>
+                </div>
+                <button type="submit" ng-disabled="changePwdForm.$invalid" class="btn btn-block btn-primary mt-lg">Change password</button>
+            </form>
+            <p class="pt-lg text-center">Have an account?</p><a ui-sref="page.login" class="btn btn-block btn-default">Signin</a>
+        </div>
+    </div>
+    <!-- END panel-->
+    <div class="p-lg text-center">
+        <span>&copy;</span>
+        <span ng-bind="app.year"></span>
+        <span>-</span>
+        <span ng-bind="app.name"></span>
+        <br/>
+        <span ng-bind="app.description"></span>
+    </div>
+</div>

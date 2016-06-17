@@ -1,0 +1,109 @@
+<h3>
+    Register Client
+</h3>
+<div class="row" ng-controller="ClientFormController as clientCtrl">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form novalidate ng-submit="clientSubmit()" name="clientForm" class="form-horizontal col-sm-10 col-sm-offset-1" role="form">
+                    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+                    <div class="row">
+                        <!--<div class="col-xs-12 col-md-5">-->
+                            <fieldset>
+                                <legend>Client Details</legend>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="form-group"  ng-class="{'has-error': clientForm.name.$error.required && !clientForm.name.$pristine}">
+                                        <label for="name" class="col-sm-3 control-label">Client's Name</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-]+$/" ng-model="client.name" class="form-control" id="name" name="name" placeholder="Enter Client's Name" required/>
+                                            <span ng-show="!clientForm.name.$pristine &amp;&amp; clientForm.name.$error.required" class="text-danger">This field is required</span>
+                                            <span ng-show="!clientForm.name.$pristine &amp;&amp; clientForm.name.$error.pattern" class="text-danger">This field must be a valid name</span>
+                                        </div>
+                                    </div> <br />
+                                    <div class="form-group" ng-class="{'has-error': clientForm.address.$error.required && !clientForm.address.$pristine}">
+                                        <label for="address" class="col-sm-3 control-label">Client's Address</label>
+                                        <div class="col-sm-7">
+                                            <textarea name="address" ng-model="client.address" id="address" cols="20" rows="3" class="form-control" required></textarea>
+                                            <span ng-show="!clientForm.address.$pristine &amp;&amp; clientForm.address.$error.required" class="text-danger">This field is required</span>
+                                            <!--<span ng-show="!clientForm.address.$pristine &amp;&amp; clientForm.address.$error.pattern" class="text-danger">This field must be a valid name</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        <!--</div>-->
+                    </div>
+
+                    <div class="row">
+                        <p style="padding: 20px;"></p>
+                    </div>
+
+                    <div class="row">
+
+                        <fieldset>
+                            <legend>Contact Person's Details</legend>
+                            <div class="col-xs-12 col-sm-10">
+                                <div class="form-group" ng-class="{'has-error': clientForm.title.$error.required && !clientForm.title.$pristine}">
+                                    <label for="title" class="col-sm-3 control-label">Title</label>
+                                    <div class="col-sm-4">
+                                        <select name="title" ng-model="client.title" id="title" class="form-control" required>
+                                            <option value="Mr">Mr.</option>
+                                            <option value="Mrs">Mrs.</option>
+                                        </select>
+                                        <span ng-show="!clientForm.title.$pristine &amp;&amp; clientForm.title.$error.required" class="text-danger">This field is required</span>
+                                    </div>
+                                </div><br />
+                                <div class="form-group" ng-class="{'has-error': clientForm.firstname.$error.required && !clientForm.firstname.$pristine}">
+                                    <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z]+$/" ng-model="client.firstname" class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" required/>
+                                        <span ng-show="!clientForm.firstname.$pristine &amp;&amp; clientForm.firstname.$error.required" class="text-danger">This field is required</span>
+                                        <span ng-show="!clientForm.firstname.$pristine &amp;&amp; clientForm.firstname.$error.pattern" class="text-danger">This field must be a valid name</span>
+                                    </div>
+                                </div><br />
+                                <div class="form-group" ng-class="{'has-error': clientForm.lastname.$error.required && !clientForm.lastname.$pristine}">
+                                    <label for="lastName" class="col-sm-3 control-label">Last Name</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z]+$/" class="form-control" ng-model="client.lastname" name="lastname" id="lastname" placeholder="Enter Last Name" required/>
+                                        <span ng-show="!clientForm.lastname.$pristine &amp;&amp; clientForm.lastname.$error.required" class="text-danger">This field is required</span>
+                                        <span ng-show="!clientForm.lastname.$pristine &amp;&amp; clientForm.lastname.$error.pattern" class="text-danger">This field must be a valid name</span>
+                                    </div>
+                                </div><br />
+                                <div class="form-group" ng-class="{'has-error': clientForm.mobile.$error.required && !clientForm.mobile.$pristine}">
+                                    <label for="mobile" class="col-sm-3 control-label">Phone Number</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" autocomplete="off" ng-pattern="/^[0-9]{11,15}$/" ng-model="client.mobile" class="form-control col-sm-5" name="mobile" id="mobile" placeholder="Enter Phone Number" required/>
+                                        <span ng-show="!clientForm.mobile.$pristine &amp;&amp; clientForm.mobile.$error.required" class="text-danger">This field is required</span>
+                                        <span ng-show="!clientForm.mobile.$pristine &amp;&amp; clientForm.mobile.$error.pattern" class="text-danger">This field must be a valid mobile number</span>
+                                    </div>
+                                </div><br />
+                                <div class="form-group" ng-class="{'has-error': clientForm.email.$error.required && !clientForm.email.$pristine}">
+                                    <label for="email" class="control-label col-sm-3">Email</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" autocomplete="off" ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i" ng-model="client.email" class="form-control col-sm-9" name="email" id="email" placeholder="Email" required/>
+                                        <span ng-show="!clientForm.email.$pristine &amp;&amp; clientForm.email.$error.required" class="text-danger">This field is required</span>
+                                        <span ng-show="!clientForm.email.$pristine &amp;&amp; clientForm.email.$error.pattern" class="text-danger">This field must be a valid email</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                    </div>
+
+                    <div class="row">
+                        <p style="padding: 20px;"></p>
+
+                        <div class="col-xs-12 col-sm-10">
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-3">
+                                    <button class="btn btn-primary" ng-if="!client.id" ng-disabled="clientForm.$invalid" type="submit">Register</button>
+                                    <button class="btn btn-primary" ng-if="client.id" ng-disabled="clientForm.$invalid" type="submit">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

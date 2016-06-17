@@ -1,0 +1,22 @@
+<h3>
+    Vehicle
+</h3>
+
+<div ui-view="" autoscroll="false" class="ng-zoomBackDown ng-fluid">
+    <!--<div ng-include="'app/template/profile.tpl.html'"></div>-->
+
+    <div class="panel panel-default" >
+        <div class="panel-body">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" ng-class="{active:isSelected(1)}"><a ng-click="select(1)" aria-controls="View">Manage</a></li>
+                <li role="presentation" ng-class="{active:isSelected(2)}"><a ng-click="select(2)" aria-controls="Create">Create</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(1)}" ng-if="isSelected(1)" ng-include="'app/views/vehicle-manage.tpl.html'"></div>
+                <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(2)}" ng-if="isSelected(2)" ng-include="'app/views/vehicle-create.tpl.html'"></div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+<h3>
+    Airtime
+</h3>
+
+<div ui-view="" autoscroll="false" class="ng-zoomBackDown ng-fluid">
+
+    <div class="row" ng-controller="AirtimeDefaultController">
+        <div class="col-xs-12 col-sm-12">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Search Airtime</div>
+                <div class="panel-body">
+                    <form name="dateSearch" class="form-inline" role="form" ng-submit="search()" novalidate>
+                        <div class="form-group mb-xl">
+                            <div >
+                                <div class="col-sm-4">
+                                    <p class="input-group">
+                                        <input type="text" ng-change="dateChanged()" name="min_date" required="" uib-datepicker-popup="{{format}}" ng-model="min_date" is-open="min_opened"  uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)" readonly
+                                               close-text="Close" class="form-control" />
+                              <span class="input-group-btn">
+                                 <button type="button" ng-click="min_open($event)" class="btn btn-default">
+                                     <em class="fa fa-calendar"></em>
+                                 </button>
+                              </span>
+                                    </p>
+                                </div>
+                                <div class="col-sm-1 text-center">-</div>
+                                <div class="col-sm-4">
+                                    <p class="input-group">
+                                        <input type="text" ng-change="dateChanged()" name="max_date" required="" uib-datepicker-popup="{{format}}" ng-model="max_date" is-open="max_opened" min-date="dateSearch.min_date.$modelValue" max-date="today" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)" readonly
+                                               close-text="Close" class="form-control" />
+                              <span class="input-group-btn">
+                                 <button type="button" ng-click="max_open($event)" class="btn btn-default">
+                                     <em class="fa fa-calendar"></em>
+                                 </button>
+                              </span>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <button type="submit" class="pull-left btn btn-info"><em class="fa fa-search"></em> Search</button>
+                                    <!--<small class="text-muted">Value: {{date}}</small>-->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-body helicopter" ng-class="{whirl:isDisabled}">
+
+                    <div>
+                        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered row-border hover">
+                            <thead>
+                            <tr>
+                                <th>Order No</th>
+                                <th>Agent Name</th>
+                                <th>Date</th>
+                                <!--<th>Product</th>-->
+                                <th>Approved</th>
+                                <th>Recommended</th>
+                                <th>Programme</th>
+                                <!--<th>Discount</th>-->
+                                <!--<th>Commission</th>-->
+                                <th>Grand Total</th>
+                                <!--<th>Status</th>-->
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="schedule in schedules">
+                                <td>
+                                    <a ui-sref="app.airtime.details({'id':schedule.id})" class="text-info" >{{schedule.order_no}}</a>
+                                </td>
+                                <td>{{schedule.user.lastname+', '+schedule.user.firstname}}</td>
+                                <td>{{schedule.created_at | date:'MMM d, y h:mm a'}}</td>
+                                <!--<td>-->
+                                <!--<ol>-->
+                                <!--<li ng-repeat="subscription in schedule.subscriptions" >{{subscription.product.name}}</li>-->
+                                <!--</ol>-->
+                                <!--</td>-->
+                                <!--<td>{{schedule.detailsCount}}</td>-->
+                                <td class="text-center" ><label class="label" ng-class="propClass(schedule.schedule_alert.approved)">{{schedule.schedule_alert.approved == 1? 'Yes':'No'}}</label></td>
+                                <td class="text-center" ><label class="label" ng-class="propClass(schedule.schedule_alert.recommend)">{{schedule.schedule_alert.recommend == 1? 'Yes':'No'}}</label></td>
+                                <td class="text-center" ><label class="label" ng-class="propClass(schedule.schedule_alert.programme)">{{schedule.schedule_alertairtim
+                                    .programme == 1? 'Yes':'No'}}</label></td>
+                                <!--<td><strong>N{{schedule.discountAmt | number:2}}</strong></td>-->
+                                <!--<td><strong>N{{schedule.commissionAmt | number:2}}</strong></td>-->
+                                <td><strong>N{{schedule.grandTotal | number:2}}</strong></td>
+                                <!--<td>not approved</td>-->
+                                <td>
+                                    <!--<a ui-sref="app.client.edit({id: client.id})" class="btn btn-sm btn-warning">-->
+                                    <!--<em class="fa fa-edit"></em>-->
+                                    <!--</a>-->
+                                    <!--<button type="button" ng-click="removeClient($index)" class="btn btn-sm btn-danger">-->
+                                    <!--<em class="fa fa-trash-o"></em>-->
+                                    <!--</button>-->
+                                    <!--<a permission permission-only="'programmes.airtime.approved'" ng-href="/pdf/{{schedule.id}}/airtime" target="_blank" class="btn btn-success btn-sm" ><em class="fa fa-file-pdf-o fa-sm"></em></a>-->
+                                    <!--<a permission permission-only="'recommend.approval'" ng-href="/pdf/{{schedule.id}}/airtime" target="_blank" class="btn btn-success btn-sm" ><em class="fa fa-file-pdf-o fa-sm"></em></a>-->
+                                    <!--<a permission permission-only="'validate.airtime'" ng-href="/pdf/{{schedule.id}}/airtime" target="_blank" class="btn btn-success btn-sm" ><em class="fa fa-file-pdf-o fa-sm"></em></a>-->
+                                    <!--<a permission permission-only="'approve.airtime'" ng-href="/pdf/{{schedule.id}}/airtime" target="_blank" class="btn btn-success btn-sm" ><em class="fa fa-file-pdf-o fa-sm"></em></a>-->
+                                    <a ng-href="/pdf/{{schedule.id}}/airtime" target="_blank" class="btn btn-success btn-sm" ><em class="fa fa-file-pdf-o fa-sm"></em></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

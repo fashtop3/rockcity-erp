@@ -1,0 +1,42 @@
+<div class="panel" ng-controller="TargetManageController">
+    <!--<div class="panel-heading">Datatables |-->
+        <!--<small>Chaning data</small>-->
+    <!--</div>-->
+    <div class="panel-body">
+        <div>
+            <div>
+                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+            </div>
+
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+                    <thead>
+                    <tr>
+                        <th>Target</th>
+                        <th>Start Date</th>
+                        <th>Duration(s)</th>
+                        <th>Marketer</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="target in targets">
+                        <td>{{ target.name }}</td>
+                        <td>{{ target.start_date }}</td>
+                        <td>{{ target.duration }}</td>
+                        <td>{{ target.user_id }}</td>
+                        <td>N{{ target.amount}}</td>
+                        <td>
+                            <button type="button" ng-click="modifyTarget($index)" class="btn btn-sm btn-warning">
+                                <em class="fa fa-edit"></em>
+                            </button>
+                            <button type="button" ng-click="removeTarget($index)" class="btn btn-sm btn-danger">
+                                <em class="fa fa-trash-o"></em>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>

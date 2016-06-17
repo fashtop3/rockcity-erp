@@ -1,0 +1,213 @@
+<br />
+<div id="product-slot" class="tab-pane" ng-class="{active:isSelected(2)}" role="tabpanel">
+    <!--Product details-->
+    <!-- START panel-->
+    <div id="productPanel" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':productPanel}" class="panel-heading">Product Details
+            <paneltool tool-collapse="tool-collapse" ng-init="productPanel=false"></paneltool>
+        </div>
+        <!-- .panel-wrapper is the element to be collapsed-->
+        <div uib-collapse="productPanel" class="panel-wrapper">
+            <div class="panel-body">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="form-group" ng-class="{'has-error': airtimeForm.product.$error.required && airtimeForm.product.$pristine}">
+                        <label for="product" class="control-label" >Product <abbr class="text-danger" title="required">*</abbr></label>
+                        <ui-select ng-model="product.selected" name="product" id="product" theme="bootstrap" ng-change="productChanged()" required>
+                            <ui-select-match placeholder="Select or search a Product...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="product in products | propsFilter: {name: $select.search, id: $select.search}">
+                                <div ng-bind-html="product.name | highlight: $select.search"></div>
+                                <small>Timeable: {{product.timeable == 1 ? 'Yes' : 'No'}} Prices Opt:
+                                    <span ng-bind-html="''+product.prices.length | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span ng-show="airtimeForm.product.$error.required && airtimeForm.product.$pristine" class="help-block">Please select a product. </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" style="width:150px;" value="{{form.price | number:2}}" name="price" id="price" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="product.selected.timeable" ng-class="{'has-error': airtimeForm.price.$error.required && !airtimeForm.price.$pristine}">
+                        <div class="row col-sm-6">
+                            <label for="duration" class="control-label">Airtime Duration <abbr class="text-danger" title="required">*</abbr></label>
+                            <select name="price" id="duration" class="form-control" ng-model="price.index" required
+                                    ng-options="product.selected.prices.indexOf(price) as price.duration for price in product.selected.prices" ng-change="durationChange()" >
+                            </select>
+                        </div>
+                        <span ng-show="airtimeForm.duration.$error.required && !airtimeForm.duration.$pristine" class="help-block">Please select a duration. </span>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="panel-footer">Panel Footer</div>-->
+        </div>
+    </div>
+    <!-- END panel-->
+
+    <!--Attachement-->
+    <!-- START panel-->
+    <div id="attachPanel" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':attachPanel}" class="panel-heading">Attachment
+            <paneltool tool-collapse="tool-collapse" ng-init="attachPanel=true"></paneltool>
+        </div>
+        <!-- .panel-wrapper is the element to be collapsed-->
+        <div uib-collapse="attachPanel" class="panel-wrapper">
+            <div class="panel-body">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label for="attachment">Upload Attachment</label>
+                        <input type="file" id="attachment" name="attachment">
+                        <p class="help-block">Only pdf and mp3 formats are allowed.</p>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="panel-footer">Panel Footer</div>-->
+        </div>
+    </div>
+    <!-- END panel-->
+
+    <!--Bulk Option-->
+    <!-- START panel-->
+    <div id="bulkPanel" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':bulkPanel}" class="panel-heading">Bulk Option
+            <paneltool tool-collapse="tool-collapse" ng-init="bulkPanel=true" ></paneltool>
+        </div>
+        <!-- .panel-wrapper is the element to be collapsed-->
+        <div uib-collapse="bulkPanel" class="panel-wrapper">
+            <div class="panel-body">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="form.bulk" name="bulk" id="bulk" /> Bulk
+                            </label>
+                        </div>
+                    </div>
+                    <!-- if bulk is clicked -->
+                    <div ng-show="form.bulk">
+                        <div class="form-group" ng-class="{'has-error':airtimeForm.broadcast.$dirty && airtimeForm.broadcast.$error.pattern}">
+                            <div class="col-sm-7">
+                                <label for="noBroadcast" class="control-label">No. of Broadcasts <abbr class="text-danger" title="required">*</abbr></label>
+                                <input type="text" ng-disabled="form.price == 0" ng-pattern="/^[0-9]+$/" ui-validate="'$value > 0'" maxlength="3" style="width:150px;" class="form-control" ng-model="form.broadcast" name="broadcast" id="noBroadcast" required />
+                            </div>
+                            <span ng-show="airtimeForm.broadcast.$dirty && airtimeForm.broadcast.$error.pattern" class="help-block">Input not valid. </span>
+                        </div>
+                        <!--<div>-->
+                        <!--</div>-->
+
+                        <!-- Datetime example -->
+                        <div class="form-group">
+                            <label class="control-label"><i class="fa fa-calendar"></i> Start <abbr class="text-danger" title="required">*</abbr></label><br>
+                            <div class="col-sm-6">
+                                <input type="text" size="10" ng-disabled="form.price == 0" class="form-control" ng-change="bulkValidate('date')" ng-model="form.bulk_start_date" data-placement="bottom-right" data-min-date="today" data-autoclose="1" placeholder="Date" bs-datepicker>
+                            </div>
+                            <div class="col-sm-6">
+                                <!--<input type="text" size="8" ng-disabled="form.price == 0 || !form.bulkStartDate" class="form-control"  ng-model="form.bulkStartTime" data-placement="auto" data-time-format="HH:mm" placeholder="Time" bs-timepicker data-length="1" data-minute-step="1" data-arrow-behavior="picker">-->
+                                <input type="text" size="8" ng-disabled="form.price == 0 || !form.bulk_start_date" class="form-control" ng-change="bulkValidate('time')" ng-model="form.bulk_start_date" data-placement="auto" data-time-format="hh:mm:ss a" data-autoclose="1" data-minute-step="1" placeholder="Time" bs-timepicker>
+                            </div>
+                            <!--<span ng-show="airtimeForm.broadcast.$dirty && airtimeForm.broadcast.$error.pattern" class="help-block">Input not valid. </span>-->
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label"><i class="fa fa-calendar"></i> End <abbr class="text-danger" title="required">*</abbr></label><br>
+                            <div class="col-sm-6">
+                                <input type="text" size="10" ng-disabled="form.price == 0" class="form-control" ng-change="bulkValidate('date')" ng-model="form.bulk_end_date" data-placement="auto bottom-right"  data-min-date="{{form.bulk_start_date}}" data-autoclose="1" placeholder="Date" bs-datepicker>
+                            </div>
+                            <div class="col-sm-6">
+                                <!--<input type="text" size="8" ng-disabled="form.price == 0 || !form.bulkEndDate" class="form-control" ng-change="bulkDateTimeChanged()" ng-model="form.bulkEndTime" data-placement="auto bottom-left" data-time-format="HH:mm" placeholder="Time" bs-timepicker data-length="1" data-minute-step="1" data-arrow-behavior="picker">-->
+                                <input type="text" size="8" ng-disabled="form.price == 0 || !form.bulk_end_date" class="form-control" ng-change="bulkValidate('time')" ng-model="form.bulk_end_date" data-placement="auto" data-time-format="hh:mm:ss a" data-autoclose="1" data-minute-step="1" placeholder="Time" bs-timepicker>
+                            </div>
+                            <!--<span ng-show="airtimeForm.broadcast.$dirty && airtimeForm.broadcast.$error.pattern" class="help-block">Input not valid. </span>-->
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer" ng-show="form.bulk">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <button ng-click="addBulk()" ng-disabled="form.price == 0 || !bulkValidate()" class="btn btn-info btn-sm">Add Bulk</button>
+                    </div>
+                    <div class="col-sm-7" ng-if="!form.price" ng-class="{'has-error':form.price == 0}">
+                        <span class="help-block"><i class="fa fa-info-circle"></i> Please select airtime duration. </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END panel-->
+    <!--Schedule Details-->
+    <!-- START panel-->
+    <div id="schedulePanel" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':schedulePanel}" class="panel-heading">Schedule Details
+            <paneltool tool-collapse="tool-collapse" ng-init="schedulePanel=true"></paneltool>
+        </div>
+        <!-- .panel-wrapper is the element to be collapsed-->
+        <div uib-collapse="schedulePanel" class="panel-wrapper">
+            <div class="panel-body">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="form.fixedSpot" name="spot" id="spot"> Fixed Spot?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Datetime example -->
+                    <div class="form-group">
+                        <label class="control-label"><i class="fa fa-calendar"></i> Start</label><br>
+                        <div class="col-sm-6">
+                            <input type="text" size="10" ng-disabled="form.price == 0" class="form-control" ng-model="form.trans_date" data-placement="auto" data-min-date="today" data-autoclose="1" placeholder="Date" bs-datepicker>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" size="8" ng-disabled="form.price == 0" class="form-control" ng-model="form.trans_date" data-placement="auto" data-time-format="hh:mm:ss a" data-autoclose="1" data-minute-step="1" placeholder="Time" bs-timepicker>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error':airtimeForm.durations.$dirty && airtimeForm.durations.$error.pattern}">
+                        <div class="col-sm-7">
+                            <label for="duration" class="control-label">Duration</label>
+                            <input type="text" name="durations" class="form-control"  required ng-model="form.duration" ng-pattern="/^([0-9]+)(H|M|S|hours|mins|secs)$/i" ng-disabled="form.price == 0" name="transmitDuration" id="transmitDuration"/>
+                            <p class="help-block">E.g, 5secs, 1min, 2hours.</p>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error':airtimeForm.period.$error.required && airtimeForm.period.$invalid}">
+                        <div class="col-sm-6 col-sm-push-6">
+                            <label for="airtimePeriod" class="control-label">Airtime Period <abbr class="text-danger" title="required">*</abbr></label>
+                            <select name="period" id="airtimePeriod" ng-model="form.period" class="form-control" ng-disabled="form.price == 0" ng-change="onPeriodChange()" required>
+                                <option value="{{period.value}}" ng-repeat="period in periods">{{period.label}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 col-sm-pull-6" ng-show="form.fixedSpot">
+                            <label for="airtimePeriod" class="control-label">Surcharge (%)</label>
+                            <select ng-model="form.subCharge" name="subCharge" id="subCharge" class="form-control" ng-disabled="form.price == 0">
+                                <option value="0" selected>0</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <button ng-click="addSlot()" ng-disabled="!form.price || !slotValidate()" class="btn btn-info btn-sm">Add Slot</button>
+                    </div>
+                    <div class="col-sm-7" ng-if="!form.price" ng-class="{'has-error':form.price == 0}">
+                        <span class="help-block"><i class="fa fa-info-circle"></i> Please select airtime duration. </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END panel-->
+
+</div>

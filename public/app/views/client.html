@@ -1,0 +1,47 @@
+<h3>
+    Clients
+</h3>
+
+<div class="row">
+    <!--<div class="col-xs-12 col-sm-12">-->
+    <div class="panel panel-default" ng-controller="ClientController">
+        <div class="panel-body">
+            <div>
+                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+            </div>
+
+            <div class="table-responsive">
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+                    <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Contact Person</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="client in clients">
+                        <td>{{ client.name }}</td>
+                        <td>{{client.lastname+' '+client.firstname}}</td>
+                        <td>{{ client.address }}</td>
+                        <td>{{ client.mobile }}</td>
+                        <td>{{ client.email }}</td>
+                        <td>
+                            <a ui-sref="app.client.edit({id: client.id})" class="btn btn-sm btn-warning">
+                                <em class="fa fa-edit"></em>
+                            </a>
+                            <button type="button" ng-click="removeClient($index)" class="btn btn-sm btn-danger">
+                                <em class="fa fa-trash-o"></em>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+</div>

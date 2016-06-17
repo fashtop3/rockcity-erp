@@ -1,0 +1,62 @@
+<div class="panel">
+
+    <div class="panel-body" >
+        <form class="form-horizontal form-validate" role="form" name="vForm" ng-submit="submitVehicle(vForm)" novalidate>
+
+            <div>
+                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+            </div>
+
+            <fieldset>
+                <div class="form-group" ng-class="{'has-error': vForm.vehicleName.$error.required && !vForm.vehicleName.$pristine}">
+                    <label for="vehicleName" class="control-label col-sm-4">Vehicle Name</label>
+                    <div class="col-sm-7">
+                        <input class=" form-control" ng-model="vehicleForm.name" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-]+$/" type="text" name="vehicleName" id="vehicleName" required />
+                        <span ng-show="!vForm.vehicleName.$pristine &amp;&amp; vForm.vehicleName.$error.required" class="text-danger">This field is required</span>
+                        <span ng-show="!vForm.vehicleName.$pristine &amp;&amp; vForm.vehicleName.$error.pattern" class="text-danger">This field must be a valid name</span>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group" ng-class="{'has-error':vForm.reg.$dirty &amp;&amp; vForm.reg.$error.required}">
+                    <label for="reg" class="control-label col-sm-4">Registration. No.</label>
+                    <div class="col-sm-7">
+                        <input class=" form-control" ng-pattern="/^[a-zA-Z0-9\-]+$/" autocomplete="off" ng-model="vehicleForm.reg" type="text" name="reg" id="reg" required />
+                        <span ng-show="!vForm.reg.$pristine &amp;&amp; vForm.reg.$error.required" class="text-danger">This field is required</span>
+                        <span ng-show="!vForm.reg.$pristine &amp;&amp; vForm.reg.$error.pattern" class="text-danger">This field must be a valid Registration No.</span>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group" ng-class="{'has-error':vForm.eng.$dirty &amp;&amp; vForm.eng.$error.required}">
+                    <label for="engineNo" class="control-label col-sm-4">Engine No.</label>
+                    <div class="col-sm-7">
+                        <input class=" form-control" ng-pattern="/^[a-zA-Z0-9]+$/" autocomplete="off" ng-model="vehicleForm.eng" type="text" name="eng" id="engineNo" required/>
+                        <span ng-show="!vForm.eng.$pristine &amp;&amp; vForm.eng.$error.required" class="text-danger">This field is required</span>
+                        <span ng-show="!vForm.eng.$pristine &amp;&amp; vForm.eng.$error.pattern" class="text-danger">This field must be a valid Engine No.</span>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group" ng-class="{'has-error':vForm.colour.$dirty &amp;&amp; vForm.colour.$error.required}">
+                    <label for="colour" class="control-label col-sm-4">Vehicle colour.</label>
+                    <div class="col-sm-7">
+                        <input class=" form-control" ng-pattern="/^[a-zA-Z \-]+$/" autocomplete="off" ng-model="vehicleForm.colour" type="text" name="colour" id="colour" required/>
+                        <span ng-show="!vForm.colour.$pristine &amp;&amp; vForm.colour.$error.required" class="text-danger">This field is required</span>
+                        <span ng-show="!vForm.colour.$pristine &amp;&amp; vForm.colour.$error.pattern" class="text-danger">This field must be a valid Colour</span>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <button type="submit" name="button" ng-disabled="vForm.$invalid" class="btn btn-info col-sm-offset-4"><em class="fa fa-save fa-lg"></em> Save</button>
+                <!--<button ng-disabled="vehicles.length == 1" ng-click="closeAll(vehicles)" class="btn btn-danger btn-sm"><em class="icon-close"> Close All</em></button>-->
+            </div>
+
+        </form>
+    </div>
+
+</div>

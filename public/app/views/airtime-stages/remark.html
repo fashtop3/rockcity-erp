@@ -1,0 +1,46 @@
+<br />
+<div id="remarks" class="tab-pane" ng-class="{active:isSelected(3)}">
+    <!-- START panel-->
+    <div id="otherPanel" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':otherPanel}" class="panel-heading">Other Detail
+            <paneltool tool-collapse="tool-collapse" ng-init="otherPanel=false"></paneltool>
+        </div>
+        <!-- .panel-wrapper is the element to be collapsed-->
+        <div uib-collapse="otherPanel" class="panel-wrapper">
+            <div class="panel-body">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label for="remark" class="control-label">Remarks</label>
+                        <textarea class="form-control" name="remark" id="remark" cols="30" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="discount" class="col-sm-3 control-label">Discount(%)</label>
+                        <div class="col-sm-6">
+                            <select name="discount" ng-model="form.discount" ng-change="doDiscountCalc()" id="discount" class="form-control">
+                                <option ng-repeat="i in [].constructor(31) track by $index" value="{{$index}}">{{$index}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="commission" class="col-sm-3 control-label">Commision(%)</label>
+                        <div class="col-sm-6">
+                            <select name="commission" ng-model="form.commission" id="commission" ng-change="doDiscountCalc()" class="form-control">
+                                <option ng-repeat="i in [].constructor(11) track by $index" value="{{$index}}">{{$index}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="checkbox">
+                    <label for="terms">
+                        <input type="checkbox" ng-model="form.agree" name="terms" id="terms" />
+                        I agree to the <a ui-sref="privacy" target="_blank">terms and conditions</a> of Boot Communications Ltd
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END panel-->
+
+</div>

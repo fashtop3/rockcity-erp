@@ -1,0 +1,105 @@
+<!-- START panel-->
+<div id="panelCartRefresh3" class="panel panel-default" role="complementary" data-offset-top="-70"  bs-affix>
+    <div class="panel-heading"><i class="fa fa-shopping-cart"></i> cart
+        <paneltool tool-refresh="line back-and-forth grow"></paneltool>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="list-group" ng-show="wizard.active(2)" >
+                    <!-- START list group item-->
+                    <div class="list-group-item">
+                        <div class="media-box">
+                            <div class="pull-left">
+                     <span class="fa-stack">
+                        <em class="fa fa-circle fa-stack-2x text-purple"></em>
+                        <em class="fa fa-money fa-stack-1x fa-inverse text-white"></em>
+                     </span>
+                            </div>
+                            <div class="media-box-body clearfix">
+                                <!--<small class="text-muted pull-right ml">(5)</small>-->
+                                <div class="media-box-heading"><span class="text-purple m0">Product Price</span>
+                                </div>
+                                <p class="m0">
+                                    <small>N{{productPrice() | number:2}}
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END list group item-->
+                    <!-- START list group item-->
+                    <div class="list-group-item">
+                        <div class="media-box">
+                            <div class="pull-left">
+                     <span class="fa-stack">
+                        <em class="fa fa-circle fa-stack-2x text-info"></em>
+                        <em class="fa fa-money fa-stack-1x fa-inverse text-white"></em>
+                     </span>
+                            </div>
+                            <div class="media-box-body clearfix">
+                                <small class="text-muted pull-right ml">({{cart.length}} Product(s)</small>
+                                <div class="media-box-heading"><span class="text-info m0">Cart Price</span>
+                                </div>
+                                <p class="m0">
+                                    <small>N{{ cartTotals | number:2}}
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other details-->
+                <div ng-show="wizard.active(3)">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span class="label label-purple pull-right">N{{cartTotals | number:2}}</span>
+                            Initial Amount
+                        </li>
+                        <li class="list-group-item">
+                            <span class="label label-danger pull-right">N{{vat | number:2}}</span>
+                            Vat(5%)
+                        </li>
+                        <li class="list-group-item">
+                            <span class="label label-warning pull-right">N{{dsctAmnt | number:2}}</span>
+                            Discount Amount ({{form.discount}}%)
+                        </li>
+                        <li class="list-group-item">
+                            <span class="label label-warning pull-right">N{{commAmnt | number:2}}</span>
+                            Commission Amount({{form.commission}}%)
+                        </li>
+                        <li class="list-group-item">
+                            <span class="label label-success pull-right">N{{totalWOComm | number:2}}</span>
+                            Total Without Commission
+                        </li>
+                        <li class="list-group-item">
+                            <span class="label label-inverse pull-right">N{{totalWComm | number:2}}</span>
+                            Total With Commission
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- START panel footer-->
+    <div class="panel-footer clearfix" ng-show="wizard.active(2)">
+        <a href="" ng-click="emptyCart()" ng-show="cart.length" class="pull-right clearfix">
+            <small><i class="fa fa-trash"></i> Empty</small>
+        </a>
+        <a href="" ng-click="openCart('lg')" ng-show="cart.length" class="pull-left">
+            <small><i class="fa fa-opencart"></i> View</small>
+        </a>
+    </div>
+    <!-- END panel-footer-->
+    <!--<div class="panel-footer">-->
+        <!--<div class="row">-->
+            <!--<div><button type="button" class="btn btn-pill-right btn-success col-sm-8" style="text-align: left">Cart: N{{ cartTotals | number:2}}</button></div>-->
+            <!--<div><button type="button" disabled class="btn btn-pill-right btn-inverse col-sm-8" >Product: N{{productPrice() | number:2}} </button></div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+<!-- END panel-->
+
