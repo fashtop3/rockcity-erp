@@ -10923,7 +10923,8 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 },
                 cache: false,
                 templateUrl: helper.basepath('people-adduser.html'),
-                controller: 'PeopleUpdateController'
+                controller: 'PeopleUpdateController',
+                resolve: helper.resolveFor('whirl')
             })
             .state('app.roles', {
                 url: '/roles',
@@ -10975,6 +10976,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 title: 'Register Client',
                 views: {
                     '@app': {
+                        resolve: helper.resolveFor('whirl'),
                         templateUrl: helper.basepath('client-create.html')
                     }
                 }
@@ -13509,7 +13511,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
     'use strict';
 
     angular
-        .module('app.order', [])
+        .module('app.order', ['ngFileUpload'])
         .constant("baseURL", "/api/")
 })();
 
@@ -13738,8 +13740,10 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             $http
                 .get('/api/permission/controls')
                 .then(function (permissions) {
+                    //console.log(permissions);
                     // Use RoleStore and PermissionStore to define permissions and roles
                     angular.forEach(permissions.data.permissions, function ($permission) {
+                        //console.log($permission.slug);
                         PermissionStore.definePermission($permission.slug, function () {
                             return userFactory.userCan($permission.slug);
                         })
@@ -13845,6 +13849,66 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 (function() {
     angular
         .module('app.order')
+        .controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
+            $scope.uploadFiles = function (files, errFiles) {
+                $scope.files = files;
+                $scope.errFiles = errFiles;
+                angular.forEach(files, function (file) {
+                    file.upload = Upload.upload({
+                        url: '/api/vehicle',
+                        data: {file: file}
+                    });
+
+                    file.upload.then(function (response) {
+                        $timeout(function () {
+                            file.result = response.data;
+                        });
+                    }, function (response) {
+                        if (response.status > 0)
+                            $scope.errorMsg = response.status + ': ' + response.data;
+                    }, function (evt) {
+                        console.log(evt.data);
+                        file.progress = Math.min(100, parseInt(100.0 *
+                            evt.loaded / evt.total));
+                    });
+                });
+            }
+        }]);
+
+//        .controller('MyCtrl', ['$scope', 'Upload', function ($scope, Upload) {
+//            // upload later on reportForm submit or something similar
+//            $scope.submitUpload = function() {
+//                if ($scope.reportForm.file.$valid && $scope.file) {
+//                    $scope.upload($scope.file);
+//                }
+//            };
+//
+//            // upload on file select or drop
+//            $scope.upload = function (file) {
+//                Upload.upload({
+//                    url: 'upload/url',
+//                    data: {file: file, 'username': $scope.username}
+//                }).then(function (resp) {
+//                    console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+//                }, function (resp) {
+//                    console.log('Error status: ' + resp.status);
+//                }, function (evt) {
+//                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+//                    console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+//                });
+//            };
+//            // for multiple files:
+////            $scope.uploadFiles = function (files) {
+////                if (files && files.length) {
+////                    for (var i = 0; i < files.length; i++) {
+////                        Upload.upload({..., data: {file: files[i]}, ...})...;
+////                }
+////                // or send them all together for HTML5 browsers:
+////                Upload.upload({..., data: {file: files}, ...})...;
+////        }
+////}
+//}]);
+
 
 })();
 /**
@@ -15262,6 +15326,92 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }]);
 })();
 /**
+ * Created by dfash on 6/19/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ClientFormController', [
+            '$scope', 'clientFactory', 'toaster', '$stateParams', '$rootScope', '$state', '$timeout',
+            function($scope, clientFactory, toaster, $stateParams, $rootScope, $state, $timeout) {
+
+                var vm = $scope;
+                vm.disableView = false;
+
+                vm.client = {name:'', address:'', title:'Mr', firstname:'', lastname:'', mobile:'', email:''};
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                if($state.is('app.client.edit')) {
+
+                    vm.disableView = false;
+
+                    vm.client = clientFactory.getClients().get({id: parseInt($stateParams.id, 10)})
+                        .$promise.then(
+                        function(response) {
+                            vm.client = response;
+                        },
+                        function (response) {
+
+                            vm.disableView = true;
+
+                            if(response.status == 403){
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                            else if(response.status == 404){
+                                vm.alerts[0] = {'type':'danger', 'msg': "Client not found!."};
+                            }
+                        }
+                    );
+                }
+
+                vm.clientSubmit = function() {
+
+                    toaster.pop('wait', 'Client', 'Processing your request');
+
+                    if(vm.client.id) {
+                        clientFactory.update().save({'id':vm.client.id}, vm.client,
+                            function() {
+                                toaster.pop('success', 'Client', 'Data updated.');
+                                $timeout(function(){
+                                    $state.go('app.client');
+                                }, 500);
+                            },
+                            function (response) {
+                                if(response.status == 403) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', 'Data update Failed.');
+                                }
+                            }
+                        );
+                    }
+                    else
+                    {
+                        clientFactory.client().save(vm.client,
+                            function(){
+                                toaster.pop('success', 'Client Registration', 'Registration Successful.');
+                                $timeout(function(){
+                                    $state.go('app.client');
+                                }, 1000);
+                            },
+                            function() {
+                                toaster.pop('error', 'Client Registration', 'Registration Failed.');
+                            }
+                        );
+                    }
+                };
+
+            }]);
+})();
+
+
+/**
  * Created by dfash on 4/29/16.
  */
 
@@ -15270,13 +15420,18 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
     angular
         .module('app.order')
-        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder) {
+        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
 
                 var vm = $scope;
 
                 vm.showClient = false;
                 vm.clientMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
 
                 if(angular.isDefined($stateParams.id)) {
 
@@ -15290,7 +15445,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                             vm.clientMessage = "Error: " + response.status + " " + response.statusText;
                         }
                     )
-                };
+                }
 
 
 
@@ -15329,18 +15484,34 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
                     function removeClient($index)
                     {
-                        //TODO: confirm delete
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this client?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    clientFactory.client().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
+                                        function () {
 
-                        clientFactory.client().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
-                            function () {
-
-                                clients.clients.splice($index, 1);
-                                vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
-                            },
-                            function () {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                            }
-                        );
+                                            vm.clients.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
+                                        },
+                                        function () {
+                                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Client data is safe :)', 'error');
+                                }
+                            });
+                        })();
 
                     }
 
@@ -15348,73 +15519,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
             }]);
 })();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('ClientFormController', [
-            '$scope', 'clientFactory', 'toaster', '$stateParams', '$rootScope', '$state', '$timeout',
-            function($scope, clientFactory, toaster, $stateParams, $rootScope, $state, $timeout) {
-
-                var vm = $scope;
-                
-                vm.client = {name:'', address:'', title:'Mr', firstname:'', lastname:'', mobile:'', email:''};
-
-                //this.toaster = {
-                //        type:  'success',
-                //        title: 'Title',
-                //        text:  'Message'
-                //    };$stateParams.id
-
-                if($state.$current.name == 'app.client.edit') {
-
-                    vm.client = clientFactory.getClients().get({id: parseInt($stateParams.id, 10)})
-                        .$promise.then(
-                        function(response) {
-                            vm.client = response;
-                        }
-                    );
-                }
-
-                vm.clientSubmit = function() {
-
-                    toaster.pop('wait', 'Client', 'Processing your request');
-
-                    if(vm.client.id) {
-                        clientFactory.update().save({'id':vm.client.id}, vm.client,
-                            function() {
-                                toaster.pop('success', 'Client', 'Data updated.');
-                                $timeout(function(){
-                                    $state.go('app.client');
-                                }, 500);
-                            },
-                            function () {
-                                toaster.pop('error', 'Client', 'Data update Failed.');
-                            }
-                        );
-                    }
-                    else
-                    {
-                        clientFactory.client().save(vm.client,
-                            function(){
-                                toaster.pop('success', 'Client Registration', 'Registration Successful.');
-                                $timeout(function(){
-                                    $state.go('app.client');
-                                }, 1000);
-                            },
-                            function() {
-                                toaster.pop('error', 'Client Registration', 'Registration Failed.');
-                            }
-                        );
-                    }
-                };
-
-            }]);
-})();
-
-
 /**
  * Created by dfash on 4/29/16.
  */
@@ -15439,7 +15543,8 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             };
 
             this.client = function() {
-                return $resource(baseURL + 'client/:id', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}, 'delete':{method:'DELETE'}});
+                return $resource(baseURL + 'client/:id', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
             };
 
         }]);
@@ -15610,60 +15715,73 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         .controller('PeopleUpdateController', ['$scope', 'toaster', 'userFactory', '$stateParams',
             function($scope, toaster, userFactory, $stateParams){
 
-                $scope.account = {'firstname':'','lastname':'', 'email':'', 'password':'', 'password_confirm':'',
+                var vm = $scope;
+
+                vm.disableView = false;
+
+                vm.account = {'firstname':'','lastname':'', 'email':'', 'password':'', 'password_confirm':'',
                     'status':0, 'roles':{}, 'permissions':{} };
 
-                $scope.alerts = [];
-                $scope.closeAlert = function(index) {
-                    $scope.alerts.splice(index, 1);
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
                 };
 
                 //returns registered users
-                $scope.account = userFactory.getUsers()
+                vm.account = userFactory.getUsers()
                     .get({id: parseInt($stateParams.id)}).$promise.then(
                     function (response) {
-                        $scope.account = response;
+                        vm.disableView = false;
+                        vm.account = response;
                         check();
                     },function (response) {
-                        $scope.showPeople = false;
+
+                        vm.disableView = true;
+
+                        if(response.status == 403){
+                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                        }
+                        else if(response.status == 404){
+                            vm.alerts[0] = {'type':'danger', 'msg': "User not found!."};
+                        }
                     }
                 );
 
                 function check()
                 {
-                    var roles = angular.copy($scope.account.roles);
-                    var permissions = angular.copy($scope.account.permissions);
+                    var roles = angular.copy(vm.account.roles);
+                    var permissions = angular.copy(vm.account.permissions);
 
-                    $scope.account.roles = {};
-                    $scope.account.permissions = {};
+                    vm.account.roles = {};
+                    vm.account.permissions = {};
 
                     angular.forEach(roles, function (value, key) {
-                        $scope.account.roles[value.id] = true;
+                        vm.account.roles[value.id] = true;
                     });
 
                     angular.forEach(permissions, function (value, key) {
-                        $scope.account.permissions[value.id] = true;
+                        vm.account.permissions[value.id] = true;
                     });
                 }
 
-                $scope.submitUserForm = function() {
+                vm.submitUserForm = function() {
                     toaster.pop('wait', 'User', 'Processing your request');
 
                     validateRolesPerm();
 
-                    userFactory.getUsers().update({'id': parseInt($stateParams.id)}, $scope.account).$promise.then(
-                        function(response) {
-                            //$scope.account = {'status':0, 'roles':{}, 'permissions':{} };
-                            $scope.alerts[0] = {'type':'success', 'msg':'Account successfully updated'};
+                    userFactory.getUsers().update({'id': parseInt($stateParams.id)}, vm.account).$promise.then(
+                        function() {
+                            //vm.account = {'status':0, 'roles':{}, 'permissions':{} };
+                            vm.alerts[0] = {'type':'success', 'msg':'Account successfully updated'};
                             toaster.pop('success', 'User', 'Account updated successfully');
                         },
                         function(response) {
                             if(response.status == 403) {
-                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
                                 toaster.pop('error', response.statusText, response.data);
                             }
                             else {
-                                $scope.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
+                                vm.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
                                 toaster.pop('error', response.statusText, response.data);
                             }
 
@@ -15673,23 +15791,23 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
                 function validateRolesPerm() {
 
-                    var roles = angular.copy($scope.account.roles);
-                    var permissions = angular.copy($scope.account.permissions);
+                    var roles = angular.copy(vm.account.roles);
+                    var permissions = angular.copy(vm.account.permissions);
 
-                    $scope.account.roles = {};
-                    $scope.account.permissions = {};
+                    vm.account.roles = {};
+                    vm.account.permissions = {};
 
                     angular.forEach(roles, function (value, key) {
                         if (value == true) {
                             this[key] = true;
                         }
-                    }, $scope.account.roles);
+                    }, vm.account.roles);
 
                     angular.forEach(permissions, function (value, key) {
                         if (value == true) {
                             this[key] = true;
                         }
-                    }, $scope.account.permissions);
+                    }, vm.account.permissions);
                 }
 
             }]);
@@ -15751,8 +15869,10 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                         vm.people = response;
                         vm.showPeople = true;
                     },function (response) {
-                        vm.showPeople = false;
-                        vm.peopleMessage = "Error: " + response.status + " " + response.statusText;
+                        if(response.status == 403) {
+                            vm.showPeople = false;
+                            vm.peopleMessage = "Error: " + response.status + " " + response.statusText;
+                        }
                     }
                 );
 

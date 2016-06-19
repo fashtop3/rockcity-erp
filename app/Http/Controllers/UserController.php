@@ -222,11 +222,7 @@ class UserController extends Controller
 
         //TOdo: or if user is admin to validate using roles and perimissions
 
-        $user = User::find($id);
-
-        if(!$user) {
-            return response('User not found', 403);
-        }
+        $user = User::findOrFail($id);
 
         //get user roles and permissions
         $user->roles->toArray();

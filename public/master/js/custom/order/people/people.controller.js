@@ -54,8 +54,10 @@
                         vm.people = response;
                         vm.showPeople = true;
                     },function (response) {
-                        vm.showPeople = false;
-                        vm.peopleMessage = "Error: " + response.status + " " + response.statusText;
+                        if(response.status == 403) {
+                            vm.showPeople = false;
+                            vm.peopleMessage = "Error: " + response.status + " " + response.statusText;
+                        }
                     }
                 );
 

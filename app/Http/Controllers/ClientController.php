@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
+    private $user;
 
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->user = Auth::user();
     }
 
     /**
@@ -58,17 +61,17 @@ class ClientController extends Controller
         //TODO: check if email exists
 
         if(Client::mailExits($request->get('email'))) {
-            return response('Client email already exists!', 422);
+            return response('Client email already exists!', 403);
         }
 
-        $input['user_id'] = Auth::user()->id;
+        $input['user_id'] = $this->user->id;
 
         if(!Client::create($input))
         {
             return response('Error saving client\'s data', 403);
         }
 
-        return response('Client\'s data saved successfuly', 201);
+        return response('Client\'s data saved successfuly');
     }
 
     /**
@@ -99,7 +102,7 @@ class ClientController extends Controller
         $client = Client::findOrFail($id);
 
         if($client) {
-            return response($client, 201);
+            return response($client);
         }
 
         return response('Error client doesn\'t exists' , 403);
@@ -132,12 +135,12 @@ class ClientController extends Controller
         $client = Client::find($id);
 
         //check if client is created by current user
-        if($client->user_id != Auth::user()->id) {
-            return response('You are not authorized to update client', 401);
+        if($client->user_id != $this->user->id) {
+            return response('You are not authorized to update client', 403);
         }
 
         if(!$client) {
-            return response('No record found', 422);
+            return response('No record found', 403);
         }
 
         $client->update([
@@ -150,7 +153,7 @@ class ClientController extends Controller
             'email'     => $request->get('email'),
         ]);
 
-        return response('Client data updated successfully', 201);
+        return response('Client data updated successfully');
     }
 
     /**
@@ -163,21 +166,25 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
 
-        dd($client);
 
         if(!$client) {
-            return response('Client doesn\'t exists', 400);
+            return response('Client doesn\'t exists', 403);
         }
 
-        //check if client is created by current user
-        if($client->user_id != Auth::user()->id) {
-            return response('You are not authorized to delete client', 401);
-        }
+        //if account is not created by the current user
+        if($client->user_id != $this->user->id) {
 
+            //if the current user is not an admin or ....
+            if(!$this->user->is('admin|executive.director|head.marketing')) {
+                return response('You are not authorized to delete client', 403);
+            }
+        }
 
 
         if($client->delete()) {
-            return response('Client deleted successfully', 200);
+            return response('Client deleted successfully');
         }
+
+        return response('Failed to delete client!. contact the administrator', 403);
     }
 }

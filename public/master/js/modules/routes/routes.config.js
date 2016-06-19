@@ -200,7 +200,8 @@
                 },
                 cache: false,
                 templateUrl: helper.basepath('people-adduser.html'),
-                controller: 'PeopleUpdateController'
+                controller: 'PeopleUpdateController',
+                resolve: helper.resolveFor('whirl')
             })
             .state('app.roles', {
                 url: '/roles',
@@ -252,6 +253,7 @@
                 title: 'Register Client',
                 views: {
                     '@app': {
+                        resolve: helper.resolveFor('whirl'),
                         templateUrl: helper.basepath('client-create.html')
                     }
                 }

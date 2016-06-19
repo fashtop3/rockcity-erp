@@ -168,6 +168,7 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::resource('/api/client', 'ClientController');
 
     Route::resource('/api/role', 'RoleController');
+    Route::resource('/api/permission/controls', 'PermissionController@controls');
     Route::resource('/api/permission', 'PermissionController');
 
     Route::resource('/api/marketer', 'MarketerController');

@@ -22,7 +22,8 @@
             };
 
             this.client = function() {
-                return $resource(baseURL + 'client/:id', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}, 'delete':{method:'DELETE'}});
+                return $resource(baseURL + 'client/:id', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
             };
 
         }]);

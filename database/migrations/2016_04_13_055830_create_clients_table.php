@@ -21,7 +21,9 @@ class CreateClientsTable extends Migration
                 ->onDelete('cascade');
 
             $table->string('name')->unique();
-            $table->string('address');
+            $table->string('street_no');
+            $table->string('street_name');
+            $table->string('town');
             $table->string('title');
             $table->string('firstname');
             $table->string('lastname');

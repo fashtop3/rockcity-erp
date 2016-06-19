@@ -18,8 +18,10 @@
             $http
                 .get('/api/permission/controls')
                 .then(function (permissions) {
+                    //console.log(permissions);
                     // Use RoleStore and PermissionStore to define permissions and roles
                     angular.forEach(permissions.data.permissions, function ($permission) {
+                        //console.log($permission.slug);
                         PermissionStore.definePermission($permission.slug, function () {
                             return userFactory.userCan($permission.slug);
                         })

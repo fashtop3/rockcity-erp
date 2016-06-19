@@ -7,13 +7,18 @@
 
     angular
         .module('app.order')
-        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder) {
+        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
 
                 var vm = $scope;
 
                 vm.showClient = false;
                 vm.clientMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
 
                 if(angular.isDefined($stateParams.id)) {
 
@@ -27,7 +32,7 @@
                             vm.clientMessage = "Error: " + response.status + " " + response.statusText;
                         }
                     )
-                };
+                }
 
 
 
@@ -66,18 +71,34 @@
 
                     function removeClient($index)
                     {
-                        //TODO: confirm delete
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this client?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    clientFactory.client().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
+                                        function () {
 
-                        clientFactory.client().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
-                            function () {
-
-                                clients.clients.splice($index, 1);
-                                vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
-                            },
-                            function () {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                            }
-                        );
+                                            vm.clients.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
+                                        },
+                                        function () {
+                                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Client data is safe :)', 'error');
+                                }
+                            });
+                        })();
 
                     }
 
@@ -85,69 +106,3 @@
 
             }]);
 })();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('ClientFormController', [
-            '$scope', 'clientFactory', 'toaster', '$stateParams', '$rootScope', '$state', '$timeout',
-            function($scope, clientFactory, toaster, $stateParams, $rootScope, $state, $timeout) {
-
-                var vm = $scope;
-                
-                vm.client = {name:'', address:'', title:'Mr', firstname:'', lastname:'', mobile:'', email:''};
-
-                //this.toaster = {
-                //        type:  'success',
-                //        title: 'Title',
-                //        text:  'Message'
-                //    };$stateParams.id
-
-                if($state.$current.name == 'app.client.edit') {
-
-                    vm.client = clientFactory.getClients().get({id: parseInt($stateParams.id, 10)})
-                        .$promise.then(
-                        function(response) {
-                            vm.client = response;
-                        }
-                    );
-                }
-
-                vm.clientSubmit = function() {
-
-                    toaster.pop('wait', 'Client', 'Processing your request');
-
-                    if(vm.client.id) {
-                        clientFactory.update().save({'id':vm.client.id}, vm.client,
-                            function() {
-                                toaster.pop('success', 'Client', 'Data updated.');
-                                $timeout(function(){
-                                    $state.go('app.client');
-                                }, 500);
-                            },
-                            function () {
-                                toaster.pop('error', 'Client', 'Data update Failed.');
-                            }
-                        );
-                    }
-                    else
-                    {
-                        clientFactory.client().save(vm.client,
-                            function(){
-                                toaster.pop('success', 'Client Registration', 'Registration Successful.');
-                                $timeout(function(){
-                                    $state.go('app.client');
-                                }, 1000);
-                            },
-                            function() {
-                                toaster.pop('error', 'Client Registration', 'Registration Failed.');
-                            }
-                        );
-                    }
-                };
-
-            }]);
-})();
-
