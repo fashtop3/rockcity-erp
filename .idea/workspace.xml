@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c047d5b3-926f-4ccd-ba0c-01d851eb4ff2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2016_04_18_042359_create_products_table.php" afterPath="$PROJECT_DIR$/database/migrations/2016_04_18_042359_create_products_table.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/airtime-stages/cart.html" afterPath="$PROJECT_DIR$/public/app/views/airtime-stages/cart.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="orders.iws" />
@@ -256,6 +254,13 @@
       <option name="number" value="Default" />
       <updated>1466172364845</updated>
     </task>
+    <task id="LOCAL-00001" summary="product_table_and_migrations_updated">
+      <created>1466415125572</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1466415125573</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -296,7 +301,8 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="product_table_and_migrations_updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="product_table_and_migrations_updated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
