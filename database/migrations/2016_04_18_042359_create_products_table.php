@@ -16,6 +16,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->boolean('timeable')->default(false);
+            $table->boolean('fixable')->default(false);
+            $table->integer('surcharge')->default(0);
             $table->timestamps();
         });
     }
