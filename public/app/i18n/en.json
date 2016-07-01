@@ -34,7 +34,14 @@
         "MENU": "People",
         "VIEW": "View and Search",
         "REGISTER": "Register"
+      },
+
+      "assessment": {
+        "MENU": "Assessment",
+        "VIEW": "View Assessments",
+        "CREATE": "New Assessment form"
       }
+
     }
   },
 
@@ -54,6 +61,14 @@
 
       "vehicle": {
         "MENU": "Vehicle"
+      },
+
+      "driver": {
+        "MENU": "Driver's Report",
+        "nav": {
+          "NEW": "Add Report",
+          "VIEW": "View"
+        }
       }
     }
   }

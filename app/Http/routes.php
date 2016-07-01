@@ -151,7 +151,7 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/api/auth/logout',    'UserController@logoutUser');
 //    Route::get('/api/auth/logout',    'Auth\AuthController@logout');
 
-
+    //user routing
     Route::post('/api/user/{id}/upload', 'UserController@upload');
 //    Route::post('/api/user/{id}', 'UserController@update');
     Route::post('/api/user/recover', 'UserController@recover');
@@ -184,8 +184,11 @@ Route::group(['middleware' => ['web'] ], function () {
 
     Route::resource('/api/airtime', 'AirtimeController');
 
+    //vehicle and driver's report
+    Route::resource('/api/driver/report', 'DriverController');
     Route::resource('/api/vehicle', 'VehicleController');
 
+    //target and staff controlls
     Route::get('/api/target/user', 'TargetController@getMyTargets');
     Route::get('/api/target/{user_id}/user', 'TargetController@getUserTargets');
     Route::resource('/api/target', 'TargetController');

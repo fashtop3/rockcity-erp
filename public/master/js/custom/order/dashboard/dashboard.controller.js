@@ -6,63 +6,82 @@
 
     angular
         .module('app.order')
-        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token',
-            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token) {
+        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
+            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
 
-                $scope.alerts = [];
+                var vm = $scope;
+                
+                vm.alerts = [];
 
-                $scope.profile = {_token: _token};
+                vm.profile = {_token: _token};
 
-                $scope.closeAlert = function(index) {
-                    $scope.alerts.splice(index, 1);
+                vm.reset = {_token: _token};
+
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
                 };
-
 
 
                 $resource(baseURL + 'contacts').query().$promise.then(
                     function (response) {
-                        $scope.contacts = response;
+                        vm.contacts = response;
                     }
                 );
 
                 //profile
-                $scope.profile = loginFactory.userData();
+                vm.profile = loginFactory.userData();
 
                 //uploader object
-                $scope.uploader = new FileUploader({
-                    url: baseURL +'user/'+$scope.profile.id+'/upload'
+                vm.uploader = new FileUploader({
+                    url: baseURL +'user/'+vm.profile.id+'/upload'
                 });
 
                 //upload
-                $scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
+                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
                     console.info('onErrorItem', fileItem, response, status, headers);
                 };
 
                 //upload
-                $scope.uploader.onCompleteAll = function() {
-                    $scope.uploader.clearQueue();
+                vm.uploader.onCompleteAll = function() {
+                    vm.uploader.clearQueue();
                 };
 
 
                 //submit profile form
-                $scope.updateProfile = function() {
-                    //TODO: post it to server
+                vm.updateProfile = function() {
                     $resource(baseURL + 'user/:id', null, {'update':{method:'PUT'}})
-                        .update({'id':$scope.profile.id}, $scope.profile,
-                        function (response) {
-                            $scope.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
+                        .update({'id':vm.profile.id}, vm.profile,
+                        function () {
+                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
                         },
                         function (response) {
-                            $scope.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};
+                            }
                         }
                     );
 
-                    //console.log($scope.profile);
-                    $scope.uploader.uploadAll();
+                    //console.log(vm.profile);
+                    //vm.uploader.uploadAll();
                 };
 
-                $scope.updatePassword = function() {
-                    //Todo:post it to server
+                vm.updatePassword = function() {
+                    $resource(baseURL + 'user/:id?action=password', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.reset,
+                        function () {
+                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
+                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail ');
+                                toaster.pop('error', 'Error', 'Failed to reset password');
+                            }
+                            else{
+                                toaster.pop('error', 'Error', 'Failed: contact administrator');
+                            }
+                        }
+                    );
                 }
             }]);
 })();

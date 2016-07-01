@@ -6,9 +6,11 @@
     angular
         .module('app.order')
         .controller('AirtimeCreateController',
-        function($scope, $cookies, toaster, clientFactory, userFactory, productFactory, airtimeFactory, SweetAlert, $uibModal, $timeout, $state, loginFactory) {
+        function($scope, $cookies, $rootScope, toaster, clientFactory, userFactory, productFactory, airtimeFactory, SweetAlert, $uibModal, $timeout, $state, loginFactory) {
 
             var vm = $scope;
+            //collapse the menu bar
+            $rootScope.app.layout.isCollapsed = true;
 
             vm.tab = 1;
             vm.bulkValid = false;

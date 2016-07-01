@@ -55,6 +55,17 @@
   },
 
   {
+    "text": "Assessment",
+    "sref": "#",
+    "icon": "fa fa-reorder",
+    "submenu": [
+      { "text": "Create", "sref": "app.assessment.create", "translate": "sidebar.nav.assessment.CREATE"},
+      { "text": "View", "sref": "app.assessment.view", "translate": "sidebar.nav.assessment.VIEW"}
+    ],
+    "translate": "sidebar.nav.assessment.MENU"
+  },
+
+  {
     "text": "Report Heading",
     "heading": "true",
     "translate": "report.heading.HEADER"
@@ -79,5 +90,15 @@
     "sref": "app.vehicles",
     "icon": "fa fa-truck",
     "translate": "report.nav.vehicle.MENU"
+  },
+  {
+    "text": "Driver's Report",
+    "sref": "#",
+    "icon": "fa fa-file-image-o",
+    "submenu": [
+      { "text": "Add new report", "icon": "fa fa-plus", "sref": "app.driver.addReport", "translate": "report.nav.driver.nav.NEW"},
+      { "text": "View Driver's report", "icon": "icon-layers", "sref": "app.driver.viewReport", "translate": "report.nav.driver.nav.VIEW"}
+    ],
+    "translate": "report.nav.driver.MENU"
   }
 ]

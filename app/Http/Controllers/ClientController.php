@@ -56,14 +56,29 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:3',
+            'street_no' => 'required|string|min:3',
+            'street_name' => 'required|string|min:3',
+            'town' => 'required|string|min:3',
+            'title' => 'required|alpha|min:2,max:6',
+            'firstname' => 'required|alpha',
+            'lastname' => 'required|alpha',
+            'mobile' => 'required|numeric',
+            'email' => 'required|email',
+        ]);
 
-        //TODO: check if email exists
 
+        if($validator->fails()) {
+            return response($validator->errors()->all(), 422);
+        }
+
+        //check if mail exists
         if(Client::mailExits($request->get('email'))) {
             return response('Client email already exists!', 403);
         }
 
+        $input = $request->all();
         $input['user_id'] = $this->user->id;
 
         if(!Client::create($input))
@@ -71,7 +86,7 @@ class ClientController extends Controller
             return response('Error saving client\'s data', 403);
         }
 
-        return response('Client\'s data saved successfuly');
+        return response('Client\'s data saved successfully');
     }
 
     /**
@@ -119,8 +134,10 @@ class ClientController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
-            'address' => 'required|string|min:3',
-            'title' => 'required|alpha|min:2,max:3',
+            'street_no' => 'required|string|min:3',
+            'street_name' => 'required|string|min:3',
+            'town' => 'required|string|min:3',
+            'title' => 'required|alpha|min:2,max:6',
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
             'mobile' => 'required|numeric',
@@ -143,15 +160,7 @@ class ClientController extends Controller
             return response('No record found', 403);
         }
 
-        $client->update([
-            'name'  => $request->get('name'),
-            'address'   => $request->get('address'),
-            'title' => $request->get('title'),
-            'firstname' => $request->get('firstname'),
-            'lastname'  => $request->get('lastname'),
-            'mobile'    => $request->get('mobile'),
-            'email'     => $request->get('email'),
-        ]);
+        $client->update($request->all());
 
         return response('Client data updated successfully');
     }

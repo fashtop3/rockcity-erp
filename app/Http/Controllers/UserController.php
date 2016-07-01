@@ -238,15 +238,30 @@ class UserController extends Controller
      */
     public function update($id, Request $request)
     {
+
+        $user = User::find($id);
+
         //Todo: admin check first using else if
 
-        if($id != Auth::user()->id) {
-            if( !Auth::user()->canRegisterStaff() ) {
+        if($id != $user->id) {
+            if( !$user->canRegisterStaff() ) {
                 return response('You are not authorized to update this account', 403);
             }
         }
 
-        $user = User::find($id);
+
+        //changing user's password
+        if($request->get('action') && $request->get('action') == 'password') {
+
+            //validate request for password reset
+//            $this->validate($request, [
+//               'new_password' => 'required|between:6,8',
+//                'password' => 'required|between:6,8',
+//            ]);
+
+            return $this->sendResetLink($user);
+        }
+
 
         if($user) {
             $user->update($request->all());
@@ -367,12 +382,7 @@ class UserController extends Controller
             return response('Email not found!.', 403);
         }
 
-        $recover = PasswordResets::updateOrCreate(['email' => $request->get('email')] , ['token' => Str::random(60)]);
-
-        //send email notification
-        Event::fire(new UserRequestReset($user, $recover));
-
-        return response($recover);
+        return $this->sendResetLink($user);
 
     }
 
@@ -417,5 +427,20 @@ class UserController extends Controller
     {
         //return all permissions given to current user
          return response(Auth::user()->permissions->toArray());
+    }
+
+    /**
+     * @param Request $request
+     * @param $user
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    protected function sendResetLink($user)
+    {
+        $recover = PasswordResets::updateOrCreate(['email' => $user->email], ['token' => Str::random(60)]);
+
+        //send email notification
+        Event::fire(new UserRequestReset($user, $recover));
+
+        return response($recover);
     }
 }

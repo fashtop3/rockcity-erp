@@ -15,5 +15,13 @@
                 });
             }
 
+            this.driver = function() {
+                return $resource(baseURL + 'vehicle/report/:id', null, {
+                    'report': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'update':{method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE'}
+                });
+            }
+
         }]);
 })();

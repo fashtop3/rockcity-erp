@@ -4,13 +4,14 @@
 <div class="row" ng-controller="ClientFormController as clientCtrl">
     <div class="col-md-12">
         <div class="panel panel-default helicopter" ng-class="{whirl:disableView}">
-            <div class="panel-body">
+            <form novalidate ng-submit="clientSubmit()" name="clientForm" class="form-horizontal" role="form">
 
-                <div>
-                    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
-                </div>
+                <div class="panel-body">
 
-                <form novalidate ng-submit="clientSubmit()" name="clientForm" class="form-horizontal" role="form">
+                    <div>
+                        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+                    </div>
+
 
                     <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
 
@@ -77,8 +78,18 @@
                             <label for="title" class="col-sm-3 control-label">Title</label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.title.$error.required && !clientForm.title.$pristine}">
                                 <select name="title" ng-model="client.title" id="title" class="form-control" required>
+                                    <option value="Miss">Miss.</option>
                                     <option value="Mr">Mr.</option>
                                     <option value="Mrs">Mrs.</option>
+                                    <option value="Chief">Chief.</option>
+                                    <option value="Pastor">Pastor.</option>
+                                    <option value="Revd">Revd.</option>
+                                    <option value="Bishop">Bishop.</option>
+                                    <option value="Imam">Imam.</option>
+                                    <option value="Dr">Dr.</option>
+                                    <option value="Prof">Prof.</option>
+                                    <option value="Alhaji">Alhaji.</option>
+                                    <option value="Alhaja">Alhaja.</option>
                                 </select>
                                 <span ng-show="!clientForm.title.$pristine &amp;&amp; clientForm.title.$error.required" class="text-danger">This field is required</span>
                             </div>
@@ -129,17 +140,13 @@
                         </div>
                     </fieldset>
 
-                    <p style="padding: 20px;"></p>
+                </div>
 
-                    <div class="form-group">
-                        <div class="col-sm-7 col-sm-offset-3">
-                            <button class="btn btn-primary btn-block" ng-if="!client.id" ng-disabled="clientForm.$invalid" type="submit">Register</button>
-                            <button class="btn btn-primary btn-block" ng-if="client.id" ng-disabled="clientForm.$invalid" type="submit">Update</button>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary btn-block" ng-if="!client.id" ng-disabled="clientForm.$invalid" type="submit">Register</button>
+                    <button class="btn btn-primary btn-block" ng-if="client.id" ng-disabled="clientForm.$invalid" type="submit">Update</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

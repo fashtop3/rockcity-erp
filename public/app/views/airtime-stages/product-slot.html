@@ -39,6 +39,26 @@
                         </div>
                         <span ng-show="airtimeForm.duration.$error.required && !airtimeForm.duration.$pristine" class="help-block">Please select a duration. </span>
                     </div>
+
+                    <div class="form-group" ng-class="{'has-error':airtimeForm.period.$error.required && airtimeForm.period.$invalid}">
+                        <div class="col-sm-6 col-sm-push-6">
+                            <label for="airtimePeriod" class="control-label">Airtime Period <abbr class="text-danger" title="required">*</abbr></label>
+                            <select name="period" id="airtimePeriod" ng-model="form.period" class="form-control" ng-disabled="form.price == 0" ng-change="onPeriodChange()" required>
+                                <option value="{{period.value}}" ng-repeat="period in periods">{{period.label}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 col-sm-pull-6" ng-show="form.fixedSpot">
+                            <label for="airtimePeriod" class="control-label">Surcharge (%)</label>
+                            <select ng-model="form.subCharge" name="subCharge" id="subCharge" class="form-control" ng-disabled="form.price == 0">
+                                <option value="0" selected>0</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <!--<div class="panel-footer">Panel Footer</div>-->
@@ -173,24 +193,6 @@
                             <label for="duration" class="control-label">Duration</label>
                             <input type="text" name="durations" class="form-control"  required ng-model="form.duration" ng-pattern="/^([0-9]+)(H|M|S|hours|mins|secs)$/i" ng-disabled="form.price == 0" name="transmitDuration" id="transmitDuration"/>
                             <p class="help-block">E.g, 5secs, 1min, 2hours.</p>
-                        </div>
-                    </div>
-                    <div class="form-group" ng-class="{'has-error':airtimeForm.period.$error.required && airtimeForm.period.$invalid}">
-                        <div class="col-sm-6 col-sm-push-6">
-                            <label for="airtimePeriod" class="control-label">Airtime Period <abbr class="text-danger" title="required">*</abbr></label>
-                            <select name="period" id="airtimePeriod" ng-model="form.period" class="form-control" ng-disabled="form.price == 0" ng-change="onPeriodChange()" required>
-                                <option value="{{period.value}}" ng-repeat="period in periods">{{period.label}}</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4 col-sm-pull-6" ng-show="form.fixedSpot">
-                            <label for="airtimePeriod" class="control-label">Surcharge (%)</label>
-                            <select ng-model="form.subCharge" name="subCharge" id="subCharge" class="form-control" ng-disabled="form.price == 0">
-                                <option value="0" selected>0</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
                         </div>
                     </div>
 

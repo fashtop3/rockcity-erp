@@ -1,10 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<div class="panel panel-default">
 
-</body>
-</html>
+    <div class="panel-heading">Create new report</div>
+    <form class="form-horizontal" name="reportForm" ng-submit="submitVehicleReport()" role="form" novalidate>
+
+        <div class="panel-body">
+
+            <!--<a href="" trigger-resize="" ng-click="app.layout.isCollapsed = !app.layout.isCollapsed" class="hidden-xs">-->
+                <!--<em class="fa fa-navicon"></em>-->
+            <!--</a>-->
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="vehicle" class="control-label col-sm-4">Vehicle</label>
+                    <div class="col-sm-7" ng-class="{'has-error': reportForm.brand.$error.required && !reportForm.brand.$pristine}">
+                        <!--<select class="form-control" ng-model="vehicle.brand" name="vehicle" id="vehicle">-->
+                        <!--<option value="">&#45;&#45;choose&#45;&#45;</option>-->
+                        <!--</select>-->
+                        <ui-select  ng-model="report.vehicle_id" id="vehicle" theme="bootstrap" ng-disabled="disabled" required>
+                            <ui-select-match name="brand" placeholder="Select vehicle...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices  repeat="vehicle in motors | propsFilter: {name: $select.search, reg: $select.search, colour: $select.search}">
+                                <div ng-bind-html="vehicle.name | highlight: $select.search"></div>
+                                <small><b>Reg No:</b> {{vehicle.reg}}, <b>Color:</b> {{vehicle.colour}}</small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span ng-show="!reportForm.brand.$pristine &amp;&amp; reportForm.brand.$error.required" class="text-danger">This field is required</span>
+                        <!--<span ng-show="!reportForm.brand.$pristine &amp;&amp; reportForm.brand.$error.pattern" class="text-danger">This field must be a valid name</span>-->
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="time_inspect" class="control-label col-sm-4">Time of inspection</label>
+                    <div class="col-sm-7">
+                        <uib-timepicker id="time_inspect" name="time_inspect" required ng-model="report.time_inspect" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                        <span ng-show="validateInput('time_inspect', 'required')" class="text-danger">This field is invalid</span>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="water_level" class="control-label col-sm-4">Water level</label>
+                    <div class="col-sm-7">
+                        <select class="form-control"ng-model="report.water_level" name="water_level" id="water_level" required>
+                            <option value="">--Select water level--</option>
+                            <option ng-repeat="i in [].constructor(101) track by $index" value="{{$index}}">{{$index}}%</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="oil_level" class="control-label col-sm-4">Oil level</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="report.oil_level" name="oil_level" id="oil_level" required>
+                            <option value="">--Select oil level--</option>
+                            <option ng-repeat="i in [].constructor(101) track by $index" value="{{$index}}">{{$index}}%</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="fuel_level" class="control-label col-sm-4">Fuel level</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="report.fuel_level" name="fuel_level" id="fuel_level" required>
+                            <option value="">--Select fuel level--</option>
+                            <option ng-repeat="level in ['Empty','Quarter tank', 'Half tank', 'Full tank']" value="{{level}}">{{level}}</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="break_condition" class="control-label col-sm-4">Break condition</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="report.break_condition" name="break_condition" id="break_condition" required>
+                            <option value="">--Select break condition--</option>
+                            <option ng-repeat="condition in ['Bad', 'Fair', 'Good']" value="{{condition}}">{{condition}}</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="absorber_condition" class="control-label col-sm-4">Absorber condition</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="report.absorber_condition" name="absorber_condition" id="absorber_condition" required>
+                            <option value="">--Select absorber condition--</option>
+                            <option ng-repeat="condition in ['Bad', 'Fair', 'Good']" value="{{condition}}">{{condition}}</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="time_washed" class="control-label col-sm-4">Time Washed</label>
+                    <div class="col-sm-7">
+                        <uib-timepicker id="time_washed" name="time_washed" required ng-model="report.time_washed" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                        <span ng-show="validateInput('time_washed', 'required')" class="text-danger">This field is invalid</span>
+                    </div>
+                </div>
+            </fieldset>
+
+        </div><!--End: panel-body -->
+
+        <div class="panel-footer">
+            <button type="submit" ng-disabled="reportForm.$invalid" class="btn btn-block btn-primary btn-lg">Submit</button>
+        </div>
+    </form>
+
+</div>
