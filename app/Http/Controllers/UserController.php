@@ -323,10 +323,12 @@ class UserController extends Controller
     {
 //        dd(Auth::user());
         $contacts = [
-            ['name'=>'Admin', 'email'=>'niran.malaolu@rockcityfmradio.com'],
+//            ['name'=>'Admin', 'email'=>'niran.malaolu@rockcityfmradio.com'],
+            ['name'=>'Admin', 'email'=>'fashtop3@gmail.com'],
             ['name'=>'Technical', 'email'=>'fashtop3@gmail.com'],
             ['name'=>'Support', 'email'=>'fashtop3@gmail.com'],
-            ['name'=>'Marketing', 'email'=>'olufunso.adeniran@rockcityfmradio.com'],
+            ['name'=>'Marketing', 'email'=>'fashtop3@gmail.com'],
+//            ['name'=>'Marketing', 'email'=>'olufunso.adeniran@rockcityfmradio.com'],
         ];
 
         return response($contacts);

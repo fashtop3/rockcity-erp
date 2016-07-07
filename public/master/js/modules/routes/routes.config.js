@@ -230,7 +230,7 @@
                 cache: false,
                 templateUrl: helper.basepath('airtime-create.html'),
                 controller: 'AirtimeCreateController',
-                resolve: helper.resolveFor('parsley')
+                resolve: helper.resolveFor('parsley', 'ui.select', 'taginput','inputmask','localytics.directives')
 
             })
             .state('app.airtime.details', {

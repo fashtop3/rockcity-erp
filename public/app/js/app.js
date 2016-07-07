@@ -218,6 +218,14 @@
     'use strict';
 
     angular
+        .module('app.routes', [
+            'app.lazyload'
+        ]);
+})();
+(function() {
+    'use strict';
+
+    angular
         .module('app.settings', []);
 })();
 (function() {
@@ -247,14 +255,6 @@
           ]);
 })();
 
-(function() {
-    'use strict';
-
-    angular
-        .module('app.routes', [
-            'app.lazyload'
-        ]);
-})();
 (function(){
     'use strict';
 
@@ -10637,6 +10637,1121 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
     }
 
 })();
+/**=========================================================
+ * Module: helpers.js
+ * Provides helper functions for routes definition
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.routes')
+        .provider('RouteHelpers', RouteHelpersProvider)
+        ;
+
+    RouteHelpersProvider.$inject = ['APP_REQUIRES'];
+    function RouteHelpersProvider(APP_REQUIRES) {
+
+      /* jshint validthis:true */
+      return {
+        // provider access level
+        basepath: basepath,
+        resolveFor: resolveFor,
+        // controller access level
+        $get: function() {
+          return {
+            basepath: basepath,
+            resolveFor: resolveFor
+          };
+        }
+      };
+
+      // Set here the base of the relative path
+      // for all app views
+      function basepath(uri) {
+        return 'app/views/' + uri;
+      }
+
+      // Generates a resolve object by passing script names
+      // previously configured in constant.APP_REQUIRES
+      function resolveFor() {
+        var _args = arguments;
+        return {
+          deps: ['$ocLazyLoad','$q', function ($ocLL, $q) {
+            // Creates a promise chain for each argument
+            var promise = $q.when(1); // empty promise
+            for(var i=0, len=_args.length; i < len; i ++){
+              promise = andThen(_args[i]);
+            }
+            return promise;
+
+            // creates promise to chain dynamically
+            function andThen(_arg) {
+              // also support a function that returns a promise
+              if(typeof _arg === 'function')
+                  return promise.then(_arg);
+              else
+                  return promise.then(function() {
+                    // if is a module, pass the name. If not, pass the array
+                    var whatToLoad = getRequired(_arg);
+                    // simple error check
+                    if(!whatToLoad) return $.error('Route resolve: Bad resource name [' + _arg + ']');
+                    // finally, return a promise
+                    return $ocLL.load( whatToLoad );
+                  });
+            }
+            // check and returns required data
+            // analyze module items with the form [name: '', files: []]
+            // and also simple array of script files (for not angular js)
+            function getRequired(name) {
+              if (APP_REQUIRES.modules)
+                  for(var m in APP_REQUIRES.modules)
+                      if(APP_REQUIRES.modules[m].name && APP_REQUIRES.modules[m].name === name)
+                          return APP_REQUIRES.modules[m];
+              return APP_REQUIRES.scripts && APP_REQUIRES.scripts[name];
+            }
+
+          }]};
+      } // resolveFor
+
+    }
+
+
+})();
+
+
+/**=========================================================
+ * Module: config.js
+ * App routes and resources configuration
+ =========================================================*/
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.routes')
+        .config([ '$httpProvider', function($httpProvider) {
+            $httpProvider.interceptors.push('securityInterceptor');
+        }])
+        .provider('securityInterceptor', function() {
+            this.$get = ["$location", "$q", function($location, $q) {
+                return function(promise) {
+                    return promise.then(null, function(response) {
+                        if(response.status === 403 || response.status === 401) {
+                            $location.path('/unauthorized');
+                        }
+                        return $q.reject(response);
+                    });
+                };
+            }];
+        })
+        .config(routesConfig);
+
+
+
+    routesConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
+    function routesConfig($stateProvider, $locationProvider, $urlRouterProvider, helper){
+
+        // Set the following to true to enable the HTML5 Mode
+        // You may have to set <base> tag in index and a routing configuration in your server
+        $locationProvider.html5Mode(false);
+
+        // defaults to dashboard
+        $urlRouterProvider.otherwise('/page/login');
+
+        //$urlRouterProvider.deferIntercept();
+
+        //// Use instead
+        //$urlRouterProvider.otherwise( function($injector) {
+        //    var $state = $injector.get("$state");
+        //    $state.go('/page/login');
+        //});
+
+        //
+        // Application Routes
+        // -----------------------------------
+        $stateProvider
+            .state('privacy', {
+                url: '/app/privacy',
+                cache: false,
+                templateUrl: 'app/pages/privacy.html',
+                resolve: helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'modernizr', 'icons'),
+                controller: ['$rootScope', function($rootScope) {
+                    $rootScope.app.layout.isBoxed = false;
+                }]
+            })
+            .state('page', {
+                url: '/page',
+                data:{
+                    authenticate:false
+                },
+                cache: false,
+                templateUrl: 'app/pages/page.html',
+                resolve: helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'modernizr', 'icons'),
+                controller: ['$rootScope', function($rootScope) {
+                    $rootScope.app.layout.isBoxed = false;
+                }]
+            })
+            .state('page.login', {
+                url: '/login',
+                title: 'Login',
+                cache: false,
+                templateUrl: 'app/pages/login.html',
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                }),
+                controller: 'LoginFormController'
+            })
+            .state('page.register', {
+                url: '/register',
+                title: 'Register',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                }),
+                templateUrl: 'app/pages/register.html'
+            })
+            .state('page.recover', {
+                url: '/recover',
+                title: 'Recover',
+                cache: false,
+                templateUrl: 'app/pages/recover.html'
+            })
+            .state('page.change', {
+                url: '/recover/change?{e}&{m}',
+                title: 'Change',
+                cache: false,
+                templateUrl: 'app/pages/recover-change.html'
+            })
+            .state('app', {
+                url: '/app',
+                abstract: true,
+                cache: false,
+                data:{
+                    authenticate:true
+                },
+                templateUrl: helper.basepath('app.html'),
+                resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl', 'oitozero.ngSweetAlert')
+            })
+            .state('app.dashboard', {
+                url: '/dashboard',
+                title: 'Dashboard',
+                cache: false,
+                templateUrl: helper.basepath('dashboard.html'),
+                controller: 'DashboardController',
+                resolve: angular.extend(helper.resolveFor('angularFileUpload', 'filestyle'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+            //.state('app.dashboard.profile', {
+            //    url: '/profile',
+            //    cache: false,
+            //    templateUrl: 'app/template/profile.tpl.html',
+            //    controller: 'DashboardController',
+            //    resolve: helper.resolveFor('angularFileUpload', 'filestyle'),
+            //})
+            .state('app.dashboard.update', {
+                url: '/profile/update',
+                cache: false,
+                templateUrl: 'app/template/profile-update.tpl.html',
+                controller: 'DashboardController',
+                resolve: helper.resolveFor('angularFileUpload', 'filestyle')
+
+            })
+            .state('app.dashboard.permissions', {
+                url: '/permissions',
+                cache: false,
+                templateUrl: 'app/template/permissions.tpl.html',
+                controller: 'DashboardController'
+            })
+            .state('app.mail', {
+                url: '/mail',
+                title: 'Mail',
+                cache: false,
+                templateUrl: helper.basepath('mail.html'),
+                resolve: helper.resolveFor('ngWig', 'ui.select'),
+                controller: 'MailController'
+            })
+            .state('app.sms', {
+                url: '/sms',
+                title: 'Sms',
+                cache: false,
+                templateUrl: helper.basepath('sms.html')
+            })
+            .state('app.people', {
+                url: '/people',
+                title: 'People',
+                data: {
+                    permissions: {
+                        only: 'view.verified.staff',
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('people.html'),
+                controller: 'PeopleController'
+            })
+            .state('app.people.adduser', {
+                url: '/create',
+                data: {
+                    permissions: {
+                        only: 'register.staff',
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                title: 'People',
+                templateUrl: helper.basepath('people-adduser.html')
+            })
+            .state('app.people.edit', {
+                url: '/:id/edit',
+                title: 'People',
+                data: {
+                    permissions: {
+                        only: 'register.staff',
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                templateUrl: helper.basepath('people-adduser.html'),
+                controller: 'PeopleUpdateController',
+                resolve: helper.resolveFor('whirl')
+            })
+            .state('app.roles', {
+                url: '/roles',
+                title: 'Permissions',
+                cache: false,
+                resolve: helper.resolveFor('modernizr', 'icons', 'toaster'),
+                templateUrl: helper.basepath('roles.html')
+            })
+            .state('app.airtime', {
+                url: '/airtime',
+                title: 'Airtime',
+                cache: false,
+                templateUrl: helper.basepath('airtime.html'),
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'datatables','parsley', 'ui.select', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'ngTableExport', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
+                //controller: 'AirtimeDefaultController'
+            })
+            .state('app.airtime.create', {
+                url: '/create',
+                data: {
+                    permissions: {
+                        only: ['generate.airtime', 'admin'],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                title: 'Generate Airtime',
+                cache: false,
+                templateUrl: helper.basepath('airtime-create.html'),
+                controller: 'AirtimeCreateController',
+                resolve: helper.resolveFor('parsley', 'ui.select', 'taginput','inputmask','localytics.directives')
+
+            })
+            .state('app.airtime.details', {
+                url: '/:id',
+                title: 'Airtime',
+                cache: false,
+                templateUrl: helper.basepath('airtime-details.html'),
+                controller: 'AirtimeDetailController'
+            })
+            .state('app.client', {
+                url: '/client',
+                title: 'Client',
+                cache: false,
+                templateUrl: helper.basepath('client.html'),
+                resolve: helper.resolveFor('datatables')
+            })
+            .state('app.client.create', {
+                url: '/create',
+                cache: false,
+                title: 'Register Client',
+                views: {
+                    '@app': {
+                        resolve: helper.resolveFor('whirl'),
+                        templateUrl: helper.basepath('client-create.html')
+                    }
+                }
+            })
+            .state('app.client.edit', {
+                url: '/:id/edit',
+                title: 'Update Client',
+                cache: false,
+                views: {
+                    '@app' : {
+                        templateUrl: helper.basepath('client-create.html'),
+                        resolve: angular.extend({
+                            clientUpdate: function () {
+                                return true;
+                            }
+                        })
+                    }
+                }
+            })
+            .state('app.report', {
+                url: '/report',
+                title: 'Report',
+                data: {
+                    permissions: {
+                        only: 'generate.report',
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                templateUrl: helper.basepath('report.html'),
+                controller: 'ReportController',
+                resolve: helper.resolveFor('colorpicker.module', 'ui.select', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
+            })
+            .state('app.target', {
+                url: '/target',
+                title: 'Target',
+                data: {
+                    permissions: {
+                        only: 'manage.target',
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                templateUrl: helper.basepath('target.html'),
+                controller: 'TargetController',
+                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+            .state('app.vehicles', {
+                url: '/vehicles',
+                title: 'Vehicles',
+                data: {
+                    permissions: {
+                        only: 'manage.vehicle',
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                templateUrl: helper.basepath('vehicle.html'),
+                controller: 'VehicleController',
+                resolve: angular.extend(helper.resolveFor('datatables'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+
+            .state('app.unauthorized', {
+                url: '/unauthorized',
+                title: 'unauthorized',
+                cache: false,
+                templateUrl: helper.basepath('unauthorized.html')
+            })
+            .state('app.driver', {
+                url: '/driver',
+                title: 'Driver\'s Report',
+                //data: {
+                //    permissions: {
+                //        only: 'view.verified.staff',
+                //        redirectTo: 'app.unauthorized'
+                //    }
+                //},
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select')),
+                templateUrl: helper.basepath('driver.html'),
+                controller: 'DriverController'
+            })
+            .state('app.driver.addReport', {
+                url: '/report/add',
+                //data: {
+                //    permissions: {
+                //        only: 'view.verified.staff',
+                //        redirectTo: 'app.unauthorized'
+                //    }
+                //},
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('driver-addreport.html'),
+                controller: 'DriverController'
+            })
+            .state('app.driver.viewReport', {
+                url: '/report/view',
+                //data: {
+                //    permissions: {
+                //        only: 'view.verified.staff',
+                //        redirectTo: 'app.unauthorized'
+                //    }
+                //},
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('driver-viewreport.html'),
+                controller: 'DriverController'
+            })
+            .state('app.assessment', {
+                url: '/assessment',
+                abstract: true,
+                cache: false,
+                //data: {
+                //    permissions: {
+                //        only: 'view.verified.staff',
+                //        redirectTo: 'app.unauthorized'
+                //    }
+                //},
+                templateUrl: helper.basepath('assessment.html'),
+                resolve: angular.extend(helper.resolveFor('datatables'))
+            })
+            .state('app.assessment.create', {
+                url: '/create',
+                //data: {
+                //    permissions: {
+                //        only: 'view.verified.staff',
+                //        redirectTo: 'app.unauthorized'
+                //    }
+                //},
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('assessment-form.html'),
+                controller: 'AssessmentController'
+            })
+            .state('app.assessment.view', {
+                url: '/view',
+                //data: {
+                //    permissions: {
+                //        only: 'view.verified.staff',
+                //        redirectTo: 'app.unauthorized'
+                //    }
+                //},
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('assessment-form.html'),
+                controller: 'AssessmentController'
+            })
+
+            //.state('app', {
+          //    url: '/app',
+          //    abstract: true,
+          //    templateUrl: helper.basepath('app.html'),
+          //    resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl')
+          //})
+          //.state('app.dashboard', {
+          //    url: '/dashboard',
+          //    title: 'Dashboard',
+          //    templateUrl: helper.basepath('dashboard.html'),
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins', 'weather-icons')
+          //})
+          //.state('app.dashboard_v2', {
+          //    url: '/dashboard_v2',
+          //    title: 'Dashboard v2',
+          //    templateUrl: helper.basepath('dashboard_v2.html'),
+          //    controller: 'DashboardV2Controller',
+          //    controllerAs: 'dash2',
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
+          //})
+          //.state('app.dashboard_v3', {
+          //    url: '/dashboard_v3',
+          //    title: 'Dashboard v3',
+          //    controller: 'DashboardV3Controller',
+          //    controllerAs: 'dash3',
+          //    templateUrl: helper.basepath('dashboard_v3.html'),
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins', 'vector-map', 'vector-map-maps')
+          //})
+          //.state('app.widgets', {
+          //    url: '/widgets',
+          //    title: 'Widgets',
+          //    templateUrl: helper.basepath('widgets.html'),
+          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
+          //})
+          //.state('app.buttons', {
+          //    url: '/buttons',
+          //    title: 'Buttons',
+          //    templateUrl: helper.basepath('buttons.html')
+          //})
+          //.state('app.colors', {
+          //    url: '/colors',
+          //    title: 'Colors',
+          //    templateUrl: helper.basepath('colors.html')
+          //})
+          //.state('app.localization', {
+          //    url: '/localization',
+          //    title: 'Localization',
+          //    templateUrl: helper.basepath('localization.html')
+          //})
+          //.state('app.infinite-scroll', {
+          //    url: '/infinite-scroll',
+          //    title: 'Infinite Scroll',
+          //    templateUrl: helper.basepath('infinite-scroll.html'),
+          //    resolve: helper.resolveFor('infinite-scroll')
+          //})
+          //.state('app.navtree', {
+          //    url: '/navtree',
+          //    title: 'Nav Tree',
+          //    templateUrl: helper.basepath('nav-tree.html'),
+          //    resolve: helper.resolveFor('angularBootstrapNavTree')
+          //})
+          //.state('app.nestable', {
+          //    url: '/nestable',
+          //    title: 'Nestable',
+          //    templateUrl: helper.basepath('nestable.html'),
+          //    resolve: helper.resolveFor('ng-nestable')
+          //})
+          //.state('app.sortable', {
+          //    url: '/sortable',
+          //    title: 'Sortable',
+          //    templateUrl: helper.basepath('sortable.html'),
+          //    resolve: helper.resolveFor('htmlSortable')
+          //})
+          //.state('app.notifications', {
+          //    url: '/notifications',
+          //    title: 'Notifications',
+          //    templateUrl: helper.basepath('notifications.html')
+          //})
+          //.state('app.carousel', {
+          //    url: '/carousel',
+          //    title: 'Carousel',
+          //    templateUrl: helper.basepath('carousel.html'),
+          //    resolve: helper.resolveFor('angular-carousel')
+          //})
+          //.state('app.ngdialog', {
+          //    url: '/ngdialog',
+          //    title: 'ngDialog',
+          //    templateUrl: helper.basepath('ngdialog.html'),
+          //    resolve: angular.extend(helper.resolveFor('ngDialog'),{
+          //      tpl: function() { return { path: helper.basepath('ngdialog-template.html') }; }
+          //    }),
+          //    controller: 'DialogIntroCtrl'
+          //})
+          //.state('app.sweetalert', {
+          //  url: '/sweetalert',
+          //  title: 'SweetAlert',
+          //  templateUrl: helper.basepath('sweetalert.html'),
+          //  resolve: helper.resolveFor('oitozero.ngSweetAlert')
+          //})
+          //.state('app.tour', {
+          //  url: '/tour',
+          //  title: 'Tour',
+          //  templateUrl: helper.basepath('tour.html'),
+          //  resolve: helper.resolveFor('bm.bsTour')
+          //})
+          //.state('app.interaction', {
+          //    url: '/interaction',
+          //    title: 'Interaction',
+          //    templateUrl: helper.basepath('interaction.html')
+          //})
+          //.state('app.spinners', {
+          //    url: '/spinners',
+          //    title: 'Spinners',
+          //    templateUrl: helper.basepath('spinners.html'),
+          //    resolve: helper.resolveFor('loaders.css', 'spinkit')
+          //})
+          //.state('app.dropdown-animations', {
+          //    url: '/dropdown-animations',
+          //    title: 'Dropdown Animations',
+          //    templateUrl: helper.basepath('dropdown-animations.html')
+          //})
+          //.state('app.panels', {
+          //    url: '/panels',
+          //    title: 'Panels',
+          //    templateUrl: helper.basepath('panels.html')
+          //})
+          //.state('app.portlets', {
+          //    url: '/portlets',
+          //    title: 'Portlets',
+          //    templateUrl: helper.basepath('portlets.html'),
+          //    resolve: helper.resolveFor('jquery-ui', 'jquery-ui-widgets')
+          //})
+          //.state('app.maps-google', {
+          //    url: '/maps-google',
+          //    title: 'Maps Google',
+          //    templateUrl: helper.basepath('maps-google.html'),
+          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
+          //})
+          //.state('app.maps-vector', {
+          //    url: '/maps-vector',
+          //    title: 'Maps Vector',
+          //    templateUrl: helper.basepath('maps-vector.html'),
+          //    controller: 'VectorMapController',
+          //    controllerAs: 'vmap',
+          //    resolve: helper.resolveFor('vector-map', 'vector-map-maps')
+          //})
+          //.state('app.grid', {
+          //    url: '/grid',
+          //    title: 'Grid',
+          //    templateUrl: helper.basepath('grid.html')
+          //})
+          //.state('app.grid-masonry', {
+          //    url: '/grid-masonry',
+          //    title: 'Grid Masonry',
+          //    templateUrl: helper.basepath('grid-masonry.html')
+          //})
+          //.state('app.grid-masonry-deck', {
+          //    url: '/grid-masonry-deck',
+          //    title: 'Grid Masonry',
+          //    templateUrl: helper.basepath('grid-masonry-deck.html'),
+          //    resolve: helper.resolveFor('spinkit', 'akoenig.deckgrid')
+          //})
+          //.state('app.typo', {
+          //    url: '/typo',
+          //    title: 'Typo',
+          //    templateUrl: helper.basepath('typo.html')
+          //})
+          //.state('app.icons-font', {
+          //    url: '/icons-font',
+          //    title: 'Icons Font',
+          //    templateUrl: helper.basepath('icons-font.html'),
+          //    resolve: helper.resolveFor('icons')
+          //})
+          //.state('app.icons-weather', {
+          //    url: '/icons-weather',
+          //    title: 'Icons Weather',
+          //    templateUrl: helper.basepath('icons-weather.html'),
+          //    resolve: helper.resolveFor('weather-icons', 'skycons')
+          //})
+          //.state('app.form-standard', {
+          //    url: '/form-standard',
+          //    title: 'Form Standard',
+          //    templateUrl: helper.basepath('form-standard.html')
+          //})
+          //.state('app.form-extended', {
+          //    url: '/form-extended',
+          //    title: 'Form Extended',
+          //    templateUrl: helper.basepath('form-extended.html'),
+          //    resolve: helper.resolveFor('colorpicker.module', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
+          //})
+          //.state('app.form-validation', {
+          //    url: '/form-validation',
+          //    title: 'Form Validation',
+          //    templateUrl: helper.basepath('form-validation.html'),
+          //    resolve: helper.resolveFor('ui.select', 'taginput','inputmask','localytics.directives')
+          //})
+          //.state('app.form-parsley', {
+          //    url: '/form-parsley',
+          //    title: 'Form Validation - Parsley',
+          //    templateUrl: helper.basepath('form-parsley.html'),
+          //    resolve: helper.resolveFor('parsley')
+          //})
+          //.state('app.form-wizard', {
+          //    url: '/form-wizard',
+          //    title: 'Form Wizard',
+          //    templateUrl: helper.basepath('form-wizard.html'),
+          //    resolve: helper.resolveFor('parsley')
+          //})
+          //.state('app.form-upload', {
+          //    url: '/form-upload',
+          //    title: 'Form upload',
+          //    templateUrl: helper.basepath('form-upload.html'),
+          //    resolve: helper.resolveFor('angularFileUpload', 'filestyle')
+          //})
+          //.state('app.form-xeditable', {
+          //    url: '/form-xeditable',
+          //    templateUrl: helper.basepath('form-xeditable.html'),
+          //    resolve: helper.resolveFor('xeditable')
+          //})
+          //.state('app.form-imagecrop', {
+          //    url: '/form-imagecrop',
+          //    templateUrl: helper.basepath('form-imagecrop.html'),
+          //    resolve: helper.resolveFor('ngImgCrop', 'filestyle')
+          //})
+          //.state('app.form-uiselect', {
+          //    url: '/form-uiselect',
+          //    templateUrl: helper.basepath('form-uiselect.html'),
+          //    controller: 'uiSelectController',
+          //    controllerAs: 'uisel',
+          //    resolve: helper.resolveFor('ui.select')
+          //})
+          //.state('app.chart-flot', {
+          //    url: '/chart-flot',
+          //    title: 'Chart Flot',
+          //    templateUrl: helper.basepath('chart-flot.html'),
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
+          //})
+          //.state('app.chart-radial', {
+          //    url: '/chart-radial',
+          //    title: 'Chart Radial',
+          //    templateUrl: helper.basepath('chart-radial.html'),
+          //    resolve: helper.resolveFor('classyloader', 'ui.knob', 'easypiechart')
+          //})
+          //.state('app.chart-js', {
+          //    url: '/chart-js',
+          //    title: 'Chart JS',
+          //    templateUrl: helper.basepath('chart-js.html'),
+          //    resolve: helper.resolveFor('chartjs')
+          //})
+          //.state('app.chart-rickshaw', {
+          //    url: '/chart-rickshaw',
+          //    title: 'Chart Rickshaw',
+          //    templateUrl: helper.basepath('chart-rickshaw.html'),
+          //    resolve: helper.resolveFor('angular-rickshaw')
+          //})
+          //.state('app.chart-morris', {
+          //    url: '/chart-morris',
+          //    title: 'Chart Morris',
+          //    templateUrl: helper.basepath('chart-morris.html'),
+          //    resolve: helper.resolveFor('morris')
+          //})
+          //.state('app.chart-chartist', {
+          //    url: '/chart-chartist',
+          //    title: 'Chart Chartist',
+          //    templateUrl: helper.basepath('chart-chartist.html'),
+          //    resolve: helper.resolveFor('angular-chartist')
+          //})
+          //.state('app.table-standard', {
+          //    url: '/table-standard',
+          //    title: 'Table Standard',
+          //    templateUrl: helper.basepath('table-standard.html')
+          //})
+          //.state('app.table-extended', {
+          //    url: '/table-extended',
+          //    title: 'Table Extended',
+          //    templateUrl: helper.basepath('table-extended.html')
+          //})
+          //.state('app.table-datatable', {
+          //    url: '/table-datatable',
+          //    title: 'Table Datatable',
+          //    templateUrl: helper.basepath('table-datatable.html'),
+          //    resolve: helper.resolveFor('datatables')
+          //})
+          //.state('app.table-xeditable', {
+          //    url: '/table-xeditable',
+          //    templateUrl: helper.basepath('table-xeditable.html'),
+          //    resolve: helper.resolveFor('xeditable')
+          //})
+          //.state('app.table-ngtable', {
+          //    url: '/table-ngtable',
+          //    templateUrl: helper.basepath('table-ngtable.html'),
+          //    resolve: helper.resolveFor('ngTable', 'ngTableExport')
+          //})
+          //.state('app.table-uigrid', {
+          //    url: '/table-uigrid',
+          //    templateUrl: helper.basepath('table-uigrid.html'),
+          //    resolve: helper.resolveFor('ui.grid')
+          //})
+          //.state('app.table-angulargrid', {
+          //    url: '/table-angulargrid',
+          //    templateUrl: helper.basepath('table-angulargrid.html'),
+          //    resolve: helper.resolveFor('angularGrid')
+          //})
+          //.state('app.timeline', {
+          //    url: '/timeline',
+          //    title: 'Timeline',
+          //    templateUrl: helper.basepath('timeline.html')
+          //})
+          //.state('app.calendar', {
+          //    url: '/calendar',
+          //    title: 'Calendar',
+          //    templateUrl: helper.basepath('calendar.html'),
+          //    resolve: helper.resolveFor('jquery-ui', 'jquery-ui-widgets', 'moment', 'fullcalendar')
+          //})
+          //.state('app.invoice', {
+          //    url: '/invoice',
+          //    title: 'Invoice',
+          //    templateUrl: helper.basepath('invoice.html')
+          //})
+          //.state('app.search', {
+          //    url: '/search',
+          //    title: 'Search',
+          //    templateUrl: helper.basepath('search.html'),
+          //    resolve: helper.resolveFor('moment', 'localytics.directives', 'ui.bootstrap-slider')
+          //})
+          //.state('app.todo', {
+          //    url: '/todo',
+          //    title: 'Todo List',
+          //    templateUrl: helper.basepath('todo.html'),
+          //    controller: 'TodoController',
+          //    controllerAs: 'todo'
+          //})
+          //.state('app.profile', {
+          //    url: '/profile',
+          //    title: 'Profile',
+          //    templateUrl: helper.basepath('profile.html'),
+          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
+          //})
+          //.state('app.code-editor', {
+          //    url: '/code-editor',
+          //    templateUrl: helper.basepath('code-editor.html'),
+          //    controller: 'CodeEditorController',
+          //    controllerAs: 'coder',
+          //    resolve: {
+          //        deps: helper.resolveFor('codemirror', 'ui.codemirror', 'codemirror-modes-web', 'angularBootstrapNavTree').deps,
+          //        filetree: ['LoadTreeService', function (LoadTreeService) {
+          //            return LoadTreeService.get().$promise.then(function (res) {
+          //                return res.data;
+          //            });
+          //        }]
+          //    }
+          //})
+          //.state('app.template', {
+          //    url: '/template',
+          //    title: 'Blank Template',
+          //    templateUrl: helper.basepath('template.html')
+          //})
+          //.state('app.documentation', {
+          //    url: '/documentation',
+          //    title: 'Documentation',
+          //    templateUrl: helper.basepath('documentation.html'),
+          //    resolve: helper.resolveFor('flatdoc')
+          //})
+          //// Forum
+          //// -----------------------------------
+          //.state('app.forum', {
+          //    url: '/forum',
+          //    title: 'Forum',
+          //    templateUrl: helper.basepath('forum.html')
+          //})
+          //.state('app.forum-topics', {
+          //    url: '/forum/topics/:catid',
+          //    title: 'Forum Topics',
+          //    templateUrl: helper.basepath('forum-topics.html')
+          //})
+          //.state('app.forum-discussion', {
+          //    url: '/forum/discussion/:topid',
+          //    title: 'Forum Discussion',
+          //    templateUrl: helper.basepath('forum-discussion.html')
+          //})
+          //// Blog
+          //// -----------------------------------
+          //.state('app.blog', {
+          //    url: '/blog',
+          //    title: 'Blog',
+          //    templateUrl: helper.basepath('blog.html'),
+          //    resolve: helper.resolveFor('angular-jqcloud')
+          //})
+          //.state('app.blog-post', {
+          //    url: '/post',
+          //    title: 'Post',
+          //    templateUrl: helper.basepath('blog-post.html'),
+          //    resolve: helper.resolveFor('angular-jqcloud')
+          //})
+          //.state('app.articles', {
+          //    url: '/articles',
+          //    title: 'Articles',
+          //    templateUrl: helper.basepath('blog-articles.html'),
+          //    resolve: helper.resolveFor('datatables')
+          //})
+          //.state('app.article-view', {
+          //    url: '/article/:id',
+          //    title: 'Article View',
+          //    templateUrl: helper.basepath('blog-article-view.html'),
+          //    resolve: helper.resolveFor('ui.select', 'textAngular')
+          //})
+          //// eCommerce
+          //// -----------------------------------
+          //.state('app.orders', {
+          //    url: '/orders',
+          //    title: 'Orders',
+          //    templateUrl: helper.basepath('ecommerce-orders.html'),
+          //    resolve: helper.resolveFor('datatables')
+          //})
+          //.state('app.order-view', {
+          //    url: '/order-view',
+          //    title: 'Order View',
+          //    templateUrl: helper.basepath('ecommerce-order-view.html')
+          //})
+          //.state('app.products', {
+          //    url: '/products',
+          //    title: 'Products',
+          //    templateUrl: helper.basepath('ecommerce-products.html'),
+          //    resolve: helper.resolveFor('datatables')
+          //})
+          //.state('app.product-view', {
+          //    url: '/product/:id',
+          //    title: 'Product View',
+          //    templateUrl: helper.basepath('ecommerce-product-view.html')
+          //})
+          //// Mailbox
+          //// -----------------------------------
+          //.state('app.mailbox', {
+          //    url: '/mailbox',
+          //    title: 'Mailbox',
+          //    abstract: true,
+          //    templateUrl: helper.basepath('mailbox.html')
+          //})
+          //.state('app.mailbox.folder', {
+          //    url: '/folder/:folder',
+          //    title: 'Mailbox',
+          //    templateUrl: helper.basepath('mailbox-inbox.html')
+          //})
+          //.state('app.mailbox.view', {
+          //    url : '/{mid:[0-9]{1,4}}',
+          //    title: 'View mail',
+          //    templateUrl: helper.basepath('mailbox-view.html'),
+          //    resolve: helper.resolveFor('ngWig')
+          //})
+          //.state('app.mailbox.compose', {
+          //    url: '/compose',
+          //    title: 'Mailbox',
+          //    templateUrl: helper.basepath('mailbox-compose.html'),
+          //    resolve: helper.resolveFor('ngWig')
+          //})
+          ////
+          //// Multiple level example
+          //// -----------------------------------
+          //.state('app.multilevel', {
+          //    url: '/multilevel',
+          //    title: 'Multilevel',
+          //    template: '<h3>Multilevel Views</h3>' + '<div class="lead ba p">View @ Top Level ' + '<div ui-view=""></div> </div>'
+          //})
+          //.state('app.multilevel.level1', {
+          //    url: '/level1',
+          //    title: 'Multilevel - Level1',
+          //    template: '<div class="lead ba p">View @ Level 1' + '<div ui-view=""></div> </div>'
+          //})
+          //.state('app.multilevel.level1.item', {
+          //    url: '/item',
+          //    title: 'Multilevel - Level1',
+          //    template: '<div class="lead ba p"> Menu item @ Level 1</div>'
+          //})
+          //.state('app.multilevel.level1.level2', {
+          //    url: '/level2',
+          //    title: 'Multilevel - Level2',
+          //    template: '<div class="lead ba p">View @ Level 2'  + '<div ui-view=""></div> </div>'
+          //})
+          //.state('app.multilevel.level1.level2.level3', {
+          //    url: '/level3',
+          //    title: 'Multilevel - Level3',
+          //    template: '<div class="lead ba p">View @ Level 3' + '<div ui-view=""></div> </div>'
+          //})
+          //.state('app.multilevel.level1.level2.level3.item', {
+          //    url: '/item',
+          //    title: 'Multilevel - Level3 Item',
+          //    template: '<div class="lead ba p"> Menu item @ Level 3</div>'
+          //})
+          ////
+          //// Single Page Routes
+          //// -----------------------------------
+          //.state('page', {
+          //    url: '/page',
+          //    templateUrl: 'app/pages/page.html',
+          //    resolve: helper.resolveFor('modernizr', 'icons'),
+          //    controller: ['$rootScope', function($rootScope) {
+          //        $rootScope.app.layout.isBoxed = false;
+          //    }]
+          //})
+          //.state('page.login', {
+          //    url: '/login',
+          //    title: 'Login',
+          //    templateUrl: 'app/pages/login.html'
+          //})
+          //.state('page.register', {
+          //    url: '/register',
+          //    title: 'Register',
+          //    templateUrl: 'app/pages/register.html'
+          //})
+          //.state('page.recover', {
+          //    url: '/recover',
+          //    title: 'Recover',
+          //    templateUrl: 'app/pages/recover.html'
+          //})
+          //.state('page.lock', {
+          //    url: '/lock',
+          //    title: 'Lock',
+          //    templateUrl: 'app/pages/lock.html'
+          //})
+          //.state('page.404', {
+          //    url: '/404',
+          //    title: 'Not Found',
+          //    templateUrl: 'app/pages/404.html'
+          //})
+          ////
+          //// Horizontal layout
+          //// -----------------------------------
+          //.state('app-h', {
+          //    url: '/app-h',
+          //    abstract: true,
+          //    templateUrl: helper.basepath( 'app-h.html' ),
+          //    resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl')
+          //})
+          //.state('app-h.dashboard_v2', {
+          //    url: '/dashboard_v2',
+          //    title: 'Dashboard v2',
+          //    templateUrl: helper.basepath('dashboard_v2.html'),
+          //    controller: 'DashboardV2Controller',
+          //    controllerAs: 'dash2',
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
+          //})
+          //
+          // CUSTOM RESOLVES
+          //   Add your own resolves properties
+          //   following this object extend
+          //   method
+          // -----------------------------------
+          // .state('app.someroute', {
+          //   url: '/some_url',
+          //   templateUrl: 'path_to_template.html',
+          //   controller: 'someController',
+          //   resolve: angular.extend(
+          //     helper.resolveFor(), {
+          //     // YOUR RESOLVES GO HERE
+          //     }
+          //   )
+          // })
+          ;
+
+    } // routesConfig
+
+})();
+
+
+/**
+ * Created by dfash on 6/10/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.routes')
+        .run(['$rootScope', '$state', 'loginFactory', '$location',
+            function ($rootScope, $state, loginFactory, $location) {
+
+
+                $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+                    //if toState requires authenticate and user is not logged in
+                    if (toState.data.authenticate) {
+
+                        //if user is not logged in
+                        if(!loginFactory.getUserStatus()) {
+
+                            //save anticipated state
+                            loginFactory.toState = toState;
+
+                            $state.transitionTo('page.login');
+                            event.preventDefault();
+                        }
+
+                        //handle when user refreshes unauthorized page
+                        if(toState.name == 'app.unauthorized' && fromState.name == '') {
+                            $state.go('app.dashboard');
+                        }
+
+                    }
+
+                    //if toState is 'page.login' And user is already logged in
+                    if (toState.name == 'page.login' && loginFactory.getUserStatus()) {
+
+                        if (fromState.name != '') {
+                            $state.go(fromState.name);//return state
+                        }
+                        else {
+                            $state.go('app.dashboard');//go to default state
+                        }
+                        event.preventDefault();
+                    }
+
+                    //confirm if user is logged in
+                    if (loginFactory.getUserStatus()) {
+                        loginFactory.authCheck();
+                    }
+                });
+
+            }])
+})();
 (function() {
   'use strict';
 
@@ -12458,1121 +13573,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
     }
 })();
 
-/**=========================================================
- * Module: helpers.js
- * Provides helper functions for routes definition
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.routes')
-        .provider('RouteHelpers', RouteHelpersProvider)
-        ;
-
-    RouteHelpersProvider.$inject = ['APP_REQUIRES'];
-    function RouteHelpersProvider(APP_REQUIRES) {
-
-      /* jshint validthis:true */
-      return {
-        // provider access level
-        basepath: basepath,
-        resolveFor: resolveFor,
-        // controller access level
-        $get: function() {
-          return {
-            basepath: basepath,
-            resolveFor: resolveFor
-          };
-        }
-      };
-
-      // Set here the base of the relative path
-      // for all app views
-      function basepath(uri) {
-        return 'app/views/' + uri;
-      }
-
-      // Generates a resolve object by passing script names
-      // previously configured in constant.APP_REQUIRES
-      function resolveFor() {
-        var _args = arguments;
-        return {
-          deps: ['$ocLazyLoad','$q', function ($ocLL, $q) {
-            // Creates a promise chain for each argument
-            var promise = $q.when(1); // empty promise
-            for(var i=0, len=_args.length; i < len; i ++){
-              promise = andThen(_args[i]);
-            }
-            return promise;
-
-            // creates promise to chain dynamically
-            function andThen(_arg) {
-              // also support a function that returns a promise
-              if(typeof _arg === 'function')
-                  return promise.then(_arg);
-              else
-                  return promise.then(function() {
-                    // if is a module, pass the name. If not, pass the array
-                    var whatToLoad = getRequired(_arg);
-                    // simple error check
-                    if(!whatToLoad) return $.error('Route resolve: Bad resource name [' + _arg + ']');
-                    // finally, return a promise
-                    return $ocLL.load( whatToLoad );
-                  });
-            }
-            // check and returns required data
-            // analyze module items with the form [name: '', files: []]
-            // and also simple array of script files (for not angular js)
-            function getRequired(name) {
-              if (APP_REQUIRES.modules)
-                  for(var m in APP_REQUIRES.modules)
-                      if(APP_REQUIRES.modules[m].name && APP_REQUIRES.modules[m].name === name)
-                          return APP_REQUIRES.modules[m];
-              return APP_REQUIRES.scripts && APP_REQUIRES.scripts[name];
-            }
-
-          }]};
-      } // resolveFor
-
-    }
-
-
-})();
-
-
-/**=========================================================
- * Module: config.js
- * App routes and resources configuration
- =========================================================*/
-
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.routes')
-        .config([ '$httpProvider', function($httpProvider) {
-            $httpProvider.interceptors.push('securityInterceptor');
-        }])
-        .provider('securityInterceptor', function() {
-            this.$get = ["$location", "$q", function($location, $q) {
-                return function(promise) {
-                    return promise.then(null, function(response) {
-                        if(response.status === 403 || response.status === 401) {
-                            $location.path('/unauthorized');
-                        }
-                        return $q.reject(response);
-                    });
-                };
-            }];
-        })
-        .config(routesConfig);
-
-
-
-    routesConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
-    function routesConfig($stateProvider, $locationProvider, $urlRouterProvider, helper){
-
-        // Set the following to true to enable the HTML5 Mode
-        // You may have to set <base> tag in index and a routing configuration in your server
-        $locationProvider.html5Mode(false);
-
-        // defaults to dashboard
-        $urlRouterProvider.otherwise('/page/login');
-
-        //$urlRouterProvider.deferIntercept();
-
-        //// Use instead
-        //$urlRouterProvider.otherwise( function($injector) {
-        //    var $state = $injector.get("$state");
-        //    $state.go('/page/login');
-        //});
-
-        //
-        // Application Routes
-        // -----------------------------------
-        $stateProvider
-            .state('privacy', {
-                url: '/app/privacy',
-                cache: false,
-                templateUrl: 'app/pages/privacy.html',
-                resolve: helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'modernizr', 'icons'),
-                controller: ['$rootScope', function($rootScope) {
-                    $rootScope.app.layout.isBoxed = false;
-                }]
-            })
-            .state('page', {
-                url: '/page',
-                data:{
-                    authenticate:false
-                },
-                cache: false,
-                templateUrl: 'app/pages/page.html',
-                resolve: helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'modernizr', 'icons'),
-                controller: ['$rootScope', function($rootScope) {
-                    $rootScope.app.layout.isBoxed = false;
-                }]
-            })
-            .state('page.login', {
-                url: '/login',
-                title: 'Login',
-                cache: false,
-                templateUrl: 'app/pages/login.html',
-                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                }),
-                controller: 'LoginFormController'
-            })
-            .state('page.register', {
-                url: '/register',
-                title: 'Register',
-                cache: false,
-                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                }),
-                templateUrl: 'app/pages/register.html'
-            })
-            .state('page.recover', {
-                url: '/recover',
-                title: 'Recover',
-                cache: false,
-                templateUrl: 'app/pages/recover.html'
-            })
-            .state('page.change', {
-                url: '/recover/change?{e}&{m}',
-                title: 'Change',
-                cache: false,
-                templateUrl: 'app/pages/recover-change.html'
-            })
-            .state('app', {
-                url: '/app',
-                abstract: true,
-                cache: false,
-                data:{
-                    authenticate:true
-                },
-                templateUrl: helper.basepath('app.html'),
-                resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl', 'oitozero.ngSweetAlert')
-            })
-            .state('app.dashboard', {
-                url: '/dashboard',
-                title: 'Dashboard',
-                cache: false,
-                templateUrl: helper.basepath('dashboard.html'),
-                controller: 'DashboardController',
-                resolve: angular.extend(helper.resolveFor('angularFileUpload', 'filestyle'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                })
-            })
-            //.state('app.dashboard.profile', {
-            //    url: '/profile',
-            //    cache: false,
-            //    templateUrl: 'app/template/profile.tpl.html',
-            //    controller: 'DashboardController',
-            //    resolve: helper.resolveFor('angularFileUpload', 'filestyle'),
-            //})
-            .state('app.dashboard.update', {
-                url: '/profile/update',
-                cache: false,
-                templateUrl: 'app/template/profile-update.tpl.html',
-                controller: 'DashboardController',
-                resolve: helper.resolveFor('angularFileUpload', 'filestyle')
-
-            })
-            .state('app.dashboard.permissions', {
-                url: '/permissions',
-                cache: false,
-                templateUrl: 'app/template/permissions.tpl.html',
-                controller: 'DashboardController'
-            })
-            .state('app.mail', {
-                url: '/mail',
-                title: 'Mail',
-                cache: false,
-                templateUrl: helper.basepath('mail.html'),
-                resolve: helper.resolveFor('ngWig', 'ui.select'),
-                controller: 'MailController'
-            })
-            .state('app.sms', {
-                url: '/sms',
-                title: 'Sms',
-                cache: false,
-                templateUrl: helper.basepath('sms.html')
-            })
-            .state('app.people', {
-                url: '/people',
-                title: 'People',
-                data: {
-                    permissions: {
-                        only: 'view.verified.staff',
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('people.html'),
-                controller: 'PeopleController'
-            })
-            .state('app.people.adduser', {
-                url: '/create',
-                data: {
-                    permissions: {
-                        only: 'register.staff',
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                title: 'People',
-                templateUrl: helper.basepath('people-adduser.html')
-            })
-            .state('app.people.edit', {
-                url: '/:id/edit',
-                title: 'People',
-                data: {
-                    permissions: {
-                        only: 'register.staff',
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                templateUrl: helper.basepath('people-adduser.html'),
-                controller: 'PeopleUpdateController',
-                resolve: helper.resolveFor('whirl')
-            })
-            .state('app.roles', {
-                url: '/roles',
-                title: 'Permissions',
-                cache: false,
-                resolve: helper.resolveFor('modernizr', 'icons', 'toaster'),
-                templateUrl: helper.basepath('roles.html')
-            })
-            .state('app.airtime', {
-                url: '/airtime',
-                title: 'Airtime',
-                cache: false,
-                templateUrl: helper.basepath('airtime.html'),
-                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'datatables','parsley', 'ui.select', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'ngTableExport', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
-                //controller: 'AirtimeDefaultController'
-            })
-            .state('app.airtime.create', {
-                url: '/create',
-                data: {
-                    permissions: {
-                        only: ['generate.airtime', 'admin'],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                title: 'Generate Airtime',
-                cache: false,
-                templateUrl: helper.basepath('airtime-create.html'),
-                controller: 'AirtimeCreateController',
-                resolve: helper.resolveFor('parsley')
-
-            })
-            .state('app.airtime.details', {
-                url: '/:id',
-                title: 'Airtime',
-                cache: false,
-                templateUrl: helper.basepath('airtime-details.html'),
-                controller: 'AirtimeDetailController'
-            })
-            .state('app.client', {
-                url: '/client',
-                title: 'Client',
-                cache: false,
-                templateUrl: helper.basepath('client.html'),
-                resolve: helper.resolveFor('datatables')
-            })
-            .state('app.client.create', {
-                url: '/create',
-                cache: false,
-                title: 'Register Client',
-                views: {
-                    '@app': {
-                        resolve: helper.resolveFor('whirl'),
-                        templateUrl: helper.basepath('client-create.html')
-                    }
-                }
-            })
-            .state('app.client.edit', {
-                url: '/:id/edit',
-                title: 'Update Client',
-                cache: false,
-                views: {
-                    '@app' : {
-                        templateUrl: helper.basepath('client-create.html'),
-                        resolve: angular.extend({
-                            clientUpdate: function () {
-                                return true;
-                            }
-                        })
-                    }
-                }
-            })
-            .state('app.report', {
-                url: '/report',
-                title: 'Report',
-                data: {
-                    permissions: {
-                        only: 'generate.report',
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                templateUrl: helper.basepath('report.html'),
-                controller: 'ReportController',
-                resolve: helper.resolveFor('colorpicker.module', 'ui.select', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
-            })
-            .state('app.target', {
-                url: '/target',
-                title: 'Target',
-                data: {
-                    permissions: {
-                        only: 'manage.target',
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                templateUrl: helper.basepath('target.html'),
-                controller: 'TargetController',
-                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                })
-            })
-            .state('app.vehicles', {
-                url: '/vehicles',
-                title: 'Vehicles',
-                data: {
-                    permissions: {
-                        only: 'manage.vehicle',
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                templateUrl: helper.basepath('vehicle.html'),
-                controller: 'VehicleController',
-                resolve: angular.extend(helper.resolveFor('datatables'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                })
-            })
-
-            .state('app.unauthorized', {
-                url: '/unauthorized',
-                title: 'unauthorized',
-                cache: false,
-                templateUrl: helper.basepath('unauthorized.html')
-            })
-            .state('app.driver', {
-                url: '/driver',
-                title: 'Driver\'s Report',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
-                cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select')),
-                templateUrl: helper.basepath('driver.html'),
-                controller: 'DriverController'
-            })
-            .state('app.driver.addReport', {
-                url: '/report/add',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
-                cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('driver-addreport.html'),
-                controller: 'DriverController'
-            })
-            .state('app.driver.viewReport', {
-                url: '/report/view',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
-                cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('driver-viewreport.html'),
-                controller: 'DriverController'
-            })
-            .state('app.assessment', {
-                url: '/assessment',
-                abstract: true,
-                cache: false,
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
-                templateUrl: helper.basepath('assessment.html'),
-                resolve: angular.extend(helper.resolveFor('datatables'))
-            })
-            .state('app.assessment.create', {
-                url: '/create',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
-                cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('assessment-form.html'),
-                controller: 'AssessmentController'
-            })
-            .state('app.assessment.view', {
-                url: '/view',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
-                cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('assessment-form.html'),
-                controller: 'AssessmentController'
-            })
-
-            //.state('app', {
-          //    url: '/app',
-          //    abstract: true,
-          //    templateUrl: helper.basepath('app.html'),
-          //    resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl')
-          //})
-          //.state('app.dashboard', {
-          //    url: '/dashboard',
-          //    title: 'Dashboard',
-          //    templateUrl: helper.basepath('dashboard.html'),
-          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins', 'weather-icons')
-          //})
-          //.state('app.dashboard_v2', {
-          //    url: '/dashboard_v2',
-          //    title: 'Dashboard v2',
-          //    templateUrl: helper.basepath('dashboard_v2.html'),
-          //    controller: 'DashboardV2Controller',
-          //    controllerAs: 'dash2',
-          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
-          //})
-          //.state('app.dashboard_v3', {
-          //    url: '/dashboard_v3',
-          //    title: 'Dashboard v3',
-          //    controller: 'DashboardV3Controller',
-          //    controllerAs: 'dash3',
-          //    templateUrl: helper.basepath('dashboard_v3.html'),
-          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins', 'vector-map', 'vector-map-maps')
-          //})
-          //.state('app.widgets', {
-          //    url: '/widgets',
-          //    title: 'Widgets',
-          //    templateUrl: helper.basepath('widgets.html'),
-          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
-          //})
-          //.state('app.buttons', {
-          //    url: '/buttons',
-          //    title: 'Buttons',
-          //    templateUrl: helper.basepath('buttons.html')
-          //})
-          //.state('app.colors', {
-          //    url: '/colors',
-          //    title: 'Colors',
-          //    templateUrl: helper.basepath('colors.html')
-          //})
-          //.state('app.localization', {
-          //    url: '/localization',
-          //    title: 'Localization',
-          //    templateUrl: helper.basepath('localization.html')
-          //})
-          //.state('app.infinite-scroll', {
-          //    url: '/infinite-scroll',
-          //    title: 'Infinite Scroll',
-          //    templateUrl: helper.basepath('infinite-scroll.html'),
-          //    resolve: helper.resolveFor('infinite-scroll')
-          //})
-          //.state('app.navtree', {
-          //    url: '/navtree',
-          //    title: 'Nav Tree',
-          //    templateUrl: helper.basepath('nav-tree.html'),
-          //    resolve: helper.resolveFor('angularBootstrapNavTree')
-          //})
-          //.state('app.nestable', {
-          //    url: '/nestable',
-          //    title: 'Nestable',
-          //    templateUrl: helper.basepath('nestable.html'),
-          //    resolve: helper.resolveFor('ng-nestable')
-          //})
-          //.state('app.sortable', {
-          //    url: '/sortable',
-          //    title: 'Sortable',
-          //    templateUrl: helper.basepath('sortable.html'),
-          //    resolve: helper.resolveFor('htmlSortable')
-          //})
-          //.state('app.notifications', {
-          //    url: '/notifications',
-          //    title: 'Notifications',
-          //    templateUrl: helper.basepath('notifications.html')
-          //})
-          //.state('app.carousel', {
-          //    url: '/carousel',
-          //    title: 'Carousel',
-          //    templateUrl: helper.basepath('carousel.html'),
-          //    resolve: helper.resolveFor('angular-carousel')
-          //})
-          //.state('app.ngdialog', {
-          //    url: '/ngdialog',
-          //    title: 'ngDialog',
-          //    templateUrl: helper.basepath('ngdialog.html'),
-          //    resolve: angular.extend(helper.resolveFor('ngDialog'),{
-          //      tpl: function() { return { path: helper.basepath('ngdialog-template.html') }; }
-          //    }),
-          //    controller: 'DialogIntroCtrl'
-          //})
-          //.state('app.sweetalert', {
-          //  url: '/sweetalert',
-          //  title: 'SweetAlert',
-          //  templateUrl: helper.basepath('sweetalert.html'),
-          //  resolve: helper.resolveFor('oitozero.ngSweetAlert')
-          //})
-          //.state('app.tour', {
-          //  url: '/tour',
-          //  title: 'Tour',
-          //  templateUrl: helper.basepath('tour.html'),
-          //  resolve: helper.resolveFor('bm.bsTour')
-          //})
-          //.state('app.interaction', {
-          //    url: '/interaction',
-          //    title: 'Interaction',
-          //    templateUrl: helper.basepath('interaction.html')
-          //})
-          //.state('app.spinners', {
-          //    url: '/spinners',
-          //    title: 'Spinners',
-          //    templateUrl: helper.basepath('spinners.html'),
-          //    resolve: helper.resolveFor('loaders.css', 'spinkit')
-          //})
-          //.state('app.dropdown-animations', {
-          //    url: '/dropdown-animations',
-          //    title: 'Dropdown Animations',
-          //    templateUrl: helper.basepath('dropdown-animations.html')
-          //})
-          //.state('app.panels', {
-          //    url: '/panels',
-          //    title: 'Panels',
-          //    templateUrl: helper.basepath('panels.html')
-          //})
-          //.state('app.portlets', {
-          //    url: '/portlets',
-          //    title: 'Portlets',
-          //    templateUrl: helper.basepath('portlets.html'),
-          //    resolve: helper.resolveFor('jquery-ui', 'jquery-ui-widgets')
-          //})
-          //.state('app.maps-google', {
-          //    url: '/maps-google',
-          //    title: 'Maps Google',
-          //    templateUrl: helper.basepath('maps-google.html'),
-          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
-          //})
-          //.state('app.maps-vector', {
-          //    url: '/maps-vector',
-          //    title: 'Maps Vector',
-          //    templateUrl: helper.basepath('maps-vector.html'),
-          //    controller: 'VectorMapController',
-          //    controllerAs: 'vmap',
-          //    resolve: helper.resolveFor('vector-map', 'vector-map-maps')
-          //})
-          //.state('app.grid', {
-          //    url: '/grid',
-          //    title: 'Grid',
-          //    templateUrl: helper.basepath('grid.html')
-          //})
-          //.state('app.grid-masonry', {
-          //    url: '/grid-masonry',
-          //    title: 'Grid Masonry',
-          //    templateUrl: helper.basepath('grid-masonry.html')
-          //})
-          //.state('app.grid-masonry-deck', {
-          //    url: '/grid-masonry-deck',
-          //    title: 'Grid Masonry',
-          //    templateUrl: helper.basepath('grid-masonry-deck.html'),
-          //    resolve: helper.resolveFor('spinkit', 'akoenig.deckgrid')
-          //})
-          //.state('app.typo', {
-          //    url: '/typo',
-          //    title: 'Typo',
-          //    templateUrl: helper.basepath('typo.html')
-          //})
-          //.state('app.icons-font', {
-          //    url: '/icons-font',
-          //    title: 'Icons Font',
-          //    templateUrl: helper.basepath('icons-font.html'),
-          //    resolve: helper.resolveFor('icons')
-          //})
-          //.state('app.icons-weather', {
-          //    url: '/icons-weather',
-          //    title: 'Icons Weather',
-          //    templateUrl: helper.basepath('icons-weather.html'),
-          //    resolve: helper.resolveFor('weather-icons', 'skycons')
-          //})
-          //.state('app.form-standard', {
-          //    url: '/form-standard',
-          //    title: 'Form Standard',
-          //    templateUrl: helper.basepath('form-standard.html')
-          //})
-          //.state('app.form-extended', {
-          //    url: '/form-extended',
-          //    title: 'Form Extended',
-          //    templateUrl: helper.basepath('form-extended.html'),
-          //    resolve: helper.resolveFor('colorpicker.module', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
-          //})
-          //.state('app.form-validation', {
-          //    url: '/form-validation',
-          //    title: 'Form Validation',
-          //    templateUrl: helper.basepath('form-validation.html'),
-          //    resolve: helper.resolveFor('ui.select', 'taginput','inputmask','localytics.directives')
-          //})
-          //.state('app.form-parsley', {
-          //    url: '/form-parsley',
-          //    title: 'Form Validation - Parsley',
-          //    templateUrl: helper.basepath('form-parsley.html'),
-          //    resolve: helper.resolveFor('parsley')
-          //})
-          //.state('app.form-wizard', {
-          //    url: '/form-wizard',
-          //    title: 'Form Wizard',
-          //    templateUrl: helper.basepath('form-wizard.html'),
-          //    resolve: helper.resolveFor('parsley')
-          //})
-          //.state('app.form-upload', {
-          //    url: '/form-upload',
-          //    title: 'Form upload',
-          //    templateUrl: helper.basepath('form-upload.html'),
-          //    resolve: helper.resolveFor('angularFileUpload', 'filestyle')
-          //})
-          //.state('app.form-xeditable', {
-          //    url: '/form-xeditable',
-          //    templateUrl: helper.basepath('form-xeditable.html'),
-          //    resolve: helper.resolveFor('xeditable')
-          //})
-          //.state('app.form-imagecrop', {
-          //    url: '/form-imagecrop',
-          //    templateUrl: helper.basepath('form-imagecrop.html'),
-          //    resolve: helper.resolveFor('ngImgCrop', 'filestyle')
-          //})
-          //.state('app.form-uiselect', {
-          //    url: '/form-uiselect',
-          //    templateUrl: helper.basepath('form-uiselect.html'),
-          //    controller: 'uiSelectController',
-          //    controllerAs: 'uisel',
-          //    resolve: helper.resolveFor('ui.select')
-          //})
-          //.state('app.chart-flot', {
-          //    url: '/chart-flot',
-          //    title: 'Chart Flot',
-          //    templateUrl: helper.basepath('chart-flot.html'),
-          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
-          //})
-          //.state('app.chart-radial', {
-          //    url: '/chart-radial',
-          //    title: 'Chart Radial',
-          //    templateUrl: helper.basepath('chart-radial.html'),
-          //    resolve: helper.resolveFor('classyloader', 'ui.knob', 'easypiechart')
-          //})
-          //.state('app.chart-js', {
-          //    url: '/chart-js',
-          //    title: 'Chart JS',
-          //    templateUrl: helper.basepath('chart-js.html'),
-          //    resolve: helper.resolveFor('chartjs')
-          //})
-          //.state('app.chart-rickshaw', {
-          //    url: '/chart-rickshaw',
-          //    title: 'Chart Rickshaw',
-          //    templateUrl: helper.basepath('chart-rickshaw.html'),
-          //    resolve: helper.resolveFor('angular-rickshaw')
-          //})
-          //.state('app.chart-morris', {
-          //    url: '/chart-morris',
-          //    title: 'Chart Morris',
-          //    templateUrl: helper.basepath('chart-morris.html'),
-          //    resolve: helper.resolveFor('morris')
-          //})
-          //.state('app.chart-chartist', {
-          //    url: '/chart-chartist',
-          //    title: 'Chart Chartist',
-          //    templateUrl: helper.basepath('chart-chartist.html'),
-          //    resolve: helper.resolveFor('angular-chartist')
-          //})
-          //.state('app.table-standard', {
-          //    url: '/table-standard',
-          //    title: 'Table Standard',
-          //    templateUrl: helper.basepath('table-standard.html')
-          //})
-          //.state('app.table-extended', {
-          //    url: '/table-extended',
-          //    title: 'Table Extended',
-          //    templateUrl: helper.basepath('table-extended.html')
-          //})
-          //.state('app.table-datatable', {
-          //    url: '/table-datatable',
-          //    title: 'Table Datatable',
-          //    templateUrl: helper.basepath('table-datatable.html'),
-          //    resolve: helper.resolveFor('datatables')
-          //})
-          //.state('app.table-xeditable', {
-          //    url: '/table-xeditable',
-          //    templateUrl: helper.basepath('table-xeditable.html'),
-          //    resolve: helper.resolveFor('xeditable')
-          //})
-          //.state('app.table-ngtable', {
-          //    url: '/table-ngtable',
-          //    templateUrl: helper.basepath('table-ngtable.html'),
-          //    resolve: helper.resolveFor('ngTable', 'ngTableExport')
-          //})
-          //.state('app.table-uigrid', {
-          //    url: '/table-uigrid',
-          //    templateUrl: helper.basepath('table-uigrid.html'),
-          //    resolve: helper.resolveFor('ui.grid')
-          //})
-          //.state('app.table-angulargrid', {
-          //    url: '/table-angulargrid',
-          //    templateUrl: helper.basepath('table-angulargrid.html'),
-          //    resolve: helper.resolveFor('angularGrid')
-          //})
-          //.state('app.timeline', {
-          //    url: '/timeline',
-          //    title: 'Timeline',
-          //    templateUrl: helper.basepath('timeline.html')
-          //})
-          //.state('app.calendar', {
-          //    url: '/calendar',
-          //    title: 'Calendar',
-          //    templateUrl: helper.basepath('calendar.html'),
-          //    resolve: helper.resolveFor('jquery-ui', 'jquery-ui-widgets', 'moment', 'fullcalendar')
-          //})
-          //.state('app.invoice', {
-          //    url: '/invoice',
-          //    title: 'Invoice',
-          //    templateUrl: helper.basepath('invoice.html')
-          //})
-          //.state('app.search', {
-          //    url: '/search',
-          //    title: 'Search',
-          //    templateUrl: helper.basepath('search.html'),
-          //    resolve: helper.resolveFor('moment', 'localytics.directives', 'ui.bootstrap-slider')
-          //})
-          //.state('app.todo', {
-          //    url: '/todo',
-          //    title: 'Todo List',
-          //    templateUrl: helper.basepath('todo.html'),
-          //    controller: 'TodoController',
-          //    controllerAs: 'todo'
-          //})
-          //.state('app.profile', {
-          //    url: '/profile',
-          //    title: 'Profile',
-          //    templateUrl: helper.basepath('profile.html'),
-          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
-          //})
-          //.state('app.code-editor', {
-          //    url: '/code-editor',
-          //    templateUrl: helper.basepath('code-editor.html'),
-          //    controller: 'CodeEditorController',
-          //    controllerAs: 'coder',
-          //    resolve: {
-          //        deps: helper.resolveFor('codemirror', 'ui.codemirror', 'codemirror-modes-web', 'angularBootstrapNavTree').deps,
-          //        filetree: ['LoadTreeService', function (LoadTreeService) {
-          //            return LoadTreeService.get().$promise.then(function (res) {
-          //                return res.data;
-          //            });
-          //        }]
-          //    }
-          //})
-          //.state('app.template', {
-          //    url: '/template',
-          //    title: 'Blank Template',
-          //    templateUrl: helper.basepath('template.html')
-          //})
-          //.state('app.documentation', {
-          //    url: '/documentation',
-          //    title: 'Documentation',
-          //    templateUrl: helper.basepath('documentation.html'),
-          //    resolve: helper.resolveFor('flatdoc')
-          //})
-          //// Forum
-          //// -----------------------------------
-          //.state('app.forum', {
-          //    url: '/forum',
-          //    title: 'Forum',
-          //    templateUrl: helper.basepath('forum.html')
-          //})
-          //.state('app.forum-topics', {
-          //    url: '/forum/topics/:catid',
-          //    title: 'Forum Topics',
-          //    templateUrl: helper.basepath('forum-topics.html')
-          //})
-          //.state('app.forum-discussion', {
-          //    url: '/forum/discussion/:topid',
-          //    title: 'Forum Discussion',
-          //    templateUrl: helper.basepath('forum-discussion.html')
-          //})
-          //// Blog
-          //// -----------------------------------
-          //.state('app.blog', {
-          //    url: '/blog',
-          //    title: 'Blog',
-          //    templateUrl: helper.basepath('blog.html'),
-          //    resolve: helper.resolveFor('angular-jqcloud')
-          //})
-          //.state('app.blog-post', {
-          //    url: '/post',
-          //    title: 'Post',
-          //    templateUrl: helper.basepath('blog-post.html'),
-          //    resolve: helper.resolveFor('angular-jqcloud')
-          //})
-          //.state('app.articles', {
-          //    url: '/articles',
-          //    title: 'Articles',
-          //    templateUrl: helper.basepath('blog-articles.html'),
-          //    resolve: helper.resolveFor('datatables')
-          //})
-          //.state('app.article-view', {
-          //    url: '/article/:id',
-          //    title: 'Article View',
-          //    templateUrl: helper.basepath('blog-article-view.html'),
-          //    resolve: helper.resolveFor('ui.select', 'textAngular')
-          //})
-          //// eCommerce
-          //// -----------------------------------
-          //.state('app.orders', {
-          //    url: '/orders',
-          //    title: 'Orders',
-          //    templateUrl: helper.basepath('ecommerce-orders.html'),
-          //    resolve: helper.resolveFor('datatables')
-          //})
-          //.state('app.order-view', {
-          //    url: '/order-view',
-          //    title: 'Order View',
-          //    templateUrl: helper.basepath('ecommerce-order-view.html')
-          //})
-          //.state('app.products', {
-          //    url: '/products',
-          //    title: 'Products',
-          //    templateUrl: helper.basepath('ecommerce-products.html'),
-          //    resolve: helper.resolveFor('datatables')
-          //})
-          //.state('app.product-view', {
-          //    url: '/product/:id',
-          //    title: 'Product View',
-          //    templateUrl: helper.basepath('ecommerce-product-view.html')
-          //})
-          //// Mailbox
-          //// -----------------------------------
-          //.state('app.mailbox', {
-          //    url: '/mailbox',
-          //    title: 'Mailbox',
-          //    abstract: true,
-          //    templateUrl: helper.basepath('mailbox.html')
-          //})
-          //.state('app.mailbox.folder', {
-          //    url: '/folder/:folder',
-          //    title: 'Mailbox',
-          //    templateUrl: helper.basepath('mailbox-inbox.html')
-          //})
-          //.state('app.mailbox.view', {
-          //    url : '/{mid:[0-9]{1,4}}',
-          //    title: 'View mail',
-          //    templateUrl: helper.basepath('mailbox-view.html'),
-          //    resolve: helper.resolveFor('ngWig')
-          //})
-          //.state('app.mailbox.compose', {
-          //    url: '/compose',
-          //    title: 'Mailbox',
-          //    templateUrl: helper.basepath('mailbox-compose.html'),
-          //    resolve: helper.resolveFor('ngWig')
-          //})
-          ////
-          //// Multiple level example
-          //// -----------------------------------
-          //.state('app.multilevel', {
-          //    url: '/multilevel',
-          //    title: 'Multilevel',
-          //    template: '<h3>Multilevel Views</h3>' + '<div class="lead ba p">View @ Top Level ' + '<div ui-view=""></div> </div>'
-          //})
-          //.state('app.multilevel.level1', {
-          //    url: '/level1',
-          //    title: 'Multilevel - Level1',
-          //    template: '<div class="lead ba p">View @ Level 1' + '<div ui-view=""></div> </div>'
-          //})
-          //.state('app.multilevel.level1.item', {
-          //    url: '/item',
-          //    title: 'Multilevel - Level1',
-          //    template: '<div class="lead ba p"> Menu item @ Level 1</div>'
-          //})
-          //.state('app.multilevel.level1.level2', {
-          //    url: '/level2',
-          //    title: 'Multilevel - Level2',
-          //    template: '<div class="lead ba p">View @ Level 2'  + '<div ui-view=""></div> </div>'
-          //})
-          //.state('app.multilevel.level1.level2.level3', {
-          //    url: '/level3',
-          //    title: 'Multilevel - Level3',
-          //    template: '<div class="lead ba p">View @ Level 3' + '<div ui-view=""></div> </div>'
-          //})
-          //.state('app.multilevel.level1.level2.level3.item', {
-          //    url: '/item',
-          //    title: 'Multilevel - Level3 Item',
-          //    template: '<div class="lead ba p"> Menu item @ Level 3</div>'
-          //})
-          ////
-          //// Single Page Routes
-          //// -----------------------------------
-          //.state('page', {
-          //    url: '/page',
-          //    templateUrl: 'app/pages/page.html',
-          //    resolve: helper.resolveFor('modernizr', 'icons'),
-          //    controller: ['$rootScope', function($rootScope) {
-          //        $rootScope.app.layout.isBoxed = false;
-          //    }]
-          //})
-          //.state('page.login', {
-          //    url: '/login',
-          //    title: 'Login',
-          //    templateUrl: 'app/pages/login.html'
-          //})
-          //.state('page.register', {
-          //    url: '/register',
-          //    title: 'Register',
-          //    templateUrl: 'app/pages/register.html'
-          //})
-          //.state('page.recover', {
-          //    url: '/recover',
-          //    title: 'Recover',
-          //    templateUrl: 'app/pages/recover.html'
-          //})
-          //.state('page.lock', {
-          //    url: '/lock',
-          //    title: 'Lock',
-          //    templateUrl: 'app/pages/lock.html'
-          //})
-          //.state('page.404', {
-          //    url: '/404',
-          //    title: 'Not Found',
-          //    templateUrl: 'app/pages/404.html'
-          //})
-          ////
-          //// Horizontal layout
-          //// -----------------------------------
-          //.state('app-h', {
-          //    url: '/app-h',
-          //    abstract: true,
-          //    templateUrl: helper.basepath( 'app-h.html' ),
-          //    resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl')
-          //})
-          //.state('app-h.dashboard_v2', {
-          //    url: '/dashboard_v2',
-          //    title: 'Dashboard v2',
-          //    templateUrl: helper.basepath('dashboard_v2.html'),
-          //    controller: 'DashboardV2Controller',
-          //    controllerAs: 'dash2',
-          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
-          //})
-          //
-          // CUSTOM RESOLVES
-          //   Add your own resolves properties
-          //   following this object extend
-          //   method
-          // -----------------------------------
-          // .state('app.someroute', {
-          //   url: '/some_url',
-          //   templateUrl: 'path_to_template.html',
-          //   controller: 'someController',
-          //   resolve: angular.extend(
-          //     helper.resolveFor(), {
-          //     // YOUR RESOLVES GO HERE
-          //     }
-          //   )
-          // })
-          ;
-
-    } // routesConfig
-
-})();
-
-
-/**
- * Created by dfash on 6/10/16.
- */
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.routes')
-        .run(['$rootScope', '$state', 'loginFactory', '$location',
-            function ($rootScope, $state, loginFactory, $location) {
-
-
-                $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-
-                    //if toState requires authenticate and user is not logged in
-                    if (toState.data.authenticate) {
-
-                        //if user is not logged in
-                        if(!loginFactory.getUserStatus()) {
-
-                            //save anticipated state
-                            loginFactory.toState = toState;
-
-                            $state.transitionTo('page.login');
-                            event.preventDefault();
-                        }
-
-                        //handle when user refreshes unauthorized page
-                        if(toState.name == 'app.unauthorized' && fromState.name == '') {
-                            $state.go('app.dashboard');
-                        }
-
-                    }
-
-                    //if toState is 'page.login' And user is already logged in
-                    if (toState.name == 'page.login' && loginFactory.getUserStatus()) {
-
-                        if (fromState.name != '') {
-                            $state.go(fromState.name);//return state
-                        }
-                        else {
-                            $state.go('app.dashboard');//go to default state
-                        }
-                        event.preventDefault();
-                    }
-
-                    //confirm if user is logged in
-                    if (loginFactory.getUserStatus()) {
-                        loginFactory.authCheck();
-                    }
-                });
-
-            }])
-})();
 (function() {
     'use strict';
 
@@ -13782,6 +13782,96 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             }]);
 })();
 /**
+ * Created by dfash on 6/9/16.
+ */
+
+(function () {
+    angular
+        .module('app.core')
+        .config(['$urlRouterProvider', function ($urlRouterProvider) {
+
+            // Prevent router from automatic state resolving
+            $urlRouterProvider.deferIntercept();
+
+            // Use instead
+            $urlRouterProvider.otherwise( function($injector) {
+                var $state = $injector.get("$state");
+                $state.go('page.login');
+            });
+        }]);
+})();
+/**
+ * Created by dfash on 6/9/16.
+ */
+
+(function () {
+    angular
+        .module('app.core')
+        .run(permissionRun);
+
+    function permissionRun(userFactory, PermissionStore, RoleStore, $urlRouter, $http){
+        //PermissionStore
+        //    .definePermission('create.airtime', function () {
+        //        return userFactory.userCan('approve.airtime');
+        //    });
+        //
+
+        // Example ajax call
+            $http
+                .get('/api/permission/controls')
+                .then(function (permissions) {
+                    //console.log(permissions);
+                    // Use RoleStore and PermissionStore to define permissions and roles
+                    angular.forEach(permissions.data.permissions, function ($permission) {
+                        //console.log($permission.slug);
+                        PermissionStore.definePermission($permission.slug, function () {
+                            return userFactory.userCan($permission.slug);
+                        })
+                    });
+
+                    //save roles
+                    angular.forEach(permissions.data.roles, function ($roles) {
+                        RoleStore.defineRole($roles.slug, function () {
+                            return userFactory.userIs($roles.slug);
+                        })
+                    });
+                    // or even set up whole session
+                })
+                .then(function () {
+
+                    //console.log(PermissionStore.getStore());
+                    //console.log(RoleStore.getStore());
+
+                    // Once permissions are set-up
+                    // kick-off router and start the application rendering
+                    $urlRouter.sync();
+                    // Also enable router to listen to url changes
+                    $urlRouter.listen();
+                });
+    }
+    permissionRun.$inject = ["userFactory", "PermissionStore", "RoleStore", "$urlRouter", "$http"];
+
+
+})();
+/**
+ * Created by dfash on 7/6/16.
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app.sidebar')
+        .directive('sideMenuPermission', function() {
+
+            return {
+                restrict: 'AE',
+                link: function (scope, elem, attrs) {
+                    console.log('Linking....');
+                }
+            }
+        });
+})();
+/**
  * Created by dfash on 5/5/16.
  */
 
@@ -13848,64 +13938,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             this.register = function() {
                 return $resource(baseURL + 'user', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
             }
-        }]);
-})();
-/**
- * Created by dfash on 6/22/16.
- */
-
-(function() {
-    angular
-        .module('app.order')
-        .controller('AssessmentController', ['$scope', '$rootScope', function($scope, $rootScope) {
-
-            var vm = $scope;
-
-            vm.partOne = { personal:{ date_confirm: {date:'', opened:false}, appraisal_date: {date:'', opened:false} },
-                qualifications:[{date:'', opened:false},{date:'', opened:false},{date:'', opened:false},{date:'', opened:false}] };
-
-            vm.partTwo = { review:[{}], performance:{}};
-            vm.partThree = {competencies:{}};
-
-            vm.supervisor = {};
-
-            //START-DATE functions
-            vm.today = function() {
-                vm.dt = new Date();
-            };
-            vm.today();
-
-            vm.clear = function () {
-                vm.dt = null;
-            };
-
-            // Disable weekend selection
-            vm.disabled = function(date, mode) {
-                return false;
-                //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
-            };
-
-            vm.toggleMin = function() {
-                vm.minDate = vm.minDate ? null : new Date();
-            };
-            vm.toggleMin();
-
-            vm.open = function($event, dateObj) {
-                $event.preventDefault();
-                $event.stopPropagation();
-
-                dateObj.opened = true;
-            };
-
-            vm.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-            };
-
-            vm.initDate = new Date('2019-10-20');
-            vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            vm.dateFormat = vm.dateFormats[0];
-        //END: Date functions
         }]);
 })();
 /**
@@ -14667,82 +14699,13 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             }]);
 })();
 /**
- * Created by dfash on 6/9/16.
- */
-
-(function () {
-    angular
-        .module('app.core')
-        .config(['$urlRouterProvider', function ($urlRouterProvider) {
-
-            // Prevent router from automatic state resolving
-            $urlRouterProvider.deferIntercept();
-
-            // Use instead
-            $urlRouterProvider.otherwise( function($injector) {
-                var $state = $injector.get("$state");
-                $state.go('page.login');
-            });
-        }]);
-})();
-/**
- * Created by dfash on 6/9/16.
- */
-
-(function () {
-    angular
-        .module('app.core')
-        .run(permissionRun);
-
-    function permissionRun(userFactory, PermissionStore, RoleStore, $urlRouter, $http){
-        //PermissionStore
-        //    .definePermission('create.airtime', function () {
-        //        return userFactory.userCan('approve.airtime');
-        //    });
-        //
-
-        // Example ajax call
-            $http
-                .get('/api/permission/controls')
-                .then(function (permissions) {
-                    //console.log(permissions);
-                    // Use RoleStore and PermissionStore to define permissions and roles
-                    angular.forEach(permissions.data.permissions, function ($permission) {
-                        //console.log($permission.slug);
-                        PermissionStore.definePermission($permission.slug, function () {
-                            return userFactory.userCan($permission.slug);
-                        })
-                    });
-
-                    //save roles
-                    angular.forEach(permissions.data.roles, function ($roles) {
-                        RoleStore.defineRole($roles.slug, function () {
-                            return userFactory.userIs($roles.slug);
-                        })
-                    });
-                    // or even set up whole session
-                })
-                .then(function () {
-
-                    //console.log(PermissionStore.getStore());
-                    //console.log(RoleStore.getStore());
-
-                    // Once permissions are set-up
-                    // kick-off router and start the application rendering
-                    $urlRouter.sync();
-                    // Also enable router to listen to url changes
-                    $urlRouter.listen();
-                });
-    }
-    permissionRun.$inject = ["userFactory", "PermissionStore", "RoleStore", "$urlRouter", "$http"];
-
-
-})();
-/**
  * Created by dfash on 4/29/16.
  */
 
 (function() {
+
+    'use strict';
+
     angular
         .module('app.order')
         .controller('AirtimeCreateController',
@@ -14757,22 +14720,21 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             vm.slotValid = false;
             vm.cart = [];
             vm.orderButton = undefined;
-
+            vm.btn = {};
 
             vm.form = {
-                bulk: false,
                 price: 0.00,
-                broadcast: 1,
-                bulk_start_date:'',
-                //bulk_start_time:'',
-                bulk_end_date:'',
-                //bulk_end_time:'',
-                fixedSpot: false,
-                trans_date:'',
-                //trans_time:'',
-                subCharge:'0',
-                duration: 0,
                 period: '',
+
+                no_slots: "0",
+                slot_start_date: "",
+                slot_end_date: "",
+                fixSpotPrice: "",
+
+                broadcast: "0",
+                bulk_start_date:'',
+                bulk_end_date:'',
+                bulkPrice: "",
                 discount: '0',
                 commission: '0',
                 agree: false,
@@ -14788,14 +14750,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             vm.periods = [{value:'premium', label:'Premium' }, {value:'regular', label:'Regular'}];
 
             vm.client = {};
-            //vm.clients = clientFactory.getClients().query().$promise.then(
-            //    function(response) {
-            //        vm.clients = response;
-            //    },
-            //    function () {
-            //        vm.clients = [];
-            //    }
-            //)
             //TODO: implement this for
             vm.refreshClient = function(search) {
                 clientFactory.getClients().query().$promise.then(
@@ -14803,6 +14757,96 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                         vm.clients = response;
                     }
                 );
+            };
+
+            vm.slot_start_date = "";
+            vm.slot_end_date = "";
+
+            vm.getSlotRange = function(n) {
+                return new Array(parseInt(n));
+            };
+
+            vm.maxSlotRange = 0;
+
+            vm.maxSlotRangeChange = function() {
+                vm.maxSlotRange = angular.copy(vm.form.no_slots);
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.maxSlotRange);
+            };
+
+            vm.bulkRangeChanged = function() {
+                vm.form.bulkPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.broadcast);
+            };
+
+            vm.clearBulk = function() {
+                vm.form.broadcast = 0;
+                vm.form.bulk_start_date = null;
+                vm.form.bulk_end_date = null;
+                vm.bulkRangeChanged();
+            };
+
+            vm.clearSlot = function() {
+                vm.form.no_slots = 0;
+                vm.form.slot_start_date = null;
+                vm.form.slot_end_date = null;
+                vm.maxSlotRange = 0;
+                vm.fixForDate = {};
+                vm.scheduleSlots = [];
+                vm.btn.fixslot = false;
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.no_slots);
+            };
+
+            vm.fixForDate = {};
+            vm.scheduleSlots = [];
+
+            //validation for add slot button if all fixed time is set
+            vm.checkScheduleSlot = function() {
+                var valid = true;
+                if(vm.scheduleSlots.length) {
+                    for(var i=0; i<vm.scheduleSlots.length; i++) {
+                        valid = vm.scheduleSlots[i].tofix == vm.scheduleSlots[i].times.length;
+                    }
+                }
+                return valid;
+            };
+
+            //push into table
+            vm.pushToSchedule = function() {
+                vm.fixForDate.times = [];
+                vm.scheduleSlots.push(vm.fixForDate);
+                vm.recalculateSlot();
+            };
+
+            //recalculate slot if any changes
+            vm.recalculateSlot = function() {
+                var slot = angular.copy(vm.fixForDate.slot);
+                vm.maxSlotRange = parseInt(vm.maxSlotRange) - parseInt(slot);
+
+                vm.fixForDate = {slot:"1"};
+            };
+
+            //remove fixed spot from the table
+            vm.removeSchedule = function($index) {
+                vm.maxSlotRange = parseInt(vm.maxSlotRange) + parseInt(vm.scheduleSlots[$index].slot);
+                vm.scheduleSlots.splice($index, 1);
+
+                vm.calcFixedPrice();
+            };
+
+            vm.calcFixedPrice = function () {
+
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.no_slots);
+
+                //selected  product price
+                var selProdPrice = parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]);
+
+                for(var i = 0; i < vm.scheduleSlots.length; i++) {
+                    var schtable = vm.scheduleSlots[i];
+
+                    //cal normal price for tofix slot and remove it from already calculated price
+                    var price = parseInt(schtable.tofix) * parseFloat(selProdPrice);
+
+                    vm.form.fixSpotPrice = parseFloat(vm.form.fixSpotPrice) + ( (parseInt(vm.product.selected.surcharge) / 100) * parseFloat(price) );
+                }
             };
 
             //submit order
@@ -14849,9 +14893,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 );
             };
 
-            vm.updateCartCookie = function() {
-                $cookies.put('cart', vm.cart);
-            };
 
             //set default to current user
             vm.marketer = {'selected': loginFactory.userData()};
@@ -14878,20 +14919,14 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 vm.totalWComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt;
             };
 
+            //get total price of a product
             vm.calProductSubscription = function(itemIdx) {
                 var sum = 0;
                 for(var j=0; j<vm.cart[itemIdx].subscriptions.length; j++) {
 
                     var subObj = vm.cart[itemIdx].subscriptions[j];
 
-                    //it is bulk option
-                    if(subObj.broadcast > 0) {
-                        //do calculations for bulk option
-                        sum += parseFloat(subObj.amount) * subObj.broadcast;
-                        continue;
-                    }
-                    //it is add slot and / fixed spot
-                    sum += parseFloat(subObj.amount) + parseFloat(subObj.subChargePrice);
+                    sum += parseFloat(subObj.amount);// + parseFloat(subObj.subChargePrice);
                 }
                 return sum;
             };
@@ -14919,27 +14954,23 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             };
 
             vm.productPrice = function () {
-                return ( (vm.form.subCharge/100) * parseFloat(vm.form.price)) + parseFloat(vm.form.price);
+                return parseFloat(vm.form.price);
             };
 
             vm.addBulk = function() {
                 //TODO: do validation here
                 if(vm.product.selected == '') return;
 
-                var bulkSub = {
+                //pick number of broadcast
+                //pick bulkstartdate
+                //pick bulkenddate
+
+                var data = {
                     broadcast:vm.form.broadcast,
-                    fixedSpot:false,
                     bulk_start_date:vm.form.bulk_start_date,
-                    //bulk_start_time:vm.form.bulk_start_time,
                     bulk_end_date:vm.form.bulk_end_date,
-                    //bulk_end_time:vm.form.bulk_end_time,
-                    trans_date:null,
-                    //trans_time:null,
-                    duration: null,
                     period: vm.form.period,
-                    amount: parseFloat(vm.form.price),
-                    subCharge:'0',
-                    subChargePrice:0
+                    amount: parseFloat(vm.form.bulkPrice),
                 };
 
                 vm.addItemToCart(); //attempts adding item to cart
@@ -14947,17 +14978,12 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 var index = vm.cartItemIndex(vm.product.selected.id);
                 //for(var i = 0; i<vm.form.broadcast; i++)
                 //{
-                vm.cart[index].subscriptions.push(bulkSub);
+                vm.cart[index].subscriptions.push(data);
                 //}
 
                 vm.calcCartTotalPrice();//recalculate cart price
 
-                //reset bulk option field
-                vm.form.broadcast = 0;
-                vm.form.bulk_start_date = '';
-                vm.form.bulk_start_time = '';
-                vm.form.bulk_end_date = '';
-                vm.form.bulk_end_time = '';
+                vm.clearBulk();
 
             };
 
@@ -14969,35 +14995,36 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 //new item object is created here to the vm
                 vm.addItemToCart();
 
-                var slotSub = {
-                    fixedSpot:vm.form.fixedSpot,
-                    bulk_start_date:null,
-                    //bulk_start_time:null,
-                    trans_date: vm.form.trans_date,
-                    //trans_time: vm.form.trans_time,
-                    duration: vm.form.duration,
+                //pick number if slot
+                //pick slot start date
+                //pick slot end date
+                //pick slot calculated price
+                //pick isFixedOrDisplaced
+                //pick programmes fixtures (object) schedule
+
+                var data = {
+                    slots: vm.form.no_slots,
+                    slot_start_date: vm.form.slot_start_date,
+                    slot_end_date: vm.form.slot_end_date,
+                    isFixedOrDisplaced: vm.btn.fixslot,
                     period: vm.form.period,
-                    amount: parseFloat(vm.form.price),
-                    subCharge:vm.form.subCharge,
-                    subChargePrice: ((vm.form.subCharge/100) * parseFloat(vm.form.price))
+                    amount: parseFloat(vm.form.fixSpotPrice),
+                    schedule: vm.scheduleSlots
                 };
                 var index = vm.cartItemIndex(vm.product.selected.id); //item obj created in vm.addItemToCart();
-                vm.cart[index].subscriptions.push(slotSub);
+                vm.cart[index].subscriptions.push(data);
 
                 vm.calcCartTotalPrice();
 
-                //reset Schedule details field
-                vm.form.fixedSpot = false;
-                vm.form.subCharge = '0';
-                vm.form.trans_date = '';
-                vm.form.trans_time = '';
-                vm.form.duration = 0;
+                vm.clearSlot();
+            };
 
-                //vm.updateCartCookie();
+            vm.clearScheduleTimes = function (schedule) {
+                schedule.times = [];
             };
 
             vm.minusBroadcast = function(itemIdx, subIdx) {
-                if(vm.cart[itemIdx].subscriptions[subIdx].broadcast == 1) return;
+                if(vm.cart[itemIdx].subscriptions[subIdx].broadcast == 501) return;
                 --vm.cart[itemIdx].subscriptions[subIdx].broadcast;
                 vm.calcCartTotalPrice();
             };
@@ -15025,7 +15052,9 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             vm.productChanged = function() {
                 vm.price = {index:0};
                 vm.form.period = 'premium';
-                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period]
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
+                vm.clearSlot();
+                vm.clearBulk();
             };
 
             vm.addItemToCart = function() {
@@ -15040,51 +15069,14 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
             vm.durationChange =  function() {
                 vm.form.period = 'premium';
-                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period]
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
             };
 
             vm.onPeriodChange = function() {
-                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period]
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
             };
 
-            vm.slotValidate = function() {
-
-                vm.slotValid = false;
-
-                if(vm.form.trans_date && vm.form.duration) {
-                    vm.slotValid = true;
-                }
-
-                return vm.slotValid;
-            };
-
-            vm.bulkValidate = function () {
-                vm.bulkValid = false;
-
-                var bsd = new Date(vm.form.bulk_start_date);
-                bsd.setHours(0,0,0,0);
-                var bed = new Date(vm.form.bulk_end_date);
-                bed.setHours(0,0,0,0);
-
-                if(bed < bsd) {
-                    //vm.form.bulkEndDate = null;
-                }
-
-                var bst = new Date(vm.form.bulk_start_date);
-                var bet = new Date(vm.form.bulk_end_date);
-
-                if(bet.getTime() <= bst.getTime()) {
-                    vm.form.bulk_end_date = null;
-                }
-
-                if(vm.form.bulk_start_date && vm.form.bulk_end_date && vm.form.broadcast > 0)
-                {
-                    vm.bulkValid = true;
-                }
-
-                return vm.bulkValid;
-            };
-
+            //validate bulk date and time
             vm.bulkValidate = function (type) {
                 vm.bulkValid = false;
 
@@ -15208,9 +15200,340 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 }
             }
 
-
         }]);
 })();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotStartDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotEndDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('FixedSlotDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('BulkStartDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('BulkEndDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotTimeModalCtrl', SlotTimeModalCtrl);
+
+    SlotTimeModalCtrl.$inject = ['$uibModal'];
+    function SlotTimeModalCtrl($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            vm.open = function (size, $schedule) {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: '/myModalContent.html',
+                    controller: ModalInstanceCtrl,
+                    size: size,
+                    resolve: {
+                        $schedule: function () {
+                            return $schedule;
+                        }
+                    },
+                    cache: false
+                });
+
+                var state = $('#modal-state');
+                modalInstance.result.then(function () {
+                    state.text('Modal dismissed with OK status');
+                }, function () {
+                    state.text('Modal dismissed with Cancel status');
+                });
+            };
+
+            // Please note that $uibModalInstance represents a modal window (instance) dependency.
+            // It is not the same as the $uibModal service used above.
+
+            ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', '$schedule'];
+            function ModalInstanceCtrl($scope, $uibModalInstance, $schedule) {
+
+                $scope.scheduleRef = $schedule;
+
+                $scope.getSlotRange = function(n) {
+                    return new Array(parseInt(n));
+                };
+
+                $scope.ok = function () {
+                    $uibModalInstance.close('closed');
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }
+        }
+    }
+
+})();
+
 /**
  * Created by dfash on 5/25/16.
  */
@@ -15477,6 +15800,18 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             }]);
 })();
 /**
+ * Created by dfash on 6/7/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('airtimeGenService', ['$resource', 'baseURL', function($resource, baseURL) {
+
+
+        }]);
+})();
+/**
  * Created by dfash on 5/25/16.
  */
 
@@ -15550,6 +15885,127 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             this.programmeAirtime = function () {
                 return $resource(baseURL + 'airtime/:id/programme', null, {'save':{'method': 'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
             };
+
+        }]);
+})();
+/**
+ * Created by dfash on 6/22/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService',
+            function($scope, toaster, assessmentService) {
+
+            var vm = $scope;
+
+            vm.partOne = { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
+                "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}] };
+
+            vm.partTwo = { "review":[{}], "performance":{}};
+            vm.partThree = {"competencies":{}};
+
+            vm.supervisor = {"attributes":{}, "habit":{}, "leadership":{}};
+
+
+            //submit form
+            vm.submitAssessment = function() {
+
+                var data = {"partOne":vm.partOne, "partTwo":vm.partTwo, "partThree":vm.partThree};
+
+                toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                assessmentService.assessment().save(data,
+                    function () {
+                        toaster.pop('success', 'Assessment', 'Data saved.');
+                        //Todo: assessment records
+                        //$timeout(function(){
+                        //    $state.go('app.client');
+                        //}, 500);
+                    },
+                    function (response) {
+                        if(response.status == 403) {
+                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                        }
+                    }
+                );
+            };
+
+            //START-DATE functions
+            vm.today = function() {
+                vm.dt = new Date();
+            };
+            vm.today();
+
+            vm.clear = function () {
+                vm.dt = null;
+            };
+
+            // Disable weekend selection
+            vm.disabled = function(date, mode) {
+                return false;
+                //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
+            };
+
+            vm.toggleMin = function() {
+                vm.minDate = vm.minDate ? null : new Date();
+            };
+            vm.toggleMin();
+
+            vm.open = function($event, dateObj) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                dateObj.opened = true;
+            };
+
+            vm.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+
+            vm.initDate = new Date('2019-10-20');
+            vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+            vm.dateFormat = vm.dateFormats[0];
+        //END: Date functions
+        }]);
+})();
+/**
+ * Created by dfash on 7/7/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.assessment = function() {
+                return $resource(baseURL + 'assessment', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest', 'Content-Type': 'application/json'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest', 'Content-Type': 'application/json' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest', 'Content-Type': 'application/json' }}
+                    }
+                )
+            }
+
+        }]);
+})();
+/**
+ * Created by dfash on 7/6/16.
+ */
+
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('assessmentServices', ['$scope', function($scope) {
+
 
         }]);
 })();
@@ -15781,6 +16237,93 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }]);
 })();
 /**
+ * Created by dfash on 5/18/16.
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
+            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
+
+                var vm = $scope;
+                
+                vm.alerts = [];
+
+                vm.profile = {_token: _token};
+
+                vm.reset = {_token: _token};
+
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+
+                $resource(baseURL + 'contacts').query().$promise.then(
+                    function (response) {
+                        vm.contacts = response;
+                    }
+                );
+
+                //profile
+                vm.profile = loginFactory.userData();
+
+                //uploader object
+                vm.uploader = new FileUploader({
+                    url: baseURL +'user/'+vm.profile.id+'/upload'
+                });
+
+                //upload
+                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
+
+                //upload
+                vm.uploader.onCompleteAll = function() {
+                    vm.uploader.clearQueue();
+                };
+
+
+                //submit profile form
+                vm.updateProfile = function() {
+                    $resource(baseURL + 'user/:id', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.profile,
+                        function () {
+                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};
+                            }
+                        }
+                    );
+
+                    //console.log(vm.profile);
+                    //vm.uploader.uploadAll();
+                };
+
+                vm.updatePassword = function() {
+                    $resource(baseURL + 'user/:id?action=password', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.reset,
+                        function () {
+                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
+                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail ');
+                                toaster.pop('error', 'Error', 'Failed to reset password');
+                            }
+                            else{
+                                toaster.pop('error', 'Error', 'Failed: contact administrator');
+                            }
+                        }
+                    );
+                }
+            }]);
+})();
+/**
  * Created by dfash on 5/23/16.
  */
 
@@ -15984,8 +16527,8 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
     angular
         .module('app.order')
-        .controller('PeopleController',
-        ["$scope", "toaster", "userFactory", "registerFactory", "permissionFactory", "DTOptionsBuilder", "DTColumnDefBuilder", "SweetAlert", function($scope, toaster, userFactory, registerFactory, permissionFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert){
+        .controller('PeopleController', ['$scope', 'toaster', 'userFactory', 'registerFactory', 'permissionFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+        function($scope, toaster, userFactory, registerFactory, permissionFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert){
 
             var vm = $scope;
 
@@ -16477,91 +17020,4 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             //    loginFactory.logout();
             //};
         }]);
-})();
-/**
- * Created by dfash on 5/18/16.
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
-            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
-
-                var vm = $scope;
-                
-                vm.alerts = [];
-
-                vm.profile = {_token: _token};
-
-                vm.reset = {_token: _token};
-
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-
-                $resource(baseURL + 'contacts').query().$promise.then(
-                    function (response) {
-                        vm.contacts = response;
-                    }
-                );
-
-                //profile
-                vm.profile = loginFactory.userData();
-
-                //uploader object
-                vm.uploader = new FileUploader({
-                    url: baseURL +'user/'+vm.profile.id+'/upload'
-                });
-
-                //upload
-                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
-                    console.info('onErrorItem', fileItem, response, status, headers);
-                };
-
-                //upload
-                vm.uploader.onCompleteAll = function() {
-                    vm.uploader.clearQueue();
-                };
-
-
-                //submit profile form
-                vm.updateProfile = function() {
-                    $resource(baseURL + 'user/:id', null, {'update':{method:'PUT'}})
-                        .update({'id':vm.profile.id}, vm.profile,
-                        function () {
-                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};
-                            }
-                        }
-                    );
-
-                    //console.log(vm.profile);
-                    //vm.uploader.uploadAll();
-                };
-
-                vm.updatePassword = function() {
-                    $resource(baseURL + 'user/:id?action=password', null, {'update':{method:'PUT'}})
-                        .update({'id':vm.profile.id}, vm.reset,
-                        function () {
-                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
-                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail ');
-                                toaster.pop('error', 'Error', 'Failed to reset password');
-                            }
-                            else{
-                                toaster.pop('error', 'Error', 'Failed: contact administrator');
-                            }
-                        }
-                    );
-                }
-            }]);
 })();

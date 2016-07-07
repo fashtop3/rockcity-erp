@@ -84,11 +84,11 @@
         </div>
     </div>
 
-    <!-- cart list items-->
     <div class="row">
         <div class="col-sm-12">
             <div class="list-group">
-                <li class="list-group-item" ng-if="cart.length" ng-repeat="item in cart track by $index">
+
+                <li ng-if="cart.length" ng-repeat="item in cart track by $index">
                     <!-- START panel-->
                     <div id="product{{item.id}}" class="panel panel-default">
                         <div ng-class="{'panel-heading-collapsed':false}" class="panel-heading">{{item.name}}
@@ -97,56 +97,28 @@
                         </div>
                         <div uib-collapse="product{{item.id}}" class="panel-wrapper">
                             <div class="panel-body">
-                                <div class="list-group">
-                                    <div ng-repeat="sub in item.subscriptions">
-                                        <div class="list-group-item" ng-if="sub.broadcast && sub.broadcast > 0">
-                                            <table class="wd-wide table-responsive">
-                                                <tbody>
-                                                <tr>
-                                                    <td class="wd-lg" colspan="2">
-                                                        <div class="ph">
-                                                            <span class="label label-info pull-right">{{sub.period}}</span>
-                                                            <h6 class="media-box-heading">BULK</h6>
-                                                            <small class="text-muted text-inverse">
-                                                                <b>Start :</b> ({{sub.bulk_start_date | date:'MMM d, y h:mm a'}})
-                                                                <b>End :</b> ({{sub.bulk_end_date | date:'MMM d, y h:mm a'}}) <br />
-                                                                <b>Broadcast: </b> {{sub.broadcast}}
-                                                            </small>
-                                                        </div>
-                                                    </td>
-                                                    <td class="wd-sm">
-                                                        <div class="ph">
-                                                            <!--<p class="m0">Price</p>-->
-                                                            <small class="m0 text-info">
-                                                                ₦{{(sub.amount * sub.broadcast) | number:2}}</small>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!--</div>-->
-                                        <!--<div class="list-group" ng-if="!sub.broadcast">-->
-                                        <div class="list-group-item" ng-if="!sub.broadcast">
+                                <div ng-repeat="sub in item.subscriptions">
+                                    <div class="list-group" ng-if="sub.broadcast && sub.broadcast > 0">
+                                        <div class="list-group-item">
                                             <table class="wd-wide table-responsive">
                                                 <tbody>
                                                 <tr>
                                                     <td>
                                                         <div class="ph">
                                                             <span class="label label-info pull-right">{{sub.period}}</span>
-                                                            <h6 class="media-box-heading">SLOT <small ng-if="sub.fixedSpot" class="text-muted">(Fixed)</small></h6>
+                                                            <h4 class="media-box-heading">BULK</h4>
                                                             <small class="text-muted text-inverse">
-                                                                <b>Date :</b> ({{sub.trans_date | date:'MMM d, y'}})
-                                                                <b>Time :</b> ({{sub.trans_date | date:'h:mm a'}})
-                                                                <b>Length : </b> ({{sub.duration}})
+                                                                <b>Start :</b> ({{sub.bulk_start_date | date:'MMM d, y h:mm a'}})
+                                                                <b>End :</b> ({{sub.bulk_end_date | date:'MMM d, y h:mm a'}} )
                                                             </small>
                                                         </div>
                                                     </td>
-                                                    <td class="wd-sm"> <!--hidden-xs hidden-sm-->
+                                                    <td class="wd-sm">
                                                         <div class="ph text-center">
                                                             <!--<p class="m0">QTY</p>-->
-                                                            <div ng-if="sub.fixedSpot"><small class="text-muted">(Fixed)</small></div>
-                                                            <small class="text-purple">Surcharge : ({{sub.subCharge}}%)</small>
+                                                            <!--<a href="" ng-click="minusBroadcast(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-minus"></em></a>-->
+                                                            <small class="m0">-({{sub.broadcast}})-</small>
+                                                            <!--<a href="" ng-click="plusBroadcast(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-plus"></em></a>-->
                                                         </div>
                                                     </td>
                                                     <td class="wd-sm">
@@ -154,8 +126,6 @@
                                                             <!--<p class="m0">Price</p>-->
                                                             <small class="m0 text-info">
                                                                 ₦{{sub.amount | number:2}}</small>
-                                            <span class="label label-inverse">
-                                                    +Subcharge: ₦{{sub.subChargePrice | number:2}}</span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -163,29 +133,78 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <br />
-                                    <div class="list-group-item">
-                                        <div class="media-box">
-                                            <div class="pull-left">
-                                                <span class="fa-stack">
-                                                <em class="fa fa-circle fa-stack-2x text-purple"></em>
-                                                <em class="fa fa-money fa-stack-1x fa-inverse text-white"></em>
-                                                </span>
-                                            </div>
-                                            <div class="media-box-body clearfix">
-                                                <p class="m0 pull-right text-inverse"> ₦{{calProductSubscription(cart.indexOf(item)) | number:2}}
-                                                </p>
-                                                <div class="media-box-heading pull-left"><span class="text-purple m0">Total Amount: </span>
-                                                </div>
+                                    <div class="list-group" ng-if="!sub.broadcast">
+                                        <div class="list-group-item">
+                                            <table class="wd-wide table-responsive">
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="ph">
+                                                            <span class="label label-info pull-right">{{sub.period}}</span>
+                                                            <h4 class="media-box-heading">SLOT <small ng-if="sub.fixedSpot" class="text-muted">(Fixed)</small></h4>
+                                                            <small class="text-muted text-inverse">
+                                                                <b>Slot date :</b> {{sub.slot_start_date | date:'MMM d, y'}}
+                                                                <b> -- </b> {{sub.slot_end_date | date:'MMM d, y'}}
+                                                            </small><br />
+                                                            <small class="text-muted text-inverse">
+                                                                <b>Slot :</b> {{sub.slots}}
+                                                            </small>
+                                                        </div><br />
+                                                        <div class="table-responsive" ng-if="sub.schedule.length">
+                                                            <table class="table table-bordered">
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Slot</th>
+                                                                    <th>Fixed</th>
+                                                                    <th>Time</th>
+                                                                </tr>
+                                                                <tr ng-repeat="schedule in sub.schedule">
+                                                                    <td>{{schedule.date | date:'MMM d, y'}}</td>
+                                                                    <td>{{schedule.slot}}</td>
+                                                                    <td>{{schedule.tofix}}</td>
+                                                                    <td><span class="text text-primary"><small ng-repeat="t in schedule.times">{{t | date:'h:mm a'}}, </small></span></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                    <td class="wd-sm" valign="top">
+                                                        <div class="ph">
+                                                            <!--<p class="m0">Price</p>-->
+                                                            <small class="m0 text-info">
+                                                                ₦{{sub.amount | number:2}}</small>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="list-group-item">
+                                    <div class="media-box">
+                                        <div class="pull-left">
+                                 <span class="fa-stack">
+                                    <em class="fa fa-circle fa-stack-2x text-purple"></em>
+                                    <em class="fa fa-money fa-stack-1x fa-inverse text-white"></em>
+                                 </span>
+                                        </div>
+                                        <div class="media-box-body clearfix">
+                                            <p class="m0 pull-right text-inverse"> ₦{{calProductSubscription(cart.indexOf(item)) | number:2}}
+                                            </p>
+                                            <div class="media-box-heading pull-left"><span class="text-purple m0">Total Amount: </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
                     <!-- END panel-->
                 </li>
+
             </div>
         </div>
     </div>
@@ -292,7 +311,7 @@
     </div>
     <br />
 
-    <!-- Marketer in charrge-->
+    <!-- Marketer in charge-->
     <div class="row">
         <div class="col-sm-12">
             <div class="list-group">

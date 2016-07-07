@@ -3,6 +3,9 @@
  */
 
 (function() {
+
+    'use strict';
+
     angular
         .module('app.order')
         .controller('AirtimeCreateController',
@@ -17,22 +20,21 @@
             vm.slotValid = false;
             vm.cart = [];
             vm.orderButton = undefined;
-
+            vm.btn = {};
 
             vm.form = {
-                bulk: false,
                 price: 0.00,
-                broadcast: 1,
-                bulk_start_date:'',
-                //bulk_start_time:'',
-                bulk_end_date:'',
-                //bulk_end_time:'',
-                fixedSpot: false,
-                trans_date:'',
-                //trans_time:'',
-                subCharge:'0',
-                duration: 0,
                 period: '',
+
+                no_slots: "0",
+                slot_start_date: "",
+                slot_end_date: "",
+                fixSpotPrice: "",
+
+                broadcast: "0",
+                bulk_start_date:'',
+                bulk_end_date:'',
+                bulkPrice: "",
                 discount: '0',
                 commission: '0',
                 agree: false,
@@ -48,14 +50,6 @@
             vm.periods = [{value:'premium', label:'Premium' }, {value:'regular', label:'Regular'}];
 
             vm.client = {};
-            //vm.clients = clientFactory.getClients().query().$promise.then(
-            //    function(response) {
-            //        vm.clients = response;
-            //    },
-            //    function () {
-            //        vm.clients = [];
-            //    }
-            //)
             //TODO: implement this for
             vm.refreshClient = function(search) {
                 clientFactory.getClients().query().$promise.then(
@@ -63,6 +57,96 @@
                         vm.clients = response;
                     }
                 );
+            };
+
+            vm.slot_start_date = "";
+            vm.slot_end_date = "";
+
+            vm.getSlotRange = function(n) {
+                return new Array(parseInt(n));
+            };
+
+            vm.maxSlotRange = 0;
+
+            vm.maxSlotRangeChange = function() {
+                vm.maxSlotRange = angular.copy(vm.form.no_slots);
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.maxSlotRange);
+            };
+
+            vm.bulkRangeChanged = function() {
+                vm.form.bulkPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.broadcast);
+            };
+
+            vm.clearBulk = function() {
+                vm.form.broadcast = 0;
+                vm.form.bulk_start_date = null;
+                vm.form.bulk_end_date = null;
+                vm.bulkRangeChanged();
+            };
+
+            vm.clearSlot = function() {
+                vm.form.no_slots = 0;
+                vm.form.slot_start_date = null;
+                vm.form.slot_end_date = null;
+                vm.maxSlotRange = 0;
+                vm.fixForDate = {};
+                vm.scheduleSlots = [];
+                vm.btn.fixslot = false;
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.no_slots);
+            };
+
+            vm.fixForDate = {};
+            vm.scheduleSlots = [];
+
+            //validation for add slot button if all fixed time is set
+            vm.checkScheduleSlot = function() {
+                var valid = true;
+                if(vm.scheduleSlots.length) {
+                    for(var i=0; i<vm.scheduleSlots.length; i++) {
+                        valid = vm.scheduleSlots[i].tofix == vm.scheduleSlots[i].times.length;
+                    }
+                }
+                return valid;
+            };
+
+            //push into table
+            vm.pushToSchedule = function() {
+                vm.fixForDate.times = [];
+                vm.scheduleSlots.push(vm.fixForDate);
+                vm.recalculateSlot();
+            };
+
+            //recalculate slot if any changes
+            vm.recalculateSlot = function() {
+                var slot = angular.copy(vm.fixForDate.slot);
+                vm.maxSlotRange = parseInt(vm.maxSlotRange) - parseInt(slot);
+
+                vm.fixForDate = {slot:"1"};
+            };
+
+            //remove fixed spot from the table
+            vm.removeSchedule = function($index) {
+                vm.maxSlotRange = parseInt(vm.maxSlotRange) + parseInt(vm.scheduleSlots[$index].slot);
+                vm.scheduleSlots.splice($index, 1);
+
+                vm.calcFixedPrice();
+            };
+
+            vm.calcFixedPrice = function () {
+
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.no_slots);
+
+                //selected  product price
+                var selProdPrice = parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]);
+
+                for(var i = 0; i < vm.scheduleSlots.length; i++) {
+                    var schtable = vm.scheduleSlots[i];
+
+                    //cal normal price for tofix slot and remove it from already calculated price
+                    var price = parseInt(schtable.tofix) * parseFloat(selProdPrice);
+
+                    vm.form.fixSpotPrice = parseFloat(vm.form.fixSpotPrice) + ( (parseInt(vm.product.selected.surcharge) / 100) * parseFloat(price) );
+                }
             };
 
             //submit order
@@ -109,9 +193,6 @@
                 );
             };
 
-            vm.updateCartCookie = function() {
-                $cookies.put('cart', vm.cart);
-            };
 
             //set default to current user
             vm.marketer = {'selected': loginFactory.userData()};
@@ -138,20 +219,14 @@
                 vm.totalWComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt;
             };
 
+            //get total price of a product
             vm.calProductSubscription = function(itemIdx) {
                 var sum = 0;
                 for(var j=0; j<vm.cart[itemIdx].subscriptions.length; j++) {
 
                     var subObj = vm.cart[itemIdx].subscriptions[j];
 
-                    //it is bulk option
-                    if(subObj.broadcast > 0) {
-                        //do calculations for bulk option
-                        sum += parseFloat(subObj.amount) * subObj.broadcast;
-                        continue;
-                    }
-                    //it is add slot and / fixed spot
-                    sum += parseFloat(subObj.amount) + parseFloat(subObj.subChargePrice);
+                    sum += parseFloat(subObj.amount);// + parseFloat(subObj.subChargePrice);
                 }
                 return sum;
             };
@@ -179,27 +254,23 @@
             };
 
             vm.productPrice = function () {
-                return ( (vm.form.subCharge/100) * parseFloat(vm.form.price)) + parseFloat(vm.form.price);
+                return parseFloat(vm.form.price);
             };
 
             vm.addBulk = function() {
                 //TODO: do validation here
                 if(vm.product.selected == '') return;
 
-                var bulkSub = {
+                //pick number of broadcast
+                //pick bulkstartdate
+                //pick bulkenddate
+
+                var data = {
                     broadcast:vm.form.broadcast,
-                    fixedSpot:false,
                     bulk_start_date:vm.form.bulk_start_date,
-                    //bulk_start_time:vm.form.bulk_start_time,
                     bulk_end_date:vm.form.bulk_end_date,
-                    //bulk_end_time:vm.form.bulk_end_time,
-                    trans_date:null,
-                    //trans_time:null,
-                    duration: null,
                     period: vm.form.period,
-                    amount: parseFloat(vm.form.price),
-                    subCharge:'0',
-                    subChargePrice:0
+                    amount: parseFloat(vm.form.bulkPrice),
                 };
 
                 vm.addItemToCart(); //attempts adding item to cart
@@ -207,17 +278,12 @@
                 var index = vm.cartItemIndex(vm.product.selected.id);
                 //for(var i = 0; i<vm.form.broadcast; i++)
                 //{
-                vm.cart[index].subscriptions.push(bulkSub);
+                vm.cart[index].subscriptions.push(data);
                 //}
 
                 vm.calcCartTotalPrice();//recalculate cart price
 
-                //reset bulk option field
-                vm.form.broadcast = 0;
-                vm.form.bulk_start_date = '';
-                vm.form.bulk_start_time = '';
-                vm.form.bulk_end_date = '';
-                vm.form.bulk_end_time = '';
+                vm.clearBulk();
 
             };
 
@@ -229,35 +295,36 @@
                 //new item object is created here to the vm
                 vm.addItemToCart();
 
-                var slotSub = {
-                    fixedSpot:vm.form.fixedSpot,
-                    bulk_start_date:null,
-                    //bulk_start_time:null,
-                    trans_date: vm.form.trans_date,
-                    //trans_time: vm.form.trans_time,
-                    duration: vm.form.duration,
+                //pick number if slot
+                //pick slot start date
+                //pick slot end date
+                //pick slot calculated price
+                //pick isFixedOrDisplaced
+                //pick programmes fixtures (object) schedule
+
+                var data = {
+                    slots: vm.form.no_slots,
+                    slot_start_date: vm.form.slot_start_date,
+                    slot_end_date: vm.form.slot_end_date,
+                    isFixedOrDisplaced: vm.btn.fixslot,
                     period: vm.form.period,
-                    amount: parseFloat(vm.form.price),
-                    subCharge:vm.form.subCharge,
-                    subChargePrice: ((vm.form.subCharge/100) * parseFloat(vm.form.price))
+                    amount: parseFloat(vm.form.fixSpotPrice),
+                    schedule: vm.scheduleSlots
                 };
                 var index = vm.cartItemIndex(vm.product.selected.id); //item obj created in vm.addItemToCart();
-                vm.cart[index].subscriptions.push(slotSub);
+                vm.cart[index].subscriptions.push(data);
 
                 vm.calcCartTotalPrice();
 
-                //reset Schedule details field
-                vm.form.fixedSpot = false;
-                vm.form.subCharge = '0';
-                vm.form.trans_date = '';
-                vm.form.trans_time = '';
-                vm.form.duration = 0;
+                vm.clearSlot();
+            };
 
-                //vm.updateCartCookie();
+            vm.clearScheduleTimes = function (schedule) {
+                schedule.times = [];
             };
 
             vm.minusBroadcast = function(itemIdx, subIdx) {
-                if(vm.cart[itemIdx].subscriptions[subIdx].broadcast == 1) return;
+                if(vm.cart[itemIdx].subscriptions[subIdx].broadcast == 501) return;
                 --vm.cart[itemIdx].subscriptions[subIdx].broadcast;
                 vm.calcCartTotalPrice();
             };
@@ -285,7 +352,9 @@
             vm.productChanged = function() {
                 vm.price = {index:0};
                 vm.form.period = 'premium';
-                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period]
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
+                vm.clearSlot();
+                vm.clearBulk();
             };
 
             vm.addItemToCart = function() {
@@ -300,51 +369,14 @@
 
             vm.durationChange =  function() {
                 vm.form.period = 'premium';
-                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period]
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
             };
 
             vm.onPeriodChange = function() {
-                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period]
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
             };
 
-            vm.slotValidate = function() {
-
-                vm.slotValid = false;
-
-                if(vm.form.trans_date && vm.form.duration) {
-                    vm.slotValid = true;
-                }
-
-                return vm.slotValid;
-            };
-
-            vm.bulkValidate = function () {
-                vm.bulkValid = false;
-
-                var bsd = new Date(vm.form.bulk_start_date);
-                bsd.setHours(0,0,0,0);
-                var bed = new Date(vm.form.bulk_end_date);
-                bed.setHours(0,0,0,0);
-
-                if(bed < bsd) {
-                    //vm.form.bulkEndDate = null;
-                }
-
-                var bst = new Date(vm.form.bulk_start_date);
-                var bet = new Date(vm.form.bulk_end_date);
-
-                if(bet.getTime() <= bst.getTime()) {
-                    vm.form.bulk_end_date = null;
-                }
-
-                if(vm.form.bulk_start_date && vm.form.bulk_end_date && vm.form.broadcast > 0)
-                {
-                    vm.bulkValid = true;
-                }
-
-                return vm.bulkValid;
-            };
-
+            //validate bulk date and time
             vm.bulkValidate = function (type) {
                 vm.bulkValid = false;
 
@@ -468,6 +500,336 @@
                 }
             }
 
-
         });
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotStartDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotEndDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('FixedSlotDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('BulkStartDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('BulkEndDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotTimeModalCtrl', SlotTimeModalCtrl);
+
+    SlotTimeModalCtrl.$inject = ['$uibModal'];
+    function SlotTimeModalCtrl($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            vm.open = function (size, $schedule) {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: '/myModalContent.html',
+                    controller: ModalInstanceCtrl,
+                    size: size,
+                    resolve: {
+                        $schedule: function () {
+                            return $schedule;
+                        }
+                    },
+                    cache: false
+                });
+
+                var state = $('#modal-state');
+                modalInstance.result.then(function () {
+                    state.text('Modal dismissed with OK status');
+                }, function () {
+                    state.text('Modal dismissed with Cancel status');
+                });
+            };
+
+            // Please note that $uibModalInstance represents a modal window (instance) dependency.
+            // It is not the same as the $uibModal service used above.
+
+            ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', '$schedule'];
+            function ModalInstanceCtrl($scope, $uibModalInstance, $schedule) {
+
+                $scope.scheduleRef = $schedule;
+
+                $scope.getSlotRange = function(n) {
+                    return new Array(parseInt(n));
+                };
+
+                $scope.ok = function () {
+                    $uibModalInstance.close('closed');
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }
+        }
+    }
+
 })();

@@ -6,7 +6,7 @@
 
     angular
         .module('app.order')
-        .controller('PeopleController',
+        .controller('PeopleController', ['$scope', 'toaster', 'userFactory', 'registerFactory', 'permissionFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
         function($scope, toaster, userFactory, registerFactory, permissionFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert){
 
             var vm = $scope;
@@ -158,5 +158,5 @@
                 }, vm.account.permissions);
             }
 
-        });
+        }]);
 })();

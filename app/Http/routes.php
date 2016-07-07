@@ -197,6 +197,9 @@ Route::group(['middleware' => ['web'] ], function () {
 
     Route::get('pdf/{id}/airtime', 'PDFController@airtimePDF');
 
+    //assessments
+    Route::resource('/api/assessment', 'AssessmentController');
+
 });
 
 //Route::filter('api.csrf', function($route, $request)

@@ -3,1058 +3,1120 @@
 </h3>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default helicopter" ng-class="{whirl:disableView}">
-            <form novalidate ng-submit="clientSubmit()" name="assessFormPart1" class="form-horizontal" role="form">
+    <div class="col-sm-12">
+        <!-- START panel-->
+        <div id="panelDemo14" class="panel panel-default">
+            <div class="panel-heading">Basic Tabs</div>
+            <div class="panel-body">
+                <uib-tabset>
+                    <uib-tab heading="Home">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nul qui officia deserunt mollit anim id est laborum.</uib-tab>
+                    <uib-tab heading="Profile">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat , sunt in culpa qui officia deserunt mollit anim id est laborum.</uib-tab>
+                    <uib-tab heading="Messages">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</uib-tab>
+                    <uib-tab heading="Settings">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+        <!-- END panel-->
+    </div>
+</div>
 
-                <div class="panel-body">
+<div >
+    <form novalidate ng-submit="submitAssessment()" class="form-horizontal" role="form">
 
-                    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+        <div class="row">
+            <div class="col-md-12">
 
-                    <h4>PERSONAL RECORDS STAFF <small>(To be completed by the staff being assessed)</small></h4>
-                    <hr>
+                <div class="panel panel-default helicopter" ng-class="{whirl:disableView}">
+                    <!--<form novalidate ng-submit="submitAssessment()" name="assessFormPart1" class="form-horizontal" role="form">-->
+
+                    <div class="panel-body">
+                        <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+
+                        <h4>PERSONAL RECORDS STAFF <small>(To be completed by the staff being assessed)</small></h4>
+                        <hr>
 
 
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Period Covered</label>
-                            <div class="col-sm-7">
-                                <input type="text" autocomplete="off" ng-model="partOne.personal.period_covered"  class="form-control" name="period_covered"/>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Period Covered</label>
+                                <div class="col-sm-7">
+                                    <input type="text" autocomplete="off" ng-model="partOne.personal.period_covered"  class="form-control" name="period_covered"/>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
 
-                    <fieldset>
-                        <div class="form-group">
+                        <fieldset>
+                            <div class="form-group">
 
-                            <label class="col-sm-3 control-label">Date of Confirmation</label>
-                            <div class="col-sm-7">
-                                <p class="input-group">
-                                    <input type="text" name="confirmDate" ng-model="partOne.personal.date_confirm.date" readonly uib-datepicker-popup="{{dateFormat}}" is-open="partOne.personal.date_confirm.opened" min-date="" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-                                           close-text="Close" class="form-control" />
-                    <span class="input-group-btn">
-                    <button type="button" ng-click="open($event, partOne.personal.date_confirm)" class="btn btn-default">
-                        <em class="fa fa-calendar"></em>
-                    </button>
-                    </span>
-                                </p>
+                                <label class="col-sm-3 control-label">Date of Confirmation</label>
+                                <div class="col-sm-7">
+                                    <p class="input-group">
+                                        <input type="text" name="confirmDate" ng-model="partOne.personal.date_confirm.date" readonly uib-datepicker-popup="{{dateFormat}}" is-open="partOne.personal.date_confirm.opened" min-date="" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                                               close-text="Close" class="form-control" />
+                                    <span class="input-group-btn">
+                                    <button type="button" ng-click="open($event, partOne.personal.date_confirm)" class="btn btn-default">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                    </span>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset>
-                        <div class="form-group">
+                        <fieldset>
+                            <div class="form-group">
 
-                            <label class="col-sm-3 control-label">Appraisal date</label>
-                            <div class="col-sm-7">
-                                <p class="input-group">
-                                    <input type="text" name="appraisalDate" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.personal.appraisal_date.date" is-open="partOne.personal.appraisal_date.opened" min-date="" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-                                           close-text="Close" class="form-control" />
+                                <label class="col-sm-3 control-label">Appraisal date</label>
+                                <div class="col-sm-7">
+                                    <p class="input-group">
+                                        <input type="text" name="appraisalDate" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.personal.appraisal_date.date" is-open="partOne.personal.appraisal_date.opened" min-date="" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                                               close-text="Close" class="form-control" />
                               <span class="input-group-btn">
                                  <button type="button" ng-click="open($event, partOne.personal.appraisal_date)" class="btn btn-default">
                                      <em class="fa fa-calendar"></em>
                                  </button>
                               </span>
-                                </p>
+                                    </p>
+                                </div>
                             </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Appraiser's Name/Job title</label>
+                                <div class="col-sm-7">
+                                    <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z ]+$/" ng-model="partOne.personal.appraisal_name" class="form-control" name="appraisal_name"/>
+                                </div>
+                            </div>
+                        </fieldset>
+
+
+                        <div class="row">
+                            <p style="padding: 20px;"></p>
                         </div>
-                    </fieldset>
 
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Appraiser's Name/Job title</label>
-                            <div class="col-sm-7">
-                                <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z ]+$/" ng-model="partOne.personal.appraisal_name" class="form-control" name="appraisal_name"/>
-                            </div>
-                        </div>
-                    </fieldset>
+                        <h4>Qualifications held <small>(academic, professional or technical)</small></h4>
+                        <hr>
 
-
-                    <div class="row">
-                        <p style="padding: 20px;"></p>
-                    </div>
-
-                    <h4>Qualifications held <small>(academic, professional or technical)</small></h4>
-                    <hr>
-
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">i.</label>
-                            <div class="col-sm-5">
-                                <input type="text" ng-model="partOne.qualifications[0].name" class="form-control" />
-                            </div>
-                            <div class="col-sm-3">
-                                <p class="input-group">
-                                    <input type="text" required="" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.qualifications[0].date" is-open="partOne.qualifications[0].opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-                                           close-text="Close" class="form-control" />
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">i.</label>
+                                <div class="col-sm-5">
+                                    <input type="text" ng-model="partOne.qualifications[0].name" class="form-control" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <p class="input-group">
+                                        <input type="text" required="" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.qualifications[0].date" is-open="partOne.qualifications[0].opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                                               close-text="Close" class="form-control" />
                               <span class="input-group-btn">
                                  <button type="button" ng-click="open($event, partOne.qualifications[0])" class="btn btn-default">
                                      <em class="fa fa-calendar"></em>
                                  </button>
                               </span>
-                                </p>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">ii.</label>
-                            <div class="col-sm-5">
-                                <input type="text" ng-model="partOne.qualifications[1].name" class="form-control" />
-                            </div>
-                            <div class="col-sm-3">
-                                <p class="input-group">
-                                    <input type="text" required="" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.qualifications[1].date" is-open="partOne.qualifications[1].opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-                                           close-text="Close" class="form-control" />
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">ii.</label>
+                                <div class="col-sm-5">
+                                    <input type="text" ng-model="partOne.qualifications[1].name" class="form-control" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <p class="input-group">
+                                        <input type="text" required="" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.qualifications[1].date" is-open="partOne.qualifications[1].opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                                               close-text="Close" class="form-control" />
                               <span class="input-group-btn">
                                  <button type="button" ng-click="open($event, partOne.qualifications[1])" class="btn btn-default">
                                      <em class="fa fa-calendar"></em>
                                  </button>
                               </span>
-                                </p>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">iii.</label>
-                            <div class="col-sm-5">
-                                <input type="text" ng-model="partOne.qualifications[2].name" class="form-control" />
-                            </div>
-                            <div class="col-sm-3">
-                                <p class="input-group">
-                                    <input type="text" required="" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.qualifications[2].date" is-open="partOne.qualifications[2].opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-                                           close-text="Close" class="form-control" />
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">iii.</label>
+                                <div class="col-sm-5">
+                                    <input type="text" ng-model="partOne.qualifications[2].name" class="form-control" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <p class="input-group">
+                                        <input type="text" required="" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.qualifications[2].date" is-open="partOne.qualifications[2].opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                                               close-text="Close" class="form-control" />
                               <span class="input-group-btn">
                                  <button type="button" ng-click="open($event, partOne.qualifications[2])" class="btn btn-default">
                                      <em class="fa fa-calendar"></em>
                                  </button>
                               </span>
-                                </p>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">iv.</label>
-                            <div class="col-sm-5">
-                                <input type="text" ng-model="partOne.qualifications[3].name" class="form-control" />
-                            </div>
-                            <div class="col-sm-3">
-                                <p class="input-group">
-                                    <input type="text" required="" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.qualifications[3].date" is-open="partOne.qualifications[3].opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-                                           close-text="Close" class="form-control" />
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">iv.</label>
+                                <div class="col-sm-5">
+                                    <input type="text" ng-model="partOne.qualifications[3].name" class="form-control" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <p class="input-group">
+                                        <input type="text" required="" readonly uib-datepicker-popup="{{dateFormat}}" ng-model="partOne.qualifications[3].date" is-open="partOne.qualifications[3].opened" min-date="minDate" max-date="'2019-12-22'" uib-datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                                               close-text="Close" class="form-control" />
                               <span class="input-group-btn">
                                  <button type="button" ng-click="open($event, partOne.qualifications[3])" class="btn btn-default">
                                      <em class="fa fa-calendar"></em>
                                  </button>
                               </span>
-                                </p>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                </div>
-
-                <div class="panel-footer">
-                    <button class="btn btn-primary btn-block" ng-if="!client.id" ng-disabled="!assessFormPart1.$invalid" type="submit">Next</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<h3>
-    PART 2
-</h3>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-            <form class="form-horizontal" name="assessFormPart2" role="form" novalidate>
-
-                <div class="panel-body">
-
-                    <h4>REVIEW OF EMPLOYEE'S JOB GOAL</h4>
-                    <hr>
-
-                    <div><small>A. List job goals that were set previously before this assessment period</small></div> <br />
-
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">i.</label>
-                            <div class="col-sm-7">
-                                <input type="text" ng-model="partTwo.review[0].text" class="form-control" />
-                            </div>
-                            <div class="col-sm-2">
-                                <select class="form-control" name="">
-                                    <option value="{{$index}}" ng-model="partTwo.review[0].rate" ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">ii.</label>
-                            <div class="col-sm-7">
-                                <input type="text" ng-model="partTwo.review[1].text" class="form-control" />
-                            </div>
-                            <div class="col-sm-2">
-                                <select class="form-control" name="">
-                                    <option value="{{$index}}" ng-model="partTwo.review[1].rate" ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">iii.</label>
-                            <div class="col-sm-7">
-                                <input type="text" ng-model="partTwo.review[2].text" class="form-control" />
-                            </div>
-                            <div class="col-sm-2">
-                                <select class="form-control" name="">
-                                    <option value="{{$index}}" ng-model="partTwo.review[2].rate" ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">iv.</label>
-                            <div class="col-sm-7">
-                                <input type="text" ng-model="partTwo.review[3].text" class="form-control" />
-                            </div>
-                            <div class="col-sm-2">
-                                <select class="form-control" name="">
-                                    <option value="{{$index}}" ng-model="partTwo.review[3].rate" ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">v.</label>
-                            <div class="col-sm-7">
-                                <input type="text" ng-model="partTwo.review[4].text" class="form-control" />
-                            </div>
-                            <div class="col-sm-2">
-                                <select class="form-control" name="">
-                                    <option value="{{$index}}" ng-model="partTwo.review[4].rate" ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">vi.</label>
-                            <div class="col-sm-7">
-                                <input type="text" ng-model="partTwo.review[5].text" class="form-control" />
-                            </div>
-                            <div class="col-sm-2">
-                                <select class="form-control" name="">
-                                    <option value="{{$index}}" ng-model="partTwo.review[5].rate" ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">vii.</label>
-                            <div class="col-sm-7">
-                                <input type="text" ng-model="partTwo.review[6].text" class="form-control" />
-                            </div>
-                            <div class="col-sm-2">
-                                <select class="form-control" name="">
-                                    <option value="{{$index}}" ng-model="partTwo.review[6].rate" ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <br />
-                    <h4>JOB PERFORMANCE <br /><small>B. Comment on duties performed during the period of this report:</small></h4><br />
-
-                    <fieldset>
-                        <p>i. Most successful job accomplishment, satisfactory task and main duties performed since last performance appraisal period</p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea ng-model="partTwo.performance.accomplishment" rows="3" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p>ii. What were the cause, personal or otherwise, to which you ascribed your success or failure</p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea ng-model="partTwo.performance.cause" rows="3" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p>iii. Do you think you need more training or experiences to enable you do your job better? if so, of what kind?</p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea ng-model="partTwo.performance.experiences" rows="3" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p>iv. Do you think your abilities could be better used in your present job or in another kind of job?</p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea ng-model="partTwo.performance.ability" rows="3" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p>v. During the period of this report, did you have job satisfaction? if not what were the cause?</p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea ng-model="partTwo.performance.satisfaction" rows="3" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p>vi. What are your strength and weaknesses</p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea ng-model="partTwo.performance.strength" rows="3" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                </div>
-
-                <div class="panel-footer">
-                    <div class="pull-right">
-                        <button class="btn btn-primary" ng-if="!client.id" ng-disabled="!assessFormPart1.$invalid" type="submit">Next</button>
                     </div>
 
-                    <div>
-                        <button class="btn btn-primary" ng-if="!client.id" ng-disabled="!assessFormPart1.$invalid" type="submit">Previous</button>
+                    <div class="panel-footer">
+                        <!-- ng-disabled="!assessFormPart1.$invalid"-->
+                        <button class="btn btn-primary btn-block" ng-if="!client.id"  type="button">Next</button>
                     </div>
+                    <!--</form>-->
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
 
+        <h3>
+            PART 2
+        </h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <!--<form class="form-horizontal" name="assessFormPart2" role="form" novalidate>-->
 
-<h3>
-    PART 3
-</h3>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-            <form class="form-horizontal" role="form" novalidate>
-
-                <div class="panel-body">
-
-                    <fieldset>
-                        <h4>Performance competencies (Skills and behaviours)</h4>
+                    <div class="panel-body">
+                        <h4>REVIEW OF EMPLOYEE'S JOB GOAL</h4>
                         <hr>
-                        <p><small>A. Please review and consider how you have demonstrated these in your job and how you might improve on these going forward.</small></p> <br />
 
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <div class="table-responsive">
+                        <div><small>A. List job goals that were set previously before this assessment period</small></div> <br />
 
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th class="col-sm-6">
-                                                <h4>Competency Area</h4>
-                                            </th>
-                                            <th class="col-sm-6"><h4 class="heading">Notes/Comments on competency Areas and suggestions for Improvement</h4></th>
-                                        </tr>
-                                        <tr>
-                                            <td><p><strong>Taking responsibility: </strong><br>Completes assignments in a through, accurate and timely manner that achieves expected outcomes; exhibits concern for the goals and needs of the department and others that depend on services or work products; handles multiple responsibilities in an effective manner uses work time productively.</p></td>
-                                            <td><textarea ng-model="partThree.competencies.responsibility" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td><p><strong>Customer Focus: </strong><br>Is dedicated to meeting the expectations and requirements of internal and external customers; acts with customers in mind; establishes and maintains effective relationships with customers and gains their trust and respect; goes above and beyond to anticipate customer needs and respond accordingly </p></td>
-                                            <td><textarea ng-model="partThree.competencies.focus" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td><p><strong>Problem Solving/Creativity: </strong><br>Identifies and analyzes problems: formulates alternative solutions; take or recommend appropriate actions; follows up to ensure problems are solved.</p></td>
-                                            <td><textarea ng-model="partThree.competencies.creativity" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td><p><strong>Collaboration/Team work: </strong><br> Uses diplomacy and fact to mantain harmonies and effective work relationships with co-workers and constituents; adapt to changing priorities and demands shares information and resources with others to promote positive and collaborative work relationships; supports diversity initiatives by demonstrating respect for all individuals. </p></td>
-                                            <td><textarea ng-model="partThree.competencies.collaboration" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td><p><strong>Communication/interpersonal Skill: </strong><br>Is able to effectively communicate and to influence others in order to meet organisational goals; shares information openly; relates well to all kinds of people, is able to speak well and write effectively.</p></td>
-                                            <td><textarea ng-model="partThree.competencies.communication" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td><p><strong>Job specific Knowledge and Skills: </strong><br>Acquires and apply knowledge, skills and experience ro accomplish results</p></td>
-                                            <td><textarea  ng-model="partThree.competencies.skill" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td><p><strong>Quality: </strong><br>Provides high quality services, processes, programs and products while consistently seeking ways to improve outcomes and enhance service</p></td>
-                                            <td><textarea ng-model="partThree.competencies.quality" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td><p><strong>Any Additional Information: </strong><br>Provide any information you thing may be relevant to your assessment</p></td>
-                                            <td><textarea ng-model="partThree.competencies.additional" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
-                                        </tr>
-                                    </table>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">i.</label>
+                                <div class="col-sm-7">
+                                    <input type="text" ng-model="partTwo.review[0].text" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="partTwo.review[0].rate" name="">
+                                        <option value="{{$index}}"  ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-
-                    <p class="text-info">B. ASPECT OF PERFORMANCE <small>(To be completed by the supervisor)</small>  </p>
-                    <p>Job Assessment/General ability <small>(Assess objectively how the staff has performed his/her set tasks)</small></p>
-
-                    <fieldset>
-                        <p><strong>Personal Attributes</strong></p>
-                        <em>A=10, B=8, C=6, D=4, E=2, F=1</em>
-
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>S/N</th>
-                                            <th></th>
-                                            <th>A</th>
-                                            <th>B</th>
-                                            <th>C</th>
-                                            <th>D</th>
-                                            <th>E</th>
-                                            <th>F</th>
-                                        </tr>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Strong>Integrity</Strong><br> <em>Maintains high personal standards of integrity</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="8"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="4"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="2"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="1" ng-init="supervisor.attributes.integrity = 1"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td><Strong>Interpersonal Relationship</Strong><br> <em>Tactfully establishes and maintains strong/benefitial relationship with others</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="6" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="1" ng-init="supervisor.attributes.relationship = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td><Strong>Knowledge of job</Strong><br> <em>Understand what his/her job entails, works effectively and efficiently</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="6" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="1" ng-init="supervisor.attributes.knowledge = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td><Strong>Communication</Strong><br> <em>Approachable, open to all and communicates effectively</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="10"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="8"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="6" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="4"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="2"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="1" ng-init="supervisor.attributes.communication = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td><Strong>Initiative</Strong><br> <em>Promptly take action to resolve problems</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="1" ng-init="supervisor.attributes.initiative = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td><Strong>Professionalism</Strong><br> <em>Applies professional/technical/administrative or any other acquired knowledge</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="1" ng-init="supervisor.attributes.professionalism = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td><Strong>Confidentiality</Strong><br> <em>Handles all business information in a professional and confidential manner</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="1" ng-init="supervisor.attributes.confidentiality = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td><Strong>Strategic Thinking</Strong><br> <em>Contributes to the business success through new ideas or improved services</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="1" ng-init="supervisor.attributes.thinking = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td><Strong>Creativity and Productivity</Strong><br> <em>Regularly introduces new concept/ideas and productive</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="1" ng-init="supervisor.attributes.creativity = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td><Strong>Team Spirit</Strong><br> <em>Works efficiently with team members</em></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="team" ng-model="supervisor.attributes.team" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="team" ng-model="supervisor.attributes.team" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="team" ng-model="supervisor.attributes.team" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="team" ng-model="supervisor.attributes.team" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="team" ng-model="supervisor.attributes.team" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="team" ng-model="supervisor.attributes.team" value="1" ng-init="supervisor.attributes.team = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><strong>TOTAL</strong></td>
-                                            <td>{{supervisor.attributes.total.a}}</td>
-                                            <td>{{supervisor.attributes.total.b}}</td>
-                                            <td>{{supervisor.attributes.total.c}}</td>
-                                            <td>{{supervisor.attributes.total.d}}</td>
-                                            <td>{{supervisor.attributes.total.e}}</td>
-                                            <td>{{supervisor.attributes.total.f}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><strong>AVERAGE SCORE(%)</strong></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">ii.</label>
+                                <div class="col-sm-7">
+                                    <input type="text" ng-model="partTwo.review[1].text" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="partTwo.review[1].rate" name="">
+                                        <option value="{{$index}}"  ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-
-                    <fieldset>
-                        <p><strong>Please justify your gradings</strong></p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea rows="2" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p><strong>Work Habits</strong></p>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>S/N</th>
-                                            <th></th>
-                                            <th>A</th>
-                                            <th>B</th>
-                                            <th>C</th>
-                                            <th>D</th>
-                                            <th>E</th>
-                                            <th>F</th>
-                                        </tr>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><strong>Dependability</strong><br> Ability to work without close supervision, inspection or compulsion</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="1" ng-init="supervisor.habit.dependability = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Loyalty and Dedication</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="1" ng-init="supervisor.habit.loyalty = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Honesty</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="1" ng-init="supervisor.habit.honesty = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Reliability</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="1" ng-init="supervisor.habit.reliability = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Sense of responsibility</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="1" ng-init="supervisor.habit.sense = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><strong>TOTAL</strong></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><strong>AVERAGE SCORE(%)</strong></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">iii.</label>
+                                <div class="col-sm-7">
+                                    <input type="text" ng-model="partTwo.review[2].text" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="partTwo.review[2].rate" name="">
+                                        <option value="{{$index}}"  ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset>
-                        <p><strong>Please justify your gradings</strong></p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea rows="2" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p><strong>Sanctions</strong><br>Has any disciplinary action been taken against th staff during the period covered by this report? YES/NO. if yes give details of sanctions</p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea rows="3" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p><strong>Rewards</strong><br>Has the staff received any special commendation (Written) during the year for outstanding performance? if YES, give details:</p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea rows="3" class="form-control note-editor note-editor-margin"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <p><strong>Leadership attainment</strong></p>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>S/N</th>
-                                            <th></th>
-                                            <th>A</th>
-                                            <th>B</th>
-                                            <th>C</th>
-                                            <th>D</th>
-                                            <th>E</th>
-                                            <th>F</th>
-                                        </tr>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Punctuality and attendance at work</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="1" ng-init="supervisor.leadership.punctuality = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Drive and Decisiveness</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="1" ng-init="supervisor.leadership.drive = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Planning Ability</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="1" ng-init="supervisor.leadership.ability = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Does he/she show good example in terms of punctuality, efficiency and high degree of responsibility in whatever he/she does?</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="example" ng-model="supervisor.leadership.example" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="example" ng-model="supervisor.leadership.example" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="example" ng-model="supervisor.leadership.example" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="example" ng-model="supervisor.leadership.example" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="example" ng-model="supervisor.leadership.example" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="example" ng-model="supervisor.leadership.example" value="1" ng-init="supervisor.leadership.example = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Does he/she make suggestion for changes/adjust method/procedures that significantly contribute to his her work or that of his/her colleagues</td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="10" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="8" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="6"  />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="4" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="2" />
-                                                <span class="fa fa-check"></span></label></td>
-                                            <td><label class="radio-inline c-radio">
-                                                <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="1" ng-init="supervisor.leadership.suggestion = 1" />
-                                                <span class="fa fa-check"></span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><strong>TOTAL</strong></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><strong>AVERAGE SCORE(%)</strong></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">iv.</label>
+                                <div class="col-sm-7">
+                                    <input type="text" ng-model="partTwo.review[3].text" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="partTwo.review[3].rate" name="">
+                                        <option value="{{$index}}"  ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset>
-                        <p><strong>Please justify your gradings</strong></p>
-                        <div class="panel">
-                            <div class="panel-body">
-                                <textarea rows="2" class="form-control note-editor note-editor-margin"></textarea>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">v.</label>
+                                <div class="col-sm-7">
+                                    <input type="text" ng-model="partTwo.review[4].text" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="partTwo.review[4].rate" name="">
+                                        <option value="{{$index}}"  ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                </div> <!-- End page-body -->
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">vi.</label>
+                                <div class="col-sm-7">
+                                    <input type="text" ng-model="partTwo.review[5].text" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="partTwo.review[5].rate" name="">
+                                        <option value="{{$index}}"  ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
 
-                <div class="panel-footer">
-                    <div class="pull-right">
-                        <button class="btn btn-primary" ng-if="!client.id" ng-disabled="!assessFormPart1.$invalid" type="submit">Next</button>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">vii.</label>
+                                <div class="col-sm-7">
+                                    <input type="text" ng-model="partTwo.review[6].text" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="partTwo.review[6].rate" name="">
+                                        <option value="{{$index}}"  ng-repeat="i in [].constructor(101) track by $index">{{$index}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <br />
+                        <h4>JOB PERFORMANCE <br /><small>B. Comment on duties performed during the period of this report:</small></h4><br />
+
+                        <fieldset>
+                            <p>i. Most successful job accomplishment, satisfactory task and main duties performed since last performance appraisal period</p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea ng-model="partTwo.performance.accomplishment" rows="3" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p>ii. What were the cause, personal or otherwise, to which you ascribed your success or failure</p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea ng-model="partTwo.performance.cause" rows="3" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p>iii. Do you think you need more training or experiences to enable you do your job better? if so, of what kind?</p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea ng-model="partTwo.performance.experiences" rows="3" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p>iv. Do you think your abilities could be better used in your present job or in another kind of job?</p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea ng-model="partTwo.performance.ability" rows="3" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p>v. During the period of this report, did you have job satisfaction? if not what were the cause?</p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea ng-model="partTwo.performance.satisfaction" rows="3" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p>vi. What are your strength and weaknesses</p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea ng-model="partTwo.performance.strength" rows="3" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
                     </div>
 
-                    <div>
-                        <button class="btn btn-primary" ng-if="!client.id" ng-disabled="!assessFormPart1.$invalid" type="submit">Previous</button>
+                    <div class="panel-footer">
+                        <div class="pull-right">
+                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
+                            <button class="btn btn-primary" ng-if="!client.id"  type="submit">Next</button>
+                        </div>
+
+                        <div>
+                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
+                            <button class="btn btn-primary" ng-if="!client.id" type="submit">Previous</button>
+                        </div>
                     </div>
+                    <!--</form>-->
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+
+
+        <h3>
+            PART 3
+        </h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <!--<form class="form-horizontal" role="form" novalidate>-->
+
+                    <div class="panel-body">
+                        <fieldset>
+                            <h4>Performance competencies (Skills and behaviours)</h4>
+                            <hr>
+                            <p><small>A. Please review and consider how you have demonstrated these in your job and how you might improve on these going forward.</small></p> <br />
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th class="col-sm-6">
+                                                    <h4>Competency Area</h4>
+                                                </th>
+                                                <th class="col-sm-6"><h4 class="heading">Notes/Comments on competency Areas and suggestions for Improvement</h4></th>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Taking responsibility: </strong><br>Completes assignments in a through, accurate and timely manner that achieves expected outcomes; exhibits concern for the goals and needs of the department and others that depend on services or work products; handles multiple responsibilities in an effective manner uses work time productively.</p></td>
+                                                <td><textarea ng-model="partThree.competencies.responsibility" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Customer Focus: </strong><br>Is dedicated to meeting the expectations and requirements of internal and external customers; acts with customers in mind; establishes and maintains effective relationships with customers and gains their trust and respect; goes above and beyond to anticipate customer needs and respond accordingly </p></td>
+                                                <td><textarea ng-model="partThree.competencies.focus" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Problem Solving/Creativity: </strong><br>Identifies and analyzes problems: formulates alternative solutions; take or recommend appropriate actions; follows up to ensure problems are solved.</p></td>
+                                                <td><textarea ng-model="partThree.competencies.creativity" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Collaboration/Team work: </strong><br> Uses diplomacy and fact to mantain harmonies and effective work relationships with co-workers and constituents; adapt to changing priorities and demands shares information and resources with others to promote positive and collaborative work relationships; supports diversity initiatives by demonstrating respect for all individuals. </p></td>
+                                                <td><textarea ng-model="partThree.competencies.collaboration" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Communication/interpersonal Skill: </strong><br>Is able to effectively communicate and to influence others in order to meet organisational goals; shares information openly; relates well to all kinds of people, is able to speak well and write effectively.</p></td>
+                                                <td><textarea ng-model="partThree.competencies.communication" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Job specific Knowledge and Skills: </strong><br>Acquires and apply knowledge, skills and experience ro accomplish results</p></td>
+                                                <td><textarea  ng-model="partThree.competencies.skill" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Quality: </strong><br>Provides high quality services, processes, programs and products while consistently seeking ways to improve outcomes and enhance service</p></td>
+                                                <td><textarea ng-model="partThree.competencies.quality" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p><strong>Any Additional Information: </strong><br>Provide any information you thing may be relevant to your assessment</p></td>
+                                                <td><textarea ng-model="partThree.competencies.additional" rows="5" class="form-control note-editor note-editor-margin"></textarea></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                    </div> <!-- End page-body -->
+
+                    <div class="panel-footer">
+                        <div class="pull-right">
+                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
+                            <button class="btn btn-primary" ng-if="!client.id"  type="submit">Next</button>
+                        </div>
+
+                        <div>
+                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
+                            <button class="btn btn-primary" ng-if="!client.id"  type="submit">Previous</button>
+                        </div>
+                    </div>
+                    <!--</form>-->
+                </div>
+            </div>
+        </div>
+
+        <h3>
+            SUPERVISOR
+        </h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <!--<form class="form-horizontal" role="form" novalidate>-->
+
+                    <div class="panel-body">
+
+                        <p class="text-info">B. ASPECT OF PERFORMANCE <small>(To be completed by the supervisor)</small>  </p>
+                        <p>Job Assessment/General ability <small>(Assess objectively how the staff has performed his/her set tasks)</small></p>
+
+                        <fieldset>
+                            <p><strong>Personal Attributes</strong></p>
+                            <em>A=10, B=8, C=6, D=4, E=2, F=1</em>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                                <th>F</th>
+                                            </tr>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td><Strong>Integrity</Strong><br> <em>Maintains high personal standards of integrity</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="8"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="4"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="2"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="integrity" ng-model="supervisor.attributes.integrity" value="1" ng-init="supervisor.attributes.integrity = 1"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td><Strong>Interpersonal Relationship</Strong><br> <em>Tactfully establishes and maintains strong/benefitial relationship with others</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="6" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="relationship" ng-model="supervisor.attributes.relationship" value="1" ng-init="supervisor.attributes.relationship = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td><Strong>Knowledge of job</Strong><br> <em>Understand what his/her job entails, works effectively and efficiently</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="6" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="knowledge" ng-model="supervisor.attributes.knowledge" value="1" ng-init="supervisor.attributes.knowledge = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td><Strong>Communication</Strong><br> <em>Approachable, open to all and communicates effectively</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="10"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="8"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="6" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="4"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="2"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="communication" ng-model="supervisor.attributes.communication" value="1" ng-init="supervisor.attributes.communication = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td><Strong>Initiative</Strong><br> <em>Promptly take action to resolve problems</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="initiative" ng-model="supervisor.attributes.initiative" value="1" ng-init="supervisor.attributes.initiative = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td><Strong>Professionalism</Strong><br> <em>Applies professional/technical/administrative or any other acquired knowledge</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="professionalism" ng-model="supervisor.attributes.professionalism" value="1" ng-init="supervisor.attributes.professionalism = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>7</td>
+                                                <td><Strong>Confidentiality</Strong><br> <em>Handles all business information in a professional and confidential manner</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="confidentiality" ng-model="supervisor.attributes.confidentiality" value="1" ng-init="supervisor.attributes.confidentiality = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>8</td>
+                                                <td><Strong>Strategic Thinking</Strong><br> <em>Contributes to the business success through new ideas or improved services</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="thinking" ng-model="supervisor.attributes.thinking" value="1" ng-init="supervisor.attributes.thinking = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>9</td>
+                                                <td><Strong>Creativity and Productivity</Strong><br> <em>Regularly introduces new concept/ideas and productive</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="creativity" ng-model="supervisor.attributes.creativity" value="1" ng-init="supervisor.attributes.creativity = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>10</td>
+                                                <td><Strong>Team Spirit</Strong><br> <em>Works efficiently with team members</em></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="team" ng-model="supervisor.attributes.team" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="team" ng-model="supervisor.attributes.team" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="team" ng-model="supervisor.attributes.team" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="team" ng-model="supervisor.attributes.team" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="team" ng-model="supervisor.attributes.team" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="team" ng-model="supervisor.attributes.team" value="1" ng-init="supervisor.attributes.team = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>TOTAL</strong></td>
+                                                <td>{{supervisor.attributes.total.a}}</td>
+                                                <td>{{supervisor.attributes.total.b}}</td>
+                                                <td>{{supervisor.attributes.total.c}}</td>
+                                                <td>{{supervisor.attributes.total.d}}</td>
+                                                <td>{{supervisor.attributes.total.e}}</td>
+                                                <td>{{supervisor.attributes.total.f}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>AVERAGE SCORE(%)</strong></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+
+                        <fieldset>
+                            <p><strong>Please justify your gradings</strong></p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea rows="2" ng-model="supervisor.attributes.justify" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p><strong>Work Habits</strong></p>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                                <th>F</th>
+                                            </tr>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td><strong>Dependability</strong><br> Ability to work without close supervision, inspection or compulsion</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="dependability" ng-model="supervisor.habit.dependability" value="1" ng-init="supervisor.habit.dependability = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Loyalty and Dedication</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="loyalty" ng-model="supervisor.habit.loyalty" value="1" ng-init="supervisor.habit.loyalty = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Honesty</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="honesty" ng-model="supervisor.habit.honesty" value="1" ng-init="supervisor.habit.honesty = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Reliability</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="reliability" ng-model="supervisor.habit.reliability" value="1" ng-init="supervisor.habit.reliability = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Sense of responsibility</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="sense" ng-model="supervisor.habit.sense" value="1" ng-init="supervisor.habit.sense = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>TOTAL</strong></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>AVERAGE SCORE(%)</strong></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p><strong>Please justify your gradings</strong></p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea rows="2" ng-model="supervisor.habit.justify" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p><strong>Sanctions</strong><br>Has any disciplinary action been taken against th staff during the period covered by this report? YES/NO. if yes give details of sanctions</p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea ng-model="supervisor.habit.sanctions" rows="3" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p><strong>Rewards</strong><br>Has the staff received any special commendation (Written) during the year for outstanding performance? if YES, give details:</p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea ng-model="supervisor.habit.rewards" rows="3" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p><strong>Leadership attainment</strong></p>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th></th>
+                                                <th>A</th>
+                                                <th>B</th>
+                                                <th>C</th>
+                                                <th>D</th>
+                                                <th>E</th>
+                                                <th>F</th>
+                                            </tr>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Punctuality and attendance at work</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="punctuality" ng-model="supervisor.leadership.punctuality" value="1" ng-init="supervisor.leadership.punctuality = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Drive and Decisiveness</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="drive" ng-model="supervisor.leadership.drive" value="1" ng-init="supervisor.leadership.drive = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Planning Ability</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="ability" ng-model="supervisor.leadership.ability" value="1" ng-init="supervisor.leadership.ability = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Does he/she show good example in terms of punctuality, efficiency and high degree of responsibility in whatever he/she does?</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="example" ng-model="supervisor.leadership.example" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="example" ng-model="supervisor.leadership.example" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="example" ng-model="supervisor.leadership.example" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="example" ng-model="supervisor.leadership.example" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="example" ng-model="supervisor.leadership.example" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="example" ng-model="supervisor.leadership.example" value="1" ng-init="supervisor.leadership.example = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Does he/she make suggestion for changes/adjust method/procedures that significantly contribute to his her work or that of his/her colleagues</td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="10" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="8" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="6"  />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="4" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="2" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                                <td><label class="radio-inline c-radio">
+                                                    <input type="radio" name="suggestion" ng-model="supervisor.leadership.suggestion" value="1" ng-init="supervisor.leadership.suggestion = 1" />
+                                                    <span class="fa fa-check"></span></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>TOTAL</strong></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>AVERAGE SCORE(%)</strong></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <p><strong>Please justify your gradings</strong></p>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <textarea rows="2" ng-model="supervisor.leadership.justify" class="form-control note-editor note-editor-margin"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                    </div> <!-- End page-body -->
+
+                    <div class="panel-footer">
+                        <div class="pull-right">
+                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
+                            <button class="btn btn-primary" ng-if="!client.id" type="submit">Next</button>
+                        </div>
+
+                        <div>
+                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
+                            <button class="btn btn-primary" ng-if="!client.id" type="submit">Previous</button>
+                        </div>
+                    </div>
+                    <!--</form>-->
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <!-- ng-disabled="!assessFormPart1.$invalid"-->
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
 </div>

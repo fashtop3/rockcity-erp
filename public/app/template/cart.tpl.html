@@ -32,9 +32,9 @@
                                         <td class="wd-sm">
                                             <div class="ph text-center">
                                                 <!--<p class="m0">QTY</p>-->
-                                                <a href="" ng-click="minusBroadcast(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-minus"></em></a>
+                                                <!--<a href="" ng-click="minusBroadcast(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-minus"></em></a>-->
                                                 <small class="m0">-({{sub.broadcast}})-</small>
-                                                <a href="" ng-click="plusBroadcast(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-plus"></em></a>
+                                                <!--<a href="" ng-click="plusBroadcast(cart.indexOf(item), item.subscriptions.indexOf(sub))"><em class="fa fa-lg fa-plus"></em></a>-->
                                             </div>
                                         </td>
                                         <td class="wd-xs hidden-xs hidden-sm">
@@ -48,7 +48,7 @@
                                             <div class="ph">
                                                 <!--<p class="m0">Price</p>-->
                                                 <small class="m0 text-info">
-                                                    ₦{{(sub.amount * sub.broadcast) | number:2}}</small>
+                                                    ₦{{sub.amount | number:2}}</small>
                                             </div>
                                         </td>
                                     </tr>
@@ -66,33 +66,42 @@
                                                 <span class="label label-info pull-right">{{sub.period}}</span>
                                                 <h4 class="media-box-heading">SLOT <small ng-if="sub.fixedSpot" class="text-muted">(Fixed)</small></h4>
                                                 <small class="text-muted text-inverse">
-                                                    <b>Date :</b> ({{sub.trans_date | date:'MMM d, y'}})
-                                                    <b>Time :</b> ({{sub.trans_time | date:'h:mm a'}})
-                                                    <b>Length : </b> ({{sub.duration}})
+                                                    <b>Slot date :</b> {{sub.slot_start_date | date:'MMM d, y'}}
+                                                    <b> -- </b> {{sub.slot_end_date | date:'MMM d, y'}}
+                                                </small><br />
+                                                <small class="text-muted text-inverse">
+                                                    <b>Slot :</b> {{sub.slots}}
                                                 </small>
+                                            </div><br />
+                                            <div class="table-responsive" ng-if="sub.schedule.length">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Slot</th>
+                                                        <th>Fixed</th>
+                                                        <th>Time</th>
+                                                    </tr>
+                                                    <tr ng-repeat="schedule in sub.schedule">
+                                                        <td>{{schedule.date | date:'MMM d, y'}}</td>
+                                                        <td>{{schedule.slot}}</td>
+                                                        <td>{{schedule.tofix}}</td>
+                                                        <td><span class="text text-primary"><small ng-repeat="t in schedule.times">{{t | date:'h:mm a'}}, </small></span></td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </td>
-                                        <td class="wd-sm"> <!--hidden-xs hidden-sm-->
-                                            <div class="ph text-center">
-                                                <!--<p class="m0">QTY</p>-->
-                                                <div ng-if="sub.fixedSpot"><small class="text-muted">(Fixed)</small></div>
-                                                <small class="text-purple">Surcharge : ({{sub.subCharge}}%)</small>
-                                            </div>
-                                        </td>
-                                        <td class="wd-xs">
+                                        <td class="wd-xs" valign="top">
                                             <div class="ph">
                                                 <p class="m0 text-muted">
                                                     <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><i class="fa fa-lg fa-trash-o"></i></a>
                                                 </p>
                                             </div>
                                         </td>
-                                        <td class="wd-sm">
+                                        <td class="wd-sm" valign="top">
                                             <div class="ph">
                                                 <!--<p class="m0">Price</p>-->
                                                 <small class="m0 text-info">
                                                     ₦{{sub.amount | number:2}}</small>
-                                        <span class="label label-inverse">
-                                            +Subcharge: ₦{{sub.subChargePrice | number:2}}</span>
                                             </div>
                                         </td>
                                     </tr>
