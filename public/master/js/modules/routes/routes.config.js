@@ -346,12 +346,6 @@
             })
             .state('app.driver.addReport', {
                 url: '/report/add',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
                 templateUrl: helper.basepath('driver-addreport.html'),
@@ -359,12 +353,6 @@
             })
             .state('app.driver.viewReport', {
                 url: '/report/view',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
                 templateUrl: helper.basepath('driver-viewreport.html'),
@@ -374,23 +362,18 @@
                 url: '/assessment',
                 abstract: true,
                 cache: false,
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
                 templateUrl: helper.basepath('assessment.html'),
                 resolve: angular.extend(helper.resolveFor('datatables'))
             })
             .state('app.assessment.create', {
                 url: '/create',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('assessment-form.html'),
+                controller: 'AssessmentController'
+            })
+            .state('app.assessment.edit', {
+                url: '/:id/edit',
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
                 templateUrl: helper.basepath('assessment-form.html'),
@@ -398,16 +381,17 @@
             })
             .state('app.assessment.view', {
                 url: '/view',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('assessment-form.html'),
-                controller: 'AssessmentController'
+                templateUrl: helper.basepath('assessment-record.html'),
+                controller: 'AssessmentRecordController'
+            })
+            .state('app.assessment.supervise', {
+                url: '^/supervisor/:id',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('assessment-supervisor.html'),
+                controller: 'SupervisorController'
             })
 
             //.state('app', {

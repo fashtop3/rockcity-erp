@@ -199,6 +199,7 @@ Route::group(['middleware' => ['web'] ], function () {
 
     //assessments
     Route::resource('/api/assessment', 'AssessmentController');
+    Route::resource('/api/supervisor', 'SupervisorController');
 
 });
 

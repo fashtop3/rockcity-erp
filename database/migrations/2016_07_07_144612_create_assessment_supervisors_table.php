@@ -15,6 +15,13 @@ class CreateAssessmentSupervisorsTable extends Migration
         Schema::create('assessment_supervisors', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->boolean('preview')->defualt(0);
+
+            $table->integer('user_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade');
+
             $table->integer('assessment_id')->unsigned();
             $table->foreign('assessment_id')->references('id')->on('assessments')
                 ->onDelete('cascade');

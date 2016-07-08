@@ -29,7 +29,9 @@
                             vm.client = response;
                             vm.showClient = true;
                         }, function (response) {
-                            vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            if(response.status == 403) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
                         }
                     )
                 }
@@ -91,7 +93,9 @@
                                             vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
                                         },
                                         function () {
-                                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                            if(response.status == 403) {
+                                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                                            }
                                         }
                                     );
                                 } else {

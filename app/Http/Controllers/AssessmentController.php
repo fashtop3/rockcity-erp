@@ -6,6 +6,8 @@ use App\Assessment;
 use App\AssessmentPartOne;
 use App\AssessmentPartThree;
 use App\AssessmentPartTwo;
+use App\AssessmentSupervisor;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,6 +17,12 @@ use Illuminate\Support\Facades\Validator;
 
 class AssessmentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth.basic');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +30,15 @@ class AssessmentController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        $user->assessments()->get();
+
+        foreach($user->assessments as $assessment) {
+            $assessment->supervisor->get();
+        }
+
+        return response($user->assessments);
     }
 
     /**
@@ -45,12 +61,11 @@ class AssessmentController extends Controller
     {
         $user = Auth::user();
 
-        dd($request->all());
-
         $validator = Validator::make($request->all(), [
-            'partOne' => 'required|array',
-            'partTwo' => 'required|array',
-            'partThree' => 'required|array'
+            'preview' => 'required|boolean',
+            'part_one' => 'required|array',
+            'part_two' => 'required|array',
+            'part_three' => 'required|array'
         ]);
 
 //        $validator->after(function($validator) {
@@ -63,21 +78,34 @@ class AssessmentController extends Controller
             return response('Something is wrong with the form!', 403);
         }
 
+        //Todo: move this update
+//        if($request->get('preview') == '1')
+//            return response('Form has been submitted for review', 403);
+
         DB::beginTransaction();
 
-        $assessment = Assessment::create(['user_id'=>$user->id]);
+        $assessment = Assessment::updateOrCreate(
+            ['id'=> $request->get('id'), 'user_id'=>$user->id],
+            ['user_id'=>$user->id, 'preview'=> $request->get('preview')]
+        );
 
-        $partOne = $request->get('partOne');
-        $partTwo = $request->get('partTwo');
-        $partThree = $request->get('partThree');
+        if($assessment) {
+            $partOne = $request->get('part_one');
+            $partTwo = $request->get('part_two');
+            $partThree = $request->get('part_three');
 
-        if ($this->partOneForm($partOne, $assessment) &&
-            $this->partTwoForm($partTwo, $assessment) &&
-            $this->partThreeForm($partThree, $assessment)) {
+            if ($this->partOneForm($partOne, $assessment) &&
+                $this->partTwoForm($partTwo, $assessment) &&
+                $this->partThreeForm($partThree, $assessment)) {
 
-            DB::commit();
+                DB::commit();
 
-            return response('Data saved');
+                $assessment->partOne->toArray();
+                $assessment->partTwo->toArray();
+                $assessment->partThree->toArray();
+
+                return response($assessment);
+            }
         }
 
         return response('Something is wrong with the form!', 403);
@@ -91,7 +119,18 @@ class AssessmentController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $assessment = Assessment::find($id);
+        if($assessment) {
+            $assessment->partOne->toArray();
+            $assessment->partTwo->toArray();
+            $assessment->partThree->toArray();
+            $assessment->supervisor->toArray();
+
+            return response($assessment);
+        }
+
+        return response('Assessment data not found!', 403);
     }
 
     /**
@@ -125,47 +164,64 @@ class AssessmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $assessment = Assessment::find($id);
+
+        if($assessment->preview) {
+            return response('Record can no longer be removed', 403);
+        }
+
+        if(!$assessment) {
+            return response('Record doesn\'t exists', 403);
+        }
+
+        if($assessment->delete()) {
+            return response('Record deleted successfully');
+        }
+
+        return response('Failed to delete record!. contact the administrator', 403);
     }
 
     /**
-     * @param Request $request
+     * @param $partOne
      * @param $assessment
+     * @return
+     * @internal param Request $request
      */
     protected function partOneForm($partOne, $assessment)
     {
 
-        return AssessmentPartOne::create([
-            'assessment_id' => $assessment->id,
-            'personal' => serialize($partOne['personal']),
-            'qualifications' => serialize($partOne['qualifications'])
+        return AssessmentPartOne::updateOrCreate(
+            ['assessment_id' => $assessment->id,],
+            ['assessment_id' => $assessment->id, 'personal' => $partOne['personal'], 'qualifications' => $partOne['qualifications']
         ]);
     }
 
     /**
-     * @param Request $request
+     * @param $partTwo
      * @param $assessment
+     * @return
+     * @internal param Request $request
      */
     protected function partTwoForm($partTwo, $assessment)
     {
 
-        return AssessmentPartTwo::create([
-            'assessment_id' => $assessment->id,
-            'review' => serialize($partTwo['performance']),
-            'performance' => serialize($partTwo['performance'])
+        return AssessmentPartTwo::updateOrCreate(
+            ['assessment_id' => $assessment->id,],
+            ['assessment_id' => $assessment->id, 'review' => $partTwo['review'], 'performance' => $partTwo['performance']
         ]);
     }
 
     /**
-     * @param Request $request
+     * @param $partThree
      * @param $assessment
+     * @return
+     * @internal param Request $request
      */
     protected function partThreeForm($partThree, $assessment)
     {
-
-        return AssessmentPartThree::create([
-            'assessment_id' => $assessment->id,
-            'competencies' => serialize($partThree['competencies'])
+        return AssessmentPartThree::updateOrCreate(
+            ['assessment_id' => $assessment->id,],
+            ['assessment_id' => $assessment->id, 'competencies' => $partThree['competencies']
         ]);
     }
 }

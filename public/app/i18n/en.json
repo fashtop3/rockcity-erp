@@ -38,8 +38,9 @@
 
       "assessment": {
         "MENU": "Assessment",
-        "VIEW": "View Assessments",
-        "CREATE": "New Assessment form"
+        "VIEW": "View records",
+        "CREATE": "New form",
+        "SUPERVISOR": "Supervisor"
       }
 
     }

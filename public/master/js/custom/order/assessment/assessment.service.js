@@ -12,12 +12,29 @@
             this.assessment = function() {
                 return $resource(baseURL + 'assessment', null,
                     {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest', 'Content-Type': 'application/json'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest', 'Content-Type': 'application/json' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest', 'Content-Type': 'application/json' }}
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
                     }
                 )
-            }
+            };
+
+            this.getAssessment = function() {
+                return $resource(baseURL + 'assessment/:id', null,
+                    {
+                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.supervisor = function() {
+                return $resource(baseURL + 'supervisor', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
 
         }]);
 })();

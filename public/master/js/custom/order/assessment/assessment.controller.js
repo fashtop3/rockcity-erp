@@ -5,80 +5,127 @@
 (function() {
     angular
         .module('app.order')
-        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService',
-            function($scope, toaster, assessmentService) {
+        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
 
-            var vm = $scope;
+                var vm = $scope;
 
-            vm.partOne = { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
-                "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}] };
+                $scope.form = {
+                    "id": null, "preview": 0,
+                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
+                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
+                    "part_two": { "review":[{}], "performance":{}},
+                    "part_three": {"competencies":{}},
+                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
+                };
 
-            vm.partTwo = { "review":[{}], "performance":{}};
-            vm.partThree = {"competencies":{}};
+                //routing from create or from url
+                if($state.is('app.assessment.edit')) {
+                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                        function (response) {
+                            $scope.form = response;
 
-            vm.supervisor = {"attributes":{}, "habit":{}, "leadership":{}};
+                            checkDataResp();
+                        },
+                        function() {
+                            $state.go('app.assessment.create', {"id":$scope.form.id});
+                        }
+                    );
+                }
 
+                vm.submitPreview = function() {
+                    $scope.form.preview = 0;
 
-            //submit form
-            vm.submitAssessment = function() {
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
 
-                var data = {"partOne":vm.partOne, "partTwo":vm.partTwo, "partThree":vm.partThree};
+                    assessmentService.assessment().save($scope.form,
+                        function (response) {
 
-                toaster.pop('wait', 'Assessment', 'Processing your request');
+                            $scope.form = response;
+                            toaster.pop('success', 'Assessment', 'Data saved.');
 
-                assessmentService.assessment().save(data,
-                    function () {
-                        toaster.pop('success', 'Assessment', 'Data saved.');
-                        //Todo: assessment records
-                        //$timeout(function(){
-                        //    $state.go('app.client');
-                        //}, 500);
-                    },
-                    function (response) {
-                        if(response.status == 403) {
-                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                            checkDataResp();
+
+                            $state.go('app.assessment.edit', {"id":$scope.form.id});
+                        },
+                        function (response) {
                             toaster.pop('error', 'Assessment', 'Data submission Failed.');
                         }
+                    );
+                };
+
+                //submit form
+                vm.submitAssessment = function() {
+
+                    $scope.form.preview = 1;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function () {
+                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if($scope.form.part_two.review.length == 0) {
+                        if($scope.form.part_two.review[0].length == 0)
+                            $scope.form.part_two.review = [{}];
                     }
-                );
-            };
 
-            //START-DATE functions
-            vm.today = function() {
-                vm.dt = new Date();
-            };
-            vm.today();
+                    if($scope.form.part_two.performance.length == 0) {
+                        $scope.form.part_two.performance = {};
+                    }
 
-            vm.clear = function () {
-                vm.dt = null;
-            };
+                    if($scope.form.part_three.competencies.length == 0) {
+                        $scope.form.part_three.competencies = {};
+                    }
+                };
 
-            // Disable weekend selection
-            vm.disabled = function(date, mode) {
-                return false;
-                //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
-            };
+                //START-DATE functions
+                vm.today = function() {
+                    vm.dt = new Date();
+                };
+                vm.today();
 
-            vm.toggleMin = function() {
-                vm.minDate = vm.minDate ? null : new Date();
-            };
-            vm.toggleMin();
+                vm.clear = function () {
+                    vm.dt = null;
+                };
 
-            vm.open = function($event, dateObj) {
-                $event.preventDefault();
-                $event.stopPropagation();
+                // Disable weekend selection
+                vm.disabled = function(date, mode) {
+                    return false;
+                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
+                };
 
-                dateObj.opened = true;
-            };
+                vm.toggleMin = function() {
+                    vm.minDate = vm.minDate ? null : new Date();
+                };
+                vm.toggleMin();
 
-            vm.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-            };
+                vm.open = function($event, dateObj) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
 
-            vm.initDate = new Date('2019-10-20');
-            vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            vm.dateFormat = vm.dateFormats[0];
-        //END: Date functions
-        }]);
+                    dateObj.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.dateFormat = vm.dateFormats[0];
+                //END: Date functions
+            }]);
 })();
