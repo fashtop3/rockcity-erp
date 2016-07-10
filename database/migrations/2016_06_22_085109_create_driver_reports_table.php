@@ -21,13 +21,9 @@ class CreateDriverReportsTable extends Migration
             $table->integer('vehicle_id')->unsigned();
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
 
-            $table->time('time_inspect');
-            $table->integer('water_level');
-            $table->integer('oil_level');
-            $table->string('fuel_level');
-            $table->string('break_condition');
-            $table->string('absorber_condition');
-            $table->time('time_washed');
+            $table->text('info');
+
+            $table->longText('html_text');
             $table->timestamps();
         });
     }

@@ -11,6 +11,8 @@
             return {
                 restrict: 'AE',
                 link: function (scope, elem, attrs) {
+                    //console.log(attrs);
+                    //console.log(scope.$eval(attrs.sideMenuPermission));
                     console.log('Linking....');
                 }
             }

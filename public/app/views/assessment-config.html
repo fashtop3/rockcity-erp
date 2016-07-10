@@ -1,0 +1,108 @@
+<h3>
+    Settings/Log
+</h3>
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Settings</div>
+            <div class="panel-body">
+                <form class="form-horizontal" name="settingsForm" ng-submit="submitSettings()">
+                    <fieldset>
+                        <div class="form-group">
+                            <!--<label class=" control-label">Enable</label>-->
+                            <div class="col-sm-8 col-sm-offset-4">
+                                <label class="switch switch-lg">
+                                    <input type="checkbox" ng-model="config.enable" />
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div ng-controller="AssessConfigDatePickerCtrl as dpick" class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <p class="input-group">
+                                    <input type="text" name="start_date" readonly required="" placeholder="Starts" uib-datepicker-popup="{{dpick.format}}" ng-model="$parent.config.starts" is-open="dpick.opened" min-date="dpick.minDate" max-date="'2019-12-22'" uib-datepicker-options="dpick.dateOptions" date-disabled="dpick.disabled(date, mode)"
+                                           close-text="Close" class="form-control" />
+                              <span class="input-group-btn">
+                                 <button type="button" ng-click="dpick.open($event)" class="btn btn-default">
+                                     <em class="fa fa-calendar"></em>
+                                 </button>
+                              </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div ng-controller="AssessConfigDatePickerCtrl as dpick" class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <p class="input-group">
+                                    <input type="text" name="end_date" readonly required="" placeholder="Ends" uib-datepicker-popup="{{dpick.format}}" ng-model="$parent.config.ends" is-open="dpick.opened" min-date="$parent.config.starts" max-date="'2019-12-22'" uib-datepicker-options="dpick.dateOptions" date-disabled="dpick.disabled(date, mode)"
+                                           close-text="Close" class="form-control" />
+                              <span class="input-group-btn">
+                                 <button type="button" ng-click="dpick.open($event)" class="btn btn-default">
+                                     <em class="fa fa-calendar"></em>
+                                 </button>
+                              </span>
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-default">Cancel</button>
+                                <button type="submit" ng-disabled="!settingsForm.$valid" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div>
+                    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+                </div>
+
+                <div class="table-responsive">
+                    <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+                        <thead>
+                        <tr>
+                            <th>Enable</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="config in configs">
+                            <td class="text-center">
+                                <div class="checkbox c-checkbox needsclick">
+                                    <label class="needsclick">
+                                        <input type="checkbox" disabled ng-checked="config.enable" class="needsclick" />
+                                        <span class="fa fa-check"></span>
+                                      </label>
+                                </div>
+                            </td>
+                            <td><a ui-sref="app.assessment.log({'id':config.id})">{{config.starts | date:'MMM d, y'}}</a></td>
+                            <td><a ui-sref="app.assessment.log({'id':config.id})">{{config.ends | date:'MMM d, y'}}</a></td>
+                            <td align="center">
+                                <button  class="btn btn-sm btn-warning" ng-disabled="isUpdate($index)" ng-click="editConfig($index)">
+                                    <em class="fa fa-edit"></em>
+                                </button>
+                                <button type="button" ng-click="remove($index)" class="btn btn-sm btn-danger">
+                                    <em class="fa fa-trash-o"></em>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

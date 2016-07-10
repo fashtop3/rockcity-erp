@@ -7,7 +7,7 @@
 
         <div class="col-sm-10">
             <!-- Wysiswyg editor-->
-            <div text-angular="" ng-model="task.htmlText" class="btn-group-small"></div>
+            <div text-angular="" ng-model="task.htmlText" required class="btn-group-small"></div>
         </div>
 
         <div class="form-group">
@@ -19,10 +19,10 @@
 
             <div class="col-sm-10">
                 <label class="radio-inline">
-                    <input type="radio" name="completed_{{$index}}" ng-model="task.completed"  value="1"> Yes
+                    <input type="radio" required name="completed_{{$index}}" ng-model="task.completed"  value="1"> Yes
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="completed_{{$index}}" ng-model="task.completed" value="0"> No
+                    <input type="radio" required name="completed_{{$index}}" ng-model="task.completed" value="0"> No
                 </label>
             </div>
         </div>

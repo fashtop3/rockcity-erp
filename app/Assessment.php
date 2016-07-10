@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assessment extends Model
 {
-    protected $fillable = ['user_id', 'preview'];
+    protected $fillable = ['assessment_config_id', 'user_id', 'preview'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -26,5 +26,10 @@ class Assessment extends Model
     public function supervisor()
     {
         return $this->hasOne('App\AssessmentSupervisor');
+    }
+
+    public function config()
+    {
+        return $this->belongsTo('App\AssessmentConfig');
     }
 }

@@ -13,10 +13,10 @@
                     'update':{method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
                     'delete':{method:'DELETE'}
                 });
-            }
+            };
 
-            this.driver = function() {
-                return $resource(baseURL + 'vehicle/report/:id', null, {
+            this.driverReport = function() {
+                return $resource(baseURL + 'driver/report/:id', null, {
                     'report': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
                     'update':{method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
                     'delete':{method:'DELETE'}

@@ -1,8 +1,17 @@
-<h3>
-    PART 1
-</h3>
+<div ng-if="disableForm" class="alert alert-danger">
+    Assessment portal is currently unavailable check back later!!!
+</div>
 
-<div >
+<div ng-if="!disableForm">
+
+    <div class="alert alert-warning" ng-show="showTimeFrame" >
+        Submission is opened from <strong>{{config.starts | date:'MMM d, y'}} - {{config.ends | date:'MMM d, y'}}</strong>
+    </div>
+
+    <h3>
+        PART 1
+    </h3>
+
     <form novalidate class="form-horizontal" role="form">
 
         <div class="row">

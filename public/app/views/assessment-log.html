@@ -1,0 +1,44 @@
+<h3>
+    Log
+</h3>
+
+<div class="row">
+    <!--<div class="col-xs-12 col-sm-12">-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div>
+                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+            </div>
+
+            <div class="table-responsive">
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+                    <thead>
+                    <tr>
+                        <th>Date Added</th>
+                        <th>Last Modified</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="record in records">
+                        <td><a ui-sref="app.assessment.edit({id: record.id})">{{ record.created_at }}</a></td>
+                        <td><a ui-sref="app.assessment.edit({id: record.id})">{{record.updated_at}}</a></td>
+                        <td align="center">
+                            <button ng-disabled="record.preview" ui-sref="app.assessment.edit({id: record.id})" class="btn btn-sm btn-warning">
+                                <em class="fa fa-edit"></em>
+                            </button>
+                            <button ng-disabled="record.preview" type="button" ng-click="remove($index)" class="btn btn-sm btn-danger">
+                                <em class="fa fa-trash-o"></em>
+                            </button>
+                            <button ng-disabled="!record.preview || record.supervisor.preview" ui-sref="app.assessment.supervise({id: record.id})" type="button" class="btn btn-sm btn-danger">
+                                <em class="fa fa-commenting"></em>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+</div>

@@ -100,45 +100,6 @@
         </div>
         {{--end: remittances--}}
 
-        {{--start: vehicles--}}
-        <div style="margin: 20px 0 5px 0">
-            <h3 style="padding: 0; margin: 0; color: orangered">VEHICLES</h3>
-            <hr style="border:1px solid orangered;" />
-
-            @foreach($report->reportVehicles as $vehicle)
-                <div style="padding: 5px; margin: 3px; border: 1px solid gainsboro">
-                    <table class="vehicle">
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Vehicle </div></td>    <td><span style="color: green">{{$vehicle->vehicle()->get()->first()->name}} </span> <small style="color: grey;">(Reg No: {{$vehicle->vehicle()->get()->first()->reg}})</small></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Driver </div></td>     <td><span style="color: green">{{$vehicle->driver}}</span></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Passenger </div></td>      <td><span style="color: green">{{$vehicle->passenger}}</span></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Destination </div></td>    <td><span style="color: green">{{$vehicle->destination}}</span></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Mileage before leaving office </div></td>      <td><span style="color: green">{{$vehicle->millageBefore}}</span></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Mileage on return to office </div></td>        <td><span style="color: green">{{$vehicle->millageAfter}}</span></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Time the vehicle left office </div></td>       <td><span style="color: green">{{$vehicle->timeBefore}}</span></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Time the vehicle returned to office </div></td>        <td><span style="color: green">{{$vehicle->timeAfter}}</span></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Fuel Gauge before leaving </div></td>      <td><span style="color: green">{{$vehicle->fuelBefore}}</span></td></tr>
-                        <tr>
-                            <td class="label" style="text-align: right; background-color: lightgrey"><div style="color: #033769">Fuel Gauge on return </div></td>       <td><span style="color: green">{{$vehicle->fuelAfter}}</span></td></tr>
-                    </table>
-
-                    <br />
-                    <div style="margin: 10px; padding: 5px;">
-                        {!! $vehicle->htmlText !!}
-                    </div>
-                </div>
-            @endforeach
-        </div>
-        {{--end: vehicles--}}
-
     </div>
 
     <div class="footer" style="color: white; padding: 1px; background-color: orangered;">

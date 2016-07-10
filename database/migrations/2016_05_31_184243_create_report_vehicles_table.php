@@ -12,35 +12,35 @@ class CreateReportVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('report_vehicles', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('report_id')->unsigned();
-            $table->foreign('report_id')
-                ->references('id')->on('reports')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->integer('vehicle_id')->unsigned();
-            $table->foreign('vehicle_id')
-                ->references('id')->on('vehicles')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->string('driver');
-            $table->string('passenger');
-            $table->string('destination');
-            $table->string('millageBefore');
-            $table->string('millageAfter');
-            $table->string('timeBefore');
-            $table->string('timeAfter');
-            $table->string('fuelBefore');
-            $table->string('fuelAfter');
-            $table->longText('htmlText');
-
-
-            $table->timestamps();
-        });
+//        Schema::create('report_vehicles', function (Blueprint $table) {
+//            $table->increments('id');
+//
+//            $table->integer('report_id')->unsigned();
+//            $table->foreign('report_id')
+//                ->references('id')->on('reports')
+//                ->onDelete('cascade')
+//                ->onUpdate('cascade');
+//
+//            $table->integer('vehicle_id')->unsigned();
+//            $table->foreign('vehicle_id')
+//                ->references('id')->on('vehicles')
+//                ->onDelete('cascade')
+//                ->onUpdate('cascade');
+//
+//            $table->string('driver');
+//            $table->string('passenger');
+//            $table->string('destination');
+//            $table->string('millageBefore');
+//            $table->string('millageAfter');
+//            $table->string('timeBefore');
+//            $table->string('timeAfter');
+//            $table->string('fuelBefore');
+//            $table->string('fuelAfter');
+//            $table->longText('htmlText');
+//
+//
+//            $table->timestamps();
+//        });
     }
 
     /**

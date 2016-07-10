@@ -198,6 +198,8 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('pdf/{id}/airtime', 'PDFController@airtimePDF');
 
     //assessments
+    Route::get('/api/activeconfig', 'AssessmentConfigController@getActive');
+    Route::resource('/api/assessconfig', 'AssessmentConfigController');
     Route::resource('/api/assessment', 'AssessmentController');
     Route::resource('/api/supervisor', 'SupervisorController');
 

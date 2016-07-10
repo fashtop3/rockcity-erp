@@ -9,6 +9,9 @@
             function($scope, toaster, assessmentService, $state, $stateParams) {
 
                 var vm = $scope;
+                vm.disableForm = false;
+                vm.showTimeFrame = false;
+                $scope.config = {};
 
                 $scope.form = {
                     "id": null, "preview": 0,
@@ -18,6 +21,33 @@
                     "part_three": {"competencies":{}},
                     "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
                 };
+
+
+
+                assessmentService.getActiveConfig().get().$promise.then(
+                    function (response) {
+                        vm.showTimeFrame = true;
+                        $scope.config = response;
+
+                        if($state.is('app.assessment.create'))
+                            $scope.form.assessment_config_id = response.id;
+
+                        checkRouting(response);
+                    },
+                    function() {
+                        vm.disableForm = true;
+                    }
+                );
+
+
+                //routes to edit if user has a data already submitted
+                function checkRouting(response) {
+                    if($state.is('app.assessment.create')) {
+                        if (angular.isDefined(response.assessment)) {
+                            $state.go('app.assessment.edit', {"id": response.assessment.id});
+                        }
+                    }
+                }
 
                 //routing from create or from url
                 if($state.is('app.assessment.edit')) {
@@ -76,16 +106,16 @@
                 };
 
                 var checkDataResp = function() {
-                    if($scope.form.part_two.review.length == 0) {
+                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
                         if($scope.form.part_two.review[0].length == 0)
                             $scope.form.part_two.review = [{}];
                     }
 
-                    if($scope.form.part_two.performance.length == 0) {
+                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
                         $scope.form.part_two.performance = {};
                     }
 
-                    if($scope.form.part_three.competencies.length == 0) {
+                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
                         $scope.form.part_three.competencies = {};
                     }
                 };

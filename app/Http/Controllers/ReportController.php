@@ -179,22 +179,6 @@ class ReportController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param $report
-     */
-    private function createVehicles(Request $request, $report)
-    {
-        $vehicles = $request->get('vehicles');
-        foreach ($vehicles as $vehicle) {
-            if (!empty($vehicle)) {
-                $vehicle['report_id'] = $report->id;
-                $vehicle['vehicle_id'] = $vehicle['brand']['id'];
-                ReportVehicle::create($vehicle);
-            }
-        }
-    }
-
-    /**
      * @param $report
      */
     private function sendReportToMails($report)
@@ -203,7 +187,6 @@ class ReportController extends Controller
         $report->tasks->toArray();
         $report->challenges->toArray();
         $report->remittances->toArray();
-        $report->reportVehicles->toArray();
 
         $report['taskCount'] = 0;
         $report['challengeCount'] = 0;
@@ -220,7 +203,6 @@ class ReportController extends Controller
         $this->createTask($request, $report);
         $this->createChallenge($request, $report);
         $this->createRemittance($request, $report);
-        $this->createVehicles($request, $report);
     }
 
 }

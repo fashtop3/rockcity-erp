@@ -2,11 +2,13 @@
   {
     "text": "Menu Heading",
     "heading": "true",
+    "permissions": "register.staff",
     "translate": "sidebar.heading.HEADER"
   },
   {
     "text": "Dashboard",
     "sref": "app.dashboard",
+    "is-admin": "",
     "icon": "fa fa-dashboard",
     "translate": "sidebar.nav.DASHBOARD"
   },
@@ -60,7 +62,11 @@
     "icon": "fa fa-reorder",
     "submenu": [
       { "text": "Create", "sref": "app.assessment.create", "translate": "sidebar.nav.assessment.CREATE"},
-      { "text": "View", "sref": "app.assessment.view", "translate": "sidebar.nav.assessment.VIEW"}
+      { "text": "View", "sref": "app.assessment.view", "translate": "sidebar.nav.assessment.VIEW"},
+      { "text": "Records", "submenu": [
+          {"text": "Settings", "sref": "app.assessment.config", "translate": "sidebar.nav.assessment.SETTINGS"}
+        ],
+        "translate": "sidebar.nav.assessment.RECORDS"}
     ],
     "translate": "sidebar.nav.assessment.MENU"
   },

@@ -10,37 +10,32 @@ class DriverReport extends Model
     protected $fillable = [
         'user_id',
         'vehicle_id',
-        'time_inspect',
-        'water_level',
-        'oil_level',
-        'fuel_level',
-        'break_condition',
-        'absorber_condition',
-        'time_washed'
+        'info',
+        'html_text'
     ];
-
-    //create a carbon instance
-    protected $dates = [ 'time_inspect', 'time_washed' ];
 
     /**
      * A setter method called when a form is submitted
      *
-     * @param $date
+     * @param $info
+     * @internal param $date
      */
-    public function setTimeInspectAttribute($date)
+    public function setInfoAttribute($info)
     {
-        //Todo: create time format here
+        $this->attributes['info'] = serialize($info);
     }
 
 
     /**
      * A setter method when a form is submitted
      *
-     * @param $date
+     * @param $info
+     * @return mixed
+     * @internal param $date
      */
-    public function setTimeWashedAttribute($date)
+    public function getInfoAttribute($info)
     {
-        //Todo: create time format here
+        return unserialize($info);
     }
 
     /**

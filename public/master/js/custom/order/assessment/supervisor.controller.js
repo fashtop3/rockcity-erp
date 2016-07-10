@@ -16,8 +16,12 @@
                 //manages for routing
                 assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
                     function (response) {
-                        console.log($scope.supervisor = response.supervisor);
-                        $scope.supervisor = response.supervisor;
+                        if(response.supervisor != null)
+                            $scope.supervisor = response.supervisor;
+                        else {
+                            $scope.supervisor.assessment_id = response.id;
+                            checkDataResp();
+                        }
                     },
                     function() {
                         $state.go('app.assessment.view');
@@ -29,7 +33,6 @@
                     $scope.supervisor.preview = 0;
 
                     toaster.pop('wait', 'Assessment', 'Processing your request');
-
 
                     //set the function
                     assessmentService.supervisor().save($scope.supervisor,
@@ -69,15 +72,15 @@
                 };
 
                 var checkDataResp = function() {
-                    if($scope.supervisor.attributes.length == 0) {
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
                         $scope.supervisor.attributes = {};
                     }
 
-                    if($scope.supervisor.habit.length == 0) {
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
                         $scope.supervisor.habbit = {};
                     }
 
-                    if($scope.supervisor.leadership.length == 0) {
+                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
                         $scope.supervisor.leadership = {};
                     }
                 };

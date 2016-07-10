@@ -41,6 +41,7 @@ class SupervisorController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+
         $validator = Validator::make($request->all(), [
             'preview' => 'required|boolean',
             'attributes' => 'required|array',

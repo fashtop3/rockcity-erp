@@ -333,15 +333,16 @@
             .state('app.driver', {
                 url: '/driver',
                 title: 'Driver\'s Report',
-                //data: {
-                //    permissions: {
-                //        only: 'view.verified.staff',
-                //        redirectTo: 'app.unauthorized'
-                //    }
-                //},
                 cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select')),
+                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select', 'textAngular')),
                 templateUrl: helper.basepath('driver.html'),
+                controller: 'DriverController'
+            })
+            .state('app.driver.editReport', {
+                url: '/report/:id/edit',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('driver-addreport.html'),
                 controller: 'DriverController'
             })
             .state('app.driver.addReport', {
@@ -356,7 +357,7 @@
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
                 templateUrl: helper.basepath('driver-viewreport.html'),
-                controller: 'DriverController'
+                controller: 'DriverReportViewCtrl'
             })
             .state('app.assessment', {
                 url: '/assessment',
@@ -368,7 +369,7 @@
             .state('app.assessment.create', {
                 url: '/create',
                 cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables')),
+                resolve: angular.extend(helper.resolveFor('datatables', 'whirl')),
                 templateUrl: helper.basepath('assessment-form.html'),
                 controller: 'AssessmentController'
             })
@@ -393,7 +394,28 @@
                 templateUrl: helper.basepath('assessment-supervisor.html'),
                 controller: 'SupervisorController'
             })
-
+            .state('app.assessment.log', {
+                url: '/record/:id',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('assessment-log.html'),
+                        controller: 'AssessmentLogController'
+                    }
+                }
+            })
+            .state('app.assessment.config', {
+                url: '/settings',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('assessment-config.html'),
+                        controller: 'AssessmentConfigController'
+                    }
+                }
+            })
             //.state('app', {
           //    url: '/app',
           //    abstract: true,

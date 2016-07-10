@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Assessment;
+use App\AssessmentConfig;
 use App\AssessmentPartOne;
 use App\AssessmentPartThree;
 use App\AssessmentPartTwo;
@@ -35,7 +36,7 @@ class AssessmentController extends Controller
         $user->assessments()->get();
 
         foreach($user->assessments as $assessment) {
-            $assessment->supervisor->get();
+            $assessment->supervisor()->get();
         }
 
         return response($user->assessments);
@@ -62,6 +63,7 @@ class AssessmentController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
+            'assessment_config_id' => 'required|integer',
             'preview' => 'required|boolean',
             'part_one' => 'required|array',
             'part_two' => 'required|array',
@@ -82,11 +84,16 @@ class AssessmentController extends Controller
 //        if($request->get('preview') == '1')
 //            return response('Form has been submitted for review', 403);
 
+        $config = AssessmentConfig::find($request->get('assessment_config_id'));
+        if(!$config->enable) {
+           return response('Submission closed', 403);
+        }
+
         DB::beginTransaction();
 
         $assessment = Assessment::updateOrCreate(
-            ['id'=> $request->get('id'), 'user_id'=>$user->id],
-            ['user_id'=>$user->id, 'preview'=> $request->get('preview')]
+            ['assessment_config_id'=> $request->get('assessment_config_id'), 'user_id'=>$user->id],
+            ['assessment_config_id'=> $request->get('assessment_config_id'), 'user_id'=>$user->id, 'preview'=> $request->get('preview')]
         );
 
         if($assessment) {
@@ -121,11 +128,15 @@ class AssessmentController extends Controller
     {
 
         $assessment = Assessment::find($id);
+
         if($assessment) {
             $assessment->partOne->toArray();
             $assessment->partTwo->toArray();
             $assessment->partThree->toArray();
-            $assessment->supervisor->toArray();
+            $assessment->supervisor()->get();
+
+            if($assessment->supervisor)
+                $assessment->supervisor->toArray();
 
             return response($assessment);
         }

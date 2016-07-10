@@ -36,5 +36,20 @@
                 )
             };
 
+            this.getConfig = function() {
+                return $resource(baseURL + 'assessconfig/:id', null,
+                    {
+                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.getActiveConfig = function() {
+                return $resource(baseURL + 'activeconfig');
+            };
+
+
         }]);
 })();

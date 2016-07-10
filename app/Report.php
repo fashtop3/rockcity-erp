@@ -33,9 +33,4 @@ class Report extends Model
     {
         return $this->hasMany('App\ReportUpload');
     }
-
-    public function reportVehicles()
-    {
-        return $this->hasMany('App\ReportVehicle');
-    }
 }

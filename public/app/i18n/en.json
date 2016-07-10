@@ -38,9 +38,12 @@
 
       "assessment": {
         "MENU": "Assessment",
-        "VIEW": "View records",
+        "VIEW": "View Data",
         "CREATE": "New form",
-        "SUPERVISOR": "Supervisor"
+        "SUPERVISOR": "Supervisor",
+        "SETTINGS": "Settings",
+        "RECORDS": "Records",
+        "LOG": "History"
       }
 
     }

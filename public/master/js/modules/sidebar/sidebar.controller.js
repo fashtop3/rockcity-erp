@@ -40,57 +40,9 @@
             // Handle sidebar and collapse items
             // ----------------------------------
 
-
-            var confirmed = [];
-            $scope.isAllowed = function(item) {
-
-
-                return true;
-
-                if(!item.permission)
-                    return;
-
-                if(item.permission) {
-                    //console.log('no link');
-
-                    //if( !item.sref || item.sref === '#'){
-                    //
-                    //    if(confirmed.indexOf(item))
-                    //        return;
-
-
-                        //confirmed.push(item);
-                        //var foundActive = false;
-                        //angular.forEach(item.submenu, function(value) {
-                        //    if(isActive(value)) foundActive = true;
-                        //});
-                        //return foundActive;
-                    //}
-                    //else
-                    //    return $state.is(item.sref) || $state.includes(item.sref);
-                    //console.log('item with permission');
-                }
-
-                return true;
-
-                    //var visibility = PermissionStore.hasPermissionDefinition(item.permission);
-                    //
-                    //angular.forEach(item.submenu, function(value) {
-                    //    if($scope.permission(value));
-                    //});
-                    //return visibility;
-
-                //return userFactory.userCan(item.permission);
-
-                //if( !item.sref || item.sref === '#') {
-                //    var foundActive = false;
-                //    angular.forEach(item.submenu, function(value) {
-                //        if(isActive(value)) foundActive = true;
-                //    });
-                //    return foundActive;
-                //}
-                //else
-                //    return $state.is(item.sref) || $state.includes(item.sref);
+            $scope.getFormattedPermission =  function (item) {
+                if(item.permissions != "undefined")
+                    return item.permissions;
             };
 
             $scope.getMenuItemPropClasses = function(item) {
