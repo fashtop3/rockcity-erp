@@ -33,3 +33,55 @@
         <!--<button type="button" ng-click="submitUpload()" >submit</button>-->
     <!--&lt;!&ndash;</form>&ndash;&gt;-->
 <!--</div>-->
+
+
+<div class="panel" ng-controller="uploadController">
+    <div class="panel-body">
+            <fieldset>
+                <div class="form-group">
+                    <div class="col-sm-6 col-sm-offset-1">
+                        <div class="btn btn-primary"
+                             ngf-drop=""
+                             ngf-select="uploadFiles($files, $invalidFiles)"
+                             ng-model="files"
+                             ngf-multiple="true"
+                             ngf-pattern="'image/*,audio/*,video/*'"
+                             ngf-accept="'image/*,audio/*,video/*'"
+                             ngf-resize="{width: 500, height: 500, centerCrop: false, type: 'image/jpeg', quality: .8}"
+                             ngf-resize-if="$width > 500 || $height > 500"
+                             ngf-model-invalid="invalidFiles"
+                             ng-model-options="{'debounce':100}"
+                             ngf-max-files="10"
+                             ngf-validate="{size: {max: '5MB', min: '10B'}, height: {max: 5000}, width: {max: 5000}, duration: {max: '5m'}}"
+                             ngf-keep="'distinct'">Select multiple files</div>
+                    </div>
+                    <button type="button" class="btn btn-warning col-sm-2" ng-click="files=[]; invalidFiles=[];">Reset</button>
+                </div>
+            </fieldset>
+
+            <p>Preview image/audio/video:</p>
+            <fieldset ng-repeat="f in files">
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <img controls ngf-src="!f.$error && f" />
+                        <audio controls ngf-src="!f.$error && f"></audio>
+                        <video controls  ngf-src="!f.$error && f"></video>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <div uib-progressbar ng-value="f.progress" type="success" class="progress-striped">{{f.progress}}%</div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset ng-repeat="i in invalidFiles">
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-1">
+                        Invalid File: MaxSize 5MB, {{f.$ngfName}}
+                    </div>
+                </div>
+            </fieldset>
+    </div>
+</div>
+

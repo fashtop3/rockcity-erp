@@ -119,16 +119,14 @@ class ReportController extends Controller
 
     public function upload(Request $request)
     {
-        $file = $request->all()['file'];
+        $file = $request->file('file');
 
-        dd($file);
+        $filename = $file->getClientOriginalName() .'.'. $file->getClientOriginalExtension();
+        $file->move(public_path() .'/app/files/', $filename);
 
-//        $filename = 'user_'.'.'.$file->getClientOriginalExtension();
-//        $file->move(public_path() .'/app/img/user/', $filename);
-//
 //        Upload::Create(['user_id' => $id, 'filename' => $filename, 'thumbnail' => $file->getRealPath()]);
-//
-//        return response('File uploaded successfully', 201);
+
+        return response('File uploaded successfully', 201);
 
     }
 

@@ -10,7 +10,7 @@
 
                 var vm = $scope;
                 //collapse the menu bar
-                $rootScope.app.layout.isCollapsed = true;
+                //$rootScope.app.layout.isCollapsed = true;
                 vm.reports = {};
 
                 vm.alerts = [];

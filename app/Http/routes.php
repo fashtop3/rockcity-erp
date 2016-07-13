@@ -193,6 +193,8 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/api/target/{user_id}/user', 'TargetController@getUserTargets');
     Route::resource('/api/target', 'TargetController');
 
+    Route::post('api/files', 'ReportController@upload');
+
     Route::resource('/api/report', 'ReportController');
 
     Route::get('pdf/{id}/airtime', 'PDFController@airtimePDF');

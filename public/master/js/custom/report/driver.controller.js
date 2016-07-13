@@ -9,7 +9,7 @@
             function($scope, $rootScope, vehicleFactory, $state, $stateParams) {
 
                 //collapse the menu bar
-                $rootScope.app.layout.isCollapsed = true;
+                //$rootScope.app.layout.isCollapsed = true;
 
                 var vm = $scope;
                 vm.report = { "info":{} }; // "water_level": "0", "oil_level": "0"};
