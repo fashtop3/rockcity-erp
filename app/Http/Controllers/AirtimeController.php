@@ -6,8 +6,9 @@ use App\Client;
 use App\Events\ScheduleHasBeenPlaced;
 use App\Schedule;
 use App\ScheduleAlert;
-use App\ScheduleDetail;
-use App\ScheduleSub;
+use App\ScheduleProduct;
+use App\ScheduleProductSub;
+use App\ScheduleProductSubDetail;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -59,7 +60,7 @@ class AirtimeController extends Controller
         //    $schedule['orderNo'] = Schedule::orderNo($schedule->created_at->format('n'), $schedule->id);
             $schedule->user->toArray();
             $schedule->client->toArray();
-            $schedule->subscriptions->toArray();
+//            $schedule->subscriptions->toArray();
             $schedule->scheduleAlert->toArray();
 
 //            foreach($schedule->subscriptions as $subscription) {
@@ -102,8 +103,6 @@ class AirtimeController extends Controller
     public function store(Request $request)
     {
 
-//        dd($request->all());
-
         DB::beginTransaction();
 
         $client = $request->get('client');
@@ -120,20 +119,34 @@ class AirtimeController extends Controller
         //create schedule
         if($schedule = Schedule::create($airtimeSchedule)) {
 
-            foreach($cart as $product){
+            foreach($cart as $products){ //each array in the cart is a product
 
-                $airtimeScheduleSub['schedule_id'] = $schedule->id;
-                $airtimeScheduleSub['product_id'] = $product['id'];
+                $myProduct = ScheduleProduct::create([
+                    'schedule_id' => $schedule->id,
+                    'product_id' => $products['id']
+                ]);
 
-                $productSub = ScheduleSub::create(['schedule_id' => $schedule->id, 'product_id' => $product['id']]);
+                foreach($products['subscriptions'] as $subscription) {
 
-                foreach($product['subscriptions'] as $subscription) {
+                    if(!empty($subscription['schedule'])) {
+                        $sub_schedule = $subscription['schedule']; //copy
+                        unset($subscription['schedule']); //remove
+                    }
 
-                    $subscription['schedule_id'] = $schedule->id;
-                    $subscription['schedule_sub_id'] = $productSub->id;
-                    ScheduleDetail::create($subscription);
+                    $productSub = ScheduleProductSub::create([
+                        'schedule_product_id' => $myProduct->id,
+                        'subscription' => $subscription
+                    ]);
+
+                    if(!empty($sub_schedule)) {
+                        ScheduleProductSubDetail::create([
+                            'schedule_product_sub_id' => $productSub->id,
+                            'schedule' => $sub_schedule
+                        ]);
+
+                        unset($sub_schedule); //to avoid been available for the next loop
+                    }
                 }
-
             }
 
             ScheduleAlert::create(['schedule_id' => $schedule->id, 'token' => bcrypt(Carbon::now())]);
@@ -141,8 +154,9 @@ class AirtimeController extends Controller
             $schedule['order_no'] = Schedule::orderNo(Carbon::now()->format('n'), $schedule->id);
             $schedule->save();
 
+            //Todo: update the schedule mail
             //mail out the invoice
-            Event::fire(new ScheduleHasBeenPlaced($schedule));
+//            Event::fire(new ScheduleHasBeenPlaced($schedule));
 
 
             DB::commit();
@@ -168,16 +182,16 @@ class AirtimeController extends Controller
 
         $schedule->user->toArray();
         $schedule->client->toArray();
-        $schedule->subscriptions->toArray();
+        $schedule->schProducts->toArray();
 
-        foreach($schedule->subscriptions as $subscription) {
-            $subscription->product->toArray();
-
-            $det = $subscription->details->toArray();
-
-            foreach($det as $d)
-                $subscription['totalAmount'] += $d['amount'];
-            $subscription['totalAmount'] += $d['subChargePrice'];
+        foreach($schedule->schProducts as $product) {
+            $product->product->toArray();
+            $product->schProductSubs->toArray();
+            foreach($product->schProductSubs as $schProductSub) {
+                if(!empty($schProductSub->slotDetails()->get())) {
+                    $schProductSub->slotDetails->toArray();
+                }
+            }
         }
 
         $schedule->scheduleAlert->toArray();

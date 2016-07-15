@@ -13,15 +13,6 @@
                 $scope.challenges = [{}];
                 $scope.remittances = [{}];
                 $scope.vehicles = [{}];
-                $scope.uploads = [{}];
-
-                //$scope.uploadFile = function(){
-                //    var file = $scope.myFile;
-                //    console.log('file is ' );
-                //    console.dir(file);
-                //    var uploadUrl = "/fileUpload";
-                //    fileUpload.uploadFileToUrl(file, uploadUrl);
-                //};
 
                 $scope.targets = targetFactory.getMyTargets().query().$promise.then(
                     function (response) {
@@ -58,20 +49,21 @@
 
                 $scope.submitReport = function (form) {
 
-                    var myReport = {'tasks': $scope.tasks, 'challenges': $scope.challenges,
-                        'remittances': $scope.remittances, 'vehicles': $scope.vehicles
+                    var myReport = {"tasks": $scope.tasks, "challenges": $scope.challenges,
+                        "remittances": $scope.remittances, "vehicles": $scope.vehicles,
+                        "uploadedFiles": reportFactory.uploadedFiles
                     };
 
                     reportFactory.report().save(myReport,
-                        function (response) {
-
-                            console.log(response);
+                        function () {
 
                             $scope.tasks = [{}];
                             $scope.challenges = [{}];
                             $scope.remittances = [{}];
                             $scope.vehicles = [{}];
-
+                            reportFactory.uploadedFiles = [];
+                            reportFactory.files = [];
+                            $scope.tab = 1;
                             form.$setPristine();
                         }, function () {
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateScheduleSubsTable extends Migration
+class CreateScheduleProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,16 @@ class CreateScheduleSubsTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedule_subs', function (Blueprint $table) {
+        Schema::create('schedule_products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('schedule_id')->unsigned();
+            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
+
             $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->timestamps();
 
-            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
         });
     }
 
@@ -30,6 +32,6 @@ class CreateScheduleSubsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('schedule_subs');
+        Schema::drop('schedule_products');
     }
 }

@@ -6,15 +6,19 @@ use App\Challenge;
 use App\Events\SendReportToMailbox;
 use App\Remittance;
 use App\Report;
+use App\ReportUpload;
 use App\ReportVehicle;
 use App\Task;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use UploadefdFile;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use UploadedFile;
 
 
 class ReportController extends Controller
@@ -65,11 +69,10 @@ class ReportController extends Controller
             $this->sendReportToMails($report);
 
             return response('Report submitted successfully');
+
         }
 
         return response('Error submitting report', 403);
-
-//        DB::commit();
     }
 
     /**
@@ -121,13 +124,10 @@ class ReportController extends Controller
     {
         $file = $request->file('file');
 
-        $filename = $file->getClientOriginalName() .'.'. $file->getClientOriginalExtension();
-        $file->move(public_path() .'/app/files/', $filename);
+        $filename = Auth::user()->id.'_'.md5($file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+        $file->move(storage_path() .'/app/temp/', $filename);
 
-//        Upload::Create(['user_id' => $id, 'filename' => $filename, 'thumbnail' => $file->getRealPath()]);
-
-        return response('File uploaded successfully', 201);
-
+        return response(['filename' => $filename, 'mime' => $file->getClientMimeType() ]);
     }
 
     /**
@@ -201,6 +201,27 @@ class ReportController extends Controller
         $this->createTask($request, $report);
         $this->createChallenge($request, $report);
         $this->createRemittance($request, $report);
+        $this->createUpload($request, $report);
+    }
+
+    /**
+     * @param Request $request
+     * @param $report
+     */
+    protected function createUpload(Request $request, $report)
+    {
+        if (!empty($request->get('uploadedFiles'))) {
+            foreach ($request->get('uploadedFiles') as $upload) {
+                $path = storage_path() . '/app/temp/' . $upload['filename'];
+                if (file_exists($path)) {
+                    $file = new ReportUpload;
+                    $file->filename = $upload['filename'];
+                    $file->mime = $upload['mime'];
+                    $report->uploads()->save($file);
+                    Storage::move('temp/' . $upload['filename'], 'report/' . $report->id.'_'.$upload['filename']);
+                }
+            }
+        }
     }
 
 }

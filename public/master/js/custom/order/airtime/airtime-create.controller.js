@@ -170,16 +170,18 @@
 
                 airtime.cart = vm.cart;
 
+                console.log(airtime);
+
                 toaster.pop('wait', 'Order', 'Processing your request');
 
-                vm.orderButton = true;
+                //vm.orderButton = true;
                 airtimeFactory.order().save(airtime,
                     function (response) {
 
                         toaster.pop('success', 'Order', 'Order has been received.');
-                        $timeout(function () {
-                            $state.go('app.airtime');
-                        }, 500);
+                        //$timeout(function () {
+                        //    $state.go('app.airtime');
+                        //}, 500);
                     },
                     function (response) {
                         vm.orderButton = false;

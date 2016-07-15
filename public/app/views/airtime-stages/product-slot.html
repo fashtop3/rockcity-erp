@@ -33,7 +33,7 @@
                             <!-- choose airtime period-->
                             <div class="col-sm-5 col-xs-12" >
                                 <label for="airtimePeriod" class="control-label">Period <abbr class="text-danger" title="required">*</abbr></label>
-                                <select ng-class="{'has-error':airtimeForm.period.$error.required && airtimeForm.period.$invalid}" ng-disabled="(form.no_slots > 0) || (form.broadcast > 0)"
+                                <select ng-class="{'has-error':airtimeForm.period.$error.required && airtimeForm.period.$invalid}" ng-disabled="(form.no_slots > 0) || (form.broadcast > 0) || !product.selected"
                                         name="period" id="airtimePeriod" ng-model="form.period" class="form-control" ng-disabled="form.price == 0" ng-change="onPeriodChange()" required>
                                     <option value="{{period.value}}" ng-repeat="period in periods">{{period.label}}</option>
                                 </select>

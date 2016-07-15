@@ -29,7 +29,7 @@ class Report extends Model
         return $this->hasMany('App\Remittance');
     }
 
-    public function reportUploads()
+    public function uploads()
     {
         return $this->hasMany('App\ReportUpload');
     }

@@ -56,7 +56,9 @@
     },
     "nav": {
       "report": {
-        "MENU": "Report"
+        "MENU": "Report",
+        "CREATE": "Add new",
+        "VIEW": "View"
       },
 
       "target": {

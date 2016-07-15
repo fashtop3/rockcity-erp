@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ScheduleSub extends Model
+class ScheduleProductSub extends Model
 {
     protected $fillable = [
-        'schedule_id',
-        'product_id',
+//        'schedule_id',
+        'schedule_product_id',
         'subscription'
     ];
 
@@ -23,18 +23,13 @@ class ScheduleSub extends Model
         return unserialize($subscription);
     }
 
-    public function schedule()
+    public function slotDetails()
     {
-        return $this->belongsTo('App\Schedule');
+        return $this->hasMany('App\ScheduleProductSubDetail');
     }
 
-    public function details()
+    public function schProduct()
     {
-        return $this->hasMany('App\ScheduleDetail');
-    }
-
-    public function product()
-    {
-        return $this->belongsTo('App\Product');
+        return $this->belongsTo('App\ScheduleProduct');
     }
 }

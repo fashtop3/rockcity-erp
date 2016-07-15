@@ -26,7 +26,7 @@
                     <tr ng-repeat="client in clients">
                         <td>{{ client.name }}</td>
                         <td>{{client.lastname+' '+client.firstname}}</td>
-                        <td>{{ client.address }}</td>
+                        <td>{{ client.street_name +' '+ client.street_no +', '+ client.town }}</td>
                         <td>{{ client.mobile }}</td>
                         <td>{{ client.email }}</td>
                         <td>

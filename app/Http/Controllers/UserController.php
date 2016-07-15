@@ -91,7 +91,7 @@ class UserController extends Controller
     public function index()
     {
 
-        $people = User::all();
+        $people = User::orderBy('id', 'desc')->get();
 
         if($people) {
             foreach($people as &$user) {

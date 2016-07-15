@@ -188,13 +188,12 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::resource('/api/driver/report', 'DriverController');
     Route::resource('/api/vehicle', 'VehicleController');
 
-    //target and staff controlls
+    //target and staff controls
     Route::get('/api/target/user', 'TargetController@getMyTargets');
     Route::get('/api/target/{user_id}/user', 'TargetController@getUserTargets');
     Route::resource('/api/target', 'TargetController');
 
-    Route::post('api/files', 'ReportController@upload');
-
+    Route::post('api/rep/files', 'ReportController@upload');
     Route::resource('/api/report', 'ReportController');
 
     Route::get('pdf/{id}/airtime', 'PDFController@airtimePDF');

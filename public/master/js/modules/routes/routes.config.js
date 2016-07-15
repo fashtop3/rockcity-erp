@@ -168,7 +168,7 @@
                 title: 'People',
                 data: {
                     permissions: {
-                        only: 'view.verified.staff',
+                        only: ["executive.director", "administration.dept", "admin"], //"view.verified.staff"
                         redirectTo: 'app.unauthorized'
                     }
                 },
@@ -213,6 +213,12 @@
             .state('app.airtime', {
                 url: '/airtime',
                 title: 'Airtime',
+                data: {
+                    permissions: {
+                        only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
                 cache: false,
                 templateUrl: helper.basepath('airtime.html'),
                 resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'datatables','parsley', 'ui.select', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'ngTableExport', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
@@ -220,12 +226,6 @@
             })
             .state('app.airtime.create', {
                 url: '/create',
-                data: {
-                    permissions: {
-                        only: ['generate.airtime', 'admin'],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
                 title: 'Generate Airtime',
                 cache: false,
                 templateUrl: helper.basepath('airtime-create.html'),
@@ -278,7 +278,7 @@
                 title: 'Report',
                 data: {
                     permissions: {
-                        only: 'generate.report',
+                        only: ["staff", "generate.report"],
                         redirectTo: 'app.unauthorized'
                     }
                 },
@@ -287,12 +287,19 @@
                 controller: 'ReportController',
                 resolve: helper.resolveFor('colorpicker.module', 'ui.select', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
             })
+            .state('app.report.view', {
+                url: '/report',
+                title: 'Report',
+                cache: false,
+                templateUrl: helper.basepath('report-view.html'),
+                controller: 'ReportController',
+            })
             .state('app.target', {
                 url: '/target',
                 title: 'Target',
                 data: {
                     permissions: {
-                        only: 'manage.target',
+                        only: ["admin", "executive.director", "administration.dept", "manage.target"],
                         redirectTo: 'app.unauthorized'
                     }
                 },
@@ -310,7 +317,7 @@
                 title: 'Vehicles',
                 data: {
                     permissions: {
-                        only: 'manage.vehicle',
+                        only: ["admin", "executive.director", "administration.dept", "manage.vehicle"],
                         redirectTo: 'app.unauthorized'
                     }
                 },
@@ -334,6 +341,12 @@
                 url: '/driver',
                 title: 'Driver\'s Report',
                 cache: false,
+                data: {
+                    permissions: {
+                        only: ["driver"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
                 resolve: angular.extend(helper.resolveFor('datatables', 'ui.select', 'textAngular')),
                 templateUrl: helper.basepath('driver.html'),
                 controller: 'DriverController'
@@ -363,6 +376,12 @@
                 url: '/assessment',
                 abstract: true,
                 cache: false,
+                data: {
+                    permissions: {
+                        only: ["staff", "admin"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
                 templateUrl: helper.basepath('assessment.html'),
                 resolve: angular.extend(helper.resolveFor('datatables'))
             })

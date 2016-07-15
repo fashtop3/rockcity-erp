@@ -73,32 +73,6 @@
                                     <button ng-disabled="schedule.schedule_alert.programme" ng-click="programmeSchedule()" class="btn btn-default"><em class="fa fa-save fa-lg"></em></button>
                                 </div>
                             </fieldset>
-
-                            <!--<div class="col-sm-10">-->
-                                <!--<div permission permission-only="'validate.airtime'" class="checkbox c-checkbox needsclick">-->
-                                    <!--<label class="needsclick">-->
-                                        <!--<input type="checkbox" ng-model="manage.validate" class="needsclick" />-->
-                                        <!--<span class="fa fa-check"></span>Validate</label>-->
-                                <!--</div>-->
-
-                                <!--<div permission permission-only="'recommend.approval'" class="checkbox c-checkbox needsclick">-->
-                                    <!--<label class="needsclick">-->
-                                        <!--<input type="checkbox" ng-disabled="schedule.schedule_alert.recommend || airtimeRecommend()" ng-model="manage.recommend" class="needsclick" />-->
-                                        <!--<span class="fa fa-check"></span>Recommend</label>-->
-                                <!--</div>-->
-
-                                <!--<div permission permission-only="'approve.airtime'" class="checkbox c-checkbox needsclick">-->
-                                    <!--<label class="needsclick">-->
-                                        <!--<input type="checkbox" ng-disabled="schedule.schedule_alert.approved || airtimeApproved()" name="approved" ng-model="manage.approved" class="needsclick" />-->
-                                        <!--<span class="fa fa-check"></span>Approve</label>-->
-                                <!--</div>-->
-
-                                <!--<div permission permission-only="'programme.airtime'" class="checkbox c-checkbox needsclick">-->
-                                    <!--<label class="needsclick">-->
-                                        <!--<input type="checkbox" ng-disabled="schedule.schedule_alert.programme || airtimeProgramme()" ng-model="manage.programme" class="needsclick" />-->
-                                        <!--<span class="fa fa-check"></span>Programme</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
                     </form>
                 </div>
             </div>
@@ -124,7 +98,7 @@
                                 <div class="hidden-sm hidden-md hidden-lg"><br />
                                     <div class="ph">
                                         <h6 class="media-box-heading">Address</h6>
-                                        <small class="text-muted"><em>{{schedule.client.address}}</em></small>
+                                        <small class="text-muted"><em>{{ schedule.client.street_name +' '+ schedule.client.street_no +', '+ schedule.client.town }}</em></small>
                                     </div><br />
                                     <div class="ph">
                                         <h6 class="media-box-heading">Phone</h6>
@@ -135,7 +109,7 @@
                             <td class="wd-sm hidden-xs">
                                 <div class="ph">
                                     <h6 class="media-box-heading">Address</h6>
-                                    <small class="text-muted"><em>{{schedule.client.address}}</em></small>
+                                    <small class="text-muted"><em>{{ schedule.client.street_name +' '+ schedule.client.street_no +', '+ schedule.client.town }}</em></small>
                                 </div><br />
                                 <div class="ph">
                                     <h6 class="media-box-heading">Phone</h6>
@@ -154,29 +128,29 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="list-group">
-                <li class="list-group-item" ng-repeat="subscription in schedule.subscriptions track by $index">
+                <li class="list-group-item" ng-repeat="sch_product in schedule.sch_products track by $index">
                     <!-- START panel-->
-                    <div id="product{{subscription.id}}" class="panel panel-default">
-                        <div ng-class="{'panel-heading-collapsed':false}" class="panel-heading">{{subscription.product.name}}
+                    <div id="product{{sch_product.product.id}}" class="panel panel-default">
+                        <div ng-class="{'panel-heading-collapsed':false}" class="panel-heading">{{sch_product.product.name}}
                             <paneltool tool-collapse="tool-collapse"></paneltool>
                             <!--<paneltool tool-refresh="standard" tool-collapse="tool-collapse" tool-dismiss="tool-dismiss"></paneltool>-->
                         </div>
-                        <div uib-collapse="product{{subscription.id}}" class="panel-wrapper">
+                        <div uib-collapse="product{{sch_product.product.id}}" class="panel-wrapper">
                             <div class="panel-body">
                                 <div class="list-group">
-                                    <div ng-repeat="detail in subscription.details">
-                                        <div class="list-group-item" ng-if="detail.broadcast && detail.broadcast > 0">
+                                    <div ng-repeat="sch_product_sub in sch_product.sch_product_subs"> <br />
+                                        <div class="list-group-item" ng-if="sch_product_sub.subscription.broadcast">
                                             <table class="wd-wide table-responsive">
                                                 <tbody>
                                                 <tr>
                                                     <td class="wd-lg" colspan="2">
                                                         <div class="ph">
-                                                            <span class="label label-info pull-right">{{detail.period}}</span>
-                                                            <h6 class="media-box-heading">BULK</h6>
+                                                            <span class="label label-info pull-right">{{sch_product_sub.subscription.period}}</span>
+                                                            <h5 class="media-box-heading">BULK</h5>
                                                             <small class="text-muted text-inverse">
-                                                                <b>Start :</b> ({{detail.bulk_start_date | date:'MMM d, y h:mm a'}})
-                                                                <b>End :</b> ({{detail.bulk_end_date | date:'MMM d, y h:mm a'}}) <br />
-                                                                <b>Broadcast: </b> {{detail.broadcast}}
+                                                                <b>Start :</b> ({{sch_product_sub.subscription.bulk_start_date | date:'MMM d, y h:mm a'}})
+                                                                <b>End :</b> ({{sch_product_sub.subscription.bulk_end_date | date:'MMM d, y h:mm a'}}) <br />
+                                                                <b>Broadcast: </b> {{sch_product_sub.subscription.broadcast}}
                                                             </small>
                                                         </div>
                                                     </td>
@@ -184,44 +158,52 @@
                                                         <div class="ph">
                                                             <!--<p class="m0">Price</p>-->
                                                             <small class="m0 text-info">
-                                                                ₦{{(detail.amount * detail.broadcast) | number:2}}</small>
+                                                                ₦{{ sch_product_sub.subscription.amount | number:2 }}</small>
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <!--</div>-->
-                                        <!--<div class="list-group" ng-if="!detail.broadcast">-->
-                                        <div class="list-group-item" ng-if="!detail.broadcast">
+
+                                        <div class="list-group-item" ng-if="sch_product_sub.subscription.slots">
                                             <table class="wd-wide table-responsive">
                                                 <tbody>
                                                 <tr>
                                                     <td>
                                                         <div class="ph">
-                                                            <span class="label label-info pull-right">{{detail.period}}</span>
-                                                            <h6 class="media-box-heading">SLOT <small ng-if="detail.fixedSpot" class="text-muted">(Fixed)</small></h6>
+                                                            <span class="label label-info pull-right">{{sch_product_sub.subscription.period}}</span>
+                                                            <h5 class="media-box-heading">SLOT</h5>
                                                             <small class="text-muted text-inverse">
-                                                                <b>Date :</b> ({{detail.trans_date | date:'MMM d, y'}})
-                                                                <b>Time :</b> ({{detail.trans_date | date:'h:mm a'}})
-                                                                <b>Length : </b> ({{detail.duration}})
+                                                                <b>Slot date :</b> {{sch_product_sub.subscription.slot_start_date | date:'MMM d, y'}}
+                                                                <b> -- </b> {{sch_product_sub.subscription.slot_end_date | date:'MMM d, y'}}
+                                                            </small><br />
+                                                            <small class="text-muted text-inverse">
+                                                                <b>Slot :</b> {{sch_product_sub.subscription.slots}}
                                                             </small>
+                                                        </div><br />
+                                                        <div class="table-responsive" ng-if="sch_product_sub.slot_details.length">
+                                                            <table class="table table-bordered">
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Slot</th>
+                                                                    <th>Fixed</th>
+                                                                    <th>Time</th>
+                                                                </tr>
+                                                                <tr ng-repeat="slot_schedule in sch_product_sub.slot_details[0].schedule">
+                                                                    <td>{{slot_schedule.date | date:'MMM d, y'}}</td>
+                                                                    <td>{{slot_schedule.slot}}</td>
+                                                                    <td>{{slot_schedule.tofix}}</td>
+                                                                    <td>{{slot_schedule.times}}<span class="text text-primary"><small ng-repeat="t in slot_schedule.times">{{t[$index] | date:'h:mm a'}}, </small></span></td>
+                                                                </tr>
+                                                            </table>
                                                         </div>
                                                     </td>
-                                                    <td class="wd-sm"> <!--hidden-xs hidden-sm-->
-                                                        <div class="ph text-center">
-                                                            <!--<p class="m0">QTY</p>-->
-                                                            <div ng-if="detail.fixedSpot"><small class="text-muted">(Fixed)</small></div>
-                                                            <small class="text-purple">Surcharge : ({{detail.subCharge}}%)</small>
-                                                        </div>
-                                                    </td>
-                                                    <td class="wd-sm">
+                                                    <td class="wd-sm" valign="top">
                                                         <div class="ph">
                                                             <!--<p class="m0">Price</p>-->
                                                             <small class="m0 text-info">
-                                                                ₦{{detail.amount | number:2}}</small>
-                                            <span class="label label-inverse">
-                                                    +Subcharge: ₦{{detail.subChargePrice | number:2}}</span>
+                                                                ₦{{sch_product_sub.subscription.amount | number:2}}</small>
                                                         </div>
                                                     </td>
                                                 </tr>

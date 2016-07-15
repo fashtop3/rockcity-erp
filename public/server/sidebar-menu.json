@@ -2,7 +2,6 @@
   {
     "text": "Menu Heading",
     "heading": "true",
-    "permissions": "register.staff",
     "translate": "sidebar.heading.HEADER"
   },
   {
@@ -36,6 +35,7 @@
   },
   {
     "text": "Airtime",
+    "permissions": ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
     "sref": "#",
     "icon": "fa fa-reorder",
     "submenu": [
@@ -47,17 +47,19 @@
 
   {
     "text": "People",
+    "permissions": ["executive.director", "administration.dept", "admin"],
     "sref": "#",
     "icon": "icon-people",
     "submenu": [
-      { "text": "View", "sref": "app.people", "translate": "sidebar.nav.people.VIEW"},
-      { "text": "View", "sref": "app.people.adduser", "translate": "sidebar.nav.people.REGISTER"}
+      { "text": "View", "permissions": ["register.staff"], "sref": "app.people", "translate": "sidebar.nav.people.VIEW"},
+      { "text": "View", "permissions": ["register.staff"], "sref": "app.people.adduser", "translate": "sidebar.nav.people.REGISTER"}
     ],
     "translate": "sidebar.nav.people.MENU"
   },
 
   {
     "text": "Assessment",
+    "permissions": ["staff", "admin"],
     "sref": "#",
     "icon": "fa fa-reorder",
     "submenu": [
@@ -78,21 +80,25 @@
   },
   {
     "text": "Report",
-    "permission" : "generate.report",
-    "sref": "app.report",
+    "permissions" : ["staff", "generate.report"],
+    "sref": "#",
+    "submenu": [
+      {"text": "Create", "sref": "app.report", "translate": "report.nav.report.CREATE"},
+      {"text": "View", "sref": "app.report.view", "translate": "report.nav.report.VIEW"}
+    ],
     "icon": "fa fa-file-text",
     "translate": "report.nav.report.MENU"
   },
   {
     "text": "Target",
-    "permission" : "manage.target",
+    "permissions" : ["admin", "executive.director", "administration.dept", "manage.target"],
     "sref": "app.target",
     "icon": "icon-target",
     "translate": "report.nav.target.MENU"
   },
   {
     "text": "Vehicles",
-    "permission" : "manage.vehicle",
+    "permission" : ["admin", "executive.director", "administration.dept", "manage.vehicle"],
     "sref": "app.vehicles",
     "icon": "fa fa-truck",
     "translate": "report.nav.vehicle.MENU"
@@ -100,6 +106,7 @@
   {
     "text": "Driver's Report",
     "sref": "#",
+    "permissions" : "driver",
     "icon": "fa fa-file-image-o",
     "submenu": [
       { "text": "Add new report", "icon": "fa fa-plus", "sref": "app.driver.addReport", "translate": "report.nav.driver.nav.NEW"},

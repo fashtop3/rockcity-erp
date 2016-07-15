@@ -1,6 +1,6 @@
 <!--<div ng-controller="MyCtrl">-->
 <!--<h4>Upload on file select</h4>-->
-<!--<button ngf-select="uploadFiles($files, $invalidFiles)" multiple-->
+<!--<button ngf-select="uploadFiles($files, $errorFiles)" multiple-->
         <!--accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">-->
     <!--Select Files</button>-->
 <!--<br><br>-->
@@ -40,26 +40,25 @@
             <fieldset>
                 <div class="form-group">
                     <div class="col-sm-6 col-sm-offset-1">
-                        <div class="btn btn-primary"
+                        <div required class="btn btn-primary"
                              ngf-drop=""
-                             ngf-select="uploadFiles($files, $invalidFiles)"
+                             ngf-select="uploadFiles($files, $errorFiles)"
                              ng-model="files"
                              ngf-multiple="true"
                              ngf-pattern="'image/*,audio/*,video/*'"
                              ngf-accept="'image/*,audio/*,video/*'"
                              ngf-resize="{width: 500, height: 500, centerCrop: false, type: 'image/jpeg', quality: .8}"
                              ngf-resize-if="$width > 500 || $height > 500"
-                             ngf-model-invalid="invalidFiles"
+                             ngf-model-invalid="errorFiles"
                              ng-model-options="{'debounce':100}"
                              ngf-max-files="10"
                              ngf-validate="{size: {max: '5MB', min: '10B'}, height: {max: 5000}, width: {max: 5000}, duration: {max: '5m'}}"
                              ngf-keep="'distinct'">Select multiple files</div>
                     </div>
-                    <button type="button" class="btn btn-warning col-sm-2" ng-click="files=[]; invalidFiles=[];">Reset</button>
+                    <button type="button" class="btn btn-warning col-sm-2" ng-click="files=[]; errorFiles=[];">Reset</button>
                 </div>
             </fieldset>
 
-            <p>Preview image/audio/video:</p>
             <fieldset ng-repeat="f in files">
                 <div class="form-group">
                     <div class="col-sm-8 col-sm-offset-1">
@@ -75,7 +74,7 @@
                 </div>
             </fieldset>
 
-            <fieldset ng-repeat="i in invalidFiles">
+            <fieldset ng-repeat="i in errorFiles">`
                 <div class="form-group">
                     <div class="col-sm-8 col-sm-offset-1">
                         Invalid File: MaxSize 5MB, {{f.$ngfName}}

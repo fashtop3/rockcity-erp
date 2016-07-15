@@ -47,10 +47,10 @@ class Schedule extends Model
         return self::$prefix[$month] . $id;
     }
 
-    public function subscriptions()
-    {
-        return $this->hasMany('App\ScheduleSub');
-    }
+//    public function subscriptions()
+//    {
+//        return $this->hasMany('App\ScheduleSub');
+//    }
 
     public function user()
     {
@@ -65,5 +65,10 @@ class Schedule extends Model
     public function scheduleAlert()
     {
         return $this->hasOne('App\ScheduleAlert');
+    }
+
+    public function schProducts()
+    {
+        return $this->hasMany('App\ScheduleProduct');
     }
 }
