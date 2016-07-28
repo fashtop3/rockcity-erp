@@ -8,7 +8,7 @@
         .controller('ReportController', ['$scope', 'reportFactory', 'targetFactory', 'vehicleFactory',
             function($scope, reportFactory, targetFactory, vehicleFactory) {
 
-                $scope.tab = 4;
+                $scope.tab = 1;
                 $scope.tasks = [{}];
                 $scope.challenges = [{}];
                 $scope.remittances = [{}];

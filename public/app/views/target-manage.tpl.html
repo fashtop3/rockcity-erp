@@ -22,7 +22,7 @@
                     <tbody>
                     <tr ng-repeat="target in targets">
                         <td>{{ target.name }}</td>
-                        <td>{{ target.start_date }}</td>
+                        <td>{{ startDate(target.start_date) | date:'MMM d, y h:mm a' }}</td>
                         <td>{{ target.duration }}</td>
                         <td>{{ target.user_id }}</td>
                         <td>N{{ target.amount}}</td>

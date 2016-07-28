@@ -16,10 +16,10 @@ class Target extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function getStartDateAttribute($date)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->diffForHumans();
-    }
+//    public function getStartDateAttribute($date)
+//    {
+//        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->diffForHumans();
+//    }
 
     public function setStartDateAttribute($date)
     {

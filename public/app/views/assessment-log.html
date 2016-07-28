@@ -1,5 +1,5 @@
 <h3>
-    Log
+    Log <br> <small>{{datetostamp(configs.starts) | date:'MMM d, y h:mm a'}} - {{datetostamp(configs.ends) | date:'MMM d, y h:mm a'}}</small>
 </h3>
 
 <div class="row">
@@ -15,20 +15,17 @@
                     <thead>
                     <tr>
                         <th>Date Added</th>
-                        <th>Last Modified</th>
+                        <th>Full name</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="record in records">
-                        <td><a ui-sref="app.assessment.edit({id: record.id})">{{ record.created_at }}</a></td>
-                        <td><a ui-sref="app.assessment.edit({id: record.id})">{{record.updated_at}}</a></td>
+                        <td>{{ datetostamp(record.created_at) | date:'MMM d, y h:mm a' }}</td>
+                        <td><a>{{record.user.lastname+ ' ' +record.user.firstname}}</a></td>
                         <td align="center">
-                            <button ng-disabled="record.preview" ui-sref="app.assessment.edit({id: record.id})" class="btn btn-sm btn-warning">
-                                <em class="fa fa-edit"></em>
-                            </button>
-                            <button ng-disabled="record.preview" type="button" ng-click="remove($index)" class="btn btn-sm btn-danger">
-                                <em class="fa fa-trash-o"></em>
+                            <button type="button" class="btn btn-sm btn-primary">
+                                <em class="fa fa-download"></em>
                             </button>
                             <button ng-disabled="!record.preview || record.supervisor.preview" ui-sref="app.assessment.supervise({id: record.id})" type="button" class="btn btn-sm btn-danger">
                                 <em class="fa fa-commenting"></em>

@@ -46,16 +46,37 @@
                         <div>
                             <hr />
 
-                            <div>
-                                <p style="font-family: sans-serif; font-size: 20px; font-weight: bold; color: darkblue">Please Review Airtime for Order No. <br>{{$schedule->order_no}}  </p>
+
+
+                            <div style="margin: 5px;">
+                                @foreach ($schedule->subscriptions as $subscription)
+                                    <table border="1" style="margin: 5px 0px" cellpadding="5" cellspacing="0" width="100%">
+                                        <tr style="">
+                                            <td style="width: 40%" valign="top">
+                                                <strong>Product:</strong>
+                                                {{$subscription->product->name}}
+                                            </td>
+                                            <td>
+                                                <strong>Number of Broadcasts:</strong> {{count($subscription->details)}}
+                                            </td>
+                                            <td>
+                                                <strong>Product Subtotal:</strong> <span style="text-decoration: underline">N{{number_format($subscription->totalAmount, 2)}}</span>
+                                            </td>
+                                            <td>
+                                                <strong>Subcharge Total:</strong> <span style="text-decoration: underline">N{{number_format($subscription->totalSubChargePrice, 2)}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                @endforeach
                             </div>
+
 
                             <div style="float: right; margin: 5px 30px">
                                 <table border="0" cellspacing="0" cellpadding="5">
-                                    {{--<tr>--}}
-                                        {{--<td style="text-align: right"><div style="color: black;">Number of Broadcast: </div></td>--}}
-                                        {{--<td><strong>{{$schedule->broadcasts}}</strong></td>--}}
-                                    {{--</tr>--}}
+                                    <tr>
+                                        <td style="text-align: right"><div style="color: black;">Number of Broadcast: </div></td>
+                                        <td><strong>{{$schedule->broadcasts}}</strong></td>
+                                    </tr>
                                     <tr>
                                         <td style="text-align: right"><div style="color: black">Total Amount: </div></td>
                                         <td><strong>N{{number_format($schedule->subTotal, 2)}}</strong></td>
@@ -94,7 +115,6 @@
     </div>
 
     <div class="footer" style="color: white; padding: 1px; background-color: orangered;">
-        <p style="font-family: sans-serif; font-size: 8">This is an automated system email. Please do not reply to this email.</p>
         <p align="center"><sup>&copy;</sup>{{date('Y')}} - <a href="http://wwww.rockcityfmradio.com" _target="blank">Rockcity</a> </p>
     </div>
 

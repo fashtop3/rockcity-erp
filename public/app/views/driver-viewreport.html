@@ -21,7 +21,7 @@
                     <tbody>
                     <tr ng-repeat="report in reports">
                         <td><a>{{ report.vehicle.name }}</a></td>
-                        <td>{{report.created_at |  date:'MMM d, y h:mm a'}}</td>
+                        <td>{{ created(report.created_at) |  date:'MMM d, y h:mm a'}}</td>
                         <td><a>{{ report.info.time_inspect | date:'h:mm a' }}</a></td>
                         <td><a>{{ report.info.destination }}</a></td>
                         <td><a>Read more...</a></td>

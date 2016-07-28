@@ -17,7 +17,7 @@ class CreateTargetsTable extends Migration
 
             $table->string('name', 255);
             $table->timestamp('start_date');
-            $table->string('duration', 5);
+            $table->string('duration', 255);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')->on('users')

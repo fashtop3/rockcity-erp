@@ -19,6 +19,10 @@
 
                 ////////////////
 
+                vm.startDate = function(date) {
+                    return new Date(date);
+                };
+
                 function activate() {
 
                     // Changing data

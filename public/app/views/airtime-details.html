@@ -158,7 +158,7 @@
                                                         <div class="ph">
                                                             <!--<p class="m0">Price</p>-->
                                                             <small class="m0 text-info">
-                                                                ₦{{ sch_product_sub.subscription.amount | number:2 }}</small>
+                                                                &#8358{{ sch_product_sub.subscription.amount | number:2 }}</small>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -194,7 +194,7 @@
                                                                     <td>{{slot_schedule.date | date:'MMM d, y'}}</td>
                                                                     <td>{{slot_schedule.slot}}</td>
                                                                     <td>{{slot_schedule.tofix}}</td>
-                                                                    <td>{{slot_schedule.times}}<span class="text text-primary"><small ng-repeat="t in slot_schedule.times">{{t[$index] | date:'h:mm a'}}, </small></span></td>
+                                                                    <td><span class="text text-primary"><small ng-repeat="t in slot_schedule.times track by $index">{{slot_schedule.times[$index] | date:'h:mm a'}}, </small></span></td>
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -203,7 +203,7 @@
                                                         <div class="ph">
                                                             <!--<p class="m0">Price</p>-->
                                                             <small class="m0 text-info">
-                                                                ₦{{sch_product_sub.subscription.amount | number:2}}</small>
+                                                                &#8358{{sch_product_sub.subscription.amount | number:2}}</small>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -221,7 +221,7 @@
                                                 </span>
                                             </div>
                                             <div class="media-box-body clearfix">
-                                                <p class="m0 pull-right text-inverse"> ₦{{subscription.totalAmount | number:2}}
+                                                <p class="m0 pull-right text-inverse"> &#8358{{sch_product.totals | number:2}}
                                                 </p>
                                                 <div class="media-box-heading pull-left"><span class="text-purple m0">Total Amount: </span>
                                                 </div>

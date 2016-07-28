@@ -5,7 +5,7 @@
 (function () {
     angular
         .module('app.order')
-        .controller('AirtimeDefaultController', ['$rootScope', '$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+        .controller('AdminAirtimeController', ['$rootScope', '$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
             function($rootScope, $scope, $resource, baseURL, $filter, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
 
                 //collapse the menu bar
@@ -24,7 +24,7 @@
 
                     vm.isDisabled = true;
 
-                    $resource(baseURL + 'airtime?min=:min&max=:max').query({'min': form.min_date.$modelValue, 'max': form.max_date.$modelValue}).$promise.then(
+                    $resource(baseURL + 'admin/airtime?min=:min&max=:max').query({'min': form.min_date.$modelValue, 'max': form.max_date.$modelValue}).$promise.then(
                         function (response) {
                             vm.isDisabled = false;
                             vm.schedules = response;
@@ -51,7 +51,7 @@
 
                     // Changing data
 
-                    $resource(baseURL + 'airtime').query().$promise.then(
+                    $resource(baseURL + 'admin/airtime').query().$promise.then(
                         function (response) {
                             vm.schedules = response;
                         }

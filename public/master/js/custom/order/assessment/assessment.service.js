@@ -50,6 +50,9 @@
                 return $resource(baseURL + 'activeconfig');
             };
 
+            this.log = function() {
+                return $resource(baseURL + "assessment/records/:id");
+            };
 
         }]);
 })();

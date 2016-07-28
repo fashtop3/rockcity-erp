@@ -1,16 +1,16 @@
 /**
- * Created by dfash on 6/1/16.
+ * Created by dfash on 7/27/16.
  */
 
 (function () {
     angular
         .module('app.order')
-        .directive('reportUpload', [function () {
+        .directive('reportChallenge', [function () {
             return {
-                templateUrl: 'app/directives/rpt-uploads.html',
+                templateUrl: 'app/directives/rpt-challenge.html',
                 replace: true,
                 scope: {
-                    uploadsObject: '='
+                    challengesObject: '='
                 }
             };
         }]);

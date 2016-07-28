@@ -221,17 +221,20 @@
                 },
                 cache: false,
                 templateUrl: helper.basepath('airtime.html'),
-                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'datatables','parsley', 'ui.select', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'ngTableExport', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'datatables', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
                 //controller: 'AirtimeDefaultController'
             })
             .state('app.airtime.create', {
                 url: '/create',
                 title: 'Generate Airtime',
                 cache: false,
-                templateUrl: helper.basepath('airtime-create.html'),
-                controller: 'AirtimeCreateController',
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('airtime-create.html'),
+                        controller: 'AirtimeCreateController'
+                    }
+                },
                 resolve: helper.resolveFor('parsley', 'ui.select', 'taginput','inputmask','localytics.directives')
-
             })
             .state('app.airtime.details', {
                 url: '/:id',
@@ -288,49 +291,13 @@
                 resolve: helper.resolveFor('colorpicker.module', 'ui.select', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
             })
             .state('app.report.view', {
-                url: '/report',
+                url: '/view',
                 title: 'Report',
                 cache: false,
                 templateUrl: helper.basepath('report-view.html'),
-                controller: 'ReportController',
+                resolve: helper.resolveFor('datatables'),
+                controller: 'ReportViewController'
             })
-            .state('app.target', {
-                url: '/target',
-                title: 'Target',
-                data: {
-                    permissions: {
-                        only: ["admin", "executive.director", "administration.dept", "manage.target"],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                templateUrl: helper.basepath('target.html'),
-                controller: 'TargetController',
-                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                })
-            })
-            .state('app.vehicles', {
-                url: '/vehicles',
-                title: 'Vehicles',
-                data: {
-                    permissions: {
-                        only: ["admin", "executive.director", "administration.dept", "manage.vehicle"],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                templateUrl: helper.basepath('vehicle.html'),
-                controller: 'VehicleController',
-                resolve: angular.extend(helper.resolveFor('datatables'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                })
-            })
-
             .state('app.unauthorized', {
                 url: '/unauthorized',
                 title: 'unauthorized',
@@ -396,16 +363,102 @@
                 url: '/:id/edit',
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('assessment-form.html'),
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('assessment-form.html')
+                    }
+                },
                 controller: 'AssessmentController'
             })
             .state('app.assessment.view', {
                 url: '/view',
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('assessment-record.html'),
-                controller: 'AssessmentRecordController'
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('assessment-record.html'),
+                        controller: 'AssessmentRecordController'
+                    }
+                }
             })
+
+            //Admin
+            .state('app.admin', {
+                url: '/admin',
+                title: 'Admin',
+                abstract: true,
+                data: {
+                    authenticate:true,
+                    permissions: {
+                        only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false
+            })
+            .state('app.admin.airtime', {
+                url: '/airtime',
+                title: 'Airtime',
+                data: {
+                    permissions: {
+                        only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                views: {
+                  '@app': {
+                      templateUrl: helper.basepath('admin-airtime.html')
+                  }
+                },
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'datatables', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
+                //controller: 'AirtimeDefaultController'
+            })
+            .state('app.admin.target', {
+                url: '/target',
+                title: 'Target',
+                data: {
+                    permissions: {
+                        only: ["admin", "executive.director", "administration.dept", "manage.target"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                views: {
+                    "@app" : {
+                        templateUrl: helper.basepath('target.html')
+                    }
+                },
+                controller: 'TargetController',
+                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+            .state('app.admin.vehicles', {
+                url: '/vehicles',
+                title: 'Vehicles',
+                data: {
+                    permissions: {
+                        only: ["admin", "executive.director", "administration.dept", "manage.vehicle"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                views: {
+                    "@app" : {
+                        templateUrl: helper.basepath('vehicle.html')
+                    }
+                },
+                controller: 'VehicleController',
+                resolve: angular.extend(helper.resolveFor('datatables'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+
             .state('app.assessment.supervise', {
                 url: '^/supervisor/:id',
                 cache: false,
@@ -435,6 +488,8 @@
                     }
                 }
             })
+
+
             //.state('app', {
           //    url: '/app',
           //    abstract: true,

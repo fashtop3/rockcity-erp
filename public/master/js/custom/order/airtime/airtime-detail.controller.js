@@ -5,8 +5,11 @@
 (function () {
     angular
         .module('app.order')
-        .controller('AirtimeDetailController', ['$scope', '$stateParams', 'airtimeFactory', '$state',
-            function($scope, $stateParams, airtimeFactory, $state) {
+        .controller('AirtimeDetailController', ['$scope', '$stateParams', 'airtimeFactory', '$state', '$rootScope',
+            function($scope, $stateParams, airtimeFactory, $state, $rootScope) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
 
                 var vm = $scope;
 

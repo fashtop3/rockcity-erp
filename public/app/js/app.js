@@ -68,6 +68,12 @@
     'use strict';
 
     angular
+        .module('app.charts', []);
+})();
+(function() {
+    'use strict';
+
+    angular
         .module('app.colors', []);
 })();
 (function() {
@@ -94,12 +100,6 @@
             'tmh.dynamicLocale',
             'ui.utils'
         ]);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.charts', []);
 })();
 (function() {
     'use strict';
@@ -132,6 +132,12 @@
     'use strict';
 
     angular
+        .module('app.extras', []);
+})();
+(function() {
+    'use strict';
+
+    angular
         .module('app.flatdoc', []);
 })();
 (function() {
@@ -144,19 +150,7 @@
     'use strict';
 
     angular
-        .module('app.extras', []);
-})();
-(function() {
-    'use strict';
-
-    angular
         .module('app.icons', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.mailbox', []);
 })();
 (function() {
     'use strict';
@@ -180,6 +174,12 @@
     'use strict';
 
     angular
+        .module('app.mailbox', []);
+})();
+(function() {
+    'use strict';
+
+    angular
         .module('app.maps', []);
 })();
 (function() {
@@ -198,14 +198,6 @@
     'use strict';
 
     angular
-        .module('app.preloader', []);
-})();
-
-
-(function() {
-    'use strict';
-
-    angular
         .module('app.pages', []);
 })();
 (function() {
@@ -214,6 +206,14 @@
     angular
         .module('app.panels', []);
 })();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.preloader', []);
+})();
+
+
 (function() {
     'use strict';
 
@@ -1339,170 +1339,6 @@
         }
     }
 })();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.colors')
-        .constant('APP_COLORS', {
-          'primary':                '#5d9cec',
-          'success':                '#27c24c',
-          'info':                   '#23b7e5',
-          'warning':                '#ff902b',
-          'danger':                 '#f05050',
-          'inverse':                '#131e26',
-          'green':                  '#37bc9b',
-          'pink':                   '#f532e5',
-          'purple':                 '#7266ba',
-          'dark':                   '#3a3f51',
-          'yellow':                 '#fad732',
-          'gray-darker':            '#232735',
-          'gray-dark':              '#3a3f51',
-          'gray':                   '#dde6e9',
-          'gray-light':             '#e4eaec',
-          'gray-lighter':           '#edf1f2'
-        })
-        ;
-})();
-/**=========================================================
- * Module: colors.js
- * Services to retrieve global colors
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.colors')
-        .service('Colors', Colors);
-
-    Colors.$inject = ['APP_COLORS'];
-    function Colors(APP_COLORS) {
-        this.byName = byName;
-
-        ////////////////
-
-        function byName(name) {
-          return (APP_COLORS[name] || '#fff');
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.core')
-        .config(coreConfig);
-
-    coreConfig.$inject = ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$animateProvider'];
-    function coreConfig($controllerProvider, $compileProvider, $filterProvider, $provide, $animateProvider){
-
-      var core = angular.module('app.core');
-      // registering components after bootstrap
-      core.controller = $controllerProvider.register;
-      core.directive  = $compileProvider.directive;
-      core.filter     = $filterProvider.register;
-      core.factory    = $provide.factory;
-      core.service    = $provide.service;
-      core.constant   = $provide.constant;
-      core.value      = $provide.value;
-
-      // Disables animation on items with class .ng-no-animation
-      $animateProvider.classNameFilter(/^((?!(ng-no-animation)).)*$/);
-
-    }
-
-})();
-/**=========================================================
- * Module: constants.js
- * Define constants to inject across the application
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.core')
-        .constant('APP_MEDIAQUERY', {
-          'desktopLG':             1200,
-          'desktop':                992,
-          'tablet':                 768,
-          'mobile':                 480
-        })
-      ;
-
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.core')
-        .run(appRun);
-
-    appRun.$inject = ['$rootScope', '$state', '$stateParams',  '$window', '$templateCache', 'Colors'];
-    
-    function appRun($rootScope, $state, $stateParams, $window, $templateCache, Colors) {
-      
-      // Set reference to access them from any scope
-      $rootScope.$state = $state;
-      $rootScope.$stateParams = $stateParams;
-      $rootScope.$storage = $window.localStorage;
-
-      // Uncomment this to disable template cache
-      /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-          if (typeof(toState) !== 'undefined'){
-            $templateCache.remove(toState.templateUrl);
-          }
-      });*/
-
-      // Allows to use branding color with interpolation
-      // {{ colorByName('primary') }}
-      $rootScope.colorByName = Colors.byName;
-
-      // cancel click event easily
-      $rootScope.cancel = function($event) {
-        $event.stopPropagation();
-      };
-
-      // Hooks Example
-      // ----------------------------------- 
-
-      // Hook not found
-      $rootScope.$on('$stateNotFound',
-        function(event, unfoundState/*, fromState, fromParams*/) {
-            console.log(unfoundState.to); // "lazy.state"
-            console.log(unfoundState.toParams); // {a:1, b:2}
-            console.log(unfoundState.options); // {inherit:false} + default options
-        });
-      // Hook error
-      $rootScope.$on('$stateChangeError',
-        function(event, toState, toParams, fromState, fromParams, error){
-          console.log(error);
-        });
-      // Hook success
-      $rootScope.$on('$stateChangeSuccess',
-        function(/*event, toState, toParams, fromState, fromParams*/) {
-          // display new view from top
-          $window.scrollTo(0, 0);
-          // Save the route title
-          $rootScope.currTitle = $state.current.title;
-        });
-
-      // Load a title dynamically
-      $rootScope.currTitle = $state.current.title;
-      $rootScope.pageTitle = function() {
-        var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
-        document.title = title;
-        return title;
-      };      
-
-    }
-
-})();
-
 
 /**=========================================================
  * Module: chartist.js
@@ -3150,6 +2986,170 @@
     
 
 })();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors')
+        .constant('APP_COLORS', {
+          'primary':                '#5d9cec',
+          'success':                '#27c24c',
+          'info':                   '#23b7e5',
+          'warning':                '#ff902b',
+          'danger':                 '#f05050',
+          'inverse':                '#131e26',
+          'green':                  '#37bc9b',
+          'pink':                   '#f532e5',
+          'purple':                 '#7266ba',
+          'dark':                   '#3a3f51',
+          'yellow':                 '#fad732',
+          'gray-darker':            '#232735',
+          'gray-dark':              '#3a3f51',
+          'gray':                   '#dde6e9',
+          'gray-light':             '#e4eaec',
+          'gray-lighter':           '#edf1f2'
+        })
+        ;
+})();
+/**=========================================================
+ * Module: colors.js
+ * Services to retrieve global colors
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors')
+        .service('Colors', Colors);
+
+    Colors.$inject = ['APP_COLORS'];
+    function Colors(APP_COLORS) {
+        this.byName = byName;
+
+        ////////////////
+
+        function byName(name) {
+          return (APP_COLORS[name] || '#fff');
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .config(coreConfig);
+
+    coreConfig.$inject = ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$animateProvider'];
+    function coreConfig($controllerProvider, $compileProvider, $filterProvider, $provide, $animateProvider){
+
+      var core = angular.module('app.core');
+      // registering components after bootstrap
+      core.controller = $controllerProvider.register;
+      core.directive  = $compileProvider.directive;
+      core.filter     = $filterProvider.register;
+      core.factory    = $provide.factory;
+      core.service    = $provide.service;
+      core.constant   = $provide.constant;
+      core.value      = $provide.value;
+
+      // Disables animation on items with class .ng-no-animation
+      $animateProvider.classNameFilter(/^((?!(ng-no-animation)).)*$/);
+
+    }
+
+})();
+/**=========================================================
+ * Module: constants.js
+ * Define constants to inject across the application
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .constant('APP_MEDIAQUERY', {
+          'desktopLG':             1200,
+          'desktop':                992,
+          'tablet':                 768,
+          'mobile':                 480
+        })
+      ;
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .run(appRun);
+
+    appRun.$inject = ['$rootScope', '$state', '$stateParams',  '$window', '$templateCache', 'Colors'];
+    
+    function appRun($rootScope, $state, $stateParams, $window, $templateCache, Colors) {
+      
+      // Set reference to access them from any scope
+      $rootScope.$state = $state;
+      $rootScope.$stateParams = $stateParams;
+      $rootScope.$storage = $window.localStorage;
+
+      // Uncomment this to disable template cache
+      /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+          if (typeof(toState) !== 'undefined'){
+            $templateCache.remove(toState.templateUrl);
+          }
+      });*/
+
+      // Allows to use branding color with interpolation
+      // {{ colorByName('primary') }}
+      $rootScope.colorByName = Colors.byName;
+
+      // cancel click event easily
+      $rootScope.cancel = function($event) {
+        $event.stopPropagation();
+      };
+
+      // Hooks Example
+      // ----------------------------------- 
+
+      // Hook not found
+      $rootScope.$on('$stateNotFound',
+        function(event, unfoundState/*, fromState, fromParams*/) {
+            console.log(unfoundState.to); // "lazy.state"
+            console.log(unfoundState.toParams); // {a:1, b:2}
+            console.log(unfoundState.options); // {inherit:false} + default options
+        });
+      // Hook error
+      $rootScope.$on('$stateChangeError',
+        function(event, toState, toParams, fromState, fromParams, error){
+          console.log(error);
+        });
+      // Hook success
+      $rootScope.$on('$stateChangeSuccess',
+        function(/*event, toState, toParams, fromState, fromParams*/) {
+          // display new view from top
+          $window.scrollTo(0, 0);
+          // Save the route title
+          $rootScope.currTitle = $state.current.title;
+        });
+
+      // Load a title dynamically
+      $rootScope.currTitle = $state.current.title;
+      $rootScope.pageTitle = function() {
+        var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
+        document.title = title;
+        return title;
+      };      
+
+    }
+
+})();
+
 
 (function() {
     'use strict';
@@ -7209,6 +7209,619 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 })();
 
 /**=========================================================
+ * Module: article.js
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .controller('ArticleController', ArticleController);
+
+    function ArticleController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.htmlContent = 'Article content...';
+
+          vm.postDemo = {};
+          vm.postDemo.tags = ['coding', 'less'];
+          vm.availableTags = ['coding', 'less', 'sass', 'angularjs', 'node', 'expressJS'];
+          vm.postDemo.categories = ['JAVASCRIPT','WEB'];
+          vm.availableCategories = ['JAVASCRIPT','WEB', 'BOOTSTRAP', 'SERVER', 'HTML5', 'CSS'];
+
+          vm.reviewers = [
+            { name: 'Adam',      email: 'adam@email.com',      age: 10 },
+            { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
+            { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
+            { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
+            { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
+            { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
+            { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
+            { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
+          ];
+
+
+          vm.alerts = [
+            { type: 'info', msg: 'There is an autosaved version of this article that is more recent than the version below. <a href="#" class="text-white">Restore</a>' }
+          ];
+
+          vm.closeAlert = function(index) {
+            vm.alerts.splice(index, 1);
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: calendar-ui.js
+ * This script handle the calendar demo with draggable 
+ * events and events creations
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .directive('calendar', calendar);
+
+    calendar.$inject = ['$rootScope'];
+    function calendar ($rootScope) {
+        var directive = {
+            link: link,
+            restrict: 'EA'
+        };
+        return directive;
+
+        function link(scope, element) {
+          
+          if(!$.fn.fullCalendar) return;
+          
+          // The element that will display the calendar
+          var calendar = element;
+
+          var demoEvents = createDemoEvents();
+
+          initExternalEvents(calendar);
+
+          initCalendar(calendar, demoEvents, $rootScope.app.layout.isRTL);
+        }
+    }
+
+
+    // global shared var to know what we are dragging
+    var draggingEvent = null;
+
+
+    /**
+     * ExternalEvent object
+     * @param jQuery Object elements Set of element as jQuery objects
+     */
+    function ExternalEvent(elements) {
+        
+        if (!elements) return;
+        
+        elements.each(function() {
+            var $this = $(this);
+            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            // it doesn't need to have a start or end
+            var calendarEventObject = {
+                title: $.trim($this.text()) // use the element's text as the event title
+            };
+
+            // store the Event Object in the DOM element so we can get to it later
+            $this.data('calendarEventObject', calendarEventObject);
+
+            // make the event draggable using jQuery UI
+            $this.draggable({
+                zIndex: 1070,
+                revert: true, // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
+
+        });
+    }
+
+    /**
+     * Invoke full calendar plugin and attach behavior
+     * @param  jQuery [calElement] The calendar dom element wrapped into jQuery
+     * @param  EventObject [events] An object with the event list to load when the calendar displays
+     */
+    function initCalendar(calElement, events, isRTL) {
+
+        // check to remove elements from the list
+        var removeAfterDrop = $('#remove-after-drop');
+
+        calElement.fullCalendar({
+            isRTL: isRTL,
+            header: {
+                left:   'prev,next today',
+                center: 'title',
+                right:  'month,agendaWeek,agendaDay'
+            },
+            buttonIcons: { // note the space at the beginning
+                prev:    ' fa fa-caret-left',
+                next:    ' fa fa-caret-right'
+            },
+            buttonText: {
+                today: 'today',
+                month: 'month',
+                week:  'week',
+                day:   'day'
+            },
+            editable: true,
+            droppable: true, // this allows things to be dropped onto the calendar 
+            drop: function(date, allDay) { // this function is called when something is dropped
+                
+                var $this = $(this),
+                    // retrieve the dropped element's stored Event Object
+                    originalEventObject = $this.data('calendarEventObject');
+
+                // if something went wrong, abort
+                if(!originalEventObject) return;
+
+                // clone the object to avoid multiple events with reference to the same object
+                var clonedEventObject = $.extend({}, originalEventObject);
+
+                // assign the reported date
+                clonedEventObject.start = date;
+                clonedEventObject.allDay = allDay;
+                clonedEventObject.backgroundColor = $this.css('background-color');
+                clonedEventObject.borderColor = $this.css('border-color');
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" 
+                // (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                calElement.fullCalendar('renderEvent', clonedEventObject, true);
+                
+                // if necessary remove the element from the list
+                if(removeAfterDrop.is(':checked')) {
+                  $this.remove();
+                }
+            },
+            eventDragStart: function (event/*, js, ui*/) {
+              draggingEvent = event;
+            },
+            // This array is the events sources
+            events: events
+        });
+    }
+
+    /**
+     * Inits the external events panel
+     * @param  jQuery [calElement] The calendar dom element wrapped into jQuery
+     */
+    function initExternalEvents(calElement){
+      // Panel with the external events list
+      var externalEvents = $('.external-events');
+
+      // init the external events in the panel
+      new ExternalEvent(externalEvents.children('div'));
+
+      // External event color is danger-red by default
+      var currColor = '#f6504d';
+      // Color selector button
+      var eventAddBtn = $('.external-event-add-btn');
+      // New external event name input
+      var eventNameInput = $('.external-event-name');
+      // Color switchers
+      var eventColorSelector = $('.external-event-color-selector .circle');
+
+      // Trash events Droparea 
+      $('.external-events-trash').droppable({
+        accept:       '.fc-event',
+        activeClass:  'active',
+        hoverClass:   'hovered',
+        tolerance:    'touch',
+        drop: function(event, ui) {
+          
+          // You can use this function to send an ajax request
+          // to remove the event from the repository
+          
+          if(draggingEvent) {
+            var eid = draggingEvent.id || draggingEvent._id;
+            // Remove the event
+            calElement.fullCalendar('removeEvents', eid);
+            // Remove the dom element
+            ui.draggable.remove();
+            // clear
+            draggingEvent = null;
+          }
+        }
+      });
+
+      eventColorSelector.click(function(e) {
+          e.preventDefault();
+          var $this = $(this);
+
+          // Save color
+          currColor = $this.css('background-color');
+          // De-select all and select the current one
+          eventColorSelector.removeClass('selected');
+          $this.addClass('selected');
+      });
+
+      eventAddBtn.click(function(e) {
+          e.preventDefault();
+          
+          // Get event name from input
+          var val = eventNameInput.val();
+          // Dont allow empty values
+          if ($.trim(val) === '') return;
+          
+          // Create new event element
+          var newEvent = $('<div/>').css({
+                              'background-color': currColor,
+                              'border-color':     currColor,
+                              'color':            '#fff'
+                          })
+                          .html(val);
+
+          // Prepends to the external events list
+          externalEvents.prepend(newEvent);
+          // Initialize the new event element
+          new ExternalEvent(newEvent);
+          // Clear input
+          eventNameInput.val('');
+      });
+    }
+
+    /**
+     * Creates an array of events to display in the first load of the calendar
+     * Wrap into this function a request to a source to get via ajax the stored events
+     * @return Array The array with the events
+     */
+    function createDemoEvents() {
+      // Date for the calendar events (dummy data)
+      var date = new Date();
+      var d = date.getDate(),
+          m = date.getMonth(),
+          y = date.getFullYear();
+
+      return  [
+                {
+                    title: 'All Day Event',
+                    start: new Date(y, m, 1),
+                    backgroundColor: '#f56954', //red 
+                    borderColor: '#f56954' //red
+                },
+                {
+                    title: 'Long Event',
+                    start: new Date(y, m, d - 5),
+                    end: new Date(y, m, d - 2),
+                    backgroundColor: '#f39c12', //yellow
+                    borderColor: '#f39c12' //yellow
+                },
+                {
+                    title: 'Meeting',
+                    start: new Date(y, m, d, 10, 30),
+                    allDay: false,
+                    backgroundColor: '#0073b7', //Blue
+                    borderColor: '#0073b7' //Blue
+                },
+                {
+                    title: 'Lunch',
+                    start: new Date(y, m, d, 12, 0),
+                    end: new Date(y, m, d, 14, 0),
+                    allDay: false,
+                    backgroundColor: '#00c0ef', //Info (aqua)
+                    borderColor: '#00c0ef' //Info (aqua)
+                },
+                {
+                    title: 'Birthday Party',
+                    start: new Date(y, m, d + 1, 19, 0),
+                    end: new Date(y, m, d + 1, 22, 30),
+                    allDay: false,
+                    backgroundColor: '#00a65a', //Success (green)
+                    borderColor: '#00a65a' //Success (green)
+                },
+                {
+                    title: 'Open Google',
+                    start: new Date(y, m, 28),
+                    end: new Date(y, m, 29),
+                    url: '//google.com/',
+                    backgroundColor: '#3c8dbc', //Primary (light-blue)
+                    borderColor: '#3c8dbc' //Primary (light-blue)
+                }
+            ];
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .service('LoadTreeService', LoadTreeService);
+
+    LoadTreeService.$inject = ['$resource'];
+    function LoadTreeService($resource) {
+        // Loads the list of files to populate the treeview
+        return $resource('server/editor/filetree.json');
+    }
+
+})();
+/**=========================================================
+ * Module: code-editor.js
+ * Codemirror code editor controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .controller('CodeEditorController', CodeEditorController);
+
+    CodeEditorController.$inject = ['$rootScope', '$scope', '$http', '$ocLazyLoad', 'filetree'];
+    function CodeEditorController($rootScope, $scope, $http, $ocLazyLoad, filetree) {
+        var vm = this;
+
+        layout();
+        activate();
+
+        ////////////////
+        /*jshint -W106*/
+        function layout() {
+          // Setup the layout mode 
+          $rootScope.app.useFullLayout = true;
+          $rootScope.app.hiddenFooter = true;
+          $rootScope.app.layout.isCollapsed = true;
+          
+          // Restore layout for demo
+          $scope.$on('$destroy', function(){
+              $rootScope.app.useFullLayout = false;
+              $rootScope.app.hiddenFooter = false;
+          });
+
+        }
+
+        function activate() {
+
+          // Set the tree data into the scope
+          vm.filetree_data = filetree;
+
+          // Available themes
+          vm.editorThemes = ['3024-day','3024-night','ambiance-mobile','ambiance','base16-dark','base16-light','blackboard','cobalt','eclipse','elegant','erlang-dark','lesser-dark','mbo','mdn-like','midnight','monokai','neat','neo','night','paraiso-dark','paraiso-light','pastel-on-dark','rubyblue','solarized','the-matrix','tomorrow-night-eighties','twilight','vibrant-ink','xq-dark','xq-light'];
+
+          vm.editorOpts = {
+            mode: 'javascript',
+            lineNumbers: true,
+            matchBrackets: true,
+            theme: 'mbo',
+            viewportMargin: Infinity
+          };
+
+          vm.refreshEditor = 0;
+
+          // Load dinamically the stylesheet for the selected theme
+          // You can use ozLazyLoad to load also the mode js based 
+          // on the file extension that is loaded (see handle_filetree)
+          vm.loadTheme = function() {
+            var BASE = 'vendor/codemirror/theme/';
+            $ocLazyLoad.load(BASE + vm.editorOpts.theme + '.css');
+            vm.refreshEditor = !vm.refreshEditor;
+          };
+          // load default theme
+          vm.loadTheme(vm.editorOpts.theme);
+          // Add some initial text
+          vm.code = '// Open a file from the left menu \n' +
+                        '// It will be requested to the server and loaded into the editor\n' +
+                        '// Also try adding a New File from the toolbar\n';
+
+
+          // Tree
+
+          var selectedBranch;
+          vm.handle_filetree = function(branch) {
+            
+            selectedBranch = branch;
+
+            var basePath = 'server/editor/';
+            var isFolder = !!branch.children.length;
+
+            console.log('You selected: ' + branch.label + ' - isFolder? ' + isFolder);
+
+            if ( ! isFolder ) {
+
+              $http
+                .get( basePath + branch.path )
+                .success(function(response){
+                  
+                  console.log('Loaded.. ' + branch.path);
+                  // set the new code into the editor
+                  vm.code = response;
+                  
+                  vm.editorOpts.mode = detectMode(branch.path);
+                  console.log( 'Mode is: ' + vm.editorOpts.mode);
+
+                });
+            }
+          };
+
+          function detectMode(file) {
+            var ext = file.split('.');
+            ext = ext ? ext[ext.length - 1] : '';
+            switch (ext) {
+              case 'html':  return 'htmlmixed';
+              case 'css':   return 'css';
+              default:      return 'javascript';
+            }
+          }
+
+          var tree;
+          tree = vm.filetree = {};
+
+          // Adds a new branch to the tree
+          vm.new_filetree = function() {
+            var b;
+            b = tree.get_selected_branch();
+
+            // if we select a leaf -> select the parent folder
+            if ( b && b.children.length === 0 ) {
+              b = tree.get_parent_branch(b);
+            }
+            
+            return tree.add_branch(b, {
+              'label': 'another.html',
+              'path': 'source/another.html'
+            });
+          };
+        }
+    }
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .controller('TodoController', TodoController);
+
+    TodoController.$inject = ['$filter'];
+    function TodoController($filter) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+           vm.items = [
+            {
+              todo: {title: 'Meeting with Mark at 7am.', description: 'Pellentesque convallis mauris eu elit imperdiet quis eleifend quam aliquet. '},
+              complete: true
+            },
+            {
+              todo: {title: 'Call Sonya. Talk about the new project.', description: ''},
+              complete: false
+            },
+            {
+              todo: {title: 'Find a new place for vacations', description: ''},
+              complete: false
+            }
+            ];
+          
+          vm.editingTodo = false;
+          vm.todo = {};
+
+          vm.addTodo = function() {
+            
+            if( vm.todo.title === '' ) return;
+            if( !vm.todo.description ) vm.todo.description = '';
+            
+            if( vm.editingTodo ) {
+              vm.todo = {};
+              vm.editingTodo = false;
+            }
+            else {
+              vm.items.push({todo: angular.copy(vm.todo), complete: false});
+              vm.todo.title = '';
+              vm.todo.description = '';
+            }
+          };
+          
+          vm.editTodo = function(index, $event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            vm.todo = vm.items[index].todo;
+            vm.editingTodo = true;
+          };
+
+          vm.removeTodo = function(index/*, $event*/) {
+            vm.items.splice(index, 1);
+          };
+          
+          vm.clearAll = function() {
+            vm.items = [];
+          };
+
+          vm.totalCompleted = function() {
+            return $filter('filter')(vm.items, function(item){
+              return item.complete;
+            }).length;
+          };
+
+          vm.totalPending = function() {
+            return $filter('filter')(vm.items, function(item){
+              return !item.complete;
+            }).length;
+          };
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: word-cloud.js
+ * Controller for jqCloud
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .controller('WordCloudController', WordCloudController);
+
+    function WordCloudController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.words = [
+              {
+                text: 'Lorem',
+                weight: 13
+                //link: 'http://themicon.co'
+              }, {
+                text: 'Ipsum',
+                weight: 10.5
+              }, {
+                text: 'Dolor',
+                weight: 9.4
+              }, {
+                text: 'Sit',
+                weight: 8
+              }, {
+                text: 'Amet',
+                weight: 6.2
+              }, {
+                text: 'Consectetur',
+                weight: 5
+              }, {
+                text: 'Adipiscing',
+                weight: 5
+              }, {
+                text: 'Sit',
+                weight: 8
+              }, {
+                text: 'Amet',
+                weight: 6.2
+              }, {
+                text: 'Consectetur',
+                weight: 5
+              }, {
+                text: 'Adipiscing',
+                weight: 5
+              }
+          ];
+        }
+    }
+})();
+
+/**=========================================================
  * Module: flatdoc.js
  * Creates the flatdoc markup and initializes the plugin
  =========================================================*/
@@ -8250,619 +8863,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 })();
 
 /**=========================================================
- * Module: article.js
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.extras')
-        .controller('ArticleController', ArticleController);
-
-    function ArticleController() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.htmlContent = 'Article content...';
-
-          vm.postDemo = {};
-          vm.postDemo.tags = ['coding', 'less'];
-          vm.availableTags = ['coding', 'less', 'sass', 'angularjs', 'node', 'expressJS'];
-          vm.postDemo.categories = ['JAVASCRIPT','WEB'];
-          vm.availableCategories = ['JAVASCRIPT','WEB', 'BOOTSTRAP', 'SERVER', 'HTML5', 'CSS'];
-
-          vm.reviewers = [
-            { name: 'Adam',      email: 'adam@email.com',      age: 10 },
-            { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
-            { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
-            { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
-            { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
-            { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
-            { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
-            { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
-          ];
-
-
-          vm.alerts = [
-            { type: 'info', msg: 'There is an autosaved version of this article that is more recent than the version below. <a href="#" class="text-white">Restore</a>' }
-          ];
-
-          vm.closeAlert = function(index) {
-            vm.alerts.splice(index, 1);
-          };
-        }
-    }
-})();
-
-/**=========================================================
- * Module: calendar-ui.js
- * This script handle the calendar demo with draggable 
- * events and events creations
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.extras')
-        .directive('calendar', calendar);
-
-    calendar.$inject = ['$rootScope'];
-    function calendar ($rootScope) {
-        var directive = {
-            link: link,
-            restrict: 'EA'
-        };
-        return directive;
-
-        function link(scope, element) {
-          
-          if(!$.fn.fullCalendar) return;
-          
-          // The element that will display the calendar
-          var calendar = element;
-
-          var demoEvents = createDemoEvents();
-
-          initExternalEvents(calendar);
-
-          initCalendar(calendar, demoEvents, $rootScope.app.layout.isRTL);
-        }
-    }
-
-
-    // global shared var to know what we are dragging
-    var draggingEvent = null;
-
-
-    /**
-     * ExternalEvent object
-     * @param jQuery Object elements Set of element as jQuery objects
-     */
-    function ExternalEvent(elements) {
-        
-        if (!elements) return;
-        
-        elements.each(function() {
-            var $this = $(this);
-            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-            // it doesn't need to have a start or end
-            var calendarEventObject = {
-                title: $.trim($this.text()) // use the element's text as the event title
-            };
-
-            // store the Event Object in the DOM element so we can get to it later
-            $this.data('calendarEventObject', calendarEventObject);
-
-            // make the event draggable using jQuery UI
-            $this.draggable({
-                zIndex: 1070,
-                revert: true, // will cause the event to go back to its
-                revertDuration: 0  //  original position after the drag
-            });
-
-        });
-    }
-
-    /**
-     * Invoke full calendar plugin and attach behavior
-     * @param  jQuery [calElement] The calendar dom element wrapped into jQuery
-     * @param  EventObject [events] An object with the event list to load when the calendar displays
-     */
-    function initCalendar(calElement, events, isRTL) {
-
-        // check to remove elements from the list
-        var removeAfterDrop = $('#remove-after-drop');
-
-        calElement.fullCalendar({
-            isRTL: isRTL,
-            header: {
-                left:   'prev,next today',
-                center: 'title',
-                right:  'month,agendaWeek,agendaDay'
-            },
-            buttonIcons: { // note the space at the beginning
-                prev:    ' fa fa-caret-left',
-                next:    ' fa fa-caret-right'
-            },
-            buttonText: {
-                today: 'today',
-                month: 'month',
-                week:  'week',
-                day:   'day'
-            },
-            editable: true,
-            droppable: true, // this allows things to be dropped onto the calendar 
-            drop: function(date, allDay) { // this function is called when something is dropped
-                
-                var $this = $(this),
-                    // retrieve the dropped element's stored Event Object
-                    originalEventObject = $this.data('calendarEventObject');
-
-                // if something went wrong, abort
-                if(!originalEventObject) return;
-
-                // clone the object to avoid multiple events with reference to the same object
-                var clonedEventObject = $.extend({}, originalEventObject);
-
-                // assign the reported date
-                clonedEventObject.start = date;
-                clonedEventObject.allDay = allDay;
-                clonedEventObject.backgroundColor = $this.css('background-color');
-                clonedEventObject.borderColor = $this.css('border-color');
-
-                // render the event on the calendar
-                // the last `true` argument determines if the event "sticks" 
-                // (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                calElement.fullCalendar('renderEvent', clonedEventObject, true);
-                
-                // if necessary remove the element from the list
-                if(removeAfterDrop.is(':checked')) {
-                  $this.remove();
-                }
-            },
-            eventDragStart: function (event/*, js, ui*/) {
-              draggingEvent = event;
-            },
-            // This array is the events sources
-            events: events
-        });
-    }
-
-    /**
-     * Inits the external events panel
-     * @param  jQuery [calElement] The calendar dom element wrapped into jQuery
-     */
-    function initExternalEvents(calElement){
-      // Panel with the external events list
-      var externalEvents = $('.external-events');
-
-      // init the external events in the panel
-      new ExternalEvent(externalEvents.children('div'));
-
-      // External event color is danger-red by default
-      var currColor = '#f6504d';
-      // Color selector button
-      var eventAddBtn = $('.external-event-add-btn');
-      // New external event name input
-      var eventNameInput = $('.external-event-name');
-      // Color switchers
-      var eventColorSelector = $('.external-event-color-selector .circle');
-
-      // Trash events Droparea 
-      $('.external-events-trash').droppable({
-        accept:       '.fc-event',
-        activeClass:  'active',
-        hoverClass:   'hovered',
-        tolerance:    'touch',
-        drop: function(event, ui) {
-          
-          // You can use this function to send an ajax request
-          // to remove the event from the repository
-          
-          if(draggingEvent) {
-            var eid = draggingEvent.id || draggingEvent._id;
-            // Remove the event
-            calElement.fullCalendar('removeEvents', eid);
-            // Remove the dom element
-            ui.draggable.remove();
-            // clear
-            draggingEvent = null;
-          }
-        }
-      });
-
-      eventColorSelector.click(function(e) {
-          e.preventDefault();
-          var $this = $(this);
-
-          // Save color
-          currColor = $this.css('background-color');
-          // De-select all and select the current one
-          eventColorSelector.removeClass('selected');
-          $this.addClass('selected');
-      });
-
-      eventAddBtn.click(function(e) {
-          e.preventDefault();
-          
-          // Get event name from input
-          var val = eventNameInput.val();
-          // Dont allow empty values
-          if ($.trim(val) === '') return;
-          
-          // Create new event element
-          var newEvent = $('<div/>').css({
-                              'background-color': currColor,
-                              'border-color':     currColor,
-                              'color':            '#fff'
-                          })
-                          .html(val);
-
-          // Prepends to the external events list
-          externalEvents.prepend(newEvent);
-          // Initialize the new event element
-          new ExternalEvent(newEvent);
-          // Clear input
-          eventNameInput.val('');
-      });
-    }
-
-    /**
-     * Creates an array of events to display in the first load of the calendar
-     * Wrap into this function a request to a source to get via ajax the stored events
-     * @return Array The array with the events
-     */
-    function createDemoEvents() {
-      // Date for the calendar events (dummy data)
-      var date = new Date();
-      var d = date.getDate(),
-          m = date.getMonth(),
-          y = date.getFullYear();
-
-      return  [
-                {
-                    title: 'All Day Event',
-                    start: new Date(y, m, 1),
-                    backgroundColor: '#f56954', //red 
-                    borderColor: '#f56954' //red
-                },
-                {
-                    title: 'Long Event',
-                    start: new Date(y, m, d - 5),
-                    end: new Date(y, m, d - 2),
-                    backgroundColor: '#f39c12', //yellow
-                    borderColor: '#f39c12' //yellow
-                },
-                {
-                    title: 'Meeting',
-                    start: new Date(y, m, d, 10, 30),
-                    allDay: false,
-                    backgroundColor: '#0073b7', //Blue
-                    borderColor: '#0073b7' //Blue
-                },
-                {
-                    title: 'Lunch',
-                    start: new Date(y, m, d, 12, 0),
-                    end: new Date(y, m, d, 14, 0),
-                    allDay: false,
-                    backgroundColor: '#00c0ef', //Info (aqua)
-                    borderColor: '#00c0ef' //Info (aqua)
-                },
-                {
-                    title: 'Birthday Party',
-                    start: new Date(y, m, d + 1, 19, 0),
-                    end: new Date(y, m, d + 1, 22, 30),
-                    allDay: false,
-                    backgroundColor: '#00a65a', //Success (green)
-                    borderColor: '#00a65a' //Success (green)
-                },
-                {
-                    title: 'Open Google',
-                    start: new Date(y, m, 28),
-                    end: new Date(y, m, 29),
-                    url: '//google.com/',
-                    backgroundColor: '#3c8dbc', //Primary (light-blue)
-                    borderColor: '#3c8dbc' //Primary (light-blue)
-                }
-            ];
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.extras')
-        .service('LoadTreeService', LoadTreeService);
-
-    LoadTreeService.$inject = ['$resource'];
-    function LoadTreeService($resource) {
-        // Loads the list of files to populate the treeview
-        return $resource('server/editor/filetree.json');
-    }
-
-})();
-/**=========================================================
- * Module: code-editor.js
- * Codemirror code editor controller
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.extras')
-        .controller('CodeEditorController', CodeEditorController);
-
-    CodeEditorController.$inject = ['$rootScope', '$scope', '$http', '$ocLazyLoad', 'filetree'];
-    function CodeEditorController($rootScope, $scope, $http, $ocLazyLoad, filetree) {
-        var vm = this;
-
-        layout();
-        activate();
-
-        ////////////////
-        /*jshint -W106*/
-        function layout() {
-          // Setup the layout mode 
-          $rootScope.app.useFullLayout = true;
-          $rootScope.app.hiddenFooter = true;
-          $rootScope.app.layout.isCollapsed = true;
-          
-          // Restore layout for demo
-          $scope.$on('$destroy', function(){
-              $rootScope.app.useFullLayout = false;
-              $rootScope.app.hiddenFooter = false;
-          });
-
-        }
-
-        function activate() {
-
-          // Set the tree data into the scope
-          vm.filetree_data = filetree;
-
-          // Available themes
-          vm.editorThemes = ['3024-day','3024-night','ambiance-mobile','ambiance','base16-dark','base16-light','blackboard','cobalt','eclipse','elegant','erlang-dark','lesser-dark','mbo','mdn-like','midnight','monokai','neat','neo','night','paraiso-dark','paraiso-light','pastel-on-dark','rubyblue','solarized','the-matrix','tomorrow-night-eighties','twilight','vibrant-ink','xq-dark','xq-light'];
-
-          vm.editorOpts = {
-            mode: 'javascript',
-            lineNumbers: true,
-            matchBrackets: true,
-            theme: 'mbo',
-            viewportMargin: Infinity
-          };
-
-          vm.refreshEditor = 0;
-
-          // Load dinamically the stylesheet for the selected theme
-          // You can use ozLazyLoad to load also the mode js based 
-          // on the file extension that is loaded (see handle_filetree)
-          vm.loadTheme = function() {
-            var BASE = 'vendor/codemirror/theme/';
-            $ocLazyLoad.load(BASE + vm.editorOpts.theme + '.css');
-            vm.refreshEditor = !vm.refreshEditor;
-          };
-          // load default theme
-          vm.loadTheme(vm.editorOpts.theme);
-          // Add some initial text
-          vm.code = '// Open a file from the left menu \n' +
-                        '// It will be requested to the server and loaded into the editor\n' +
-                        '// Also try adding a New File from the toolbar\n';
-
-
-          // Tree
-
-          var selectedBranch;
-          vm.handle_filetree = function(branch) {
-            
-            selectedBranch = branch;
-
-            var basePath = 'server/editor/';
-            var isFolder = !!branch.children.length;
-
-            console.log('You selected: ' + branch.label + ' - isFolder? ' + isFolder);
-
-            if ( ! isFolder ) {
-
-              $http
-                .get( basePath + branch.path )
-                .success(function(response){
-                  
-                  console.log('Loaded.. ' + branch.path);
-                  // set the new code into the editor
-                  vm.code = response;
-                  
-                  vm.editorOpts.mode = detectMode(branch.path);
-                  console.log( 'Mode is: ' + vm.editorOpts.mode);
-
-                });
-            }
-          };
-
-          function detectMode(file) {
-            var ext = file.split('.');
-            ext = ext ? ext[ext.length - 1] : '';
-            switch (ext) {
-              case 'html':  return 'htmlmixed';
-              case 'css':   return 'css';
-              default:      return 'javascript';
-            }
-          }
-
-          var tree;
-          tree = vm.filetree = {};
-
-          // Adds a new branch to the tree
-          vm.new_filetree = function() {
-            var b;
-            b = tree.get_selected_branch();
-
-            // if we select a leaf -> select the parent folder
-            if ( b && b.children.length === 0 ) {
-              b = tree.get_parent_branch(b);
-            }
-            
-            return tree.add_branch(b, {
-              'label': 'another.html',
-              'path': 'source/another.html'
-            });
-          };
-        }
-    }
-})();
-
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.extras')
-        .controller('TodoController', TodoController);
-
-    TodoController.$inject = ['$filter'];
-    function TodoController($filter) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-           vm.items = [
-            {
-              todo: {title: 'Meeting with Mark at 7am.', description: 'Pellentesque convallis mauris eu elit imperdiet quis eleifend quam aliquet. '},
-              complete: true
-            },
-            {
-              todo: {title: 'Call Sonya. Talk about the new project.', description: ''},
-              complete: false
-            },
-            {
-              todo: {title: 'Find a new place for vacations', description: ''},
-              complete: false
-            }
-            ];
-          
-          vm.editingTodo = false;
-          vm.todo = {};
-
-          vm.addTodo = function() {
-            
-            if( vm.todo.title === '' ) return;
-            if( !vm.todo.description ) vm.todo.description = '';
-            
-            if( vm.editingTodo ) {
-              vm.todo = {};
-              vm.editingTodo = false;
-            }
-            else {
-              vm.items.push({todo: angular.copy(vm.todo), complete: false});
-              vm.todo.title = '';
-              vm.todo.description = '';
-            }
-          };
-          
-          vm.editTodo = function(index, $event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            vm.todo = vm.items[index].todo;
-            vm.editingTodo = true;
-          };
-
-          vm.removeTodo = function(index/*, $event*/) {
-            vm.items.splice(index, 1);
-          };
-          
-          vm.clearAll = function() {
-            vm.items = [];
-          };
-
-          vm.totalCompleted = function() {
-            return $filter('filter')(vm.items, function(item){
-              return item.complete;
-            }).length;
-          };
-
-          vm.totalPending = function() {
-            return $filter('filter')(vm.items, function(item){
-              return !item.complete;
-            }).length;
-          };
-
-        }
-    }
-})();
-
-/**=========================================================
- * Module: word-cloud.js
- * Controller for jqCloud
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.extras')
-        .controller('WordCloudController', WordCloudController);
-
-    function WordCloudController() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-
-          vm.words = [
-              {
-                text: 'Lorem',
-                weight: 13
-                //link: 'http://themicon.co'
-              }, {
-                text: 'Ipsum',
-                weight: 10.5
-              }, {
-                text: 'Dolor',
-                weight: 9.4
-              }, {
-                text: 'Sit',
-                weight: 8
-              }, {
-                text: 'Amet',
-                weight: 6.2
-              }, {
-                text: 'Consectetur',
-                weight: 5
-              }, {
-                text: 'Adipiscing',
-                weight: 5
-              }, {
-                text: 'Sit',
-                weight: 8
-              }, {
-                text: 'Amet',
-                weight: 6.2
-              }, {
-                text: 'Consectetur',
-                weight: 5
-              }, {
-                text: 'Adipiscing',
-                weight: 5
-              }
-          ];
-        }
-    }
-})();
-
-/**=========================================================
  * Module: skycons.js
  * Include any animated weather icon from Skycons
  =========================================================*/
@@ -8893,144 +8893,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }
     }
 
-})();
-
-/**=========================================================
- * Module: demo-pagination.js
- * Provides a simple demo for pagination
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.mailbox')
-        .controller('MailboxController', MailboxController);
-
-    function MailboxController() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.folders = [
-            {name: 'Inbox',   folder: 'inbox',   alert: 42, icon: 'fa-inbox' },
-            {name: 'Starred', folder: 'starred', alert: 10, icon: 'fa-star' },
-            {name: 'Sent',    folder: 'sent',    alert: 0,  icon: 'fa-paper-plane-o' },
-            {name: 'Draft',   folder: 'draft',   alert: 5,  icon: 'fa-edit' },
-            {name: 'Trash',   folder: 'trash',   alert: 0,  icon: 'fa-trash'}
-          ];
-
-          vm.labels = [
-            {name: 'Red',     color: 'danger'},
-            {name: 'Pink',    color: 'pink'},
-            {name: 'Blue',    color: 'info'},
-            {name: 'Yellow',  color: 'warning'}
-          ];
-
-          vm.mail = {
-            cc: false,
-            bcc: false
-          };
-          // Mailbox editr initial content
-          vm.content = '<p>Type something..</p>';
-        }
-    }
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.mailbox')
-        .controller('MailFolderController', MailFolderController);
-
-    MailFolderController.$inject = ['mails', '$stateParams'];
-    function MailFolderController(mails, $stateParams) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          
-          vm.folder = {};
-          // no filter for inbox
-          vm.folder.folder = $stateParams.folder === 'inbox' ? '' : $stateParams.folder;
-
-          mails.all().then(function(mails){
-            vm.mails = mails;
-          });
-        }
-    }
-})();
-
-// A RESTful factory for retrieving mails from json file
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.mailbox')
-        .factory('mails', mails);
-
-    mails.$inject = ['$http'];
-    function mails($http) {
-        var service = {
-            all: all,
-            get: get
-        };
-        return service;
-
-        ////////////////
-        
-        function readMails() {
-          var path = 'server/mails.json';
-          return $http.get(path).then(function (resp) {
-            return resp.data.mails;
-          });
-        }
-
-        function all() {
-          return readMails();
-        }
-
-        function get(id) {
-          return readMails().then(function(mails){
-            for (var i = 0; i < mails.length; i++) {
-              if (+mails[i].id === +id) return mails[i];
-            }
-            return null;
-          });
-        }
-    }
-})();
-
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.mailbox')
-        .controller('MailViewController', MailViewController);
-
-    MailViewController.$inject = ['mails', '$stateParams'];
-    function MailViewController(mails, $stateParams) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          mails.get($stateParams.mid).then(function(mail){
-            vm.mail = mail;
-          });
-        }
-    }
 })();
 
 (function() {
@@ -9302,6 +9164,144 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
           $rootScope.$locale = $locale;
           
           $rootScope.changeLocale = tmhDynamicLocale.set;
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-pagination.js
+ * Provides a simple demo for pagination
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox')
+        .controller('MailboxController', MailboxController);
+
+    function MailboxController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.folders = [
+            {name: 'Inbox',   folder: 'inbox',   alert: 42, icon: 'fa-inbox' },
+            {name: 'Starred', folder: 'starred', alert: 10, icon: 'fa-star' },
+            {name: 'Sent',    folder: 'sent',    alert: 0,  icon: 'fa-paper-plane-o' },
+            {name: 'Draft',   folder: 'draft',   alert: 5,  icon: 'fa-edit' },
+            {name: 'Trash',   folder: 'trash',   alert: 0,  icon: 'fa-trash'}
+          ];
+
+          vm.labels = [
+            {name: 'Red',     color: 'danger'},
+            {name: 'Pink',    color: 'pink'},
+            {name: 'Blue',    color: 'info'},
+            {name: 'Yellow',  color: 'warning'}
+          ];
+
+          vm.mail = {
+            cc: false,
+            bcc: false
+          };
+          // Mailbox editr initial content
+          vm.content = '<p>Type something..</p>';
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox')
+        .controller('MailFolderController', MailFolderController);
+
+    MailFolderController.$inject = ['mails', '$stateParams'];
+    function MailFolderController(mails, $stateParams) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          
+          vm.folder = {};
+          // no filter for inbox
+          vm.folder.folder = $stateParams.folder === 'inbox' ? '' : $stateParams.folder;
+
+          mails.all().then(function(mails){
+            vm.mails = mails;
+          });
+        }
+    }
+})();
+
+// A RESTful factory for retrieving mails from json file
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox')
+        .factory('mails', mails);
+
+    mails.$inject = ['$http'];
+    function mails($http) {
+        var service = {
+            all: all,
+            get: get
+        };
+        return service;
+
+        ////////////////
+        
+        function readMails() {
+          var path = 'server/mails.json';
+          return $http.get(path).then(function (resp) {
+            return resp.data.mails;
+          });
+        }
+
+        function all() {
+          return readMails();
+        }
+
+        function get(id) {
+          return readMails().then(function(mails){
+            for (var i = 0; i < mails.length; i++) {
+              if (+mails[i].id === +id) return mails[i];
+            }
+            return null;
+          });
+        }
+    }
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox')
+        .controller('MailViewController', MailViewController);
+
+    MailViewController.$inject = ['mails', '$stateParams'];
+    function MailViewController(mails, $stateParams) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          mails.get($stateParams.mid).then(function(mail){
+            vm.mail = mail;
+          });
         }
     }
 })();
@@ -9983,99 +9983,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
     return notify;
 }(jQuery));
 
-(function() {
-    'use strict';
-
-    angular
-        .module('app.preloader')
-        .directive('preloader', preloader);
-
-    preloader.$inject = ['$animate', '$timeout', '$q'];
-    function preloader ($animate, $timeout, $q) {
-
-        var directive = {
-            restrict: 'EAC',
-            template: 
-              '<div class="preloader-progress">' +
-                  '<div class="preloader-progress-bar" ' +
-                       'ng-style="{width: loadCounter + \'%\'}"></div>' +
-              '</div>'
-            ,
-            link: link
-        };
-        return directive;
-
-        ///////
-
-        function link(scope, el) {
-
-          scope.loadCounter = 0;
-
-          var counter  = 0,
-              timeout;
-
-          // disables scrollbar
-          angular.element('body').css('overflow', 'hidden');
-          // ensure class is present for styling
-          el.addClass('preloader');
-
-          appReady().then(endCounter);
-
-          timeout = $timeout(startCounter);
-
-          ///////
-
-          function startCounter() {
-
-            var remaining = 100 - counter;
-            counter = counter + (0.015 * Math.pow(1 - Math.sqrt(remaining), 2));
-
-            scope.loadCounter = parseInt(counter, 10);
-
-            timeout = $timeout(startCounter, 20);
-          }
-
-          function endCounter() {
-
-            $timeout.cancel(timeout);
-
-            scope.loadCounter = 100;
-
-            $timeout(function(){
-              // animate preloader hiding
-              $animate.addClass(el, 'preloader-hidden');
-              // retore scrollbar
-              angular.element('body').css('overflow', '');
-            }, 300);
-          }
-
-          function appReady() {
-            var deferred = $q.defer();
-            var viewsLoaded = 0;
-            // if this doesn't sync with the real app ready
-            // a custom event must be used instead
-            var off = scope.$on('$viewContentLoaded', function () {
-              viewsLoaded ++;
-              // we know there are at least two views to be loaded 
-              // before the app is ready (1-index.html 2-app*.html)
-              if ( viewsLoaded === 2) {
-                // with resolve this fires only once
-                $timeout(function(){
-                  deferred.resolve();
-                }, 3000);
-
-                off();
-              }
-
-            });
-
-            return deferred.promise;
-          }
-
-        } //link
-    }
-
-})();
 /**=========================================================
  * Module: access-login.js
  * Demo for login api
@@ -10637,6 +10544,99 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
 })();
  
+(function() {
+    'use strict';
+
+    angular
+        .module('app.preloader')
+        .directive('preloader', preloader);
+
+    preloader.$inject = ['$animate', '$timeout', '$q'];
+    function preloader ($animate, $timeout, $q) {
+
+        var directive = {
+            restrict: 'EAC',
+            template: 
+              '<div class="preloader-progress">' +
+                  '<div class="preloader-progress-bar" ' +
+                       'ng-style="{width: loadCounter + \'%\'}"></div>' +
+              '</div>'
+            ,
+            link: link
+        };
+        return directive;
+
+        ///////
+
+        function link(scope, el) {
+
+          scope.loadCounter = 0;
+
+          var counter  = 0,
+              timeout;
+
+          // disables scrollbar
+          angular.element('body').css('overflow', 'hidden');
+          // ensure class is present for styling
+          el.addClass('preloader');
+
+          appReady().then(endCounter);
+
+          timeout = $timeout(startCounter);
+
+          ///////
+
+          function startCounter() {
+
+            var remaining = 100 - counter;
+            counter = counter + (0.015 * Math.pow(1 - Math.sqrt(remaining), 2));
+
+            scope.loadCounter = parseInt(counter, 10);
+
+            timeout = $timeout(startCounter, 20);
+          }
+
+          function endCounter() {
+
+            $timeout.cancel(timeout);
+
+            scope.loadCounter = 100;
+
+            $timeout(function(){
+              // animate preloader hiding
+              $animate.addClass(el, 'preloader-hidden');
+              // retore scrollbar
+              angular.element('body').css('overflow', '');
+            }, 300);
+          }
+
+          function appReady() {
+            var deferred = $q.defer();
+            var viewsLoaded = 0;
+            // if this doesn't sync with the real app ready
+            // a custom event must be used instead
+            var off = scope.$on('$viewContentLoaded', function () {
+              viewsLoaded ++;
+              // we know there are at least two views to be loaded 
+              // before the app is ready (1-index.html 2-app*.html)
+              if ( viewsLoaded === 2) {
+                // with resolve this fires only once
+                $timeout(function(){
+                  deferred.resolve();
+                }, 3000);
+
+                off();
+              }
+
+            });
+
+            return deferred.promise;
+          }
+
+        } //link
+    }
+
+})();
 /**=========================================================
  * Module: helpers.js
  * Provides helper functions for routes definition
@@ -10944,17 +10944,20 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 },
                 cache: false,
                 templateUrl: helper.basepath('airtime.html'),
-                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'datatables','parsley', 'ui.select', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'ngTableExport', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'datatables', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
                 //controller: 'AirtimeDefaultController'
             })
             .state('app.airtime.create', {
                 url: '/create',
                 title: 'Generate Airtime',
                 cache: false,
-                templateUrl: helper.basepath('airtime-create.html'),
-                controller: 'AirtimeCreateController',
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('airtime-create.html'),
+                        controller: 'AirtimeCreateController'
+                    }
+                },
                 resolve: helper.resolveFor('parsley', 'ui.select', 'taginput','inputmask','localytics.directives')
-
             })
             .state('app.airtime.details', {
                 url: '/:id',
@@ -11011,49 +11014,13 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 resolve: helper.resolveFor('colorpicker.module', 'ui.select', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
             })
             .state('app.report.view', {
-                url: '/report',
+                url: '/view',
                 title: 'Report',
                 cache: false,
                 templateUrl: helper.basepath('report-view.html'),
-                controller: 'ReportController',
+                resolve: helper.resolveFor('datatables'),
+                controller: 'ReportViewController'
             })
-            .state('app.target', {
-                url: '/target',
-                title: 'Target',
-                data: {
-                    permissions: {
-                        only: ["admin", "executive.director", "administration.dept", "manage.target"],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                templateUrl: helper.basepath('target.html'),
-                controller: 'TargetController',
-                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                })
-            })
-            .state('app.vehicles', {
-                url: '/vehicles',
-                title: 'Vehicles',
-                data: {
-                    permissions: {
-                        only: ["admin", "executive.director", "administration.dept", "manage.vehicle"],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
-                cache: false,
-                templateUrl: helper.basepath('vehicle.html'),
-                controller: 'VehicleController',
-                resolve: angular.extend(helper.resolveFor('datatables'), {
-                    '_token' : ['tokenService', function(tokenService) {
-                        return tokenService.get();
-                    }]
-                })
-            })
-
             .state('app.unauthorized', {
                 url: '/unauthorized',
                 title: 'unauthorized',
@@ -11119,16 +11086,102 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 url: '/:id/edit',
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('assessment-form.html'),
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('assessment-form.html')
+                    }
+                },
                 controller: 'AssessmentController'
             })
             .state('app.assessment.view', {
                 url: '/view',
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('assessment-record.html'),
-                controller: 'AssessmentRecordController'
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('assessment-record.html'),
+                        controller: 'AssessmentRecordController'
+                    }
+                }
             })
+
+            //Admin
+            .state('app.admin', {
+                url: '/admin',
+                title: 'Admin',
+                abstract: true,
+                data: {
+                    authenticate:true,
+                    permissions: {
+                        only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false
+            })
+            .state('app.admin.airtime', {
+                url: '/airtime',
+                title: 'Airtime',
+                data: {
+                    permissions: {
+                        only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                views: {
+                  '@app': {
+                      templateUrl: helper.basepath('admin-airtime.html')
+                  }
+                },
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'datatables', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
+                //controller: 'AirtimeDefaultController'
+            })
+            .state('app.admin.target', {
+                url: '/target',
+                title: 'Target',
+                data: {
+                    permissions: {
+                        only: ["admin", "executive.director", "administration.dept", "manage.target"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                views: {
+                    "@app" : {
+                        templateUrl: helper.basepath('target.html')
+                    }
+                },
+                controller: 'TargetController',
+                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+            .state('app.admin.vehicles', {
+                url: '/vehicles',
+                title: 'Vehicles',
+                data: {
+                    permissions: {
+                        only: ["admin", "executive.director", "administration.dept", "manage.vehicle"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                views: {
+                    "@app" : {
+                        templateUrl: helper.basepath('vehicle.html')
+                    }
+                },
+                controller: 'VehicleController',
+                resolve: angular.extend(helper.resolveFor('datatables'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+
             .state('app.assessment.supervise', {
                 url: '^/supervisor/:id',
                 cache: false,
@@ -11158,6 +11211,8 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                     }
                 }
             })
+
+
             //.state('app', {
           //    url: '/app',
           //    abstract: true,
@@ -14108,9 +14163,32 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 (function () {
     angular
         .module('app.order')
-        .controller('AssessmentLogController', ['$scope', function ($scope) {
+        .controller('AssessmentLogController', ['$scope', 'assessmentService', '$state', '$stateParams',
+            function ($scope, assessmentService, $state, $stateParams) {
 
-        }]);
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+
+                assessmentService.getConfig().get({id: parseInt($stateParams.id)}).$promise.then(
+                    function(response){
+                        $scope.configs = response;
+                    },
+                    function(response) {
+                        $state.go('app.assessment.config');
+                    }
+                );
+
+                assessmentService.log().query({"id":parseInt($stateParams.id)}).$promise.then(
+                    function(response) {
+                        $scope.records = response;
+                    },
+                    function () {
+                        $state.go('app.assessment.config');
+                    }
+                );
+            }
+        ]);
 })();
 /**
  * Created by dfash on 7/9/16.
@@ -14130,6 +14208,10 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 vm.alerts = [];
                 vm.closeAlert = function(index) {
                     vm.alerts.splice(index, 1);
+                };
+
+                vm.created = function(date) {
+                    return new Date(date);
                 };
 
 
@@ -14322,6 +14404,124 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             }]);
 })();
 /**
+ * Created by dfash on 7/27/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .directive('reportChallenge', [function () {
+            return {
+                templateUrl: 'app/directives/rpt-challenge.html',
+                replace: true,
+                scope: {
+                    challengesObject: '='
+                }
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 7/27/16.
+ */
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ReportModalController', ModalController);
+
+    ModalController.$inject = ['$uibModal'];
+    function ModalController($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            vm.open = function (modalTitle, subReport) {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/template/rpt-modal-temp.html',
+                    controller: ModalInstanceCtrl,
+                    resolve: angular.extend({
+                        title: function() { return modalTitle; },
+                        subReportArr: function() { return subReport; }
+                    })
+                });
+
+                var state = $('#modal-state');
+                modalInstance.result.then(function () {
+                    state.text('Modal dismissed with OK status');
+                }, function () {
+                    state.text('Modal dismissed with Cancel status');
+                });
+            };
+
+            // Please note that $uibModalInstance represents a modal window (instance) dependency.
+            // It is not the same as the $uibModal service used above.
+
+            ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', 'subReportArr', 'title'];
+            function ModalInstanceCtrl($scope, $uibModalInstance, subReportArr, title) {
+
+                $scope.modalTitle = title;
+                $scope.reportArr = angular.copy(subReportArr);
+
+                $scope.startDate = function(date) {
+                    return new Date(date);
+                };
+
+                $scope.isTitle = function(mod) {
+                    return mod == title;
+                };
+
+                $scope.ok = function () {
+                    $uibModalInstance.close('closed');
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }
+        }
+    }
+
+})();
+
+/**
+ * Created by dfash on 7/27/16.
+ */
+(function () {
+    angular
+        .module('app.order')
+        .directive('reportRemittance', [function () {
+            return {
+                templateUrl: 'app/directives/rpt-remittance.html',
+                replace: true,
+                scope: {
+                    remittancesObject: '='
+                }
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 7/27/16.
+ */
+(function () {
+    angular
+        .module('app.order')
+        .directive('reportTask', [function () {
+            return {
+                templateUrl: 'app/directives/rpt-task.html',
+                replace: true,
+                scope: {
+                    tasksObject: '='
+                }
+            };
+        }]);
+})();
+/**
  * Created by dfash on 6/16/16.
  */
 
@@ -14408,23 +14608,17 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
  */
 
 (function () {
-    //angular
-    //    .module('app.order')
-    //    .directive('fileModel', ['$parse', function ($parse) {
-    //    return {
-    //        restrict: 'A',
-    //        link: function(scope, element, attrs) {
-    //            var model = $parse(attrs.fileModel);
-    //            var modelSetter = model.assign;
-    //
-    //            element.bind('change', function(){
-    //                scope.$apply(function(){
-    //                    modelSetter(scope, element[0].files[0]);
-    //                });
-    //            });
-    //        }
-    //    };
-    //}]);
+    angular
+        .module('app.order')
+        .directive('reportUpload', [function () {
+            return {
+                templateUrl: 'app/directives/rpt-uploads.html',
+                replace: true,
+                scope: {
+                    uploadsObject: '='
+                }
+            };
+        }]);
 })();
 /**
  * Created by dfash on 6/1/16.
@@ -14449,6 +14643,99 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
 })();
 /**
+ * Created by dfash on 7/27/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('ReportViewController', ['$scope', 'reportFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, reportFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+                var vm = $scope;
+                //collapse the menu bar
+                //$rootScope.app.layout.isCollapsed = true;
+                vm.reports = {};
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                vm.created = function(date){
+                    return new Date(date);
+                };
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    reportFactory.report().query().$promise.then(
+                        function(response){
+                            vm.reports = response;
+                        },
+                        function(response) {
+                            vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    );
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(1).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(3).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(4).notSortable()
+                        //DTColumnDefBuilder.newColumnDef(5).notSortable()
+                    ];
+
+                    vm.removeReport = removeReport;
+
+                    function removeReport($index)
+                    {
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this report?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    //vehicleFactory.driverReport().delete({'id':parseInt(vm.reports[$index].id)}).$promise.then(
+                                    //    function () {
+                                    //
+                                    //        vm.reports.splice($index, 1);
+                                    //        vm.alerts[0] = {'type':'success', 'msg':'Report removed successfully'};
+                                    //    },
+                                    //    function () {
+                                    //        if(response.status == 403) {
+                                    //            vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                                    //        }
+                                    //    }
+                                    //);
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Report is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+            }]);
+})();
+/**
  * Created by dfash on 5/27/16.
  */
 
@@ -14458,7 +14745,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         .controller('ReportController', ['$scope', 'reportFactory', 'targetFactory', 'vehicleFactory',
             function($scope, reportFactory, targetFactory, vehicleFactory) {
 
-                $scope.tab = 4;
+                $scope.tab = 1;
                 $scope.tasks = [{}];
                 $scope.challenges = [{}];
                 $scope.remittances = [{}];
@@ -14589,6 +14876,10 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 activate();
 
                 ////////////////
+
+                vm.startDate = function(date) {
+                    return new Date(date);
+                };
 
                 function activate() {
 
@@ -15014,224 +15305,102 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             }]);
 })();
 /**
- * Created by dfash on 7/8/16.
+ * Created by dfash on 5/25/16.
  */
 
-(function() {
+(function () {
     angular
         .module('app.order')
-        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+        .controller('AdminAirtimeController', ['$rootScope', '$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+            function($rootScope, $scope, $resource, baseURL, $filter, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
 
-            var vm = $scope;
-
-            vm.showRecords = false;
-            vm.assessMessage = "Loading...";
-
-            vm.alerts = [];
-            vm.closeAlert = function(index) {
-                vm.alerts.splice(index, 1);
-            };
-
-            //
-            assessmentService.getAssessment().query()
-                .$promise.then(
-                function (response) {
-                    vm.records = response;
-                    vm.showRecords = true;
-                }, function (response) {
-                    if(response.status == 403) {
-                        vm.assessMessage = "Error: " + response.status + " " + response.statusText;
-                    }
-                }
-            );
-
-
-
-            activate();
-
-            ////////////////
-
-            function activate() {
-
-                // Changing data
-                vm.dtOptions = DTOptionsBuilder.newOptions()
-                    .withDisplayLength(100)
-                    .withPaginationType('full_numbers');
-
-                vm.dtColumnDefs = [
-                    DTColumnDefBuilder.newColumnDef(0),
-                    DTColumnDefBuilder.newColumnDef(1),
-                    DTColumnDefBuilder.newColumnDef(2).notSortable()
-                ];
-
-                vm.remove = remove;
-
-                function remove($index)
-                {
-                    //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
-                    (function() {
-                        SweetAlert.swal({
-                            title: 'Are you sure you want to delete this record?',
-                            text: 'Your will not be able to recover your selected data back!',
-                            type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#DD6B55',
-                            confirmButtonText: 'Yes, delete it!',
-                            cancelButtonText: 'No, cancel pls!',
-                            closeOnConfirm: false,
-                            closeOnCancel: false
-                        }, function(isConfirm){
-                            if (isConfirm) {
-                                assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
-                                    function () {
-
-                                        vm.records.splice($index, 1);
-                                        vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
-                                    },
-                                    function (response) {
-                                        if(response.status == 403) {
-                                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                        }
-                                    }
-                                );
-                            } else {
-                                SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
-                            }
-                        });
-                    })();
-
-                }
-
-            }
-        }]);
-})();
-/**
- * Created by dfash on 6/22/16.
- */
-
-(function() {
-    angular
-        .module('app.order')
-        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
-            function($scope, toaster, assessmentService, $state, $stateParams) {
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
 
                 var vm = $scope;
-                vm.disableForm = false;
-                vm.showTimeFrame = false;
-                $scope.config = {};
 
-                $scope.form = {
-                    "id": null, "preview": 0,
-                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
-                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
-                    "part_two": { "review":[{}], "performance":{}},
-                    "part_three": {"competencies":{}},
-                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
+                vm.showData = false;
+                vm.dataMessage = 'Loading...';
+                vm.isDisabled = false;
+
+
+                activate();
+
+                vm.search = function(form) {
+
+                    vm.isDisabled = true;
+
+                    $resource(baseURL + 'admin/airtime?min=:min&max=:max').query({'min': form.min_date.$modelValue, 'max': form.max_date.$modelValue}).$promise.then(
+                        function (response) {
+                            vm.isDisabled = false;
+                            vm.schedules = response;
+                        }
+                    );
                 };
 
+                ////////////////
 
+                function activate() {
 
-                assessmentService.getActiveConfig().get().$promise.then(
-                    function (response) {
-                        vm.showTimeFrame = true;
-                        $scope.config = response;
+                    ////class
+                    vm.propClass = function(val) {
+                        return val == 1 ? 'label-success' : 'label-info';
+                    };
 
-                        if($state.is('app.assessment.create'))
-                            $scope.form.assessment_config_id = response.id;
+                    vm.dateChanged = function(){
 
-                        checkRouting(response);
-                    },
-                    function() {
-                        vm.disableForm = true;
-                    }
-                );
-
-
-                //routes to edit if user has a data already submitted
-                function checkRouting(response) {
-                    if($state.is('app.assessment.create')) {
-                        if (angular.isDefined(response.assessment)) {
-                            $state.go('app.assessment.edit', {"id": response.assessment.id});
+                        console.log('clicked');
+                        if(vm.max_date <= vm.min_date){
+                            vm.max_date = null;
                         }
-                    }
+                    };
+
+                    // Changing data
+
+                    $resource(baseURL + 'admin/airtime').query().$promise.then(
+                        function (response) {
+                            vm.schedules = response;
+                        }
+                    );
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2),
+                        DTColumnDefBuilder.newColumnDef(3),
+                        DTColumnDefBuilder.newColumnDef(4),
+                        DTColumnDefBuilder.newColumnDef(5),
+                        DTColumnDefBuilder.newColumnDef(6),
+                        DTColumnDefBuilder.newColumnDef(7).notSortable()
+                    ];
+
                 }
 
-                //routing from create or from url
-                if($state.is('app.assessment.edit')) {
-                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
-                        function (response) {
-                            $scope.form = response;
+            }]);
+})();
 
-                            checkDataResp();
-                        },
-                        function() {
-                            $state.go('app.assessment.create', {"id":$scope.form.id});
-                        }
-                    );
-                }
+(function(){
 
-                vm.submitPreview = function() {
-                    $scope.form.preview = 0;
+    'use strict';
 
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
+    angular
+        .module('app.order')
+        .controller('MinDateCtrl', ['$scope', function($scope) {
 
-                    assessmentService.assessment().save($scope.form,
-                        function (response) {
+            var vm = this;
 
-                            $scope.form = response;
-                            toaster.pop('success', 'Assessment', 'Data saved.');
-
-                            checkDataResp();
-
-                            $state.go('app.assessment.edit', {"id":$scope.form.id});
-                        },
-                        function (response) {
-                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
-                        }
-                    );
-                };
-
-                //submit form
-                vm.submitAssessment = function() {
-
-                    $scope.form.preview = 1;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    assessmentService.assessment().save($scope.form,
-                        function () {
-                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
-                            $state.go('app.assessment.view');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
-                            }
-                        }
-                    );
-                };
-
-                var checkDataResp = function() {
-                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
-                        if($scope.form.part_two.review[0].length == 0)
-                            $scope.form.part_two.review = [{}];
-                    }
-
-                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
-                        $scope.form.part_two.performance = {};
-                    }
-
-                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
-                        $scope.form.part_three.competencies = {};
-                    }
-                };
-
-                //START-DATE functions
-                vm.today = function() {
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
                     vm.dt = new Date();
                 };
+
                 vm.today();
 
                 vm.clear = function () {
@@ -15239,21 +15408,22 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 };
 
                 // Disable weekend selection
-                vm.disabled = function(date, mode) {
+                vm.disabled = function (date, mode) {
+
                     return false;
-                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
                 };
 
-                vm.toggleMin = function() {
-                    vm.minDate = vm.minDate ? null : new Date();
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
                 };
                 vm.toggleMin();
 
-                vm.open = function($event, dateObj) {
+                vm.open = function ($event) {
                     $event.preventDefault();
                     $event.stopPropagation();
 
-                    dateObj.opened = true;
+                    vm.opened = true;
                 };
 
                 vm.dateOptions = {
@@ -15262,169 +15432,66 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 };
 
                 vm.initDate = new Date('2019-10-20');
-                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-                vm.dateFormat = vm.dateFormats[0];
-                //END: Date functions
-            }]);
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
 })();
-/**
- * Created by dfash on 7/7/16.
- */
 
 (function(){
+
     'use strict';
 
     angular
         .module('app.order')
-        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
+        .controller('MaxDateCtrl', ['$scope', function($scope) {
 
-            this.assessment = function() {
-                return $resource(baseURL + 'assessment', null,
-                    {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
-                    }
-                )
-            };
+            var vm = this;
 
-            this.getAssessment = function() {
-                return $resource(baseURL + 'assessment/:id', null,
-                    {
-                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                    }
-                );
-            };
-
-            this.supervisor = function() {
-                return $resource(baseURL + 'supervisor', null,
-                    {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
-                    }
-                )
-            };
-
-            this.getConfig = function() {
-                return $resource(baseURL + 'assessconfig/:id', null,
-                    {
-                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                    }
-                );
-            };
-
-            this.getActiveConfig = function() {
-                return $resource(baseURL + 'activeconfig');
-            };
-
-
-        }]);
-})();
-/**
- * Created by dfash on 7/6/16.
- */
-
-(function () {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .service('assessmentServices', ['$scope', function($scope) {
-
-
-        }]);
-})();
-/**
- * Created by dfash on 7/8/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
-            function($scope, toaster, assessmentService, $state, $stateParams) {
-
-                var vm = this;
-
-                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
-
-
-                //manages for routing
-                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
-                    function (response) {
-                        if(response.supervisor != null)
-                            $scope.supervisor = response.supervisor;
-                        else {
-                            $scope.supervisor.assessment_id = response.id;
-                            checkDataResp();
-                        }
-                    },
-                    function() {
-                        $state.go('app.assessment.view');
-                    }
-                );
-
-
-                $scope.submitPreview = function() {
-                    $scope.supervisor.preview = 0;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    //set the function
-                    assessmentService.supervisor().save($scope.supervisor,
-                        function (response) {
-
-                            $scope.supervisor = response;
-                            toaster.pop('success', 'Supervisor', 'Data saved.');
-
-                            checkDataResp();
-
-                        },
-                        function (response) {
-                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
-                        }
-                    );
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
                 };
 
-                //submit form
-                $scope.submitComment = function() {
+                vm.today();
 
-                    $scope.supervisor.preview = 1;
-
-                    toaster.pop('wait', 'Supervisor', 'Processing your request');
-
-                    assessmentService.supervisor().save($scope.supervisor,
-                        function () {
-                            toaster.pop('success', 'Supervisor', 'Data submitted.');
-                            $state.go('app.assessment.view');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
-                            }
-                        }
-                    );
+                vm.clear = function () {
+                    vm.dt = null;
                 };
 
-                var checkDataResp = function() {
-                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
-                        $scope.supervisor.attributes = {};
-                    }
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
 
-                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
-                        $scope.supervisor.habbit = {};
-                    }
-
-                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
-                        $scope.supervisor.leadership = {};
-                    }
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
                 };
 
-            }]);
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                        vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
 })();
+
 /**
  * Created by dfash on 4/29/16.
  */
@@ -15601,14 +15668,14 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
                 toaster.pop('wait', 'Order', 'Processing your request');
 
-                //vm.orderButton = true;
+                vm.orderButton = true;
                 airtimeFactory.order().save(airtime,
                     function (response) {
 
                         toaster.pop('success', 'Order', 'Order has been received.');
-                        //$timeout(function () {
-                        //    $state.go('app.airtime');
-                        //}, 500);
+                        $timeout(function () {
+                            $state.go('app.airtime');
+                        }, 500);
                     },
                     function (response) {
                         vm.orderButton = false;
@@ -16270,8 +16337,11 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 (function () {
     angular
         .module('app.order')
-        .controller('AirtimeDefaultController', ['$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-            function($scope, $resource, baseURL, $filter, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+        .controller('AirtimeDefaultController', ['$rootScope', '$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+            function($rootScope, $scope, $resource, baseURL, $filter, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
 
                 var vm = $scope;
 
@@ -16282,11 +16352,11 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
                 activate();
 
-                vm.search = function() {
+                vm.search = function(form) {
 
                     vm.isDisabled = true;
 
-                    $resource(baseURL + 'airtime?min=:min&max=:max').query({'min': vm.min_date, 'max': vm.max_date}).$promise.then(
+                    $resource(baseURL + 'airtime?min=:min&max=:max').query({'min': form.min_date.$modelValue, 'max': form.max_date.$modelValue}).$promise.then(
                         function (response) {
                             vm.isDisabled = false;
                             vm.schedules = response;
@@ -16303,55 +16373,13 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                         return val == 1 ? 'label-success' : 'label-info';
                     };
 
-                    /////date
-                    vm.today = function() {
-                        vm.dt = new Date();
-                    };
-                    vm.today();
-
-                    vm.clear = function () {
-                        vm.dt = null;
-                    };
-
-                    // Disable weekend selection
-                    vm.disabled = function(date, mode) {
-                        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-                    };
-
-                    vm.toggleMin = function() {
-                        vm.minDate = vm.minDate ? null : new Date();
-                    };
-                    vm.toggleMin();
-
                     vm.dateChanged = function(){
-                      if(vm.max_date <= vm.min_date){
-                          vm.max_date = null;
-                      }
+
+                        console.log('clicked');
+                        if(vm.max_date <= vm.min_date){
+                            vm.max_date = null;
+                        }
                     };
-
-                    vm.min_open = function($event) {
-                        $event.preventDefault();
-                        $event.stopPropagation();
-
-                        vm.min_opened = true;
-                    };
-
-                    vm.max_open = function($event) {
-                        $event.preventDefault();
-                        $event.stopPropagation();
-
-                        vm.max_opened = true;
-                    };
-
-                    vm.dateOptions = {
-                        formatYear: 'yy',
-                        startingDay: 1
-                    };
-
-                    vm.initDate = new Date('2019-10-20');
-                    vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-                    vm.format = vm.formats[0];
-
 
                     // Changing data
 
@@ -16367,7 +16395,13 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                         .withPaginationType('full_numbers');
 
                     vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
                         DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2),
+                        DTColumnDefBuilder.newColumnDef(3),
+                        DTColumnDefBuilder.newColumnDef(4),
+                        DTColumnDefBuilder.newColumnDef(5),
+                        DTColumnDefBuilder.newColumnDef(6),
                         DTColumnDefBuilder.newColumnDef(7).notSortable()
                     ];
 
@@ -16375,6 +16409,115 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
             }]);
 })();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('MinDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('MaxDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                        vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
 /**
  * Created by dfash on 6/11/16.
  */
@@ -16382,8 +16525,11 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 (function () {
     angular
         .module('app.order')
-        .controller('AirtimeDetailController', ['$scope', '$stateParams', 'airtimeFactory', '$state',
-            function($scope, $stateParams, airtimeFactory, $state) {
+        .controller('AirtimeDetailController', ['$scope', '$stateParams', 'airtimeFactory', '$state', '$rootScope',
+            function($scope, $stateParams, airtimeFactory, $state, $rootScope) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
 
                 var vm = $scope;
 
@@ -16547,8 +16693,11 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 (function () {
     angular
         .module('app.order')
-        .controller('AirtimeController', ['$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-            function($scope, $resource, baseURL, $filter, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+        .controller('AirtimeController', ['$scope', '$resource', 'baseURL', '$filter', '$rootScope', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+            function($scope, $resource, baseURL, $filter, $rootScope, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
 
                 var vm = $scope;
 
@@ -16616,6 +16765,410 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             };
 
         }]);
+})();
+/**
+ * Created by dfash on 7/8/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.showRecords = false;
+                vm.assessMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+                //
+                assessmentService.getAssessment().query()
+                    .$promise.then(
+                    function (response) {
+                        vm.records = response;
+                        vm.showRecords = true;
+                    }, function (response) {
+                        if(response.status == 403) {
+                            vm.assessMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    }
+                );
+
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable()
+                    ];
+
+                    vm.remove = remove;
+
+                    function remove($index)
+                    {
+                        //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this record?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
+                                        function () {
+
+                                            vm.records.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
+                                        },
+                                        function (response) {
+                                            if(response.status == 403) {
+                                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                            }
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/22/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = $scope;
+                vm.disableForm = false;
+                vm.showTimeFrame = false;
+                $scope.config = {};
+
+                $scope.form = {
+                    "id": null, "preview": 0,
+                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
+                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
+                    "part_two": { "review":[{}], "performance":{}},
+                    "part_three": {"competencies":{}},
+                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
+                };
+
+
+
+                assessmentService.getActiveConfig().get().$promise.then(
+                    function (response) {
+                        vm.showTimeFrame = true;
+                        $scope.config = response;
+
+                        if($state.is('app.assessment.create'))
+                            $scope.form.assessment_config_id = response.id;
+
+                        checkRouting(response);
+                    },
+                    function() {
+                        vm.disableForm = true;
+                    }
+                );
+
+
+                //routes to edit if user has a data already submitted
+                function checkRouting(response) {
+                    if($state.is('app.assessment.create')) {
+                        if (angular.isDefined(response.assessment)) {
+                            $state.go('app.assessment.edit', {"id": response.assessment.id});
+                        }
+                    }
+                }
+
+                //routing from create or from url
+                if($state.is('app.assessment.edit')) {
+                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                        function (response) {
+                            $scope.form = response;
+
+                            checkDataResp();
+                        },
+                        function() {
+                            $state.go('app.assessment.create', {"id":$scope.form.id});
+                        }
+                    );
+                }
+
+                vm.submitPreview = function() {
+                    $scope.form.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function (response) {
+
+                            $scope.form = response;
+                            toaster.pop('success', 'Assessment', 'Data saved.');
+
+                            checkDataResp();
+
+                            $state.go('app.assessment.edit', {"id":$scope.form.id});
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                vm.submitAssessment = function() {
+
+                    $scope.form.preview = 1;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function () {
+                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
+                        if($scope.form.part_two.review[0].length == 0)
+                            $scope.form.part_two.review = [{}];
+                    }
+
+                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
+                        $scope.form.part_two.performance = {};
+                    }
+
+                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
+                        $scope.form.part_three.competencies = {};
+                    }
+                };
+
+                //START-DATE functions
+                vm.today = function() {
+                    vm.dt = new Date();
+                };
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function(date, mode) {
+                    return false;
+                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
+                };
+
+                vm.toggleMin = function() {
+                    vm.minDate = vm.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function($event, dateObj) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    dateObj.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.dateFormat = vm.dateFormats[0];
+                //END: Date functions
+            }]);
+})();
+/**
+ * Created by dfash on 7/7/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.assessment = function() {
+                return $resource(baseURL + 'assessment', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getAssessment = function() {
+                return $resource(baseURL + 'assessment/:id', null,
+                    {
+                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.supervisor = function() {
+                return $resource(baseURL + 'supervisor', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getConfig = function() {
+                return $resource(baseURL + 'assessconfig/:id', null,
+                    {
+                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.getActiveConfig = function() {
+                return $resource(baseURL + 'activeconfig');
+            };
+
+            this.log = function() {
+                return $resource(baseURL + "assessment/records/:id");
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 7/8/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = this;
+
+                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
+
+
+                //manages for routing
+                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                    function (response) {
+                        if(response.supervisor != null)
+                            $scope.supervisor = response.supervisor;
+                        else {
+                            $scope.supervisor.assessment_id = response.id;
+                            checkDataResp();
+                        }
+                    },
+                    function() {
+                        $state.go('app.assessment.view');
+                    }
+                );
+
+
+                $scope.submitPreview = function() {
+                    $scope.supervisor.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    //set the function
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function (response) {
+
+                            $scope.supervisor = response;
+                            toaster.pop('success', 'Supervisor', 'Data saved.');
+
+                            checkDataResp();
+
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                $scope.submitComment = function() {
+
+                    $scope.supervisor.preview = 1;
+
+                    toaster.pop('wait', 'Supervisor', 'Processing your request');
+
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function () {
+                            toaster.pop('success', 'Supervisor', 'Data submitted.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
+                        $scope.supervisor.attributes = {};
+                    }
+
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
+                        $scope.supervisor.habbit = {};
+                    }
+
+                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
+                        $scope.supervisor.leadership = {};
+                    }
+                };
+
+            }]);
 })();
 /**
  * Created by dfash on 6/19/16.
@@ -17478,6 +18031,79 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 })();
 
 /**
+ * Created by dfash on 6/13/16.
+ */
+
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('RecoverPasswordController', ['$scope', 'userFactory', '$state', '$stateParams',
+            function($scope, userFactory, $state, $stateParams) {
+
+                var vm = $scope;
+
+                vm.recover = {email:''};
+
+                vm.disableView = false;
+
+                if($state.is('page.change')) {
+                    vm.recover.email = $stateParams.e;
+                    vm.recover.token = $stateParams.m;
+                }
+
+                vm.submitRecoverForm = function() {
+                    vm.showSuccess = false;
+                    vm.showError = false;
+                    vm.disableView = true;
+                    //posts data to the server vm.register
+                    userFactory.recover().confirm(vm.recover).$promise.then(
+                        function() {
+                            vm.disableView = false;
+                            vm.showSuccess = true;
+                            vm.showError = false;
+                            vm.authMsg = "Reset link has been sent to your email.";
+                            vm.recover = {email:''};
+                            vm.registerForm.$setPristine();
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.showSuccess = false;
+                                vm.showError = true;
+                                vm.disableView = false;
+                                vm.authMsg = response.data;
+                            }
+                        }
+                    )
+                };
+
+                vm.submitChangePwd = function() {
+                    vm.showSuccess = false;
+                    vm.showError = false;
+                    vm.disableView = true;
+                    userFactory.recover().change(vm.recover).$promise.then(
+                        function() {
+                            vm.disableView = false;
+                            vm.showSuccess = true;
+                            vm.showError = false;
+                            vm.authMsg = "Password successfully changed.";
+                            vm.recover = {};
+                            vm.changePwdForm.$setPristine();
+                        },
+                        function(response) {
+                            if(response.status == 403) {
+                                vm.showSuccess = false;
+                                vm.showError = true;
+                                vm.disableView = false;
+                                vm.authMsg = response.data;
+                            }
+                        }
+                    );
+                }
+            }]);
+})();
+/**
  * Created by dfash on 5/3/16.
  */
 
@@ -17559,77 +18185,4 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             //    loginFactory.logout();
             //};
         }]);
-})();
-/**
- * Created by dfash on 6/13/16.
- */
-
-(function () {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('RecoverPasswordController', ['$scope', 'userFactory', '$state', '$stateParams',
-            function($scope, userFactory, $state, $stateParams) {
-
-                var vm = $scope;
-
-                vm.recover = {email:''};
-
-                vm.disableView = false;
-
-                if($state.is('page.change')) {
-                    vm.recover.email = $stateParams.e;
-                    vm.recover.token = $stateParams.m;
-                }
-
-                vm.submitRecoverForm = function() {
-                    vm.showSuccess = false;
-                    vm.showError = false;
-                    vm.disableView = true;
-                    //posts data to the server vm.register
-                    userFactory.recover().confirm(vm.recover).$promise.then(
-                        function() {
-                            vm.disableView = false;
-                            vm.showSuccess = true;
-                            vm.showError = false;
-                            vm.authMsg = "Reset link has been sent to your email.";
-                            vm.recover = {email:''};
-                            vm.registerForm.$setPristine();
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.showSuccess = false;
-                                vm.showError = true;
-                                vm.disableView = false;
-                                vm.authMsg = response.data;
-                            }
-                        }
-                    )
-                };
-
-                vm.submitChangePwd = function() {
-                    vm.showSuccess = false;
-                    vm.showError = false;
-                    vm.disableView = true;
-                    userFactory.recover().change(vm.recover).$promise.then(
-                        function() {
-                            vm.disableView = false;
-                            vm.showSuccess = true;
-                            vm.showError = false;
-                            vm.authMsg = "Password successfully changed.";
-                            vm.recover = {};
-                            vm.changePwdForm.$setPristine();
-                        },
-                        function(response) {
-                            if(response.status == 403) {
-                                vm.showSuccess = false;
-                                vm.showError = true;
-                                vm.disableView = false;
-                                vm.authMsg = response.data;
-                            }
-                        }
-                    );
-                }
-            }]);
 })();

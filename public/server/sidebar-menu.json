@@ -39,22 +39,10 @@
     "sref": "#",
     "icon": "fa fa-reorder",
     "submenu": [
-      { "text": "View and Search", "sref": "app.airtime", "translate": "sidebar.nav.airtime.VIEW"},
-      { "text": "Generate", "sref": "app.airtime.create", "translate": "sidebar.nav.airtime.CREATE"}
+      { "text": "Generate", "sref": "app.airtime.create", "translate": "sidebar.nav.airtime.CREATE"},
+      { "text": "View and Search", "sref": "app.airtime", "translate": "sidebar.nav.airtime.VIEW"}
     ],
     "translate": "sidebar.nav.airtime.MENU"
-  },
-
-  {
-    "text": "People",
-    "permissions": ["executive.director", "administration.dept", "admin"],
-    "sref": "#",
-    "icon": "icon-people",
-    "submenu": [
-      { "text": "View", "permissions": ["register.staff"], "sref": "app.people", "translate": "sidebar.nav.people.VIEW"},
-      { "text": "View", "permissions": ["register.staff"], "sref": "app.people.adduser", "translate": "sidebar.nav.people.REGISTER"}
-    ],
-    "translate": "sidebar.nav.people.MENU"
   },
 
   {
@@ -64,11 +52,7 @@
     "icon": "fa fa-reorder",
     "submenu": [
       { "text": "Create", "sref": "app.assessment.create", "translate": "sidebar.nav.assessment.CREATE"},
-      { "text": "View", "sref": "app.assessment.view", "translate": "sidebar.nav.assessment.VIEW"},
-      { "text": "Records", "submenu": [
-          {"text": "Settings", "sref": "app.assessment.config", "translate": "sidebar.nav.assessment.SETTINGS"}
-        ],
-        "translate": "sidebar.nav.assessment.RECORDS"}
+      { "text": "View", "sref": "app.assessment.view", "translate": "sidebar.nav.assessment.VIEW"}
     ],
     "translate": "sidebar.nav.assessment.MENU"
   },
@@ -90,20 +74,6 @@
     "translate": "report.nav.report.MENU"
   },
   {
-    "text": "Target",
-    "permissions" : ["admin", "executive.director", "administration.dept", "manage.target"],
-    "sref": "app.target",
-    "icon": "icon-target",
-    "translate": "report.nav.target.MENU"
-  },
-  {
-    "text": "Vehicles",
-    "permission" : ["admin", "executive.director", "administration.dept", "manage.vehicle"],
-    "sref": "app.vehicles",
-    "icon": "fa fa-truck",
-    "translate": "report.nav.vehicle.MENU"
-  },
-  {
     "text": "Driver's Report",
     "sref": "#",
     "permissions" : "driver",
@@ -113,5 +83,54 @@
       { "text": "View Driver's report", "icon": "icon-layers", "sref": "app.driver.viewReport", "translate": "report.nav.driver.nav.VIEW"}
     ],
     "translate": "report.nav.driver.MENU"
+  },
+
+  {
+    "text": "Admin Section",
+    "heading": "true",
+    "translate": "sidebar.heading.ADMIN"
+  },
+
+  {
+    "text": "Airtime Orders",
+    "permissions" : ["admin", "executive.director", "administration.dept", "manage.target"],
+    "icon": "icon-target",
+     "sref": "app.admin.airtime",
+    "translate": "admin.ORDER"
+  },
+
+  {
+    "text": "Assessment",
+    "icon": "fa fa-reorder",
+    "submenu": [
+      {"text": "Settings", "sref": "app.assessment.config", "translate": "sidebar.nav.assessment.SETTINGS"}
+    ],
+    "translate": "sidebar.nav.assessment.RECORDS"
+  },
+
+  {
+    "text": "Target",
+    "permissions" : ["admin", "executive.director", "administration.dept", "manage.target"],
+    "sref": "app.admin.target",
+    "icon": "icon-target",
+    "translate": "report.nav.target.MENU"
+  },
+  {
+    "text": "Vehicles",
+    "permission" : ["admin", "executive.director", "administration.dept", "manage.vehicle"],
+    "sref": "app.admin.vehicles",
+    "icon": "fa fa-truck",
+    "translate": "report.nav.vehicle.MENU"
+  },
+  {
+    "text": "People",
+    "permissions": ["executive.director", "administration.dept", "admin"],
+    "sref": "#",
+    "icon": "icon-people",
+    "submenu": [
+      { "text": "View", "permissions": ["register.staff"], "sref": "app.people", "translate": "sidebar.nav.people.VIEW"},
+      { "text": "View", "permissions": ["register.staff"], "sref": "app.people.adduser", "translate": "sidebar.nav.people.REGISTER"}
+    ],
+    "translate": "sidebar.nav.people.MENU"
   }
 ]

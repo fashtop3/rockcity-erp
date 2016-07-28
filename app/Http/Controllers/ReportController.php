@@ -35,17 +35,19 @@ class ReportController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $reports = Report::where('user_id', Auth::user()->id)->latest()->get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        foreach($reports as $report){
+            $report->challenges->toArray();
+            $report->tasks->toArray();
+            $report->remittances->toArray();
+            foreach($report->remittances as $remittance) {
+                $remittance->target->toArray();
+            }
+            $report->uploads->toArray();
+        }
+
+        return response($reports);
     }
 
     /**
@@ -83,7 +85,7 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

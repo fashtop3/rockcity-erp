@@ -5,8 +5,11 @@
 (function () {
     angular
         .module('app.order')
-        .controller('AirtimeController', ['$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-            function($scope, $resource, baseURL, $filter, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+        .controller('AirtimeController', ['$scope', '$resource', 'baseURL', '$filter', '$rootScope', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+            function($scope, $resource, baseURL, $filter, $rootScope, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
 
                 var vm = $scope;
 

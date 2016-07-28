@@ -1,25 +1,43 @@
-<!--<div ng-include="'app/template/profile.tpl.html'"></div>-->
-
-<form role="form" class="form-horizontal" name="reportForm" ng-submit="submitReport(reportForm)" novalidate>
+<div class="row">
+    <!--<div class="col-xs-12 col-sm-12">-->
     <div class="panel panel-default">
         <div class="panel-body">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" ng-class="{active:isSelected(1)}"><a ng-click="select(1)" aria-controls="Tasks">Tasks</a></li>
-                <li role="presentation" ng-class="{active:isSelected(2)}"><a ng-click="select(2)" aria-controls="Challenge">Challenge</a></li>
-                <li role="presentation" ng-class="{active:isSelected(3)}"><a ng-click="select(3)" aria-controls="Remittance">Remittance</a></li>
-                <li role="presentation" ng-class="{active:isSelected(4)}"><a ng-click="select(4)" aria-controls="Uploads">Uploads</a></li>
-            </ul>
-
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(1)}" ng-if="isSelected(1)" ng-include="'app/views/report-task.tpl.html'"></div>
-                <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(2)}" ng-if="isSelected(2)" ng-include="'app/views/report-challenge.tpl.html'"></div>
-                <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(3)}" ng-if="isSelected(3)" ng-include="'app/views/report-remittance.tpl.html'"></div>
-                <div role="tabpanel" class="tab-pane fade in" ng-class="{'active':isSelected(4)}" ng-if="isSelected(4)" ng-include="'app/views/report-upload.tpl.html'"></div>
+            <div>
+                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
             </div>
 
-        </div>
-        <div class="panel-footer">
-            <button type="submit" ng-disabled="reportForm.$invalid" class="btn btn-block btn-primary btn-lg">Submit</button>
+            <div class="table-responsive">
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+                    <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Challenge</th>
+                        <th>Remittance</th>
+                        <th>uploads</th>
+                        <th>Created</th>
+                        <!--<th></th>-->
+                    </tr>
+                    </thead>
+                    <tbody ng-controller="ReportModalController as modal">
+                    <tr ng-repeat="report in reports">
+                        <td><a ng-click="modal.open('Tasks', report.tasks)">[{{report.tasks.length}}]Read...</a></td>
+                        <td><a ng-click="modal.open('Challenges', report.challenges)">[{{report.challenges.length}}]Read...</a></td>
+                        <td><a ng-click="modal.open('Remittances', report.remittances)">[{{report.remittances.length}}]Read...</a></td>
+                        <td><a ng-click="modal.open('Uploads', report.uploads)">[{{report.uploads.length}}]Download....</a></td>
+                        <td>{{ created(report.created_at) |  date:'MMM d, y h:mm a'}}</td>
+                        <!--<td>-->
+                            <!--<a ui-sref="app.driver.editReport({'id':report.id})" class="btn btn-sm btn-warning">-->
+                                <!--<em class="fa fa-edit"></em>-->
+                            <!--</a>-->
+                            <!--<button type="button" ng-click="removeReport($index)" class="btn btn-sm btn-danger">-->
+                                <!--<em class="fa fa-trash-o"></em>-->
+                            <!--</button>-->
+                        <!--</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</form>
+    <!--</div>-->
+</div>

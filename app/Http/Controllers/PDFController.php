@@ -39,29 +39,46 @@ class PDFController extends Controller
     {
         $schedule = Schedule::find($id);
 
-        if(!$schedule)
-            dd('not found');
-
+        if(!$schedule) {
+            return response('Airtime not found', 403);
+        }
 
         $schedule->user->toArray();
         $schedule->client->toArray();
-        $schedule->subscriptions->toArray();
+        $schedule->schProducts->toArray();
 
-        foreach($schedule->subscriptions as $subscription) {
-            $subscription->product->toArray();
-            $det = $subscription->details->toArray();
+        foreach($schedule->schProducts as $product) {
+            $product->product->toArray();
+            $product->schProductSubs->toArray();
+            foreach($product->schProductSubs as $schProductSub) {
+                if(!empty($schProductSub->slotDetails()->get())) {
+                    $schProductSub->slotDetails->toArray();
+                }
+                $product['totals'] += $schProductSub->subscription['amount'];
+            }
 
-            foreach($det as $d)
-                $subscription['totalAmount'] += $d['amount'];
-
-            $subscription['detailsCount'] += count($det);
+            $schedule['totals'] += $product['totals'];
         }
 
-        $totalAmount = 0;
 
-        return view('pdf.airtime', compact('schedule', 'totalAmount'));
+//        foreach($schedule->subscriptions as $subscription) {
+//            $subscription->product->toArray();
+//            $det = $subscription->details->toArray();
+//
+//            foreach($det as $d)
+//                $subscription['totalAmount'] += $d['amount'];
+//
+//            $subscription['detailsCount'] += count($det);
+//        }
+//
+//        $totalAmount = 0;
 
-        $pdf = PDF::loadView('pdf.airtime', compact('schedule', 'totalAmount'));
+//        return view('pdf.airtime', compact('schedule', 'totalAmount'));
+//        $pdf = PDF::loadView('pdf.airtime', compact('schedule', 'totalAmount'));
+
+        return view('pdf.airtime', compact('schedule'));
+
+        $pdf = PDF::loadView('pdf.airtime', compact('schedule'));
         return $pdf->stream('airtime_order.pdf');
     }
 }

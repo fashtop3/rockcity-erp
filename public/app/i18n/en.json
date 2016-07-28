@@ -10,7 +10,8 @@
   "sidebar": {
     "WELCOME": "Welcome",
     "heading": {
-      "HEADER": "Main Navigation"
+      "HEADER": "Main Navigation",
+      "ADMIN": "Admin Section"
     },
     "nav": {
       "DASHBOARD": "Dashboard",
@@ -26,7 +27,7 @@
 
       "airtime": {
         "MENU": "Airtime",
-        "VIEW": "View and Search",
+        "VIEW": "View Orders",
         "CREATE": "Generate Airtime"
       },
 
@@ -41,8 +42,8 @@
         "VIEW": "View Data",
         "CREATE": "New form",
         "SUPERVISOR": "Supervisor",
-        "SETTINGS": "Settings",
-        "RECORDS": "Records",
+        "SETTINGS": "Records",
+        "RECORDS": "Assessment",
         "LOG": "History"
       }
 
@@ -56,7 +57,7 @@
     },
     "nav": {
       "report": {
-        "MENU": "Report",
+        "MENU": "Staff's Report",
         "CREATE": "Add new",
         "VIEW": "View"
       },
@@ -77,5 +78,9 @@
         }
       }
     }
+  },
+
+  "admin" : {
+    "ORDER": "Airtime Orders"
   }
 }

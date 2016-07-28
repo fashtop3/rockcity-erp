@@ -145,6 +145,32 @@ class AssessmentController extends Controller
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function records($id)
+    {
+        $assessments = Assessment::where('assessment_config_id', $id)->get();
+
+        if($assessments) {
+            foreach($assessments as $assessment) {
+                $assessment->user->toArray();
+                $assessment->partOne->toArray();
+                $assessment->partTwo->toArray();
+                $assessment->partThree->toArray();
+                $assessment->supervisor()->get();
+
+                if($assessment->supervisor)
+                    $assessment->supervisor->toArray();
+            }
+
+            return response($assessments);
+        }
+
+        return response('Assessment data not found!', 403);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

@@ -1,7 +1,7 @@
 @extends('pdf')
 
 @section('content')
-    <h3 class="text-center">AIRTIME ORDER FORM</h3>
+    <h3 class="text-center">AIRTIME ORDER</h3>
     <hr>
 
     <table class="table table-bordered">
@@ -13,70 +13,108 @@
     <table class="table table-bordered">
         <tr>
             <td><p>Client Name: <span class="text-muted">{{$schedule->client->name}}</span></p></td>
-            <td><p><em class="fa fa-home fa-lg"></em> <span class="text-muted">{{$schedule->client->address}}</span></p></td>
+            <td><p><em class="fa fa-home fa-lg"></em> <span class="text-muted">{{$schedule->client->street_name.' '.$schedule->client->street_no.', '.$schedule->client->town}}</span></p></td>
             <td><p><em class="fa fa-phone fa-lg"></em> <span class="text-muted">{{$schedule->client->mobile}}</span></p></td>
         </tr>
     </table>
-    @foreach($schedule->subscriptions as $subscription)
+    @foreach($schedule->schProducts as $product)
     <table class="table table-bordered">
         <tr class="bg-info">
-            <td><p>Product: <span class="text-danger"><strong>{{$subscription->product->name}}</strong></span></p></td>
-            <td><p>Slots: <span class="text-muted"><strong>{{$subscription->detailsCount}}</strong></span></p></td>
+            <td colspan="2"><p>Product: <span class="text-danger"><strong>{{$product->product->name}}</strong></span></p></td>
+            {{--<td><p>Slots: <span class="text-muted"><strong>{{$product->detailsCount}}</strong></span></p></td>--}}
         </tr>
         <tr>
-            <td width="75%">
-                <h4>Details</h4>
-                <div>
-                    <table class="table">
-                        <tr class="bg-info">
-                            <th></th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Duration</th>
-                            <th>Amount</th>
-                            <th>Subcharge</th>
-                        </tr>
-                        <tbody>
-                        @foreach($subscription->details as $detail)
-                            <tr>
-                                @if($detail->broadcast)
-                                    <td>
-                                        <span class="label label-danger">Not Fixed</span>
+            <td width="75%" colspan="2">
+                @foreach($product->schProductSubs as $productSub)
+                    @if(isset($productSub['subscription']['broadcast']))
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td width="85%" class="table">
+                                        <div class="">
+                                            <span class="label label-info pull-right">{{$productSub['subscription']['period']}}</span>
+                                            <h5 class="media-box-heading">BULK</h5>
+                                            <small class="text-muted text-inverse">
+                                                <b>Start :</b> ({{$productSub['subscription']['bulk_start_date']}})
+                                                <b>End :</b> ({{$productSub['subscription']['bulk_end_date']}}) <br />
+                                                <b>Broadcast: </b> {{$productSub['subscription']['broadcast']}}
+                                            </small>
+                                        </div>
                                     </td>
-                                    <td>
-                                        {{$detail->bulk_start_date}}
+                                    <td width="15%">
+                                        <div class="ph">
+                                            <!--<p class="m0">Price</p>-->
+                                            <small class="m0 text-info">
+                                                ₦{{ number_format($productSub['subscription']['amount'], 2) }}</small>
+                                        </div>
                                     </td>
-                                    <td>
-                                        {{$detail->bulk_end_date}}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+
+                    @if(isset($productSub['subscription']['slots']))
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td width="85%">
+                                        <div class="ph">
+                                            <span class="label label-info pull-right">{{$productSub['subscription']['period']}}</span>
+                                            <h5 class="media-box-heading">SLOT</h5>
+                                            <small class="text-muted text-inverse">
+                                                <b>Slot date :</b> {{$productSub['subscription']['slot_start_date']}}
+                                                <b> -- </b> {{$productSub['subscription']['slot_end_date']}}
+                                            </small><br />
+                                            <small class="text-muted text-inverse">
+                                                <b>Slot :</b> {{$productSub['subscription']['slots']}}
+                                            </small>
+                                        </div><br />
+                                        @if(count($productSub->slotDetails) > 0)
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Slot</th>
+                                                    <th>Fixed</th>
+                                                    <th>Time</th>
+                                                </tr>
+                                                @foreach($productSub->slotDetails as $slotDetail)
+                                                <tr>
+                                                    <td>{{$slotDetail->schedule[0]['date']}}</td>
+                                                    <td>{{$slotDetail->schedule[0]['slot']}}</td>
+                                                    <td>{{$slotDetail->schedule[0]['tofix']}}</td>
+                                                    <td>
+                                                        <span class="text text-primary">
+                                                            @foreach($slotDetail->schedule[0]['times'] as $time)
+                                                            <small>{{$time}}, </small>
+                                                            @endforeach
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </table>
+                                        </div>
+                                        @endif
                                     </td>
-                                @else
-                                    <td>
-                                        <span class="label label-success">Fixed</span>
+                                    <td width="15%" valign="bottom">
+                                        <div class="ph">
+                                            {{--<!--<p class="m0">Price</p>-->--}}
+                                            <small class="m0 text-info">
+                                                ₦{{number_format($productSub['subscription']['amount'], 2)}}</small>
+                                        </div>
                                     </td>
-                                    <td>
-                                        {{$detail->trans_date}}
-                                    </td>
-                                    <td>
-                                        ----
-                                    </td>
-                                @endif
-                                    <td>
-                                        {{$detail->duration ? $detail->duration : '----'}}
-                                    </td>
-                                    <td>
-                                        {{number_format($detail->amount, 2)}}
-                                    </td>
-                                    <td>
-                                        {{number_format($detail->subChargePrice, 2)}}
-                                    </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                @endforeach
             </td>
-            <td><p>Total: <strong>NGN {{ number_format($subscription->totalAmount, 2)}}</strong></p></td>
         </tr>
+        <tr><td width="80%"></td><td valign="bottom" width="20%"><p>Total: <strong>NGN {{ number_format($product->totals, 2)}}</strong></p></td></tr>
     </table>
     @endforeach
 

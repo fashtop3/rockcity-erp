@@ -33,35 +33,4 @@ class ScheduleHasBeenPlaced extends ScheduleEvent
     {
         return [];
     }
-
-//    protected function setBackgroundColour()
-//    {
-//        $alert = $this->schedule->scheduleAlert;
-//        $this->schedule->bg_colour = 'lightgrey';
-//
-//        //disables cron jobs
-//        if($alert->mail >= 4) {
-//            if($alert->validate && $alert->validate_signed) {
-//                $this->schedule->bg_colour = 'gold';
-//            }
-//
-//            if ($alert->recommend && $alert->recommend_signed) {
-//                $this->schedule->bg_colour = 'Orange';
-//            }
-//
-//            if($alert->approved && $alert->approved_signed) {
-//                $this->schedule->bg_colour = 'lightgreen';
-//            }
-//
-//            if (!$alert->approved && $alert->approved_signed) {
-//                $this->schedule->bg_colour = 'red';
-//            }
-//
-//            if($alert->programme && $alert->programme_signed) {
-//                $this->schedule->bg_colour = 'paleturquoise';
-//            }
-//
-//        }
-//
-//    }
 }

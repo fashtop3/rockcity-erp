@@ -41,12 +41,14 @@ class AirtimeController extends Controller
 
         if($request->get('min') && $request->get('max')) {
 
-            $schedules = Schedule::latest()
+            $schedules = Schedule::where('user_id', Auth::user()->id)
+                ->latest()
                 ->search(Carbon::parse($request->get('min'))->toDateTimeString(), Carbon::parse($request->get('max'))->toDateTimeString())
                 ->currentUser()->get();
         }
         else {
-            $schedules = Schedule::latest()
+            $schedules = Schedule::where('user_id', Auth::user()->id)
+                ->latest()
                 ->currentUser()->get();
         }
 
@@ -57,29 +59,10 @@ class AirtimeController extends Controller
 
         foreach($schedules as $schedule)
         {
-        //    $schedule['orderNo'] = Schedule::orderNo($schedule->created_at->format('n'), $schedule->id);
             $schedule->user->toArray();
             $schedule->client->toArray();
-//            $schedule->subscriptions->toArray();
             $schedule->scheduleAlert->toArray();
-
-//            foreach($schedule->subscriptions as $subscription) {
-//                $subscription->product->toArray();
-//                $det = $subscription->details->toArray();
-//                $schedule->detailsCount += count($det);
-//            }
         }
-
-
-//        $schedules = DB::table('schedules')
-//            ->join('schedule_alerts', 'schedules.id', '=', 'schedule_alerts.schedule_id')
-//            ->join('users', 'schedules.user_id', '=', 'users.id')
-////            ->whereNull('schedule_alerts.approved_signed')
-//            ->select('schedule_alerts.*', 'schedules.*', DB::raw("DATE_FORMAT(schedules.created_at, '%b %d, %Y %h:%i %p') As created"),
-//                'users.lastname', 'users.firstname')
-//            ->get();
-
-//        ->paginate(2);
 
         return response($schedules);
     }
@@ -154,9 +137,8 @@ class AirtimeController extends Controller
             $schedule['order_no'] = Schedule::orderNo(Carbon::now()->format('n'), $schedule->id);
             $schedule->save();
 
-            //Todo: update the schedule mail
             //mail out the invoice
-//            Event::fire(new ScheduleHasBeenPlaced($schedule));
+            Event::fire(new ScheduleHasBeenPlaced($schedule));
 
 
             DB::commit();
@@ -191,6 +173,7 @@ class AirtimeController extends Controller
                 if(!empty($schProductSub->slotDetails()->get())) {
                     $schProductSub->slotDetails->toArray();
                 }
+                $product['totals'] += $schProductSub->subscription['amount'];
             }
         }
 
@@ -437,19 +420,19 @@ class AirtimeController extends Controller
         $schedule = Schedule::find($alert->schedule_id);
         $schedule->scheduleAlert->toArray();
         $schedule->client->toArray();
-        $schedule->subscriptions->toArray();
-
-        foreach ($schedule->subscriptions as $subscription) {
-            $subscription->product->toArray();
-            $det = $subscription->details->toArray();
-
-            foreach ($det as $d) {
-                $subscription->totalAmount += $d['amount'];
-                $subscription->totalSubChargePrice += $d['subChargePrice'];
-            }
-
-            $schedule->broadcasts += count($det);
-        }
+//        $schedule->subscriptions->toArray();
+//
+//        foreach ($schedule->subscriptions as $subscription) {
+//            $subscription->product->toArray();
+//            $det = $subscription->details->toArray();
+//
+//            foreach ($det as $d) {
+//                $subscription->totalAmount += $d['amount'];
+//                $subscription->totalSubChargePrice += $d['subChargePrice'];
+//            }
+//
+//            $schedule->broadcasts += count($det);
+//        }
 
         //check listeners to understand hot it works
         Event::fire(new ScheduleHasBeenPlaced($schedule));

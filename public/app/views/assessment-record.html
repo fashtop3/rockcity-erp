@@ -21,8 +21,8 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="record in records">
-                        <td><a ui-sref="app.assessment.edit({id: record.id})">{{ record.created_at }}</a></td>
-                        <td><a ui-sref="app.assessment.edit({id: record.id})">{{record.updated_at}}</a></td>
+                        <td><a ui-sref="app.assessment.edit({id: record.id})">{{ datetostamp(record.created_at) | date:'MMM d, y h:mm a' }}</a></td>
+                        <td><a ui-sref="app.assessment.edit({id: record.id})">{{datetostamp(record.updated_at) | date:'MMM d, y h:mm a'}}</a></td>
                         <td align="center">
                             <button ng-disabled="record.preview" ui-sref="app.assessment.edit({id: record.id})" class="btn btn-sm btn-warning">
                                 <em class="fa fa-edit"></em>

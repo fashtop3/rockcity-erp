@@ -23,6 +23,10 @@ class Assessment extends Model
         return $this->hasOne('App\AssessmentPartThree');
     }
 
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
     public function supervisor()
     {
         return $this->hasOne('App\AssessmentSupervisor');

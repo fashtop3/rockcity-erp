@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Event;
 //
 ////    return \Carbon\Carbon::now()->addMinute(20);
 //
-//    $notApproved = ScheduleAlert::whereNull('approved_signed')->get();
+////    $notApproved = ScheduleAlert::whereNull('approved_signed')->get();
 //
 //
 ////    $notApproved->each(function($item, $key) {
@@ -32,22 +32,22 @@ use Illuminate\Support\Facades\Event;
 ////        if(Carbon\Carbon::now() > $item->resend_at) {
 ////
 ////        $schedule = Schedule::find($item->schedule_id);
-//        $schedule = Schedule::find(35);
+//        $schedule = Schedule::find(4);
 //        $schedule->scheduleAlert->toArray();
 //        $schedule->client->toArray();
-//        $schedule->subscriptions->toArray();
+////        $schedule->subscriptions->toArray();
 //
-//        foreach ($schedule->subscriptions as $subscription) {
-//            $subscription->product->toArray();
-//            $det = $subscription->details->toArray();
-//
-//            foreach($det as $d) {
-//                $subscription->totalAmount += $d['amount'];
-//                $subscription->totalSubChargePrice += $d['subChargePrice'];
-//            }
-//
-//            $schedule->broadcasts += count($det);
-//        }
+////        foreach ($schedule->subscriptions as $subscription) {
+////            $subscription->product->toArray();
+////            $det = $subscription->details->toArray();
+////
+////            foreach($det as $d) {
+////                $subscription->totalAmount += $d['amount'];
+////                $subscription->totalSubChargePrice += $d['subChargePrice'];
+////            }
+////
+////            $schedule->broadcasts += count($det);
+////        }
 //
 //    $schedule->bg_colour = 'lightgrey';
 //
@@ -201,8 +201,11 @@ Route::group(['middleware' => ['web'] ], function () {
     //assessments
     Route::get('/api/activeconfig', 'AssessmentConfigController@getActive');
     Route::resource('/api/assessconfig', 'AssessmentConfigController');
+    Route::get('/api/assessment/records/{id}', 'AssessmentController@records');
     Route::resource('/api/assessment', 'AssessmentController');
     Route::resource('/api/supervisor', 'SupervisorController');
+
+    Route::get('/api/admin/airtime', 'AdminController@getOrders');
 
 });
 
