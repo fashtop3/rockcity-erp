@@ -1,8 +1,7 @@
 <div class="media" ng-repeat="task in tasksObject track by $index">
-    <div class="media-left">
-        <div class="media-object"><strong>{{$index+1}}.</strong></div>
-    </div>
-    <div class="media-body">
-        <div ng-bind-html="task.htmlText"></div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div ng-bind-html="task.htmlText"></div>
+        </div>
     </div>
 </div>

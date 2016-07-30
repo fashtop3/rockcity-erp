@@ -19,6 +19,11 @@ use App\ScheduleAlert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 
+//Route::get('/example', [
+//    'as' => 'example',
+//    'uses' => 'VehicleController@index',
+//]);
+
 
 //Route::get('reserve', function() {
 //
@@ -206,6 +211,8 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::resource('/api/supervisor', 'SupervisorController');
 
     Route::get('/api/admin/airtime', 'AdminController@getOrders');
+    Route::get('/api/admin/driver-reps', 'DriverController@getReports');
+    Route::get('/api/admin/staff-reps', 'ReportController@getReports');
 
 });
 

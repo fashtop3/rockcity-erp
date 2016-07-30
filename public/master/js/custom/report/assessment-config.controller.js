@@ -104,16 +104,19 @@
                                     assessmentService.getConfig().delete({'id':parseInt(vm.configs[$index].id)}).$promise.then(
                                         function () {
                                             vm.configs.splice($index, 1);
-                                            vm.alerts[0] = {'type':'success', 'msg':'Schedule removed successfully'};
+                                            //vm.alerts[0] = {'type':'success', 'msg':'Schedule removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Schedule removed successfully', 'success');
                                         },
                                         function () {
+                                            vm.configMessage = 'Server error.';
                                             if(response.status == 403) {
                                                 vm.configMessage = "Error: " + response.status + " " + response.statusText;
                                             }
+                                            SweetAlert.swal('Cancelled', vm.configMessage, 'error');
                                         }
                                     );
                                 } else {
-                                    SweetAlert.swal('Cancelled', 'Settings is safe :)', 'error');
+                                    SweetAlert.swal('Cancelled', 'Schedule is safe :)', 'error');
                                 }
                             });
                         })();

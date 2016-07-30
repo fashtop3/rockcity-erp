@@ -1,0 +1,49 @@
+<h3>
+    Drivers Report
+</h3>
+
+<div class="row">
+    <!--<div class="col-xs-12 col-sm-12">-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div>
+                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+            </div>
+
+            <div class="table-responsive">
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover">
+                    <thead>
+                    <tr>
+                        <th>Full name</th>
+                        <th>Vehicle</th>
+                        <th>Created</th>
+                        <th>Inspection</th>
+                        <th>Destination</th>
+                        <th>Notes</th>
+                        <!--<th></th>-->
+                    </tr>
+                    </thead>
+                    <tbody ng-controller="DriverReportModalController as modal">
+                    <tr ng-repeat="report in reports">
+                        <td>{{report.user.lastname | uppercase}}, {{report.user.firstname}}</td>
+                        <td><a ng-click="modal.open(report)">{{ report.vehicle.name }}</a></td>
+                        <td>{{ created(report.created_at) |  date:'MMM d, y h:mm a'}}</td>
+                        <td><a ng-click="modal.open(report)">{{ report.info.time_inspect | date:'h:mm a' }}</a></td>
+                        <td><a ng-click="modal.open(report)">{{ report.info.destination }}</a></td>
+                        <td><a ng-click="modal.open(report)">Read more...</a></td>
+                        <!--<td>-->
+                            <!--<a ui-sref="app.driver.editReport({'id':report.id})" class="btn btn-sm btn-warning">-->
+                                <!--<em class="fa fa-edit"></em>-->
+                            <!--</a>-->
+                            <!--<button type="button" ng-click="removeReport($index)" class="btn btn-sm btn-danger">-->
+                                <!--<em class="fa fa-trash-o"></em>-->
+                            <!--</button>-->
+                        <!--</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+</div>

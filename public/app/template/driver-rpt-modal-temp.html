@@ -1,0 +1,42 @@
+<div class="modal-header"><button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button><h4 id="myModalLabel" class="modal-title">{{report.user.lastname | uppercase}}, {{report.user.firstname}}</h4></div>
+<div class="modal-body">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{report.vehicle.name}}
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped">
+                <tr><th class="text-right" style="width: 45%">Reg. No.:</th><td>{{report.vehicle.reg}}</td></tr>
+                <tr><th class="text-right">Engine No.:</th><td>{{report.vehicle.eng}}</td></tr>
+                <tr><th class="text-right">Colour.:</th><td>{{report.vehicle.colour}}</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{report.name}}
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped">
+                <tr><th class="text-right" style="width: 45%">Time of inspection:</th><td>{{stringtodate(report.info.time_inspect) | date:'h:mm a'}}</td></tr>
+                <tr><th class="text-right">Water level.:</th><td>{{report.info.water_level}}</td></tr>
+                <tr><th class="text-right">Oil level:</th><td>{{report.info.oil_level}}</td></tr>
+                <tr><th class="text-right">Fuel level:</th><td>{{report.info.fuel_level}}</td></tr>
+                <tr><th class="text-right">Break condition:</th><td>{{report.info.break_condition}}</td></tr>
+                <tr><th class="text-right">Absorber condition:</th><td>{{report.info.absorber_condition}}</td></tr>
+                <tr><th class="text-right">Time washed:</th><td>{{stringtodate(report.info.time_washed) | date:'h:mm a'}}</td></tr>
+                <tr><th class="text-right">Passenger:</th><td>{{report.info.passenger}}</td></tr>
+                <tr><th class="text-right">Destination:</th><td>{{report.info.destination}}</td></tr>
+                <tr><th class="text-right">Mileage before leaving office:</th><td>{{report.info.millageBefore}}</td></tr>
+                <tr><th class="text-right">Mileage on return to office:</th><td>{{report.info.millageAfter}}</td></tr>
+                <tr><th class="text-right">Time the vehicle left office:</th><td>{{stringtodate(report.info.timeBefore) | date:'h:mm a'}}</td></tr>
+                <tr><th class="text-right">Time the vehicle returned to office:</th><td>{{stringtodate(report.info.timeAfter) | date:'h:mm a'}}</td></tr>
+                <tr><th class="text-right">Fuel Gauge before leaving:</th><td>{{report.info.fuelBefore}}</td></tr>
+                <tr><th class="text-right">Fuel Gauge on return:</th><td>{{report.info.fuelAfter}}</td></tr>
+                <tr><th class="text-right">Further Notes:</th><td ng-bind-html="report.info.html_text"></td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer"><button ng-click="ok()" class="btn btn-primary">OK</button><button ng-click="cancel()" class="btn btn-warning">Cancel</button></div>

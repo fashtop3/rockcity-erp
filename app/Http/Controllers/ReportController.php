@@ -26,6 +26,8 @@ class ReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth.basic');
+        $this->middleware('role:staff', ['only' => ['upload', 'store']]);
+        $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['getReports']]);
     }
 
     /**
@@ -38,6 +40,24 @@ class ReportController extends Controller
         $reports = Report::where('user_id', Auth::user()->id)->latest()->get();
 
         foreach($reports as $report){
+            $report->challenges->toArray();
+            $report->tasks->toArray();
+            $report->remittances->toArray();
+            foreach($report->remittances as $remittance) {
+                $remittance->target->toArray();
+            }
+            $report->uploads->toArray();
+        }
+
+        return response($reports);
+    }
+
+    public function getReports()
+    {
+        $reports = Report::latest()->get();
+
+        foreach($reports as $report){
+            $report->user->toArray();
             $report->challenges->toArray();
             $report->tasks->toArray();
             $report->remittances->toArray();
@@ -75,51 +95,6 @@ class ReportController extends Controller
         }
 
         return response('Error submitting report', 403);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function upload(Request $request)

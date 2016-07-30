@@ -97,11 +97,12 @@
                                         $scope.alerts[0] = {'type':'success', 'msg':'User has been deleted successfully'};
                                         SweetAlert.swal('Deleted!', 'User has been deleted.', 'success');
                                     }, function(response){
+                                        vm.clientMessage = 'Server error.';
                                         if(response.status == 403) {
                                             $scope.alerts[0] = {'type':'danger', 'msg':response.data};
-                                            SweetAlert.swal('Cancelled', response.data, 'error');
+                                            vm.clientMessage = response.data;
                                         }
-                                    }
+                                        SweetAlert.swal('Cancelled', vm.clientMessage, 'error');                                    }
                                 );
                             } else {
                                 SweetAlert.swal('Cancelled', 'User data is safe :)', 'error');

@@ -73,7 +73,6 @@
                                 closeOnCancel: false
                             }, function(isConfirm){
                                 if (isConfirm) {
-                                    //Todo: confirm first
                                     targetFactory.getTargets().delete({'id':parseInt(vm.targets[$index].id)}).$promise.then(
                                         function () {
                                             vm.targets.splice($index, 1);

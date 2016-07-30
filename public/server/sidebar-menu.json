@@ -47,8 +47,7 @@
 
   {
     "text": "Assessment",
-    "permissions": ["staff", "admin"],
-    "sref": "#",
+    "permissions": ["staff"],
     "icon": "fa fa-reorder",
     "submenu": [
       { "text": "Create", "sref": "app.assessment.create", "translate": "sidebar.nav.assessment.CREATE"},
@@ -59,12 +58,13 @@
 
   {
     "text": "Report Heading",
+    "permissions" : ["staff", "driver"],
     "heading": "true",
     "translate": "report.heading.HEADER"
   },
   {
     "text": "Report",
-    "permissions" : ["staff", "generate.report"],
+    "permissions" : ["staff"],
     "sref": "#",
     "submenu": [
       {"text": "Create", "sref": "app.report", "translate": "report.nav.report.CREATE"},
@@ -76,7 +76,7 @@
   {
     "text": "Driver's Report",
     "sref": "#",
-    "permissions" : "driver",
+    "permissions" : ["driver"],
     "icon": "fa fa-file-image-o",
     "submenu": [
       { "text": "Add new report", "icon": "fa fa-plus", "sref": "app.driver.addReport", "translate": "report.nav.driver.nav.NEW"},
@@ -86,14 +86,15 @@
   },
 
   {
-    "text": "Admin Section",
+    "text": "Admin Navigation",
+    "permissions" : ["admin", "executive.director", "administration.dept", "supervisor"],
     "heading": "true",
     "translate": "sidebar.heading.ADMIN"
   },
 
   {
     "text": "Airtime Orders",
-    "permissions" : ["admin", "executive.director", "administration.dept", "manage.target"],
+    "permissions" : ["admin", "executive.director", "administration.dept"],
     "icon": "icon-target",
      "sref": "app.admin.airtime",
     "translate": "admin.ORDER"
@@ -102,10 +103,21 @@
   {
     "text": "Assessment",
     "icon": "fa fa-reorder",
+    "permissions" : ["admin", "executive.director", "administration.dept", "supervisor"],
     "submenu": [
-      {"text": "Settings", "sref": "app.assessment.config", "translate": "sidebar.nav.assessment.SETTINGS"}
+      {"text": "Settings", "sref": "app.admin.assessment-config", "translate": "sidebar.nav.assessment.SETTINGS"}
     ],
     "translate": "sidebar.nav.assessment.RECORDS"
+  },
+
+  {
+    "text": "Reports",
+    "icon": "fa fa-file-text",
+    "permissions" : ["admin", "executive.director", "administration.dept", "supervisor"],
+    "submenu": [
+      {"text": "Staffs", "sref": "app.admin.staff-report", "translate": "Staff's report"},
+      {"text": "Drivers", "sref": "app.admin.driver-report", "translate": "Driver's report"}
+    ]
   },
 
   {
@@ -117,7 +129,7 @@
   },
   {
     "text": "Vehicles",
-    "permission" : ["admin", "executive.director", "administration.dept", "manage.vehicle"],
+    "permissions" : ["admin", "executive.director", "administration.dept", "manage.vehicle"],
     "sref": "app.admin.vehicles",
     "icon": "fa fa-truck",
     "translate": "report.nav.vehicle.MENU"

@@ -30,7 +30,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth.basic', ['except' => ['checkAuth', 'isAuth', 'store', 'contacts', 'recover', 'changePassword'] ]);
-//        $this->middleware('auth', ['except' => ['checkAuth', 'isAuth', 'store', 'contacts'] ]);
+
+        $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['destroy']]);
 
 //        Auth::guard($this->getGuard())->login($user);
 //        $user->forceFill([
@@ -39,10 +40,24 @@ class UserController extends Controller
 //        ])->save();
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
+    public function index()
+    {
+
+        $people = User::orderBy('id', 'desc')->get();
+
+        if($people) {
+            foreach($people as &$user) {
+
+                $user->roles->toArray();
+                $user->permissions->toArray();
+            }
+
+            return response($people);
+        }
+
+        return response('No user found!', 403);
+    }
+
     public function checkAuth(AuthRequest $request)
     {
         $credentials = [
@@ -65,9 +80,7 @@ class UserController extends Controller
         return response(Auth::user());
     }
 
-    /**
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
+
     public function isAuth()
     {
         if(Auth::check()){
@@ -77,33 +90,10 @@ class UserController extends Controller
         return response('Unauthorized', 403);
     }
 
-    /**
-     *
-     */
+
     public function logoutUser()
     {
         Auth::logout();
-    }
-
-    /**
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function index()
-    {
-
-        $people = User::orderBy('id', 'desc')->get();
-
-        if($people) {
-            foreach($people as &$user) {
-
-                $user->roles->toArray();
-                $user->permissions->toArray();
-            }
-
-            return response($people);
-        }
-
-        return response('No user found!', 403);
     }
 
     public function getMarketers()

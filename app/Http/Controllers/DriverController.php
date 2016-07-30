@@ -33,14 +33,15 @@ class DriverController extends Controller
         return response($reports);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getReports()
     {
-        //
+        $reports = DriverReport::latest()->get();
+        foreach($reports as $report) {
+            $report->vehicle->toArray();
+            $report->user->toArray();
+        }
+
+        return response($reports);
     }
 
     /**
@@ -152,7 +153,7 @@ class DriverController extends Controller
         }
 
         //if account is not created by the current user
-        if($report->user_id != $this->user->id) {
+        if($report->user_id != Auth::user()->id) {
 
             //if the current user is not an admin or ....
             if(!$this->user->is('admin|executive.director|head.marketing')) {

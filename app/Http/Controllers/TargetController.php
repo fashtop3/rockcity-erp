@@ -15,6 +15,9 @@ class TargetController extends Controller
     public function __construct()
     {
         $this->middleware('auth.basic');
+
+        $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['update', 'store', 'destroy']]);
+
     }
 
     /**
@@ -31,16 +34,6 @@ class TargetController extends Controller
         }
 
         return response('Not target found', 403);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -88,27 +81,6 @@ class TargetController extends Controller
         return response('No targets set for you', 403);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

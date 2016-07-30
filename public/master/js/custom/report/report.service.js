@@ -20,6 +20,10 @@
                 return $resource(baseURL + 'report', null, {
                     'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
                 });
+            };
+
+            this.getReports = function() {
+                return $resource(baseURL + 'admin/staff-reps');
             }
 
         }]);

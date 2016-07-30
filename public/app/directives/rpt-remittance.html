@@ -3,16 +3,26 @@
         <div class="media-object"><strong>{{$index+1}}.</strong></div>
     </div>
     <div class="media-body">
-        <table class="table table-bordered" >
-            <tr><th class="text-right" style="width: 30%">Target: </th><td>{{remittance.target.name}}</td></tr>
-            <tr><th class="text-right" style="width: 30%">Start date: </th><td>{{ startDate(remittance.target.start_date) |date:'MMM d, y h:mm a'}}</td></tr>
-            <tr><th class="text-right" style="width: 30%">Duration: </th><td>{{remittance.target.duration}}</td></tr>
-            <tr><th class="text-right" style="width: 30%">Amount: </th><td>{{remittance.target.amount}}</td></tr>
-        </table>
+        <div class="panel panel-default">
+            <div class="panel-heading">Target</div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <tr><th class="text-right" style="width: 30%">Target: </th><td>{{remittance.target.name}}</td></tr>
+                    <tr><th class="text-right" style="width: 30%">Start date: </th><td>{{ startDate(remittance.target.start_date) |date:'MMM d, y h:mm a'}}</td></tr>
+                    <tr><th class="text-right" style="width: 30%">Duration: </th><td>{{remittance.target.duration}}</td></tr>
+                    <tr><th class="text-right" style="width: 30%">Amount: </th><td>{{remittance.target.amount}}</td></tr>
+                </table>
+            </div>
+        </div>
 
-        <table class="table table-bordered" >
-            <tr><th class="text-right" style="width: 30%">Client name: </th><td>{{remittance.client}}</td></tr>
-            <tr><th class="text-right" style="width: 30%">Amount: </th><td>{{remittance.amount}}</td></tr>
-        </table>
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <tr><th class="text-right" style="width: 30%">Client name: </th><td>{{remittance.client}}</td></tr>
+                    <tr><th class="text-right" style="width: 30%">Amount: </th><td>{{remittance.amount}}</td></tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

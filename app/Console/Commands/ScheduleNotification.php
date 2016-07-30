@@ -60,19 +60,19 @@ class ScheduleNotification extends Command
                 $schedule = Schedule::find($item->schedule_id);
                 $schedule->scheduleAlert->toArray();
                 $schedule->client->toArray();
-                $schedule->subscriptions->toArray();
-
-                foreach ($schedule->subscriptions as $subscription) {
-                    $subscription->product->toArray();
-                    $det = $subscription->details->toArray();
-
-                    foreach($det as $d) {
-                        $subscription->totalAmount += $d['amount'];
-                        $subscription->totalSubChargePrice += $d['subChargePrice'];
-                    }
-
-                    $schedule->broadcasts += count($det);
-                }
+//                $schedule->subscriptions->toArray();
+//
+//                foreach ($schedule->subscriptions as $subscription) {
+//                    $subscription->product->toArray();
+//                    $det = $subscription->details->toArray();
+//
+//                    foreach($det as $d) {
+//                        $subscription->totalAmount += $d['amount'];
+//                        $subscription->totalSubChargePrice += $d['subChargePrice'];
+//                    }
+//
+//                    $schedule->broadcasts += count($det);
+//                }
 
                 Event::fire(new ScheduleHasBeenPlaced($schedule));
             }

@@ -17,6 +17,9 @@ class VehicleController extends Controller
     {
 
         $this->middleware('auth.basic');
+        $this->middleware('role:admin|executive.director|administration.dept',
+            ['only' => ['store', 'update', 'destroy']]);
+//        $this->middleware('permission:edit.articles', ['only' => ['index']]);
     }
 
     /**
@@ -35,15 +38,6 @@ class VehicleController extends Controller
         return response($vehicle);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -89,28 +83,6 @@ class VehicleController extends Controller
         {
             return response('Vehicle added successfully');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

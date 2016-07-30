@@ -21,6 +21,10 @@
                     'update':{method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
                     'delete':{method:'DELETE'}
                 });
+            };
+
+            this.getReports = function() {
+                return $resource(baseURL + 'admin/driver-reps');
             }
 
         }]);

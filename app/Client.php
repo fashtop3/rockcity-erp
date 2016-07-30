@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
+    use SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -19,6 +21,8 @@ class Client extends Model
         'mobile',
         'email'
     ];
+
+    protected $dates = ['deleted_at'];
 
 
     public static function mailExits($email)

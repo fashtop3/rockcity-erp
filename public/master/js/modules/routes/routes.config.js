@@ -345,7 +345,7 @@
                 cache: false,
                 data: {
                     permissions: {
-                        only: ["staff", "admin"],
+                        only: ["staff"],
                         redirectTo: 'app.unauthorized'
                     }
                 },
@@ -390,21 +390,16 @@
                 data: {
                     authenticate:true,
                     permissions: {
-                        only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
+                        only: ["supervisor", "traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin"],
                         redirectTo: 'app.unauthorized'
                     }
                 },
-                cache: false
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables'))
             })
             .state('app.admin.airtime', {
                 url: '/airtime',
                 title: 'Airtime',
-                data: {
-                    permissions: {
-                        only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
                 cache: false,
                 views: {
                   '@app': {
@@ -417,19 +412,13 @@
             .state('app.admin.target', {
                 url: '/target',
                 title: 'Target',
-                data: {
-                    permissions: {
-                        only: ["admin", "executive.director", "administration.dept", "manage.target"],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
                 cache: false,
                 views: {
                     "@app" : {
-                        templateUrl: helper.basepath('target.html')
+                        templateUrl: helper.basepath('target.html'),
+                        controller: 'TargetController'
                     }
                 },
-                controller: 'TargetController',
                 resolve: angular.extend(helper.resolveFor('datatables', 'ui.select'), {
                     '_token' : ['tokenService', function(tokenService) {
                         return tokenService.get();
@@ -439,19 +428,13 @@
             .state('app.admin.vehicles', {
                 url: '/vehicles',
                 title: 'Vehicles',
-                data: {
-                    permissions: {
-                        only: ["admin", "executive.director", "administration.dept", "manage.vehicle"],
-                        redirectTo: 'app.unauthorized'
-                    }
-                },
                 cache: false,
                 views: {
                     "@app" : {
-                        templateUrl: helper.basepath('vehicle.html')
+                        templateUrl: helper.basepath('vehicle.html'),
+                        controller: 'VehicleController'
                     }
                 },
-                controller: 'VehicleController',
                 resolve: angular.extend(helper.resolveFor('datatables'), {
                     '_token' : ['tokenService', function(tokenService) {
                         return tokenService.get();
@@ -459,14 +442,24 @@
                 })
             })
 
-            .state('app.assessment.supervise', {
+            .state('app.admin.assessment-supervise', {
                 url: '^/supervisor/:id',
                 cache: false,
+                data: {
+                    permissions: {
+                        only: ["supervisor"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                views: {
+                    '@app': {
+                        templateUrl: helper.basepath('assessment-supervisor.html'),
+                        controller: 'SupervisorController'
+                    }
+                },
                 resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('assessment-supervisor.html'),
-                controller: 'SupervisorController'
             })
-            .state('app.assessment.log', {
+            .state('app.admin.assessment-log', {
                 url: '/record/:id',
                 cache: false,
                 views: {
@@ -477,14 +470,37 @@
                     }
                 }
             })
-            .state('app.assessment.config', {
+            .state('app.admin.assessment-config', {
                 url: '/settings',
                 cache: false,
                 views: {
                     '@app': {
                         resolve: angular.extend(helper.resolveFor('datatables')),
                         templateUrl: helper.basepath('assessment-config.html'),
-                        controller: 'AssessmentConfigController'
+                        //controller: 'AssessmentConfigController',
+                        //ControllerAs: 'AssessConfig'
+                    }
+                }
+            })
+            .state('app.admin.staff-report', {
+                url: '/staff/report/:id',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('admin-report-view.html'),
+                        controller: 'ReportViewController'
+                    }
+                }
+            })
+            .state('app.admin.driver-report', {
+                url: '/driver/report/:id',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('admin-driver-viewreport.html'),
+                        controller: 'DriverReportViewCtrl'
                     }
                 }
             })

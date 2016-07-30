@@ -88,14 +88,16 @@
                                 if (isConfirm) {
                                     clientFactory.client().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
                                         function () {
-
                                             vm.clients.splice($index, 1);
                                             vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Client has been deleted.', 'success');
                                         },
                                         function () {
+                                            vm.clientMessage = 'Server error.';
                                             if(response.status == 403) {
                                                 vm.clientMessage = "Error: " + response.status + " " + response.statusText;
                                             }
+                                            SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
                                         }
                                     );
                                 } else {

@@ -5,8 +5,8 @@
 (function () {
     angular
         .module('app.order')
-        .controller('DriverReportViewCtrl', ['$scope', '$rootScope', 'vehicleFactory', 'SweetAlert', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-            function($scope, $rootScope, vehicleFactory, SweetAlert, DTOptionsBuilder, DTColumnDefBuilder) {
+        .controller('DriverReportViewCtrl', ['$scope', '$rootScope', 'vehicleFactory', 'SweetAlert', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$state',
+            function($scope, $rootScope, vehicleFactory, SweetAlert, DTOptionsBuilder, DTColumnDefBuilder, $state) {
 
                 var vm = $scope;
                 //collapse the menu bar
@@ -29,29 +29,52 @@
 
                 function activate() {
 
-                    // Changing data
-
-                    vehicleFactory.driverReport().query().$promise.then(
-                        function(response){
-                            vm.reports = response;
-                        },
-                        function(response) {
-                            vm.reportMessage = "Error: " + response.status + " " + response.statusText;
-                        }
-                    );
-
                     vm.dtOptions = DTOptionsBuilder.newOptions()
                         .withDisplayLength(100)
                         .withPaginationType('full_numbers');
 
-                    vm.dtColumnDefs = [
-                        DTColumnDefBuilder.newColumnDef(0),
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(2),
-                        DTColumnDefBuilder.newColumnDef(3),
-                        DTColumnDefBuilder.newColumnDef(4).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(5).notSortable()
-                    ];
+                    // Changing data
+                    //if its admin route page
+                    if($state.is('app.admin.driver-report'))
+                    {
+                        vm.dtColumnDefs = [
+                            DTColumnDefBuilder.newColumnDef(0),
+                            DTColumnDefBuilder.newColumnDef(1),
+                            DTColumnDefBuilder.newColumnDef(2),
+                            DTColumnDefBuilder.newColumnDef(3),
+                            DTColumnDefBuilder.newColumnDef(4).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(5).notSortable()
+                        ];
+
+                        vehicleFactory.getReports().query().$promise.then(
+                            function(response){
+                                vm.reports = response;
+                            },
+                            function(response) {
+                                vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+                    else
+                    {
+                        vm.dtColumnDefs = [
+                            DTColumnDefBuilder.newColumnDef(0),
+                            DTColumnDefBuilder.newColumnDef(1),
+                            DTColumnDefBuilder.newColumnDef(2),
+                            DTColumnDefBuilder.newColumnDef(3),
+                            DTColumnDefBuilder.newColumnDef(4).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(5).notSortable()
+                        ];
+
+                        vehicleFactory.driverReport().query().$promise.then(
+                            function(response){
+                                vm.reports = response;
+                            },
+                            function(response) {
+                                vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
 
                     vm.removeReport = removeReport;
 
@@ -72,14 +95,16 @@
                                 if (isConfirm) {
                                     vehicleFactory.driverReport().delete({'id':parseInt(vm.reports[$index].id)}).$promise.then(
                                         function () {
-
                                             vm.reports.splice($index, 1);
                                             vm.alerts[0] = {'type':'success', 'msg':'Report removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Report has been deleted.', 'success');
                                         },
                                         function () {
+                                            vm.clientMessage = 'Server error.';
                                             if(response.status == 403) {
                                                 vm.reportMessage = "Error: " + response.status + " " + response.statusText;
                                             }
+                                            SweetAlert.swal('Cancelled', vm.reportMessage, 'error');
                                         }
                                     );
                                 } else {
