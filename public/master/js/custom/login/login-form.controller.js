@@ -8,7 +8,7 @@
         .controller('LoginFormController', ['$scope', 'loginFactory', '$cookies', '$rootScope', '$state', '_token', '$window',
             function($scope, loginFactory, $cookies, $rootScope, $state, _token, $window) {
 
-                $scope.account = {email:'fashtop3@gmail.com', password:'ericson', _token: _token.data};
+                $scope.account = {email:'', password:'', _token: _token.data};
 
                 $scope.authMsg = false;
 
