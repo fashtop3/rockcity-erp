@@ -174,8 +174,8 @@
                 },
                 cache: false,
                 resolve: angular.extend(helper.resolveFor('datatables')),
-                templateUrl: helper.basepath('people.html'),
-                controller: 'PeopleController'
+                templateUrl: helper.basepath('people.html')
+                //controller:"PeopleController"
             })
             .state('app.people.adduser', {
                 url: '/create',
@@ -187,7 +187,8 @@
                 },
                 cache: false,
                 title: 'People',
-                templateUrl: helper.basepath('people-adduser.html')
+                templateUrl: helper.basepath('people-adduser.html'),
+                controller:'PeopleController'
             })
             .state('app.people.edit', {
                 url: '/:id/edit',

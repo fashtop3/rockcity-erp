@@ -98,8 +98,6 @@ class UserController extends Controller
 
     public function getMarketers()
     {
-        //TODO: check user role and permissions here
-
         $role = Role::where('name', 'marketing')->get()->first();
 
         if(empty($role->users->toArray()))
@@ -110,10 +108,6 @@ class UserController extends Controller
         return response($role->users);
     }
 
-    /**
-     * @param $perm
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
     public function userCan($slug)
     {
         $permission = Permission::where('slug', $slug)->get()->first();
@@ -145,10 +139,6 @@ class UserController extends Controller
     }
 
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
     public function store(Request $request)
     {
 
@@ -233,8 +223,8 @@ class UserController extends Controller
 
         //Todo: admin check first using else if
 
-        if($id != $user->id) {
-            if( !$user->canRegisterStaff() ) {
+        if($id != Auth::user()->id) {
+            if( !Auth::user()->canRegisterStaff() ) {
                 return response('You are not authorized to update this account', 403);
             }
         }
@@ -311,14 +301,13 @@ class UserController extends Controller
      */
     public function contacts()
     {
-//        dd(Auth::user());
         $contacts = [
-//            ['name'=>'Admin', 'email'=>'niran.malaolu@rockcityfmradio.com'],
-            ['name'=>'Admin', 'email'=>'fashtop3@gmail.com'],
+            ['name'=>'Admin', 'email'=>'niran.malaolu@rockcityfmradio.com'],
+//            ['name'=>'Admin', 'email'=>'fashtop3@gmail.com'],
             ['name'=>'Technical', 'email'=>'fashtop3@gmail.com'],
             ['name'=>'Support', 'email'=>'fashtop3@gmail.com'],
-            ['name'=>'Marketing', 'email'=>'fashtop3@gmail.com'],
-//            ['name'=>'Marketing', 'email'=>'olufunso.adeniran@rockcityfmradio.com'],
+//            ['name'=>'Marketing', 'email'=>'fashtop3@gmail.com'],
+            ['name'=>'Marketing', 'email'=>'olufunso.adeniran@rockcityfmradio.com'],
         ];
 
         return response($contacts);
@@ -328,7 +317,7 @@ class UserController extends Controller
      * @param Request $request
      * @param $user
      */
-    protected function setRolePermission(Request $request, $user)
+    protected function setRolePermission(Request $request, $newUser)
     {
         $user = Auth::user();
         //check if user is logged in and has permission to register user
@@ -338,13 +327,13 @@ class UserController extends Controller
             if(is_array($request->get('roles'))) {
 
                 //get the id's of roles from the array
-                $user->roles()->sync(array_keys($request->get('roles')));
+                $newUser->roles()->sync(array_keys($request->get('roles')));
             }
 
             if(is_array($request->get('permissions'))) {
 
                 //get id's of permissions from the array
-                $user->permissions()->sync(array_keys($request->get('permissions')));
+                $newUser->permissions()->sync(array_keys($request->get('permissions')));
             }
         }
     }

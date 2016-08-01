@@ -7,8 +7,8 @@
 
     angular
         .module('app.order')
-        .controller('PeopleUpdateController', ['$scope', 'toaster', 'userFactory', '$stateParams',
-            function($scope, toaster, userFactory, $stateParams){
+        .controller('PeopleUpdateController', ['$scope', 'toaster', 'userFactory', '$stateParams', 'permissionFactory',
+            function($scope, toaster, userFactory, $stateParams, permissionFactory){
 
                 var vm = $scope;
 
@@ -21,6 +21,20 @@
                 vm.closeAlert = function(index) {
                     vm.alerts.splice(index, 1);
                 };
+
+
+                permissionFactory.getRoles().query().$promise.then(
+                    function(response){
+                        vm.roles = response;
+                    }
+                );
+
+                //returns permission from database
+                permissionFactory.getPermissions().query().$promise.then(
+                    function(response){
+                        vm.permissions = response;
+                    }
+                );
 
                 //returns registered users
                 vm.account = userFactory.getUsers()
