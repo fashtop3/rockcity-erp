@@ -2,5 +2,6 @@
 /node_modules
 /public/storage
 /public/master/node_modules
+/public/master
 Homestead.yaml
 Homestead.json
