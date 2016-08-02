@@ -16,28 +16,28 @@ class ReportMailer extends Mailer
 
     public function sendReportToHeadOfMarketing(Report $report)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => 'olufunso.adeniran@rockcityfmradio.com'];
 
         $this->sendReport($report, $user);
     }
 
     public function sendReportHeadOfAccounting(Report $report)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => 'yinka.adelowo@rockcityfmradio.com'];
 
         $this->sendReport($report, $user);
     }
 
     public function sendReportExecutiveDirector(Report $report)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => 'bukky.malaolu@rockcityfmradio.com'];
 
         $this->sendReport($report, $user);
     }
 
     public function sendReportToAdministrator(Report $report)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => 'niran.malaolu@rockcityfmradio.com'];
 
         $this->sendReport($report, $user);
 
@@ -46,7 +46,7 @@ class ReportMailer extends Mailer
 
     public function sendReportToTraffic(Report $report)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => 'wale.ogunbiyi@rockcityfmradio.com'];
 
         $this->sendReport($report, $user);
     }

@@ -303,10 +303,10 @@ class UserController extends Controller
     {
         $contacts = [
             ['name'=>'Admin', 'email'=>'niran.malaolu@rockcityfmradio.com'],
-//            ['name'=>'Admin', 'email'=>'fashtop3@gmail.com'],
-            ['name'=>'Technical', 'email'=>'fashtop3@gmail.com'],
-            ['name'=>'Support', 'email'=>'fashtop3@gmail.com'],
-//            ['name'=>'Marketing', 'email'=>'fashtop3@gmail.com'],
+            ['name'=>'Executive Director', 'email'=>'bukky.malaolu@rockcityfmradio.com'],
+            ['name'=>'Account', 'email'=>'yinka.adelowo@rockcityfmradio.com'],
+            ['name'=>'Support', 'email'=>'mpo@rockcityfmradio.com'],
+            ['name'=>'Traffic', 'email'=>'wale.ogunbiyi@rockcityfmradio.com'],
             ['name'=>'Marketing', 'email'=>'olufunso.adeniran@rockcityfmradio.com'],
         ];
 
