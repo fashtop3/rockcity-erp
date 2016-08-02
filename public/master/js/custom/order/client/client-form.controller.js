@@ -73,7 +73,7 @@
                                     $state.go('app.client');
                                 }, 1000);
                             },
-                            function() {
+                            function(response) {
                                 if(response.status == 403) {
                                     vm.alerts[0] = {'type':'danger', 'msg':response.data};
                                     toaster.pop('error', 'Client', response.data);

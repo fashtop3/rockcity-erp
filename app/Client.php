@@ -27,7 +27,7 @@ class Client extends Model
 
     public static function mailExits($email)
     {
-        if(!empty(Client::where('email', $email)->get()->toArray())){
+        if(!empty(Client::withTrashed()->where('email', $email)->get()->first())){
             return true;
         }
         return false;

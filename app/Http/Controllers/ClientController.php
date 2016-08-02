@@ -190,10 +190,12 @@ class ClientController extends Controller
         }
 
 
-        if($client->delete()) {
-            return response('Client deleted successfully');
+        if(!empty($client->schedules()->get()->first())) {
+            $client->delete();
+            return response('Client has been moved to trash');
         }
 
-        return response('Failed to delete client!. contact the administrator', 403);
+        $client->forceDelete();
+        return response('Client deleted successfully');
     }
 }
