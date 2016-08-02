@@ -5,3 +5,4 @@
 /public/master
 Homestead.yaml
 Homestead.json
+.env
