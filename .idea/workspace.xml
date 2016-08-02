@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a676137-a53d-407b-85e0-7c18b8c76649" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/index.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="orders.iws" />
@@ -33,18 +35,28 @@
       <file leaf-file-name="ClientController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
+            <state vertical-scroll-proportion="0.0">
               <caret line="201" column="0" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7912088">
-              <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+            <state vertical-scroll-proportion="-1.3333334">
+              <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.2535211">
+              <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -182,16 +194,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.scratch.ScratchProjectViewPane$MyProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -252,8 +254,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.scratch.ScratchProjectViewPane$MyProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -265,7 +277,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="User&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/UserController.php&#10;lient&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Client.php&#10;clientcontr.php&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/ClientController.php&#10;client.con&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/client/client-form.controller.js&#10;mail.p&#9;FILE&#9;file:///var/www/html/rockcity/orders/config/mail.php&#10;index.ht&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/index.html&#10;index&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/jade/index.jade&#10;rout&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/routes.php&#10;PeopleUpdateController&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/people/people-update.controller.js&#10;addu&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/people-adduser.html&#10;People-add&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/people-adduser.html&#10;peop.&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/people.html&#10;rout.&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/modules/routes/routes.config.js&#10;UserController&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/UserController.php&#10;regi&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/register/register.services.js&#10;registerF&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/register/register-form.controller.js&#10;peopl&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/people/people.controller.js&#10;usercon.php&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/UserController.php&#10;route&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/modules/routes/routes.config.js&#10;side&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/server/sidebar-menu.json&#10;login.co&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/login/login-form.controller.js&#10;acc.con&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/modules/pages/access-login.controller.js&#10;peop&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/people/people.controller.js&#10;target&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/report/target-manage.controller.js&#10;target.&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/target-manage.tpl.html&#10;client&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/client/client.controller.js&#10;AssessConfigDatePickerCtrl&#9;null&#9;null&#10;assessment-config&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-config.html&#10;assessment-supervisor&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-supervisor.html&#10;asses&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-record.html&#10;assessment-log.html&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-log.html&#10;jade&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/jade/index.jade&#10;client.p&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Client.php&#10;confi&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/AssessmentConfigController.php&#10;assess.c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/report/assessment-config.controller.js&#10;dri.co&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/report/driver-report-view.controller.js&#10;DriverController&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/DriverController.php&#10;peop.c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/people/people.controller.js&#10;client.c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/client/client.controller.js&#10;assessment-config.html&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-config.html&#10;tar&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/report/target-manage.controller.js&#10;targ.ht&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/target.html&#10;targe-ma&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/target-manage.tpl.html&#10;targe-c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/target-create.tpl.html&#10;dri&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/admin-driver-viewreport.html&#10;admin-re&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/admin-report-view.html&#10;rout.c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/modules/routes/routes.config.js&#10;sidem&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/server/sidebar-menu.json&#10;DriverController.php&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/DriverController.php&#10;driverrep.ph&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/DriverReport.php" />
+    <property name="SearchEverywhereHistoryKey" value="rout&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/routes.php&#10;User&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/UserController.php&#10;lient&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Client.php&#10;clientcontr.php&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/ClientController.php&#10;client.con&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/client/client-form.controller.js&#10;mail.p&#9;FILE&#9;file:///var/www/html/rockcity/orders/config/mail.php&#10;index.ht&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/index.html&#10;index&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/jade/index.jade&#10;PeopleUpdateController&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/people/people-update.controller.js&#10;addu&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/people-adduser.html&#10;People-add&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/people-adduser.html&#10;peop.&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/people.html&#10;rout.&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/modules/routes/routes.config.js&#10;UserController&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/UserController.php&#10;regi&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/register/register.services.js&#10;registerF&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/register/register-form.controller.js&#10;peopl&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/people/people.controller.js&#10;usercon.php&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/UserController.php&#10;route&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/modules/routes/routes.config.js&#10;side&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/server/sidebar-menu.json&#10;login.co&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/login/login-form.controller.js&#10;acc.con&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/modules/pages/access-login.controller.js&#10;peop&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/people/people.controller.js&#10;target&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/report/target-manage.controller.js&#10;target.&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/target-manage.tpl.html&#10;client&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/client/client.controller.js&#10;AssessConfigDatePickerCtrl&#9;null&#9;null&#10;assessment-config&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-config.html&#10;assessment-supervisor&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-supervisor.html&#10;asses&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-record.html&#10;assessment-log.html&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-log.html&#10;jade&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/jade/index.jade&#10;client.p&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Client.php&#10;confi&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/AssessmentConfigController.php&#10;assess.c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/report/assessment-config.controller.js&#10;dri.co&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/report/driver-report-view.controller.js&#10;DriverController&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/DriverController.php&#10;peop.c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/people/people.controller.js&#10;client.c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/order/client/client.controller.js&#10;assessment-config.html&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/assessment-config.html&#10;tar&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/custom/report/target-manage.controller.js&#10;targ.ht&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/target.html&#10;targe-ma&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/target-manage.tpl.html&#10;targe-c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/target-create.tpl.html&#10;dri&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/admin-driver-viewreport.html&#10;admin-re&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/app/views/admin-report-view.html&#10;rout.c&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/master/js/modules/routes/routes.config.js&#10;sidem&#9;FILE&#9;file:///var/www/html/rockcity/orders/public/server/sidebar-menu.json&#10;DriverController.php&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/DriverController.php&#10;driverrep.ph&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/DriverReport.php" />
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="js.buildTools.gulp.gulp_package_dir" value="/usr/lib/node_modules/gulp" />
     <property name="FullScreen" value="false" />
@@ -334,14 +346,14 @@
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32654658" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34299138" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34847298" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967892" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32740742" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26624903" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.7837037" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" x="66" y="308" width="1277" height="222" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4977778" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" x="66" y="308" width="1277" height="222" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889584" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -397,6 +409,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="201" column="0" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -637,14 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26195425">
-          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -655,8 +675,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7912088">
-          <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+        <state vertical-scroll-proportion="-1.3333334">
+          <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2535211">
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
           <folding />
         </state>
       </provider>
