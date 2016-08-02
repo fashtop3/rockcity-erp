@@ -19,6 +19,11 @@ use App\ScheduleAlert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 
+
+Route::get('/', function() {
+    return view('app');
+});
+
 //Route::get('/example', [
 //    'as' => 'example',
 //    'uses' => 'VehicleController@index',
