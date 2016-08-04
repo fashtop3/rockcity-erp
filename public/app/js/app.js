@@ -8,11 +8,18300 @@
  * License: https://wrapbootstrap.com/help/licenses
  * 
  */
-!function(){"use strict";angular.module("angle",["app.core","app.routes","app.sidebar","app.navsearch","app.preloader","app.loadingbar","app.translate","app.settings","app.icons","app.flatdoc","app.notify","app.bootstrapui","app.elements","app.panels","app.charts","app.forms","app.locale","app.maps","app.pages","app.tables","app.extras","app.mailbox","app.utils","app.order","app.affix","app.datetime"])}(),function(){"use strict";angular.module("app.affix",["ngStrap.affix"])}(),function(){"use strict";angular.module("app.bootstrapui",[])}(),function(){"use strict";angular.module("app.charts",[])}(),function(){"use strict";angular.module("app.core",["ngRoute","ngAnimate","ngStorage","ngCookies","pascalprecht.translate","ui.bootstrap","ui.router","permission","permission.ui","oc.lazyLoad","cfp.loadingBar","ngSanitize","ngResource","tmh.dynamicLocale","ui.utils"])}(),function(){"use strict";angular.module("app.colors",[])}(),function(){"use strict";angular.module("app.datetime",["mgcrea.ngStrap.core","mgcrea.ngStrap.timepicker","mgcrea.ngStrap.datepicker"])}(),function(){"use strict";angular.module("app.elements",[])}(),function(){"use strict";angular.module("app.extras",[])}(),function(){"use strict";angular.module("app.flatdoc",[])}(),function(){"use strict";angular.module("app.forms",[])}(),function(){"use strict";angular.module("app.icons",[])}(),function(){"use strict";angular.module("app.lazyload",[])}(),function(){"use strict";angular.module("app.loadingbar",[])}(),function(){"use strict";angular.module("app.locale",[])}(),function(){"use strict";angular.module("app.mailbox",[])}(),function(){"use strict";angular.module("app.maps",[])}(),function(){"use strict";angular.module("app.navsearch",[])}(),function(){"use strict";angular.module("app.notify",[])}(),function(){"use strict";angular.module("app.pages",[])}(),function(){"use strict";angular.module("app.panels",[])}(),function(){"use strict";angular.module("app.preloader",[])}(),function(){"use strict";angular.module("app.routes",["app.lazyload"])}(),function(){"use strict";angular.module("app.settings",[])}(),function(){"use strict";angular.module("app.sidebar",[])}(),function(){"use strict";angular.module("app.tables",[])}(),function(){"use strict";angular.module("app.translate",[])}(),function(){"use strict";angular.module("app.utils",["app.colors"])}(),function(){"use strict";angular.module("app.dashboard",[])}(),function(){"use strict";angular.module("ngStrap.affix",["mgcrea.ngStrap.helpers.dimensions","mgcrea.ngStrap.helpers.debounce"]).provider("$affix",function(){var e=this.defaults={offsetTop:"auto",inlineStyles:!0};this.$get=["$window","debounce","dimensions",function(t,n,a){function o(o,s){function l(e,t,n){var a=c(),o=u();return y>=a?"top":null!==e&&a+e<=t.top?"middle":null!==b&&t.top+n+h>=o-b?"bottom":"middle"}function c(){return m[0]===t?t.pageYOffset:m[0].scrollTop}function u(){return m[0]===t?t.document.body.scrollHeight:m[0].scrollHeight}var d={},p=angular.extend({},e,s),m=p.target,f="affix affix-top affix-bottom",g=!1,h=0,v=0,y=0,b=0,w=null,$=null,D=o.parent();if(p.offsetParent)if(p.offsetParent.match(/^\d+$/))for(var C=0;C<1*p.offsetParent-1;C++)D=D.parent();else D=angular.element(p.offsetParent);return d.init=function(){this.$parseOffsets(),v=a.offset(o[0]).top+h,g=!o[0].style.width,m.on("scroll",this.checkPosition),m.on("click",this.checkPositionWithEventLoop),i.on("resize",this.$debouncedOnResize),this.checkPosition(),this.checkPositionWithEventLoop()},d.destroy=function(){m.off("scroll",this.checkPosition),m.off("click",this.checkPositionWithEventLoop),i.off("resize",this.$debouncedOnResize)},d.checkPositionWithEventLoop=function(){setTimeout(d.checkPosition,1)},d.checkPosition=function(){var e=c(),t=a.offset(o[0]),n=a.height(o[0]),i=l($,t,n);w!==i&&(w=i,"top"===i?($=null,g&&o.css("width",""),p.inlineStyles&&(o.css("position",p.offsetParent?"":"relative"),o.css("top",""))):"bottom"===i?($=p.offsetUnpin?-(1*p.offsetUnpin):t.top-e,g&&o.css("width",""),p.inlineStyles&&(o.css("position",p.offsetParent?"":"relative"),o.css("top",p.offsetParent?"":r[0].offsetHeight-b-n-v+"px"))):($=null,g&&o.css("width",o[0].offsetWidth+"px"),p.inlineStyles&&(o.css("position","fixed"),o.css("top",h+"px"))),o.removeClass(f).addClass("affix"+("middle"!==i?"-"+i:"")))},d.$onResize=function(){d.$parseOffsets(),d.checkPosition()},d.$debouncedOnResize=n(d.$onResize,50),d.$parseOffsets=function(){var e=o.css("position");p.inlineStyles&&o.css("position",p.offsetParent?"":"relative"),p.offsetTop&&("auto"===p.offsetTop&&(p.offsetTop="+0"),p.offsetTop.match(/^[-+]\d+$/)?(h=1*-p.offsetTop,y=p.offsetParent?a.offset(D[0]).top+1*p.offsetTop:a.offset(o[0]).top-a.css(o[0],"marginTop",!0)+1*p.offsetTop):y=1*p.offsetTop),p.offsetBottom&&(b=p.offsetParent&&p.offsetBottom.match(/^[-+]\d+$/)?u()-(a.offset(D[0]).top+a.height(D[0]))+1*p.offsetBottom+1:1*p.offsetBottom),p.inlineStyles&&o.css("position",e)},d.init(),d}var r=angular.element(t.document.body),i=angular.element(t);return o}]}).directive("bsAffix",["$affix","$window",function(e,t){return{restrict:"EAC",require:"^?bsAffixTarget",link:function(n,a,o,r){var i={scope:n,target:r?r.$element:angular.element(t)};angular.forEach(["offsetTop","offsetBottom","offsetParent","offsetUnpin","inlineStyles"],function(e){if(angular.isDefined(o[e])){var t=o[e];/true/i.test(t)&&(t=!0),/false/i.test(t)&&(t=!1),i[e]=t}});var s=e(a,i);n.$on("$destroy",function(){s&&s.destroy(),i=null,s=null})}}}]).directive("bsAffixTarget",function(){return{controller:["$element",function(e){this.$element=e}]}})}(),function(){"use strict";angular.module("mgcrea.ngStrap.helpers.debounce",[]).factory("debounce",["$timeout",function(e){return function(t,n,a){var o=null;return function(){var r=this,i=arguments,s=a&&!o;return o&&e.cancel(o),o=e(function(){o=null,a||t.apply(r,i)},n,!1),s&&t.apply(r,i),o}}}]).factory("throttle",["$timeout",function(e){return function(t,n,a){var o=null;return a||(a={}),function(){var r=this,i=arguments;o||(a.leading!==!1&&t.apply(r,i),o=e(function(){o=null,a.trailing!==!1&&t.apply(r,i)},n,!1))}}}])}(),function(){"use strict";angular.module("mgcrea.ngStrap.helpers.dimensions",[]).factory("dimensions",function(){function e(e){var a=e.ownerDocument,o=e.offsetParent||a;if(n(o,"#document"))return a.documentElement;for(;o&&!n(o,"html")&&"static"===t.css(o,"position");)o=o.offsetParent;return o||a.documentElement}var t={},n=t.nodeName=function(e,t){return e.nodeName&&e.nodeName.toLowerCase()===t.toLowerCase()};return t.css=function(e,t,n){var a;return a=e.currentStyle?e.currentStyle[t]:window.getComputedStyle?window.getComputedStyle(e)[t]:e.style[t],n===!0?parseFloat(a)||0:a},t.offset=function(e){var t=e.getBoundingClientRect(),n=e.ownerDocument;return{width:t.width||e.offsetWidth,height:t.height||e.offsetHeight,top:t.top+(window.pageYOffset||n.documentElement.scrollTop)-(n.documentElement.clientTop||0),left:t.left+(window.pageXOffset||n.documentElement.scrollLeft)-(n.documentElement.clientLeft||0)}},t.setOffset=function(e,n,a){var o,r,i,s,l,c,u,d=t.css(e,"position"),p=angular.element(e),m={};"static"===d&&(e.style.position="relative"),l=t.offset(e),i=t.css(e,"top"),c=t.css(e,"left"),u=("absolute"===d||"fixed"===d)&&(i+c).indexOf("auto")>-1,u?(o=t.position(e),s=o.top,r=o.left):(s=parseFloat(i)||0,r=parseFloat(c)||0),angular.isFunction(n)&&(n=n.call(e,a,l)),null!==n.top&&(m.top=n.top-l.top+s),null!==n.left&&(m.left=n.left-l.left+r),"using"in n?n.using.call(p,m):p.css({top:m.top+"px",left:m.left+"px"})},t.position=function(a){var o,r,i={top:0,left:0};return"fixed"===t.css(a,"position")?r=a.getBoundingClientRect():(o=e(a),r=t.offset(a),n(o,"html")||(i=t.offset(o)),i.top+=t.css(o,"borderTopWidth",!0),i.left+=t.css(o,"borderLeftWidth",!0)),{width:a.offsetWidth,height:a.offsetHeight,top:r.top-i.top-t.css(a,"marginTop",!0),left:r.left-i.left-t.css(a,"marginLeft",!0)}},t.height=function(e,n){var a=e.offsetHeight;return n?a+=t.css(e,"marginTop",!0)+t.css(e,"marginBottom",!0):a-=t.css(e,"paddingTop",!0)+t.css(e,"paddingBottom",!0)+t.css(e,"borderTopWidth",!0)+t.css(e,"borderBottomWidth",!0),a},t.width=function(e,n){var a=e.offsetWidth;return n?a+=t.css(e,"marginLeft",!0)+t.css(e,"marginRight",!0):a-=t.css(e,"paddingLeft",!0)+t.css(e,"paddingRight",!0)+t.css(e,"borderLeftWidth",!0)+t.css(e,"borderRightWidth",!0),a},t})}(),function(){"use strict";function e(){function e(){t.alerts=[{type:"danger",msg:"Oh snap! Change a few things up and try submitting again."},{type:"warning",msg:"Well done! You successfully read this important alert message."}],t.addAlert=function(){t.alerts.push({msg:"Another alert!"})},t.closeAlert=function(e){t.alerts.splice(e,1)}}var t=this;e()}angular.module("app.bootstrapui").controller("AlertDemoCtrl",e)}(),function(){"use strict";function e(e){e.options({appendToBody:!0})}angular.module("app.bootstrapui").config(e),e.$inject=["$uibTooltipProvider"]}(),function(){"use strict";function e(){function e(){t.singleModel=1,t.radioModel="Middle",t.checkModel={left:!1,middle:!0,right:!1}}var t=this;e()}angular.module("app.bootstrapui").controller("ButtonsCtrl",e)}(),function(){"use strict";function e(){function e(){t.myInterval=5e3;var e=t.slides=[];t.addSlide=function(t){t=t||8,e.push({image:"app/img/bg"+t+".jpg",text:["More","Extra","Lots of","Surplus"][e.length%2]+" "+["Cats","Kittys","Felines","Cutes"][e.length%2]})},t.addSlide(4),t.addSlide(7),t.addSlide(8)}var t=this;e()}angular.module("app.bootstrapui").controller("CarouselDemoCtrl",e)}(),function(){"use strict";function e(){function e(){t.today=function(){t.dt=new Date},t.today(),t.clear=function(){t.dt=null},t.disabled=function(e,t){return"day"===t&&(0===e.getDay()||6===e.getDay())},t.toggleMin=function(){t.minDate=t.minDate?null:new Date},t.toggleMin(),t.open=function(e){e.preventDefault(),e.stopPropagation(),t.opened=!0},t.dateOptions={formatYear:"yy",startingDay:1},t.initDate=new Date("2019-10-20"),t.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],t.format=t.formats[0]}var t=this;e()}angular.module("app.bootstrapui").controller("DatepickerDemoCtrl",e)}(),function(){"use strict";function e(e){function t(){function t(e,t){e.ok=function(){t.close("closed")},e.cancel=function(){t.dismiss("cancel")}}n.open=function(n){var a=e.open({templateUrl:"/myModalContent.html",controller:t,size:n}),o=$("#modal-state");a.result.then(function(){o.text("Modal dismissed with OK status")},function(){o.text("Modal dismissed with Cancel status")})},t.$inject=["$scope","$uibModalInstance"]}var n=this;t()}angular.module("app.bootstrapui").controller("ModalController",e),e.$inject=["$uibModal"]}(),function(){"use strict";function e(){function e(){t.totalItems=64,t.currentPage=4,t.setPage=function(e){t.currentPage=e},t.pageChanged=function(){console.log("Page changed to: "+t.currentPage)},t.maxSize=5,t.bigTotalItems=175,t.bigCurrentPage=1}var t=this;e()}angular.module("app.bootstrapui").controller("PaginationDemoCtrl",e)}(),function(){"use strict";function e(){function e(){t.dynamicPopover="Hello, World!",t.dynamicPopoverTitle="Title"}var t=this;e()}angular.module("app.bootstrapui").controller("PopoverDemoCtrl",e)}(),function(){"use strict";function e(){function e(){t.max=200,t.random=function(){var e,n=Math.floor(100*Math.random()+1);e=25>n?"success":50>n?"info":75>n?"warning":"danger",t.showWarning="danger"===e||"warning"===e,t.dynamic=n,t.type=e},t.random(),t.randomStacked=function(){t.stacked=[];for(var e=["success","info","warning","danger"],n=0,a=Math.floor(4*Math.random()+1);a>n;n++){var o=Math.floor(4*Math.random());t.stacked.push({value:Math.floor(30*Math.random()+1),type:e[o]})}},t.randomStacked()}var t=this;e()}angular.module("app.bootstrapui").controller("ProgressDemoCtrl",e)}(),function(){"use strict";function e(){function e(){t.rate=7,t.max=10,t.isReadonly=!1,t.hoveringOver=function(e){t.overStar=e,t.percent=100*(e/t.max)},t.ratingStates=[{stateOn:"fa fa-check",stateOff:"fa fa-check-circle"},{stateOn:"fa fa-star",stateOff:"fa fa-star-o"},{stateOn:"fa fa-heart",stateOff:"fa fa-ban"},{stateOn:"fa fa-heart"},{stateOff:"fa fa-power-off"}]}var t=this;e()}angular.module("app.bootstrapui").controller("RatingDemoCtrl",e)}(),function(){"use strict";function e(){function e(){t.mytime=new Date,t.hstep=1,t.mstep=15,t.options={hstep:[1,2,3],mstep:[1,5,10,15,25,30]},t.ismeridian=!0,t.toggleMode=function(){t.ismeridian=!t.ismeridian},t.update=function(){var e=new Date;e.setHours(14),e.setMinutes(0),t.mytime=e},t.changed=function(){console.log("Time changed to: "+t.mytime)},t.clear=function(){t.mytime=null}}var t=this;e()}angular.module("app.bootstrapui").controller("TimepickerDemoCtrl",e)}(),function(){"use strict";function e(){function e(){function e(e){for(var t=e.offsetTop,n=40;e.offsetParent;)e=e.offsetParent,t+=e.offsetTop;return t-n-window.pageYOffset}function n(e){for(var t=e.offsetLeft,n=e.offsetWidth;e.offsetParent;)e=e.offsetParent,t+=e.offsetLeft;return t-n-window.pageXOffset}t.dynamicTooltip="Hello, World!",t.dynamicTooltipText="dynamic",t.htmlTooltip="I've been made <b>bold</b>!",t.autoplace=function(t,a){var o="top";return e(a)<0&&(o="bottom"),n(a)<0&&(o="right"),o}}var t=this;e()}angular.module("app.bootstrapui").controller("TooltipDemoCtrl",e)}(),function(){"use strict";function e(e){function t(){n.selected=void 0,n.states=["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"],n.getLocation=function(t){return e.get("//maps.googleapis.com/maps/api/geocode/json",{params:{address:t,sensor:!1}}).then(function(e){var t=[];return angular.forEach(e.data.results,function(e){t.push(e.formatted_address)}),t})},n.statesWithFlags=[{name:"Alabama",flag:"5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png"},{name:"Alaska",flag:"e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png"},{name:"Arizona",flag:"9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png"},{name:"Arkansas",flag:"9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png"},{name:"California",flag:"0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png"},{name:"Colorado",flag:"4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png"},{name:"Connecticut",flag:"9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png"},{name:"Delaware",flag:"c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png"},{name:"Florida",flag:"f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png"},{name:"Georgia",flag:"5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png"},{name:"Hawaii",flag:"e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png"},{name:"Idaho",flag:"a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png"},{name:"Illinois",flag:"0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png"},{name:"Indiana",flag:"a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png"},{name:"Iowa",flag:"a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png"},{name:"Kansas",flag:"d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png"},{name:"Kentucky",flag:"8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png"},{name:"Louisiana",flag:"e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png"},{name:"Maine",flag:"3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png"},{name:"Maryland",flag:"a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png"},{name:"Massachusetts",flag:"f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png"},{name:"Michigan",flag:"b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png"},{name:"Minnesota",flag:"b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png"},{name:"Mississippi",flag:"4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png"},{name:"Missouri",flag:"5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png"},{name:"Montana",flag:"c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png"},{name:"Nebraska",flag:"4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png"},{name:"Nevada",flag:"f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png"},{name:"New Hampshire",flag:"2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png"},{name:"New Jersey",flag:"9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png"},{name:"New Mexico",flag:"c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png"},{name:"New York",flag:"1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png"},{name:"North Carolina",flag:"b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png"},{name:"North Dakota",flag:"e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png"},{name:"Ohio",flag:"4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png"},{name:"Oklahoma",flag:"6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png"},{name:"Oregon",flag:"b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png"},{name:"Pennsylvania",flag:"f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png"},{name:"Rhode Island",flag:"f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png"},{name:"South Carolina",flag:"6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png"},{name:"South Dakota",flag:"1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png"},{name:"Tennessee",flag:"9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png"},{name:"Texas",flag:"f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png"},{name:"Utah",flag:"f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png"},{name:"Vermont",flag:"4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png"},{name:"Virginia",flag:"4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png"},{name:"Washington",flag:"5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png"},{name:"West Virginia",flag:"2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png"},{name:"Wisconsin",flag:"2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png"},{name:"Wyoming",flag:"b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png"}]}var n=this;t()}angular.module("app.bootstrapui").controller("TypeaheadCtrl",e),e.$inject=["$http"]}(),function(){"use strict";function e(){function e(){t.lineData={labels:["Monday","Tuesday","Wednesday","Thursday","Friday"],series:[[12,9,7,8,5],[2,1,3.5,7,3],[1,3,4,5,6]]},t.lineOptions={fullWidth:!0,height:220,chartPadding:{right:40}},t.barBipolarOptions={high:10,low:-10,height:220,axisX:{labelInterpolationFnc:function(e,t){return t%2===0?e:null}}},t.barBipolarData={labels:["W1","W2","W3","W4","W5","W6","W7","W8","W9","W10"],series:[[1,2,4,8,6,-2,-1,-4,-6,-2]]},t.barHorizontalData={labels:["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],series:[[5,4,3,7,5,10,3],[3,2,9,5,4,6,4]]},t.barHorizontalOptions={seriesBarDistance:10,reverseData:!0,horizontalBars:!0,height:220,axisY:{offset:70}};var e=0,n=80,a=500;t.smilData={labels:["1","2","3","4","5","6","7","8","9","10","11","12"],series:[[12,9,7,8,5,4,6,2,3,3,4,6],[4,5,3,7,3,5,5,3,4,4,5,5],[5,3,4,5,6,3,3,4,5,6,3,4],[3,4,5,6,7,6,4,5,6,7,6,3]]},t.smilOptions={low:0,height:260},t.smilEvents={created:function(){e=0},draw:function(t){e++,"line"===t.type?t.element.animate({opacity:{begin:e*n+1e3,dur:a,from:0,to:1}}):"label"===t.type&&"x"===t.axis?t.element.animate({y:{begin:e*n,dur:a,from:t.y+100,to:t.y,easing:"easeOutQuart"}}):"label"===t.type&&"y"===t.axis?t.element.animate({x:{begin:e*n,dur:a,from:t.x-100,to:t.x,easing:"easeOutQuart"}}):"point"===t.type&&t.element.animate({x1:{begin:e*n,dur:a,from:t.x-10,to:t.x,easing:"easeOutQuart"},x2:{begin:e*n,dur:a,from:t.x-10,to:t.x,easing:"easeOutQuart"},opacity:{begin:e*n,dur:a,from:0,to:1,easing:"easeOutQuart"}})}},t.pathData={labels:["Mon","Tue","Wed","Thu","Fri","Sat"],series:[[1,5,2,5,4,3],[2,3,4,8,1,2],[5,4,3,2,1,.5]]},t.pathOptions={low:0,showArea:!0,showPoint:!1,fullWidth:!0,height:260},t.pathEvents={draw:function(e){"line"!==e.type&&"area"!==e.type||e.element.animate({d:{begin:2e3*e.index,dur:2e3,from:e.path.clone().scale(1,0).translate(0,e.chartRect.height()).stringify(),to:e.path.clone().stringify(),easing:Chartist.Svg.Easing.easeOutQuint}})}}}var t=this;e()}angular.module("app.charts").controller("ChartistController",e)}(),function(){"use strict";function e(e){function t(){var t=function(){return Math.round(100*Math.random())};n.lineData={labels:["January","February","March","April","May","June","July"],datasets:[{label:"My First dataset",fillColor:"rgba(114,102,186,0.2)",strokeColor:"rgba(114,102,186,1)",pointColor:"rgba(114,102,186,1)",pointStrokeColor:"#fff",pointHighlightFill:"#fff",pointHighlightStroke:"rgba(114,102,186,1)",data:[t(),t(),t(),t(),t(),t(),t()]},{label:"My Second dataset",fillColor:"rgba(35,183,229,0.2)",strokeColor:"rgba(35,183,229,1)",pointColor:"rgba(35,183,229,1)",pointStrokeColor:"#fff",pointHighlightFill:"#fff",pointHighlightStroke:"rgba(35,183,229,1)",data:[t(),t(),t(),t(),t(),t(),t()]}]},n.lineOptions={scaleShowGridLines:!0,scaleGridLineColor:"rgba(0,0,0,.05)",scaleGridLineWidth:1,bezierCurve:!0,bezierCurveTension:.4,pointDot:!0,pointDotRadius:4,pointDotStrokeWidth:1,pointHitDetectionRadius:20,datasetStroke:!0,datasetStrokeWidth:2,datasetFill:!0},n.barData={labels:["January","February","March","April","May","June","July"],datasets:[{fillColor:e.byName("info"),strokeColor:e.byName("info"),highlightFill:e.byName("info"),highlightStroke:e.byName("info"),data:[t(),t(),t(),t(),t(),t(),t()]},{fillColor:e.byName("primary"),strokeColor:e.byName("primary"),highlightFill:e.byName("primary"),highlightStroke:e.byName("primary"),data:[t(),t(),t(),t(),t(),t(),t()]}]},n.barOptions={scaleBeginAtZero:!0,scaleShowGridLines:!0,scaleGridLineColor:"rgba(0,0,0,.05)",scaleGridLineWidth:1,barShowStroke:!0,barStrokeWidth:2,barValueSpacing:5,barDatasetSpacing:1},n.doughnutData=[{value:300,color:e.byName("purple"),highlight:e.byName("purple"),label:"Purple"},{value:50,color:e.byName("info"),highlight:e.byName("info"),label:"Info"},{value:100,color:e.byName("yellow"),highlight:e.byName("yellow"),label:"Yellow"}],n.doughnutOptions={segmentShowStroke:!0,segmentStrokeColor:"#fff",segmentStrokeWidth:2,percentageInnerCutout:85,animationSteps:100,animationEasing:"easeOutBounce",animateRotate:!0,animateScale:!1},n.pieData=[{value:300,color:e.byName("purple"),highlight:e.byName("purple"),label:"Purple"},{value:40,color:e.byName("yellow"),highlight:e.byName("yellow"),label:"Yellow"},{value:120,color:e.byName("info"),highlight:e.byName("info"),label:"Info"}],n.pieOptions={segmentShowStroke:!0,segmentStrokeColor:"#fff",segmentStrokeWidth:2,percentageInnerCutout:0,animationSteps:100,animationEasing:"easeOutBounce",animateRotate:!0,animateScale:!1},n.polarData=[{value:300,color:e.byName("pink"),highlight:e.byName("pink"),label:"Red"},{value:50,color:e.byName("purple"),highlight:e.byName("purple"),label:"Green"},{value:100,color:e.byName("pink"),highlight:e.byName("pink"),label:"Yellow"},{value:140,color:e.byName("purple"),highlight:e.byName("purple"),label:"Grey"}],n.polarOptions={scaleShowLabelBackdrop:!0,scaleBackdropColor:"rgba(255,255,255,0.75)",scaleBeginAtZero:!0,scaleBackdropPaddingY:1,scaleBackdropPaddingX:1,scaleShowLine:!0,segmentShowStroke:!0,segmentStrokeColor:"#fff",segmentStrokeWidth:2,animationSteps:100,animationEasing:"easeOutBounce",animateRotate:!0,animateScale:!1},n.radarData={labels:["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],datasets:[{label:"My First dataset",fillColor:"rgba(114,102,186,0.2)",strokeColor:"rgba(114,102,186,1)",pointColor:"rgba(114,102,186,1)",pointStrokeColor:"#fff",pointHighlightFill:"#fff",pointHighlightStroke:"rgba(114,102,186,1)",data:[65,59,90,81,56,55,40]},{label:"My Second dataset",fillColor:"rgba(151,187,205,0.2)",strokeColor:"rgba(151,187,205,1)",pointColor:"rgba(151,187,205,1)",pointStrokeColor:"#fff",pointHighlightFill:"#fff",pointHighlightStroke:"rgba(151,187,205,1)",data:[28,48,40,19,96,27,100]}]},n.radarOptions={scaleShowLine:!0,angleShowLineOut:!0,scaleShowLabels:!1,scaleBeginAtZero:!0,angleLineColor:"rgba(0,0,0,.1)",angleLineWidth:1,pointLabelFontFamily:"'Arial'",pointLabelFontStyle:"bold",pointLabelFontSize:10,pointLabelFontColor:"#565656",pointDot:!0,pointDotRadius:3,pointDotStrokeWidth:1,pointHitDetectionRadius:20,datasetStroke:!0,datasetStrokeWidth:2,datasetFill:!0}}var n=this;t()}angular.module("app.charts").controller("ChartJSController",e),e.$inject=["Colors"]}(),function(){"use strict";function e(e){return function(){return{restrict:"A",scope:{data:"=",options:"=",id:"@",width:"=",height:"=",resize:"=",chart:"@",segments:"@",responsive:"=",tooltip:"=",legend:"="},link:function(t,n){var a=n[0].getContext("2d"),o=!1;t.size=function(){t.width<=0?(n.width(n.parent().width()),a.canvas.width=n.width()):(a.canvas.width=t.width||a.canvas.width,o=!0),t.height<=0?(n.height(n.parent().height()),a.canvas.height=a.canvas.width/2):(a.canvas.height=t.height||a.canvas.height,o=!0)},t.$watch("data",function(s){r&&r.destroy(),s&&(t.chart&&(e=t.chart),o&&(t.size(),i=new Chart(a)),(t.responsive||t.resize)&&(t.options.responsive=!0),void 0!==t.responsive&&(t.options.responsive=t.responsive),r=i[e](t.data,t.options),r.update(),t.legend&&angular.element(n[0]).parent().after(r.generateLegend()))},!0),t.$watch("tooltip",function(e){if(r&&r.draw(),void 0!==e&&r.segments&&!(!isFinite(e)||e>=r.segments.length||0>e)){var t=r.segments[e];t.save(),t.fillColor=t.highlightColor,r.showTooltip([t]),t.restore()}},!0),t.size();var r,i=new Chart(a);t.$on("$destroy",function(){r&&r.destroy()})}}}}angular.module("app.charts").directive("linechart",e("Line")).directive("barchart",e("Bar")).directive("radarchart",e("Radar")).directive("polarchart",e("PolarArea")).directive("piechart",e("Pie")).directive("doughnutchart",e("Doughnut")).directive("donutchart",e("Doughnut"))}(),function(){"use strict";function e(e,t,n){function a(a,o){function r(e,n){var a=-20;!e.hasClass(l)&&t.isInView(e,{topoffset:a})&&i(e,n)}function i(e,t){e.ClassyLoader(t).addClass(l)}var s=$(n),l="js-is-in-view";e(function(){var e=$(o),t=e.data();t&&(t.triggerInView?(s.scroll(function(){r(e,t)}),r(e,t)):i(e,t))},0)}var o={link:a,restrict:"A"};return o}angular.module("app.charts").directive("classyloader",e),e.$inject=["$timeout","Utils","$window"]}(),function(){"use strict";function e(e){function t(t){return e(t,{},n).get()}this.load=t;var n={get:{method:"GET",isArray:!0}}}angular.module("app.charts").service("ChartData",e),e.$inject=["$resource"]}(),function(){"use strict";function e(e,t,n){function a(){function a(){for(i.length>0&&(i=i.slice(1));i.length<s;){var e=i.length>0?i[i.length-1]:50,t=e+10*Math.random()-5;0>t?t=0:t>100&&(t=100),i.push(t)}for(var n=[],a=0;a<i.length;++a)n.push([a,i[a]]);return[n]}function r(){o.realTimeData=a(),n(r,30)}o.barData=t.load("server/chart/bar.json"),o.barOptions={series:{bars:{align:"center",lineWidth:0,show:!0,barWidth:.6,fill:.9}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#fcfcfc",mode:"categories"},yaxis:{position:e.app.layout.isRTL?"right":"left",tickColor:"#eee"},shadowSize:0},o.barStackeData=t.load("server/chart/barstacked.json"),o.barStackedOptions={series:{stack:!0,bars:{align:"center",lineWidth:0,show:!0,barWidth:.6,fill:.9}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#fcfcfc",mode:"categories"},yaxis:{min:0,max:200,position:e.app.layout.isRTL?"right":"left",tickColor:"#eee"},shadowSize:0},o.splineData=t.load("server/chart/spline.json"),o.splineOptions={series:{lines:{show:!1},points:{show:!0,radius:4},splines:{show:!0,tension:.4,lineWidth:1,fill:.5}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#fcfcfc",mode:"categories"},yaxis:{min:0,max:150,tickColor:"#eee",position:e.app.layout.isRTL?"right":"left",tickFormatter:function(e){return e}},shadowSize:0},o.areaData=t.load("server/chart/area.json"),o.areaOptions={series:{lines:{show:!0,fill:.8},points:{show:!0,radius:4}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#fcfcfc",mode:"categories"},yaxis:{min:0,tickColor:"#eee",position:e.app.layout.isRTL?"right":"left",tickFormatter:function(e){return e+" visitors"}},shadowSize:0},o.lineData=t.load("server/chart/line.json"),o.lineOptions={series:{lines:{show:!0,fill:.01},points:{show:!0,radius:4}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#eee",mode:"categories"},yaxis:{position:e.app.layout.isRTL?"right":"left",tickColor:"#eee"},shadowSize:0},o.pieData=[{label:"jQuery",color:"#4acab4",data:30},{label:"CSS",color:"#ffea88",data:40},{label:"LESS",color:"#ff8153",data:90},{label:"SASS",color:"#878bb6",data:75},{label:"Jade",color:"#b2d767",data:120}],o.pieOptions={series:{pie:{show:!0,innerRadius:0,label:{show:!0,radius:.8,formatter:function(e,t){return'<div class="flot-pie-label">'+Math.round(t.percent)+"%</div>"},background:{opacity:.8,color:"#222"}}}}},o.donutData=[{color:"#39C558",data:60,label:"Coffee"},{color:"#00b4ff",data:90,label:"CSS"},{color:"#FFBE41",data:50,label:"LESS"},{color:"#ff3e43",data:80,label:"Jade"},{color:"#937fc7",data:116,label:"AngularJS"}],o.donutOptions={series:{pie:{show:!0,innerRadius:.5}}},o.realTimeOptions={series:{lines:{show:!0,fill:!0,fillColor:{colors:["#a0e0f3","#23b7e5"]}},shadowSize:0},grid:{show:!1,borderWidth:0,minBorderMargin:20,labelMargin:10},xaxis:{tickFormatter:function(){return""}},yaxis:{min:0,max:110},legend:{show:!0},colors:["#23b7e5"]};var i=[],s=300;r(),e.$on("panel-refresh",function(t,a){console.log("Simulating chart refresh during 3s on #"+a),n(function(){e.$broadcast("removeSpinner",a),console.log("Refreshed #"+a)},3e3)}),e.$on("panel-remove",function(e,t,n){console.log("Panel #"+t+" removing"),n.resolve()}),e.$on("panel-removed",function(e,t){console.log("Panel #"+t+" removed")})}var o=this;a()}angular.module("app.charts").controller("FlotChartController",e),e.$inject=["$scope","ChartData","$timeout"]}(),function(){"use strict";function e(e,t){function n(n,a,o){function r(){var e;if(n.dataset&&n.options)return e=$.plot(d,n.dataset,n.options),n.$emit("plotReady",e),n.callback&&n.callback(e,n),e}function i(e){return u?(u.setData(e),u.setupGrid(),u.draw()):(u=r(),s(n.series),u)}function s(e){function t(e){return function(t,a){n[a]&&n[a][e]&&(n[a][e].show=t)}}if(u&&e){var n=u.getData();for(var a in e)angular.forEach(e[a],t(a));u.setData(n),u.draw()}}function l(a){a&&e.get(a).success(function(e){t(function(){n.dataset=e})}).error(function(){$.error("Flot chart: Bad request.")})}var c,u,d,p,m=220;u=null,p=o.width||"100%",c=o.height||m,d=$(a.children()[0]),d.css({width:p,height:c}),n.$watchCollection("dataset",i,!0),n.$watch("series",s,!0),n.$watch("src",l)}var a={restrict:"EA",template:"<div></div>",scope:{dataset:"=?",options:"=",series:"=",callback:"=",src:"="},link:n};return a}angular.module("app.charts").directive("flot",e),e.$inject=["$http","$timeout"]}(),function(){"use strict";function e(e,t){function n(){a.chartdata=[{y:"2006",a:100,b:90},{y:"2007",a:75,b:65},{y:"2008",a:50,b:40},{y:"2009",a:75,b:65},{y:"2010",a:50,b:40},{y:"2011",a:75,b:65},{y:"2012",a:100,b:90}],a.donutdata=[{label:"Download Sales",value:12},{label:"In-Store Sales",value:30},{label:"Mail-Order Sales",value:20}],a.donutOptions={Colors:[t.byName("danger"),t.byName("yellow"),t.byName("warning")],
-resize:!0},a.barOptions={xkey:"y",ykeys:["a","b"],labels:["Series A","Series B"],xLabelMargin:2,barColors:[t.byName("info"),t.byName("danger")],resize:!0},a.lineOptions={xkey:"y",ykeys:["a","b"],labels:["Serie A","Serie B"],lineColors:["#31C0BE","#7a92a3"],resize:!0},a.areaOptions={xkey:"y",ykeys:["a","b"],labels:["Serie A","Serie B"],lineColors:[t.byName("purple"),t.byName("info")],resize:!0}}var a=this;n()}angular.module("app.charts").controller("ChartMorrisController",e),e.$inject=["$timeout","Colors"]}(),function(){"use strict";function e(e){return function(){return{restrict:"EA",scope:{morrisData:"=",morrisOptions:"="},link:function(t,n){t.$watch("morrisData",function(e){e&&(t.morrisInstance.setData(e),t.morrisInstance.redraw())},!0),t.morrisOptions.element=n,t.morrisData&&(t.morrisOptions.data=t.morrisData),t.morrisInstance=new Morris[e](t.morrisOptions)}}}}angular.module("app.charts").directive("morrisBar",e("Bar")).directive("morrisDonut",e("Donut")).directive("morrisLine",e("Line")).directive("morrisArea",e("Area"))}(),function(){"use strict";function e(e){function t(){function t(){return Math.floor(100*Math.random()+1)}n.knobLoaderData1=80,n.knobLoaderOptions1={width:"50%",displayInput:!0,fgColor:e.byName("info")},n.knobLoaderData2=45,n.knobLoaderOptions2={width:"50%",displayInput:!0,fgColor:e.byName("purple"),readOnly:!0},n.knobLoaderData3=30,n.knobLoaderOptions3={width:"50%",displayInput:!0,fgColor:e.byName("pink"),displayPrevious:!0,thickness:.1,lineCap:"round"},n.knobLoaderData4=20,n.knobLoaderOptions4={width:"50%",displayInput:!0,fgColor:e.byName("info"),bgColor:e.byName("gray"),angleOffset:-125,angleArc:250},n.piePercent1=85,n.piePercent2=45,n.piePercent3=25,n.piePercent4=60,n.pieOptions1={animate:{duration:800,enabled:!0},barColor:e.byName("success"),trackColor:!1,scaleColor:!1,lineWidth:10,lineCap:"circle"},n.pieOptions2={animate:{duration:800,enabled:!0},barColor:e.byName("warning"),trackColor:!1,scaleColor:!1,lineWidth:4,lineCap:"circle"},n.pieOptions3={animate:{duration:800,enabled:!0},barColor:e.byName("danger"),trackColor:!1,scaleColor:e.byName("gray"),lineWidth:15,lineCap:"circle"},n.pieOptions4={animate:{duration:800,enabled:!0},barColor:e.byName("danger"),trackColor:e.byName("yellow"),scaleColor:e.byName("gray-dark"),lineWidth:15,lineCap:"circle"},n.randomize=function(e){"easy"===e&&(n.piePercent1=t(),n.piePercent2=t(),n.piePercent3=t(),n.piePercent4=t()),"knob"===e&&(n.knobLoaderData1=t(),n.knobLoaderData2=t(),n.knobLoaderData3=t(),n.knobLoaderData4=t())}}var n=this;t()}angular.module("app.charts").controller("PieChartsController",e),e.$inject=["Colors"]}(),function(){"use strict";function e(){function e(){t.renderers=[{id:"area",name:"Area"},{id:"line",name:"Line"},{id:"bar",name:"Bar"},{id:"scatterplot",name:"Scatterplot"}],t.palettes=["spectrum14","spectrum2000","spectrum2001","colorwheel","cool","classic9","munin"],t.rendererChanged=function(e){t["options"+e]={renderer:t["renderer"+e].id}},t.paletteChanged=function(e){t["features"+e]={palette:t["palette"+e]}},t.changeSeriesData=function(e){for(var n=[],a=0;3>a;a++){for(var o={name:"Series "+(a+1),data:[]},r=0;10>r;r++)o.data.push({x:r,y:20*Math.random()});n.push(o),t["series"+e][a]=o}},t.series0=[],t.options0={renderer:"area"},t.renderer0=t.renderers[0],t.palette0=t.palettes[0],t.rendererChanged(0),t.paletteChanged(0),t.changeSeriesData(0);for(var e=[[],[],[]],n=new Rickshaw.Fixtures.RandomData(150),a=0;150>a;a++)n.addData(e);t.series2=[{color:"#c05020",data:e[0],name:"New York"},{color:"#30c020",data:e[1],name:"London"},{color:"#6060c0",data:e[2],name:"Tokyo"}],t.options2={renderer:"area"}}var t=this;e()}angular.module("app.charts").controller("ChartRickshawController",e)}(),function(){"use strict";function e(){var e={restrict:"EA",scope:{sparkline:"="},controller:t};return e}function t(e,t,n,a){function o(){var n=e.sparkline,o=t.data();n?o&&(n=angular.extend({},n,o)):n=o,n.type=n.type||"bar",n.disableHiddenCheck=!0,t.sparkline("html",n),n.resize&&$(a).resize(function(){t.sparkline("html",n)})}var r=function(){o()};n(r)}angular.module("app.charts").directive("sparkline",e),t.$inject=["$scope","$element","$timeout","$window"]}(),function(){"use strict";function e(e,t,n,a,o){var r=angular.module("app.core");r.controller=e.register,r.directive=t.directive,r.filter=n.register,r.factory=a.factory,r.service=a.service,r.constant=a.constant,r.value=a.value,o.classNameFilter(/^((?!(ng-no-animation)).)*$/)}angular.module("app.core").config(e),e.$inject=["$controllerProvider","$compileProvider","$filterProvider","$provide","$animateProvider"]}(),function(){"use strict";angular.module("app.core").constant("APP_MEDIAQUERY",{desktopLG:1200,desktop:992,tablet:768,mobile:480})}(),function(){"use strict";function e(e,t,n,a,o,r){e.$state=t,e.$stateParams=n,e.$storage=a.localStorage,e.colorByName=r.byName,e.cancel=function(e){e.stopPropagation()},e.$on("$stateNotFound",function(e,t){console.log(t.to),console.log(t.toParams),console.log(t.options)}),e.$on("$stateChangeError",function(e,t,n,a,o,r){console.log(r)}),e.$on("$stateChangeSuccess",function(){a.scrollTo(0,0),e.currTitle=t.current.title}),e.currTitle=t.current.title,e.pageTitle=function(){var t=e.app.name+" - "+(e.currTitle||e.app.description);return document.title=t,t}}angular.module("app.core").run(e),e.$inject=["$rootScope","$state","$stateParams","$window","$templateCache","Colors"]}(),function(){"use strict";angular.module("app.colors").constant("APP_COLORS",{primary:"#5d9cec",success:"#27c24c",info:"#23b7e5",warning:"#ff902b",danger:"#f05050",inverse:"#131e26",green:"#37bc9b",pink:"#f532e5",purple:"#7266ba",dark:"#3a3f51",yellow:"#fad732","gray-darker":"#232735","gray-dark":"#3a3f51",gray:"#dde6e9","gray-light":"#e4eaec","gray-lighter":"#edf1f2"})}(),function(){"use strict";function e(e){function t(t){return e[t]||"#fff"}this.byName=t}angular.module("app.colors").service("Colors",e),e.$inject=["APP_COLORS"]}(),function(){"use strict";function e(e,t,n,a,o,r){function i(e,t){return angular.element((t||document).querySelectorAll(e))}function s(e){return l[e]?l[e]:l[e]=t.get(e,{cache:r}).then(function(e){return e.data})}this.compile=function(t){t.template&&/\.html$/.test(t.template)&&(console.warn("Deprecated use of `template` option to pass a file. Please use the `templateUrl` option instead."),t.templateUrl=t.template,t.template="");var r=t.templateUrl,l=t.template||"",c=t.controller,u=t.controllerAs,d=angular.copy(t.resolve||{}),p=angular.copy(t.locals||{}),m=t.transformTemplate||angular.identity,f=t.bindToController;if(angular.forEach(d,function(e,t){angular.isString(e)?d[t]=n.get(e):d[t]=n.invoke(e)}),angular.extend(d,p),l)d.$template=e.when(l);else{if(!r)throw new Error("Missing `template` / `templateUrl` option.");d.$template=s(r)}return t.titleTemplate&&(d.$template=e.all([d.$template,s(t.titleTemplate)]).then(function(e){var t=angular.element(e[0]);return i('[ng-bind="title"]',t[0]).removeAttr("ng-bind").html(e[1]),t[0].outerHTML})),t.contentTemplate&&(d.$template=e.all([d.$template,s(t.contentTemplate)]).then(function(e){var n=angular.element(e[0]),a=i('[ng-bind="content"]',n[0]).removeAttr("ng-bind").html(e[1]);return t.templateUrl||a.next().remove(),n[0].outerHTML})),e.all(d).then(function(e){var n=m(e.$template);t.html&&(n=n.replace(/ng-bind="/gi,'ng-bind-html="'));var r=angular.element("<div>").html(n.trim()).contents(),i=a(r);return{locals:e,element:r,link:function(t){if(e.$scope=t,c){var n=o(c,e,!0);f&&angular.extend(n.instance,e);var a=angular.isObject(n)?n:n();r.data("$ngControllerController",a),r.children().data("$ngControllerController",a),u&&(t[u]=a)}return i.apply(null,arguments)}}})};var l={}}angular.module("mgcrea.ngStrap.core",[]).service("$bsCompiler",e),e.$inject=["$q","$http","$injector","$compile","$controller","$templateCache"]}(),function(){"use strict";angular.module("mgcrea.ngStrap.helpers.dateFormatter",[]).service("$dateFormatter",["$locale","dateFilter",function(e,t){function n(e){return/(h+)([:\.])?(m+)([:\.])?(s*)[ ]?(a?)/i.exec(e).slice(1)}this.getDefaultLocale=function(){return e.id},this.getDatetimeFormat=function(t,n){return e.DATETIME_FORMATS[t]||t},this.weekdaysShort=function(t){return e.DATETIME_FORMATS.SHORTDAY},this.hoursFormat=function(e){return n(e)[0]},this.minutesFormat=function(e){return n(e)[2]},this.secondsFormat=function(e){return n(e)[4]},this.timeSeparator=function(e){return n(e)[1]},this.showSeconds=function(e){return!!n(e)[4]},this.showAM=function(e){return!!n(e)[5]},this.formatDate=function(e,n,a,o){return t(e,n,o)}}])}(),function(){"use strict";angular.module("mgcrea.ngStrap.helpers.dateParser",[]).provider("$dateParser",["$localeProvider",function(e){function t(){this.year=1970,this.month=0,this.day=1,this.hours=0,this.minutes=0,this.seconds=0,this.milliseconds=0}function n(){}function a(e){return!isNaN(parseFloat(e))&&isFinite(e)}function o(e,t){for(var n=e.length,a=t.toString().toLowerCase(),o=0;n>o;o++)if(e[o].toLowerCase()===a)return o;return-1}t.prototype.setMilliseconds=function(e){this.milliseconds=e},t.prototype.setSeconds=function(e){this.seconds=e},t.prototype.setMinutes=function(e){this.minutes=e},t.prototype.setHours=function(e){this.hours=e},t.prototype.getHours=function(){return this.hours},t.prototype.setDate=function(e){this.day=e},t.prototype.setMonth=function(e){this.month=e},t.prototype.setFullYear=function(e){this.year=e},t.prototype.fromDate=function(e){return this.year=e.getFullYear(),this.month=e.getMonth(),this.day=e.getDate(),this.hours=e.getHours(),this.minutes=e.getMinutes(),this.seconds=e.getSeconds(),this.milliseconds=e.getMilliseconds(),this},t.prototype.toDate=function(){return new Date(this.year,this.month,this.day,this.hours,this.minutes,this.seconds,this.milliseconds)};var r=t.prototype,i=this.defaults={format:"shortDate",strict:!1};this.$get=["$locale","dateFilter",function(e,s){var l=function(l){function c(e){var t=u(e);return f(t)}function u(e){var t=d(e),n=t.replace(/''/g,"\\'"),a=/('(?:\\'|.)*?')/,o=n.split(a),r=Object.keys($),i=[];return angular.forEach(o,function(e){if(p(e))e=m(e);else for(var t=0;t<r.length;t++)e=e.split(r[t]).join("${"+t+"}");i.push(e)}),i.join("")}function d(e){return e.replace(/\\/g,"[\\\\]").replace(/-/g,"[-]").replace(/\./g,"[.]").replace(/\*/g,"[*]").replace(/\+/g,"[+]").replace(/\?/g,"[?]").replace(/\$/g,"[$]").replace(/\^/g,"[^]").replace(/\//g,"[/]").replace(/\\s/g,"[\\s]")}function p(e){return/^'.*'$/.test(e)}function m(e){return e.replace(/^'(.*)'$/,"$1")}function f(e){for(var t=Object.keys($),n=e,a=0;a<t.length;a++)n=n.split("${"+a+"}").join("("+$[t[a]]+")");return new RegExp("^"+n+"$",["i"])}function g(e){var t=u(e);return h(t)}function h(e){for(var t,n,a,o,r=Object.keys($),i=new RegExp("\\${(\\d+)}","g"),s=[];null!==(t=i.exec(e));)n=t[1],a=r[n],o=D[a],s.push(o);return s}var v,y,b=angular.extend({},i,l),w={},$={sss:"[0-9]{3}",ss:"[0-5][0-9]",s:b.strict?"[1-5]?[0-9]":"[0-9]|[0-5][0-9]",mm:"[0-5][0-9]",m:b.strict?"[1-5]?[0-9]":"[0-9]|[0-5][0-9]",HH:"[01][0-9]|2[0-3]",H:b.strict?"1?[0-9]|2[0-3]":"[01]?[0-9]|2[0-3]",hh:"[0][1-9]|[1][012]",h:b.strict?"[1-9]|1[012]":"0?[1-9]|1[012]",a:"AM|PM",EEEE:e.DATETIME_FORMATS.DAY.join("|"),EEE:e.DATETIME_FORMATS.SHORTDAY.join("|"),dd:"0[1-9]|[12][0-9]|3[01]",d:b.strict?"[1-9]|[1-2][0-9]|3[01]":"0?[1-9]|[1-2][0-9]|3[01]",MMMM:e.DATETIME_FORMATS.MONTH.join("|"),MMM:e.DATETIME_FORMATS.SHORTMONTH.join("|"),MM:"0[1-9]|1[012]",M:b.strict?"[1-9]|1[012]":"0?[1-9]|1[012]",yyyy:"[1]{1}[0-9]{3}|[2]{1}[0-9]{3}",yy:"[0-9]{2}",y:b.strict?"-?(0|[1-9][0-9]{0,3})":"-?0*[0-9]{1,4}"},D={sss:r.setMilliseconds,ss:r.setSeconds,s:r.setSeconds,mm:r.setMinutes,m:r.setMinutes,HH:r.setHours,H:r.setHours,hh:r.setHours,h:r.setHours,EEEE:n,EEE:n,dd:r.setDate,d:r.setDate,a:function(e){var t=this.getHours()%12;return this.setHours(e.match(/pm/i)?t+12:t)},MMMM:function(t){return this.setMonth(o(e.DATETIME_FORMATS.MONTH,t))},MMM:function(t){return this.setMonth(o(e.DATETIME_FORMATS.SHORTMONTH,t))},MM:function(e){return this.setMonth(1*e-1)},M:function(e){return this.setMonth(1*e-1)},yyyy:r.setFullYear,yy:function(e){return this.setFullYear(2e3+1*e)},y:function(e){return 50>=1*e&&2===e.length?this.setFullYear(2e3+1*e):this.setFullYear(1*e)}};return w.init=function(){w.$format=e.DATETIME_FORMATS[b.format]||b.format,v=c(w.$format),y=g(w.$format)},w.isValid=function(e){return angular.isDate(e)?!isNaN(e.getTime()):v.test(e)},w.parse=function(n,a,o,r){o&&(o=e.DATETIME_FORMATS[o]||o),angular.isDate(n)&&(n=s(n,o||w.$format,r));var i=o?c(o):v,l=o?g(o):y,u=i.exec(n);if(!u)return!1;for(var d=a&&!isNaN(a.getTime())?(new t).fromDate(a):(new t).fromDate(new Date(1970,0,1,0)),p=0;p<u.length-1;p++)l[p]&&l[p].call(d,u[p+1]);var m=d.toDate();return parseInt(d.day,10)!==m.getDate()?!1:m},w.getDateForAttribute=function(e,t){var n;if("today"===t){var o=new Date;n=new Date(o.getFullYear(),o.getMonth(),o.getDate()+("maxDate"===e?1:0),0,0,0,"minDate"===e?0:-1)}else n=angular.isString(t)&&t.match(/^".+"$/)?new Date(t.substr(1,t.length-2)):a(t)?new Date(parseInt(t,10)):angular.isString(t)&&0===t.length?"minDate"===e?-(1/0):+(1/0):new Date(t);return n},w.getTimeForAttribute=function(e,t){var n;return n="now"===t?(new Date).setFullYear(1970,0,1):angular.isString(t)&&t.match(/^".+"$/)?new Date(t.substr(1,t.length-2)).setFullYear(1970,0,1):a(t)?new Date(parseInt(t,10)).setFullYear(1970,0,1):angular.isString(t)&&0===t.length?"minTime"===e?-(1/0):+(1/0):w.parse(t,new Date(1970,0,1,0))},w.daylightSavingAdjust=function(e){return e?(e.setHours(e.getHours()>12?e.getHours()+2:0),e):null},w.timezoneOffsetAdjust=function(e,t,n){return e?(t&&"UTC"===t&&(e=new Date(e.getTime()),e.setMinutes(e.getMinutes()+(n?-1:1)*e.getTimezoneOffset())),e):null},w.init(),w};return l}]}])}(),function(){"use strict";angular.module("mgcrea.ngStrap.datepicker",["mgcrea.ngStrap.helpers.dateParser","mgcrea.ngStrap.helpers.dateFormatter","mgcrea.ngStrap.tooltip"]).provider("$datepicker",function(){var e=this.defaults={animation:"am-fade",prefixClass:"datepicker",placement:"bottom-left",templateUrl:"app/template/datepicker.tpl.html",trigger:"focus",container:!1,keyboard:!0,html:!1,delay:0,useNative:!1,dateType:"date",dateFormat:"shortDate",timezone:null,modelDateFormat:null,dayFormat:"dd",monthFormat:"MMM",yearFormat:"yyyy",monthTitleFormat:"MMMM yyyy",yearTitleFormat:"yyyy",strictFormat:!1,autoclose:!1,minDate:-(1/0),maxDate:+(1/0),startView:0,minView:0,startWeek:0,daysOfWeekDisabled:"",iconLeft:"glyphicon glyphicon-chevron-left",iconRight:"glyphicon glyphicon-chevron-right"};this.$get=["$window","$document","$rootScope","$sce","$dateFormatter","datepickerViews","$tooltip","$timeout",function(t,n,a,o,r,i,s,l){function c(t,n,a){function o(e){e.selected=c.$isSelected(e.date)}function r(){t[0].focus()}var c=s(t,angular.extend({},e,a)),p=a.scope,m=c.$options,f=c.$scope;m.startView&&(m.startView-=m.minView);var g=i(c);c.$views=g.views;var h=g.viewDate;f.$mode=m.startView,f.$iconLeft=m.iconLeft,f.$iconRight=m.iconRight;var v=c.$views[f.$mode];f.$select=function(e){c.select(e)},f.$selectPane=function(e){c.$selectPane(e)},f.$toggleMode=function(){c.setMode((f.$mode+1)%c.$views.length)},c.update=function(e){angular.isDate(e)&&!isNaN(e.getTime())&&(c.$date=e,v.update.call(v,e)),c.$build(!0)},c.updateDisabledDates=function(e){m.disabledDateRanges=e;for(var t=0,n=f.rows.length;n>t;t++)angular.forEach(f.rows[t],c.$setDisabledEl)},c.select=function(e,t){angular.isDate(n.$dateValue)||(n.$dateValue=new Date(e)),!f.$mode||t?(n.$setViewValue(angular.copy(e)),n.$render(),m.autoclose&&!t&&l(function(){c.hide(!0)})):(angular.extend(h,{year:e.getFullYear(),month:e.getMonth(),date:e.getDate()}),c.setMode(f.$mode-1),c.$build())},c.setMode=function(e){f.$mode=e,v=c.$views[f.$mode],c.$build()},c.$build=function(e){e===!0&&v.built||(e!==!1||v.built)&&v.build.call(v)},c.$updateSelected=function(){for(var e=0,t=f.rows.length;t>e;e++)angular.forEach(f.rows[e],o)},c.$isSelected=function(e){return v.isSelected(e)},c.$setDisabledEl=function(e){e.disabled=v.isDisabled(e.date)},c.$selectPane=function(e){var t=v.steps,n=new Date(Date.UTC(h.year+(t.year||0)*e,h.month+(t.month||0)*e,1));angular.extend(h,{year:n.getUTCFullYear(),month:n.getUTCMonth(),date:n.getUTCDate()}),c.$build()},c.$onMouseDown=function(e){if(e.preventDefault(),e.stopPropagation(),d){var t=angular.element(e.target);"button"!==t[0].nodeName.toLowerCase()&&(t=t.parent()),t.triggerHandler("click")}},c.$onKeyDown=function(e){if(/(38|37|39|40|13)/.test(e.keyCode)&&!e.shiftKey&&!e.altKey){if(e.preventDefault(),e.stopPropagation(),13===e.keyCode)return void(f.$mode?f.$apply(function(){c.setMode(f.$mode-1)}):c.hide(!0));v.onKeyDown(e),p.$digest()}};var y=c.init;c.init=function(){return u&&m.useNative?(t.prop("type","date"),void t.css("-webkit-appearance","textfield")):(d&&(t.prop("type","text"),t.attr("readonly","true"),t.on("click",r)),void y())};var b=c.destroy;c.destroy=function(){u&&m.useNative&&t.off("click",r),b()};var w=c.show;c.show=function(){!d&&t.attr("readonly")||t.attr("disabled")||(w(),l(function(){c.$isShown&&(c.$element.on(d?"touchstart":"mousedown",c.$onMouseDown),m.keyboard&&t.on("keydown",c.$onKeyDown))},0,!1))};var $=c.hide;return c.hide=function(e){c.$isShown&&(c.$element.off(d?"touchstart":"mousedown",c.$onMouseDown),m.keyboard&&t.off("keydown",c.$onKeyDown),$(e))},c}var u=/(ip[ao]d|iphone|android)/gi.test(t.navigator.userAgent),d="createTouch"in t.document&&u;return e.lang||(e.lang=r.getDefaultLocale()),c.defaults=e,c}]}).directive("bsDatepicker",["$window","$parse","$q","$dateFormatter","$dateParser","$datepicker",function(e,t,n,a,o,r){var i=/(ip[ao]d|iphone|android)/gi.test(e.navigator.userAgent);return{restrict:"EAC",require:"ngModel",link:function(e,t,n,s){function l(e){return e&&e.length?e:null}function c(e){if(angular.isDate(e)){var t=isNaN(m.$options.minDate)||e.getTime()>=m.$options.minDate,n=isNaN(m.$options.maxDate)||e.getTime()<=m.$options.maxDate,a=t&&n;s.$setValidity("date",a),s.$setValidity("min",t),s.$setValidity("max",n),a&&(s.$dateValue=e)}}function u(){return!s.$dateValue||isNaN(s.$dateValue.getTime())?"":g(s.$dateValue,d.dateFormat)}var d={scope:e};angular.forEach(["template","templateUrl","controller","controllerAs","placement","container","delay","trigger","html","animation","autoclose","dateType","dateFormat","timezone","modelDateFormat","dayFormat","strictFormat","startWeek","startDate","useNative","lang","startView","minView","iconLeft","iconRight","daysOfWeekDisabled","id","prefixClass","prefixEvent"],function(e){angular.isDefined(n[e])&&(d[e]=n[e])});var p=/^(false|0|)$/i;angular.forEach(["html","container","autoclose","useNative"],function(e){angular.isDefined(n[e])&&p.test(n[e])&&(d[e]=!1)}),angular.forEach(["onBeforeShow","onShow","onBeforeHide","onHide"],function(t){var a="bs"+t.charAt(0).toUpperCase()+t.slice(1);angular.isDefined(n[a])&&(d[t]=e.$eval(n[a]))});var m=r(t,s,d);d=m.$options,i&&d.useNative&&(d.dateFormat="yyyy-MM-dd");var f=d.lang,g=function(e,t){return a.formatDate(e,t,f)},h=o({format:d.dateFormat,lang:f,strict:d.strictFormat});n.bsShow&&e.$watch(n.bsShow,function(e,t){m&&angular.isDefined(e)&&(angular.isString(e)&&(e=!!e.match(/true|,?(datepicker),?/i)),e===!0?m.show():m.hide())}),angular.forEach(["minDate","maxDate"],function(e){angular.isDefined(n[e])&&n.$observe(e,function(t){m.$options[e]=h.getDateForAttribute(e,t),isNaN(m.$options[e])||m.$build(!1),c(s.$dateValue)})}),angular.isDefined(n.dateFormat)&&n.$observe("dateFormat",function(e){m.$options.dateFormat=e}),e.$watch(n.ngModel,function(e,t){m.update(s.$dateValue)},!0),angular.isDefined(n.disabledDates)&&e.$watch(n.disabledDates,function(e,t){e=l(e),t=l(t),e&&m.updateDisabledDates(e)}),s.$parsers.unshift(function(e){var t;if(!e)return s.$setValidity("date",!0),null;var n=h.parse(e,s.$dateValue);return!n||isNaN(n.getTime())?void s.$setValidity("date",!1):(c(n),"string"===d.dateType?(t=h.timezoneOffsetAdjust(n,d.timezone,!0),g(t,d.modelDateFormat||d.dateFormat)):(t=h.timezoneOffsetAdjust(s.$dateValue,d.timezone,!0),"number"===d.dateType?t.getTime():"unix"===d.dateType?t.getTime()/1e3:"iso"===d.dateType?t.toISOString():new Date(t)))}),s.$formatters.push(function(e){var t;return t=angular.isUndefined(e)||null===e?NaN:angular.isDate(e)?e:"string"===d.dateType?h.parse(e,null,d.modelDateFormat):"unix"===d.dateType?new Date(1e3*e):new Date(e),s.$dateValue=h.timezoneOffsetAdjust(t,d.timezone),u()}),s.$render=function(){t.val(u())},e.$on("$destroy",function(){m&&m.destroy(),d=null,m=null})}}}]).provider("datepickerViews",function(){function e(e,t){for(var n=[];e.length>0;)n.push(e.splice(0,t));return n}function t(e,t){return(e%t+t)%t}this.$get=["$dateFormatter","$dateParser","$sce",function(n,a,o){return function(r){var i=r.$scope,s=r.$options,l=s.lang,c=function(e,t){return n.formatDate(e,t,l)},u=a({format:s.dateFormat,lang:l,strict:s.strictFormat}),d=n.weekdaysShort(l),p=d.slice(s.startWeek).concat(d.slice(0,s.startWeek)),m=o.trustAsHtml('<th class="dow text-center">'+p.join('</th><th class="dow text-center">')+"</th>"),f=r.$date||(s.startDate?u.getDateForAttribute("startDate",s.startDate):new Date),g={year:f.getFullYear(),month:f.getMonth(),date:f.getDate()},h=[{format:s.dayFormat,split:7,steps:{month:1},update:function(e,t){!this.built||t||e.getFullYear()!==g.year||e.getMonth()!==g.month?(angular.extend(g,{year:r.$date.getFullYear(),month:r.$date.getMonth(),date:r.$date.getDate()}),r.$build()):e.getDate()===g.date&&1!==e.getDate()||(g.date=r.$date.getDate(),r.$updateSelected())},build:function(){var n=new Date(g.year,g.month,1),a=n.getTimezoneOffset(),o=new Date(+n-864e5*t(n.getDay()-s.startWeek,7)),l=o.getTimezoneOffset(),d=u.timezoneOffsetAdjust(new Date,s.timezone).toDateString();l!==a&&(o=new Date(+o+6e4*(l-a)));for(var p,f=[],h=0;42>h;h++)p=u.daylightSavingAdjust(new Date(o.getFullYear(),o.getMonth(),o.getDate()+h)),f.push({date:p,isToday:p.toDateString()===d,label:c(p,this.format),selected:r.$date&&this.isSelected(p),muted:p.getMonth()!==g.month,disabled:this.isDisabled(p)});i.title=c(n,s.monthTitleFormat),i.showLabels=!0,i.labels=m,i.rows=e(f,this.split),this.built=!0},isSelected:function(e){return r.$date&&e.getFullYear()===r.$date.getFullYear()&&e.getMonth()===r.$date.getMonth()&&e.getDate()===r.$date.getDate()},isDisabled:function(e){var t=e.getTime();if(t<s.minDate||t>s.maxDate)return!0;if(-1!==s.daysOfWeekDisabled.indexOf(e.getDay()))return!0;if(s.disabledDateRanges)for(var n=0;n<s.disabledDateRanges.length;n++)if(t>=s.disabledDateRanges[n].start&&t<=s.disabledDateRanges[n].end)return!0;return!1},onKeyDown:function(e){if(r.$date){var t,n=r.$date.getTime();37===e.keyCode?t=new Date(n-864e5):38===e.keyCode?t=new Date(n-6048e5):39===e.keyCode?t=new Date(n+864e5):40===e.keyCode&&(t=new Date(n+6048e5)),this.isDisabled(t)||r.select(t,!0)}}},{name:"month",format:s.monthFormat,split:4,steps:{year:1},update:function(e,t){this.built&&e.getFullYear()===g.year?e.getMonth()!==g.month&&(angular.extend(g,{month:r.$date.getMonth(),date:r.$date.getDate()}),r.$updateSelected()):(angular.extend(g,{year:r.$date.getFullYear(),month:r.$date.getMonth(),date:r.$date.getDate()}),r.$build())},build:function(){for(var t,n=[],a=0;12>a;a++)t=new Date(g.year,a,1),n.push({date:t,label:c(t,this.format),selected:r.$isSelected(t),disabled:this.isDisabled(t)});i.title=c(t,s.yearTitleFormat),i.showLabels=!1,i.rows=e(n,this.split),this.built=!0},isSelected:function(e){return r.$date&&e.getFullYear()===r.$date.getFullYear()&&e.getMonth()===r.$date.getMonth()},isDisabled:function(e){var t=+new Date(e.getFullYear(),e.getMonth()+1,0);return t<s.minDate||e.getTime()>s.maxDate},onKeyDown:function(e){if(r.$date){var t=r.$date.getMonth(),n=new Date(r.$date);37===e.keyCode?n.setMonth(t-1):38===e.keyCode?n.setMonth(t-4):39===e.keyCode?n.setMonth(t+1):40===e.keyCode&&n.setMonth(t+4),this.isDisabled(n)||r.select(n,!0)}}},{name:"year",format:s.yearFormat,split:4,steps:{year:12},update:function(e,t){!this.built||t||parseInt(e.getFullYear()/20,10)!==parseInt(g.year/20,10)?(angular.extend(g,{year:r.$date.getFullYear(),month:r.$date.getMonth(),date:r.$date.getDate()}),r.$build()):e.getFullYear()!==g.year&&(angular.extend(g,{year:r.$date.getFullYear(),month:r.$date.getMonth(),date:r.$date.getDate()}),r.$updateSelected())},build:function(){for(var t,n=g.year-g.year%(3*this.split),a=[],o=0;12>o;o++)t=new Date(n+o,0,1),a.push({date:t,label:c(t,this.format),selected:r.$isSelected(t),disabled:this.isDisabled(t)});i.title=a[0].label+"-"+a[a.length-1].label,i.showLabels=!1,i.rows=e(a,this.split),this.built=!0},isSelected:function(e){return r.$date&&e.getFullYear()===r.$date.getFullYear()},isDisabled:function(e){var t=+new Date(e.getFullYear()+1,0,0);return t<s.minDate||e.getTime()>s.maxDate},onKeyDown:function(e){if(r.$date){var t=r.$date.getFullYear(),n=new Date(r.$date);37===e.keyCode?n.setYear(t-1):38===e.keyCode?n.setYear(t-4):39===e.keyCode?n.setYear(t+1):40===e.keyCode&&n.setYear(t+4),this.isDisabled(n)||r.select(n,!0)}}}];return{views:s.minView?Array.prototype.slice.call(h,s.minView):h,viewDate:g}}}]})}(),function(){"use strict";angular.module("mgcrea.ngStrap.timepicker",["mgcrea.ngStrap.helpers.dateParser","mgcrea.ngStrap.helpers.dateFormatter","mgcrea.ngStrap.tooltip"]).provider("$timepicker",function(){var e=this.defaults={animation:"am-fade",prefixClass:"timepicker",placement:"bottom-left",templateUrl:"app/template/timepicker.tpl.html",trigger:"focus",container:!1,keyboard:!0,html:!1,delay:0,useNative:!0,timeType:"date",timeFormat:"shortTime",timezone:null,modelTimeFormat:null,autoclose:!1,minTime:-(1/0),maxTime:+(1/0),length:5,hourStep:1,minuteStep:5,secondStep:5,roundDisplay:!1,iconUp:"glyphicon glyphicon-chevron-up",iconDown:"glyphicon glyphicon-chevron-down",arrowBehavior:"pager"};this.$get=["$window","$document","$rootScope","$sce","$dateFormatter","$tooltip","$timeout",function(t,n,a,o,r,i,s){function l(t,n,a){function o(e){var t=6e4*f.minuteStep;return new Date(Math.floor(e.getTime()/t)*t)}function l(e,n){var a=e+n;if(t[0].createTextRange){var o=t[0].createTextRange();o.collapse(!0),o.moveStart("character",e),o.moveEnd("character",a),o.select()}else t[0].setSelectionRange?t[0].setSelectionRange(e,a):angular.isUndefined(t[0].selectionStart)&&(t[0].selectionStart=e,t[0].selectionEnd=a)}function d(){t[0].focus()}var p=i(t,angular.extend({},e,a)),m=a.scope,f=p.$options,g=p.$scope,h=f.lang,v=function(e,t,n){return r.formatDate(e,t,h,n)},y=0,b=f.roundDisplay?o(new Date):new Date,w=n.$dateValue||b,$={hour:w.getHours(),meridian:w.getHours()<12,minute:w.getMinutes(),second:w.getSeconds(),millisecond:w.getMilliseconds()},D=r.getDatetimeFormat(f.timeFormat,h),C=r.hoursFormat(D),S=r.timeSeparator(D),M=r.minutesFormat(D),k=r.secondsFormat(D),T=r.showSeconds(D),x=r.showAM(D);g.$iconUp=f.iconUp,g.$iconDown=f.iconDown,g.$select=function(e,t){p.select(e,t)},g.$moveIndex=function(e,t){p.$moveIndex(e,t)},g.$switchMeridian=function(e){p.switchMeridian(e)},p.update=function(e){angular.isDate(e)&&!isNaN(e.getTime())?(p.$date=e,angular.extend($,{hour:e.getHours(),minute:e.getMinutes(),second:e.getSeconds(),millisecond:e.getMilliseconds()}),p.$build()):p.$isBuilt||p.$build()},p.select=function(e,t,a){n.$dateValue&&!isNaN(n.$dateValue.getTime())||(n.$dateValue=new Date(1970,0,1)),angular.isDate(e)||(e=new Date(e)),0===t?n.$dateValue.setHours(e.getHours()):1===t?n.$dateValue.setMinutes(e.getMinutes()):2===t&&n.$dateValue.setSeconds(e.getSeconds()),n.$setViewValue(angular.copy(n.$dateValue)),n.$render(),f.autoclose&&!a&&s(function(){p.hide(!0)})},p.switchMeridian=function(e){if(n.$dateValue&&!isNaN(n.$dateValue.getTime())){var t=(e||n.$dateValue).getHours();n.$dateValue.setHours(12>t?t+12:t-12),n.$setViewValue(angular.copy(n.$dateValue)),n.$render()}},p.$build=function(){var e,t,n=g.midIndex=parseInt(f.length/2,10),a=[];for(e=0;e<f.length;e++)t=new Date(1970,0,1,$.hour-(n-e)*f.hourStep),a.push({date:t,label:v(t,C),selected:p.$date&&p.$isSelected(t,0),disabled:p.$isDisabled(t,0)});var o,r=[];for(e=0;e<f.length;e++)o=new Date(1970,0,1,0,$.minute-(n-e)*f.minuteStep),r.push({date:o,label:v(o,M),selected:p.$date&&p.$isSelected(o,1),disabled:p.$isDisabled(o,1)});var i,s=[];for(e=0;e<f.length;e++)i=new Date(1970,0,1,0,0,$.second-(n-e)*f.secondStep),s.push({date:i,label:v(i,k),selected:p.$date&&p.$isSelected(i,2),disabled:p.$isDisabled(i,2)});var l=[];for(e=0;e<f.length;e++)T?l.push([a[e],r[e],s[e]]):l.push([a[e],r[e]]);g.rows=l,g.showSeconds=T,g.showAM=x,g.isAM=(p.$date||a[n].date).getHours()<12,g.timeSeparator=S,p.$isBuilt=!0},p.$isSelected=function(e,t){return p.$date?0===t?e.getHours()===p.$date.getHours():1===t?e.getMinutes()===p.$date.getMinutes():2===t?e.getSeconds()===p.$date.getSeconds():void 0:!1},p.$isDisabled=function(e,t){var n;return 0===t?n=e.getTime()+6e4*$.minute+1e3*$.second:1===t?n=e.getTime()+36e5*$.hour+1e3*$.second:2===t&&(n=e.getTime()+36e5*$.hour+6e4*$.minute),n<1*f.minTime||n>1*f.maxTime},g.$arrowAction=function(e,t){"picker"===f.arrowBehavior?p.$setTimeByStep(e,t):p.$moveIndex(e,t)},p.$setTimeByStep=function(e,t){var n=new Date(p.$date||w),a=n.getHours(),o=n.getMinutes(),r=n.getSeconds();0===t?n.setHours(a-parseInt(f.hourStep,10)*e):1===t?n.setMinutes(o-parseInt(f.minuteStep,10)*e):2===t&&n.setSeconds(r-parseInt(f.secondStep,10)*e),p.select(n,t,!0)},p.$moveIndex=function(e,t){var n;0===t?(n=new Date(1970,0,1,$.hour+e*f.length,$.minute,$.second),angular.extend($,{hour:n.getHours()})):1===t?(n=new Date(1970,0,1,$.hour,$.minute+e*f.length*f.minuteStep,$.second),angular.extend($,{minute:n.getMinutes()})):2===t&&(n=new Date(1970,0,1,$.hour,$.minute,$.second+e*f.length*f.secondStep),angular.extend($,{second:n.getSeconds()})),p.$build()},p.$onMouseDown=function(e){if("input"!==e.target.nodeName.toLowerCase()&&e.preventDefault(),e.stopPropagation(),u){var t=angular.element(e.target);"button"!==t[0].nodeName.toLowerCase()&&(t=t.parent()),t.triggerHandler("click")}},p.$onKeyDown=function(e){if(/(38|37|39|40|13)/.test(e.keyCode)&&!e.shiftKey&&!e.altKey){if(e.preventDefault(),e.stopPropagation(),13===e.keyCode)return void p.hide(!0);var t=new Date(p.$date),n=t.getHours(),a=v(t,C).length,o=t.getMinutes(),r=v(t,M).length,i=t.getSeconds(),s=v(t,k).length,c=1,u=/(37|39)/.test(e.keyCode),d=2+1*T+1*x;u&&(37===e.keyCode?y=1>y?d-1:y-1:39===e.keyCode&&(y=d-1>y?y+1:0));var g=[0,a],h=0;38===e.keyCode&&(h=-1),40===e.keyCode&&(h=1);var b=2===y&&T,w=2===y&&!T||3===y&&T;0===y?(t.setHours(n+h*parseInt(f.hourStep,10)),a=v(t,C).length,g=[0,a]):1===y?(t.setMinutes(o+h*parseInt(f.minuteStep,10)),r=v(t,M).length,g=[a+c,r]):b?(t.setSeconds(i+h*parseInt(f.secondStep,10)),s=v(t,k).length,g=[a+c+r+c,s]):w&&(u||p.switchMeridian(),g=[a+c+r+c+(s+c)*T,2]),p.select(t,y,!0),l(g[0],g[1]),m.$digest()}};var F=p.init;p.init=function(){return c&&f.useNative?(t.prop("type","time"),void t.css("-webkit-appearance","textfield")):(u&&(t.prop("type","text"),t.attr("readonly","true"),t.on("click",d)),void F())};var A=p.destroy;p.destroy=function(){c&&f.useNative&&t.off("click",d),A()};var P=p.show;p.show=function(){!u&&t.attr("readonly")||t.attr("disabled")||(P(),s(function(){p.$element&&p.$element.on(u?"touchstart":"mousedown",p.$onMouseDown),f.keyboard&&t&&t.on("keydown",p.$onKeyDown)},0,!1))};var _=p.hide;return p.hide=function(e){p.$isShown&&(p.$element&&p.$element.off(u?"touchstart":"mousedown",p.$onMouseDown),f.keyboard&&t&&t.off("keydown",p.$onKeyDown),_(e))},p}var c=/(ip[ao]d|iphone|android)/gi.test(t.navigator.userAgent),u="createTouch"in t.document&&c;return e.lang||(e.lang=r.getDefaultLocale()),l.defaults=e,l}]}).directive("bsTimepicker",["$window","$parse","$q","$dateFormatter","$dateParser","$timepicker",function(e,t,n,a,o,r){var i=r.defaults,s=/(ip[ao]d|iphone|android)/gi.test(e.navigator.userAgent);return{restrict:"EAC",require:"ngModel",link:function(e,t,n,l){function c(e){if(angular.isDate(e)){var t=isNaN(d.minTime)||new Date(e.getTime()).setFullYear(1970,0,1)>=d.minTime,n=isNaN(d.maxTime)||new Date(e.getTime()).setFullYear(1970,0,1)<=d.maxTime,a=t&&n;
-l.$setValidity("date",a),l.$setValidity("min",t),l.$setValidity("max",n),a&&(l.$dateValue=e)}}function u(){return!l.$dateValue||isNaN(l.$dateValue.getTime())?"":g(l.$dateValue,d.timeFormat)}var d={scope:e};angular.forEach(["template","templateUrl","controller","controllerAs","placement","container","delay","trigger","keyboard","html","animation","autoclose","timeType","timeFormat","timezone","modelTimeFormat","useNative","hourStep","minuteStep","secondStep","length","arrowBehavior","iconUp","iconDown","roundDisplay","id","prefixClass","prefixEvent"],function(e){angular.isDefined(n[e])&&(d[e]=n[e])});var p=/^(false|0|)$/i;angular.forEach(["html","container","autoclose","useNative","roundDisplay"],function(e){angular.isDefined(n[e])&&p.test(n[e])&&(d[e]=!1)}),angular.forEach(["onBeforeShow","onShow","onBeforeHide","onHide"],function(t){var a="bs"+t.charAt(0).toUpperCase()+t.slice(1);angular.isDefined(n[a])&&(d[t]=e.$eval(n[a]))}),s&&(d.useNative||i.useNative)&&(d.timeFormat="HH:mm");var m=r(t,l,d);d=m.$options;var f=d.lang,g=function(e,t,n){return a.formatDate(e,t,f,n)};n.bsShow&&e.$watch(n.bsShow,function(e,t){m&&angular.isDefined(e)&&(angular.isString(e)&&(e=!!e.match(/true|,?(timepicker),?/i)),e===!0?m.show():m.hide())});var h=o({format:d.timeFormat,lang:f});angular.forEach(["minTime","maxTime"],function(e){angular.isDefined(n[e])&&n.$observe(e,function(t){m.$options[e]=h.getTimeForAttribute(e,t),isNaN(m.$options[e])||m.$build(),c(l.$dateValue)})}),e.$watch(n.ngModel,function(e,t){m.update(l.$dateValue)},!0),l.$parsers.unshift(function(e){var t;if(!e)return l.$setValidity("date",!0),null;var n=angular.isDate(e)?e:h.parse(e,l.$dateValue);return!n||isNaN(n.getTime())?void l.$setValidity("date",!1):(c(n),"string"===d.timeType?(t=h.timezoneOffsetAdjust(n,d.timezone,!0),g(t,d.modelTimeFormat||d.timeFormat)):(t=h.timezoneOffsetAdjust(l.$dateValue,d.timezone,!0),"number"===d.timeType?t.getTime():"unix"===d.timeType?t.getTime()/1e3:"iso"===d.timeType?t.toISOString():new Date(t)))}),l.$formatters.push(function(e){var t;return t=angular.isUndefined(e)||null===e?NaN:angular.isDate(e)?e:"string"===d.timeType?h.parse(e,null,d.modelTimeFormat):"unix"===d.timeType?new Date(1e3*e):new Date(e),l.$dateValue=h.timezoneOffsetAdjust(t,d.timezone),u()}),l.$render=function(){t.val(u())},e.$on("$destroy",function(){m&&m.destroy(),d=null,m=null})}}}])}(),angular.module("mgcrea.ngStrap.tooltip",["mgcrea.ngStrap.core","mgcrea.ngStrap.helpers.dimensions"]).provider("$tooltip",function(){var e=this.defaults={animation:"am-fade",customClass:"",prefixClass:"tooltip",prefixEvent:"tooltip",container:!1,target:!1,placement:"top",templateUrl:"tooltip/tooltip.tpl.html",template:"",titleTemplate:!1,trigger:"hover focus",keyboard:!1,html:!1,show:!1,title:"",type:"",delay:0,autoClose:!1,bsEnabled:!0,viewport:{selector:"body",padding:0}};this.$get=["$window","$rootScope","$bsCompiler","$q","$templateCache","$http","$animate","$sce","dimensions","$$rAF","$timeout",function(t,n,a,o,r,i,s,l,c,u,d){function p(o,r){function i(){R.$emit(P.prefixEvent+".show",A),angular.isDefined(P.onShow)&&angular.isFunction(P.onShow)&&P.onShow(A)}function p(){if(R.$emit(P.prefixEvent+".hide",A),angular.isDefined(P.onHide)&&angular.isFunction(P.onHide)&&P.onHide(A),I===W){if(q&&"focus"===P.trigger)return o[0].blur();F()}}function g(){var e=P.trigger.split(" ");angular.forEach(e,function(e){"click"===e||"contextmenu"===e?o.on(e,A.toggle):"manual"!==e&&(o.on("hover"===e?"mouseenter":"focus",A.enter),o.on("hover"===e?"mouseleave":"blur",A.leave),"button"===O&&"hover"!==e&&o.on(h?"touchstart":"mousedown",A.$onFocusElementMouseDown))})}function y(){for(var e=P.trigger.split(" "),t=e.length;t--;){var n=e[t];"click"===n||"contextmenu"===n?o.off(n,A.toggle):"manual"!==n&&(o.off("hover"===n?"mouseenter":"focus",A.enter),o.off("hover"===n?"mouseleave":"blur",A.leave),"button"===O&&"hover"!==n&&o.off(h?"touchstart":"mousedown",A.$onFocusElementMouseDown))}}function b(){"focus"!==P.trigger?I.on("keyup",A.$onKeyUp):o.on("keyup",A.$onFocusKeyUp)}function w(){"focus"!==P.trigger?I.off("keyup",A.$onKeyUp):o.off("keyup",A.$onFocusKeyUp)}function $(){d(function(){I.on("click",C),v.on("click",A.hide),H=!0},0,!1)}function D(){H&&(I.off("click",C),v.off("click",A.hide),H=!1)}function C(e){e.stopPropagation()}function S(e){e=e||P.target||o;var n=e[0],a="BODY"===n.tagName,r=n.getBoundingClientRect(),i={};for(var s in r)i[s]=r[s];null===i.width&&(i=angular.extend({},i,{width:r.right-r.left,height:r.bottom-r.top}));var l=a?{top:0,left:0}:c.offset(n),u={scroll:a?document.documentElement.scrollTop||document.body.scrollTop:e.prop("scrollTop")||0},d=a?{width:document.documentElement.clientWidth,height:t.innerHeight}:null;return angular.extend({},i,u,d,l)}function M(e,t,n,a){var o,r=e.split("-");switch(r[0]){case"right":o={top:t.top+t.height/2-a/2,left:t.left+t.width};break;case"bottom":o={top:t.top+t.height,left:t.left+t.width/2-n/2};break;case"left":o={top:t.top+t.height/2-a/2,left:t.left-n};break;default:o={top:t.top-a,left:t.left+t.width/2-n/2}}if(!r[1])return o;if("top"===r[0]||"bottom"===r[0])switch(r[1]){case"left":o.left=t.left;break;case"right":o.left=t.left+t.width-n}else if("left"===r[0]||"right"===r[0])switch(r[1]){case"top":o.top=t.top-a+t.height;break;case"bottom":o.top=t.top}return o}function k(e,t){var n=I[0],a=n.offsetWidth,o=n.offsetHeight,r=parseInt(c.css(n,"margin-top"),10),i=parseInt(c.css(n,"margin-left"),10);isNaN(r)&&(r=0),isNaN(i)&&(i=0),e.top=e.top+r,e.left=e.left+i,c.setOffset(n,angular.extend({using:function(e){I.css({top:Math.round(e.top)+"px",left:Math.round(e.left)+"px",right:""})}},e),0);var s=n.offsetWidth,l=n.offsetHeight;if("top"===t&&l!==o&&(e.top=e.top+o-l),!/top-left|top-right|bottom-left|bottom-right/.test(t)){var u=T(t,e,s,l);if(u.left?e.left+=u.left:e.top+=u.top,c.setOffset(n,e),/top|right|bottom|left/.test(t)){var d=/top|bottom/.test(t),p=d?2*u.left-a+s:2*u.top-o+l,m=d?"offsetWidth":"offsetHeight";x(p,n[m],d)}}}function T(e,t,n,a){var o={top:0,left:0};if(!A.$viewport)return o;var r=P.viewport&&P.viewport.padding||0,i=S(A.$viewport);if(/right|left/.test(e)){var s=t.top-r-i.scroll,l=t.top+r-i.scroll+a;s<i.top?o.top=i.top-s:l>i.top+i.height&&(o.top=i.top+i.height-l)}else{var c=t.left-r,u=t.left+r+n;c<i.left?o.left=i.left-c:u>i.right&&(o.left=i.left+i.width-u)}return o}function x(e,t,n){var a=f(".tooltip-arrow, .arrow",I[0]);a.css(n?"left":"top",50*(1-e/t)+"%").css(n?"top":"left","")}function F(){clearTimeout(N),A.$isShown&&null!==I&&(P.autoClose&&D(),P.keyboard&&w()),U&&(U.$destroy(),U=null),I&&(I.remove(),I=A.$element=null)}var A={},P=A.$options=angular.extend({},e,r),_=A.$promise=a.compile(P),R=A.$scope=P.scope&&P.scope.$new()||n.$new(),O=o[0].nodeName.toLowerCase();if(P.delay&&angular.isString(P.delay)){var j=P.delay.split(",").map(parseFloat);P.delay=j.length>1?{show:j[0],hide:j[1]}:j[0]}A.$id=P.id||o.attr("id")||"",P.title&&(R.title=l.trustAsHtml(P.title)),R.$setEnabled=function(e){R.$$postDigest(function(){A.setEnabled(e)})},R.$hide=function(){R.$$postDigest(function(){A.hide()})},R.$show=function(){R.$$postDigest(function(){A.show()})},R.$toggle=function(){R.$$postDigest(function(){A.toggle()})},A.$isShown=R.$isShown=!1;var N,L,E,I,B,U;_.then(function(e){E=e,A.init()}),A.init=function(){P.delay&&angular.isNumber(P.delay)&&(P.delay={show:P.delay,hide:P.delay}),"self"===P.container?B=o:angular.isElement(P.container)?B=P.container:P.container&&(B=f(P.container)),g(),P.target&&(P.target=angular.isElement(P.target)?P.target:f(P.target)),P.show&&R.$$postDigest(function(){"focus"===P.trigger?o[0].focus():A.show()})},A.destroy=function(){y(),F(),R.$destroy()},A.enter=function(){return clearTimeout(N),L="in",P.delay&&P.delay.show?void(N=setTimeout(function(){"in"===L&&A.show()},P.delay.show)):A.show()},A.show=function(){if(P.bsEnabled&&!A.$isShown){R.$emit(P.prefixEvent+".show.before",A),angular.isDefined(P.onBeforeShow)&&angular.isFunction(P.onBeforeShow)&&P.onBeforeShow(A);var e,t;P.container?(e=B,t=B[0].lastChild?angular.element(B[0].lastChild):null):(e=null,t=o),I&&F(),U=A.$scope.$new(),I=A.$element=E.link(U,function(e,t){}),I.css({top:"-9999px",left:"-9999px",right:"auto",display:"block",visibility:"hidden"}),P.animation&&I.addClass(P.animation),P.type&&I.addClass(P.prefixClass+"-"+P.type),P.customClass&&I.addClass(P.customClass),t?t.after(I):e.prepend(I),A.$isShown=R.$isShown=!0,m(R),A.$applyPlacement(),angular.version.minor<=2?s.enter(I,e,t,i):s.enter(I,e,t).then(i),m(R),u(function(){I&&I.css({visibility:"visible"}),P.keyboard&&("focus"!==P.trigger&&A.focus(),b())}),P.autoClose&&$()}},A.leave=function(){return clearTimeout(N),L="out",P.delay&&P.delay.hide?void(N=setTimeout(function(){"out"===L&&A.hide()},P.delay.hide)):A.hide()};var q,W;A.hide=function(e){A.$isShown&&(R.$emit(P.prefixEvent+".hide.before",A),angular.isDefined(P.onBeforeHide)&&angular.isFunction(P.onBeforeHide)&&P.onBeforeHide(A),q=e,W=I,angular.version.minor<=2?s.leave(I,p):s.leave(I).then(p),A.$isShown=R.$isShown=!1,m(R),P.keyboard&&null!==I&&w(),P.autoClose&&null!==I&&D())},A.toggle=function(e){e&&e.preventDefault(),A.$isShown?A.leave():A.enter()},A.focus=function(){I[0].focus()},A.setEnabled=function(e){P.bsEnabled=e},A.setViewport=function(e){P.viewport=e},A.$applyPlacement=function(){if(I){var t=P.placement,n=/\s?auto?\s?/i,a=n.test(t);a&&(t=t.replace(n,"")||e.placement),I.addClass(P.placement);var o=S(),r=I.prop("offsetWidth"),i=I.prop("offsetHeight");if(A.$viewport=P.viewport&&f(P.viewport.selector||P.viewport),a){var s=t,l=S(A.$viewport);/bottom/.test(s)&&o.bottom+i>l.bottom?t=s.replace("bottom","top"):/top/.test(s)&&o.top-i<l.top&&(t=s.replace("top","bottom")),/left/.test(s)&&o.left-r<l.left?t=t.replace("left","right"):/right/.test(s)&&o.right+r>l.width&&(t=t.replace("right","left")),I.removeClass(s).addClass(t)}var c=M(t,o,r,i);k(c,t)}},A.$onKeyUp=function(e){27===e.which&&A.$isShown&&(A.hide(),e.stopPropagation())},A.$onFocusKeyUp=function(e){27===e.which&&(o[0].blur(),e.stopPropagation())},A.$onFocusElementMouseDown=function(e){e.preventDefault(),e.stopPropagation(),A.$isShown?o[0].blur():o[0].focus()};var H=!1;return A}function m(e){e.$$phase||e.$root&&e.$root.$$phase||e.$digest()}function f(e,t){return angular.element((t||document).querySelectorAll(e))}var g=/(ip[ao]d|iphone|android)/gi.test(t.navigator.userAgent),h="createTouch"in t.document&&g,v=angular.element(t.document);return p}]}).directive("bsTooltip",["$window","$location","$sce","$parse","$tooltip","$$rAF",function(e,t,n,a,o,r){return{restrict:"EAC",scope:!0,link:function(e,t,a,i){var s,l={scope:e};angular.forEach(["template","templateUrl","controller","controllerAs","titleTemplate","placement","container","delay","trigger","html","animation","backdropAnimation","type","customClass","id"],function(e){angular.isDefined(a[e])&&(l[e]=a[e])});var c=/^(false|0|)$/i;angular.forEach(["html","container"],function(e){angular.isDefined(a[e])&&c.test(a[e])&&(l[e]=!1)}),angular.forEach(["onBeforeShow","onShow","onBeforeHide","onHide"],function(t){var n="bs"+t.charAt(0).toUpperCase()+t.slice(1);angular.isDefined(a[n])&&(l[t]=e.$eval(a[n]))});var u=t.attr("data-target");angular.isDefined(u)&&(c.test(u)?l.target=!1:l.target=u),e.hasOwnProperty("title")||(e.title=""),a.$observe("title",function(t){if(angular.isDefined(t)||!e.hasOwnProperty("title")){var a=e.title;e.title=n.trustAsHtml(t),angular.isDefined(a)&&r(function(){s&&s.$applyPlacement()})}}),a.$observe("disabled",function(e){e&&s.$isShown&&s.hide()}),a.bsTooltip&&e.$watch(a.bsTooltip,function(t,n){angular.isObject(t)?angular.extend(e,t):e.title=t,angular.isDefined(n)&&r(function(){s&&s.$applyPlacement()})},!0),a.bsShow&&e.$watch(a.bsShow,function(e,t){s&&angular.isDefined(e)&&(angular.isString(e)&&(e=!!e.match(/true|,?(tooltip),?/i)),e===!0?s.show():s.hide())}),a.bsEnabled&&e.$watch(a.bsEnabled,function(e,t){s&&angular.isDefined(e)&&(angular.isString(e)&&(e=!!e.match(/true|1|,?(tooltip),?/i)),e===!1?s.setEnabled(!1):s.setEnabled(!0))}),a.viewport&&e.$watch(a.viewport,function(e){s&&angular.isDefined(e)&&s.setViewport(e)}),s=o(t,l),e.$on("$destroy",function(){s&&s.destroy(),l=null,s=null})}}}]),function(){"use strict";function e(){function e(){function e(e,n){var a=e.length;return{id:a+1,label:"slide #"+(a+1),img:"http://lorempixel.com/1200/500/"+n+"/"+(a+1)%10,color:t.colors[10*a%t.colors.length],odd:a%2===0}}function n(t,n){t.push(e(t,n))}function a(e,t,a){for(var o=0;a>o;o++)n(e,t)}t.colors=["#fc0003","#f70008","#f2000d","#ed0012","#e80017","#e3001c","#de0021","#d90026","#d4002b","#cf0030","#c90036","#c4003b","#bf0040","#ba0045","#b5004a","#b0004f","#ab0054","#a60059","#a1005e","#9c0063","#960069","#91006e","#8c0073","#870078","#82007d","#7d0082","#780087","#73008c","#6e0091","#690096","#63009c","#5e00a1","#5900a6","#5400ab","#4f00b0","#4a00b5","#4500ba","#4000bf","#3b00c4","#3600c9","#3000cf","#2b00d4","#2600d9","#2100de","#1c00e3","#1700e8","#1200ed","#0d00f2","#0800f7","#0300fc"],t.carouselIndex=3,t.carouselIndex2=0,t.carouselIndex2=1,t.carouselIndex3=5,t.carouselIndex4=5,t.slides=[],a(t.slides,"sports",50),t.slides2=[],a(t.slides2,"sports",10),t.slides3=[],a(t.slides3,"people",50),t.slides4=[],a(t.slides4,"city",50),t.slides6=[],t.carouselIndex6=0,a(t.slides6,"sports",10),t.addSlide=function(n){"head"===n?t.slides6.unshift(e(t.slides6,"people")):t.slides6.push(e(t.slides6,"people"))}}var t=this;e()}angular.module("app.elements").controller("AngularCarouselController",e)}(),function(){"use strict";function e(e,t,n){function a(){e.tpl=n,t.open({template:n.path,className:"ngdialog-theme-default"})}a()}function t(e,t,n){function a(){t.jsonData='{"foo": "bar"}',t.theme="ngdialog-theme-default",e.directivePreCloseCallback=function(e){return!!confirm("Close it? MainCtrl.Directive. (Value = "+e+")")},e.preCloseCallbackOnScope=function(e){return!!confirm("Close it? MainCtrl.OnScope (Value = "+e+")")},e.open=function(){n.open({template:"firstDialogId",controller:"InsideCtrl",data:{foo:"some data"}})},e.openDefault=function(){n.open({template:"firstDialogId",controller:"InsideCtrl",className:"ngdialog-theme-default"})},e.openDefaultWithPreCloseCallbackInlined=function(){n.open({template:"firstDialogId",controller:"InsideCtrl",className:"ngdialog-theme-default",preCloseCallback:function(e){return!!confirm("Close it?  (Value = "+e+")")}})},e.openConfirm=function(){n.openConfirm({template:"modalDialogId",className:"ngdialog-theme-default"}).then(function(e){console.log("Modal promise resolved. Value: ",e)},function(e){console.log("Modal promise rejected. Reason: ",e)})},e.openConfirmWithPreCloseCallbackOnScope=function(){n.openConfirm({template:"modalDialogId",className:"ngdialog-theme-default",preCloseCallback:"preCloseCallbackOnScope",scope:e}).then(function(e){console.log("Modal promise resolved. Value: ",e)},function(e){console.log("Modal promise rejected. Reason: ",e)})},e.openConfirmWithPreCloseCallbackInlinedWithNestedConfirm=function(){n.openConfirm({template:"dialogWithNestedConfirmDialogId",className:"ngdialog-theme-default",preCloseCallback:function(){var e=n.openConfirm({template:'<p>Are you sure you want to close the parent dialog?</p><div><button type="button" class="btn btn-default" ng-click="closeThisDialog(0)">No<button type="button" class="btn btn-primary" ng-click="confirm(1)">Yes</button></div>',plain:!0,className:"ngdialog-theme-default"});return e},scope:e}).then(function(e){console.log("resolved:"+e)},function(e){console.log("rejected:"+e)})},e.openInlineController=function(){t.theme="ngdialog-theme-default",n.open({template:"withInlineController",controller:["$scope","$timeout",function(e,t){function n(){e.exampleExternalData="Counter "+o++,a=t(n,450)}var a,o=0;n(),e.$on("$destroy",function(){t.cancel(a)})}],className:"ngdialog-theme-default"})},e.openTemplate=function(){e.value=!0,n.open({template:e.tpl.path,className:"ngdialog-theme-default",scope:e})},e.openTemplateNoCache=function(){e.value=!0,n.open({template:e.tpl.path,className:"ngdialog-theme-default",scope:e,cache:!1})},e.openTimed=function(){var e=n.open({template:"<p>Just passing through!</p>",plain:!0,closeByDocument:!1,closeByEscape:!1});setTimeout(function(){e.close()},2e3)},e.openNotify=function(){var e=n.open({template:'<p>You can do whatever you want when I close, however that happens.</p><div><button type="button" class="btn btn-primary" ng-click="closeThisDialog(1)">Close Me</button></div>',plain:!0});e.closePromise.then(function(e){console.log("ngDialog closed"+(1===e.value?" using the button":"")+" and notified by promise: "+e.id)})},e.openWithoutOverlay=function(){n.open({template:"<h2>Notice that there is no overlay!</h2>",className:"ngdialog-theme-default",plain:!0,overlay:!1})},t.$on("ngDialog.opened",function(e,t){console.log("ngDialog opened: "+t.attr("id"))}),t.$on("ngDialog.closed",function(e,t){console.log("ngDialog closed: "+t.attr("id"))}),t.$on("ngDialog.closing",function(e,t){console.log("ngDialog closing: "+t.attr("id"))})}a()}function n(e,t){function n(){e.dialogModel={message:"message from passed scope"},e.openSecond=function(){t.open({template:'<p class="lead m0"><a href="" ng-click="closeSecond()">Close all by click here!</a></h3>',plain:!0,closeByEscape:!1,controller:"SecondModalCtrl"})}}n()}function a(e,t){function n(){e.closeSecond=function(){t.close()}}n()}angular.module("app.elements").controller("DialogIntroCtrl",e).controller("DialogMainCtrl",t).controller("InsideCtrl",n).controller("SecondModalCtrl",a),e.$inject=["$scope","ngDialog","tpl"],t.$inject=["$scope","$rootScope","ngDialog"],n.$inject=["$scope","ngDialog"],a.$inject=["$scope","ngDialog"]}(),function(){"use strict";function e(){function e(){t.images=[1,2,3,4,5,6,7,8,9,10],t.loadMore=function(){for(var e=t.images[t.images.length-1],n=1;10>=n;n++)t.images.push(e+n)}}var t=this;e()}function t(e,t){var n=function(e,n,a){return t(function(){var t,o,r,i;for(o=[],t=r=e,i=e+n-1;i>=e?i>=r:r>=i;t=i>=e?++r:--r)o.push("item #"+t);return a(o)},100)};return{get:n}}angular.module("app.elements").controller("InfiniteScrollController",e).factory("datasource",t),t.$inject=["$log","$timeout"]}(),function(){"use strict";function e(e){function t(){n.basepath=e.basepath,n.photos=[{id:"photo-1",name:"Awesome photo",src:"http://lorempixel.com/400/300/abstract"},{id:"photo-2",name:"Great photo",src:"http://lorempixel.com/450/400/city"},{id:"photo-3",name:"Strange photo",src:"http://lorempixel.com/400/300/people"},{id:"photo-4",name:"A photo?",src:"http://lorempixel.com/400/300/transport"},{id:"photo-5",name:"What a photo",src:"http://lorempixel.com/450/300/fashion"},{id:"photo-6",name:"Silly photo",src:"http://lorempixel.com/400/300/technics"},{id:"photo-7",name:"Weird photo",src:"http://lorempixel.com/410/350/sports"},{id:"photo-8",name:"Modern photo",src:"http://lorempixel.com/400/300/nightlife"},{id:"photo-9",name:"Classical photo",src:"http://lorempixel.com/400/300/nature"},{id:"photo-10",name:"Dynamic photo",src:"http://lorempixel.com/420/300/abstract"},{id:"photo-11",name:"Neat photo",src:"http://lorempixel.com/400/300/sports"},{id:"photo-12",name:"Bumpy photo",src:"http://lorempixel.com/400/300/nightlife"},{id:"photo-13",name:"Brilliant photo",src:"http://lorempixel.com/400/380/nature"},{id:"photo-14",name:"Excellent photo",src:"http://lorempixel.com/480/300/technics"},{id:"photo-15",name:"Gorgeous photo",src:"http://lorempixel.com/400/300/sports"},{id:"photo-16",name:"Lovely photo",src:"http://lorempixel.com/400/300/nightlife"},{id:"photo-17",name:'A "wow" photo',src:"http://lorempixel.com/400/300/nature"},{id:"photo-18",name:"Bodacious photo",src:"http://lorempixel.com/400/300/abstract"}]}var n=this;t()}function t(){function e(e,t,n){var a=n.loadedclass;t.bind("load",function(){angular.element(t).addClass(a)})}var t={link:e,restrict:"A"};return t}angular.module("app.elements").controller("MasonryDeckController",e).directive("imageloaded",t),e.$inject=["RouteHelpers"]}(),function(){"use strict";function e(e,t){function n(){a.my_tree_handler=function(e){return a.output="You selected: "+e.label,e.data&&e.data.description?(a.output+="("+e.data.description+")",a.output):void 0};var e=function(e){return a.output="APPLE! : "+e.label,a.output},n=[{label:"Animal",children:[{label:"Dog",data:{description:"man's best friend"}},{label:"Cat",data:{description:"Felis catus"}},{label:"Hippopotamus",data:{description:"hungry, hungry"}},{label:"Chicken",children:["White Leghorn","Rhode Island Red","Jersey Giant"]}]},{label:"Vegetable",data:{definition:"A plant or part of a plant used as food, typically as accompaniment to meat or fish, such as a cabbage, potato, carrot, or bean.",data_can_contain_anything:!0},onSelect:function(e){return a.output="Vegetable: "+e.data.definition,a.output},children:[{label:"Oranges"},{label:"Apples",children:[{label:"Granny Smith",onSelect:e},{label:"Red Delicous",onSelect:e},{label:"Fuji",onSelect:e}]}]},{label:"Mineral",children:[{label:"Rock",children:["Igneous","Sedimentary","Metamorphic"]},{label:"Metal",children:["Aluminum","Steel","Copper"]},{label:"Plastic",children:[{label:"Thermoplastic",children:["polyethylene","polypropylene","polystyrene"," polyvinyl chloride"]},{label:"Thermosetting Polymer",children:["polyester","polyurethane","vulcanized rubber","bakelite","urea-formaldehyde"]}]}]}],o=[{label:"North America",children:[{label:"Canada",children:["Toronto","Vancouver"]},{label:"USA",children:["New York","Los Angeles"]},{label:"Mexico",children:["Mexico City","Guadalajara"]}]},{label:"South America",children:[{label:"Venezuela",children:["Caracas","Maracaibo"]},{label:"Brazil",children:["Sao Paulo","Rio de Janeiro"]},{label:"Argentina",children:["Buenos Aires","Cordoba"]}]}];a.my_data=n,a.try_changing_the_tree_data=function(){return a.my_data===n?a.my_data=o:a.my_data=n,a.my_data};var r;a.my_tree=r={},a.try_async_load=function(){a.my_data=[],a.doing_async=!0;var e=t("server/treedata.json");return e.get(function(e){return a.my_data=e.data,a.doing_async=!1,r.expand_all()}).$promise},a.try_adding_a_branch=function(){var e;return e=r.get_selected_branch(),r.add_branch(e,{label:"New Branch",data:{something:42,"else":43}})}}var a=this;n()}angular.module("app.elements").controller("AbnTestController",e),e.$inject=["$timeout","$resource"]}(),function(){"use strict";function e(){function e(){t.items=[{item:{text:"a"},children:[]},{item:{text:"b"},children:[{item:{text:"c"},children:[]},{item:{text:"d"},children:[]}]},{item:{text:"e"},children:[]},{item:{text:"f"},children:[]}],t.items2=[{item:{text:"1"},children:[]},{item:{text:"2"},children:[{item:{text:"3"},children:[]},{item:{text:"4"},children:[]}]},{item:{text:"5"},children:[]},{item:{text:"6"},children:[]}]}var t=this;e()}angular.module("app.elements").controller("NestableController",e)}(),function(){"use strict";function e(){function e(e,t,n){var a=250;t.slimScroll({height:n.height||a})}var t={link:e,restrict:"EA"};return t}angular.module("app.elements").directive("scrollable",e)}(),function(){"use strict";function e(e){function t(){e.data1=[{id:1,name:"Donald Hoffman"},{id:2,name:"Wallace Barrett"},{id:3,name:"Marsha Hicks"},{id:4,name:"Roland Brown"}],e.add=function(){e.data1.push({id:e.data1.length+1,name:"Earl Knight"})},e.sortableCallback=function(e,t,n,a){console.log(n+" -> "+a)},e.sortableOptions={placeholder:'<div class="box-placeholder p0 m0"><div></div></div>',forcePlaceholderSize:!0}}t()}angular.module("app.elements").controller("SortableController",e),e.$inject=["$scope"]}(),function(){"use strict";function e(e){function t(){n.demo1=function(){e.swal("Here's a message")},n.demo2=function(){e.swal("Here's a message!","It's pretty, isn't it?")},n.demo3=function(){e.swal("Good job!","You clicked the button!","success")},n.demo4=function(){e.swal({title:"Are you sure?",text:"Your will not be able to recover this imaginary file!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",closeOnConfirm:!1},function(){e.swal("Booyah!")})},n.demo5=function(){e.swal({title:"Are you sure?",text:"Your will not be able to recover this imaginary file!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel plx!",closeOnConfirm:!1,closeOnCancel:!1},function(t){t?e.swal("Deleted!","Your imaginary file has been deleted.","success"):e.swal("Cancelled","Your imaginary file is safe :)","error")})},n.demo6=function(){e.swal({title:"Sweet!",text:"Here's a custom image.",imageUrl:"http://oitozero.com/img/avatar.jpg"})}}var n=this;t()}angular.module("app.elements").controller("SweetAlertController",e),e.$inject=["SweetAlert"]}(),function(){"use strict";function e(e){function t(){n.toaster={type:"success",title:"Title",text:"Message"},n.pop=function(){e.pop(n.toaster.type,n.toaster.title,n.toaster.text)}}var n=this;t()}angular.module("app.elements").controller("ToasterDemoCtrl",e),e.$inject=["toaster"]}(),function(){"use strict";function e(e){function t(){var t=angular.element(".wrapper > section");t.css({position:"static"}),e.$on("$destroy",function(){t.css({position:""})})}t()}angular.module("app.elements").controller("TourCtrl",e),e.$inject=["$scope"]}(),function(){"use strict";function e(){function e(){t.htmlContent="Article content...",t.postDemo={},t.postDemo.tags=["coding","less"],t.availableTags=["coding","less","sass","angularjs","node","expressJS"],t.postDemo.categories=["JAVASCRIPT","WEB"],t.availableCategories=["JAVASCRIPT","WEB","BOOTSTRAP","SERVER","HTML5","CSS"],t.reviewers=[{name:"Adam",email:"adam@email.com",age:10},{name:"Amalie",email:"amalie@email.com",age:12},{name:"Wladimir",email:"wladimir@email.com",age:30},{name:"Samantha",email:"samantha@email.com",age:31},{name:"Estefanía",email:"estefanía@email.com",age:16},{name:"Natasha",email:"natasha@email.com",age:54},{name:"Nicole",email:"nicole@email.com",age:43},{name:"Adrian",email:"adrian@email.com",age:21}],t.alerts=[{type:"info",msg:'There is an autosaved version of this article that is more recent than the version below. <a href="#" class="text-white">Restore</a>'}],t.closeAlert=function(e){t.alerts.splice(e,1)}}var t=this;e()}angular.module("app.extras").controller("ArticleController",e)}(),function(){"use strict";function e(e){function t(t,r){if($.fn.fullCalendar){var i=r,s=o();a(i),n(i,s,e.app.layout.isRTL)}}var r={link:t,restrict:"EA"};return r}function t(e){e&&e.each(function(){var e=$(this),t={title:$.trim(e.text())};e.data("calendarEventObject",t),e.draggable({zIndex:1070,revert:!0,revertDuration:0})})}function n(e,t,n){var a=$("#remove-after-drop");e.fullCalendar({isRTL:n,header:{left:"prev,next today",center:"title",right:"month,agendaWeek,agendaDay"},buttonIcons:{prev:" fa fa-caret-left",next:" fa fa-caret-right"},buttonText:{today:"today",month:"month",week:"week",day:"day"},editable:!0,droppable:!0,drop:function(t,n){var o=$(this),r=o.data("calendarEventObject");if(r){var i=$.extend({},r);i.start=t,i.allDay=n,i.backgroundColor=o.css("background-color"),i.borderColor=o.css("border-color"),e.fullCalendar("renderEvent",i,!0),a.is(":checked")&&o.remove()}},eventDragStart:function(e){r=e},events:t})}function a(e){var n=$(".external-events");new t(n.children("div"));var a="#f6504d",o=$(".external-event-add-btn"),i=$(".external-event-name"),s=$(".external-event-color-selector .circle");$(".external-events-trash").droppable({accept:".fc-event",activeClass:"active",hoverClass:"hovered",tolerance:"touch",drop:function(t,n){if(r){var a=r.id||r._id;e.fullCalendar("removeEvents",a),n.draggable.remove(),r=null}}}),s.click(function(e){e.preventDefault();var t=$(this);a=t.css("background-color"),s.removeClass("selected"),t.addClass("selected")}),o.click(function(e){e.preventDefault();var o=i.val();if(""!==$.trim(o)){var r=$("<div/>").css({"background-color":a,"border-color":a,color:"#fff"}).html(o);n.prepend(r),new t(r),i.val("")}})}function o(){var e=new Date,t=e.getDate(),n=e.getMonth(),a=e.getFullYear();return[{title:"All Day Event",start:new Date(a,n,1),backgroundColor:"#f56954",borderColor:"#f56954"},{title:"Long Event",start:new Date(a,n,t-5),end:new Date(a,n,t-2),backgroundColor:"#f39c12",borderColor:"#f39c12"},{title:"Meeting",start:new Date(a,n,t,10,30),allDay:!1,backgroundColor:"#0073b7",borderColor:"#0073b7"},{title:"Lunch",start:new Date(a,n,t,12,0),end:new Date(a,n,t,14,0),allDay:!1,backgroundColor:"#00c0ef",borderColor:"#00c0ef"},{title:"Birthday Party",start:new Date(a,n,t+1,19,0),end:new Date(a,n,t+1,22,30),allDay:!1,backgroundColor:"#00a65a",borderColor:"#00a65a"},{title:"Open Google",start:new Date(a,n,28),end:new Date(a,n,29),url:"//google.com/",backgroundColor:"#3c8dbc",borderColor:"#3c8dbc"}]}angular.module("app.extras").directive("calendar",e),e.$inject=["$rootScope"];var r=null}(),function(){"use strict";function e(e){return e("server/editor/filetree.json")}angular.module("app.extras").service("LoadTreeService",e),e.$inject=["$resource"]}(),function(){"use strict";function e(e,t,n,a,o){function r(){e.app.useFullLayout=!0,e.app.hiddenFooter=!0,e.app.layout.isCollapsed=!0,t.$on("$destroy",function(){e.app.useFullLayout=!1,e.app.hiddenFooter=!1})}function i(){function e(e){var t=e.split(".");switch(t=t?t[t.length-1]:""){case"html":return"htmlmixed";case"css":return"css";default:return"javascript"}}s.filetree_data=o,s.editorThemes=["3024-day","3024-night","ambiance-mobile","ambiance","base16-dark","base16-light","blackboard","cobalt","eclipse","elegant","erlang-dark","lesser-dark","mbo","mdn-like","midnight","monokai","neat","neo","night","paraiso-dark","paraiso-light","pastel-on-dark","rubyblue","solarized","the-matrix","tomorrow-night-eighties","twilight","vibrant-ink","xq-dark","xq-light"],s.editorOpts={mode:"javascript",lineNumbers:!0,matchBrackets:!0,theme:"mbo",viewportMargin:1/0},s.refreshEditor=0,s.loadTheme=function(){var e="vendor/codemirror/theme/";a.load(e+s.editorOpts.theme+".css"),s.refreshEditor=!s.refreshEditor},s.loadTheme(s.editorOpts.theme),s.code="// Open a file from the left menu \n// It will be requested to the server and loaded into the editor\n// Also try adding a New File from the toolbar\n";var t;s.handle_filetree=function(a){t=a;var o="server/editor/",r=!!a.children.length;console.log("You selected: "+a.label+" - isFolder? "+r),r||n.get(o+a.path).success(function(t){console.log("Loaded.. "+a.path),s.code=t,s.editorOpts.mode=e(a.path),console.log("Mode is: "+s.editorOpts.mode)})};var r;r=s.filetree={},s.new_filetree=function(){var e;return e=r.get_selected_branch(),e&&0===e.children.length&&(e=r.get_parent_branch(e)),r.add_branch(e,{label:"another.html",path:"source/another.html"})}}var s=this;r(),i()}angular.module("app.extras").controller("CodeEditorController",e),e.$inject=["$rootScope","$scope","$http","$ocLazyLoad","filetree"]}(),function(){"use strict";function e(e){function t(){n.items=[{todo:{title:"Meeting with Mark at 7am.",description:"Pellentesque convallis mauris eu elit imperdiet quis eleifend quam aliquet. "},complete:!0},{todo:{title:"Call Sonya. Talk about the new project.",description:""},complete:!1},{todo:{title:"Find a new place for vacations",description:""},complete:!1}],n.editingTodo=!1,n.todo={},n.addTodo=function(){""!==n.todo.title&&(n.todo.description||(n.todo.description=""),n.editingTodo?(n.todo={},n.editingTodo=!1):(n.items.push({todo:angular.copy(n.todo),complete:!1}),n.todo.title="",n.todo.description=""))},n.editTodo=function(e,t){t.preventDefault(),t.stopPropagation(),n.todo=n.items[e].todo,n.editingTodo=!0},n.removeTodo=function(e){n.items.splice(e,1)},n.clearAll=function(){n.items=[]},n.totalCompleted=function(){return e("filter")(n.items,function(e){return e.complete}).length},n.totalPending=function(){return e("filter")(n.items,function(e){return!e.complete}).length}}var n=this;t()}angular.module("app.extras").controller("TodoController",e),e.$inject=["$filter"]}(),function(){"use strict";function e(){function e(){t.words=[{text:"Lorem",weight:13},{text:"Ipsum",weight:10.5
-},{text:"Dolor",weight:9.4},{text:"Sit",weight:8},{text:"Amet",weight:6.2},{text:"Consectetur",weight:5},{text:"Adipiscing",weight:5},{text:"Sit",weight:8},{text:"Amet",weight:6.2},{text:"Consectetur",weight:5},{text:"Adipiscing",weight:5}]}var t=this;e()}angular.module("app.extras").controller("WordCloudController",e)}(),function(){"use strict";function e(){function e(e,t,n){Flatdoc.run({fetcher:Flatdoc.file(n.src)});var a=$("html, body");$(document).on("flatdoc:ready",function(){var e=$('[role="flatdoc-menu"]');e.find("a").on("click",function(t){t.preventDefault(),t.stopPropagation();var n=$(this);e.find("a.active").removeClass("active"),n.addClass("active"),a.animate({scrollTop:$(this.getAttribute("href")).offset().top-($(".topnavbar").height()+10)},800)})})}var t={template:'<div role="flatdoc"><div role="flatdoc-menu"></div><div role="flatdoc-content"></div></div>',link:e,restrict:"EA"};return t}angular.module("app.flatdoc").directive("flatdoc",e)}(),function(){"use strict";function e(){function e(){t.hexPicker={color:""},t.rgbPicker={color:""},t.rgbaPicker={color:""},t.nonInput={color:""},t.resetColor=function(){t.hexPicker={color:"#ff0000"}},t.resetRBGColor=function(){t.rgbPicker={color:"rgb(255,255,255)"}},t.resetRBGAColor=function(){t.rgbaPicker={color:"rgb(255,255,255, 0.25)"}},t.resetNonInputColor=function(){t.nonInput={color:"#ffffff"}}}var t=this;e()}angular.module("app.forms").controller("ColorPickerController",e)}(),function(){"use strict";function e(){function e(e,t){var n=t.data();n.classInput=t.data("classinput")||n.classInput,t.filestyle(n)}var t={link:e,restrict:"A"};return t}angular.module("app.forms").directive("filestyle",e)}(),function(){"use strict";function e(e){function t(){n.reset=function(){n.myImage="",n.myCroppedImage="",n.imgcropType="square"},n.reset();var t=function(t){var a=t.currentTarget.files[0],o=new FileReader;o.onload=function(t){e.$apply(function(){n.myImage=t.target.result})},a&&o.readAsDataURL(a)};angular.element(document.querySelector("#fileInput")).on("change",t)}var n=this;t()}angular.module("app.forms").controller("ImageCropController",e),e.$inject=["$scope"]}(),function(){"use strict";function e(){function e(){t.notBlackListed=function(e){var t=["some@mail.com","another@email.com"];return-1===t.indexOf(e)},t.words=function(e){return e&&e.split(" ").length},t.submitted=!1,t.validateInput=function(e,n){var a=t.formValidate[e];return(a.$dirty||t.submitted)&&a.$error[n]},t.submitForm=function(){return t.submitted=!0,t.formValidate.$valid?void console.log("Submitted!!"):(console.log("Not valid!!"),!1)}}var t=this;e()}angular.module("app.forms").controller("FormValidationController",e)}(),function(){"use strict";function e(e){function t(t,a,o){var r=e(o.validateSteps)(t),i=new n(o.steps,!!r,a);t.wizard=i.init()}function n(e,t,n){var a=this;a.quantity=parseInt(e,10),a.validate=t,a.element=n,a.init=function(){return a.createsteps(a.quantity),a.go(1),a},a.go=function(e){if(angular.isDefined(a.steps[e])){if(a.validate&&1!==e){var t=$(a.element),n=t.children().children("div").get(e-2);if(!1===t.parsley().validate(n.id))return!1}a.cleanall(),a.steps[e]=!0}},a.active=function(e){return!!a.steps[e]},a.cleanall=function(){for(var e in a.steps)a.steps[e]=!1},a.createsteps=function(e){a.steps=[];for(var t=1;e>=t;t++)a.steps[t]=!1}}var a={link:t,restrict:"A",scope:!0};return a}angular.module("app.forms").directive("formWizard",e),e.$inject=["$parse"]}(),function(){"use strict";function e(e,t,n,a,o){function r(){t.theme="bs3",n.bs3.inputClass="input-sm",n.bs3.buttonsClass="btn-sm",n.bs3.submitTpl='<button type="submit" class="btn btn-success"><span class="fa fa-check"></span></button>',n.bs3.cancelTpl='<button type="button" class="btn btn-default" ng-click="$form.$cancel()"><span class="fa fa-times text-muted"></span></button>',i.user={email:"email@example.com",tel:"123-45-67",number:29,range:10,url:"http://example.com",search:"blabla",color:"#6a4415",date:null,time:new Date,datetime:null,month:null,week:null,desc:"Sed pharetra euismod dolor, id feugiat ante volutpat eget. "},i.user2={status:2},i.statuses=[{value:1,text:"status1"},{value:2,text:"status2"},{value:3,text:"status3"},{value:4,text:"status4"}],i.showStatus=function(){var e=a("filter")(i.statuses,{value:i.user2.status});return i.user2.status&&e.length?e[0].text:"Not set"},i.user3={id:4,text:"admin"},i.groups=[],i.loadGroups=function(){return i.groups.length?null:o.get("server/xeditable-groups.json").success(function(e){i.groups=e})},e.$watch("user3.id",function(e,t){if(e!==t){var n=a("filter")(i.groups,{id:i.user3.id});i.user3.text=n.length?n[0].text:null}}),i.user4={state:"Arizona"},i.states=["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]}var i=this;i.title="Controller",r()}angular.module("app.forms").controller("FormxEditableController",e),e.$inject=["$scope","editableOptions","editableThemes","$filter","$http"]}(),function(){"use strict";function e(e){function t(){var t={get:{method:"GET",isArray:!0}},a=e("server/cities.json",{},t);a.get(function(e){n.cities=e}),n.slider1=5,n.slider2=10,n.slider3=15,n.slider4=20,n.slider5=25,n.slider6=30,n.slider7=10,n.slider8=[250,750];var o=e("server/chosen-states.json",{},{query:{method:"GET",isArray:!0}});n.states=o.query(),n.alertSubmit=function(){return alert("Form submitted!"),!1},n.wysiwygContent="<p> Write something here.. </p>",n.htmlContent='<h2>Try me!</h2><p>textAngular is a super cool WYSIWYG Text Editor directive for AngularJS</p><p><b>Features:</b></p><ol><li>Automatic Seamless Two-Way-Binding</li><li style="color: blue;">Super Easy <b>Theming</b> Options</li><li>Simple Editor Instance Creation</li><li>Safely Parses Html for Custom Toolbar Icons</li><li>Doesn&apos;t Use an iFrame</li><li>Works with Firefox, Chrome, and IE8+</li></ol><p><a href="https://github.com/fraywing/textAngular">Source</a> </p>'}var n=this;t()}angular.module("app.forms").controller("FormDemoCtrl",e),e.$inject=["$resource"]}(),function(){"use strict";function e(){function e(e,t){var n=$(t);$.fn.inputmask&&n.inputmask()}var t={link:e,restrict:"A"};return t}angular.module("app.forms").directive("masked",e)}(),function(){"use strict";function e(){function e(e,t){var n=[];return angular.isArray(e)?e.forEach(function(e){for(var a=!1,o=Object.keys(t),r=0;r<o.length;r++){var i=o[r],s=t[i].toLowerCase();if(-1!==e[i].toString().toLowerCase().indexOf(s)){a=!0;break}}a&&n.push(e)}):n=e,n}return e}angular.module("app.forms").filter("propsFilter",e)}(),function(){"use strict";function e(e){function t(t,n,a,o){n.on("itemAdded itemRemoved",function(){o.$viewValue&&o.$viewValue.split&&(o.$setViewValue(o.$viewValue.split(",")),o.$render())}),e(function(){n.tagsinput()})}var n={link:t,require:"ngModel",restrict:"A"};return n}angular.module("app.forms").directive("tagsinput",e),e.$inject=["$timeout"]}(),function(){"use strict";function e(e,t){function n(){a.disabled=void 0,a.enable=function(){a.disabled=!1},a.disable=function(){a.disabled=!0},a.clear=function(){a.person.selected=void 0,a.address.selected=void 0,a.country.selected=void 0},a.person={},a.people=[{name:"Adam",email:"adam@email.com",age:10},{name:"Amalie",email:"amalie@email.com",age:12},{name:"Wladimir",email:"wladimir@email.com",age:30},{name:"Samantha",email:"samantha@email.com",age:31},{name:"Estefanía",email:"estefanía@email.com",age:16},{name:"Natasha",email:"natasha@email.com",age:54},{name:"Nicole",email:"nicole@email.com",age:43},{name:"Adrian",email:"adrian@email.com",age:21}],a.address={},a.refreshAddresses=function(e){var n={address:e,sensor:!1};return t.get("//maps.googleapis.com/maps/api/geocode/json",{params:n}).then(function(e){a.addresses=e.data.results})},a.country={},a.countries=[{name:"Afghanistan",code:"AF"},{name:"Åland Islands",code:"AX"},{name:"Albania",code:"AL"},{name:"Algeria",code:"DZ"},{name:"American Samoa",code:"AS"},{name:"Andorra",code:"AD"},{name:"Angola",code:"AO"},{name:"Anguilla",code:"AI"},{name:"Antarctica",code:"AQ"},{name:"Antigua and Barbuda",code:"AG"},{name:"Argentina",code:"AR"},{name:"Armenia",code:"AM"},{name:"Aruba",code:"AW"},{name:"Australia",code:"AU"},{name:"Austria",code:"AT"},{name:"Azerbaijan",code:"AZ"},{name:"Bahamas",code:"BS"},{name:"Bahrain",code:"BH"},{name:"Bangladesh",code:"BD"},{name:"Barbados",code:"BB"},{name:"Belarus",code:"BY"},{name:"Belgium",code:"BE"},{name:"Belize",code:"BZ"},{name:"Benin",code:"BJ"},{name:"Bermuda",code:"BM"},{name:"Bhutan",code:"BT"},{name:"Bolivia",code:"BO"},{name:"Bosnia and Herzegovina",code:"BA"},{name:"Botswana",code:"BW"},{name:"Bouvet Island",code:"BV"},{name:"Brazil",code:"BR"},{name:"British Indian Ocean Territory",code:"IO"},{name:"Brunei Darussalam",code:"BN"},{name:"Bulgaria",code:"BG"},{name:"Burkina Faso",code:"BF"},{name:"Burundi",code:"BI"},{name:"Cambodia",code:"KH"},{name:"Cameroon",code:"CM"},{name:"Canada",code:"CA"},{name:"Cape Verde",code:"CV"},{name:"Cayman Islands",code:"KY"},{name:"Central African Republic",code:"CF"},{name:"Chad",code:"TD"},{name:"Chile",code:"CL"},{name:"China",code:"CN"},{name:"Christmas Island",code:"CX"},{name:"Cocos (Keeling) Islands",code:"CC"},{name:"Colombia",code:"CO"},{name:"Comoros",code:"KM"},{name:"Congo",code:"CG"},{name:"Congo, The Democratic Republic of the",code:"CD"},{name:"Cook Islands",code:"CK"},{name:"Costa Rica",code:"CR"},{name:"Cote D'Ivoire",code:"CI"},{name:"Croatia",code:"HR"},{name:"Cuba",code:"CU"},{name:"Cyprus",code:"CY"},{name:"Czech Republic",code:"CZ"},{name:"Denmark",code:"DK"},{name:"Djibouti",code:"DJ"},{name:"Dominica",code:"DM"},{name:"Dominican Republic",code:"DO"},{name:"Ecuador",code:"EC"},{name:"Egypt",code:"EG"},{name:"El Salvador",code:"SV"},{name:"Equatorial Guinea",code:"GQ"},{name:"Eritrea",code:"ER"},{name:"Estonia",code:"EE"},{name:"Ethiopia",code:"ET"},{name:"Falkland Islands (Malvinas)",code:"FK"},{name:"Faroe Islands",code:"FO"},{name:"Fiji",code:"FJ"},{name:"Finland",code:"FI"},{name:"France",code:"FR"},{name:"French Guiana",code:"GF"},{name:"French Polynesia",code:"PF"},{name:"French Southern Territories",code:"TF"},{name:"Gabon",code:"GA"},{name:"Gambia",code:"GM"},{name:"Georgia",code:"GE"},{name:"Germany",code:"DE"},{name:"Ghana",code:"GH"},{name:"Gibraltar",code:"GI"},{name:"Greece",code:"GR"},{name:"Greenland",code:"GL"},{name:"Grenada",code:"GD"},{name:"Guadeloupe",code:"GP"},{name:"Guam",code:"GU"},{name:"Guatemala",code:"GT"},{name:"Guernsey",code:"GG"},{name:"Guinea",code:"GN"},{name:"Guinea-Bissau",code:"GW"},{name:"Guyana",code:"GY"},{name:"Haiti",code:"HT"},{name:"Heard Island and Mcdonald Islands",code:"HM"},{name:"Holy See (Vatican City State)",code:"VA"},{name:"Honduras",code:"HN"},{name:"Hong Kong",code:"HK"},{name:"Hungary",code:"HU"},{name:"Iceland",code:"IS"},{name:"India",code:"IN"},{name:"Indonesia",code:"ID"},{name:"Iran, Islamic Republic Of",code:"IR"},{name:"Iraq",code:"IQ"},{name:"Ireland",code:"IE"},{name:"Isle of Man",code:"IM"},{name:"Israel",code:"IL"},{name:"Italy",code:"IT"},{name:"Jamaica",code:"JM"},{name:"Japan",code:"JP"},{name:"Jersey",code:"JE"},{name:"Jordan",code:"JO"},{name:"Kazakhstan",code:"KZ"},{name:"Kenya",code:"KE"},{name:"Kiribati",code:"KI"},{name:"Korea, Democratic People's Republic of",code:"KP"},{name:"Korea, Republic of",code:"KR"},{name:"Kuwait",code:"KW"},{name:"Kyrgyzstan",code:"KG"},{name:"Lao People's Democratic Republic",code:"LA"},{name:"Latvia",code:"LV"},{name:"Lebanon",code:"LB"},{name:"Lesotho",code:"LS"},{name:"Liberia",code:"LR"},{name:"Libyan Arab Jamahiriya",code:"LY"},{name:"Liechtenstein",code:"LI"},{name:"Lithuania",code:"LT"},{name:"Luxembourg",code:"LU"},{name:"Macao",code:"MO"},{name:"Macedonia, The Former Yugoslav Republic of",code:"MK"},{name:"Madagascar",code:"MG"},{name:"Malawi",code:"MW"},{name:"Malaysia",code:"MY"},{name:"Maldives",code:"MV"},{name:"Mali",code:"ML"},{name:"Malta",code:"MT"},{name:"Marshall Islands",code:"MH"},{name:"Martinique",code:"MQ"},{name:"Mauritania",code:"MR"},{name:"Mauritius",code:"MU"},{name:"Mayotte",code:"YT"},{name:"Mexico",code:"MX"},{name:"Micronesia, Federated States of",code:"FM"},{name:"Moldova, Republic of",code:"MD"},{name:"Monaco",code:"MC"},{name:"Mongolia",code:"MN"},{name:"Montserrat",code:"MS"},{name:"Morocco",code:"MA"},{name:"Mozambique",code:"MZ"},{name:"Myanmar",code:"MM"},{name:"Namibia",code:"NA"},{name:"Nauru",code:"NR"},{name:"Nepal",code:"NP"},{name:"Netherlands",code:"NL"},{name:"Netherlands Antilles",code:"AN"},{name:"New Caledonia",code:"NC"},{name:"New Zealand",code:"NZ"},{name:"Nicaragua",code:"NI"},{name:"Niger",code:"NE"},{name:"Nigeria",code:"NG"},{name:"Niue",code:"NU"},{name:"Norfolk Island",code:"NF"},{name:"Northern Mariana Islands",code:"MP"},{name:"Norway",code:"NO"},{name:"Oman",code:"OM"},{name:"Pakistan",code:"PK"},{name:"Palau",code:"PW"},{name:"Palestinian Territory, Occupied",code:"PS"},{name:"Panama",code:"PA"},{name:"Papua New Guinea",code:"PG"},{name:"Paraguay",code:"PY"},{name:"Peru",code:"PE"},{name:"Philippines",code:"PH"},{name:"Pitcairn",code:"PN"},{name:"Poland",code:"PL"},{name:"Portugal",code:"PT"},{name:"Puerto Rico",code:"PR"},{name:"Qatar",code:"QA"},{name:"Reunion",code:"RE"},{name:"Romania",code:"RO"},{name:"Russian Federation",code:"RU"},{name:"Rwanda",code:"RW"},{name:"Saint Helena",code:"SH"},{name:"Saint Kitts and Nevis",code:"KN"},{name:"Saint Lucia",code:"LC"},{name:"Saint Pierre and Miquelon",code:"PM"},{name:"Saint Vincent and the Grenadines",code:"VC"},{name:"Samoa",code:"WS"},{name:"San Marino",code:"SM"},{name:"Sao Tome and Principe",code:"ST"},{name:"Saudi Arabia",code:"SA"},{name:"Senegal",code:"SN"},{name:"Serbia and Montenegro",code:"CS"},{name:"Seychelles",code:"SC"},{name:"Sierra Leone",code:"SL"},{name:"Singapore",code:"SG"},{name:"Slovakia",code:"SK"},{name:"Slovenia",code:"SI"},{name:"Solomon Islands",code:"SB"},{name:"Somalia",code:"SO"},{name:"South Africa",code:"ZA"},{name:"South Georgia and the South Sandwich Islands",code:"GS"},{name:"Spain",code:"ES"},{name:"Sri Lanka",code:"LK"},{name:"Sudan",code:"SD"},{name:"Suriname",code:"SR"},{name:"Svalbard and Jan Mayen",code:"SJ"},{name:"Swaziland",code:"SZ"},{name:"Sweden",code:"SE"},{name:"Switzerland",code:"CH"},{name:"Syrian Arab Republic",code:"SY"},{name:"Taiwan, Province of China",code:"TW"},{name:"Tajikistan",code:"TJ"},{name:"Tanzania, United Republic of",code:"TZ"},{name:"Thailand",code:"TH"},{name:"Timor-Leste",code:"TL"},{name:"Togo",code:"TG"},{name:"Tokelau",code:"TK"},{name:"Tonga",code:"TO"},{name:"Trinidad and Tobago",code:"TT"},{name:"Tunisia",code:"TN"},{name:"Turkey",code:"TR"},{name:"Turkmenistan",code:"TM"},{name:"Turks and Caicos Islands",code:"TC"},{name:"Tuvalu",code:"TV"},{name:"Uganda",code:"UG"},{name:"Ukraine",code:"UA"},{name:"United Arab Emirates",code:"AE"},{name:"United Kingdom",code:"GB"},{name:"United States",code:"US"},{name:"United States Minor Outlying Islands",code:"UM"},{name:"Uruguay",code:"UY"},{name:"Uzbekistan",code:"UZ"},{name:"Vanuatu",code:"VU"},{name:"Venezuela",code:"VE"},{name:"Vietnam",code:"VN"},{name:"Virgin Islands, British",code:"VG"},{name:"Virgin Islands, U.S.",code:"VI"},{name:"Wallis and Futuna",code:"WF"},{name:"Western Sahara",code:"EH"},{name:"Yemen",code:"YE"},{name:"Zambia",code:"ZM"},{name:"Zimbabwe",code:"ZW"}],a.someGroupFn=function(e){return e.name[0]>="A"&&e.name[0]<="M"?"From A - M":e.name[0]>="N"&&e.name[0]<="Z"?"From N - Z":void 0},a.counter=0,a.someFunction=function(e,t){a.counter++,a.eventResult={item:e,model:t}},a.availableColors=["Red","Green","Blue","Yellow","Magenta","Maroon","Umbra","Turquoise"],a.multipleDemo={},a.multipleDemo.colors=["Blue","Red"],a.multipleDemo.selectedPeople=[a.people[5],a.people[4]],a.multipleDemo.selectedPeopleWithGroupBy=[a.people[8],a.people[6]],a.multipleDemo.selectedPeopleSimple=["samantha@email.com","wladimir@email.com"]}var a=this;n()}angular.module("app.forms").controller("uiSelectController",e),e.$inject=["$scope","$http"]}(),function(){"use strict";function e(e){function t(){var t=n.uploader=new e({url:"server/upload.php"});t.filters.push({name:"customFilter",fn:function(){return this.queue.length<10}}),t.onWhenAddingFileFailed=function(e,t,n){console.info("onWhenAddingFileFailed",e,t,n)},t.onAfterAddingFile=function(e){console.info("onAfterAddingFile",e)},t.onAfterAddingAll=function(e){console.info("onAfterAddingAll",e)},t.onBeforeUploadItem=function(e){console.info("onBeforeUploadItem",e)},t.onProgressItem=function(e,t){console.info("onProgressItem",e,t)},t.onProgressAll=function(e){console.info("onProgressAll",e)},t.onSuccessItem=function(e,t,n,a){console.info("onSuccessItem",e,t,n,a)},t.onErrorItem=function(e,t,n,a){console.info("onErrorItem",e,t,n,a)},t.onCancelItem=function(e,t,n,a){console.info("onCancelItem",e,t,n,a)},t.onCompleteItem=function(e,t,n,a){console.info("onCompleteItem",e,t,n,a)},t.onCompleteAll=function(){console.info("onCompleteAll")},console.info("uploader",t)}var n=this;t()}angular.module("app.forms").controller("FileUploadController",e),e.$inject=["FileUploader"]}(),function(){"use strict";function e(){function e(e,t){var n=$(t);$.fn.parsley&&n.parsley()}var t={link:e,restrict:"A"};return t}angular.module("app.forms").directive("validateForm",e)}(),function(){"use strict";function e(){function e(e,t,n){var a=new Skycons({color:n.color||"white"});t.html('<canvas width="'+n.width+'" height="'+n.height+'"></canvas>'),a.add(t.children()[0],n.skycon),a.play()}var t={link:e,restrict:"A"};return t}angular.module("app.icons").directive("skycon",e)}(),function(){"use strict";function e(e,t){e.config({debug:!1,events:!0,modules:t.modules})}angular.module("app.lazyload").config(e),e.$inject=["$ocLazyLoadProvider","APP_REQUIRES"]}(),function(){"use strict";angular.module("app.lazyload").constant("APP_REQUIRES",{scripts:{whirl:["vendor/whirl/dist/whirl.css"],classyloader:["vendor/jquery-classyloader/js/jquery.classyloader.min.js"],animo:["vendor/animo.js/animo.js"],fastclick:["vendor/fastclick/lib/fastclick.js"],modernizr:["vendor/modernizr/modernizr.custom.js"],animate:["vendor/animate.css/animate.min.css"],skycons:["vendor/skycons/skycons.js"],icons:["vendor/fontawesome/css/font-awesome.min.css","vendor/simple-line-icons/css/simple-line-icons.css"],"weather-icons":["vendor/weather-icons/css/weather-icons.min.css","vendor/weather-icons/css/weather-icons-wind.min.css"],sparklines:["vendor/sparkline/index.js"],wysiwyg:["vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js","vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"],slimscroll:["vendor/slimScroll/jquery.slimscroll.min.js"],screenfull:["vendor/screenfull/dist/screenfull.js"],"vector-map":["vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js","vendor/ika.jvectormap/jquery-jvectormap-1.2.2.css"],"vector-map-maps":["vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js","vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js"],loadGoogleMapsJS:["vendor/load-google-maps/load-google-maps.js"],"flot-chart":["vendor/Flot/jquery.flot.js"],"flot-chart-plugins":["vendor/flot.tooltip/js/jquery.flot.tooltip.min.js","vendor/Flot/jquery.flot.resize.js","vendor/Flot/jquery.flot.pie.js","vendor/Flot/jquery.flot.time.js","vendor/Flot/jquery.flot.categories.js","vendor/flot-spline/js/jquery.flot.spline.min.js"],"jquery-ui":["vendor/jquery-ui/ui/core.js","vendor/jquery-ui/ui/widget.js"],"jquery-ui-widgets":["vendor/jquery-ui/ui/core.js","vendor/jquery-ui/ui/widget.js","vendor/jquery-ui/ui/mouse.js","vendor/jquery-ui/ui/draggable.js","vendor/jquery-ui/ui/droppable.js","vendor/jquery-ui/ui/sortable.js","vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"],moment:["vendor/moment/min/moment-with-locales.min.js"],inputmask:["vendor/jquery.inputmask/dist/jquery.inputmask.bundle.js"],flatdoc:["vendor/flatdoc/flatdoc.js"],codemirror:["vendor/codemirror/lib/codemirror.js","vendor/codemirror/lib/codemirror.css"],"codemirror-modes-web":["vendor/codemirror/mode/javascript/javascript.js","vendor/codemirror/mode/xml/xml.js","vendor/codemirror/mode/htmlmixed/htmlmixed.js","vendor/codemirror/mode/css/css.js"],taginput:["vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css","vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"],filestyle:["vendor/bootstrap-filestyle/src/bootstrap-filestyle.js"],parsley:["vendor/parsleyjs/dist/parsley.min.js"],fullcalendar:["vendor/fullcalendar/dist/fullcalendar.min.js","vendor/fullcalendar/dist/fullcalendar.css"],gcal:["vendor/fullcalendar/dist/gcal.js"],chartjs:["vendor/Chart.js/Chart.js"],morris:["vendor/raphael/raphael.js","vendor/morris.js/morris.js","vendor/morris.js/morris.css"],"loaders.css":["vendor/loaders.css/loaders.css"],spinkit:["vendor/spinkit/css/spinkit.css"]},modules:[{name:"toaster",files:["vendor/angularjs-toaster/toaster.js","vendor/angularjs-toaster/toaster.css"]},{name:"localytics.directives",files:["vendor/chosen_v1.2.0/chosen.jquery.min.js","vendor/chosen_v1.2.0/chosen.min.css","vendor/angular-chosen-localytics/chosen.js"],serie:!0},{name:"ngDialog",files:["vendor/ngDialog/js/ngDialog.min.js","vendor/ngDialog/css/ngDialog.min.css","vendor/ngDialog/css/ngDialog-theme-default.min.css"]},{name:"ngWig",files:["vendor/ngWig/dist/ng-wig.min.js"]},{name:"ngTable",files:["vendor/ng-table/dist/ng-table.min.js","vendor/ng-table/dist/ng-table.min.css"]},{name:"ngTableExport",files:["vendor/ng-table-export/ng-table-export.js"]},{name:"angularBootstrapNavTree",files:["vendor/angular-bootstrap-nav-tree/dist/abn_tree_directive.js","vendor/angular-bootstrap-nav-tree/dist/abn_tree.css"]},{name:"htmlSortable",files:["vendor/html.sortable/dist/html.sortable.js","vendor/html.sortable/dist/html.sortable.angular.js"]},{name:"xeditable",files:["vendor/angular-xeditable/dist/js/xeditable.js","vendor/angular-xeditable/dist/css/xeditable.css"]},{name:"angularFileUpload",files:["vendor/angular-file-upload/dist/angular-file-upload.js"]},{name:"ngImgCrop",files:["vendor/ng-img-crop/compile/unminified/ng-img-crop.js","vendor/ng-img-crop/compile/unminified/ng-img-crop.css"]},{name:"ui.select",files:["vendor/angular-ui-select/dist/select.js","vendor/angular-ui-select/dist/select.css"]},{name:"ui.codemirror",files:["vendor/angular-ui-codemirror/ui-codemirror.js"]},{name:"angular-carousel",files:["vendor/angular-carousel/dist/angular-carousel.css","vendor/angular-carousel/dist/angular-carousel.js"]},{name:"infinite-scroll",files:["vendor/ngInfiniteScroll/build/ng-infinite-scroll.js"]},{name:"ui.bootstrap-slider",files:["vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js","vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css","vendor/angular-bootstrap-slider/slider.js"]},{name:"ui.grid",files:["vendor/angular-ui-grid/ui-grid.min.css","vendor/angular-ui-grid/ui-grid.min.js"]},{name:"textAngular",files:["vendor/textAngular/dist/textAngular.css","vendor/textAngular/dist/textAngular-rangy.min.js","vendor/textAngular/dist/textAngular-sanitize.js","vendor/textAngular/src/globals.js","vendor/textAngular/src/factories.js","vendor/textAngular/src/DOM.js","vendor/textAngular/src/validators.js","vendor/textAngular/src/taBind.js","vendor/textAngular/src/main.js","vendor/textAngular/dist/textAngularSetup.js"],serie:!0},{name:"angular-rickshaw",files:["vendor/d3/d3.min.js","vendor/rickshaw/rickshaw.js","vendor/rickshaw/rickshaw.min.css","vendor/angular-rickshaw/rickshaw.js"],serie:!0},{name:"angular-chartist",files:["vendor/chartist/dist/chartist.min.css","vendor/chartist/dist/chartist.js","vendor/angular-chartist.js/dist/angular-chartist.js"],serie:!0},{name:"ui.map",files:["vendor/angular-ui-map/ui-map.js"]},{name:"datatables",files:["vendor/datatables/media/css/jquery.dataTables.css","vendor/datatables/media/js/jquery.dataTables.js","vendor/angular-datatables/dist/angular-datatables.js"],serie:!0},{name:"angular-jqcloud",files:["vendor/jqcloud2/dist/jqcloud.css","vendor/jqcloud2/dist/jqcloud.js","vendor/angular-jqcloud/angular-jqcloud.js"]},{name:"angularGrid",files:["vendor/ag-grid/dist/ag-grid.css","vendor/ag-grid/dist/ag-grid.js","vendor/ag-grid/dist/theme-dark.css","vendor/ag-grid/dist/theme-fresh.css"]},{name:"ng-nestable",files:["vendor/ng-nestable/src/angular-nestable.js","vendor/nestable/jquery.nestable.js"]},{name:"akoenig.deckgrid",files:["vendor/angular-deckgrid/angular-deckgrid.js"]},{name:"oitozero.ngSweetAlert",files:["vendor/sweetalert/dist/sweetalert.css","vendor/sweetalert/dist/sweetalert.min.js","vendor/angular-sweetalert/SweetAlert.js"]},{name:"bm.bsTour",files:["vendor/bootstrap-tour/build/css/bootstrap-tour.css","vendor/bootstrap-tour/build/js/bootstrap-tour-standalone.js","vendor/angular-bootstrap-tour/dist/angular-bootstrap-tour.js"],serie:!0},{name:"ui.knob",files:["vendor/angular-knob/src/angular-knob.js","vendor/jquery-knob/dist/jquery.knob.min.js"]},{name:"easypiechart",files:["vendor/jquery.easy-pie-chart/dist/angular.easypiechart.min.js"]},{name:"colorpicker.module",files:["vendor/angular-bootstrap-colorpicker/css/colorpicker.css","vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"]},{name:"affix",files:["vendor/affix/affix.js","vendor/affix/debounce.js","vendor/affix/dimensions.js"]}]})}(),function(){"use strict";function e(e){e.includeBar=!0,e.includeSpinner=!1,e.latencyThreshold=500,e.parentSelector=".wrapper > section"}angular.module("app.loadingbar").config(e),e.$inject=["cfpLoadingBarProvider"]}(),function(){"use strict";function e(e,t,n){var a;e.$on("$stateChangeStart",function(){$(".wrapper > section").length&&(a=t(function(){n.start()},0))}),e.$on("$stateChangeSuccess",function(e){e.targetScope.$watch("$viewContentLoaded",function(){t.cancel(a),n.complete()})})}angular.module("app.loadingbar").run(e),e.$inject=["$rootScope","$timeout","cfpLoadingBar"]}(),function(){"use strict";function e(e){e.localeLocationPattern("vendor/angular-i18n/angular-locale_{{locale}}.js")}angular.module("app.locale").config(e),e.$inject=["tmhDynamicLocaleProvider"]}(),function(){"use strict";function e(e,t,n){function a(){e.availableLocales={en:"English",es:"Spanish",de:"German",fr:"French",ar:"Arabic",ja:"Japanese",ko:"Korean",zh:"Chinese"},e.model={selectedLocale:"en"},e.$locale=n,e.changeLocale=t.set}a()}angular.module("app.locale").controller("LocalizationController",e),e.$inject=["$rootScope","tmhDynamicLocale","$locale"]}(),function(){"use strict";function e(){function e(){t.folders=[{name:"Inbox",folder:"inbox",alert:42,icon:"fa-inbox"},{name:"Starred",folder:"starred",alert:10,icon:"fa-star"},{name:"Sent",folder:"sent",alert:0,icon:"fa-paper-plane-o"},{name:"Draft",folder:"draft",alert:5,icon:"fa-edit"},{name:"Trash",folder:"trash",alert:0,icon:"fa-trash"}],t.labels=[{name:"Red",color:"danger"},{name:"Pink",color:"pink"},{name:"Blue",color:"info"},{name:"Yellow",color:"warning"}],t.mail={cc:!1,bcc:!1},t.content="<p>Type something..</p>"}var t=this;e()}angular.module("app.mailbox").controller("MailboxController",e)}(),function(){"use strict";function e(e,t){function n(){a.folder={},a.folder.folder="inbox"===t.folder?"":t.folder,e.all().then(function(e){a.mails=e})}var a=this;n()}angular.module("app.mailbox").controller("MailFolderController",e),e.$inject=["mails","$stateParams"]}(),function(){"use strict";function e(e){function t(){var t="server/mails.json";return e.get(t).then(function(e){return e.data.mails})}function n(){return t()}function a(e){return t().then(function(t){for(var n=0;n<t.length;n++)if(+t[n].id===+e)return t[n];return null})}var o={all:n,get:a};return o}angular.module("app.mailbox").factory("mails",e),e.$inject=["$http"]}(),function(){"use strict";function e(e,t){function n(){e.get(t.mid).then(function(e){a.mail=e})}var a=this;n()}angular.module("app.mailbox").controller("MailViewController",e),e.$inject=["mails","$stateParams"]}(),function(){"use strict";function e(e){function t(){function t(e,t,n){t.opened.then(function(){var t=new google.maps.LatLng(33.790807,-117.835734);e.mapOptionsModal={zoom:14,center:t,mapTypeId:google.maps.MapTypeId.ROADMAP},n(function(){new google.maps.Marker({map:e.myMapModal,position:t}),google.maps.event.trigger(e.myMapModal,"resize"),e.myMapModal.panTo(t)})}),e.ok=function(){t.close("closed")},e.cancel=function(){t.dismiss("cancel")}}n.open=function(n){e.open({templateUrl:"/myModalContent.html",controller:t,size:n})},t.$inject=["$scope","$uibModalInstance","$timeout"]}var n=this;t()}angular.module("app.maps").controller("ModalGmapController",e),e.$inject=["$uibModal"]}(),function(){"use strict";function e(e){function t(){function t(e,t){return new google.maps.Marker({map:e,position:t})}var a=[new google.maps.LatLng(33.790807,-117.835734),new google.maps.LatLng(33.790807,-117.835734),new google.maps.LatLng(33.790807,-117.835734),new google.maps.LatLng(33.790807,-117.835734),new google.maps.LatLng(33.787453,-117.835858)];n.addMarker=t,e(function(){t(n.myMap1,a[0]),t(n.myMap2,a[1]),t(n.myMap3,a[2]),t(n.myMap5,a[3])}),n.mapOptions1={zoom:14,center:a[0],mapTypeId:google.maps.MapTypeId.ROADMAP,scrollwheel:!1},n.mapOptions2={zoom:19,center:a[1],mapTypeId:google.maps.MapTypeId.ROADMAP},n.mapOptions3={zoom:14,center:a[2],mapTypeId:google.maps.MapTypeId.SATELLITE},n.mapOptions4={zoom:14,center:a[3],mapTypeId:google.maps.MapTypeId.ROADMAP},e(function(){t(n.myMap4,a[3]),t(n.myMap4,a[4])});var o=[{featureType:"water",stylers:[{visibility:"on"},{color:"#bdd1f9"}]},{featureType:"all",elementType:"labels.text.fill",stylers:[{color:"#334165"}]},{featureType:"landscape",stylers:[{color:"#e9ebf1"}]},{featureType:"road.highway",elementType:"geometry",stylers:[{color:"#c5c6c6"}]},{featureType:"road.arterial",elementType:"geometry",stylers:[{color:"#fff"}]},{featureType:"road.local",elementType:"geometry",stylers:[{color:"#fff"}]},{featureType:"transit",elementType:"geometry",stylers:[{color:"#d8dbe0"}]},{featureType:"poi",elementType:"geometry",stylers:[{color:"#cfd5e0"}]},{featureType:"administrative",stylers:[{visibility:"on"},{lightness:33}]},{featureType:"poi.park",elementType:"labels",stylers:[{visibility:"on"},{lightness:20}]},{featureType:"road",stylers:[{color:"#d8dbe0",lightness:20}]}];n.mapOptions5={zoom:14,center:a[3],styles:o,mapTypeId:google.maps.MapTypeId.ROADMAP,scrollwheel:!1}}var n=this;t()}angular.module("app.maps").controller("GMapController",e),e.$inject=["$timeout"]}(),function(){"use strict";function e(e){function t(t,n,a){var o={markerColor:"#23b7e5",bgColor:"transparent",scaleColors:["#878c9a"],regionFill:"#bbbec6"},r=a.height||"300",i={markerColor:a.markerColor||o.markerColor,bgColor:a.bgColor||o.bgColor,scale:a.scale||1,scaleColors:a.scaleColors||o.scaleColors,regionFill:a.regionFill||o.regionFill,mapName:a.mapName||"world_mill_en"};n.css("height",r),e.init(n,i,t.seriesData,t.markersData)}var n={link:t,restrict:"EA",scope:{seriesData:"=",markersData:"="}};return n}angular.module("app.maps").directive("vectorMap",e),e.$inject=["VectorMap"]}(),function(){"use strict";function e(){function e(e,t,n,a){e.vectorMap({map:t.mapName,backgroundColor:t.bgColor,zoomMin:1,zoomMax:8,zoomOnScroll:!1,regionStyle:{initial:{fill:t.regionFill,"fill-opacity":1,stroke:"none","stroke-width":1.5,"stroke-opacity":1},hover:{"fill-opacity":.8},selected:{fill:"blue"},selectedHover:{}},focusOn:{x:.4,y:.6,scale:t.scale},markerStyle:{initial:{fill:t.markerColor,stroke:t.markerColor}},onRegionLabelShow:function(e,t,a){n&&n[a]&&t.html(t.html()+": "+n[a]+" visitors")},markers:a,series:{regions:[{values:n,scale:t.scaleColors,normalizeFunction:"polynomial"}]}})}this.init=e}angular.module("app.maps").service("VectorMap",e)}(),function(){
-"use strict";function e(){function e(){t.seriesData={CA:11100,DE:2510,FR:3710,AU:5710,GB:8310,RU:9310,BR:6610,IN:7810,CN:4310,US:839,SA:410},t.markersData=[{latLng:[41.9,12.45],name:"Vatican City"},{latLng:[43.73,7.41],name:"Monaco"},{latLng:[-.52,166.93],name:"Nauru"},{latLng:[-8.51,179.21],name:"Tuvalu"},{latLng:[7.11,171.06],name:"Marshall Islands"},{latLng:[17.3,-62.73],name:"Saint Kitts and Nevis"},{latLng:[3.2,73.22],name:"Maldives"},{latLng:[35.88,14.5],name:"Malta"},{latLng:[41,-71.06],name:"New England"},{latLng:[12.05,-61.75],name:"Grenada"},{latLng:[13.16,-59.55],name:"Barbados"},{latLng:[17.11,-61.85],name:"Antigua and Barbuda"},{latLng:[-4.61,55.45],name:"Seychelles"},{latLng:[7.35,134.46],name:"Palau"},{latLng:[42.5,1.51],name:"Andorra"}]}var t=this;e()}angular.module("app.maps").controller("VectorMapController",e)}(),function(){"use strict";function e(){var e={controller:n,restrict:"A"};return e}function t(){var e={controller:a,restrict:"A"};return e}function n(e,t,n){t.on("click",function(e){e.stopPropagation()}).on("click",n.toggle)}function a(e,t,n){var a='.navbar-form input[type="text"]';$(a).on("click",function(e){e.stopPropagation()}).on("keyup",function(e){27===e.keyCode&&n.dismiss()}),$(document).on("click",n.dismiss),t.on("click",function(e){e.stopPropagation()}).on("click",n.dismiss)}angular.module("app.navsearch").directive("searchOpen",e).directive("searchDismiss",t),n.$inject=["$scope","$element","NavSearch"],a.$inject=["$scope","$element","NavSearch"]}(),function(){"use strict";function e(){function e(){var e=$(n);e.toggleClass("open");var t=e.hasClass("open");e.find("input")[t?"focus":"blur"]()}function t(){$(n).removeClass("open").find('input[type="text"]').blur().val("")}this.toggle=e,this.dismiss=t;var n="form.navbar-form"}angular.module("app.navsearch").service("NavSearch",e)}(),function(){"use strict";function e(e,t){function n(){a.msgHtml='<em class="fa fa-check"></em> Message with icon..',a.notifyMsg="Some messages here..",a.notifyOpts={status:"danger",pos:"bottom-center"},t(function(){e.alert("This is a custom message from notify..",{status:"success"})},500)}var a=this;n()}angular.module("app.notify").controller("NotifyDemoCtrl",e),e.$inject=["Notify","$timeout"]}(),function(){"use strict";function e(e,t){function n(e,n){n.on("click",function(n){n.preventDefault(),t.alert(e.message,e.options)})}var a={link:n,restrict:"A",scope:{options:"=",message:"="}};return a}angular.module("app.notify").directive("notify",e),e.$inject=["$window","Notify"]}(),function(){"use strict";function e(e){function t(t,n){t&&e(function(){$.notify(t,n||{})})}this.alert=t}angular.module("app.notify").service("Notify",e),e.$inject=["$timeout"]}(),function(e){"use strict";var t={},n={},a=function(t){return"string"===e.type(t)&&(t={message:t}),arguments[1]&&(t=e.extend(t,"string"===e.type(arguments[1])?{status:arguments[1]}:arguments[1])),new r(t).show()},o=function(e,t){var a;if(e)for(a in n)e===n[a].group&&n[a].close(t);else for(a in n)n[a].close(t)},r=function(a){this.options=e.extend({},r.defaults,a),this.uuid="ID"+(new Date).getTime()+"RAND"+Math.ceil(1e5*Math.random()),this.element=e(['<div class="uk-notify-message alert-dismissable">','<a class="close">&times;</a>',"<div>"+this.options.message+"</div>","</div>"].join("")).data("notifyMessage",this),this.options.status&&(this.element.addClass("alert alert-"+this.options.status),this.currentstatus=this.options.status),this.group=this.options.group,n[this.uuid]=this,t[this.options.pos]||(t[this.options.pos]=e('<div class="uk-notify uk-notify-'+this.options.pos+'"></div>').appendTo("body").on("click",".uk-notify-message",function(){e(this).data("notifyMessage").close()}))};return e.extend(r.prototype,{uuid:!1,element:!1,timout:!1,currentstatus:"",group:!1,show:function(){if(!this.element.is(":visible")){var e=this;t[this.options.pos].show().prepend(this.element);var n=parseInt(this.element.css("margin-bottom"),10);return this.element.css({opacity:0,"margin-top":-1*this.element.outerHeight(),"margin-bottom":0}).animate({opacity:1,"margin-top":0,"margin-bottom":n},function(){if(e.options.timeout){var t=function(){e.close()};e.timeout=setTimeout(t,e.options.timeout),e.element.hover(function(){clearTimeout(e.timeout)},function(){e.timeout=setTimeout(t,e.options.timeout)})}}),this}},close:function(e){var a=this,o=function(){a.element.remove(),t[a.options.pos].children().length||t[a.options.pos].hide(),delete n[a.uuid]};this.timeout&&clearTimeout(this.timeout),e?o():this.element.animate({opacity:0,"margin-top":-1*this.element.outerHeight(),"margin-bottom":0},function(){o()})},content:function(e){var t=this.element.find(">div");return e?(t.html(e),this):t.html()},status:function(e){return e?(this.element.removeClass("alert alert-"+this.currentstatus).addClass("alert alert-"+e),this.currentstatus=e,this):this.currentstatus}}),r.defaults={message:"",status:"normal",timeout:5e3,group:null,pos:"top-center"},e.notify=a,e.notify.message=r,e.notify.closeAll=o,a}(jQuery),function(){"use strict";function e(e,t){function n(){a.account={},a.authMsg="",a.login=function(){a.authMsg="",a.loginForm.$valid?e.post("api/account/login",{email:a.account.email,password:a.account.password}).then(function(e){e.account?t.go("app.dashboard"):a.authMsg="Incorrect credentials."},function(){a.authMsg="Server Request Error"}):(a.loginForm.account_email.$dirty=!0,a.loginForm.account_password.$dirty=!0)}}var a=this;n()}angular.module("app.pages").controller("LoginFormController",e),e.$inject=["$http","$state"]}(),function(){"use strict";function e(){var e={controller:t,restrict:"A",scope:!1};return e}function t(e,t,n,a){function o(e,t){if(!e)return!1;var n=angular.fromJson(a[i]);n||(n={}),n[e]=t,a[i]=angular.toJson(n)}function r(e){if(!e)return!1;var t=angular.fromJson(a[i]);return t?t[e]:void 0}var i="panelState",s=$(t),l=s.closest(".panel"),c=l.attr("id"),u=r(c);"undefined"!=typeof u&&n(function(){e[c]=u},10),t.bind("click",function(t){t.preventDefault(),o(c,!e[c])})}angular.module("app.panels").directive("panelCollapse",e),t.$inject=["$scope","$element","$timeout","$localStorage"]}(),function(){"use strict";function e(){var e={controller:t,restrict:"A"};return e}function t(e,t,n,a){var o="panel-remove",r="panel-removed";t.on("click",function(t){function i(){var t=n.defer(),a=t.promise;e.$emit(o,c.attr("id"),t),a.then(s)}function s(){a.support.animation?c.animo({animation:"bounceOut"},l):l()}function l(){var t=c.parent();c.remove(),t.filter(function(){var e=$(this);return e.is('[class*="col-"]:not(.sortable)')&&0===e.children("*").length}).remove(),e.$emit(r,c.attr("id"))}t.preventDefault();var c=$(this).closest(".panel");i()})}angular.module("app.panels").directive("panelDismiss",e),t.$inject=["$scope","$element","$q","Utils"]}(),function(){"use strict";function e(){var e={controller:t,restrict:"A",scope:!1};return e}function t(e,t){function n(e,t){if(t){var n="#"===t.charAt(0)?t:"#"+t;angular.element(n).removeClass(o)}}var a="panel-refresh",o="whirl",r="standard";t.on("click",function(t){t.preventDefault();var n=$(this),i=n.parents(".panel").eq(0),s=n.data("spinner")||r;i.addClass(o+" "+s),e.$emit(a,i.attr("id"))}),e.$on("removeSpinner",n)}angular.module("app.panels").directive("panelRefresh",e),t.$inject=["$scope","$element"]}(),function(){"use strict";function e(e,t){function n(n,a,o){function r(e,t){var n="";return t=t||{},t.toolCollapse&&(n+=i.collapse.replace(/{{panelId}}/g,e.parent().parent().attr("id"))),t.toolDismiss&&(n+=i.dismiss),t.toolRefresh&&(n+=i.refresh.replace(/{{spinner}}/g,t.toolRefresh)),n}var i={collapse:'<a href="#" panel-collapse="" uib-tooltip="Collapse Panel" ng-click="{{panelId}} = !{{panelId}}">                         <em ng-show="{{panelId}}" class="fa fa-plus ng-no-animation"></em>                         <em ng-show="!{{panelId}}" class="fa fa-minus ng-no-animation"></em>                       </a>',dismiss:'<a href="#" panel-dismiss="" uib-tooltip="Close Panel">                       <em class="fa fa-times"></em>                     </a>',refresh:'<a href="#" panel-refresh="" data-spinner="{{spinner}}" uib-tooltip="Refresh Panel">                       <em class="fa fa-refresh"></em>                     </a>'},s=n.panelTools||o;t(function(){a.html(r(a,s)).show(),e(a.contents())(n),a.addClass("pull-right")})}var a={link:n,restrict:"E",scope:!1};return a}angular.module("app.panels").directive("paneltool",e),e.$inject=["$compile","$timeout"]}(),function(){"use strict";function e(e,t){function n(){e.$watch("panelDemo1",function(e){console.log("panelDemo1 collapsed: "+e)}),e.$on("panel-remove",function(e,t,n){console.log("Panel #"+t+" removing"),n.resolve()}),e.$on("panel-removed",function(e,t){console.log("Panel #"+t+" removed")}),e.$on("panel-refresh",function(n,a){var o=3;console.log("Refreshing during "+o+"s #"+a),t(function(){e.$broadcast("removeSpinner",a),console.log("Refreshed #"+a)},3e3)}),e.panels=[{id:"panelRepeat1",title:"Panel Title 1",body:"Nulla eget lorem leo, sit amet elementum lorem. "},{id:"panelRepeat2",title:"Panel Title 2",body:"Nulla eget lorem leo, sit amet elementum lorem. "},{id:"panelRepeat3",title:"Panel Title 3",body:"Nulla eget lorem leo, sit amet elementum lorem. "}]}n()}angular.module("app.panels").controller("PanelsCtrl",e),e.$inject=["$scope","$timeout"]}(),function(){"use strict";function e(e,t){function n(e,t){$.fn.sortable&&t.sortable({connectWith:"[portlet]",items:"div.panel",handle:".portlet-handler",opacity:.7,placeholder:"portlet box-placeholder",cancel:".portlet-cancel",forcePlaceholderSize:!0,iframeFix:!1,tolerance:"pointer",helper:"original",revert:200,forceHelperSize:!0,update:a,create:o})}function a(n){var a=n.target,o=angular.fromJson(t[r]);o||(o={}),o[a.id]=$(a).sortable("toArray"),o&&e(function(){t[r]=angular.toJson(o)})}function o(e){var n=e.target,a=angular.fromJson(t[r]);if(a){var o=n.id,i=a[o];if(i){var s=$("#"+o);$.each(i,function(e,t){$("#"+t).appendTo(s)})}}}var r="portletState";return{restrict:"A",link:n}}angular.module("app.panels").directive("portlet",e),e.$inject=["$timeout","$localStorage"]}(),function(){"use strict";function e(e,t,n){function a(a,o){function r(){var e=100-c;c+=.015*Math.pow(1-Math.sqrt(e),2),a.loadCounter=parseInt(c,10),l=t(r,20)}function i(){t.cancel(l),a.loadCounter=100,t(function(){e.addClass(o,"preloader-hidden"),angular.element("body").css("overflow","")},300)}function s(){var e=n.defer(),o=0,r=a.$on("$viewContentLoaded",function(){o++,2===o&&(t(function(){e.resolve()},3e3),r())});return e.promise}a.loadCounter=0;var l,c=0;angular.element("body").css("overflow","hidden"),o.addClass("preloader"),s().then(i),l=t(r)}var o={restrict:"EAC",template:'<div class="preloader-progress"><div class="preloader-progress-bar" ng-style="{width: loadCounter + \'%\'}"></div></div>',link:a};return o}angular.module("app.preloader").directive("preloader",e),e.$inject=["$animate","$timeout","$q"]}(),function(){"use strict";function e(e){function t(e){return"app/views/"+e}function n(){var t=arguments;return{deps:["$ocLazyLoad","$q",function(n,a){function o(e){return"function"==typeof e?i.then(e):i.then(function(){var t=r(e);return t?n.load(t):$.error("Route resolve: Bad resource name ["+e+"]")})}function r(t){if(e.modules)for(var n in e.modules)if(e.modules[n].name&&e.modules[n].name===t)return e.modules[n];return e.scripts&&e.scripts[t]}for(var i=a.when(1),s=0,l=t.length;l>s;s++)i=o(t[s]);return i}]}}return{basepath:t,resolveFor:n,$get:function(){return{basepath:t,resolveFor:n}}}}angular.module("app.routes").provider("RouteHelpers",e),e.$inject=["APP_REQUIRES"]}(),function(){"use strict";function e(e,t,n,a){t.html5Mode(!1),n.otherwise("/page/login"),e.state("privacy",{url:"/app/privacy",cache:!1,templateUrl:"app/pages/privacy.html",resolve:a.resolveFor("loaders.css","spinkit","whirl","modernizr","icons"),controller:["$rootScope",function(e){e.app.layout.isBoxed=!1}]}).state("page",{url:"/page",data:{authenticate:!1},cache:!1,templateUrl:"app/pages/page.html",resolve:a.resolveFor("loaders.css","spinkit","whirl","modernizr","icons"),controller:["$rootScope",function(e){e.app.layout.isBoxed=!1}]}).state("page.login",{url:"/login",title:"Login",cache:!1,templateUrl:"app/pages/login.html",resolve:angular.extend(a.resolveFor("loaders.css","spinkit","whirl"),{_token:["tokenService",function(e){return e.get()}]}),controller:"LoginFormController"}).state("page.register",{url:"/register",title:"Register",cache:!1,resolve:angular.extend(a.resolveFor("loaders.css","spinkit","whirl"),{_token:["tokenService",function(e){return e.get()}]}),templateUrl:"app/pages/register.html"}).state("page.recover",{url:"/recover",title:"Recover",cache:!1,templateUrl:"app/pages/recover.html"}).state("page.change",{url:"/recover/change?{e}&{m}",title:"Change",cache:!1,templateUrl:"app/pages/recover-change.html"}).state("app",{url:"/app","abstract":!0,cache:!1,data:{authenticate:!0},templateUrl:a.basepath("app.html"),resolve:a.resolveFor("fastclick","modernizr","icons","screenfull","animo","sparklines","slimscroll","classyloader","toaster","whirl","oitozero.ngSweetAlert")}).state("app.dashboard",{url:"/dashboard",title:"Dashboard",cache:!1,templateUrl:a.basepath("dashboard.html"),controller:"DashboardController",resolve:angular.extend(a.resolveFor("angularFileUpload","filestyle"),{_token:["tokenService",function(e){return e.get()}]})}).state("app.dashboard.update",{url:"/profile/update",cache:!1,templateUrl:"app/template/profile-update.tpl.html",controller:"DashboardController",resolve:a.resolveFor("angularFileUpload","filestyle")}).state("app.dashboard.permissions",{url:"/permissions",cache:!1,templateUrl:"app/template/permissions.tpl.html",controller:"DashboardController"}).state("app.mail",{url:"/mail",title:"Mail",cache:!1,templateUrl:a.basepath("mail.html"),resolve:a.resolveFor("ngWig","ui.select"),controller:"MailController"}).state("app.sms",{url:"/sms",title:"Sms",cache:!1,templateUrl:a.basepath("sms.html")}).state("app.people",{url:"/people",title:"People",data:{permissions:{only:["executive.director","administration.dept","admin"],redirectTo:"app.unauthorized"}},cache:!1,resolve:angular.extend(a.resolveFor("datatables")),templateUrl:a.basepath("people.html")}).state("app.people.adduser",{url:"/create",data:{permissions:{only:"register.staff",redirectTo:"app.unauthorized"}},cache:!1,title:"People",templateUrl:a.basepath("people-adduser.html"),controller:"PeopleController"}).state("app.people.edit",{url:"/:id/edit",title:"People",data:{permissions:{only:"register.staff",redirectTo:"app.unauthorized"}},cache:!1,templateUrl:a.basepath("people-adduser.html"),controller:"PeopleUpdateController",resolve:a.resolveFor("whirl")}).state("app.roles",{url:"/roles",title:"Permissions",cache:!1,resolve:a.resolveFor("modernizr","icons","toaster"),templateUrl:a.basepath("roles.html")}).state("app.airtime",{url:"/airtime",title:"Airtime",data:{permissions:{only:["traffic","accounting","marketing","head.accounting","head.marketing","executive.director","administration.dept","admin","generate.airtime"],redirectTo:"app.unauthorized"}},cache:!1,templateUrl:a.basepath("airtime.html"),resolve:angular.extend(a.resolveFor("loaders.css","spinkit","datatables","oitozero.ngSweetAlert","ngDialog","ngTable","moment","localytics.directives","ui.bootstrap-slider"))}).state("app.airtime.create",{url:"/create",title:"Generate Airtime",cache:!1,views:{"@app":{templateUrl:a.basepath("airtime-create.html"),controller:"AirtimeCreateController"}},resolve:a.resolveFor("parsley","ui.select","taginput","inputmask","localytics.directives")}).state("app.airtime.details",{url:"/:id",title:"Airtime",cache:!1,templateUrl:a.basepath("airtime-details.html"),controller:"AirtimeDetailController"}).state("app.client",{url:"/client",title:"Client",cache:!1,templateUrl:a.basepath("client.html"),resolve:a.resolveFor("datatables")}).state("app.client.create",{url:"/create",cache:!1,title:"Register Client",views:{"@app":{resolve:a.resolveFor("whirl"),templateUrl:a.basepath("client-create.html")}}}).state("app.client.edit",{url:"/:id/edit",title:"Update Client",cache:!1,views:{"@app":{templateUrl:a.basepath("client-create.html"),resolve:angular.extend({clientUpdate:function(){return!0}})}}}).state("app.report",{url:"/report",title:"Report",data:{permissions:{only:["staff","generate.report"],redirectTo:"app.unauthorized"}},cache:!1,templateUrl:a.basepath("report.html"),controller:"ReportController",resolve:a.resolveFor("colorpicker.module","ui.select","codemirror","moment","taginput","inputmask","localytics.directives","ui.bootstrap-slider","ngWig","filestyle","textAngular")}).state("app.report.view",{url:"/view",title:"Report",cache:!1,templateUrl:a.basepath("report-view.html"),resolve:a.resolveFor("datatables"),controller:"ReportViewController"}).state("app.unauthorized",{url:"/unauthorized",title:"unauthorized",cache:!1,templateUrl:a.basepath("unauthorized.html")}).state("app.driver",{url:"/driver",title:"Driver's Report",cache:!1,data:{permissions:{only:["driver"],redirectTo:"app.unauthorized"}},resolve:angular.extend(a.resolveFor("datatables","ui.select","textAngular")),templateUrl:a.basepath("driver.html"),controller:"DriverController"}).state("app.driver.editReport",{url:"/report/:id/edit",cache:!1,resolve:angular.extend(a.resolveFor("datatables")),templateUrl:a.basepath("driver-addreport.html"),controller:"DriverController"}).state("app.driver.addReport",{url:"/report/add",cache:!1,resolve:angular.extend(a.resolveFor("datatables")),templateUrl:a.basepath("driver-addreport.html"),controller:"DriverController"}).state("app.driver.viewReport",{url:"/report/view",cache:!1,resolve:angular.extend(a.resolveFor("datatables")),templateUrl:a.basepath("driver-viewreport.html"),controller:"DriverReportViewCtrl"}).state("app.assessment",{url:"/assessment","abstract":!0,cache:!1,data:{permissions:{only:["staff"],redirectTo:"app.unauthorized"}},templateUrl:a.basepath("assessment.html"),resolve:angular.extend(a.resolveFor("datatables"))}).state("app.assessment.create",{url:"/create",cache:!1,resolve:angular.extend(a.resolveFor("datatables","whirl")),templateUrl:a.basepath("assessment-form.html"),controller:"AssessmentController"}).state("app.assessment.edit",{url:"/:id/edit",cache:!1,resolve:angular.extend(a.resolveFor("datatables")),views:{"@app":{templateUrl:a.basepath("assessment-form.html")}},controller:"AssessmentController"}).state("app.assessment.view",{url:"/view",cache:!1,resolve:angular.extend(a.resolveFor("datatables")),views:{"@app":{templateUrl:a.basepath("assessment-record.html"),controller:"AssessmentRecordController"}}}).state("app.admin",{url:"/admin",title:"Admin","abstract":!0,data:{authenticate:!0,permissions:{only:["supervisor","traffic","accounting","marketing","head.accounting","head.marketing","executive.director","administration.dept","admin"],redirectTo:"app.unauthorized"}},cache:!1,resolve:angular.extend(a.resolveFor("datatables"))}).state("app.admin.airtime",{url:"/airtime",title:"Airtime",cache:!1,views:{"@app":{templateUrl:a.basepath("admin-airtime.html")}},resolve:angular.extend(a.resolveFor("loaders.css","spinkit","datatables","oitozero.ngSweetAlert","ngDialog","ngTable","moment","localytics.directives","ui.bootstrap-slider"))}).state("app.admin.target",{url:"/target",title:"Target",cache:!1,views:{"@app":{templateUrl:a.basepath("target.html"),controller:"TargetController"}},resolve:angular.extend(a.resolveFor("datatables","ui.select"),{_token:["tokenService",function(e){return e.get()}]})}).state("app.admin.vehicles",{url:"/vehicles",title:"Vehicles",cache:!1,views:{"@app":{templateUrl:a.basepath("vehicle.html"),controller:"VehicleController"}},resolve:angular.extend(a.resolveFor("datatables"),{_token:["tokenService",function(e){return e.get()}]})}).state("app.admin.assessment-supervise",{url:"^/supervisor/:id",cache:!1,data:{permissions:{only:["supervisor"],redirectTo:"app.unauthorized"}},views:{"@app":{templateUrl:a.basepath("assessment-supervisor.html"),controller:"SupervisorController"}},resolve:angular.extend(a.resolveFor("datatables"))}).state("app.admin.assessment-log",{url:"/record/:id",cache:!1,views:{"@app":{resolve:angular.extend(a.resolveFor("datatables")),templateUrl:a.basepath("assessment-log.html"),controller:"AssessmentLogController"}}}).state("app.admin.assessment-config",{url:"/settings",cache:!1,views:{"@app":{resolve:angular.extend(a.resolveFor("datatables")),templateUrl:a.basepath("assessment-config.html")}}}).state("app.admin.staff-report",{url:"/staff/report/:id",cache:!1,views:{"@app":{resolve:angular.extend(a.resolveFor("datatables")),templateUrl:a.basepath("admin-report-view.html"),controller:"ReportViewController"}}}).state("app.admin.driver-report",{url:"/driver/report/:id",cache:!1,views:{"@app":{resolve:angular.extend(a.resolveFor("datatables")),templateUrl:a.basepath("admin-driver-viewreport.html"),controller:"DriverReportViewCtrl"}}})}angular.module("app.routes").config(["$httpProvider",function(e){e.interceptors.push("securityInterceptor")}]).provider("securityInterceptor",function(){this.$get=["$location","$q",function(e,t){return function(n){return n.then(null,function(n){return 403!==n.status&&401!==n.status||e.path("/unauthorized"),t.reject(n)})}}]}).config(e),e.$inject=["$stateProvider","$locationProvider","$urlRouterProvider","RouteHelpersProvider"]}(),function(){"use strict";angular.module("app.routes").run(["$rootScope","$state","loginFactory","$location",function(e,t,n,a){e.$on("$stateChangeStart",function(e,a,o,r,i){a.data.authenticate&&(n.getUserStatus()||(n.toState=a,t.transitionTo("page.login"),e.preventDefault()),"app.unauthorized"==a.name&&""==r.name&&t.go("app.dashboard")),"page.login"==a.name&&n.getUserStatus()&&(""!=r.name?t.go(r.name):t.go("app.dashboard"),e.preventDefault()),n.getUserStatus()&&n.authCheck()})}])}(),function(){"use strict";function e(e,t){e.app={name:"Rockcity FM Radio",description:"Rockcity FM Radio Station Ogun state",year:(new Date).getFullYear(),layout:{isFixed:!0,isCollapsed:!1,isBoxed:!1,isRTL:!1,horizontal:!1,isFloat:!1,asideHover:!1,theme:null,asideScrollbar:!1},useFullLayout:!1,hiddenFooter:!1,offsidebarOpen:!1,asideToggled:!1,viewAnimation:"ng-fadeInUp"},e.app.layout.horizontal="app-h"===e.$stateParams.layout,e.$watch("app.layout.isCollapsed",function(t){t===!1&&e.$broadcast("closeSidebarMenu")})}angular.module("app.settings").run(e),e.$inject=["$rootScope","$localStorage"]}(),function(){"use strict";function e(e,t,n,a,o){function r(){function r(e){t.menuItems=e}function i(e){if(e){if(e.sref&&"#"!==e.sref)return n.is(e.sref)||n.includes(e.sref);var t=!1;return angular.forEach(e.submenu,function(e){i(e)&&(t=!0)}),t}}function s(e){e+="";for(var t in c)(0>e||e.indexOf(t)<0)&&(c[t]=!0)}function l(e){return"string"==typeof e&&!(e.indexOf("-")<0)}var c=[];e.$watch("app.layout.asideHover",function(e,t){t===!1&&e===!0&&s(-1)}),a.getMenu(r),t.getFormattedPermission=function(e){return"undefined"!=e.permissions?e.permissions:void 0},t.getMenuItemPropClasses=function(e){return(e.heading?"nav-heading":"")+(i(e)?" active":"")},t.addCollapse=function(t,n){c[t]=e.app.layout.asideHover?!0:!i(n)},t.isCollapse=function(e){return c[e]},t.toggleCollapse=function(n,a){return o.isSidebarCollapsed()||e.app.layout.asideHover?!0:(angular.isDefined(c[n])?t.lastEventFromChild||(c[n]=!c[n],s(n)):a&&s(-1),t.lastEventFromChild=l(n),!0)}}r()}angular.module("app.sidebar").controller("SidebarController",e),e.$inject=["$rootScope","$scope","$state","SidebarLoader","Utils"]}(),function(){"use strict";function e(e,t,n,a){function o(n,o,i){function u(e){e===!0?t(function(){h.on(v,function(e){$(e.target).parents(".aside").length||d()})}):h.off(v)}function d(){e.app.asideToggled=!1,n.$$phase||n.$apply()}var p=e.$state.current.name,m=o,f=a.isTouch()?"click":"mouseenter",g=$();if(m.on(f,".nav > li",function(){(a.isSidebarCollapsed()||e.app.layout.asideHover)&&(g.trigger("mouseleave"),g=s($(this),m),r())}),n.$on("closeSidebarMenu",function(){l()}),c.on("resize",function(){a.isMobile()||d()}),e.$on("$stateChangeStart",function(t,n){p=n.name,d(),e.$broadcast("closeSidebarMenu")}),angular.isDefined(i.sidebarAnyclickClose)){var h=$(".wrapper"),v="click.sidebar";e.$watch("app.asideToggled",u)}}function r(){var e=$("<div/>",{"class":"dropdown-backdrop"});e.insertAfter(".aside-inner").on("click mouseenter",function(){l()})}function i(e){e.siblings("li").removeClass("open").end().toggleClass("open")}function s(t,n){l();var a=t.children("ul");if(!a.length)return $();if(t.hasClass("open"))return i(t),$();var o=$(".aside"),r=$(".aside-inner"),s=parseInt(r.css("padding-top"),0)+parseInt(o.css("padding-top"),0),u=a.clone().appendTo(o);i(t);var d=t.position().top+s-n.scrollTop(),p=c.height();return u.addClass("nav-floating").css({position:e.app.layout.isFixed?"fixed":"absolute",top:d,bottom:u.outerHeight(!0)+d>p?0:"auto"}),u.on("mouseleave",function(){i(t),u.remove()}),u}function l(){$(".dropdown-backdrop").remove(),$(".sidebar-subnav.nav-floating").remove(),$(".sidebar li.open").removeClass("open")}var c=angular.element(n),u={link:o,restrict:"EA",template:'<nav class="sidebar" ng-transclude></nav>',transclude:!0,replace:!0};return u}angular.module("app.sidebar").directive("sidebar",e),e.$inject=["$rootScope","$timeout","$window","Utils"]}(),function(){"use strict";function e(e){function t(t,n){var a="server/sidebar-menu.json",o=a+"?v="+(new Date).getTime();n=n||function(){alert("Failure loading menu")},e.get(o).success(t).error(n)}this.getMenu=t}angular.module("app.sidebar").service("SidebarLoader",e),e.$inject=["$http"]}(),function(){"use strict";function e(e,t,n){function a(){var a=angular.fromJson(n.get("auth"));e.user={name:a.lastname,job:"Administrator",picture:"app/img/user/04.jpg"},e.toggleUserBlock=function(){e.$broadcast("toggleUserBlock")},e.userBlockVisible=!0;var o=e.$on("toggleUserBlock",function(){e.userBlockVisible=!e.userBlockVisible});t.$on("$destroy",o)}a()}angular.module("app.sidebar").controller("UserBlockController",e),e.$inject=["$rootScope","$scope","$cookies"]}(),function(){"use strict";function e(e){function t(){var t=[{headerName:"Athlete",field:"athlete",width:150},{headerName:"Age",field:"age",width:90},{headerName:"Country",field:"country",width:120},{headerName:"Year",field:"year",width:90},{headerName:"Date",field:"date",width:110},{headerName:"Sport",field:"sport",width:110},{headerName:"Gold",field:"gold",width:100},{headerName:"Silver",field:"silver",width:100},{headerName:"Bronze",field:"bronze",width:100},{headerName:"Total",field:"total",width:100}];n.gridOptions={columnDefs:t,rowData:null,ready:function(e){e.sizeColumnsToFit()}};var a=["John Joe Nevin","Katie Taylor","Paddy Barnes","Kenny Egan","Darren Sutherland","Margaret Thatcher","Tony Blair","Ronald Regan","Barack Obama"],o=[{headerName:"Athlete",field:"athlete",width:150,filter:"set",filterParams:{cellHeight:20,values:a}},{headerName:"Age",field:"age",width:90,filter:"number"},{headerName:"Country",field:"country",width:120},{headerName:"Year",field:"year",width:90},{headerName:"Date",field:"date",width:110},{headerName:"Sport",field:"sport",width:110},{headerName:"Gold",field:"gold",width:100,filter:"number"},{headerName:"Silver",field:"silver",width:100,filter:"number"},{headerName:"Bronze",field:"bronze",width:100,filter:"number"},{headerName:"Total",field:"total",width:100,filter:"number"}];n.gridOptions1={columnDefs:o,rowData:null,enableFilter:!0,ready:function(e){e.sizeColumnsToFit()}},n.gridOptions2={columnDefs:t,rowData:null,pinnedColumnCount:2,ready:function(e){e.sizeColumnsToFit()}},e.get("server/ag-owinners.json").then(function(e){n.gridOptions.api.setRowData(e.data),n.gridOptions.api.sizeColumnsToFit(),n.gridOptions1.api.setRowData(e.data),n.gridOptions1.api.sizeColumnsToFit(),n.gridOptions2.api.setRowData(e.data),n.gridOptions2.api.sizeColumnsToFit()})}var n=this;t()}angular.module("app.tables").controller("AngularGridController",e),e.$inject=["$http"]}(),function(){"use strict";function e(e,t,n){function a(){function a(e){return{id:e,firstName:"Foo"+e,lastName:"Bar"+e}}function r(){o.heroes.push(angular.copy(o.person2Add)),o.person2Add=a(o.person2Add.id+1)}function i(e){o.heroes.splice(e,1,angular.copy(o.person2Add)),o.person2Add=a(o.person2Add.id+1)}function s(e){o.heroes.splice(e,1)}e("server/datatable.json").query().$promise.then(function(e){o.persons=e}),o.heroes=[{id:860,firstName:"Superman",lastName:"Yoda"},{id:870,firstName:"Ace",lastName:"Ventura"},{id:590,firstName:"Flash",lastName:"Gordon"},{id:803,firstName:"Luke",lastName:"Skywalker"}],o.dtOptions=t.newOptions().withPaginationType("full_numbers"),o.dtColumnDefs=[n.newColumnDef(0),n.newColumnDef(1),n.newColumnDef(2),n.newColumnDef(3).notSortable()],o.person2Add=a(1),o.addPerson=r,o.modifyPerson=i,o.removePerson=s}var o=this;a()}angular.module("app.tables").controller("DataTableController",e),e.$inject=["$resource","DTOptionsBuilder","DTColumnDefBuilder"]}(),function(){"use strict";function e(e,t,n){function a(){e.filterOptions={filterText:"",useExternalFilter:!0},e.totalServerItems=0,e.pagingOptions={pageSizes:[250,500,1e3],pageSize:250,currentPage:1},e.gridOptions={data:"myData",enablePaging:!0,showFooter:!0,rowHeight:36,headerRowHeight:38,totalServerItems:"totalServerItems",pagingOptions:e.pagingOptions,filterOptions:e.filterOptions},e.setPagingData=function(t,n,a){var o=t.slice((n-1)*a,n*a);e.myData=o,e.totalServerItems=t.length,e.$$phase||e.$apply()},e.getPagedDataAsync=function(a,o,r){var i="server/ng-grid-data.json";n(function(){if(r){var n=r.toLowerCase();t.get(i).success(function(t){var r=t.filter(function(e){return-1!==JSON.stringify(e).toLowerCase().indexOf(n)});e.setPagingData(r,o,a)})}else t.get(i).success(function(t){e.setPagingData(t,o,a)})},100)},e.$watch("pagingOptions",function(t,n){t!==n&&t.currentPage!==n.currentPage&&e.getPagedDataAsync(e.pagingOptions.pageSize,e.pagingOptions.currentPage,e.filterOptions.filterText)},!0),e.$watch("filterOptions",function(t,n){t!==n&&e.getPagedDataAsync(e.pagingOptions.pageSize,e.pagingOptions.currentPage,e.filterOptions.filterText)},!0),e.getPagedDataAsync(e.pagingOptions.pageSize,e.pagingOptions.currentPage)}a()}angular.module("app.tables").controller("NGGridController",e),e.$inject=["$scope","$http","$timeout"]}(),function(){"use strict";function e(){function e(e,n,a){function o(e,n){var a=(n.page()-1)*n.count(),o=n.page()*n.count(),r=t.cache.result.slice(a,o);n.total(t.cache.total),e.resolve(r)}t.cache?o(e,n):a&&a.get(function(a){t.cache=a,o(e,n)})}var t=this;this.cache=null,this.getData=e}angular.module("app.tables").service("ngTableDataService",e)}(),function(){"use strict";function e(e,t,n,a,o){function r(){var a=[{name:"Moroni",age:50,money:-10},{name:"Tiancum",age:43,money:120},{name:"Jacob",age:27,money:5.5},{name:"Nephi",age:29,money:-54},{name:"Enos",age:34,money:110},{name:"Tiancum",age:43,money:1e3},{name:"Jacob",age:27,money:-201},{name:"Nephi",age:29,money:100},{name:"Enos",age:34,money:-52.5},{name:"Tiancum",age:43,money:52.1},{name:"Jacob",age:27,money:110},{name:"Nephi",age:29,money:-55},{name:"Enos",age:34,money:551},{name:"Tiancum",age:43,money:-1410},{name:"Jacob",age:27,money:410},{name:"Nephi",age:29,money:100},{name:"Enos",age:34,money:-100}];i.data=a,i.tableParams3=new t({page:1,count:10},{total:a.length,getData:function(t,n){var o=n.filter()?e("filter")(a,n.filter()):a,r=n.sorting()?e("orderBy")(o,n.orderBy()):a;n.total(r.length),t.resolve(r.slice((n.page()-1)*n.count(),n.page()*n.count()))}}),i.changeSelection=function(e){console.info(e)};var r=[{name:"Moroni",age:50},{name:"Tiancum",age:43},{name:"Jacob",age:27},{name:"Nephi",age:29},{name:"Enos",age:34},{name:"Tiancum",age:43},{name:"Jacob",age:27},{name:"Nephi",age:29},{name:"Enos",age:34},{name:"Tiancum",age:43},{name:"Jacob",age:27},{name:"Nephi",age:29},{name:"Enos",age:34},{name:"Tiancum",age:43},{name:"Jacob",age:27},{name:"Nephi",age:29},{name:"Enos",age:34}];i.tableParams4=new t({page:1,count:10
-},{total:r.length,getData:function(e,t){e.resolve(r.slice((t.page()-1)*t.count(),t.page()*t.count()))}}),i.tableParams=new t({page:1,count:10,sorting:{name:"asc"}},{total:a.length,getData:function(t,n){var o=n.sorting()?e("orderBy")(a,n.orderBy()):a;t.resolve(o.slice((n.page()-1)*n.count(),n.page()*n.count()))}}),i.tableParams2=new t({page:1,count:10,filter:{name:"",age:""}},{total:a.length,getData:function(t,n){var o=n.filter()?e("filter")(a,n.filter()):a;i.users=o.slice((n.page()-1)*n.count(),n.page()*n.count()),n.total(o.length),t.resolve(i.users)}});var s=n("server/table-data.json");i.tableParams5=new t({page:1,count:10},{total:0,counts:[],getData:function(e,t){o.getData(e,t,s)}})}var i=this;i.title="Controller",r()}angular.module("app.tables").controller("NGTableCtrl",e),e.$inject=["$filter","ngTableParams","$resource","$timeout","ngTableDataService"]}(),function(){"use strict";function e(e,t,n,a,o){function r(){i.users=[{id:1,name:"awesome user1",status:2,group:4,groupName:"admin"},{id:2,name:"awesome user2",status:void 0,group:3,groupName:"vip"},{id:3,name:"awesome user3",status:2,group:null}],i.statuses=[{value:1,text:"status1"},{value:2,text:"status2"},{value:3,text:"status3"},{value:4,text:"status4"}],i.groups=[],i.loadGroups=function(){return i.groups.length?null:t.get("server/xeditable-groups.json").success(function(e){i.groups=e})},i.showGroup=function(t){if(t.group&&i.groups.length){var n=e("filter")(i.groups,{id:t.group});return n.length?n[0].text:"Not set"}return t.groupName||"Not set"},i.showStatus=function(t){var n=[];return t.status&&(n=e("filter")(i.statuses,{value:t.status})),n.length?n[0].text:"Not set"},i.checkName=function(e,t){return 2===t&&"awesome"!==e?"Username 2 should be `awesome`":void 0},i.saveUser=function(e,t){angular.extend(e,{id:t}),console.log("Saving user: "+t)},i.removeUser=function(e){i.users.splice(e,1)},i.addUser=function(){i.inserted={id:i.users.length+1,name:"",status:null,group:null,isNew:!0},i.users.push(i.inserted)},i.saveColumn=function(e){var t=[];return angular.forEach(i.users,function(){console.log("Saving column: "+e)}),o.all(t)},i.filterUser=function(e){return e.isDeleted!==!0},i.deleteUser=function(t){var n=e("filter")(i.users,{id:t});n.length&&(n[0].isDeleted=!0)},i.cancel=function(){for(var e=i.users.length;e--;){var t=i.users[e];t.isDeleted&&delete t.isDeleted,t.isNew&&i.users.splice(e,1)}},i.saveTable=function(){for(var e=[],t=i.users.length;t--;){var n=i.users[t];n.isDeleted&&i.users.splice(t,1),n.isNew&&(n.isNew=!1),console.log("Saving Table...")}return o.all(e)}}var i=this;r()}angular.module("app.tables").controller("TablexEditableController",e),e.$inject=["$filter","$http","editableOptions","editableThemes","$q"]}(),function(){"use strict";function e(e,t){function n(){a.gridOptions={rowHeight:34,data:[{name:"Wilder Gonzales",gender:"male",company:"Geekko"},{name:"Georgina Schultz",gender:"female",company:"Suretech"},{name:"Carroll Buchanan",gender:"male",company:"Ecosys"},{name:"Valarie Atkinson",gender:"female",company:"Hopeli"},{name:"Schroeder Mathews",gender:"male",company:"Polarium"},{name:"Ethel Price",gender:"female",company:"Enersol"},{name:"Claudine Neal",gender:"female",company:"Sealoud"},{name:"Beryl Rice",gender:"female",company:"Velity"},{name:"Lynda Mendoza",gender:"female",company:"Dogspa"},{name:"Sarah Massey",gender:"female",company:"Bisba"},{name:"Robles Boyle",gender:"male",company:"Comtract"},{name:"Evans Hickman",gender:"male",company:"Parleynet"},{name:"Dawson Barber",gender:"male",company:"Dymi"},{name:"Bruce Strong",gender:"male",company:"Xyqag"},{name:"Nellie Whitfield",gender:"female",company:"Exospace"},{name:"Jackson Macias",gender:"male",company:"Aquamate"},{name:"Pena Pena",gender:"male",company:"Quarx"},{name:"Lelia Gates",gender:"female",company:"Proxsoft"},{name:"Letitia Vasquez",gender:"female",company:"Slumberia"},{name:"Trevino Moreno",gender:"male",company:"Conjurica"}]};var n=[];a.gridOptionsComplex={showGridFooter:!0,showColumnFooter:!0,enableFiltering:!0,columnDefs:[{field:"name",width:"13%"},{field:"address.street",aggregationType:e.aggregationTypes.sum,width:"13%"},{field:"age",aggregationType:e.aggregationTypes.avg,aggregationHideLabel:!0,width:"13%"},{name:"ageMin",field:"age",aggregationType:e.aggregationTypes.min,width:"13%",displayName:"Age for min"},{name:"ageMax",field:"age",aggregationType:e.aggregationTypes.max,width:"13%",displayName:"Age for max"},{name:"customCellTemplate",field:"age",width:"14%",footerCellTemplate:'<div class="ui-grid-cell-contents bg-info text-center">Custom HTML</div>'},{name:"registered",field:"registered",width:"20%",cellFilter:"date",footerCellFilter:"date",aggregationType:e.aggregationTypes.max}],data:n,onRegisterApi:function(e){a.gridApi=e}},t.get("server/uigrid-complex.json").success(function(e){e.forEach(function(e){e.registered=Date.parse(e.registered)}),a.gridOptionsComplex.data=e}),a.gridOptions1={paginationPageSizes:[25,50,75],paginationPageSize:25,columnDefs:[{name:"name"},{name:"gender"},{name:"company"}]},t.get("server/uigrid-100.json").success(function(e){a.gridOptions1.data=e})}var a=this;n()}angular.module("app.tables").controller("UIGridController",e),e.$inject=["uiGridConstants","$http"]}(),function(){"use strict";function e(e){e.useStaticFilesLoader({prefix:"app/i18n/",suffix:".json"}),e.preferredLanguage("en"),e.useLocalStorage(),e.usePostCompiling(!0),e.useSanitizeValueStrategy("sanitizeParameters")}angular.module("app.translate").config(e),e.$inject=["$translateProvider"]}(),function(){"use strict";function e(e,t){e.language={listIsOpen:!1,available:{en:"English",es_AR:"Español"},init:function(){var n=t.proposedLanguage()||t.use(),a=t.preferredLanguage();e.language.selected=e.language.available[n||a]},set:function(n){t.use(n),e.language.selected=e.language.available[n],e.language.listIsOpen=!e.language.listIsOpen}},e.language.init()}angular.module("app.translate").run(e),e.$inject=["$rootScope","$translate"]}(),function(){"use strict";function e(e){function t(t,n,a){t.$watch(function(){return t.$eval(a.animateEnabled,t)},function(t){e.enabled(!!t,n)})}var n={link:t,restrict:"A"};return n}angular.module("app.utils").directive("animateEnabled",e),e.$inject=["$animate"]}(),function(){"use strict";function e(e){return e.jQBrowser}angular.module("app.utils").service("Browser",e),e.$inject=["$window"]}(),function(){"use strict";function e(e,t){function n(n,a){a.on("click",function(a){a.preventDefault(),n.resetKey?(delete t[n.resetKey],e.go(e.current,{},{reload:!0})):$.error("No storage key specified for reset.")})}var a={link:n,restrict:"A",scope:{resetKey:"@"}};return a}angular.module("app.utils").directive("resetKey",e),e.$inject=["$state","$localStorage"]}(),function(){"use strict";function e(e){function t(t,n){e.msie?n.addClass("hide"):n.on("click",function(e){e.preventDefault(),screenfull.enabled?(screenfull.toggle(),screenfull.isFullscreen?$(this).children("em").removeClass("fa-expand").addClass("fa-compress"):$(this).children("em").removeClass("fa-compress").addClass("fa-expand")):$.error("Fullscreen not enabled")})}var n={link:t,restrict:"A"};return n}angular.module("app.utils").directive("toggleFullscreen",e),e.$inject=["Browser"]}(),function(){"use strict";function e(){function e(e,n,a){n.on("click",function(e){n.is("a")&&e.preventDefault();var o,r=a.loadCss;r?(o=t(r),o||$.error("Error creating stylesheet link element.")):$.error("No stylesheet location defined.")})}function t(e){var t="autoloaded-stylesheet",n=$("#"+t).attr("id",t+"-old");return $("head").append($("<link/>").attr({id:t,rel:"stylesheet",href:e})),n.length&&n.remove(),$("#"+t)}var n={link:e,restrict:"A"};return n}angular.module("app.utils").directive("loadCss",e)}(),function(){"use strict";function e(e,t){function n(n,a,o){function r(){var t=e(new Date,i);a.text(t)}var i=o.format;r();var s=t(r,1e3);n.$on("$destroy",function(){t.cancel(s)})}var a={link:n,restrict:"EA"};return a}angular.module("app.utils").directive("now",e),e.$inject=["dateFilter","$interval"]}(),function(){"use strict";function e(){function e(e,t){t.on("change",function(){var e=$(this),t=e.index()+1,n=e.find('input[type="checkbox"]'),a=e.parents("table");a.find("tbody > tr > td:nth-child("+t+') input[type="checkbox"]').prop("checked",n[0].checked)})}var t={link:e,restrict:"A"};return t}angular.module("app.utils").directive("checkAll",e)}(),function(){"use strict";function e(e,t){function n(n,a,o){a.on("click",function(){t(function(){var t=document.createEvent("UIEvents");t.initUIEvent("resize",!0,!1,e,0),e.dispatchEvent(t)},o.triggerResize||300)})}var a={link:n,restrict:"A"};return a}angular.module("app.utils").directive("triggerResize",e),e.$inject=["$window","$timeout"]}(),function(){"use strict";function e(e,t){var n=angular.element("html"),a=angular.element(e),o=angular.element("body");return{support:{transition:function(){var e=function(){var e,t=document.body||document.documentElement,n={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(e in n)if(void 0!==t.style[e])return n[e]}();return e&&{end:e}}(),animation:function(){var e=function(){var e,t=document.body||document.documentElement,n={WebkitAnimation:"webkitAnimationEnd",MozAnimation:"animationend",OAnimation:"oAnimationEnd oanimationend",animation:"animationend"};for(e in n)if(void 0!==t.style[e])return n[e]}();return e&&{end:e}}(),requestAnimationFrame:window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||window.oRequestAnimationFrame||function(e){window.setTimeout(e,1e3/60)},touch:"ontouchstart"in window&&navigator.userAgent.toLowerCase().match(/mobile|tablet/)||window.DocumentTouch&&document instanceof window.DocumentTouch||window.navigator.msPointerEnabled&&window.navigator.msMaxTouchPoints>0||window.navigator.pointerEnabled&&window.navigator.maxTouchPoints>0||!1,mutationobserver:window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver||null},isInView:function(e,t){var n=$(e);if(!n.is(":visible"))return!1;var o=a.scrollLeft(),r=a.scrollTop(),i=n.offset(),s=i.left,l=i.top;return t=$.extend({topoffset:0,leftoffset:0},t),l+n.height()>=r&&l-t.topoffset<=r+a.height()&&s+n.width()>=o&&s-t.leftoffset<=o+a.width()},langdirection:"rtl"===n.attr("dir")?"right":"left",isTouch:function(){return n.hasClass("touch")},isSidebarCollapsed:function(){return o.hasClass("aside-collapsed")},isSidebarToggled:function(){return o.hasClass("aside-toggled")},isMobile:function(){return a.width()<t.tablet}}}angular.module("app.utils").service("Utils",e),e.$inject=["$window","APP_MEDIAQUERY"]}(),function(){"use strict";function e(e,t,n){function a(){o.splineData=t.load("server/chart/spline.json"),o.splineOptions={series:{lines:{show:!1},points:{show:!0,radius:4},splines:{show:!0,tension:.4,lineWidth:1,fill:.5}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#fcfcfc",mode:"categories"},yaxis:{min:0,max:150,tickColor:"#eee",position:e.app.layout.isRTL?"right":"left",tickFormatter:function(e){return e}},shadowSize:0},e.$on("panel-refresh",function(t,a){console.log("Simulating chart refresh during 3s on #"+a),n(function(){e.$broadcast("removeSpinner",a),console.log("Refreshed #"+a)},3e3)}),e.$on("panel-remove",function(e,t,n){console.log("Panel #"+t+" removing"),n.resolve()}),e.$on("panel-removed",function(e,t){console.log("Panel #"+t+" removed")})}var o=this;a()}angular.module("app.dashboard").controller("DashboardController",e),e.$inject=["$scope","ChartData","$timeout"]}(),function(){"use strict";function e(e,t,n){function a(){n.includes("app-h")?(e.app.layout.horizontal=!0,t.$on("$destroy",function(){e.app.layout.horizontal=!1})):e.app.layout.isCollapsed=!0,o.barStackedOptions={series:{stack:!0,bars:{align:"center",lineWidth:0,show:!0,barWidth:.6,fill:.9}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#fcfcfc",mode:"categories"},yaxis:{min:0,max:200,position:e.app.layout.isRTL?"right":"left",tickColor:"#eee"},shadowSize:0},o.splineOptions={series:{lines:{show:!1},points:{show:!0,radius:4},splines:{show:!0,tension:.4,lineWidth:1,fill:.5}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#fcfcfc",mode:"categories"},yaxis:{min:0,max:150,tickColor:"#eee",position:e.app.layout.isRTL?"right":"left",tickFormatter:function(e){return e}},shadowSize:0}}var o=this;a()}angular.module("app.dashboard").controller("DashboardV2Controller",e),e.$inject=["$rootScope","$scope","$state"]}(),function(){"use strict";function e(e){function t(){n.splineOptions={series:{lines:{show:!1},points:{show:!0,radius:4},splines:{show:!0,tension:.4,lineWidth:1,fill:.5}},grid:{borderColor:"#eee",borderWidth:1,hoverable:!0,backgroundColor:"#fcfcfc"},tooltip:!0,tooltipOpts:{content:function(e,t,n){return t+" : "+n}},xaxis:{tickColor:"#fcfcfc",mode:"categories"},yaxis:{min:0,max:150,tickColor:"#eee",position:e.app.layout.isRTL?"right":"left",tickFormatter:function(e){return e}},shadowSize:0},n.seriesData={CA:11100,DE:2510,FR:3710,AU:5710,GB:8310,RU:9310,BR:6610,IN:7810,CN:4310,US:839,SA:410},n.markersData=[{latLng:[41.9,12.45],name:"Vatican City"},{latLng:[43.73,7.41],name:"Monaco"},{latLng:[-.52,166.93],name:"Nauru"},{latLng:[-8.51,179.21],name:"Tuvalu"},{latLng:[7.11,171.06],name:"Marshall Islands"},{latLng:[17.3,-62.73],name:"Saint Kitts and Nevis"},{latLng:[3.2,73.22],name:"Maldives"},{latLng:[35.88,14.5],name:"Malta"},{latLng:[41,-71.06],name:"New England"},{latLng:[12.05,-61.75],name:"Grenada"},{latLng:[13.16,-59.55],name:"Barbados"},{latLng:[17.11,-61.85],name:"Antigua and Barbuda"},{latLng:[-4.61,55.45],name:"Seychelles"},{latLng:[7.35,134.46],name:"Palau"},{latLng:[42.5,1.51],name:"Andorra"}]}var n=this;t()}angular.module("app.dashboard").controller("DashboardV3Controller",e),e.$inject=["$rootScope"]}(),function(){"use strict";angular.module("custom",["angle","app.core","app.sidebar"])}(),function(){"use strict";angular.module("app.order",["ngFileUpload","app.bootstrapui"]).constant("baseURL","/api/")}(),function(){"use strict";function e(e){function t(){e.log("I'm a line from custom.js")}t()}angular.module("custom").controller("Controller",e),e.$inject=["$log"]}(),function(){angular.module("app.order").service("tokenService",["$http","baseURL","$q",function(e,t,n){this.get=function(){return e.get(t+"csrf").then(function(e){return e.data},function(e){return e})}}])}(),function(){angular.module("app.order").controller("LoginFormController",["$scope","loginFactory","$cookies","$rootScope","$state","_token","$window",function(e,t,n,a,o,r,i){e.account={email:"",password:"",_token:r.data},e.authMsg=!1,e.login=function(){e.disabled=!0,t.user().login(e.account).$promise.then(function(e){if(a.auth=e,n.put("auth",JSON.stringify(a.auth)),a.authenticated=!0,t.toState){if("app.unauthorized"==t.toState.name)return void o.go("app.dashboard");i.history.back()}else o.go("app.dashboard")},function(t){e.disabled=!1,403==t.status?e.authMsg=t.data:422==t.status?e.authMsg="Username or password not valid":e.authMsg="Access denied! Try refreshing this page"})},e.logout=function(){t.logout()}}])}(),function(){angular.module("app.order").service("loginFactory",["$resource","$cookies","$rootScope","baseURL","$state","PermissionStore","RoleStore",function(e,t,n,a,o,r,i){function s(){t.remove("auth"),n.authenticated=!1,o.go("page.login")}this.toState=null,this.toParams=null,this.getUserStatus=function(){var e=t.get("auth");return!!e},this.userData=function(){var e=angular.fromJson(t.get("auth"));return e},this.authCheck=function(){e(a+"auth/check").get(function(){},function(){s()})},n.logout=function(){e(a+"auth/logout").query(function(e){s()})},this.user=function(){return e(a+"auth",null,{login:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})}}])}(),function(){"use strict";angular.module("app.order").controller("RegisterFormController",["$scope","registerFactory","loginFactory","$timeout",function(e,t,n,a){e.register={lastname:"",firstname:"",email:"",password:"",password_confirm:"",agreed:!1},e.disabled=!1,e.submitReg=function(){e.authMsg="",e.disabled=!0,t.register().save(e.register,function(){e.authMsg=!1,e.succMsg="Account created successfully",e.register={lastname:"",firstname:"",email:"",password:"",password_confirm:"",agreed:!1},e.registerForm.$setPristine(),e.disabled=!1},function(t){403==t.status?(e.succMsg=!1,e.disabled=!1,e.authMsg="Registration failed. "+t.data):(e.succMsg=!1,e.disabled=!1,e.authMsg="Server error please try again later..")})}}])}(),function(){"use strict";angular.module("app.order").service("registerFactory",["$resource","baseURL",function(e,t){this.register=function(){return e(t+"user",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})}}])}(),function(){angular.module("app.order").controller("AssessmentConfigController",["$scope","$state","assessmentService","DTOptionsBuilder","DTColumnDefBuilder","SweetAlert",function(e,t,n,a,o,r){function i(){function e(e){!function(){r.swal({title:"Are you sure you want to delete this Schedule?",text:"Your will not be able to recover your selected data back!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel pls!",closeOnConfirm:!1,closeOnCancel:!1},function(t){t?n.getConfig()["delete"]({id:parseInt(s.configs[e].id)}).$promise.then(function(){s.configs.splice(e,1),r.swal("Deleted!","Schedule removed successfully","success")},function(){s.configMessage="Server error.",403==response.status&&(s.configMessage="Error: "+response.status+" "+response.statusText),r.swal("Cancelled",s.configMessage,"error")}):r.swal("Cancelled","Schedule is safe :)","error")})}()}n.getConfig().query().$promise.then(function(e){s.configs=e},function(e){s.configsMessage="Error: "+e.status+" "+e.statusText}),s.dtOptions=a.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),s.dtColumnDefs=[o.newColumnDef(0).notSortable(),o.newColumnDef(1),o.newColumnDef(2),o.newColumnDef(3).notSortable()],s.remove=e}var s=e;s.config={enable:!1,starts:"",ends:""},s.configs={},i(),s.submitSettings=function(){angular.isDefined(s.config.id)?n.getConfig().update({id:parseInt(s.config.id)},s.config,function(e){t.reload()},function(e){403==e.status&&(s.configsMessage="Error: "+e.status+" "+e.statusText)}):n.getConfig().save(s.config,function(e){t.reload()},function(e){403==e.status&&(s.configsMessage="Error: "+e.status+" "+e.statusText)})},s.editConfig=function(e){s.config.id=s.configs[e].id,s.config.enable=1==s.configs[e].enable,s.config.starts=new Date(s.configs[e].starts),s.config.ends=new Date(s.configs[e].ends)},s.isUpdate=function(e){return s.config.id==s.configs[e].id}}])}(),function(){"use strict";function e(){function e(){t.today=function(){t.dt=new Date},t.today(),t.clear=function(){t.dt=null},t.disabled=function(e,t){return!1},t.toggleMin=function(){t.minDate=t.minDate?null:new Date},t.toggleMin(),t.open=function(e){e.preventDefault(),e.stopPropagation(),t.opened=!0},t.dateOptions={formatYear:"yy",startingDay:1},t.initDate=new Date("2019-10-20"),t.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],t.format=t.formats[0]}var t=this;e()}angular.module("app.order").controller("AssessConfigDatePickerCtrl",e)}(),function(){angular.module("app.order").controller("AssessmentLogController",["$scope","assessmentService","$state","$stateParams",function(e,t,n,a){e.datetostamp=function(e){return new Date(e)},t.getConfig().get({id:parseInt(a.id)}).$promise.then(function(t){e.configs=t},function(e){n.go("app.assessment.config")}),t.log().query({id:parseInt(a.id)}).$promise.then(function(t){e.records=t},function(){n.go("app.assessment.config")})}])}(),function(){"use strict";function e(e){function t(){function t(e,t,n){e.report=n,e.stringtodate=function(e){return new Date(e)},e.isTitle=function(e){return e==title},e.ok=function(){t.close("closed")},e.cancel=function(){t.dismiss("cancel")}}n.open=function(n){var a=e.open({templateUrl:"app/template/driver-rpt-modal-temp.html",controller:t,resolve:angular.extend({report:function(){return n}})});$("#modal-state");a.result.then(function(){},function(){})},t.$inject=["$scope","$uibModalInstance","report"]}var n=this;t()}angular.module("app.order").controller("DriverReportModalController",e),e.$inject=["$uibModal"]}(),function(){angular.module("app.order").controller("DriverReportViewCtrl",["$scope","$rootScope","vehicleFactory","SweetAlert","DTOptionsBuilder","DTColumnDefBuilder","$state",function(e,t,n,a,o,r,i){function s(){function e(e){!function(){a.swal({title:"Are you sure you want to delete this report?",text:"Your will not be able to recover your selected data back!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel pls!",closeOnConfirm:!1,closeOnCancel:!1},function(t){t?n.driverReport()["delete"]({id:parseInt(l.reports[e].id)}).$promise.then(function(){l.reports.splice(e,1),l.alerts[0]={type:"success",msg:"Report removed successfully"},a.swal("Deleted!","Report has been deleted.","success")},function(){l.clientMessage="Server error.",403==response.status&&(l.reportMessage="Error: "+response.status+" "+response.statusText),a.swal("Cancelled",l.reportMessage,"error")}):a.swal("Cancelled","Report is safe :)","error")})}()}l.dtOptions=o.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),i.is("app.admin.driver-report")?(l.dtColumnDefs=[r.newColumnDef(0),r.newColumnDef(1),r.newColumnDef(2),r.newColumnDef(3),r.newColumnDef(4).notSortable(),r.newColumnDef(5).notSortable()],n.getReports().query().$promise.then(function(e){l.reports=e},function(e){l.reportMessage="Error: "+e.status+" "+e.statusText})):(l.dtColumnDefs=[r.newColumnDef(0),r.newColumnDef(1),r.newColumnDef(2),r.newColumnDef(3),r.newColumnDef(4).notSortable(),r.newColumnDef(5).notSortable()],n.driverReport().query().$promise.then(function(e){l.reports=e},function(e){l.reportMessage="Error: "+e.status+" "+e.statusText})),l.removeReport=e}var l=e;l.reports={},l.alerts=[],l.closeAlert=function(e){l.alerts.splice(e,1)},l.created=function(e){return new Date(e)},s()}])}(),function(){angular.module("app.order").controller("DriverController",["$scope","$rootScope","vehicleFactory","$state","$stateParams",function(e,t,n,a,o){function r(){i.hstep=1,i.mstep=15,i.options={hstep:[1,2,3],mstep:[1,5,10,15,25,30]},i.ismeridian=!0,i.toggleMode=function(){i.ismeridian=!i.ismeridian},i.update=function(){var e=new Date;e.setHours(14),e.setMinutes(0),i.mytime=e},i.changed=function(){console.log("Time changed to: "+i.mytime)},i.clear=function(){i.mytime=null}}var i=e;i.report={info:{}},r(),i.motors=n.vehicles().query().$promise.then(function(e){i.motors=e}),i.validateInput=function(e,t){var n=i.reportForm[e];return(!n.$pristine||i.submitted)&&n.$error[t]},a.is("app.driver.editReport")&&angular.isDefined(o.id)&&(console.log(o.id),n.driverReport().get({id:parseInt(o.id)}).$promise.then(function(e){i.report=e},function(e){a.go("app.driver.viewReport")})),i.submitReport=function(t){i.report.vehicle_id=i.report.vehicle.id,a.is("app.driver.editReport")?n.driverReport().update({id:parseInt(o.id)},i.report,function(n){i.report=n,e.alerts[0]={type:"success",msg:"Report updated successfully"},t.$setPristine()},function(t){403==t.status&&(e.alerts[0]={type:"danger",msg:t.data})}):n.driverReport().report(i.report,function(){i.report={vehicle:i.report.vehicle,info:{}},e.alerts[0]={type:"success",msg:"Report saved successfully"},t.$setPristine()},function(t){403==t.status&&(e.alerts[0]={type:"danger",msg:t.data})})}}])}(),function(){angular.module("app.order").directive("reportChallenge",[function(){return{templateUrl:"app/directives/rpt-challenge.html",replace:!0,scope:{challengesObject:"="}}}])}(),function(){"use strict";function e(e){function t(){function t(e,t,n,a){e.modalTitle=a,e.reportArr=angular.copy(n),e.startDate=function(e){return new Date(e)},e.isTitle=function(e){return e==a},e.ok=function(){t.close("closed")},e.cancel=function(){t.dismiss("cancel")}}n.open=function(n,a){var o=e.open({templateUrl:"app/template/rpt-modal-temp.html",controller:t,resolve:angular.extend({title:function(){return n},subReportArr:function(){return a}})}),r=$("#modal-state");o.result.then(function(){r.text("Modal dismissed with OK status")},function(){r.text("Modal dismissed with Cancel status")})},t.$inject=["$scope","$uibModalInstance","subReportArr","title"]}var n=this;t()}angular.module("app.order").controller("ReportModalController",e),e.$inject=["$uibModal"]}(),function(){angular.module("app.order").directive("reportRemittance",[function(){return{templateUrl:"app/directives/rpt-remittance.html",replace:!0,scope:{remittancesObject:"="}}}])}(),function(){angular.module("app.order").directive("reportTask",[function(){return{templateUrl:"app/directives/rpt-task.html",replace:!0,scope:{tasksObject:"="}}}])}(),function(){angular.module("app.order").controller("uploadController",["$scope","Upload","$timeout","reportFactory",function(e,t,n,a){e.files=a.files,e.errorFiles=a.errorFiles,e.$watch("files",function(e){a.files=e}),e.$watch("errorFiles",function(e){a.errorFiles=e}),e.uploadFiles=function(o,r){a.files=o,a.errorFiles=r,angular.forEach(o,function(o){o.upload=t.upload({url:"/api/rep/files",data:{file:o}}),o.upload.then(function(e){n(function(){o.result=e.data,a.appendUpload(o.result)})},function(t){t.status>0&&(e.errorMsg=t.status+": "+t.data)},function(e){o.progress=Math.min(100,parseInt(100*e.loaded/e.total))})})}}])}(),function(){angular.module("app.order").directive("reportUpload",[function(){return{templateUrl:"app/directives/rpt-uploads.html",replace:!0,scope:{uploadsObject:"="}}}])}(),function(){angular.module("app.order").controller("ReportViewController",["$scope","reportFactory","DTOptionsBuilder","DTColumnDefBuilder","SweetAlert","$state",function(e,t,n,a,o,r){function i(){s.dtOptions=n.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),r.is("app.admin.staff-report")?(s.dtColumnDefs=[a.newColumnDef(0).notSortable(),a.newColumnDef(1).notSortable(),a.newColumnDef(2).notSortable(),a.newColumnDef(3).notSortable(),a.newColumnDef(4).notSortable(),a.newColumnDef(5).notSortable()],t.getReports().query().$promise.then(function(e){s.reports=e},function(e){s.reportMessage="Error: "+e.status+" "+e.statusText})):(s.dtColumnDefs=[a.newColumnDef(0).notSortable(),a.newColumnDef(1).notSortable(),a.newColumnDef(2).notSortable(),a.newColumnDef(3).notSortable(),a.newColumnDef(4).notSortable()],t.report().query().$promise.then(function(e){s.reports=e},function(e){s.reportMessage="Error: "+e.status+" "+e.statusText}))}var s=e;s.reports={},s.alerts=[],s.closeAlert=function(e){s.alerts.splice(e,1)},s.created=function(e){return new Date(e)},i()}])}(),function(){angular.module("app.order").controller("ReportController",["$scope","reportFactory","targetFactory","vehicleFactory",function(e,t,n,a){e.tab=1,e.tasks=[{}],e.challenges=[{}],e.remittances=[{}],e.vehicles=[{}],e.targets=n.getMyTargets().query().$promise.then(function(t){e.targets=t}),e.motors=a.vehicles().query().$promise.then(function(t){e.motors=t}),e.closeAll=function(e){e.splice(1)},e.closeField=function(e,t){t.splice(e,1)},e.addField=function(e){e.push({})},e.isSelected=function(t){return e.tab===t},e.select=function(t){e.tab=t},e.submitReport=function(n){var a={tasks:e.tasks,challenges:e.challenges,remittances:e.remittances,vehicles:e.vehicles,uploadedFiles:t.uploadedFiles};t.report().save(a,function(){e.tasks=[{}],e.challenges=[{}],e.remittances=[{}],e.vehicles=[{}],t.uploadedFiles=[],t.files=[],e.tab=1,n.$setPristine()},function(){}),n.$setPristine()}}])}(),function(){angular.module("app.order").service("reportFactory",["$resource","baseURL",function(e,t){this.files=[],this.errorFiles=[],this.uploadedFiles=[],this.appendUpload=function(e){this.uploadedFiles[this.uploadedFiles.length]=e},this.report=function(){return e(t+"report",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.getReports=function(){return e(t+"admin/staff-reps")}}])}(),function(){angular.module("app.order").controller("TargetManageController",["$scope","targetFactory","DTOptionsBuilder","DTColumnDefBuilder","SweetAlert",function(e,t,n,a,o){function r(){function r(e){i.target.id=i.targets[e].id,i.target.name=i.targets[e].name,i.target.startDate=new Date(i.targets[e].startDate.toString()),i.target.duration=i.targets[e].duration,i.target.user_id=i.targets[e].user_id.toString(),i.target.amount=i.targets[e].amount,i.select(1)}function s(n){!function(){o.swal({title:"Are you sure you want to delete this target?",text:"Your will not be able to recover your selected data back!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel pls!",closeOnConfirm:!1,closeOnCancel:!1},function(a){a?(t.getTargets()["delete"]({id:parseInt(i.targets[n].id)}).$promise.then(function(){i.targets.splice(n,1),e.alerts[0]={type:"success",msg:"Target deleted successfully"}},function(){e.alerts[0]={type:"danger",msg:response.data}}),o.swal("Deleted!","Selected target has been deleted.","success")):o.swal("Cancelled","Your data is safe :)","error")})}()}t.target().query().$promise.then(function(e){i.targets=e}),i.dtOptions=n.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),i.dtColumnDefs=[a.newColumnDef(1),a.newColumnDef(4),a.newColumnDef(5).notSortable()],i.modifyTarget=r,i.removeTarget=s}var i=e;i.alerts=[],i.closeAlert=function(e){i.alerts.splice(e,1)},r(),i.startDate=function(e){return new Date(e)}}])}(),function(){angular.module("app.order").controller("TargetController",["$scope","userFactory","targetFactory","_token",function(e,t,n,a){function o(){e.today=function(){e.dt=new Date},e.today(),e.clear=function(){e.dt=null},e.disabled=function(e,t){return"day"===t&&(0===e.getDay()||6===e.getDay())},e.toggleMin=function(){e.minDate=e.minDate?null:new Date},e.toggleMin(),e.open=function(t){t.preventDefault(),t.stopPropagation(),e.opened=!0},e.dateOptions={formatYear:"yy",startingDay:1},e.initDate=new Date("2019-10-20"),e.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],e.format=e.formats[0]}e.tab=1,e.target={_token:a.data},e.isSelected=function(t){return e.tab===t},e.select=function(t){e.tab=t},e.marketers=t.marketers().query().$promise.then(function(t){e.marketers=t},function(e){}),e.alerts=[],e.closeAlert=function(t){e.alerts.splice(t,1)},e.submitTarget=function(t){angular.isDefined(e.target.id)?n.getTargets().update({id:parseInt(e.target.id)},e.target).$promise.then(function(){e.alerts[0]={type:"success",msg:"Target saved successfully"},e.target={_token:a.data},t.$setPristine()},function(){e.alerts[0]={type:"danger",msg:response.data}}):n.target().save(e.target,function(){e.alerts[0]={type:"success",msg:"Target saved successfully"},e.target={_token:a.data},t.$setPristine()},function(){e.alerts[0]={type:"danger",msg:response.data}})},o()}])}(),function(){angular.module("app.order").service("targetFactory",["$resource","baseURL",function(e,t){this.target=function(){return e(t+"target",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.getTargets=function(){return e(t+"target/:id",null,{update:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}},save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}},"delete":{method:"DELETE"}})},this.getMyTargets=function(){return e(t+"target/:id/user")}}])}(),function(){angular.module("app.order").controller("VehicleManageController",["$scope","vehicleFactory","DTOptionsBuilder","DTColumnDefBuilder","SweetAlert",function(e,t,n,a,o){
-function r(){function r(e){i.vehicleForm.id=i.vehicles[e].id,i.vehicleForm.name=i.vehicles[e].name,i.vehicleForm.reg=i.vehicles[e].reg,i.vehicleForm.eng=i.vehicles[e].eng,i.vehicleForm.colour=i.vehicles[e].colour,i.select(2)}function s(n){!function(){o.swal({title:"Are you sure you want to delete this vehicle?",text:"Your will not be able to recover your selected items back!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel pls!",closeOnConfirm:!1,closeOnCancel:!1},function(a){a?t.vehicles()["delete"]({id:parseInt(i.vehicles[n].id)}).$promise.then(function(){i.vehicles.splice(n,1),e.alerts[0]={type:"success",msg:"Vehicle removed successfully"},o.swal("Deleted!","Selected vehicle has been deleted.","success")},function(){403==response.status&&(e.alerts[0]={type:"danger",msg:response.data},o.swal("Cancelled",response.data,"error"))}):o.swal("Cancelled","Your data is safe :)","error")})}()}t.vehicles().query().$promise.then(function(e){i.vehicles=e}),i.dtOptions=n.newOptions().withDisplayLength(10).withPaginationType("full_numbers"),i.dtColumnDefs=[a.newColumnDef(1),a.newColumnDef(4).notSortable()],i.modifyVehicle=r,i.removeVehicle=s}var i=e;i.alerts=[],i.closeAlert=function(e){i.alerts.splice(e,1)},r()}])}(),function(){angular.module("app.order").service("vehicleFactory",["$resource","baseURL",function(e,t){this.vehicles=function(){return e(t+"vehicle/:id",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}},update:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}},"delete":{method:"DELETE"}})},this.driverReport=function(){return e(t+"driver/report/:id",null,{report:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}},update:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}},"delete":{method:"DELETE"}})},this.getReports=function(){return e(t+"admin/driver-reps")}}])}(),function(){angular.module("app.order").controller("VehicleController",["$scope","vehicleFactory","_token",function(e,t,n){e.vehicleForm={_token:n.data},e.tab=1,e.vehicles=[{}],e.isSelected=function(t){return e.tab===t},e.select=function(t){e.tab=t},e.alerts=[],e.closeAlert=function(t){e.alerts.splice(t,1)},e.submitVehicle=function(a){angular.isDefined(e.vehicleForm.id)?t.vehicles().update({id:parseInt(e.vehicleForm.id)},e.vehicleForm).$promise.then(function(){e.alerts[0]={type:"success",msg:"Vehicle updated successfully"},e.vehicleForm={_token:n.data},a.$setPristine()},function(){e.alerts[0]={type:"danger",msg:response.data}}):t.vehicles().save(e.vehicleForm,function(){e.alerts[0]={type:"success",msg:"Vehicle added successfully"},e.vehicleForm={name:"",reg:"",engineNo:"",colour:"",_token:n.data},a.$setPristine(),e.select(1)},function(t){e.alerts[0]={type:"danger",msg:t.data}})}}])}(),function(){angular.module("app.core").config(["$urlRouterProvider",function(e){e.deferIntercept(),e.otherwise(function(e){var t=e.get("$state");t.go("page.login")})}])}(),function(){function e(e,t,n,a,o){o.get("/api/permission/controls").then(function(a){angular.forEach(a.data.permissions,function(n){t.definePermission(n.slug,function(){return e.userCan(n.slug)})}),angular.forEach(a.data.roles,function(t){n.defineRole(t.slug,function(){return e.userIs(t.slug)})})}).then(function(){a.sync(),a.listen()})}angular.module("app.core").run(e),e.$inject=["userFactory","PermissionStore","RoleStore","$urlRouter","$http"]}(),function(){"use strict";angular.module("app.sidebar").directive("sideMenuPermission",function(){return{restrict:"AE",link:function(e,t,n){console.log("Linking....")}}})}(),function(){angular.module("app.order").controller("AdminAirtimeController",["$rootScope","$scope","$resource","baseURL","$filter","ngTableParams","$timeout","ngTableDataService","DTOptionsBuilder","DTColumnDefBuilder",function(e,t,n,a,o,r,i,s,l,c){function u(){d.propClass=function(e){return 1==e?"label-success":"label-info"},d.dateChanged=function(){console.log("clicked"),d.max_date<=d.min_date&&(d.max_date=null)},n(a+"admin/airtime").query().$promise.then(function(e){d.schedules=e}),d.dtOptions=l.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),d.dtColumnDefs=[c.newColumnDef(0),c.newColumnDef(1),c.newColumnDef(2),c.newColumnDef(3),c.newColumnDef(4),c.newColumnDef(5),c.newColumnDef(6),c.newColumnDef(7).notSortable()]}e.app.layout.isCollapsed=!0;var d=t;d.showData=!1,d.dataMessage="Loading...",d.isDisabled=!1,u(),d.search=function(e){d.isDisabled=!0,n(a+"admin/airtime?min=:min&max=:max").query({min:e.min_date.$modelValue,max:e.max_date.$modelValue}).$promise.then(function(e){d.isDisabled=!1,d.schedules=e})}}])}(),function(){"use strict";angular.module("app.order").controller("MinDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){"use strict";angular.module("app.order").controller("MaxDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){"use strict";angular.module("app.order").controller("AirtimeCreateController",["$scope","$cookies","$rootScope","toaster","clientFactory","userFactory","productFactory","airtimeFactory","SweetAlert","$uibModal","$timeout","$state","loginFactory",function(e,t,n,a,o,r,i,s,l,c,u,d,p){function m(){function e(e,t,n,a){var o=e;o.cart=n.cart,o.calProductSubscription=function(e){return n.calProductSubscription(e)},o.minusBroadcast=function(e,t){n.minusBroadcast(e,t)},o.plusBroadcast=function(e,t){n.plusBroadcast(e,t)},o.deleteCartItem=function(e){n.deleteCartItem(e)},o.deleteSubscription=function(e,t){n.deleteSubscription(e,t)},o.ok=function(){t.close("closed")},o.cancel=function(){t.dismiss("cancel")}}f.openCart=function(t){var n=c.open({templateUrl:"app/template/cart.tpl.html",controller:e,size:t,resolve:{cart:function(){return f.cart},$rootScope:function(){return f}},cache:!1}),a=$("#modal-state");n.result.then(function(){a.text("Modal dismissed with OK status")},function(){a.text("Modal dismissed with Cancel status")})},e.$inject=["$scope","$uibModalInstance","$rootScope","cart"]}var f=e;n.app.layout.isCollapsed=!0,f.tab=1,f.bulkValid=!1,f.slotValid=!1,f.cart=[],f.orderButton=void 0,f.btn={},f.form={price:0,period:"",no_slots:"0",slot_start_date:"",slot_end_date:"",fixSpotPrice:"",broadcast:"0",bulk_start_date:"",bulk_end_date:"",bulkPrice:"",discount:"0",commission:"0",agree:!1},f.cartTotals=0,f.vat=0,f.dsctAmnt=0,f.commAmnt=0,f.totalWOComm=0,f.totalWComm=0,f.periods=[{value:"premium",label:"Premium"},{value:"regular",label:"Regular"}],f.client={},f.refreshClient=function(e){o.getClients().query().$promise.then(function(e){f.clients=e})},f.slot_start_date="",f.slot_end_date="",f.getSlotRange=function(e){return new Array(parseInt(e))},f.maxSlotRange=0,f.maxSlotRangeChange=function(){f.maxSlotRange=angular.copy(f.form.no_slots),f.form.fixSpotPrice=parseFloat(f.product.selected.prices[f.price.index][f.form.period])*parseInt(f.maxSlotRange)},f.bulkRangeChanged=function(){f.form.bulkPrice=parseFloat(f.product.selected.prices[f.price.index][f.form.period])*parseInt(f.form.broadcast)},f.clearBulk=function(){f.form.broadcast=0,f.form.bulk_start_date=null,f.form.bulk_end_date=null,f.bulkRangeChanged()},f.clearSlot=function(){f.form.no_slots=0,f.form.slot_start_date=null,f.form.slot_end_date=null,f.maxSlotRange=0,f.fixForDate={},f.scheduleSlots=[],f.btn.fixslot=!1,f.form.fixSpotPrice=parseFloat(f.product.selected.prices[f.price.index][f.form.period])*parseInt(f.form.no_slots)},f.fixForDate={},f.scheduleSlots=[],f.checkScheduleSlot=function(){var e=!0;if(f.scheduleSlots.length)for(var t=0;t<f.scheduleSlots.length;t++)e=f.scheduleSlots[t].tofix==f.scheduleSlots[t].times.length;return e},f.pushToSchedule=function(){f.fixForDate.times=[],f.scheduleSlots.push(f.fixForDate),f.recalculateSlot()},f.recalculateSlot=function(){var e=angular.copy(f.fixForDate.slot);f.maxSlotRange=parseInt(f.maxSlotRange)-parseInt(e),f.fixForDate={slot:"1"}},f.removeSchedule=function(e){f.maxSlotRange=parseInt(f.maxSlotRange)+parseInt(f.scheduleSlots[e].slot),f.scheduleSlots.splice(e,1),f.calcFixedPrice()},f.calcFixedPrice=function(){f.form.fixSpotPrice=parseFloat(f.product.selected.prices[f.price.index][f.form.period])*parseInt(f.form.no_slots);for(var e=parseFloat(f.product.selected.prices[f.price.index][f.form.period]),t=0;t<f.scheduleSlots.length;t++){var n=f.scheduleSlots[t],a=parseInt(n.tofix)*parseFloat(e);f.form.fixSpotPrice=parseFloat(f.form.fixSpotPrice)+parseInt(f.product.selected.surcharge)/100*parseFloat(a)}},f.submitOrder=function(){var e={};e.marketer=f.marketer.selected,e.client=f.client.selected,e.sub={discount:f.form.discount,discountAmt:f.dsctAmnt,commission:f.form.commission,commissionAmt:f.commAmnt,subTotal:f.cartTotals,vat:f.vat,grandTotal:f.totalWOComm},e.cart=f.cart,console.log(e),a.pop("wait","Order","Processing your request"),f.orderButton=!0,s.order().save(e,function(e){a.pop("success","Order","Order has been received."),u(function(){d.go("app.airtime")},500)},function(e){f.orderButton=!1,403==e.status?a.pop("error","Order",e.data):a.pop("error","Order","Failed to process order!. please contact the administrator")})},f.marketer={selected:p.userData()},r.marketers().query().$promise.then(function(e){f.marketers=e}),f.product={},f.price={index:"0"},f.products=i.getProducts().query().$promise.then(function(e){f.products=e}),f.doDiscountCalc=function(){f.vat=.05*f.cartTotals,f.dsctAmnt=f.form.discount/100*f.cartTotals,f.commAmnt=f.form.commission/100*f.cartTotals,f.totalWOComm=f.cartTotals+f.vat-f.dsctAmnt-f.commAmnt,f.totalWComm=f.cartTotals+f.vat-f.dsctAmnt},f.calProductSubscription=function(e){for(var t=0,n=0;n<f.cart[e].subscriptions.length;n++){var a=f.cart[e].subscriptions[n];t+=parseFloat(a.amount)}return t},f.calcCartTotalPrice=function(){for(var e=0,t=0;t<f.cart.length;t++)e+=f.calProductSubscription(t);f.cartTotals=e,f.doDiscountCalc()},f.deleteCartItem=function(e){delete f.cart.splice(e,1),f.calcCartTotalPrice()},f.deleteSubscription=function(e,t){f.cart[e].subscriptions.splice(t,1),0==f.cart[e].subscriptions.length&&f.deleteCartItem(e),f.calcCartTotalPrice()},f.productPrice=function(){return parseFloat(f.form.price)},f.addBulk=function(){if(""!=f.product.selected){var e={broadcast:f.form.broadcast,bulk_start_date:f.form.bulk_start_date,bulk_end_date:f.form.bulk_end_date,period:f.form.period,amount:parseFloat(f.form.bulkPrice)};f.addItemToCart();var t=f.cartItemIndex(f.product.selected.id);f.cart[t].subscriptions.push(e),f.calcCartTotalPrice(),f.clearBulk()}},f.addSlot=function(){if(""!=f.product.selected&&0!=f.form.price){f.addItemToCart();var e={slots:f.form.no_slots,slot_start_date:f.form.slot_start_date,slot_end_date:f.form.slot_end_date,isFixedOrDisplaced:f.btn.fixslot,period:f.form.period,amount:parseFloat(f.form.fixSpotPrice),schedule:f.scheduleSlots},t=f.cartItemIndex(f.product.selected.id);f.cart[t].subscriptions.push(e),f.calcCartTotalPrice(),f.clearSlot()}},f.clearScheduleTimes=function(e){e.times=[]},f.minusBroadcast=function(e,t){501!=f.cart[e].subscriptions[t].broadcast&&(--f.cart[e].subscriptions[t].broadcast,f.calcCartTotalPrice())},f.plusBroadcast=function(e,t){++f.cart[e].subscriptions[t].broadcast,f.calcCartTotalPrice()},f.searchCartItem=function(e){for(var t=0;t<f.cart.length;t++)if(f.cart[t].id==e)return!0;return!1},f.cartItemIndex=function(e){for(var t=0;t<f.cart.length;t++)if(f.cart[t].id==e)return t},f.productChanged=function(){f.price={index:0},f.form.period="premium",f.form.price=f.product.selected.prices[f.price.index][f.form.period],f.clearSlot(),f.clearBulk()},f.addItemToCart=function(){var e=angular.copy(f.product.selected);e.subscriptions=[],f.searchCartItem(e.id)||f.cart.push(e)},f.durationChange=function(){f.form.period="premium",f.form.price=f.product.selected.prices[f.price.index][f.form.period]},f.onPeriodChange=function(){f.form.price=f.product.selected.prices[f.price.index][f.form.period]},f.bulkValidate=function(e){if(f.bulkValid=!1,"date"==e){var t=new Date(f.form.bulk_start_date);t.setHours(0,0,0,0);var n=new Date(f.form.bulk_end_date);n.setHours(0,0,0,0),t>=n&&(f.form.bulk_end_date=null)}if("time"==e){var a=new Date(f.form.bulk_start_date),o=new Date(f.form.bulk_end_date);o.getTime()<=a.getTime()&&(f.form.bulk_end_date=null)}return f.form.bulk_start_date&&f.form.bulk_end_date&&f.form.broadcast>0&&(f.bulkValid=!0),f.bulkValid},f.emptyCart=function(){l.swal({title:"Are you sure you want to empty your cart?",text:"Your will not be able to recover your selected items back!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel pls!",closeOnConfirm:!1,closeOnCancel:!1},function(e){e?(f.cart=[],f.calcCartTotalPrice(),l.swal("Deleted!","Your cart is now empty.","success")):l.swal("Cancelled","Your item is safe :)","error")})},m()}])}(),function(){"use strict";angular.module("app.order").controller("SlotStartDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){"use strict";angular.module("app.order").controller("SlotEndDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){"use strict";angular.module("app.order").controller("FixedSlotDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){"use strict";angular.module("app.order").controller("BulkStartDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){"use strict";angular.module("app.order").controller("BulkEndDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){"use strict";function e(e){function t(){function t(e,t,n){e.scheduleRef=n,e.getSlotRange=function(e){return new Array(parseInt(e))},e.ok=function(){t.close("closed")},e.cancel=function(){t.dismiss("cancel")}}n.open=function(n,a){var o=e.open({templateUrl:"/myModalContent.html",controller:t,size:n,resolve:{$schedule:function(){return a}},cache:!1}),r=$("#modal-state");o.result.then(function(){r.text("Modal dismissed with OK status")},function(){r.text("Modal dismissed with Cancel status")})},t.$inject=["$scope","$uibModalInstance","$schedule"]}var n=this;t()}angular.module("app.order").controller("SlotTimeModalCtrl",e),e.$inject=["$uibModal"]}(),function(){angular.module("app.order").controller("AirtimeDefaultController",["$rootScope","$scope","$resource","baseURL","$filter","ngTableParams","$timeout","ngTableDataService","DTOptionsBuilder","DTColumnDefBuilder",function(e,t,n,a,o,r,i,s,l,c){function u(){d.propClass=function(e){return 1==e?"label-success":"label-info"},d.dateChanged=function(){console.log("clicked"),d.max_date<=d.min_date&&(d.max_date=null)},n(a+"airtime").query().$promise.then(function(e){d.schedules=e}),d.dtOptions=l.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),d.dtColumnDefs=[c.newColumnDef(0),c.newColumnDef(1),c.newColumnDef(2),c.newColumnDef(3),c.newColumnDef(4),c.newColumnDef(5),c.newColumnDef(6),c.newColumnDef(7).notSortable()]}e.app.layout.isCollapsed=!0;var d=t;d.showData=!1,d.dataMessage="Loading...",d.isDisabled=!1,u(),d.search=function(e){d.isDisabled=!0,n(a+"airtime?min=:min&max=:max").query({min:e.min_date.$modelValue,max:e.max_date.$modelValue}).$promise.then(function(e){d.isDisabled=!1,d.schedules=e})}}])}(),function(){"use strict";angular.module("app.order").controller("MinDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){"use strict";angular.module("app.order").controller("MaxDateCtrl",["$scope",function(e){function t(){n.today=function(){n.dt=new Date},n.today(),n.clear=function(){n.dt=null},n.disabled=function(e,t){return!1},n.toggleMin=function(){n.minDate=e.minDate?null:new Date},n.toggleMin(),n.open=function(e){e.preventDefault(),e.stopPropagation(),n.opened=!0},n.dateOptions={formatYear:"yy",startingDay:1},n.initDate=new Date("2019-10-20"),n.formats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],n.format=n.formats[0]}var n=this;t()}])}(),function(){angular.module("app.order").controller("AirtimeDetailController",["$scope","$stateParams","airtimeFactory","$state","$rootScope",function(e,t,n,a,o){function r(){s.schedule=n.getAirtime().get({id:parseInt(t.id)}).$promise.then(function(e){s.schedule=e,s.manage.validate=s.schedule.schedule_alert.validate,s.manage.recommend=s.schedule.schedule_alert.recommend,s.manage.approved=s.schedule.schedule_alert.approved,s.manage.programme=s.schedule.schedule_alert.programme},function(){a.go("app.airtime")})}function i(){s.airtimeRecommend=function(){return s.manage.validate?!1:(s.manage.recommend=!1,!0)},s.airtimeApproved=function(){return s.manage.validate&&s.manage.recommend?!1:(s.manage.approved=!1,!0)},s.airtimeProgramme=function(){return s.manage.validate&&s.manage.recommend&&s.manage.approved?!1:(s.manage.programme=!1,!0)},s.validateSchedule=function(){e.alerts=[],n.validateAirtime().save({id:s.schedule.schedule_alert.id},s.manage).$promise.then(function(t){r(),e.alerts[0]={type:"success",msg:"Airtime has been validated"}},function(t){403==t.status&&(e.alerts[0]={type:"danger",msg:t.data}),422==t.status&&(e.alerts[0]={type:"warning",msg:t.data})})},s.recommendSchedule=function(){e.alerts=[],n.recommendAirtime().save({id:s.schedule.schedule_alert.id},s.manage).$promise.then(function(t){r(),e.alerts[0]={type:"success",msg:"Airtime successfully recommended for approval"}},function(t){403==t.status&&(e.alerts[0]={type:"danger",msg:t.data}),422==t.status&&(e.alerts[0]={type:"warning",msg:t.data})})},s.approveSchedule=function(){e.alerts=[],n.approveAirtime().save({id:s.schedule.schedule_alert.id},s.manage).$promise.then(function(t){r(),e.alerts[0]={type:"success",msg:"Airtime successfully approved for programme"}},function(t){403==t.status&&(e.alerts[0]={type:"danger",msg:t.data}),422==t.status&&(e.alerts[0]={type:"warning",msg:t.data})})},s.programmeSchedule=function(){e.alerts=[],n.programmeAirtime().save({id:s.schedule.schedule_alert.id},s.manage).$promise.then(function(t){r(),e.alerts[0]={type:"success",msg:"Airtime saved for programme"}},function(t){403==t.status&&(e.alerts[0]={type:"danger",msg:t.data}),422==t.status&&(e.alerts[0]={type:"warning",msg:t.data})})}}o.app.layout.isCollapsed=!0;var s=e;r(),i(),s.manage={},e.alerts=[],e.closeAlert=function(t){e.alerts.splice(t,1)}}])}(),function(){angular.module("app.order").service("airtimeGenService",["$resource","baseURL",function(e,t){}])}(),function(){angular.module("app.order").controller("AirtimeController",["$scope","$resource","baseURL","$filter","$rootScope","ngTableParams","$timeout","ngTableDataService","DTOptionsBuilder","DTColumnDefBuilder",function(e,t,n,a,o,r,i,s,l,c){function u(){t(n+"airtime").query().$promise.then(function(e){d.schedules=e}),d.dtOptions=l.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),d.dtColumnDefs=[c.newColumnDef(1),c.newColumnDef(6).notSortable()]}o.app.layout.isCollapsed=!0;var d=e;d.showData=!1,d.dataMessage="Loading...",u()}])}(),function(){angular.module("app.order").service("airtimeFactory",["$resource","baseURL",function(e,t){this.order=function(){return e(t+"airtime",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.getAirtime=function(){return e(t+"airtime/:id")},this.validateAirtime=function(){return e(t+"airtime/:id/validate",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.recommendAirtime=function(){return e(t+"airtime/:id/recommend",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.approveAirtime=function(){return e(t+"airtime/:id/approve",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.programmeAirtime=function(){return e(t+"airtime/:id/programme",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})}}])}(),function(){angular.module("app.order").controller("AssessmentRecordController",["$scope","assessmentService","DTOptionsBuilder","DTColumnDefBuilder","SweetAlert",function(e,t,n,a,o){function r(){function e(e){!function(){o.swal({title:"Are you sure you want to delete this record?",text:"Your will not be able to recover your selected data back!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel pls!",closeOnConfirm:!1,closeOnCancel:!1},function(n){n?t.getAssessment()["delete"]({id:parseInt(i.records[e].id)}).$promise.then(function(){i.records.splice(e,1),i.alerts[0]={type:"success",msg:"Assessment data removed successfully"}},function(e){403==e.status&&(i.alerts[0]={type:"danger",msg:e.data})}):o.swal("Cancelled","Assessment data is safe :)","error")})}()}i.dtOptions=n.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),i.dtColumnDefs=[a.newColumnDef(0),a.newColumnDef(1),a.newColumnDef(2).notSortable()],i.remove=e}var i=e;i.showRecords=!1,i.assessMessage="Loading...",i.alerts=[],i.closeAlert=function(e){i.alerts.splice(e,1)},e.datetostamp=function(e){return new Date(e)},t.getAssessment().query().$promise.then(function(e){i.records=e,i.showRecords=!0},function(e){403==e.status&&(i.assessMessage="Error: "+e.status+" "+e.statusText)}),r()}])}(),function(){angular.module("app.order").controller("AssessmentController",["$scope","toaster","assessmentService","$state","$stateParams",function(e,t,n,a,o){function r(e){a.is("app.assessment.create")&&angular.isDefined(e.assessment)&&a.go("app.assessment.edit",{id:e.assessment.id})}var i=e;i.disableForm=!1,i.showTimeFrame=!1,e.config={},e.form={id:null,preview:0,part_one:{personal:{date_confirm:{date:"",opened:!1},appraisal_date:{date:"",opened:!1}},qualifications:[{date:"",opened:!1},{date:"",opened:!1},{date:"",opened:!1},{date:"",opened:!1}]},part_two:{review:[{}],performance:{}},part_three:{competencies:{}},supervisor:{preview:0,attributes:{},habit:{},leadership:{}}},n.getActiveConfig().get().$promise.then(function(t){i.showTimeFrame=!0,e.config=t,a.is("app.assessment.create")&&(e.form.assessment_config_id=t.id),r(t)},function(){i.disableForm=!0}),a.is("app.assessment.edit")&&n.getAssessment().get({id:o.id}).$promise.then(function(t){e.form=t,s()},function(){a.go("app.assessment.create",{id:e.form.id})}),i.submitPreview=function(){e.form.preview=0,t.pop("wait","Assessment","Processing your request"),n.assessment().save(e.form,function(n){e.form=n,t.pop("success","Assessment","Data saved."),s(),a.go("app.assessment.edit",{id:e.form.id})},function(e){t.pop("error","Assessment","Data submission Failed.")})},i.submitAssessment=function(){e.form.preview=1,t.pop("wait","Assessment","Processing your request"),n.assessment().save(e.form,function(){t.pop("success","Assessment","Data submitted for review."),a.go("app.assessment.view")},function(e){403==e.status&&(i.alerts[0]={type:"danger",msg:e.data},t.pop("error","Assessment","Data submission Failed."))})};var s=function(){angular.isDefined(e.form.part_two.review)&&0==e.form.part_two.review.length&&0==e.form.part_two.review[0].length&&(e.form.part_two.review=[{}]),angular.isDefined(e.form.part_two.performance)&&0==e.form.part_two.performance.length&&(e.form.part_two.performance={}),angular.isDefined(e.form.part_three.competencies)&&0==e.form.part_three.competencies.length&&(e.form.part_three.competencies={})};i.today=function(){i.dt=new Date},i.today(),i.clear=function(){i.dt=null},i.disabled=function(e,t){return!1},i.toggleMin=function(){i.minDate=i.minDate?null:new Date},i.toggleMin(),i.open=function(e,t){e.preventDefault(),e.stopPropagation(),t.opened=!0},i.dateOptions={formatYear:"yy",startingDay:1},i.initDate=new Date("2019-10-20"),i.dateFormats=["dd-MMMM-yyyy","yyyy/MM/dd","dd.MM.yyyy","shortDate"],i.dateFormat=i.dateFormats[0]}])}(),function(){"use strict";angular.module("app.order").service("assessmentService",["$resource","baseURL",function(e,t){this.assessment=function(){return e(t+"assessment",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}},update:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.getAssessment=function(){return e(t+"assessment/:id",null,{save:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}},"delete":{method:"DELETE",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.supervisor=function(){return e(t+"supervisor",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}},update:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.getConfig=function(){return e(t+"assessconfig/:id",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}},update:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}},"delete":{method:"DELETE",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.getActiveConfig=function(){return e(t+"activeconfig")},this.log=function(){return e(t+"assessment/records/:id")}}])}(),function(){angular.module("app.order").controller("SupervisorController",["$scope","toaster","assessmentService","$state","$stateParams",function(e,t,n,a,o){var r=this;e.supervisor={preview:0,attributes:{},habit:{},leadership:{}},n.getAssessment().get({id:o.id}).$promise.then(function(t){null!=t.supervisor?e.supervisor=t.supervisor:(e.supervisor.assessment_id=t.id,i())},function(){a.go("app.assessment.view")}),e.submitPreview=function(){e.supervisor.preview=0,t.pop("wait","Assessment","Processing your request"),n.supervisor().save(e.supervisor,function(n){e.supervisor=n,t.pop("success","Supervisor","Data saved."),i()},function(e){t.pop("error","Supervisor","Data submission Failed.")})},e.submitComment=function(){e.supervisor.preview=1,t.pop("wait","Supervisor","Processing your request"),n.supervisor().save(e.supervisor,function(){t.pop("success","Supervisor","Data submitted."),a.go("app.assessment.view")},function(e){403==e.status&&(r.alerts[0]={type:"danger",msg:e.data},t.pop("error","Supervisor","Data submission Failed."))})};var i=function(){"undefined"!=e.supervisor.habit&&0==e.supervisor.attributes.length&&(e.supervisor.attributes={}),"undefined"!=e.supervisor.habit&&0==e.supervisor.habit.length&&(e.supervisor.habbit={}),"undefined"!=e.supervisor.leadership&&0==e.supervisor.leadership.length&&(e.supervisor.leadership={})}}])}(),function(){"use strict";angular.module("app.order").controller("ClientFormController",["$scope","clientFactory","toaster","$stateParams","$rootScope","$state","$timeout",function(e,t,n,a,o,r,i){var s=e;s.disableView=!1,s.client={name:"",address:"",title:"Mr",firstname:"",lastname:"",mobile:"",email:""},s.alerts=[],s.closeAlert=function(e){s.alerts.splice(e,1)},r.is("app.client.edit")&&(s.disableView=!1,s.client=t.getClients().get({id:parseInt(a.id,10)}).$promise.then(function(e){s.client=e},function(e){s.disableView=!0,403==e.status?s.alerts[0]={type:"danger",msg:e.data}:404==e.status&&(s.alerts[0]={type:"danger",msg:"Client not found!."})})),s.clientSubmit=function(){n.pop("wait","Client","Processing your request"),s.client.id?t.update().save({id:s.client.id},s.client,function(){n.pop("success","Client","Data updated."),i(function(){r.go("app.client")},500)},function(e){403==e.status&&(s.alerts[0]={type:"danger",msg:e.data},n.pop("error","Client","Data update Failed."))}):t.client().save(s.client,function(){n.pop("success","Client Registration","Registration Successful."),i(function(){r.go("app.client")},1e3)},function(e){403==e.status&&(s.alerts[0]={type:"danger",msg:e.data},n.pop("error","Client",e.data))})}}])}(),function(){"use strict";angular.module("app.order").controller("ClientController",["$scope","$stateParams","clientFactory","DTOptionsBuilder","DTColumnDefBuilder","SweetAlert",function(e,t,n,a,o,r){function i(){function e(e){!function(){r.swal({title:"Are you sure you want to delete this client?",text:"Your will not be able to recover your selected data back!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel pls!",closeOnConfirm:!1,closeOnCancel:!1},function(t){t?n.client()["delete"]({id:parseInt(s.clients[e].id)}).$promise.then(function(){s.clients.splice(e,1),s.alerts[0]={type:"success",msg:"Client removed successfully"},r.swal("Deleted!","Client has been deleted.","success")},function(){s.clientMessage="Server error.",403==response.status&&(s.clientMessage="Error: "+response.status+" "+response.statusText),r.swal("Cancelled",s.clientMessage,"error")}):r.swal("Cancelled","Client data is safe :)","error")})}()}n.getClients().query().$promise.then(function(e){s.clients=e,s.showclient=!0},function(e){s.clientMessage="Error: "+e.status+" "+e.statusText}),s.dtOptions=a.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),s.dtColumnDefs=[o.newColumnDef(1),o.newColumnDef(2).notSortable(),o.newColumnDef(3).notSortable(),o.newColumnDef(4).notSortable(),o.newColumnDef(5).notSortable()],
-s.removeClient=e}var s=e;s.showClient=!1,s.clientMessage="Loading...",s.alerts=[],s.closeAlert=function(e){s.alerts.splice(e,1)},angular.isDefined(t.id)&&(s.client=n.getClients().get({id:parseInt(t.id,10)}).$promise.then(function(e){s.client=e,s.showClient=!0},function(e){403==e.status&&(s.clientMessage="Error: "+e.status+" "+e.statusText)})),i()}])}(),function(){"use strict";angular.module("app.order").service("clientFactory",["$resource","baseURL",function(e,t){this.getClients=function(){return e(t+"client/:id")},this.clientEdit=function(){return e(t+"client/:id/edit")},this.update=function(){return e(t+"client/:id",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.client=function(){return e(t+"client/:id",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}},"delete":{method:"DELETE",headers:{"X-Requested-With":"XMLHttpRequest"}}})}}])}(),function(){"use strict";angular.module("app.order").controller("DashboardController",["loginFactory","$scope","$resource","baseURL","FileUploader","_token","toaster",function(e,t,n,a,o,r,i){var s=t;s.alerts=[],s.profile={_token:r},s.reset={_token:r},s.closeAlert=function(e){s.alerts.splice(e,1)},n(a+"contacts").query().$promise.then(function(e){s.contacts=e}),s.profile=e.userData(),s.uploader=new o({url:a+"user/"+s.profile.id+"/upload"}),s.uploader.onErrorItem=function(e,t,n,a){console.info("onErrorItem",e,t,n,a)},s.uploader.onCompleteAll=function(){s.uploader.clearQueue()},s.updateProfile=function(){n(a+"user/:id",null,{update:{method:"PUT"}}).update({id:s.profile.id},s.profile,function(){s.alerts[0]={type:"success",msg:"Profile updated successfully"}},function(e){403==e.status&&(s.alerts[0]={type:"danger",msg:"Profile update failed"})})},s.updatePassword=function(){n(a+"user/:id?action=password",null,{update:{method:"PUT"}}).update({id:s.profile.id},s.reset,function(){s.alerts[0]={type:"success",msg:"Profile updated successfully"},i.pop("success","Sent","Reset link has been sent to your mail")},function(e){403==e.status?(s.alerts[0]={type:"danger",msg:"Profile update failed"},i.pop("success","Sent","Reset link has been sent to your mail "),i.pop("error","Error","Failed to reset password")):i.pop("error","Error","Failed: contact administrator")})}}])}(),function(){"use strict";angular.module("app.order").controller("MailController",["$scope","mailFactory","$timeout",function(e,t,n){e.mail={to:{},subject:"",cc:"",bcc:""},e.content=null,e.disabled=void 0,e.alerts=[],e.closeAlert=function(t){e.alerts.splice(t,1)},e.mailbox={},t.contacts().query().$promise.then(function(t){e.mailbox=t}),e.sendMail=function(){e.alerts=[],e.mailMsg="Please wait...",e.disabled=!0,e.mail.msg=e.content,e.mail.to=e.mailbox.selected.email,t.mail().send(e.mail,function(t){e.mail={to:{},subject:"",cc:"",bcc:""},e.content=null,e.disabled=!1,e.mailoutForm.$setPristine(),e.alerts[0]={type:"success",msg:"Mail sent successfully"}},function(t){e.disabled=!1,403==t.status?e.alerts[0]={type:"danger",msg:"Mail not sent"}:e.alerts[0]={type:"danger",msg:"Error sending mail!. Contact the administrator"}})}}])}(),function(){"use strict";angular.module("app.order").service("mailFactory",["$resource","baseURL",function(e,t){this.mail=function(){return e(t+"mail/mailout",null,{send:{method:"POST"}})},this.contacts=function(){return e(t+"contacts")}}])}(),function(){"use strict";angular.module("app.order").controller("PeopleUpdateController",["$scope","toaster","userFactory","$stateParams","permissionFactory",function(e,t,n,a,o){function r(){var e=angular.copy(s.account.roles),t=angular.copy(s.account.permissions);s.account.roles={},s.account.permissions={},angular.forEach(e,function(e,t){s.account.roles[e.id]=!0}),angular.forEach(t,function(e,t){s.account.permissions[e.id]=!0})}function i(){var e=angular.copy(s.account.roles),t=angular.copy(s.account.permissions);s.account.roles={},s.account.permissions={},angular.forEach(e,function(e,t){1==e&&(this[t]=!0)},s.account.roles),angular.forEach(t,function(e,t){1==e&&(this[t]=!0)},s.account.permissions)}var s=e;s.disableView=!1,s.account={firstname:"",lastname:"",email:"",password:"",password_confirm:"",status:0,roles:{},permissions:{}},s.alerts=[],s.closeAlert=function(e){s.alerts.splice(e,1)},o.getRoles().query().$promise.then(function(e){s.roles=e}),o.getPermissions().query().$promise.then(function(e){s.permissions=e}),s.account=n.getUsers().get({id:parseInt(a.id)}).$promise.then(function(e){s.disableView=!1,s.account=e,r()},function(e){s.disableView=!0,403==e.status?s.alerts[0]={type:"danger",msg:e.data}:404==e.status&&(s.alerts[0]={type:"danger",msg:"User not found!."})}),s.submitUserForm=function(){t.pop("wait","User","Processing your request"),i(),n.getUsers().update({id:parseInt(a.id)},s.account).$promise.then(function(){s.alerts[0]={type:"success",msg:"Account successfully updated"},t.pop("success","User","Account updated successfully")},function(e){403==e.status?(s.alerts[0]={type:"danger",msg:e.data},t.pop("error",e.statusText,e.data)):(s.alerts[0]={type:"danger",msg:"Token mismatch... Please refresh"},t.pop("error",e.statusText,e.data))})}}])}(),function(){"use strict";angular.module("app.order").controller("PeopleController",["$scope","toaster","userFactory","registerFactory","permissionFactory","DTOptionsBuilder","DTColumnDefBuilder","SweetAlert",function(e,t,n,a,o,r,i,s){function l(){function t(t){!function(){s.swal({title:"Are you sure you want to delete this user?",text:"Your will not be able to recover your selected data back!",type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",confirmButtonText:"Yes, delete it!",cancelButtonText:"No, cancel pls!",closeOnConfirm:!1,closeOnCancel:!1},function(a){a?n.getUsers()["delete"]({id:parseInt(u.people[t].id)}).$promise.then(function(){u.people.splice(t,1),e.alerts[0]={type:"success",msg:"User has been deleted successfully"},s.swal("Deleted!","User has been deleted.","success")},function(t){u.clientMessage="Server error.",403==t.status&&(e.alerts[0]={type:"danger",msg:t.data},u.clientMessage=t.data),s.swal("Cancelled",u.clientMessage,"error")}):s.swal("Cancelled","User data is safe :)","error")})}()}n.getUsers().query().$promise.then(function(e){u.people=e,u.showPeople=!0},function(e){403==e.status&&(u.showPeople=!1,u.peopleMessage="Error: "+e.status+" "+e.statusText)}),u.dtOptions=r.newOptions().withDisplayLength(100).withPaginationType("full_numbers"),u.dtColumnDefs=[i.newColumnDef(1),i.newColumnDef(2),i.newColumnDef(3),i.newColumnDef(4).notSortable()],u.removeUser=t}function c(){var e=angular.copy(u.account.roles),t=angular.copy(u.account.permissions);u.account.roles={},u.account.permissions={},angular.forEach(e,function(e,t){1==e&&(this[t]=!0)},u.account.roles),angular.forEach(t,function(e,t){1==e&&(this[t]=!0)},u.account.permissions)}var u=e;u.account={firstname:"",lastname:"",email:"",password:"",password_confirm:"",status:0,roles:{},permissions:{}},u.showPeople=!1,u.showPermissions=!1,u.peopleMessage="Loading...",u.alerts=[],u.closeAlert=function(e){u.alerts.splice(e,1)},o.getRoles().query().$promise.then(function(e){u.roles=e}),o.getPermissions().query().$promise.then(function(e){u.permissions=e}),l(),u.submitUserForm=function(){t.pop("wait","User","Processing your request"),c(),a.register().save(u.account,function(e){u.account={status:0,roles:{},permissions:{}},u.alerts[0]={type:"success",msg:e.data},t.pop("success","User","Account successfully created")},function(n){403==n.status?(e.alerts[0]={type:"danger",msg:n.data},t.pop("error",n.statusText,n.data)):(e.alerts[0]={type:"danger",msg:"Token mismatch... Please refresh"},t.pop("error",n.statusText,n.data))})}}])}(),function(){"use strict";angular.module("app.order").service("permissionFactory",["$resource","baseURL",function(e,t){this.getRoles=function(){return e(t+"role")},this.roleEdit=function(){return e(t+"role/:id/edit",null,{update:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.getPermissions=function(){return e(t+"permission")}}])}(),function(){"use strict";angular.module("app.order").controller("RolesController",["$scope","$uibModal","$stateParams","rolesFactory",function(e,t,n,a){e.showRoles=!1,e.roleMessage="loading..",e.roleEdit=!1,e.permissionEdit=!1,e.roles=a.roles().query().$promise.then(function(t){e.roles=t,e.showRoles=!0},function(t){e.showRoles=!1,console.log(t)}),e.editRole=function(e,n){function a(e,t,n){e.role=angular.copy(n),e.title=angular.copy(n.name),e.ok=function(){t.close(e.role)},e.cancel=function(){t.dismiss("cancel")}}var o=t.open({templateUrl:"/roleModal.html",controller:a,size:e,resolve:{role:function(){return n}}});o.result.then(function(e){console.log("updated: ",e)},function(){}),a.$inject=["$scope","$uibModalInstance","role"]},e.editPermission=function(e,n){function a(e,t,n,a){e.role=angular.copy(a),e.permMessage="loading...",e.showPermissions=!1,e.permissions=n.roles().query().$promise.then(function(t){e.permissions=t,e.showPermissions=!0},function(t){e.showPermissions=!1,e.permMessage=t.statusText}),e.ok=function(){t.close("close")},e.cancel=function(){t.dismiss("cancel")}}var o=t.open({templateUrl:"/permissionModal.html",controller:a,size:e,resolve:{role:function(){return n}}});o.result.then(function(e){},function(){}),a.$inject=["$scope","$uibModalInstance","permissionFactory","role"]}}])}(),function(){"use strict";angular.module("app.order").service("productFactory",["$resource","baseURL",function(e,t){this.getProducts=function(){return e(t+"product/:id",null,null)}}])}(),function(){"use strict";angular.module("app.order").controller("RecoverPasswordController",["$scope","userFactory","$state","$stateParams",function(e,t,n,a){var o=e;o.recover={email:""},o.disableView=!1,n.is("page.change")&&(o.recover.email=a.e,o.recover.token=a.m),o.submitRecoverForm=function(){o.showSuccess=!1,o.showError=!1,o.disableView=!0,t.recover().confirm(o.recover).$promise.then(function(){o.disableView=!1,o.showSuccess=!0,o.showError=!1,o.authMsg="Reset link has been sent to your email.",o.recover={email:""},o.registerForm.$setPristine()},function(e){403==e.status&&(o.showSuccess=!1,o.showError=!0,o.disableView=!1,o.authMsg=e.data)})},o.submitChangePwd=function(){o.showSuccess=!1,o.showError=!1,o.disableView=!0,t.recover().change(o.recover).$promise.then(function(){o.disableView=!1,o.showSuccess=!0,o.showError=!1,o.authMsg="Password successfully changed.",o.recover={},o.changePwdForm.$setPristine()},function(e){403==e.status&&(o.showSuccess=!1,o.showError=!0,o.disableView=!1,o.authMsg=e.data)})}}])}(),function(){"use strict";angular.module("app.order").service("userFactory",["$http","$resource","baseURL","$q",function(e,t,n,a){this.userCan=function(t){return e.get(n+"user/can/"+t).then(function(){return a.resolve()},function(){return a.reject()})},this.userIs=function(t){return e.get(n+"user/is/"+t).then(function(){return a.resolve()},function(){return a.reject()})},this.getUsers=function(){return t(n+"user/:id",null,{update:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}},"delete":{method:"DELETE"}})},this.userUpdate=function(){return t(n+"user/:id/edit",null,{save:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}}})},this.marketers=function(){return t(n+"user/marketers")},this.recover=function(){return t(n+"user/recover",null,{confirm:{method:"POST",headers:{"X-Requested-With":"XMLHttpRequest"}},change:{method:"PUT",headers:{"X-Requested-With":"XMLHttpRequest"}}})}}])}(),function(){angular.module("app.order").controller("UserModelController",["$scope","loginFactory",function(e,t){}])}();
+
+// APP START
+// ----------------------------------- 
+
+(function() {
+    'use strict';
+
+    angular
+        .module('angle', [
+            'app.core',
+            'app.routes',
+            'app.sidebar',
+            'app.navsearch',
+            'app.preloader',
+            'app.loadingbar',
+            'app.translate',
+            'app.settings',
+            //'app.dashboard',
+            'app.icons',
+            'app.flatdoc',
+            'app.notify',
+            'app.bootstrapui',
+            'app.elements',
+            'app.panels',
+            'app.charts',
+            'app.forms',
+            'app.locale',
+            'app.maps',
+            'app.pages',
+            'app.tables',
+            'app.extras',
+            'app.mailbox',
+            'app.utils',
+            'app.order',
+            //import
+            'app.affix',
+            'app.datetime',
+        ])
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.affix', [
+            'ngStrap.affix'
+        ]);
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core', [
+            'ngRoute',
+            'ngAnimate',
+            'ngStorage',
+            'ngCookies',
+            'pascalprecht.translate',
+            'ui.bootstrap',
+            'ui.router',
+
+            //permission injection
+            'permission',
+            'permission.ui',
+
+            'oc.lazyLoad',
+            'cfp.loadingBar',
+            'ngSanitize',
+            'ngResource',
+            'tmh.dynamicLocale',
+            'ui.utils'
+        ]);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements', []);
+})();
+/**
+ * Created by dfash on 5/3/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.datetime', [
+            'mgcrea.ngStrap.core',
+            'mgcrea.ngStrap.timepicker',
+            'mgcrea.ngStrap.datepicker'
+        ]);
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.dashboard', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.flatdoc', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.icons', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.lazyload', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.loadingbar', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.locale', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.maps', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.navsearch', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.notify', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.pages', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.routes', [
+            'app.lazyload'
+        ]);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.settings', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.preloader', []);
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.tables', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sidebar', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.translate', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils', [
+          'app.colors'
+          ]);
+})();
+
+/**=========================================================
+ * Module: demo-alerts.js
+ * Provides a simple demo for pagination
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('AlertDemoCtrl', AlertDemoCtrl);
+
+    function AlertDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.alerts = [
+            { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
+            { type: 'warning', msg: 'Well done! You successfully read this important alert message.' }
+          ];
+
+          vm.addAlert = function() {
+            vm.alerts.push({msg: 'Another alert!'});
+          };
+
+          vm.closeAlert = function(index) {
+            vm.alerts.splice(index, 1);
+          };
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .config(bootstrapuiConfig);
+
+    bootstrapuiConfig.$inject = ['$uibTooltipProvider'];
+    function bootstrapuiConfig($uibTooltipProvider){
+      $uibTooltipProvider.options({appendToBody: true});
+    }
+})();
+/**=========================================================
+ * Module: demo-buttons.js
+ * Provides a simple demo for buttons actions
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('ButtonsCtrl', ButtonsCtrl);
+
+    function ButtonsCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.singleModel = 1;
+
+          vm.radioModel = 'Middle';
+
+          vm.checkModel = {
+            left: false,
+            middle: true,
+            right: false
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-carousel.js
+ * Provides a simple demo for bootstrap ui carousel
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('CarouselDemoCtrl', CarouselDemoCtrl);
+
+    function CarouselDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.myInterval = 5000;
+
+          var slides = vm.slides = [];
+          vm.addSlide = function(id) {
+            id = id || 8;
+            slides.push({
+              image: 'app/img/bg' + id + '.jpg',
+              text: ['More','Extra','Lots of','Surplus'][slides.length % 2] + ' ' +
+                ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 2]
+            });
+          };
+
+          vm.addSlide(4);
+          vm.addSlide(7);
+          vm.addSlide(8);
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-datepicker.js
+ * Provides a simple demo for bootstrap datepicker
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('DatepickerDemoCtrl', DatepickerDemoCtrl);
+
+    function DatepickerDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.today = function() {
+            vm.dt = new Date();
+          };
+          vm.today();
+
+          vm.clear = function () {
+            vm.dt = null;
+          };
+
+          // Disable weekend selection
+          vm.disabled = function(date, mode) {
+            return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+          };
+
+          vm.toggleMin = function() {
+            vm.minDate = vm.minDate ? null : new Date();
+          };
+          vm.toggleMin();
+
+          vm.open = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.opened = true;
+          };
+
+          vm.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+          };
+
+          vm.initDate = new Date('2019-10-20');
+          vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+          vm.format = vm.formats[0];
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: modals.js
+ * Provides a simple way to implement bootstrap modals from templates
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('ModalController', ModalController);
+
+    ModalController.$inject = ['$uibModal'];
+    function ModalController($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.open = function (size) {
+
+            var modalInstance = $uibModal.open({
+              templateUrl: '/myModalContent.html',
+              controller: ModalInstanceCtrl,
+              size: size
+            });
+
+            var state = $('#modal-state');
+            modalInstance.result.then(function () {
+              state.text('Modal dismissed with OK status');
+            }, function () {
+              state.text('Modal dismissed with Cancel status');
+            });
+          };
+
+          // Please note that $uibModalInstance represents a modal window (instance) dependency.
+          // It is not the same as the $uibModal service used above.
+
+          ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance'];
+          function ModalInstanceCtrl($scope, $uibModalInstance) {
+
+            $scope.ok = function () {
+              $uibModalInstance.close('closed');
+            };
+
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss('cancel');
+            };
+          }
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: demo-pagination.js
+ * Provides a simple demo for pagination
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('PaginationDemoCtrl', PaginationDemoCtrl);
+
+    function PaginationDemoCtrl() {
+        var vm = this;
+
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.totalItems = 64;
+          vm.currentPage = 4;
+
+          vm.setPage = function (pageNo) {
+            vm.currentPage = pageNo;
+          };
+
+          vm.pageChanged = function() {
+            console.log('Page changed to: ' + vm.currentPage);
+          };
+
+          vm.maxSize = 5;
+          vm.bigTotalItems = 175;
+          vm.bigCurrentPage = 1;
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-popover.js
+ * Provides a simple demo for popovers
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('PopoverDemoCtrl', PopoverDemoCtrl);
+
+    function PopoverDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.dynamicPopover = 'Hello, World!';
+          vm.dynamicPopoverTitle = 'Title';
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-progress.js
+ * Provides a simple demo to animate progress bar
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('ProgressDemoCtrl', ProgressDemoCtrl);
+
+    function ProgressDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.max = 200;
+
+          vm.random = function() {
+            var value = Math.floor((Math.random() * 100) + 1);
+            var type;
+
+            if (value < 25) {
+              type = 'success';
+            } else if (value < 50) {
+              type = 'info';
+            } else if (value < 75) {
+              type = 'warning';
+            } else {
+              type = 'danger';
+            }
+
+            vm.showWarning = (type === 'danger' || type === 'warning');
+
+            vm.dynamic = value;
+            vm.type = type;
+          };
+          vm.random();
+
+          vm.randomStacked = function() {
+            vm.stacked = [];
+            var types = ['success', 'info', 'warning', 'danger'];
+
+            for (var i = 0, n = Math.floor((Math.random() * 4) + 1); i < n; i++) {
+                var index = Math.floor((Math.random() * 4));
+                vm.stacked.push({
+                  value: Math.floor((Math.random() * 30) + 1),
+                  type: types[index]
+                });
+            }
+          };
+          vm.randomStacked();
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-rating.js
+ * Provides a demo for ratings UI
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('RatingDemoCtrl', RatingDemoCtrl);
+
+    function RatingDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.rate = 7;
+          vm.max = 10;
+          vm.isReadonly = false;
+
+          vm.hoveringOver = function(value) {
+            vm.overStar = value;
+            vm.percent = 100 * (value / vm.max);
+          };
+
+          vm.ratingStates = [
+            {stateOn: 'fa fa-check', stateOff: 'fa fa-check-circle'},
+            {stateOn: 'fa fa-star', stateOff: 'fa fa-star-o'},
+            {stateOn: 'fa fa-heart', stateOff: 'fa fa-ban'},
+            {stateOn: 'fa fa-heart'},
+            {stateOff: 'fa fa-power-off'}
+          ];
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-timepicker.js
+ * Provides a simple demo for bootstrap ui timepicker
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('TimepickerDemoCtrl', TimepickerDemoCtrl);
+
+    function TimepickerDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.mytime = new Date();
+
+          vm.hstep = 1;
+          vm.mstep = 15;
+
+          vm.options = {
+            hstep: [1, 2, 3],
+            mstep: [1, 5, 10, 15, 25, 30]
+          };
+
+          vm.ismeridian = true;
+          vm.toggleMode = function() {
+            vm.ismeridian = ! vm.ismeridian;
+          };
+
+          vm.update = function() {
+            var d = new Date();
+            d.setHours( 14 );
+            d.setMinutes( 0 );
+            vm.mytime = d;
+          };
+
+          vm.changed = function () {
+            console.log('Time changed to: ' + vm.mytime);
+          };
+
+          vm.clear = function() {
+            vm.mytime = null;
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-tooltip.js
+ * Provides a simple demo for tooltip
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('TooltipDemoCtrl', TooltipDemoCtrl);
+
+    function TooltipDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.dynamicTooltip = 'Hello, World!';
+          vm.dynamicTooltipText = 'dynamic';
+          vm.htmlTooltip = 'I\'ve been made <b>bold</b>!';
+
+          vm.autoplace = function (context, source) {
+            //return (predictTooltipTop(source) < 0) ?  "bottom": "top";
+            var pos = 'top';
+            if(predictTooltipTop(source) < 0)
+              pos = 'bottom';
+            if(predictTooltipLeft(source) < 0)
+              pos = 'right';
+            return pos;
+          };
+
+            // Predicts tooltip top position 
+            // based on the trigger element
+            function predictTooltipTop(el) {
+              var top = el.offsetTop;
+              var height = 40; // asumes ~40px tooltip height
+
+              while(el.offsetParent) {
+                el = el.offsetParent;
+                top += el.offsetTop;
+              }
+              return (top - height) - (window.pageYOffset);
+            }
+
+            // Predicts tooltip top position 
+            // based on the trigger element
+            function predictTooltipLeft(el) {
+              var left = el.offsetLeft;
+              var width = el.offsetWidth;
+
+              while(el.offsetParent) {
+                el = el.offsetParent;
+                left += el.offsetLeft;
+              }
+              return (left - width) - (window.pageXOffset);
+            }
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-typeahead.js
+ * Provides a simple demo for typeahead
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('TypeaheadCtrl', TypeaheadCtrl);
+
+    TypeaheadCtrl.$inject = ['$http'];
+    function TypeaheadCtrl($http) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.selected = undefined;
+          vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
+          // Any function returning a promise object can be used to load values asynchronously
+          vm.getLocation = function(val) {
+            return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+              params: {
+                address: val,
+                sensor: false
+              }
+            }).then(function(res){
+              var addresses = [];
+              angular.forEach(res.data.results, function(item){
+                /*jshint -W106*/
+                addresses.push(item.formatted_address);
+              });
+              return addresses;
+            });
+          };
+
+          vm.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'},{'name':'Idaho','flag':'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png'},{'name':'Illinois','flag':'0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png'},{'name':'Indiana','flag':'a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png'},{'name':'Iowa','flag':'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png'},{'name':'Kansas','flag':'d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png'},{'name':'Kentucky','flag':'8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png'},{'name':'Louisiana','flag':'e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png'},{'name':'Maine','flag':'3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png'},{'name':'Maryland','flag':'a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png'},{'name':'Massachusetts','flag':'f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png'},{'name':'Michigan','flag':'b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png'},{'name':'Minnesota','flag':'b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png'},{'name':'Mississippi','flag':'4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png'},{'name':'Missouri','flag':'5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png'},{'name':'Montana','flag':'c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png'},{'name':'Nebraska','flag':'4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png'},{'name':'Nevada','flag':'f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png'},{'name':'New Hampshire','flag':'2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png'},{'name':'New Jersey','flag':'9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png'},{'name':'New Mexico','flag':'c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png'},{'name':'New York','flag':'1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png'},{'name':'North Carolina','flag':'b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png'},{'name':'North Dakota','flag':'e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png'},{'name':'Ohio','flag':'4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png'},{'name':'Oklahoma','flag':'6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png'},{'name':'Oregon','flag':'b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png'},{'name':'Pennsylvania','flag':'f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png'},{'name':'Rhode Island','flag':'f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png'},{'name':'South Carolina','flag':'6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png'},{'name':'South Dakota','flag':'1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png'},{'name':'Tennessee','flag':'9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png'},{'name':'Texas','flag':'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png'},{'name':'Utah','flag':'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png'},{'name':'Vermont','flag':'4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png'},{'name':'Virginia','flag':'4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png'},{'name':'Washington','flag':'5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png'},{'name':'West Virginia','flag':'2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png'},{'name':'Wisconsin','flag':'2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png'},{'name':'Wyoming','flag':'b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png'}];
+
+        }
+    }
+})();
+
+(function(){
+    'use strict';
+
+    angular
+        .module('ngStrap.affix', ['mgcrea.ngStrap.helpers.dimensions', 'mgcrea.ngStrap.helpers.debounce'])
+        .provider('$affix', function () {
+
+            var defaults = this.defaults = {
+                offsetTop: 'auto',
+                inlineStyles: true
+            };
+
+            this.$get = ["$window", "debounce", "dimensions", function ($window, debounce, dimensions) {
+
+                var bodyEl = angular.element($window.document.body);
+                var windowEl = angular.element($window);
+
+                function AffixFactory (element, config) {
+
+                    var $affix = {};
+
+                    // Common vars
+                    var options = angular.extend({}, defaults, config);
+                    var targetEl = options.target;
+
+                    // Initial private vars
+                    var reset = 'affix affix-top affix-bottom';
+                    var setWidth = false;
+                    var initialAffixTop = 0;
+                    var initialOffsetTop = 0;
+                    var offsetTop = 0;
+                    var offsetBottom = 0;
+                    var affixed = null;
+                    var unpin = null;
+
+                    var parent = element.parent();
+                    // Options: custom parent
+                    if (options.offsetParent) {
+                        if (options.offsetParent.match(/^\d+$/)) {
+                            for (var i = 0; i < (options.offsetParent * 1) - 1; i++) {
+                                parent = parent.parent();
+                            }
+                        } else {
+                            parent = angular.element(options.offsetParent);
+                        }
+                    }
+
+                    $affix.init = function () {
+
+                        this.$parseOffsets();
+                        initialOffsetTop = dimensions.offset(element[0]).top + initialAffixTop;
+                        setWidth = !element[0].style.width;
+
+                        // Bind events
+                        targetEl.on('scroll', this.checkPosition);
+                        targetEl.on('click', this.checkPositionWithEventLoop);
+                        windowEl.on('resize', this.$debouncedOnResize);
+
+                        // Both of these checkPosition() calls are necessary for the case where
+                        // the user hits refresh after scrolling to the bottom of the page.
+                        this.checkPosition();
+                        this.checkPositionWithEventLoop();
+
+                    };
+
+                    $affix.destroy = function () {
+
+                        // Unbind events
+                        targetEl.off('scroll', this.checkPosition);
+                        targetEl.off('click', this.checkPositionWithEventLoop);
+                        windowEl.off('resize', this.$debouncedOnResize);
+
+                    };
+
+                    $affix.checkPositionWithEventLoop = function () {
+
+                        // IE 9 throws an error if we use 'this' instead of '$affix'
+                        // in this setTimeout call
+                        setTimeout($affix.checkPosition, 1);
+
+                    };
+
+                    $affix.checkPosition = function () {
+                        // if (!this.$element.is(':visible')) return
+
+                        var scrollTop = getScrollTop();
+                        var position = dimensions.offset(element[0]);
+                        var elementHeight = dimensions.height(element[0]);
+
+                        // Get required affix class according to position
+                        var affix = getRequiredAffixClass(unpin, position, elementHeight);
+
+                        // Did affix status changed this last check?
+                        if (affixed === affix) return;
+                        affixed = affix;
+
+                        if (affix === 'top') {
+                            unpin = null;
+                            if (setWidth) {
+                                element.css('width', '');
+                            }
+                            if (options.inlineStyles) {
+                                element.css('position', (options.offsetParent) ? '' : 'relative');
+                                element.css('top', '');
+                            }
+                        } else if (affix === 'bottom') {
+                            if (options.offsetUnpin) {
+                                unpin = -(options.offsetUnpin * 1);
+                            } else {
+                                // Calculate unpin threshold when affixed to bottom.
+                                // Hopefully the browser scrolls pixel by pixel.
+                                unpin = position.top - scrollTop;
+                            }
+                            if (setWidth) {
+                                element.css('width', '');
+                            }
+                            if (options.inlineStyles) {
+                                element.css('position', (options.offsetParent) ? '' : 'relative');
+                                element.css('top', (options.offsetParent) ? '' : ((bodyEl[0].offsetHeight - offsetBottom - elementHeight - initialOffsetTop) + 'px'));
+                            }
+                        } else { // affix === 'middle'
+                            unpin = null;
+                            if (setWidth) {
+                                element.css('width', element[0].offsetWidth + 'px');
+                            }
+                            if (options.inlineStyles) {
+                                element.css('position', 'fixed');
+                                element.css('top', initialAffixTop + 'px');
+                            }
+                        }
+
+                        // Add proper affix class
+                        element.removeClass(reset).addClass('affix' + ((affix !== 'middle') ? '-' + affix : ''));
+
+                    };
+
+                    $affix.$onResize = function () {
+                        $affix.$parseOffsets();
+                        $affix.checkPosition();
+                    };
+                    $affix.$debouncedOnResize = debounce($affix.$onResize, 50);
+
+                    $affix.$parseOffsets = function () {
+                        var initialPosition = element.css('position');
+                        // Reset position to calculate correct offsetTop
+                        if (options.inlineStyles) {
+                            element.css('position', (options.offsetParent) ? '' : 'relative');
+                        }
+
+                        if (options.offsetTop) {
+                            if (options.offsetTop === 'auto') {
+                                options.offsetTop = '+0';
+                            }
+                            if (options.offsetTop.match(/^[-+]\d+$/)) {
+                                initialAffixTop = - options.offsetTop * 1;
+                                if (options.offsetParent) {
+                                    offsetTop = dimensions.offset(parent[0]).top + (options.offsetTop * 1);
+                                } else {
+                                    offsetTop = dimensions.offset(element[0]).top - dimensions.css(element[0], 'marginTop', true) + (options.offsetTop * 1);
+                                }
+                            } else {
+                                offsetTop = options.offsetTop * 1;
+                            }
+                        }
+
+                        if (options.offsetBottom) {
+                            if (options.offsetParent && options.offsetBottom.match(/^[-+]\d+$/)) {
+                                // add 1 pixel due to rounding problems...
+                                offsetBottom = getScrollHeight() - (dimensions.offset(parent[0]).top + dimensions.height(parent[0])) + (options.offsetBottom * 1) + 1;
+                            } else {
+                                offsetBottom = options.offsetBottom * 1;
+                            }
+                        }
+
+                        // Bring back the element's position after calculations
+                        if (options.inlineStyles) {
+                            element.css('position', initialPosition);
+                        }
+                    };
+
+                    // Private methods
+
+                    function getRequiredAffixClass (_unpin, position, elementHeight) {
+                        var scrollTop = getScrollTop();
+                        var scrollHeight = getScrollHeight();
+
+                        if (scrollTop <= offsetTop) {
+                            return 'top';
+                        } else if (_unpin !== null && (scrollTop + _unpin <= position.top)) {
+                            return 'middle';
+                        } else if (offsetBottom !== null && (position.top + elementHeight + initialAffixTop >= scrollHeight - offsetBottom)) {
+                            return 'bottom';
+                        }
+                        return 'middle';
+                    }
+
+                    function getScrollTop () {
+                        return targetEl[0] === $window ? $window.pageYOffset : targetEl[0].scrollTop;
+                    }
+
+                    function getScrollHeight () {
+                        return targetEl[0] === $window ? $window.document.body.scrollHeight : targetEl[0].scrollHeight;
+                    }
+
+                    $affix.init();
+                    return $affix;
+
+                }
+
+                return AffixFactory;
+
+            }];
+
+        })
+
+        .directive('bsAffix', ["$affix", "$window", function ($affix, $window) {
+
+            return {
+                restrict: 'EAC',
+                require: '^?bsAffixTarget',
+                link: function postLink (scope, element, attr, affixTarget) {
+
+                    var options = {scope: scope, target: affixTarget ? affixTarget.$element : angular.element($window)};
+                    angular.forEach(['offsetTop', 'offsetBottom', 'offsetParent', 'offsetUnpin', 'inlineStyles'], function (key) {
+                        if (angular.isDefined(attr[key])) {
+                            var option = attr[key];
+                            if (/true/i.test(option)) option = true;
+                            if (/false/i.test(option)) option = false;
+                            options[key] = option;
+                        }
+                    });
+
+                    var affix = $affix(element, options);
+                    scope.$on('$destroy', function () {
+                        if (affix) affix.destroy();
+                        options = null;
+                        affix = null;
+                    });
+
+                }
+            };
+
+        }])
+
+        .directive('bsAffixTarget', function () {
+            return {
+                controller: ["$element", function ($element) {
+                    this.$element = $element;
+                }]
+            };
+        });
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('mgcrea.ngStrap.helpers.debounce', [])
+
+        // @source jashkenas/underscore
+        // @url https://github.com/jashkenas/underscore/blob/1.5.2/underscore.js#L693
+        .factory('debounce', ["$timeout", function ($timeout) {
+            return function (func, wait, immediate) {
+                var timeout = null;
+                return function () {
+                    var context = this;
+                    var args = arguments;
+                    var callNow = immediate && !timeout;
+                    if (timeout) {
+                        $timeout.cancel(timeout);
+                    }
+                    timeout = $timeout(function later () {
+                        timeout = null;
+                        if (!immediate) {
+                            func.apply(context, args);
+                        }
+                    }, wait, false);
+                    if (callNow) {
+                        func.apply(context, args);
+                    }
+                    return timeout;
+                };
+            };
+        }])
+
+
+// @source jashkenas/underscore
+// @url https://github.com/jashkenas/underscore/blob/1.5.2/underscore.js#L661
+        .factory('throttle', ["$timeout", function ($timeout) {
+            return function (func, wait, options) {
+                var timeout = null;
+                if (!options) options = {};
+                return function () {
+                    var context = this;
+                    var args = arguments;
+                    if (!timeout) {
+                        if (options.leading !== false) {
+                            func.apply(context, args);
+                        }
+                        timeout = $timeout(function later () {
+                            timeout = null;
+                            if (options.trailing !== false) {
+                                func.apply(context, args);
+                            }
+                        }, wait, false);
+                    }
+                };
+            };
+        }]);
+
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('mgcrea.ngStrap.helpers.dimensions', [])
+
+        .factory('dimensions', function () {
+
+            var fn = {};
+
+            /**
+             * Test the element nodeName
+             * @param element
+             * @param name
+             */
+            var nodeName = fn.nodeName = function (element, name) {
+                return element.nodeName && element.nodeName.toLowerCase() === name.toLowerCase();
+            };
+
+            /**
+             * Returns the element computed style
+             * @param element
+             * @param prop
+             * @param extra
+             */
+            fn.css = function (element, prop, extra) {
+                var value;
+                if (element.currentStyle) { // IE
+                    value = element.currentStyle[prop];
+                } else if (window.getComputedStyle) {
+                    value = window.getComputedStyle(element)[prop];
+                } else {
+                    value = element.style[prop];
+                }
+                return extra === true ? parseFloat(value) || 0 : value;
+            };
+
+            /**
+             * Provides read-only equivalent of jQuery's offset function:
+             * @required-by bootstrap-tooltip, bootstrap-affix
+             * @url http://api.jquery.com/offset/
+             * @param element
+             */
+            fn.offset = function (element) {
+                var boxRect = element.getBoundingClientRect();
+                var docElement = element.ownerDocument;
+                return {
+                    width: boxRect.width || element.offsetWidth,
+                    height: boxRect.height || element.offsetHeight,
+                    top: boxRect.top + (window.pageYOffset || docElement.documentElement.scrollTop) - (docElement.documentElement.clientTop || 0),
+                    left: boxRect.left + (window.pageXOffset || docElement.documentElement.scrollLeft) - (docElement.documentElement.clientLeft || 0)
+                };
+            };
+
+            /**
+             * Provides set equivalent of jQuery's offset function:
+             * @required-by bootstrap-tooltip
+             * @url http://api.jquery.com/offset/
+             * @param element
+             * @param options
+             * @param i
+             */
+            fn.setOffset = function (element, options, i) {
+                var curPosition;
+                var curLeft;
+                var curCSSTop;
+                var curTop;
+                var curOffset;
+                var curCSSLeft;
+                var calculatePosition;
+                var position = fn.css(element, 'position');
+                var curElem = angular.element(element);
+                var props = {};
+
+                // Set position first, in-case top/left are set even on static elem
+                if (position === 'static') {
+                    element.style.position = 'relative';
+                }
+
+                curOffset = fn.offset(element);
+                curCSSTop = fn.css(element, 'top');
+                curCSSLeft = fn.css(element, 'left');
+                calculatePosition = (position === 'absolute' || position === 'fixed') &&
+                    (curCSSTop + curCSSLeft).indexOf('auto') > -1;
+
+                // Need to be able to calculate position if either
+                // top or left is auto and position is either absolute or fixed
+                if (calculatePosition) {
+                    curPosition = fn.position(element);
+                    curTop = curPosition.top;
+                    curLeft = curPosition.left;
+                } else {
+                    curTop = parseFloat(curCSSTop) || 0;
+                    curLeft = parseFloat(curCSSLeft) || 0;
+                }
+
+                if (angular.isFunction(options)) {
+                    options = options.call(element, i, curOffset);
+                }
+
+                if (options.top !== null) {
+                    props.top = (options.top - curOffset.top) + curTop;
+                }
+                if (options.left !== null) {
+                    props.left = (options.left - curOffset.left) + curLeft;
+                }
+
+                if ('using' in options) {
+                    options.using.call(curElem, props);
+                } else {
+                    curElem.css({
+                        top: props.top + 'px',
+                        left: props.left + 'px'
+                    });
+                }
+            };
+
+            /**
+             * Provides read-only equivalent of jQuery's position function
+             * @required-by bootstrap-tooltip, bootstrap-affix
+             * @url http://api.jquery.com/offset/
+             * @param element
+             */
+            fn.position = function (element) {
+
+                var offsetParentRect = {top: 0, left: 0};
+                var offsetParentEl;
+                var offset;
+
+                // Fixed elements are offset from window (parentOffset = {top:0, left: 0}, because it is it's only offset parent
+                if (fn.css(element, 'position') === 'fixed') {
+
+                    // We assume that getBoundingClientRect is available when computed position is fixed
+                    offset = element.getBoundingClientRect();
+
+                } else {
+
+                    // Get *real* offsetParentEl
+                    offsetParentEl = offsetParentElement(element);
+
+                    // Get correct offsets
+                    offset = fn.offset(element);
+                    if (!nodeName(offsetParentEl, 'html')) {
+                        offsetParentRect = fn.offset(offsetParentEl);
+                    }
+
+                    // Add offsetParent borders
+                    offsetParentRect.top += fn.css(offsetParentEl, 'borderTopWidth', true);
+                    offsetParentRect.left += fn.css(offsetParentEl, 'borderLeftWidth', true);
+                }
+
+                // Subtract parent offsets and element margins
+                return {
+                    width: element.offsetWidth,
+                    height: element.offsetHeight,
+                    top: offset.top - offsetParentRect.top - fn.css(element, 'marginTop', true),
+                    left: offset.left - offsetParentRect.left - fn.css(element, 'marginLeft', true)
+                };
+
+            };
+
+            /**
+             * Returns the closest, non-statically positioned offsetParent of a given element
+             * @required-by fn.position
+             * @param element
+             */
+            function offsetParentElement (element) {
+                var docElement = element.ownerDocument;
+                var offsetParent = element.offsetParent || docElement;
+                if (nodeName(offsetParent, '#document')) return docElement.documentElement;
+                while (offsetParent && !nodeName(offsetParent, 'html') && fn.css(offsetParent, 'position') === 'static') {
+                    offsetParent = offsetParent.offsetParent;
+                }
+                return offsetParent || docElement.documentElement;
+            }
+
+            /**
+             * Provides equivalent of jQuery's height function
+             * @required-by bootstrap-affix
+             * @url http://api.jquery.com/height/
+             * @param element
+             * @param outer
+             */
+            fn.height = function (element, outer) {
+                var value = element.offsetHeight;
+                if (outer) {
+                    value += fn.css(element, 'marginTop', true) + fn.css(element, 'marginBottom', true);
+                } else {
+                    value -= fn.css(element, 'paddingTop', true) + fn.css(element, 'paddingBottom', true) + fn.css(element, 'borderTopWidth', true) + fn.css(element, 'borderBottomWidth', true);
+                }
+                return value;
+            };
+
+            /**
+             * Provides equivalent of jQuery's width function
+             * @required-by bootstrap-affix
+             * @url http://api.jquery.com/width/
+             * @param element
+             * @param outer
+             */
+            fn.width = function (element, outer) {
+                var value = element.offsetWidth;
+                if (outer) {
+                    value += fn.css(element, 'marginLeft', true) + fn.css(element, 'marginRight', true);
+                } else {
+                    value -= fn.css(element, 'paddingLeft', true) + fn.css(element, 'paddingRight', true) + fn.css(element, 'borderLeftWidth', true) + fn.css(element, 'borderRightWidth', true);
+                }
+                return value;
+            };
+
+            return fn;
+
+        });
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors')
+        .constant('APP_COLORS', {
+          'primary':                '#5d9cec',
+          'success':                '#27c24c',
+          'info':                   '#23b7e5',
+          'warning':                '#ff902b',
+          'danger':                 '#f05050',
+          'inverse':                '#131e26',
+          'green':                  '#37bc9b',
+          'pink':                   '#f532e5',
+          'purple':                 '#7266ba',
+          'dark':                   '#3a3f51',
+          'yellow':                 '#fad732',
+          'gray-darker':            '#232735',
+          'gray-dark':              '#3a3f51',
+          'gray':                   '#dde6e9',
+          'gray-light':             '#e4eaec',
+          'gray-lighter':           '#edf1f2'
+        })
+        ;
+})();
+/**=========================================================
+ * Module: colors.js
+ * Services to retrieve global colors
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors')
+        .service('Colors', Colors);
+
+    Colors.$inject = ['APP_COLORS'];
+    function Colors(APP_COLORS) {
+        this.byName = byName;
+
+        ////////////////
+
+        function byName(name) {
+          return (APP_COLORS[name] || '#fff');
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: chartist.js
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .controller('ChartistController', ChartistController);
+
+    function ChartistController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // Line chart
+          // ----------------------------------- 
+
+          vm.lineData = {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            series: [
+              [12, 9, 7, 8, 5],
+              [2, 1, 3.5, 7, 3],
+              [1, 3, 4, 5, 6]
+            ]
+          };
+
+          vm.lineOptions = {
+            fullWidth: true,
+            height: 220,
+            chartPadding: {
+              right: 40
+            }
+          };
+
+          // Bar bipolar
+          // ----------------------------------- 
+
+          vm.barBipolarOptions = {
+            high: 10,
+            low: -10,
+            height: 220,
+            axisX: {
+              labelInterpolationFnc: function(value, index) {
+                return index % 2 === 0 ? value : null;
+              }
+            }
+          };
+
+          vm.barBipolarData = {
+            labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10'],
+            series: [
+              [1, 2, 4, 8, 6, -2, -1, -4, -6, -2]
+            ]
+          };
+
+
+          // Bar horizontal
+          // ----------------------------------- 
+
+          vm.barHorizontalData = {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            series: [
+              [5, 4, 3, 7, 5, 10, 3],
+              [3, 2, 9, 5, 4, 6, 4]
+            ]
+          };
+
+          vm.barHorizontalOptions = {
+            seriesBarDistance: 10,
+            reverseData: true,
+            horizontalBars: true,
+            height: 220,
+            axisY: {
+              offset: 70
+            }
+          };
+
+          // Smil Animations
+          // ----------------------------------- 
+
+          // Let's put a sequence number aside so we can use it in the event callbacks
+          var seq = 0,
+            delays = 80,
+            durations = 500;
+
+          vm.smilData = {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+            series: [
+              [12, 9, 7, 8, 5, 4, 6, 2, 3, 3, 4, 6],
+              [4,  5, 3, 7, 3, 5, 5, 3, 4, 4, 5, 5],
+              [5,  3, 4, 5, 6, 3, 3, 4, 5, 6, 3, 4],
+              [3,  4, 5, 6, 7, 6, 4, 5, 6, 7, 6, 3]
+            ]
+          };
+
+          vm.smilOptions = {
+            low: 0,
+            height: 260
+          };
+
+          vm.smilEvents = {
+            created: function() {
+              seq = 0;
+            },
+            draw: function(data) {
+              seq++;
+
+              if(data.type === 'line') {
+                // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
+                data.element.animate({
+                  opacity: {
+                    // The delay when we like to start the animation
+                    begin: seq * delays + 1000,
+                    // Duration of the animation
+                    dur: durations,
+                    // The value where the animation should start
+                    from: 0,
+                    // The value where it should end
+                    to: 1
+                  }
+                });
+              } else if(data.type === 'label' && data.axis === 'x') {
+                data.element.animate({
+                  y: {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: data.y + 100,
+                    to: data.y,
+                    // We can specify an easing function from Chartist.Svg.Easing
+                    easing: 'easeOutQuart'
+                  }
+                });
+              } else if(data.type === 'label' && data.axis === 'y') {
+                data.element.animate({
+                  x: {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: data.x - 100,
+                    to: data.x,
+                    easing: 'easeOutQuart'
+                  }
+                });
+              } else if(data.type === 'point') {
+                data.element.animate({
+                  x1: {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: data.x - 10,
+                    to: data.x,
+                    easing: 'easeOutQuart'
+                  },
+                  x2: {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: data.x - 10,
+                    to: data.x,
+                    easing: 'easeOutQuart'
+                  },
+                  opacity: {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: 0,
+                    to: 1,
+                    easing: 'easeOutQuart'
+                  }
+                });
+              } 
+            }
+          };
+
+
+          // SVG PATH animation
+          // ----------------------------------- 
+
+          vm.pathData = {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            series: [
+              [1, 5, 2, 5, 4, 3],
+              [2, 3, 4, 8, 1, 2],
+              [5, 4, 3, 2, 1, 0.5]
+            ]
+          };
+
+          vm.pathOptions = {
+            low: 0,
+            showArea: true,
+            showPoint: false,
+            fullWidth: true,
+            height: 260
+          };
+
+          vm.pathEvents = {
+            draw: function(data) {
+              if(data.type === 'line' || data.type === 'area') {
+                data.element.animate({
+                  d: {
+                    begin: 2000 * data.index,
+                    dur: 2000,
+                    from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                    to: data.path.clone().stringify(),
+                    easing: Chartist.Svg.Easing.easeOutQuint
+                  }
+                });
+              }
+            }
+          };
+
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: chart.controller.js
+ * Controller for ChartJs
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .controller('ChartJSController', ChartJSController);
+
+    ChartJSController.$inject = ['Colors'];
+    function ChartJSController(Colors) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // random values for demo
+          var rFactor = function(){ return Math.round(Math.random()*100); };
+
+          // Line chart
+          // ----------------------------------- 
+
+          vm.lineData = {
+              labels : ['January','February','March','April','May','June','July'],
+              datasets : [
+                {
+                  label: 'My First dataset',
+                  fillColor : 'rgba(114,102,186,0.2)',
+                  strokeColor : 'rgba(114,102,186,1)',
+                  pointColor : 'rgba(114,102,186,1)',
+                  pointStrokeColor : '#fff',
+                  pointHighlightFill : '#fff',
+                  pointHighlightStroke : 'rgba(114,102,186,1)',
+                  data : [rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor()]
+                },
+                {
+                  label: 'My Second dataset',
+                  fillColor : 'rgba(35,183,229,0.2)',
+                  strokeColor : 'rgba(35,183,229,1)',
+                  pointColor : 'rgba(35,183,229,1)',
+                  pointStrokeColor : '#fff',
+                  pointHighlightFill : '#fff',
+                  pointHighlightStroke : 'rgba(35,183,229,1)',
+                  data : [rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor()]
+                }
+              ]
+            };
+
+
+          vm.lineOptions = {
+            scaleShowGridLines : true,
+            scaleGridLineColor : 'rgba(0,0,0,.05)',
+            scaleGridLineWidth : 1,
+            bezierCurve : true,
+            bezierCurveTension : 0.4,
+            pointDot : true,
+            pointDotRadius : 4,
+            pointDotStrokeWidth : 1,
+            pointHitDetectionRadius : 20,
+            datasetStroke : true,
+            datasetStrokeWidth : 2,
+            datasetFill : true,
+          };
+
+
+          // Bar chart
+          // ----------------------------------- 
+
+          vm.barData = {
+              labels : ['January','February','March','April','May','June','July'],
+              datasets : [
+                {
+                  fillColor : Colors.byName('info'),
+                  strokeColor : Colors.byName('info'),
+                  highlightFill: Colors.byName('info'),
+                  highlightStroke: Colors.byName('info'),
+                  data : [rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor()]
+                },
+                {
+                  fillColor : Colors.byName('primary'),
+                  strokeColor : Colors.byName('primary'),
+                  highlightFill : Colors.byName('primary'),
+                  highlightStroke : Colors.byName('primary'),
+                  data : [rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor(),rFactor()]
+                }
+              ]
+          };
+          
+          vm.barOptions = {
+            scaleBeginAtZero : true,
+            scaleShowGridLines : true,
+            scaleGridLineColor : 'rgba(0,0,0,.05)',
+            scaleGridLineWidth : 1,
+            barShowStroke : true,
+            barStrokeWidth : 2,
+            barValueSpacing : 5,
+            barDatasetSpacing : 1,
+          };
+
+
+          //  Doughnut chart
+          // ----------------------------------- 
+          
+          vm.doughnutData = [
+                {
+                  value: 300,
+                  color: Colors.byName('purple'),
+                  highlight: Colors.byName('purple'),
+                  label: 'Purple'
+                },
+                {
+                  value: 50,
+                  color: Colors.byName('info'),
+                  highlight: Colors.byName('info'),
+                  label: 'Info'
+                },
+                {
+                  value: 100,
+                  color: Colors.byName('yellow'),
+                  highlight: Colors.byName('yellow'),
+                  label: 'Yellow'
+                }
+              ];
+
+          vm.doughnutOptions = {
+            segmentShowStroke : true,
+            segmentStrokeColor : '#fff',
+            segmentStrokeWidth : 2,
+            percentageInnerCutout : 85,
+            animationSteps : 100,
+            animationEasing : 'easeOutBounce',
+            animateRotate : true,
+            animateScale : false
+          };
+
+          // Pie chart
+          // ----------------------------------- 
+
+          vm.pieData =[
+                {
+                  value: 300,
+                  color: Colors.byName('purple'),
+                  highlight: Colors.byName('purple'),
+                  label: 'Purple'
+                },
+                {
+                  value: 40,
+                  color: Colors.byName('yellow'),
+                  highlight: Colors.byName('yellow'),
+                  label: 'Yellow'
+                },
+                {
+                  value: 120,
+                  color: Colors.byName('info'),
+                  highlight: Colors.byName('info'),
+                  label: 'Info'
+                }
+              ];
+
+          vm.pieOptions = {
+            segmentShowStroke : true,
+            segmentStrokeColor : '#fff',
+            segmentStrokeWidth : 2,
+            percentageInnerCutout : 0, // Setting this to zero convert a doughnut into a Pie
+            animationSteps : 100,
+            animationEasing : 'easeOutBounce',
+            animateRotate : true,
+            animateScale : false
+          };
+
+          // Polar chart
+          // ----------------------------------- 
+          
+          vm.polarData = [
+                {
+                  value: 300,
+                  color: Colors.byName('pink'),
+                  highlight: Colors.byName('pink'),
+                  label: 'Red'
+                },
+                {
+                  value: 50,
+                  color: Colors.byName('purple'),
+                  highlight: Colors.byName('purple'),
+                  label: 'Green'
+                },
+                {
+                  value: 100,
+                  color: Colors.byName('pink'),
+                  highlight: Colors.byName('pink'),
+                  label: 'Yellow'
+                },
+                {
+                  value: 140,
+                  color: Colors.byName('purple'),
+                  highlight: Colors.byName('purple'),
+                  label: 'Grey'
+                },
+              ];
+
+          vm.polarOptions = {
+            scaleShowLabelBackdrop : true,
+            scaleBackdropColor : 'rgba(255,255,255,0.75)',
+            scaleBeginAtZero : true,
+            scaleBackdropPaddingY : 1,
+            scaleBackdropPaddingX : 1,
+            scaleShowLine : true,
+            segmentShowStroke : true,
+            segmentStrokeColor : '#fff',
+            segmentStrokeWidth : 2,
+            animationSteps : 100,
+            animationEasing : 'easeOutBounce',
+            animateRotate : true,
+            animateScale : false
+          };
+
+
+          // Radar chart
+          // ----------------------------------- 
+
+          vm.radarData = {
+            labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+            datasets: [
+              {
+                label: 'My First dataset',
+                fillColor: 'rgba(114,102,186,0.2)',
+                strokeColor: 'rgba(114,102,186,1)',
+                pointColor: 'rgba(114,102,186,1)',
+                pointStrokeColor: '#fff',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(114,102,186,1)',
+                data: [65,59,90,81,56,55,40]
+              },
+              {
+                label: 'My Second dataset',
+                fillColor: 'rgba(151,187,205,0.2)',
+                strokeColor: 'rgba(151,187,205,1)',
+                pointColor: 'rgba(151,187,205,1)',
+                pointStrokeColor: '#fff',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(151,187,205,1)',
+                data: [28,48,40,19,96,27,100]
+              }
+            ]
+          };
+
+          vm.radarOptions = {
+            scaleShowLine : true,
+            angleShowLineOut : true,
+            scaleShowLabels : false,
+            scaleBeginAtZero : true,
+            angleLineColor : 'rgba(0,0,0,.1)',
+            angleLineWidth : 1,
+            /*jshint -W109*/
+            pointLabelFontFamily : "'Arial'",
+            pointLabelFontStyle : 'bold',
+            pointLabelFontSize : 10,
+            pointLabelFontColor : '#565656',
+            pointDot : true,
+            pointDotRadius : 3,
+            pointDotStrokeWidth : 1,
+            pointHitDetectionRadius : 20,
+            datasetStroke : true,
+            datasetStrokeWidth : 2,
+            datasetFill : true
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: chart.js
+ * Wrapper directive for chartJS. 
+ * Based on https://gist.github.com/AndreasHeiberg/9837868
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        /* Aliases for various chart types */
+        .directive('linechart',     chartJS('Line')      )
+        .directive('barchart',      chartJS('Bar')       )
+        .directive('radarchart',    chartJS('Radar')     )
+        .directive('polarchart',    chartJS('PolarArea') )
+        .directive('piechart',      chartJS('Pie')       )
+        .directive('doughnutchart', chartJS('Doughnut')  )
+        .directive('donutchart',    chartJS('Doughnut')  )
+        ;
+
+    function chartJS(type) {
+        return function() {
+            return {
+                restrict: 'A',
+                scope: {
+                    data: '=',
+                    options: '=',
+                    id: '@',
+                    width: '=',
+                    height: '=',
+                    resize: '=',
+                    chart: '@',
+                    segments: '@',
+                    responsive: '=',
+                    tooltip: '=',
+                    legend: '='
+                },
+                link: function ($scope, $elem) {
+                    var ctx = $elem[0].getContext('2d');
+                    var autosize = false;
+
+                    $scope.size = function () {
+                        if ($scope.width <= 0) {
+                            $elem.width($elem.parent().width());
+                            ctx.canvas.width = $elem.width();
+                        } else {
+                            ctx.canvas.width = $scope.width || ctx.canvas.width;
+                            autosize = true;
+                        }
+
+                        if($scope.height <= 0){
+                            $elem.height($elem.parent().height());
+                            ctx.canvas.height = ctx.canvas.width / 2;
+                        } else {
+                            ctx.canvas.height = $scope.height || ctx.canvas.height;
+                            autosize = true;
+                        }
+                    };
+
+                    $scope.$watch('data', function (newVal) {
+                        if(chartCreated)
+                            chartCreated.destroy();
+
+                        // if data not defined, exit
+                        if (!newVal) {
+                            return;
+                        }
+                        if ($scope.chart) { type = $scope.chart; }
+
+                        if(autosize){
+                            $scope.size();
+                            chart = new Chart(ctx);
+                        }
+
+                        if($scope.responsive || $scope.resize)
+                            $scope.options.responsive = true;
+
+                        if($scope.responsive !== undefined)
+                            $scope.options.responsive = $scope.responsive;
+
+                        chartCreated = chart[type]($scope.data, $scope.options);
+                        chartCreated.update();
+                        if($scope.legend)
+                            angular.element($elem[0]).parent().after( chartCreated.generateLegend() );
+                    }, true);
+
+                    $scope.$watch('tooltip', function (newVal) {
+                        if (chartCreated)
+                            chartCreated.draw();
+                        if(newVal===undefined || !chartCreated.segments)
+                            return;
+                        if(!isFinite(newVal) || newVal >= chartCreated.segments.length || newVal < 0)
+                            return;
+                        var activeSegment = chartCreated.segments[newVal];
+                        activeSegment.save();
+                        activeSegment.fillColor = activeSegment.highlightColor;
+                        chartCreated.showTooltip([activeSegment]);
+                        activeSegment.restore();
+                    }, true);
+
+                    $scope.size();
+                    var chart = new Chart(ctx);
+                    var chartCreated;
+
+                    $scope.$on('$destroy', function() {
+                        if(chartCreated)
+                            chartCreated.destroy();
+                    });
+                }
+            };
+        };
+    }
+})();
+
+
+
+
+
+/**=========================================================
+ * Module: classy-loader.js
+ * Enable use of classyloader directly from data attributes
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .directive('classyloader', classyloader);
+
+    classyloader.$inject = ['$timeout', 'Utils', '$window'];
+    function classyloader ($timeout, Utils, $window) {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element) {
+          var $scroller       = $($window),
+              inViewFlagClass = 'js-is-in-view'; // a classname to detect when a chart has been triggered after scroll
+
+          // run after interpolation  
+          $timeout(function(){
+      
+            var $element = $(element),
+                options  = $element.data();
+            
+            // At lease we need a data-percentage attribute
+            if(options) {
+              if( options.triggerInView ) {
+
+                $scroller.scroll(function() {
+                  checkLoaderInVIew($element, options);
+                });
+                // if the element starts already in view
+                checkLoaderInVIew($element, options);
+              }
+              else
+                startLoader($element, options);
+            }
+
+          }, 0);
+
+          function checkLoaderInVIew(element, options) {
+            var offset = -20;
+            if( ! element.hasClass(inViewFlagClass) &&
+                Utils.isInView(element, {topoffset: offset}) ) {
+              startLoader(element, options);
+            }
+          }
+          function startLoader(element, options) {
+            element.ClassyLoader(options).addClass(inViewFlagClass);
+          }
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .service('ChartData', ChartData);
+
+    ChartData.$inject = ['$resource'];
+    function ChartData($resource) {
+        this.load = load;
+
+        ////////////////
+      
+        var opts = {
+            get: { method: 'GET', isArray: true }
+          };
+        function load(source) {
+          return $resource(source, {}, opts).get();
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: flot-chart.js
+ * Setup options and data for flot chart directive
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .controller('FlotChartController', FlotChartController);
+
+    FlotChartController.$inject = ['$scope', 'ChartData', '$timeout'];
+    function FlotChartController($scope, ChartData, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // BAR
+          // -----------------------------------
+          vm.barData = ChartData.load('server/chart/bar.json');
+          vm.barOptions = {
+              series: {
+                  bars: {
+                      align: 'center',
+                      lineWidth: 0,
+                      show: true,
+                      barWidth: 0.6,
+                      fill: 0.9
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#fcfcfc',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                  tickColor: '#eee'
+              },
+              shadowSize: 0
+          };
+
+          // BAR STACKED
+          // -----------------------------------
+          vm.barStackeData = ChartData.load('server/chart/barstacked.json');
+          vm.barStackedOptions = {
+              series: {
+                  stack: true,
+                  bars: {
+                      align: 'center',
+                      lineWidth: 0,
+                      show: true,
+                      barWidth: 0.6,
+                      fill: 0.9
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#fcfcfc',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  min: 0,
+                  max: 200, // optional: use it for a clear represetation
+                  position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                  tickColor: '#eee'
+              },
+              shadowSize: 0
+          };
+
+          // SPLINE
+          // -----------------------------------
+          vm.splineData = ChartData.load('server/chart/spline.json');
+          vm.splineOptions = {
+              series: {
+                  lines: {
+                      show: false
+                  },
+                  points: {
+                      show: true,
+                      radius: 4
+                  },
+                  splines: {
+                      show: true,
+                      tension: 0.4,
+                      lineWidth: 1,
+                      fill: 0.5
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#fcfcfc',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  min: 0,
+                  max: 150, // optional: use it for a clear represetation
+                  tickColor: '#eee',
+                  position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                  tickFormatter: function (v) {
+                      return v/* + ' visitors'*/;
+                  }
+              },
+              shadowSize: 0
+          };
+
+          // AREA
+          // -----------------------------------
+          vm.areaData = ChartData.load('server/chart/area.json');
+          vm.areaOptions = {
+              series: {
+                  lines: {
+                      show: true,
+                      fill: 0.8
+                  },
+                  points: {
+                      show: true,
+                      radius: 4
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#fcfcfc',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  min: 0,
+                  tickColor: '#eee',
+                  position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                  tickFormatter: function (v) {
+                      return v + ' visitors';
+                  }
+              },
+              shadowSize: 0
+          };
+
+          // LINE
+          // -----------------------------------
+          vm.lineData = ChartData.load('server/chart/line.json');
+          vm.lineOptions = {
+              series: {
+                  lines: {
+                      show: true,
+                      fill: 0.01
+                  },
+                  points: {
+                      show: true,
+                      radius: 4
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#eee',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                  tickColor: '#eee'
+              },
+              shadowSize: 0
+          };
+
+          // PIE
+          // -----------------------------------
+          vm.pieData = [{
+              "label": "jQuery",
+              "color": "#4acab4",
+              "data": 30
+            }, {
+              "label": "CSS",
+              "color": "#ffea88",
+              "data": 40
+            }, {
+              "label": "LESS",
+              "color": "#ff8153",
+              "data": 90
+            }, {
+              "label": "SASS",
+              "color": "#878bb6",
+              "data": 75
+            }, {
+              "label": "Jade",
+              "color": "#b2d767",
+              "data": 120
+            }];
+          // Direct data temporarily added until fix: https://github.com/flot/flot/pull/1462
+          // ChartData.load('server/chart/pie.json');
+
+          vm.pieOptions = {
+              series: {
+                  pie: {
+                      show: true,
+                      innerRadius: 0,
+                      label: {
+                          show: true,
+                          radius: 0.8,
+                          formatter: function (label, series) {
+                              return '<div class="flot-pie-label">' +
+                              //label + ' : ' +
+                              Math.round(series.percent) +
+                              '%</div>';
+                          },
+                          background: {
+                              opacity: 0.8,
+                              color: '#222'
+                          }
+                      }
+                  }
+              }
+          };
+
+          // DONUT
+          // -----------------------------------
+          vm.donutData = [ { "color" : "#39C558",
+                "data" : 60,
+                "label" : "Coffee"
+              },
+              { "color" : "#00b4ff",
+                "data" : 90,
+                "label" : "CSS"
+              },
+              { "color" : "#FFBE41",
+                "data" : 50,
+                "label" : "LESS"
+              },
+              { "color" : "#ff3e43",
+                "data" : 80,
+                "label" : "Jade"
+              },
+              { "color" : "#937fc7",
+                "data" : 116,
+                "label" : "AngularJS"
+              }
+            ];
+          // Direct data temporarily added until fix: https://github.com/flot/flot/pull/1462
+          // ChartData.load('server/chart/donut.json');
+
+          vm.donutOptions = {
+              series: {
+                  pie: {
+                      show: true,
+                      innerRadius: 0.5 // This makes the donut shape
+                  }
+              }
+          };
+
+          // REALTIME
+          // -----------------------------------
+          vm.realTimeOptions = {
+              series: {
+                lines: { show: true, fill: true, fillColor:  { colors: ['#a0e0f3', '#23b7e5'] } },
+                shadowSize: 0 // Drawing is faster without shadows
+              },
+              grid: {
+                  show:false,
+                  borderWidth: 0,
+                  minBorderMargin: 20,
+                  labelMargin: 10
+              },
+              xaxis: {
+                tickFormatter: function() {
+                    return '';
+                }
+              },
+              yaxis: {
+                  min: 0,
+                  max: 110
+              },
+              legend: {
+                  show: true
+              },
+              colors: ['#23b7e5']
+          };
+
+          // Generate random data for realtime demo
+          var data = [], totalPoints = 300;
+
+          update();
+
+          function getRandomData() {
+            if (data.length > 0)
+              data = data.slice(1);
+            // Do a random walk
+            while (data.length < totalPoints) {
+              var prev = data.length > 0 ? data[data.length - 1] : 50,
+                y = prev + Math.random() * 10 - 5;
+              if (y < 0) {
+                y = 0;
+              } else if (y > 100) {
+                y = 100;
+              }
+              data.push(y);
+            }
+            // Zip the generated y values with the x values
+            var res = [];
+            for (var i = 0; i < data.length; ++i) {
+              res.push([i, data[i]]);
+            }
+            return [res];
+          }
+          function update() {
+            vm.realTimeData = getRandomData();
+            $timeout(update, 30);
+          }
+          // end random data generation
+
+
+          // PANEL REFRESH EVENTS
+          // -----------------------------------
+
+          $scope.$on('panel-refresh', function(event, id) {
+
+            console.log('Simulating chart refresh during 3s on #'+id);
+
+            // Instead of timeout you can request a chart data
+            $timeout(function(){
+
+              // directive listen for to remove the spinner
+              // after we end up to perform own operations
+              $scope.$broadcast('removeSpinner', id);
+
+              console.log('Refreshed #' + id);
+
+            }, 3000);
+
+          });
+
+
+          // PANEL DISMISS EVENTS
+          // -----------------------------------
+
+          // Before remove panel
+          $scope.$on('panel-remove', function(event, id, deferred){
+
+            console.log('Panel #' + id + ' removing');
+
+            // Here is obligatory to call the resolve() if we pretend to remove the panel finally
+            // Not calling resolve() will NOT remove the panel
+            // It's up to your app to decide if panel should be removed or not
+            deferred.resolve();
+
+          });
+
+          // Panel removed ( only if above was resolved() )
+          $scope.$on('panel-removed', function(event, id){
+
+            console.log('Panel #' + id + ' removed');
+
+          });
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: flot.js
+ * Initializes the Flot chart plugin and handles data refresh
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .directive('flot', flot);
+
+    flot.$inject = ['$http', '$timeout'];
+    function flot ($http, $timeout) {
+
+        var directive = {
+          restrict: 'EA',
+          template: '<div></div>',
+          scope: {
+            dataset: '=?',
+            options: '=',
+            series: '=',
+            callback: '=',
+            src: '='
+          },
+          link: link
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var height, plot, plotArea, width;
+          var heightDefault = 220;
+
+          plot = null;
+
+          width = attrs.width || '100%';
+          height = attrs.height || heightDefault;
+
+          plotArea = $(element.children()[0]);
+          plotArea.css({
+            width: width,
+            height: height
+          });
+
+          function init() {
+            var plotObj;
+            if(!scope.dataset || !scope.options) return;
+            plotObj = $.plot(plotArea, scope.dataset, scope.options);
+            scope.$emit('plotReady', plotObj);
+            if (scope.callback) {
+              scope.callback(plotObj, scope);
+            }
+
+            return plotObj;
+          }
+
+          function onDatasetChanged(dataset) {
+            if (plot) {
+              plot.setData(dataset);
+              plot.setupGrid();
+              return plot.draw();
+            } else {
+              plot = init();
+              onSerieToggled(scope.series);
+              return plot;
+            }
+          }
+          scope.$watchCollection('dataset', onDatasetChanged, true);
+
+          function onSerieToggled (series) {
+            if( !plot || !series ) return;
+            var someData = plot.getData();
+            for(var sName in series) {
+              angular.forEach(series[sName], toggleFor(sName));
+            }
+            
+            plot.setData(someData);
+            plot.draw();
+            
+            function toggleFor(sName) {
+              return function (s, i){
+                if(someData[i] && someData[i][sName])
+                  someData[i][sName].show = s;
+              };
+            }
+          }
+          scope.$watch('series', onSerieToggled, true);
+          
+          function onSrcChanged(src) {
+
+            if( src ) {
+
+              $http.get(src)
+                .success(function (data) {
+
+                  $timeout(function(){
+                    scope.dataset = data;
+                  });
+
+              }).error(function(){
+                $.error('Flot chart: Bad request.');
+              });
+              
+            }
+          }
+          scope.$watch('src', onSrcChanged);
+
+        }
+    }
+
+
+})();
+
+/**=========================================================
+ * Module: morris.js
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .controller('ChartMorrisController', ChartMorrisController);
+
+    ChartMorrisController.$inject = ['$timeout', 'Colors'];
+    function ChartMorrisController($timeout, Colors) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+         vm.chartdata = [
+              { y: '2006', a: 100, b: 90 },
+              { y: '2007', a: 75,  b: 65 },
+              { y: '2008', a: 50,  b: 40 },
+              { y: '2009', a: 75,  b: 65 },
+              { y: '2010', a: 50,  b: 40 },
+              { y: '2011', a: 75,  b: 65 },
+              { y: '2012', a: 100, b: 90 }
+          ];
+
+          /* test data update
+          $timeout(function(){
+            vm.chartdata[0].a = 50;
+            vm.chartdata[0].b = 50;
+          }, 3000); */
+
+          vm.donutdata = [
+            {label: 'Download Sales', value: 12},
+            {label: 'In-Store Sales',value: 30},
+            {label: 'Mail-Order Sales', value: 20}
+          ];
+
+          vm.donutOptions = {
+            Colors: [ Colors.byName('danger'), Colors.byName('yellow'), Colors.byName('warning') ],
+            resize: true
+          };
+
+          vm.barOptions = {
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Series A', 'Series B'],
+            xLabelMargin: 2,
+            barColors: [ Colors.byName('info'), Colors.byName('danger') ],
+            resize: true
+          };
+
+          vm.lineOptions = {
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Serie A', 'Serie B'],
+            lineColors: ['#31C0BE', '#7a92a3'],
+            resize: true
+          };
+
+          vm.areaOptions = {
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Serie A', 'Serie B'],
+            lineColors: [ Colors.byName('purple'), Colors.byName('info') ],
+            resize: true
+          };
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: morris.js
+ * AngularJS Directives for Morris Charts
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .directive('morrisBar',   morrisChart('Bar')   )
+        .directive('morrisDonut', morrisChart('Donut') )
+        .directive('morrisLine',  morrisChart('Line')  )
+        .directive('morrisArea',  morrisChart('Area')  );
+
+    function morrisChart(type) {
+      return function () {
+        return {
+          restrict: 'EA',
+          scope: {
+            morrisData: '=',
+            morrisOptions: '='
+          },
+          link: function($scope, element) {
+            // start ready to watch for changes in data
+            $scope.$watch('morrisData', function(newVal) {
+              if (newVal) {
+                $scope.morrisInstance.setData(newVal);
+                $scope.morrisInstance.redraw();
+              }
+            }, true);
+            // the element that contains the chart
+            $scope.morrisOptions.element = element;
+            // If data defined copy to options
+            if($scope.morrisData)
+              $scope.morrisOptions.data = $scope.morrisData;
+            // Init chart
+            $scope.morrisInstance = new Morris[type]($scope.morrisOptions);
+
+          }
+        };
+      };
+    }
+
+})();
+
+/**=========================================================
+ * Module: PieChartsController.js
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .controller('PieChartsController', PieChartsController);
+
+    /*jshint -W069*/
+    PieChartsController.$inject = ['Colors'];
+
+    function PieChartsController(Colors) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // KNOB Charts
+
+          vm.knobLoaderData1 = 80;
+          vm.knobLoaderOptions1 = {
+              width: '50%', // responsive
+              displayInput: true,
+              fgColor: Colors.byName('info')
+            };
+
+          vm.knobLoaderData2 = 45;
+          vm.knobLoaderOptions2 = {
+              width: '50%', // responsive
+              displayInput: true,
+              fgColor: Colors.byName('purple'),
+              readOnly : true
+            };
+
+          vm.knobLoaderData3 = 30;
+          vm.knobLoaderOptions3 = {
+              width: '50%', // responsive
+              displayInput: true,
+              fgColor: Colors.byName('pink'),
+              displayPrevious : true,
+              thickness : 0.1,
+              lineCap : 'round'
+            };
+
+          vm.knobLoaderData4 = 20;
+          vm.knobLoaderOptions4 = {
+              width: '50%', // responsive
+              displayInput: true,
+              fgColor: Colors.byName('info'),
+              bgColor: Colors.byName('gray'),
+              angleOffset: -125,
+              angleArc: 250
+            };
+
+          // Easy Pie Charts
+
+          vm.piePercent1 = 85;
+          vm.piePercent2 = 45;
+          vm.piePercent3 = 25;
+          vm.piePercent4 = 60;
+
+          vm.pieOptions1 = {
+              animate:{
+                  duration: 800,
+                  enabled: true
+              },
+              barColor: Colors.byName('success'),
+              trackColor: false,
+              scaleColor: false,
+              lineWidth: 10,
+              lineCap: 'circle'
+          };
+
+          vm.pieOptions2= {
+              animate:{
+                  duration: 800,
+                  enabled: true
+              },
+              barColor: Colors.byName('warning'),
+              trackColor: false,
+              scaleColor: false,
+              lineWidth: 4,
+              lineCap: 'circle'
+          };
+
+          vm.pieOptions3 = {
+              animate:{
+                  duration: 800,
+                  enabled: true
+              },
+              barColor: Colors.byName('danger'),
+              trackColor: false,
+              scaleColor: Colors.byName('gray'),
+              lineWidth: 15,
+              lineCap: 'circle'
+          };
+
+          vm.pieOptions4 = {
+              animate:{
+                  duration: 800,
+                  enabled: true
+              },
+              barColor: Colors.byName('danger'),
+              trackColor: Colors.byName('yellow'),
+              scaleColor: Colors.byName('gray-dark'),
+              lineWidth: 15,
+              lineCap: 'circle'
+          };
+
+          vm.randomize = function(type) {
+            if ( type === 'easy') {
+              vm.piePercent1 = random();
+              vm.piePercent2 = random();
+              vm.piePercent3 = random();
+              vm.piePercent4 = random();
+            }
+            if ( type === 'knob') {
+              vm.knobLoaderData1 = random();
+              vm.knobLoaderData2 = random();
+              vm.knobLoaderData3 = random();
+              vm.knobLoaderData4 = random();
+            }
+          }
+
+          function random() { return Math.floor((Math.random() * 100) + 1); }
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: rickshaw.js
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .controller('ChartRickshawController', ChartRickshawController);
+
+    function ChartRickshawController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.renderers = [{
+                  id: 'area',
+                  name: 'Area'
+              }, {
+                  id: 'line',
+                  name: 'Line'
+              }, {
+                  id: 'bar',
+                  name: 'Bar'
+              }, {
+                  id: 'scatterplot',
+                  name: 'Scatterplot'
+              }];
+
+          vm.palettes = [
+              'spectrum14',
+              'spectrum2000',
+              'spectrum2001',
+              'colorwheel',
+              'cool',
+              'classic9',
+              'munin'
+          ];
+
+          vm.rendererChanged = function(id) {
+              vm['options' + id] = {
+                  renderer: vm['renderer' + id].id
+              };
+          };
+
+          vm.paletteChanged = function(id) {
+              vm['features' + id] = {
+                  palette: vm['palette' + id]
+              };
+          };
+
+          vm.changeSeriesData = function(id) {
+              var seriesList = [];
+              for (var i = 0; i < 3; i++) {
+                  var series = {
+                      name: 'Series ' + (i + 1),
+                      data: []
+                  };
+                  for (var j = 0; j < 10; j++) {
+                      series.data.push({x: j, y: Math.random() * 20});
+                  }
+                  seriesList.push(series);
+                  vm['series' + id][i] = series;
+              }
+              //vm['series' + id] = seriesList;
+          };
+
+          vm.series0 = [];
+
+          vm.options0 = {
+            renderer: 'area'
+          };
+
+          vm.renderer0 = vm.renderers[0];
+          vm.palette0 = vm.palettes[0];
+
+          vm.rendererChanged(0);
+          vm.paletteChanged(0);
+          vm.changeSeriesData(0);  
+
+          // Graph 2
+
+          var seriesData = [ [], [], [] ];
+          var random = new Rickshaw.Fixtures.RandomData(150);
+
+          for (var i = 0; i < 150; i++) {
+            random.addData(seriesData);
+          }
+
+          vm.series2 = [
+            {
+              color: '#c05020',
+              data: seriesData[0],
+              name: 'New York'
+            }, {
+              color: '#30c020',
+              data: seriesData[1],
+              name: 'London'
+            }, {
+              color: '#6060c0',
+              data: seriesData[2],
+              name: 'Tokyo'
+            }
+          ];
+
+          vm.options2 = {
+            renderer: 'area'
+          };
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: sparkline.js
+ * SparkLines Mini Charts
+ =========================================================*/
+ 
+(function() {
+    'use strict';
+
+    angular
+        .module('app.charts')
+        .directive('sparkline', sparkline);
+
+    function sparkline () {
+        var directive = {
+            restrict: 'EA',
+            scope: {
+              'sparkline': '='
+            },
+            controller: Controller
+        };
+        return directive;
+
+    }
+    Controller.$inject = ['$scope', '$element', '$timeout', '$window'];
+    function Controller($scope, $element, $timeout, $window) {
+      var runSL = function(){
+        initSparLine();
+      };
+
+      $timeout(runSL);
+  
+      function initSparLine() {
+        var options = $scope.sparkline,
+            data = $element.data();
+        
+        if(!options) // if no scope options, try with data attributes
+          options = data;
+        else
+          if(data) // data attributes overrides scope options
+            options = angular.extend({}, options, data);
+
+        options.type = options.type || 'bar'; // default chart is bar
+        options.disableHiddenCheck = true;
+
+        $element.sparkline('html', options);
+
+        if(options.resize) {
+          $($window).resize(function(){
+            $element.sparkline('html', options);
+          });
+        }
+      }
+
+    }
+    
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .config(coreConfig);
+
+    coreConfig.$inject = ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$animateProvider'];
+    function coreConfig($controllerProvider, $compileProvider, $filterProvider, $provide, $animateProvider){
+
+      var core = angular.module('app.core');
+      // registering components after bootstrap
+      core.controller = $controllerProvider.register;
+      core.directive  = $compileProvider.directive;
+      core.filter     = $filterProvider.register;
+      core.factory    = $provide.factory;
+      core.service    = $provide.service;
+      core.constant   = $provide.constant;
+      core.value      = $provide.value;
+
+      // Disables animation on items with class .ng-no-animation
+      $animateProvider.classNameFilter(/^((?!(ng-no-animation)).)*$/);
+
+    }
+
+})();
+/**=========================================================
+ * Module: constants.js
+ * Define constants to inject across the application
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .constant('APP_MEDIAQUERY', {
+          'desktopLG':             1200,
+          'desktop':                992,
+          'tablet':                 768,
+          'mobile':                 480
+        })
+      ;
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .run(appRun);
+
+    appRun.$inject = ['$rootScope', '$state', '$stateParams',  '$window', '$templateCache', 'Colors'];
+    
+    function appRun($rootScope, $state, $stateParams, $window, $templateCache, Colors) {
+      
+      // Set reference to access them from any scope
+      $rootScope.$state = $state;
+      $rootScope.$stateParams = $stateParams;
+      $rootScope.$storage = $window.localStorage;
+
+      // Uncomment this to disable template cache
+      /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+          if (typeof(toState) !== 'undefined'){
+            $templateCache.remove(toState.templateUrl);
+          }
+      });*/
+
+      // Allows to use branding color with interpolation
+      // {{ colorByName('primary') }}
+      $rootScope.colorByName = Colors.byName;
+
+      // cancel click event easily
+      $rootScope.cancel = function($event) {
+        $event.stopPropagation();
+      };
+
+      // Hooks Example
+      // ----------------------------------- 
+
+      // Hook not found
+      $rootScope.$on('$stateNotFound',
+        function(event, unfoundState/*, fromState, fromParams*/) {
+            console.log(unfoundState.to); // "lazy.state"
+            console.log(unfoundState.toParams); // {a:1, b:2}
+            console.log(unfoundState.options); // {inherit:false} + default options
+        });
+      // Hook error
+      $rootScope.$on('$stateChangeError',
+        function(event, toState, toParams, fromState, fromParams, error){
+          console.log(error);
+        });
+      // Hook success
+      $rootScope.$on('$stateChangeSuccess',
+        function(/*event, toState, toParams, fromState, fromParams*/) {
+          // display new view from top
+          $window.scrollTo(0, 0);
+          // Save the route title
+          $rootScope.currTitle = $state.current.title;
+        });
+
+      // Load a title dynamically
+      $rootScope.currTitle = $state.current.title;
+      $rootScope.pageTitle = function() {
+        var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
+        document.title = title;
+        return title;
+      };      
+
+    }
+
+})();
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('AngularCarouselController', AngularCarouselController);
+
+    function AngularCarouselController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.colors = ['#fc0003', '#f70008', '#f2000d', '#ed0012', '#e80017', '#e3001c', '#de0021', '#d90026', '#d4002b', '#cf0030', '#c90036', '#c4003b', '#bf0040', '#ba0045', '#b5004a', '#b0004f', '#ab0054', '#a60059', '#a1005e', '#9c0063', '#960069', '#91006e', '#8c0073', '#870078', '#82007d', '#7d0082', '#780087', '#73008c', '#6e0091', '#690096', '#63009c', '#5e00a1', '#5900a6', '#5400ab', '#4f00b0', '#4a00b5', '#4500ba', '#4000bf', '#3b00c4', '#3600c9', '#3000cf', '#2b00d4', '#2600d9', '#2100de', '#1c00e3', '#1700e8', '#1200ed', '#0d00f2', '#0800f7', '#0300fc'];
+
+          function getSlide(target, style) {
+              var i = target.length;
+              return {
+                  id: (i + 1),
+                  label: 'slide #' + (i + 1),
+                  img: 'http://lorempixel.com/1200/500/' + style + '/' + ((i + 1) % 10) ,
+                  color: vm.colors[ (i*10) % vm.colors.length],
+                  odd: (i % 2 === 0)
+              };
+          }
+
+          function addSlide(target, style) {
+              target.push(getSlide(target, style));
+          }
+
+          vm.carouselIndex = 3;
+          vm.carouselIndex2 = 0;
+          vm.carouselIndex2 = 1;
+          vm.carouselIndex3 = 5;
+          vm.carouselIndex4 = 5;
+
+          function addSlides(target, style, qty) {
+              for (var i=0; i < qty; i++) {
+                  addSlide(target, style);
+              }
+          }
+
+          // 1st ngRepeat demo
+          vm.slides = [];
+          addSlides(vm.slides, 'sports', 50);
+
+          // 2nd ngRepeat demo
+          vm.slides2 = [];
+          addSlides(vm.slides2, 'sports', 10);
+
+          // 3rd ngRepeat demo
+          vm.slides3 = [];
+          addSlides(vm.slides3, 'people', 50);
+
+          // 4th ngRepeat demo
+          vm.slides4 = [];
+          addSlides(vm.slides4, 'city', 50);
+
+
+          // 5th ngRepeat demo
+          vm.slides6 = [];
+          vm.carouselIndex6 = 0;
+          addSlides(vm.slides6, 'sports', 10);
+          vm.addSlide = function(at) {
+              if(at==='head') {
+                  vm.slides6.unshift(getSlide(vm.slides6, 'people'));
+              } else {
+                  vm.slides6.push(getSlide(vm.slides6, 'people'));
+              }
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-dialog.js
+ * Demo for multiple ngDialog Usage
+ * - ngDialogProvider for default values not supported 
+ *   using lazy loader. Include plugin in base.js instead.
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('DialogIntroCtrl', DialogIntroCtrl)
+        .controller('DialogMainCtrl', DialogMainCtrl)
+        .controller('InsideCtrl', InsideCtrl)
+        .controller('SecondModalCtrl', SecondModalCtrl);
+
+    DialogIntroCtrl.$inject = ['$scope', 'ngDialog', 'tpl'];
+    // Called from the route state. 'tpl' is resolved before
+    function DialogIntroCtrl($scope, ngDialog, tpl) {
+        
+        activate();
+
+        ////////////////
+
+        function activate() {
+          // share with other controllers
+          $scope.tpl = tpl;
+          // open dialog window
+          ngDialog.open({
+            template: tpl.path,
+            // plain: true,
+            className: 'ngdialog-theme-default'
+          });
+        }
+    }
+
+    DialogMainCtrl.$inject = ['$scope', '$rootScope', 'ngDialog'];
+    // Loads from view
+    function DialogMainCtrl($scope, $rootScope, ngDialog) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          $rootScope.jsonData = '{"foo": "bar"}';
+          $rootScope.theme = 'ngdialog-theme-default';
+
+          $scope.directivePreCloseCallback = function (value) {
+            if(confirm('Close it? MainCtrl.Directive. (Value = ' + value + ')')) {
+              return true;
+            }
+            return false;
+          };
+
+          $scope.preCloseCallbackOnScope = function (value) {
+            if(confirm('Close it? MainCtrl.OnScope (Value = ' + value + ')')) {
+              return true;
+            }
+            return false;
+          };
+
+          $scope.open = function () {
+            ngDialog.open({ template: 'firstDialogId', controller: 'InsideCtrl', data: {foo: 'some data'} });
+          };
+
+          $scope.openDefault = function () {
+            ngDialog.open({
+              template: 'firstDialogId',
+              controller: 'InsideCtrl',
+              className: 'ngdialog-theme-default'
+            });
+          };
+
+          $scope.openDefaultWithPreCloseCallbackInlined = function () {
+            ngDialog.open({
+              template: 'firstDialogId',
+              controller: 'InsideCtrl',
+              className: 'ngdialog-theme-default',
+              preCloseCallback: function(value) {
+                if (confirm('Close it?  (Value = ' + value + ')')) {
+                  return true;
+                }
+                return false;
+              }
+            });
+          };
+
+          $scope.openConfirm = function () {
+            ngDialog.openConfirm({
+              template: 'modalDialogId',
+              className: 'ngdialog-theme-default'
+            }).then(function (value) {
+              console.log('Modal promise resolved. Value: ', value);
+            }, function (reason) {
+              console.log('Modal promise rejected. Reason: ', reason);
+            });
+          };
+
+          $scope.openConfirmWithPreCloseCallbackOnScope = function () {
+            ngDialog.openConfirm({
+              template: 'modalDialogId',
+              className: 'ngdialog-theme-default',
+              preCloseCallback: 'preCloseCallbackOnScope',
+              scope: $scope
+            }).then(function (value) {
+              console.log('Modal promise resolved. Value: ', value);
+            }, function (reason) {
+              console.log('Modal promise rejected. Reason: ', reason);
+            });
+          };
+
+          $scope.openConfirmWithPreCloseCallbackInlinedWithNestedConfirm = function () {
+            ngDialog.openConfirm({
+              template: 'dialogWithNestedConfirmDialogId',
+              className: 'ngdialog-theme-default',
+              preCloseCallback: function(/*value*/) {
+
+                var nestedConfirmDialog = ngDialog.openConfirm({
+                  template:
+                      '<p>Are you sure you want to close the parent dialog?</p>' +
+                      '<div>' +
+                        '<button type="button" class="btn btn-default" ng-click="closeThisDialog(0)">No' +
+                        '<button type="button" class="btn btn-primary" ng-click="confirm(1)">Yes' +
+                      '</button></div>',
+                  plain: true,
+                  className: 'ngdialog-theme-default'
+                });
+
+                return nestedConfirmDialog;
+              },
+              scope: $scope
+            })
+            .then(function(value){
+              console.log('resolved:' + value);
+              // Perform the save here
+            }, function(value){
+              console.log('rejected:' + value);
+
+            });
+          };
+
+          $scope.openInlineController = function () {
+            $rootScope.theme = 'ngdialog-theme-default';
+
+            ngDialog.open({
+              template: 'withInlineController',
+              controller: ['$scope', '$timeout', function ($scope, $timeout) {
+                var counter = 0;
+                var timeout;
+                function count() {
+                  $scope.exampleExternalData = 'Counter ' + (counter++);
+                  timeout = $timeout(count, 450);
+                }
+                count();
+                $scope.$on('$destroy', function () {
+                  $timeout.cancel(timeout);
+                });
+              }],
+              className: 'ngdialog-theme-default'
+            });
+          };
+
+          $scope.openTemplate = function () {
+            $scope.value = true;
+
+            ngDialog.open({
+              template: $scope.tpl.path,
+              className: 'ngdialog-theme-default',
+              scope: $scope
+            });
+          };
+
+          $scope.openTemplateNoCache = function () {
+            $scope.value = true;
+
+            ngDialog.open({
+              template: $scope.tpl.path,
+              className: 'ngdialog-theme-default',
+              scope: $scope,
+              cache: false
+            });
+          };
+
+          $scope.openTimed = function () {
+            var dialog = ngDialog.open({
+              template: '<p>Just passing through!</p>',
+              plain: true,
+              closeByDocument: false,
+              closeByEscape: false
+            });
+            setTimeout(function () {
+              dialog.close();
+            }, 2000);
+          };
+
+          $scope.openNotify = function () {
+            var dialog = ngDialog.open({
+              template:
+                '<p>You can do whatever you want when I close, however that happens.</p>' +
+                '<div><button type="button" class="btn btn-primary" ng-click="closeThisDialog(1)">Close Me</button></div>',
+              plain: true
+            });
+            dialog.closePromise.then(function (data) {
+              console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+            });
+          };
+
+          $scope.openWithoutOverlay = function () {
+            ngDialog.open({
+              template: '<h2>Notice that there is no overlay!</h2>',
+              className: 'ngdialog-theme-default',
+              plain: true,
+              overlay: false
+            });
+          };
+
+          $rootScope.$on('ngDialog.opened', function (e, $dialog) {
+            console.log('ngDialog opened: ' + $dialog.attr('id'));
+          });
+
+          $rootScope.$on('ngDialog.closed', function (e, $dialog) {
+            console.log('ngDialog closed: ' + $dialog.attr('id'));
+          });
+
+          $rootScope.$on('ngDialog.closing', function (e, $dialog) {
+            console.log('ngDialog closing: ' + $dialog.attr('id'));
+          });
+        }
+    
+    } // DialogMainCtrl
+
+
+    InsideCtrl.$inject = ['$scope', 'ngDialog'];
+    function InsideCtrl($scope, ngDialog) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          $scope.dialogModel = {
+            message : 'message from passed scope'
+          };
+          $scope.openSecond = function () {
+            ngDialog.open({
+              template: '<p class="lead m0"><a href="" ng-click="closeSecond()">Close all by click here!</a></h3>',
+              plain: true,
+              closeByEscape: false,
+              controller: 'SecondModalCtrl'
+            });
+          };
+        }
+    }
+
+    SecondModalCtrl.$inject = ['$scope', 'ngDialog'];
+    function SecondModalCtrl($scope, ngDialog) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          $scope.closeSecond = function () {
+            ngDialog.close();
+          };
+        }
+
+    }
+
+
+})();
+
+
+
+
+/**=========================================================
+ * Module: calendar-ui.js
+ * This script handle the calendar demo with draggable 
+ * events and events creations
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('InfiniteScrollController', InfiniteScrollController)
+        .factory('datasource', datasource);
+
+    function InfiniteScrollController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.images = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+          vm.loadMore = function() {
+            var last = vm.images[vm.images.length - 1];
+            for(var i = 1; i <= 10; i++) {
+              vm.images.push(last + i);
+            }
+          };
+        }
+    }
+    
+    datasource.$inject = ['$log', '$timeout'];
+    function datasource(console, $timeout) {
+
+        var get = function(index, count, success) {
+            return $timeout(function() {
+                var i, result, _i, _ref;
+                result = [];
+                for (i = _i = index, _ref = index + count - 1; index <= _ref ? _i <= _ref : _i >= _ref; i = index <= _ref ? ++_i : --_i) {
+                    result.push('item #' + i);
+                }
+                return success(result);
+            }, 100);
+        };
+        return {
+            get: get
+        };
+    }
+
+})();
+
+/**=========================================================
+ * Module: masonry-deck.js
+ * Demo for Angular Deck
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('MasonryDeckController', MasonryDeckController)
+        .directive('imageloaded', imageloaded); // required by demo
+
+    MasonryDeckController.$inject = ['RouteHelpers'];
+    function MasonryDeckController(RouteHelpers) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.basepath = RouteHelpers.basepath;
+
+          vm.photos = [
+              {id: 'photo-1', name: 'Awesome photo', src: 'http://lorempixel.com/400/300/abstract'},
+              {id: 'photo-2', name: 'Great photo', src: 'http://lorempixel.com/450/400/city'},
+              {id: 'photo-3', name: 'Strange photo', src: 'http://lorempixel.com/400/300/people'},
+              {id: 'photo-4', name: 'A photo?', src: 'http://lorempixel.com/400/300/transport'},
+              {id: 'photo-5', name: 'What a photo', src: 'http://lorempixel.com/450/300/fashion'},
+              {id: 'photo-6', name: 'Silly photo', src: 'http://lorempixel.com/400/300/technics'},
+              {id: 'photo-7', name: 'Weird photo', src: 'http://lorempixel.com/410/350/sports'},
+              {id: 'photo-8', name: 'Modern photo', src: 'http://lorempixel.com/400/300/nightlife'},
+              {id: 'photo-9', name: 'Classical photo', src: 'http://lorempixel.com/400/300/nature'},
+              {id: 'photo-10', name: 'Dynamic photo', src: 'http://lorempixel.com/420/300/abstract'},
+              {id: 'photo-11', name: 'Neat photo', src: 'http://lorempixel.com/400/300/sports'},
+              {id: 'photo-12', name: 'Bumpy photo', src: 'http://lorempixel.com/400/300/nightlife'},
+              {id: 'photo-13', name: 'Brilliant photo', src: 'http://lorempixel.com/400/380/nature'},
+              {id: 'photo-14', name: 'Excellent photo', src: 'http://lorempixel.com/480/300/technics'},
+              {id: 'photo-15', name: 'Gorgeous photo', src: 'http://lorempixel.com/400/300/sports'},
+              {id: 'photo-16', name: 'Lovely photo', src: 'http://lorempixel.com/400/300/nightlife'},
+              {id: 'photo-17', name: 'A "wow" photo', src: 'http://lorempixel.com/400/300/nature'},
+              {id: 'photo-18', name: 'Bodacious photo', src: 'http://lorempixel.com/400/300/abstract'}
+          ];
+        }
+    }
+
+    // Add class to img element when source is loaded
+    function imageloaded () {
+        // Copyright(c) 2013 André König <akoenig@posteo.de>
+        // MIT Licensed
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var cssClass = attrs.loadedclass;
+
+          element.bind('load', function () {
+              angular.element(element).addClass(cssClass);
+          });
+        }
+    }
+
+})();
+
+
+
+/**=========================================================
+ * Module: access-login.js
+ * Demo for login api
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('AbnTestController', AbnTestController);
+
+    AbnTestController.$inject = ['$timeout', '$resource'];
+    function AbnTestController($timeout, $resource) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        /*jshint -W106*/
+        function activate() {
+          vm.my_tree_handler = function(branch) {
+
+            vm.output = 'You selected: ' + branch.label;
+
+            if (branch.data && branch.data.description) {
+              vm.output += '(' + branch.data.description + ')';
+              return vm.output;
+            }
+          };
+
+          // onSelect event handlers
+          var apple_selected = function(branch) {
+            vm.output = 'APPLE! : ' + branch.label;
+            return vm.output;
+          };
+
+          var treedata_avm = [
+            {
+              label: 'Animal',
+              children: [
+                {
+                  label: 'Dog',
+                  data: {
+                    description: 'man\'s best friend'
+                  }
+                }, {
+                  label: 'Cat',
+                  data: {
+                    description: 'Felis catus'
+                  }
+                }, {
+                  label: 'Hippopotamus',
+                  data: {
+                    description: 'hungry, hungry'
+                  }
+                }, {
+                  label: 'Chicken',
+                  children: ['White Leghorn', 'Rhode Island Red', 'Jersey Giant']
+                }
+              ]
+            }, {
+              label: 'Vegetable',
+              data: {
+                definition: 'A plant or part of a plant used as food, typically as accompaniment to meat or fish, such as a cabbage, potato, carrot, or bean.',
+                data_can_contain_anything: true
+              },
+              onSelect: function(branch) {
+                vm.output = 'Vegetable: ' + branch.data.definition;
+                return vm.output;
+              },
+              children: [
+                {
+                  label: 'Oranges'
+                }, {
+                  label: 'Apples',
+                  children: [
+                    {
+                      label: 'Granny Smith',
+                      onSelect: apple_selected
+                    }, {
+                      label: 'Red Delicous',
+                      onSelect: apple_selected
+                    }, {
+                      label: 'Fuji',
+                      onSelect: apple_selected
+                    }
+                  ]
+                }
+              ]
+            }, {
+              label: 'Mineral',
+              children: [
+                {
+                  label: 'Rock',
+                  children: ['Igneous', 'Sedimentary', 'Metamorphic']
+                }, {
+                  label: 'Metal',
+                  children: ['Aluminum', 'Steel', 'Copper']
+                }, {
+                  label: 'Plastic',
+                  children: [
+                    {
+                      label: 'Thermoplastic',
+                      children: ['polyethylene', 'polypropylene', 'polystyrene', ' polyvinyl chloride']
+                    }, {
+                      label: 'Thermosetting Polymer',
+                      children: ['polyester', 'polyurethane', 'vulcanized rubber', 'bakelite', 'urea-formaldehyde']
+                    }
+                  ]
+                }
+              ]
+            }
+          ];
+          
+          var treedata_geography = [
+            {
+              label: 'North America',
+              children: [
+                {
+                  label: 'Canada',
+                  children: ['Toronto', 'Vancouver']
+                }, {
+                  label: 'USA',
+                  children: ['New York', 'Los Angeles']
+                }, {
+                  label: 'Mexico',
+                  children: ['Mexico City', 'Guadalajara']
+                }
+              ]
+            }, {
+              label: 'South America',
+              children: [
+                {
+                  label: 'Venezuela',
+                  children: ['Caracas', 'Maracaibo']
+                }, {
+                  label: 'Brazil',
+                  children: ['Sao Paulo', 'Rio de Janeiro']
+                }, {
+                  label: 'Argentina',
+                  children: ['Buenos Aires', 'Cordoba']
+                }
+              ]
+            }
+          ];
+
+          vm.my_data = treedata_avm;
+          vm.try_changing_the_tree_data = function() {
+            if (vm.my_data === treedata_avm) {
+              vm.my_data = treedata_geography;
+            } else {
+              vm.my_data = treedata_avm;
+            }
+            return vm.my_data;
+          };
+          
+          var tree;
+          // This is our API control variable
+          vm.my_tree = tree = {};
+          vm.try_async_load = function() {
+            
+            vm.my_data = [];
+            vm.doing_async = true;
+            
+            // Request tree data via $resource
+            var remoteTree = $resource('server/treedata.json');
+            
+            return remoteTree.get(function(res){
+              
+              vm.my_data = res.data;
+
+              vm.doing_async = false;
+            
+              return tree.expand_all();
+            
+            // we must return a promise so the plugin 
+            // can watch when it's resolved
+            }).$promise;
+          };
+          
+          // Adds a new branch to the tree
+          vm.try_adding_a_branch = function() {
+            var b;
+            b = tree.get_selected_branch();
+            return tree.add_branch(b, {
+              label: 'New Branch',
+              data: {
+                something: 42,
+                'else': 43
+              }
+            });
+          };
+
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: nestable.js
+ * Nestable controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('NestableController', NestableController);
+
+    function NestableController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.items =  [
+            {
+              item: {text: 'a'},
+              children: []
+            },
+            {
+              item: {text: 'b'},
+              children: [
+                {
+                  item: {text: 'c'},
+                  children: []
+                },
+                {
+                  item: {text: 'd'},
+                  children: []
+                }
+              ]
+            },
+            {
+              item: {text: 'e'},
+              children: []
+            },
+            {
+              item: {text: 'f'},
+              children: []
+            }
+          ];
+
+          vm.items2 =  [
+            {
+              item: {text: '1'},
+              children: []
+            },
+            {
+              item: {text: '2'},
+              children: [
+                {
+                  item: {text: '3'},
+                  children: []
+                },
+                {
+                  item: {text: '4'},
+                  children: []
+                }
+              ]
+            },
+            {
+              item: {text: '5'},
+              children: []
+            },
+            {
+              item: {text: '6'},
+              children: []
+            }
+          ];
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: scroll.js
+ * Make a content box scrollable
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .directive('scrollable', scrollable);
+
+    function scrollable () {
+        var directive = {
+            link: link,
+            restrict: 'EA'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var defaultHeight = 250;
+          element.slimScroll({
+              height: (attrs.height || defaultHeight)
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: sortable.js
+ * Sortable controller
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('SortableController', SortableController);
+
+    SortableController.$inject = ['$scope'];
+    function SortableController($scope) {
+        // doesn't support controllerAs syntax https://github.com/voidberg/html5sortable/issues/86
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          // Single List
+          $scope.data1 = [
+            { id: 1, name: 'Donald Hoffman' },
+            { id: 2, name: 'Wallace Barrett' },
+            { id: 3, name: 'Marsha Hicks' },
+            { id: 4, name: 'Roland Brown' }
+          ];
+
+          $scope.add = function () {
+            $scope.data1.push({id: $scope.data1.length + 1, name: 'Earl Knight'});
+          };
+
+          $scope.sortableCallback = function (sourceModel, destModel, start, end) {
+            console.log(start + ' -> ' + end);
+          };
+          
+          $scope.sortableOptions = {
+              placeholder: '<div class="box-placeholder p0 m0"><div></div></div>',
+              forcePlaceholderSize: true
+          };
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: sweetalert.js
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('SweetAlertController', SweetAlertController);
+
+    SweetAlertController.$inject = ['SweetAlert'];
+    function SweetAlertController(SweetAlert) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.demo1 = function() {
+            SweetAlert.swal('Here\'s a message');
+          };
+
+          vm.demo2 = function() {
+            SweetAlert.swal('Here\'s a message!', 'It\'s pretty, isn\'t it?');
+          };
+
+          vm.demo3 = function() {
+            SweetAlert.swal('Good job!', 'You clicked the button!', 'success');
+          };
+
+          vm.demo4 = function() {
+            SweetAlert.swal({   
+              title: 'Are you sure?',   
+              text: 'Your will not be able to recover this imaginary file!',   
+              type: 'warning',   
+              showCancelButton: true,   
+              confirmButtonColor: '#DD6B55',   
+              confirmButtonText: 'Yes, delete it!',
+              closeOnConfirm: false
+            },  function(){  
+              SweetAlert.swal('Booyah!');
+            });
+          };
+
+          vm.demo5 = function() {
+            SweetAlert.swal({   
+              title: 'Are you sure?',   
+              text: 'Your will not be able to recover this imaginary file!',   
+              type: 'warning',   
+              showCancelButton: true,   
+              confirmButtonColor: '#DD6B55',   
+              confirmButtonText: 'Yes, delete it!',   
+              cancelButtonText: 'No, cancel plx!',   
+              closeOnConfirm: false,   
+              closeOnCancel: false 
+            }, function(isConfirm){  
+              if (isConfirm) {     
+                SweetAlert.swal('Deleted!', 'Your imaginary file has been deleted.', 'success');   
+              } else {     
+                SweetAlert.swal('Cancelled', 'Your imaginary file is safe :)', 'error');   
+              } 
+            });
+          };
+
+          vm.demo6 = function() {
+            SweetAlert.swal({   
+              title: 'Sweet!',   
+              text: 'Here\'s a custom image.',   
+              imageUrl: 'http://oitozero.com/img/avatar.jpg' 
+            });
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-toaster.js
+ * Demos for toaster notifications
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('ToasterDemoCtrl', ToasterDemoCtrl);
+
+    ToasterDemoCtrl.$inject = ['toaster'];
+    function ToasterDemoCtrl(toaster) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.toaster = {
+              type:  'success',
+              title: 'Title',
+              text:  'Message'
+          };
+
+          vm.pop = function() {
+            toaster.pop(vm.toaster.type, vm.toaster.title, vm.toaster.text);
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: tour.js
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.elements')
+        .controller('TourCtrl', TourCtrl);
+
+    TourCtrl.$inject = ['$scope'];
+    function TourCtrl($scope) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          // BootstrapTour is not compatible with z-index based layout
+          // so adding position:static for this case makes the browser
+          // to ignore the property
+          var section = angular.element('.wrapper > section');
+          section.css({'position': 'static'});
+          // finally restore on destroy and reuse the value declared in stylesheet
+          $scope.$on('$destroy', function(){
+            section.css({'position': ''});
+          });
+        }
+    }
+})();
+
+(function () {
+    'use strict';
+
+// NOTICE: This file was forked from the angular-material project (github.com/angular/material)
+// MIT Licensed - Copyright (c) 2014-2015 Google, Inc. http://angularjs.org
+
+    angular.module('mgcrea.ngStrap.core', [])
+        .service('$bsCompiler', bsCompilerService);
+
+    function bsCompilerService ($q, $http, $injector, $compile, $controller, $templateCache) {
+
+        /*
+         * @ngdoc service
+         * @name $bsCompiler
+         * @module material.core
+         * @description
+         * The $bsCompiler service is an abstraction of angular's compiler, that allows the developer
+         * to easily compile an element with a templateUrl, controller, and locals.
+         *
+         * @usage
+         * <hljs lang="js">
+         * $bsCompiler.compile({
+         *   templateUrl: 'modal.html',
+         *   controller: 'ModalCtrl',
+         *   locals: {
+         *     modal: myModalInstance;
+         *   }
+         * }).then(function(compileData) {
+         *   compileData.element; // modal.html's template in an element
+         *   compileData.link(myScope); //attach controller & scope to element
+         * });
+         * </hljs>
+         */
+
+        /*
+         * @ngdoc method
+         * @name $bsCompiler#compile
+         * @description A helper to compile an HTML template/templateUrl with a given controller,
+         * locals, and scope.
+         * @param {object} options An options object, with the following properties:
+         *
+         *    - `controller` - `{(string=|function()=}` Controller fn that should be associated with
+         *      newly created scope or the name of a registered controller if passed as a string.
+         *    - `controllerAs` - `{string=}` A controller alias name. If present the controller will be
+         *      published to scope under the `controllerAs` name.
+         *    - `template` - `{string=}` An html template as a string.
+         *    - `templateUrl` - `{string=}` A path to an html template.
+         *    - `transformTemplate` - `{function(template)=}` A function which transforms the template after
+         *      it is loaded. It will be given the template string as a parameter, and should
+         *      return a a new string representing the transformed template.
+         *    - `resolve` - `{Object.<string, function>=}` - An optional map of dependencies which should
+         *      be injected into the controller. If any of these dependencies are promises, the compiler
+         *      will wait for them all to be resolved, or if one is rejected before the controller is
+         *      instantiated `compile()` will fail..
+         *      * `key` - `{string}`: a name of a dependency to be injected into the controller.
+         *      * `factory` - `{string|function}`: If `string` then it is an alias for a service.
+         *        Otherwise if function, then it is injected and the return value is treated as the
+         *        dependency. If the result is a promise, it is resolved before its value is
+         *        injected into the controller.
+         *
+         * @returns {object=} promise A promise, which will be resolved with a `compileData` object.
+         * `compileData` has the following properties:
+         *
+         *   - `element` - `{element}`: an uncompiled element matching the provided template.
+         *   - `link` - `{function(scope)}`: A link function, which, when called, will compile
+         *     the element and instantiate the provided controller (if given).
+         *   - `locals` - `{object}`: The locals which will be passed into the controller once `link` is
+         *     called. If `bindToController` is true, they will be coppied to the ctrl instead
+         *   - `bindToController` - `bool`: bind the locals to the controller, instead of passing them in.
+         */
+        this.compile = function (options) {
+
+            if (options.template && /\.html$/.test(options.template)) {
+                console.warn('Deprecated use of `template` option to pass a file. Please use the `templateUrl` option instead.');
+                options.templateUrl = options.template;
+                options.template = '';
+            }
+
+            var templateUrl = options.templateUrl;
+            var template = options.template || '';
+            var controller = options.controller;
+            var controllerAs = options.controllerAs;
+            var resolve = angular.copy(options.resolve || {});
+            var locals = angular.copy(options.locals || {});
+            var transformTemplate = options.transformTemplate || angular.identity;
+            var bindToController = options.bindToController;
+
+            // Take resolve values and invoke them.
+            // Resolves can either be a string (value: 'MyRegisteredAngularConst'),
+            // or an invokable 'factory' of sorts: (value: function ValueGetter($dependency) {})
+            angular.forEach(resolve, function (value, key) {
+                if (angular.isString(value)) {
+                    resolve[key] = $injector.get(value);
+                } else {
+                    resolve[key] = $injector.invoke(value);
+                }
+            });
+            // Add the locals, which are just straight values to inject
+            // eg locals: { three: 3 }, will inject three into the controller
+            angular.extend(resolve, locals);
+
+            if (template) {
+                resolve.$template = $q.when(template);
+            } else if (templateUrl) {
+                resolve.$template = fetchTemplate(templateUrl);
+            } else {
+                throw new Error('Missing `template` / `templateUrl` option.');
+            }
+
+            if (options.titleTemplate) {
+                resolve.$template = $q.all([resolve.$template, fetchTemplate(options.titleTemplate)])
+                    .then(function (templates) {
+                        var templateEl = angular.element(templates[0]);
+                        findElement('[ng-bind="title"]', templateEl[0])
+                            .removeAttr('ng-bind')
+                            .html(templates[1]);
+                        return templateEl[0].outerHTML;
+                    });
+            }
+
+            if (options.contentTemplate) {
+                // TODO(mgcrea): deprecate?
+                resolve.$template = $q.all([resolve.$template, fetchTemplate(options.contentTemplate)])
+                    .then(function (templates) {
+                        var templateEl = angular.element(templates[0]);
+                        var contentEl = findElement('[ng-bind="content"]', templateEl[0])
+                            .removeAttr('ng-bind')
+                            .html(templates[1]);
+                        // Drop the default footer as you probably don't want it if you use a custom contentTemplate
+                        if (!options.templateUrl) contentEl.next().remove();
+                        return templateEl[0].outerHTML;
+                    });
+            }
+
+            // Wait for all the resolves to finish if they are promises
+            return $q.all(resolve).then(function (locals) {
+
+                var template = transformTemplate(locals.$template);
+                if (options.html) {
+                    template = template.replace(/ng-bind="/ig, 'ng-bind-html="');
+                }
+                // var element = options.element || angular.element('<div>').html(template.trim()).contents();
+                var element = angular.element('<div>').html(template.trim()).contents();
+                var linkFn = $compile(element);
+
+                // Return a linking function that can be used later when the element is ready
+                return {
+                    locals: locals,
+                    element: element,
+                    link: function link (scope) {
+                        locals.$scope = scope;
+
+                        // Instantiate controller if it exists, because we have scope
+                        if (controller) {
+                            var invokeCtrl = $controller(controller, locals, true);
+                            if (bindToController) {
+                                angular.extend(invokeCtrl.instance, locals);
+                            }
+                            // Support angular@~1.2 invokeCtrl
+                            var ctrl = angular.isObject(invokeCtrl) ? invokeCtrl : invokeCtrl();
+                            // See angular-route source for this logic
+                            element.data('$ngControllerController', ctrl);
+                            element.children().data('$ngControllerController', ctrl);
+
+                            if (controllerAs) {
+                                scope[controllerAs] = ctrl;
+                            }
+                        }
+
+                        return linkFn.apply(null, arguments);
+                    }
+                };
+            });
+
+        };
+
+        function findElement (query, element) {
+            return angular.element((element || document).querySelectorAll(query));
+        }
+
+        var fetchPromises = {};
+        function fetchTemplate (template) {
+            if (fetchPromises[template]) return fetchPromises[template];
+            return (fetchPromises[template] = $http.get(template, {cache: $templateCache})
+                .then(function (res) {
+                    return res.data;
+                }));
+        }
+
+    }
+    bsCompilerService.$inject = ["$q", "$http", "$injector", "$compile", "$controller", "$templateCache"];
+
+})();
+(function () {
+    'use strict';
+
+    angular.module('mgcrea.ngStrap.helpers.dateFormatter', [])
+
+        .service('$dateFormatter', ["$locale", "dateFilter", function ($locale, dateFilter) {
+
+            // The unused `lang` arguments are on purpose. The default implementation does not
+            // use them and it always uses the locale loaded into the `$locale` service.
+            // Custom implementations might use it, thus allowing different directives to
+            // have different languages.
+
+            this.getDefaultLocale = function () {
+                return $locale.id;
+            };
+
+            // Format is either a data format name, e.g. "shortTime" or "fullDate", or a date format
+            // Return either the corresponding date format or the given date format.
+            this.getDatetimeFormat = function (format, lang) {
+                return $locale.DATETIME_FORMATS[format] || format;
+            };
+
+            this.weekdaysShort = function (lang) {
+                return $locale.DATETIME_FORMATS.SHORTDAY;
+            };
+
+            function splitTimeFormat (format) {
+                return /(h+)([:\.])?(m+)([:\.])?(s*)[ ]?(a?)/i.exec(format).slice(1);
+            }
+
+            // h:mm a => h
+            this.hoursFormat = function (timeFormat) {
+                return splitTimeFormat(timeFormat)[0];
+            };
+
+            // h:mm a => mm
+            this.minutesFormat = function (timeFormat) {
+                return splitTimeFormat(timeFormat)[2];
+            };
+
+            // h:mm:ss a => ss
+            this.secondsFormat = function (timeFormat) {
+                return splitTimeFormat(timeFormat)[4];
+            };
+
+            // h:mm a => :
+            this.timeSeparator = function (timeFormat) {
+                return splitTimeFormat(timeFormat)[1];
+            };
+
+            // h:mm:ss a => true, h:mm a => false
+            this.showSeconds = function (timeFormat) {
+                return !!splitTimeFormat(timeFormat)[4];
+            };
+
+            // h:mm a => true, H.mm => false
+            this.showAM = function (timeFormat) {
+                return !!splitTimeFormat(timeFormat)[5];
+            };
+
+            this.formatDate = function (date, format, lang, timezone) {
+                return dateFilter(date, format, timezone);
+            };
+
+        }]);
+
+})();
+(function() {
+    'use strict';
+
+    angular.module('mgcrea.ngStrap.helpers.dateParser', [])
+
+        .provider('$dateParser', ["$localeProvider", function ($localeProvider) {
+
+            // define a custom ParseDate object to use instead of native Date
+            // to avoid date values wrapping when setting date component values
+            function ParseDate () {
+                this.year = 1970;
+                this.month = 0;
+                this.day = 1;
+                this.hours = 0;
+                this.minutes = 0;
+                this.seconds = 0;
+                this.milliseconds = 0;
+            }
+
+            ParseDate.prototype.setMilliseconds = function (value) { this.milliseconds = value; };
+            ParseDate.prototype.setSeconds = function (value) { this.seconds = value; };
+            ParseDate.prototype.setMinutes = function (value) { this.minutes = value; };
+            ParseDate.prototype.setHours = function (value) { this.hours = value; };
+            ParseDate.prototype.getHours = function () { return this.hours; };
+            ParseDate.prototype.setDate = function (value) { this.day = value; };
+            ParseDate.prototype.setMonth = function (value) { this.month = value; };
+            ParseDate.prototype.setFullYear = function (value) { this.year = value; };
+            ParseDate.prototype.fromDate = function (value) {
+                this.year = value.getFullYear();
+                this.month = value.getMonth();
+                this.day = value.getDate();
+                this.hours = value.getHours();
+                this.minutes = value.getMinutes();
+                this.seconds = value.getSeconds();
+                this.milliseconds = value.getMilliseconds();
+                return this;
+            };
+
+            ParseDate.prototype.toDate = function () {
+                return new Date(this.year, this.month, this.day, this.hours, this.minutes, this.seconds, this.milliseconds);
+            };
+
+            var proto = ParseDate.prototype;
+
+            function noop () {
+            }
+
+            function isNumeric (n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+
+            function indexOfCaseInsensitive (array, value) {
+                var len = array.length;
+                var str = value.toString().toLowerCase();
+                for (var i = 0; i < len; i++) {
+                    if (array[i].toLowerCase() === str) { return i; }
+                }
+                return -1; // Return -1 per the "Array.indexOf()" method.
+            }
+
+            var defaults = this.defaults = {
+                format: 'shortDate',
+                strict: false
+            };
+
+            this.$get = ["$locale", "dateFilter", function ($locale, dateFilter) {
+
+                var DateParserFactory = function (config) {
+
+                    var options = angular.extend({}, defaults, config);
+
+                    var $dateParser = {};
+
+                    /* eslint-disable key-spacing, quote-props */
+                    var regExpMap = {
+                        'sss'   : '[0-9]{3}',
+                        'ss'    : '[0-5][0-9]',
+                        's'     : options.strict ? '[1-5]?[0-9]' : '[0-9]|[0-5][0-9]',
+                        'mm'    : '[0-5][0-9]',
+                        'm'     : options.strict ? '[1-5]?[0-9]' : '[0-9]|[0-5][0-9]',
+                        'HH'    : '[01][0-9]|2[0-3]',
+                        'H'     : options.strict ? '1?[0-9]|2[0-3]' : '[01]?[0-9]|2[0-3]',
+                        'hh'    : '[0][1-9]|[1][012]',
+                        'h'     : options.strict ? '[1-9]|1[012]' : '0?[1-9]|1[012]',
+                        'a'     : 'AM|PM',
+                        'EEEE'  : $locale.DATETIME_FORMATS.DAY.join('|'),
+                        'EEE'   : $locale.DATETIME_FORMATS.SHORTDAY.join('|'),
+                        'dd'    : '0[1-9]|[12][0-9]|3[01]',
+                        'd'     : options.strict ? '[1-9]|[1-2][0-9]|3[01]' : '0?[1-9]|[1-2][0-9]|3[01]',
+                        'MMMM'  : $locale.DATETIME_FORMATS.MONTH.join('|'),
+                        'MMM'   : $locale.DATETIME_FORMATS.SHORTMONTH.join('|'),
+                        'MM'    : '0[1-9]|1[012]',
+                        'M'     : options.strict ? '[1-9]|1[012]' : '0?[1-9]|1[012]',
+                        'yyyy'  : '[1]{1}[0-9]{3}|[2]{1}[0-9]{3}',
+                        'yy'    : '[0-9]{2}',
+                        'y'     : options.strict ? '-?(0|[1-9][0-9]{0,3})' : '-?0*[0-9]{1,4}'
+                    };
+
+                    var setFnMap = {
+                        'sss'   : proto.setMilliseconds,
+                        'ss'    : proto.setSeconds,
+                        's'     : proto.setSeconds,
+                        'mm'    : proto.setMinutes,
+                        'm'     : proto.setMinutes,
+                        'HH'    : proto.setHours,
+                        'H'     : proto.setHours,
+                        'hh'    : proto.setHours,
+                        'h'     : proto.setHours,
+                        'EEEE'  : noop,
+                        'EEE'   : noop,
+                        'dd'    : proto.setDate,
+                        'd'     : proto.setDate,
+                        'a'     : function (value) { var hours = this.getHours() % 12; return this.setHours(value.match(/pm/i) ? hours + 12 : hours); },
+                        'MMMM'  : function (value) { return this.setMonth(indexOfCaseInsensitive($locale.DATETIME_FORMATS.MONTH, value)); },
+                        'MMM'   : function (value) { return this.setMonth(indexOfCaseInsensitive($locale.DATETIME_FORMATS.SHORTMONTH, value)); },
+                        'MM'    : function (value) { return this.setMonth(1 * value - 1); },
+                        'M'     : function (value) { return this.setMonth(1 * value - 1); },
+                        'yyyy'  : proto.setFullYear,
+                        'yy'    : function (value) { return this.setFullYear(2000 + 1 * value); },
+                        'y'     : function (value) { return (1 * value <= 50 && value.length === 2) ? this.setFullYear(2000 + 1 * value) : this.setFullYear(1 * value); }
+                    };
+                    /* eslint-enable key-spacing, quote-props */
+
+                    var regex;
+                    var setMap;
+
+                    $dateParser.init = function () {
+                        $dateParser.$format = $locale.DATETIME_FORMATS[options.format] || options.format;
+                        regex = regExpForFormat($dateParser.$format);
+                        setMap = setMapForFormat($dateParser.$format);
+                    };
+
+                    $dateParser.isValid = function (date) {
+                        if (angular.isDate(date)) return !isNaN(date.getTime());
+                        return regex.test(date);
+                    };
+
+                    $dateParser.parse = function (value, baseDate, format, timezone) {
+                        // check for date format special names
+                        if (format) format = $locale.DATETIME_FORMATS[format] || format;
+                        if (angular.isDate(value)) value = dateFilter(value, format || $dateParser.$format, timezone);
+                        var formatRegex = format ? regExpForFormat(format) : regex;
+                        var formatSetMap = format ? setMapForFormat(format) : setMap;
+                        var matches = formatRegex.exec(value);
+                        if (!matches) return false;
+                        // use custom ParseDate object to set parsed values
+                        var date = baseDate && !isNaN(baseDate.getTime()) ? new ParseDate().fromDate(baseDate) : new ParseDate().fromDate(new Date(1970, 0, 1, 0));
+                        for (var i = 0; i < matches.length - 1; i++) {
+                            if (formatSetMap[i]) formatSetMap[i].call(date, matches[i + 1]);
+                        }
+                        // convert back to native Date object
+                        var newDate = date.toDate();
+
+                        // check new native Date object for day values overflow
+                        if (parseInt(date.day, 10) !== newDate.getDate()) {
+                            return false;
+                        }
+
+                        return newDate;
+                    };
+
+                    $dateParser.getDateForAttribute = function (key, value) {
+                        var date;
+
+                        if (value === 'today') {
+                            var today = new Date();
+                            date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (key === 'maxDate' ? 1 : 0), 0, 0, 0, (key === 'minDate' ? 0 : -1));
+                        } else if (angular.isString(value) && value.match(/^".+"$/)) { // Support {{ dateObj }}
+                            date = new Date(value.substr(1, value.length - 2));
+                        } else if (isNumeric(value)) {
+                            date = new Date(parseInt(value, 10));
+                        } else if (angular.isString(value) && value.length === 0) { // Reset date
+                            date = key === 'minDate' ? -Infinity : +Infinity;
+                        } else {
+                            date = new Date(value);
+                        }
+
+                        return date;
+                    };
+
+                    $dateParser.getTimeForAttribute = function (key, value) {
+                        var time;
+
+                        if (value === 'now') {
+                            time = new Date().setFullYear(1970, 0, 1);
+                        } else if (angular.isString(value) && value.match(/^".+"$/)) {
+                            time = new Date(value.substr(1, value.length - 2)).setFullYear(1970, 0, 1);
+                        } else if (isNumeric(value)) {
+                            time = new Date(parseInt(value, 10)).setFullYear(1970, 0, 1);
+                        } else if (angular.isString(value) && value.length === 0) { // Reset time
+                            time = key === 'minTime' ? -Infinity : +Infinity;
+                        } else {
+                            time = $dateParser.parse(value, new Date(1970, 0, 1, 0));
+                        }
+
+                        return time;
+                    };
+
+                    /* Handle switch to/from daylight saving.
+                     * Hours may be non-zero on daylight saving cut-over:
+                     * > 12 when midnight changeover, but then cannot generate
+                     * midnight datetime, so jump to 1AM, otherwise reset.
+                     * @param  date  (Date) the date to check
+                     * @return  (Date) the corrected date
+                     *
+                     * __ copied from jquery ui datepicker __
+                     */
+                    $dateParser.daylightSavingAdjust = function (date) {
+                        if (!date) {
+                            return null;
+                        }
+                        date.setHours(date.getHours() > 12 ? date.getHours() + 2 : 0);
+                        return date;
+                    };
+
+                    /* Correct the date for timezone offset.
+                     * @param  date  (Date) the date to adjust
+                     * @param  timezone  (string) the timezone to adjust for
+                     * @param  undo  (boolean) to add or subtract timezone offset
+                     * @return  (Date) the corrected date
+                     */
+                    $dateParser.timezoneOffsetAdjust = function (date, timezone, undo) {
+                        if (!date) {
+                            return null;
+                        }
+                        // Right now, only 'UTC' is supported.
+                        if (timezone && timezone === 'UTC') {
+                            date = new Date(date.getTime());
+                            date.setMinutes(date.getMinutes() + (undo ? -1 : 1) * date.getTimezoneOffset());
+                        }
+                        return date;
+                    };
+
+                    // Private functions
+
+                    function regExpForFormat (format) {
+                        // `format` string can contain literal values.
+                        // These need to be escaped by surrounding with
+                        // single quotes (e.g. `"h 'in the morning'"`).
+                        // In order to output a single quote, escape it - i.e.,
+                        // two single quotes in a sequence (e.g. `"h 'o''clock'"`).
+
+                        var re = buildDateAbstractRegex(format);
+                        return buildDateParseRegex(re);
+                    }
+
+                    function buildDateAbstractRegex (format) {
+                        var escapedFormat = escapeReservedSymbols(format);
+                        var escapedLiteralFormat = escapedFormat.replace(/''/g, '\\\'');
+                        var literalRegex = /('(?:\\'|.)*?')/;
+                        var formatParts = escapedLiteralFormat.split(literalRegex);
+                        var dateElements = Object.keys(regExpMap);
+                        var dateRegexParts = [];
+
+                        angular.forEach(formatParts, function (part) {
+                            if (isFormatStringLiteral(part)) {
+                                part = trimLiteralEscapeChars(part);
+                            } else {
+                                // Abstract replaces to avoid collisions
+                                for (var i = 0; i < dateElements.length; i++) {
+                                    part = part.split(dateElements[i]).join('${' + i + '}');
+                                }
+                            }
+                            dateRegexParts.push(part);
+                        });
+
+                        return dateRegexParts.join('');
+                    }
+
+                    function escapeReservedSymbols (text) {
+                        return text.replace(/\\/g, '[\\\\]')
+                            .replace(/-/g, '[-]')
+                            .replace(/\./g, '[.]')
+                            .replace(/\*/g, '[*]')
+                            .replace(/\+/g, '[+]')
+                            .replace(/\?/g, '[?]')
+                            .replace(/\$/g, '[$]')
+                            .replace(/\^/g, '[^]')
+                            .replace(/\//g, '[/]')
+                            .replace(/\\s/g, '[\\s]');
+                    }
+
+                    function isFormatStringLiteral (text) {
+                        return /^'.*'$/.test(text);
+                    }
+
+                    function trimLiteralEscapeChars (text) {
+                        return text.replace(/^'(.*)'$/, '$1');
+                    }
+
+                    function buildDateParseRegex (abstractRegex) {
+                        var dateElements = Object.keys(regExpMap);
+                        var re = abstractRegex;
+
+                        // Replace abstracted values
+                        for (var i = 0; i < dateElements.length; i++) {
+                            re = re.split('${' + i + '}').join('(' + regExpMap[dateElements[i]] + ')');
+                        }
+
+                        return new RegExp('^' + re + '$', ['i']);
+                    }
+
+                    function setMapForFormat (format) {
+                        var re = buildDateAbstractRegex(format);
+                        return buildDateParseValuesMap(re);
+                    }
+
+                    function buildDateParseValuesMap (abstractRegex) {
+                        var dateElements = Object.keys(regExpMap);
+                        var valuesRegex = new RegExp('\\${(\\d+)}', 'g');
+                        var valuesMatch;
+                        var keyIndex;
+                        var valueKey;
+                        var valueFunction;
+                        var valuesFunctionMap = [];
+
+                        /* eslint-disable no-cond-assign */
+                        while ((valuesMatch = valuesRegex.exec(abstractRegex)) !== null) {
+                            keyIndex = valuesMatch[1];
+                            valueKey = dateElements[keyIndex];
+                            valueFunction = setFnMap[valueKey];
+
+                            valuesFunctionMap.push(valueFunction);
+                        }
+
+                        return valuesFunctionMap;
+                    }
+
+                    $dateParser.init();
+                    return $dateParser;
+
+                };
+
+                return DateParserFactory;
+
+            }];
+
+        }]);
+
+})();
+(function () {
+    'use strict';
+
+    angular
+        .module('mgcrea.ngStrap.datepicker', [
+        'mgcrea.ngStrap.helpers.dateParser',
+        'mgcrea.ngStrap.helpers.dateFormatter',
+        'mgcrea.ngStrap.tooltip'])
+
+        .provider('$datepicker', function () {
+
+            var defaults = this.defaults = {
+                animation: 'am-fade',
+                // Uncommenting the following line will break backwards compatability
+                // prefixEvent: 'datepicker',
+                prefixClass: 'datepicker',
+                placement: 'bottom-left',
+                templateUrl: 'app/template/datepicker.tpl.html',
+                trigger: 'focus',
+                container: false,
+                keyboard: true,
+                html: false,
+                delay: 0,
+                // lang: $locale.id,
+                useNative: false,
+                dateType: 'date',
+                dateFormat: 'shortDate',
+                timezone: null,
+                modelDateFormat: null,
+                dayFormat: 'dd',
+                monthFormat: 'MMM',
+                yearFormat: 'yyyy',
+                monthTitleFormat: 'MMMM yyyy',
+                yearTitleFormat: 'yyyy',
+                strictFormat: false,
+                autoclose: false,
+                minDate: -Infinity,
+                maxDate: +Infinity,
+                startView: 0,
+                minView: 0,
+                startWeek: 0,
+                daysOfWeekDisabled: '',
+                iconLeft: 'glyphicon glyphicon-chevron-left',
+                iconRight: 'glyphicon glyphicon-chevron-right'
+            };
+
+            this.$get = ["$window", "$document", "$rootScope", "$sce", "$dateFormatter", "datepickerViews", "$tooltip", "$timeout", function ($window, $document, $rootScope, $sce, $dateFormatter, datepickerViews, $tooltip, $timeout) {
+
+                var isNative = /(ip[ao]d|iphone|android)/ig.test($window.navigator.userAgent);
+                var isTouch = ('createTouch' in $window.document) && isNative;
+                if (!defaults.lang) defaults.lang = $dateFormatter.getDefaultLocale();
+
+                function DatepickerFactory (element, controller, config) {
+
+                    var $datepicker = $tooltip(element, angular.extend({}, defaults, config));
+                    var parentScope = config.scope;
+                    var options = $datepicker.$options;
+                    var scope = $datepicker.$scope;
+                    if (options.startView) options.startView -= options.minView;
+
+                    // View vars
+
+                    var pickerViews = datepickerViews($datepicker);
+                    $datepicker.$views = pickerViews.views;
+                    var viewDate = pickerViews.viewDate;
+                    scope.$mode = options.startView;
+                    scope.$iconLeft = options.iconLeft;
+                    scope.$iconRight = options.iconRight;
+                    var $picker = $datepicker.$views[scope.$mode];
+
+                    // Scope methods
+
+                    scope.$select = function (date) {
+                        $datepicker.select(date);
+                    };
+                    scope.$selectPane = function (value) {
+                        $datepicker.$selectPane(value);
+                    };
+                    scope.$toggleMode = function () {
+                        $datepicker.setMode((scope.$mode + 1) % $datepicker.$views.length);
+                    };
+
+                    // Public methods
+
+                    $datepicker.update = function (date) {
+                        // console.warn('$datepicker.update() newValue=%o', date);
+                        if (angular.isDate(date) && !isNaN(date.getTime())) {
+                            $datepicker.$date = date;
+                            $picker.update.call($picker, date);
+                        }
+                        // Build only if pristine
+                        $datepicker.$build(true);
+                    };
+
+                    $datepicker.updateDisabledDates = function (dateRanges) {
+                        options.disabledDateRanges = dateRanges;
+                        for (var i = 0, l = scope.rows.length; i < l; i++) {
+                            angular.forEach(scope.rows[i], $datepicker.$setDisabledEl);
+                        }
+                    };
+
+                    $datepicker.select = function (date, keep) {
+                        // console.warn('$datepicker.select', date, scope.$mode);
+                        if (!angular.isDate(controller.$dateValue)) controller.$dateValue = new Date(date);
+                        if (!scope.$mode || keep) {
+                            controller.$setViewValue(angular.copy(date));
+                            controller.$render();
+                            if (options.autoclose && !keep) {
+                                $timeout(function () { $datepicker.hide(true); });
+                            }
+                        } else {
+                            angular.extend(viewDate, {year: date.getFullYear(), month: date.getMonth(), date: date.getDate()});
+                            $datepicker.setMode(scope.$mode - 1);
+                            $datepicker.$build();
+                        }
+                    };
+
+                    $datepicker.setMode = function (mode) {
+                        // console.warn('$datepicker.setMode', mode);
+                        scope.$mode = mode;
+                        $picker = $datepicker.$views[scope.$mode];
+                        $datepicker.$build();
+                    };
+
+                    // Protected methods
+
+                    $datepicker.$build = function (pristine) {
+                        // console.warn('$datepicker.$build() viewDate=%o', viewDate);
+                        if (pristine === true && $picker.built) return;
+                        if (pristine === false && !$picker.built) return;
+                        $picker.build.call($picker);
+                    };
+
+                    $datepicker.$updateSelected = function () {
+                        for (var i = 0, l = scope.rows.length; i < l; i++) {
+                            angular.forEach(scope.rows[i], updateSelected);
+                        }
+                    };
+
+                    $datepicker.$isSelected = function (date) {
+                        return $picker.isSelected(date);
+                    };
+
+                    $datepicker.$setDisabledEl = function (el) {
+                        el.disabled = $picker.isDisabled(el.date);
+                    };
+
+                    $datepicker.$selectPane = function (value) {
+                        var steps = $picker.steps;
+                        // set targetDate to first day of month to avoid problems with
+                        // date values rollover. This assumes the viewDate does not
+                        // depend on the day of the month
+                        var targetDate = new Date(Date.UTC(viewDate.year + ((steps.year || 0) * value), viewDate.month + ((steps.month || 0) * value), 1));
+                        angular.extend(viewDate, {year: targetDate.getUTCFullYear(), month: targetDate.getUTCMonth(), date: targetDate.getUTCDate()});
+                        $datepicker.$build();
+                    };
+
+                    $datepicker.$onMouseDown = function (evt) {
+                        // Prevent blur on mousedown on .dropdown-menu
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        // Emulate click for mobile devices
+                        if (isTouch) {
+                            var targetEl = angular.element(evt.target);
+                            if (targetEl[0].nodeName.toLowerCase() !== 'button') {
+                                targetEl = targetEl.parent();
+                            }
+                            targetEl.triggerHandler('click');
+                        }
+                    };
+
+                    $datepicker.$onKeyDown = function (evt) {
+                        if (!/(38|37|39|40|13)/.test(evt.keyCode) || evt.shiftKey || evt.altKey) return;
+                        evt.preventDefault();
+                        evt.stopPropagation();
+
+                        if (evt.keyCode === 13) {
+                            if (!scope.$mode) {
+                                $datepicker.hide(true);
+                            } else {
+                                scope.$apply(function () { $datepicker.setMode(scope.$mode - 1); });
+                            }
+                            return;
+                        }
+
+                        // Navigate with keyboard
+                        $picker.onKeyDown(evt);
+                        parentScope.$digest();
+                    };
+
+                    // Private
+
+                    function updateSelected (el) {
+                        el.selected = $datepicker.$isSelected(el.date);
+                    }
+
+                    function focusElement () {
+                        element[0].focus();
+                    }
+
+                    // Overrides
+
+                    var _init = $datepicker.init;
+                    $datepicker.init = function () {
+                        if (isNative && options.useNative) {
+                            element.prop('type', 'date');
+                            element.css('-webkit-appearance', 'textfield');
+                            return;
+                        } else if (isTouch) {
+                            element.prop('type', 'text');
+                            element.attr('readonly', 'true');
+                            element.on('click', focusElement);
+                        }
+                        _init();
+                    };
+
+                    var _destroy = $datepicker.destroy;
+                    $datepicker.destroy = function () {
+                        if (isNative && options.useNative) {
+                            element.off('click', focusElement);
+                        }
+                        _destroy();
+                    };
+
+                    var _show = $datepicker.show;
+                    $datepicker.show = function () {
+                        if ((!isTouch && element.attr('readonly')) || element.attr('disabled')) return;
+                        _show();
+                        // use timeout to hookup the events to prevent
+                        // event bubbling from being processed imediately.
+                        $timeout(function () {
+                            // if $datepicker is no longer showing, don't setup events
+                            if (!$datepicker.$isShown) return;
+                            $datepicker.$element.on(isTouch ? 'touchstart' : 'mousedown', $datepicker.$onMouseDown);
+                            if (options.keyboard) {
+                                element.on('keydown', $datepicker.$onKeyDown);
+                            }
+                        }, 0, false);
+                    };
+
+                    var _hide = $datepicker.hide;
+                    $datepicker.hide = function (blur) {
+                        if (!$datepicker.$isShown) return;
+                        $datepicker.$element.off(isTouch ? 'touchstart' : 'mousedown', $datepicker.$onMouseDown);
+                        if (options.keyboard) {
+                            element.off('keydown', $datepicker.$onKeyDown);
+                        }
+                        _hide(blur);
+                    };
+
+                    return $datepicker;
+
+                }
+
+                DatepickerFactory.defaults = defaults;
+                return DatepickerFactory;
+
+            }];
+
+        })
+
+        .directive('bsDatepicker', ["$window", "$parse", "$q", "$dateFormatter", "$dateParser", "$datepicker", function ($window, $parse, $q, $dateFormatter, $dateParser, $datepicker) {
+
+            // var defaults = $datepicker.defaults;
+            var isNative = /(ip[ao]d|iphone|android)/ig.test($window.navigator.userAgent);
+
+            return {
+                restrict: 'EAC',
+                require: 'ngModel',
+                link: function postLink (scope, element, attr, controller) {
+
+                    // Directive options
+                    var options = {scope: scope};
+                    angular.forEach(['template', 'templateUrl', 'controller', 'controllerAs', 'placement', 'container', 'delay', 'trigger', 'html', 'animation', 'autoclose', 'dateType', 'dateFormat', 'timezone', 'modelDateFormat', 'dayFormat', 'strictFormat', 'startWeek', 'startDate', 'useNative', 'lang', 'startView', 'minView', 'iconLeft', 'iconRight', 'daysOfWeekDisabled', 'id', 'prefixClass', 'prefixEvent'], function (key) {
+                        if (angular.isDefined(attr[key])) options[key] = attr[key];
+                    });
+
+                    // use string regex match boolean attr falsy values, leave truthy values be
+                    var falseValueRegExp = /^(false|0|)$/i;
+                    angular.forEach(['html', 'container', 'autoclose', 'useNative'], function (key) {
+                        if (angular.isDefined(attr[key]) && falseValueRegExp.test(attr[key])) {
+                            options[key] = false;
+                        }
+                    });
+
+                    // bind functions from the attrs to the show and hide events
+                    angular.forEach(['onBeforeShow', 'onShow', 'onBeforeHide', 'onHide'], function (key) {
+                        var bsKey = 'bs' + key.charAt(0).toUpperCase() + key.slice(1);
+                        if (angular.isDefined(attr[bsKey])) {
+                            options[key] = scope.$eval(attr[bsKey]);
+                        }
+                    });
+
+                    // Initialize datepicker
+                    var datepicker = $datepicker(element, controller, options);
+                    options = datepicker.$options;
+                    // Set expected iOS format
+                    if (isNative && options.useNative) options.dateFormat = 'yyyy-MM-dd';
+
+                    var lang = options.lang;
+
+                    var formatDate = function (date, format) {
+                        return $dateFormatter.formatDate(date, format, lang);
+                    };
+
+                    var dateParser = $dateParser({format: options.dateFormat, lang: lang, strict: options.strictFormat});
+
+                    // Visibility binding support
+                    if (attr.bsShow) {
+                        scope.$watch(attr.bsShow, function (newValue, oldValue) {
+                            if (!datepicker || !angular.isDefined(newValue)) return;
+                            if (angular.isString(newValue)) newValue = !!newValue.match(/true|,?(datepicker),?/i);
+                            if (newValue === true) {
+                                datepicker.show();
+                            } else {
+                                datepicker.hide();
+                            }
+                        });
+                    }
+
+                    // Observe attributes for changes
+                    angular.forEach(['minDate', 'maxDate'], function (key) {
+                        // console.warn('attr.$observe(%s)', key, attr[key]);
+                        if (angular.isDefined(attr[key])) {
+                            attr.$observe(key, function (newValue) {
+                                // console.warn('attr.$observe(%s)=%o', key, newValue);
+                                datepicker.$options[key] = dateParser.getDateForAttribute(key, newValue);
+                                // Build only if dirty
+                                if (!isNaN(datepicker.$options[key])) datepicker.$build(false);
+                                validateAgainstMinMaxDate(controller.$dateValue);
+                            });
+                        }
+                    });
+
+                    // Observe date format
+                    if (angular.isDefined(attr.dateFormat)) {
+                        attr.$observe('dateFormat', function (newValue) {
+                            datepicker.$options.dateFormat = newValue;
+                        });
+                    }
+
+                    // Watch model for changes
+                    scope.$watch(attr.ngModel, function (newValue, oldValue) {
+                        datepicker.update(controller.$dateValue);
+                    }, true);
+
+                    // Normalize undefined/null/empty array,
+                    // so that we don't treat changing from undefined->null as a change.
+                    function normalizeDateRanges (ranges) {
+                        if (!ranges || !ranges.length) return null;
+                        return ranges;
+                    }
+
+                    if (angular.isDefined(attr.disabledDates)) {
+                        scope.$watch(attr.disabledDates, function (disabledRanges, previousValue) {
+                            disabledRanges = normalizeDateRanges(disabledRanges);
+                            previousValue = normalizeDateRanges(previousValue);
+
+                            if (disabledRanges) {
+                                datepicker.updateDisabledDates(disabledRanges);
+                            }
+                        });
+                    }
+
+                    function validateAgainstMinMaxDate (parsedDate) {
+                        if (!angular.isDate(parsedDate)) return;
+                        var isMinValid = isNaN(datepicker.$options.minDate) || parsedDate.getTime() >= datepicker.$options.minDate;
+                        var isMaxValid = isNaN(datepicker.$options.maxDate) || parsedDate.getTime() <= datepicker.$options.maxDate;
+                        var isValid = isMinValid && isMaxValid;
+                        controller.$setValidity('date', isValid);
+                        controller.$setValidity('min', isMinValid);
+                        controller.$setValidity('max', isMaxValid);
+                        // Only update the model when we have a valid date
+                        if (isValid) controller.$dateValue = parsedDate;
+                    }
+
+                    // viewValue -> $parsers -> modelValue
+                    controller.$parsers.unshift(function (viewValue) {
+                        // console.warn('$parser("%s"): viewValue=%o', element.attr('ng-model'), viewValue);
+                        var date;
+                        // Null values should correctly reset the model value & validity
+                        if (!viewValue) {
+                            controller.$setValidity('date', true);
+                            // BREAKING CHANGE:
+                            // return null (not undefined) when input value is empty, so angularjs 1.3
+                            // ngModelController can go ahead and run validators, like ngRequired
+                            return null;
+                        }
+                        var parsedDate = dateParser.parse(viewValue, controller.$dateValue);
+                        if (!parsedDate || isNaN(parsedDate.getTime())) {
+                            controller.$setValidity('date', false);
+                            // return undefined, causes ngModelController to
+                            // invalidate model value
+                            return;
+                        }
+                        validateAgainstMinMaxDate(parsedDate);
+
+                        if (options.dateType === 'string') {
+                            date = dateParser.timezoneOffsetAdjust(parsedDate, options.timezone, true);
+                            return formatDate(date, options.modelDateFormat || options.dateFormat);
+                        }
+                        date = dateParser.timezoneOffsetAdjust(controller.$dateValue, options.timezone, true);
+                        if (options.dateType === 'number') {
+                            return date.getTime();
+                        } else if (options.dateType === 'unix') {
+                            return date.getTime() / 1000;
+                        } else if (options.dateType === 'iso') {
+                            return date.toISOString();
+                        }
+                        return new Date(date);
+                    });
+
+                    // modelValue -> $formatters -> viewValue
+                    controller.$formatters.push(function (modelValue) {
+                        // console.warn('$formatter("%s"): modelValue=%o (%o)', element.attr('ng-model'), modelValue, typeof modelValue);
+                        var date;
+                        if (angular.isUndefined(modelValue) || modelValue === null) {
+                            date = NaN;
+                        } else if (angular.isDate(modelValue)) {
+                            date = modelValue;
+                        } else if (options.dateType === 'string') {
+                            date = dateParser.parse(modelValue, null, options.modelDateFormat);
+                        } else if (options.dateType === 'unix') {
+                            date = new Date(modelValue * 1000);
+                        } else {
+                            date = new Date(modelValue);
+                        }
+                        // Setup default value?
+                        // if (isNaN(date.getTime())) {
+                        //   var today = new Date();
+                        //   date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
+                        // }
+                        controller.$dateValue = dateParser.timezoneOffsetAdjust(date, options.timezone);
+                        return getDateFormattedString();
+                    });
+
+                    // viewValue -> element
+                    controller.$render = function () {
+                        // console.warn('$render("%s"): viewValue=%o', element.attr('ng-model'), controller.$viewValue);
+                        element.val(getDateFormattedString());
+                    };
+
+                    function getDateFormattedString () {
+                        return !controller.$dateValue || isNaN(controller.$dateValue.getTime()) ? '' : formatDate(controller.$dateValue, options.dateFormat);
+                    }
+
+                    // Garbage collection
+                    scope.$on('$destroy', function () {
+                        if (datepicker) datepicker.destroy();
+                        options = null;
+                        datepicker = null;
+                    });
+
+                }
+            };
+
+        }])
+
+        .provider('datepickerViews', function () {
+
+            // var defaults = this.defaults = {
+            //   dayFormat: 'dd',
+            //   daySplit: 7
+            // };
+
+            // Split array into smaller arrays
+            function split (arr, size) {
+                var arrays = [];
+                while (arr.length > 0) {
+                    arrays.push(arr.splice(0, size));
+                }
+                return arrays;
+            }
+
+            // Modulus operator
+            function mod (n, m) {
+                return ((n % m) + m) % m;
+            }
+
+            this.$get = ["$dateFormatter", "$dateParser", "$sce", function ($dateFormatter, $dateParser, $sce) {
+
+                return function (picker) {
+
+                    var scope = picker.$scope;
+                    var options = picker.$options;
+
+                    var lang = options.lang;
+                    var formatDate = function (date, format) {
+                        return $dateFormatter.formatDate(date, format, lang);
+                    };
+                    var dateParser = $dateParser({format: options.dateFormat, lang: lang, strict: options.strictFormat});
+
+                    var weekDaysMin = $dateFormatter.weekdaysShort(lang);
+                    var weekDaysLabels = weekDaysMin.slice(options.startWeek).concat(weekDaysMin.slice(0, options.startWeek));
+                    var weekDaysLabelsHtml = $sce.trustAsHtml('<th class="dow text-center">' + weekDaysLabels.join('</th><th class="dow text-center">') + '</th>');
+
+                    var startDate = picker.$date || (options.startDate ? dateParser.getDateForAttribute('startDate', options.startDate) : new Date());
+                    var viewDate = {year: startDate.getFullYear(), month: startDate.getMonth(), date: startDate.getDate()};
+
+                    var views = [{
+                        format: options.dayFormat,
+                        split: 7,
+                        steps: {month: 1},
+                        update: function (date, force) {
+                            if (!this.built || force || date.getFullYear() !== viewDate.year || date.getMonth() !== viewDate.month) {
+                                angular.extend(viewDate, {year: picker.$date.getFullYear(), month: picker.$date.getMonth(), date: picker.$date.getDate()});
+                                picker.$build();
+                            } else if (date.getDate() !== viewDate.date || date.getDate() === 1) {
+                                // chaging picker current month will cause viewDate.date to be set to first day of the month,
+                                // in $datepicker.$selectPane, so picker would not update selected day display if
+                                // user picks first day of the new month.
+                                // As a workaround, we are always forcing update when picked date is first day of month.
+                                viewDate.date = picker.$date.getDate();
+                                picker.$updateSelected();
+                            }
+                        },
+                        build: function () {
+                            var firstDayOfMonth = new Date(viewDate.year, viewDate.month, 1);
+                            var firstDayOfMonthOffset = firstDayOfMonth.getTimezoneOffset();
+                            var firstDate = new Date(+firstDayOfMonth - mod(firstDayOfMonth.getDay() - options.startWeek, 7) * 864e5);
+                            var firstDateOffset = firstDate.getTimezoneOffset();
+                            var today = dateParser.timezoneOffsetAdjust(new Date(), options.timezone).toDateString();
+                            // Handle daylight time switch
+                            if (firstDateOffset !== firstDayOfMonthOffset) firstDate = new Date(+firstDate + (firstDateOffset - firstDayOfMonthOffset) * 60e3);
+                            var days = [];
+                            var day;
+                            for (var i = 0; i < 42; i++) { // < 7 * 6
+                                day = dateParser.daylightSavingAdjust(new Date(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate() + i));
+                                days.push({date: day, isToday: day.toDateString() === today, label: formatDate(day, this.format), selected: picker.$date && this.isSelected(day), muted: day.getMonth() !== viewDate.month, disabled: this.isDisabled(day)});
+                            }
+                            scope.title = formatDate(firstDayOfMonth, options.monthTitleFormat);
+                            scope.showLabels = true;
+                            scope.labels = weekDaysLabelsHtml;
+                            scope.rows = split(days, this.split);
+                            this.built = true;
+                        },
+                        isSelected: function (date) {
+                            return picker.$date && date.getFullYear() === picker.$date.getFullYear() && date.getMonth() === picker.$date.getMonth() && date.getDate() === picker.$date.getDate();
+                        },
+                        isDisabled: function (date) {
+                            var time = date.getTime();
+
+                            // Disabled because of min/max date.
+                            if (time < options.minDate || time > options.maxDate) return true;
+
+                            // Disabled due to being a disabled day of the week
+                            if (options.daysOfWeekDisabled.indexOf(date.getDay()) !== -1) return true;
+
+                            // Disabled because of disabled date range.
+                            if (options.disabledDateRanges) {
+                                for (var i = 0; i < options.disabledDateRanges.length; i++) {
+                                    if (time >= options.disabledDateRanges[i].start && time <= options.disabledDateRanges[i].end) {
+                                        return true;
+                                    }
+                                }
+                            }
+
+                            return false;
+                        },
+                        onKeyDown: function (evt) {
+                            if (!picker.$date) {
+                                return;
+                            }
+                            var actualTime = picker.$date.getTime();
+                            var newDate;
+
+                            if (evt.keyCode === 37) newDate = new Date(actualTime - 1 * 864e5);
+                            else if (evt.keyCode === 38) newDate = new Date(actualTime - 7 * 864e5);
+                            else if (evt.keyCode === 39) newDate = new Date(actualTime + 1 * 864e5);
+                            else if (evt.keyCode === 40) newDate = new Date(actualTime + 7 * 864e5);
+
+                            if (!this.isDisabled(newDate)) picker.select(newDate, true);
+                        }
+                    }, {
+                        name: 'month',
+                        format: options.monthFormat,
+                        split: 4,
+                        steps: {year: 1},
+                        update: function (date, force) {
+                            if (!this.built || date.getFullYear() !== viewDate.year) {
+                                angular.extend(viewDate, {year: picker.$date.getFullYear(), month: picker.$date.getMonth(), date: picker.$date.getDate()});
+                                picker.$build();
+                            } else if (date.getMonth() !== viewDate.month) {
+                                angular.extend(viewDate, {month: picker.$date.getMonth(), date: picker.$date.getDate()});
+                                picker.$updateSelected();
+                            }
+                        },
+                        build: function () {
+                            // var firstMonth = new Date(viewDate.year, 0, 1);
+                            var months = [];
+                            var month;
+                            for (var i = 0; i < 12; i++) {
+                                month = new Date(viewDate.year, i, 1);
+                                months.push({date: month, label: formatDate(month, this.format), selected: picker.$isSelected(month), disabled: this.isDisabled(month)});
+                            }
+                            scope.title = formatDate(month, options.yearTitleFormat);
+                            scope.showLabels = false;
+                            scope.rows = split(months, this.split);
+                            this.built = true;
+                        },
+                        isSelected: function (date) {
+                            return picker.$date && date.getFullYear() === picker.$date.getFullYear() && date.getMonth() === picker.$date.getMonth();
+                        },
+                        isDisabled: function (date) {
+                            var lastDate = +new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                            return lastDate < options.minDate || date.getTime() > options.maxDate;
+                        },
+                        onKeyDown: function (evt) {
+                            if (!picker.$date) {
+                                return;
+                            }
+                            var actualMonth = picker.$date.getMonth();
+                            var newDate = new Date(picker.$date);
+
+                            if (evt.keyCode === 37) newDate.setMonth(actualMonth - 1);
+                            else if (evt.keyCode === 38) newDate.setMonth(actualMonth - 4);
+                            else if (evt.keyCode === 39) newDate.setMonth(actualMonth + 1);
+                            else if (evt.keyCode === 40) newDate.setMonth(actualMonth + 4);
+
+                            if (!this.isDisabled(newDate)) picker.select(newDate, true);
+                        }
+                    }, {
+                        name: 'year',
+                        format: options.yearFormat,
+                        split: 4,
+                        steps: {year: 12},
+                        update: function (date, force) {
+                            if (!this.built || force || parseInt(date.getFullYear() / 20, 10) !== parseInt(viewDate.year / 20, 10)) {
+                                angular.extend(viewDate, {year: picker.$date.getFullYear(), month: picker.$date.getMonth(), date: picker.$date.getDate()});
+                                picker.$build();
+                            } else if (date.getFullYear() !== viewDate.year) {
+                                angular.extend(viewDate, {year: picker.$date.getFullYear(), month: picker.$date.getMonth(), date: picker.$date.getDate()});
+                                picker.$updateSelected();
+                            }
+                        },
+                        build: function () {
+                            var firstYear = viewDate.year - viewDate.year % (this.split * 3);
+                            var years = [];
+                            var year;
+                            for (var i = 0; i < 12; i++) {
+                                year = new Date(firstYear + i, 0, 1);
+                                years.push({date: year, label: formatDate(year, this.format), selected: picker.$isSelected(year), disabled: this.isDisabled(year)});
+                            }
+                            scope.title = years[0].label + '-' + years[years.length - 1].label;
+                            scope.showLabels = false;
+                            scope.rows = split(years, this.split);
+                            this.built = true;
+                        },
+                        isSelected: function (date) {
+                            return picker.$date && date.getFullYear() === picker.$date.getFullYear();
+                        },
+                        isDisabled: function (date) {
+                            var lastDate = +new Date(date.getFullYear() + 1, 0, 0);
+                            return lastDate < options.minDate || date.getTime() > options.maxDate;
+                        },
+                        onKeyDown: function (evt) {
+                            if (!picker.$date) {
+                                return;
+                            }
+                            var actualYear = picker.$date.getFullYear();
+                            var newDate = new Date(picker.$date);
+
+                            if (evt.keyCode === 37) newDate.setYear(actualYear - 1);
+                            else if (evt.keyCode === 38) newDate.setYear(actualYear - 4);
+                            else if (evt.keyCode === 39) newDate.setYear(actualYear + 1);
+                            else if (evt.keyCode === 40) newDate.setYear(actualYear + 4);
+
+                            if (!this.isDisabled(newDate)) picker.select(newDate, true);
+                        }
+                    }];
+
+                    return {
+                        views: options.minView ? Array.prototype.slice.call(views, options.minView) : views,
+                        viewDate: viewDate
+                    };
+
+                };
+
+            }];
+
+        });
+
+})();
+(function () {
+    'use strict';
+
+    angular
+        .module('mgcrea.ngStrap.timepicker', [
+            'mgcrea.ngStrap.helpers.dateParser',
+            'mgcrea.ngStrap.helpers.dateFormatter',
+            'mgcrea.ngStrap.tooltip'
+        ])
+
+        .provider('$timepicker', function () {
+
+            var defaults = this.defaults = {
+                animation: 'am-fade',
+                // uncommenting the following line will break backwards compatability
+                // prefixEvent: 'timepicker',
+                prefixClass: 'timepicker',
+                placement: 'bottom-left',
+                templateUrl: 'app/template/timepicker.tpl.html',
+                trigger: 'focus',
+                container: false,
+                keyboard: true,
+                html: false,
+                delay: 0,
+                // lang: $locale.id,
+                useNative: true,
+                timeType: 'date',
+                timeFormat: 'shortTime',
+                timezone: null,
+                modelTimeFormat: null,
+                autoclose: false,
+                minTime: -Infinity,
+                maxTime: +Infinity,
+                length: 5,
+                hourStep: 1,
+                minuteStep: 5,
+                secondStep: 5,
+                roundDisplay: false,
+                iconUp: 'glyphicon glyphicon-chevron-up',
+                iconDown: 'glyphicon glyphicon-chevron-down',
+                arrowBehavior: 'pager'
+            };
+
+            this.$get = ["$window", "$document", "$rootScope", "$sce", "$dateFormatter", "$tooltip", "$timeout", function ($window, $document, $rootScope, $sce, $dateFormatter, $tooltip, $timeout) {
+
+                var isNative = /(ip[ao]d|iphone|android)/ig.test($window.navigator.userAgent);
+                var isTouch = ('createTouch' in $window.document) && isNative;
+                if (!defaults.lang) {
+                    defaults.lang = $dateFormatter.getDefaultLocale();
+                }
+
+                function timepickerFactory (element, controller, config) {
+
+                    var $timepicker = $tooltip(element, angular.extend({}, defaults, config));
+                    var parentScope = config.scope;
+                    var options = $timepicker.$options;
+                    var scope = $timepicker.$scope;
+
+                    var lang = options.lang;
+                    var formatDate = function (date, format, timezone) {
+                        return $dateFormatter.formatDate(date, format, lang, timezone);
+                    };
+
+                    function floorMinutes (time) {
+                        // coeff used to floor current time to nearest minuteStep interval
+                        var coeff = 1000 * 60 * options.minuteStep;
+                        return new Date(Math.floor(time.getTime() / coeff) * coeff);
+                    }
+
+                    // View vars
+
+                    var selectedIndex = 0;
+                    var defaultDate = options.roundDisplay ? floorMinutes(new Date()) : new Date();
+                    var startDate = controller.$dateValue || defaultDate;
+                    var viewDate = {
+                        hour: startDate.getHours(),
+                        meridian: startDate.getHours() < 12,
+                        minute: startDate.getMinutes(),
+                        second: startDate.getSeconds(),
+                        millisecond: startDate.getMilliseconds()
+                    };
+
+                    var format = $dateFormatter.getDatetimeFormat(options.timeFormat, lang);
+
+                    var hoursFormat = $dateFormatter.hoursFormat(format);
+                    var timeSeparator = $dateFormatter.timeSeparator(format);
+                    var minutesFormat = $dateFormatter.minutesFormat(format);
+                    var secondsFormat = $dateFormatter.secondsFormat(format);
+                    var showSeconds = $dateFormatter.showSeconds(format);
+                    var showAM = $dateFormatter.showAM(format);
+
+                    scope.$iconUp = options.iconUp;
+                    scope.$iconDown = options.iconDown;
+
+                    // Scope methods
+
+                    scope.$select = function (date, index) {
+                        $timepicker.select(date, index);
+                    };
+                    scope.$moveIndex = function (value, index) {
+                        $timepicker.$moveIndex(value, index);
+                    };
+                    scope.$switchMeridian = function (date) {
+                        $timepicker.switchMeridian(date);
+                    };
+
+                    // Public methods
+
+                    $timepicker.update = function (date) {
+                        // console.warn('$timepicker.update() newValue=%o', date);
+                        if (angular.isDate(date) && !isNaN(date.getTime())) {
+                            $timepicker.$date = date;
+                            angular.extend(viewDate, {
+                                hour: date.getHours(),
+                                minute: date.getMinutes(),
+                                second: date.getSeconds(),
+                                millisecond: date.getMilliseconds()
+                            });
+                            $timepicker.$build();
+                        } else if (!$timepicker.$isBuilt) {
+                            $timepicker.$build();
+                        }
+                    };
+
+                    $timepicker.select = function (date, index, keep) {
+                        // console.warn('$timepicker.select', date, scope.$mode);
+                        if (!controller.$dateValue || isNaN(controller.$dateValue.getTime())) controller.$dateValue = new Date(1970, 0, 1);
+                        if (!angular.isDate(date)) date = new Date(date);
+                        if (index === 0) controller.$dateValue.setHours(date.getHours());
+                        else if (index === 1) controller.$dateValue.setMinutes(date.getMinutes());
+                        else if (index === 2) controller.$dateValue.setSeconds(date.getSeconds());
+                        controller.$setViewValue(angular.copy(controller.$dateValue));
+                        controller.$render();
+                        if (options.autoclose && !keep) {
+                            $timeout(function () {
+                                $timepicker.hide(true);
+                            });
+                        }
+                    };
+
+                    $timepicker.switchMeridian = function (date) {
+                        if (!controller.$dateValue || isNaN(controller.$dateValue.getTime())) {
+                            return;
+                        }
+                        var hours = (date || controller.$dateValue).getHours();
+                        controller.$dateValue.setHours(hours < 12 ? hours + 12 : hours - 12);
+                        controller.$setViewValue(angular.copy(controller.$dateValue));
+                        controller.$render();
+                    };
+
+                    // Protected methods
+
+                    $timepicker.$build = function () {
+                        // console.warn('$timepicker.$build() viewDate=%o', viewDate);
+                        var i;
+                        var midIndex = scope.midIndex = parseInt(options.length / 2, 10);
+                        var hours = [];
+                        var hour;
+                        for (i = 0; i < options.length; i++) {
+                            hour = new Date(1970, 0, 1, viewDate.hour - (midIndex - i) * options.hourStep);
+                            hours.push({
+                                date: hour,
+                                label: formatDate(hour, hoursFormat),
+                                selected: $timepicker.$date && $timepicker.$isSelected(hour, 0),
+                                disabled: $timepicker.$isDisabled(hour, 0)
+                            });
+                        }
+                        var minutes = [];
+                        var minute;
+                        for (i = 0; i < options.length; i++) {
+                            minute = new Date(1970, 0, 1, 0, viewDate.minute - (midIndex - i) * options.minuteStep);
+                            minutes.push({
+                                date: minute,
+                                label: formatDate(minute, minutesFormat),
+                                selected: $timepicker.$date && $timepicker.$isSelected(minute, 1),
+                                disabled: $timepicker.$isDisabled(minute, 1)
+                            });
+                        }
+                        var seconds = [];
+                        var second;
+                        for (i = 0; i < options.length; i++) {
+                            second = new Date(1970, 0, 1, 0, 0, viewDate.second - (midIndex - i) * options.secondStep);
+                            seconds.push({
+                                date: second,
+                                label: formatDate(second, secondsFormat),
+                                selected: $timepicker.$date && $timepicker.$isSelected(second, 2),
+                                disabled: $timepicker.$isDisabled(second, 2)
+                            });
+                        }
+
+                        var rows = [];
+                        for (i = 0; i < options.length; i++) {
+                            if (showSeconds) {
+                                rows.push([hours[i], minutes[i], seconds[i]]);
+                            } else {
+                                rows.push([hours[i], minutes[i]]);
+                            }
+                        }
+                        scope.rows = rows;
+                        scope.showSeconds = showSeconds;
+                        scope.showAM = showAM;
+                        scope.isAM = ($timepicker.$date || hours[midIndex].date).getHours() < 12;
+                        scope.timeSeparator = timeSeparator;
+                        $timepicker.$isBuilt = true;
+                    };
+
+                    $timepicker.$isSelected = function (date, index) {
+                        if (!$timepicker.$date) return false;
+                        else if (index === 0) {
+                            return date.getHours() === $timepicker.$date.getHours();
+                        } else if (index === 1) {
+                            return date.getMinutes() === $timepicker.$date.getMinutes();
+                        } else if (index === 2) {
+                            return date.getSeconds() === $timepicker.$date.getSeconds();
+                        }
+                    };
+
+                    $timepicker.$isDisabled = function (date, index) {
+                        var selectedTime;
+                        if (index === 0) {
+                            selectedTime = date.getTime() + viewDate.minute * 6e4 + viewDate.second * 1e3;
+                        } else if (index === 1) {
+                            selectedTime = date.getTime() + viewDate.hour * 36e5 + viewDate.second * 1e3;
+                        } else if (index === 2) {
+                            selectedTime = date.getTime() + viewDate.hour * 36e5 + viewDate.minute * 6e4;
+                        }
+                        return selectedTime < options.minTime * 1 || selectedTime > options.maxTime * 1;
+                    };
+
+                    scope.$arrowAction = function (value, index) {
+                        if (options.arrowBehavior === 'picker') {
+                            $timepicker.$setTimeByStep(value, index);
+                        } else {
+                            $timepicker.$moveIndex(value, index);
+                        }
+                    };
+
+                    $timepicker.$setTimeByStep = function (value, index) {
+                        var newDate = new Date($timepicker.$date || startDate);
+                        var hours = newDate.getHours();
+                        var minutes = newDate.getMinutes();
+                        var seconds = newDate.getSeconds();
+                        if (index === 0) {
+                            newDate.setHours(hours - (parseInt(options.hourStep, 10) * value));
+                        } else if (index === 1) {
+                            newDate.setMinutes(minutes - (parseInt(options.minuteStep, 10) * value));
+                        } else if (index === 2) {
+                            newDate.setSeconds(seconds - (parseInt(options.secondStep, 10) * value));
+                        }
+                        $timepicker.select(newDate, index, true);
+                    };
+
+                    $timepicker.$moveIndex = function (value, index) {
+                        var targetDate;
+                        if (index === 0) {
+                            targetDate = new Date(1970, 0, 1, viewDate.hour + (value * options.length), viewDate.minute, viewDate.second);
+                            angular.extend(viewDate, {
+                                hour: targetDate.getHours()
+                            });
+                        } else if (index === 1) {
+                            targetDate = new Date(1970, 0, 1, viewDate.hour, viewDate.minute + (value * options.length * options.minuteStep), viewDate.second);
+                            angular.extend(viewDate, {
+                                minute: targetDate.getMinutes()
+                            });
+                        } else if (index === 2) {
+                            targetDate = new Date(1970, 0, 1, viewDate.hour, viewDate.minute, viewDate.second + (value * options.length * options.secondStep));
+                            angular.extend(viewDate, {
+                                second: targetDate.getSeconds()
+                            });
+                        }
+                        $timepicker.$build();
+                    };
+
+                    $timepicker.$onMouseDown = function (evt) {
+                        // Prevent blur on mousedown on .dropdown-menu
+                        if (evt.target.nodeName.toLowerCase() !== 'input') evt.preventDefault();
+                        evt.stopPropagation();
+                        // Emulate click for mobile devices
+                        if (isTouch) {
+                            var targetEl = angular.element(evt.target);
+                            if (targetEl[0].nodeName.toLowerCase() !== 'button') {
+                                targetEl = targetEl.parent();
+                            }
+                            targetEl.triggerHandler('click');
+                        }
+                    };
+
+                    $timepicker.$onKeyDown = function (evt) {
+                        if (!/(38|37|39|40|13)/.test(evt.keyCode) || evt.shiftKey || evt.altKey) return;
+                        evt.preventDefault();
+                        evt.stopPropagation();
+
+                        // Close on enter
+                        if (evt.keyCode === 13) {
+                            $timepicker.hide(true);
+                            return;
+                        }
+
+                        // Navigate with keyboard
+                        var newDate = new Date($timepicker.$date);
+                        var hours = newDate.getHours();
+                        var hoursLength = formatDate(newDate, hoursFormat).length;
+                        var minutes = newDate.getMinutes();
+                        var minutesLength = formatDate(newDate, minutesFormat).length;
+                        var seconds = newDate.getSeconds();
+                        var secondsLength = formatDate(newDate, secondsFormat).length;
+                        var sepLength = 1;
+                        var lateralMove = /(37|39)/.test(evt.keyCode);
+                        var count = 2 + showSeconds * 1 + showAM * 1;
+
+                        // Navigate indexes (left, right)
+                        if (lateralMove) {
+                            if (evt.keyCode === 37) selectedIndex = selectedIndex < 1 ? count - 1 : selectedIndex - 1;
+                            else if (evt.keyCode === 39) selectedIndex = selectedIndex < count - 1 ? selectedIndex + 1 : 0;
+                        }
+
+                        // Update values (up, down)
+                        var selectRange = [0, hoursLength];
+                        var incr = 0;
+                        if (evt.keyCode === 38) incr = -1;
+                        if (evt.keyCode === 40) incr = +1;
+                        var isSeconds = selectedIndex === 2 && showSeconds;
+                        var isMeridian = selectedIndex === 2 && !showSeconds || selectedIndex === 3 && showSeconds;
+                        if (selectedIndex === 0) {
+                            newDate.setHours(hours + incr * parseInt(options.hourStep, 10));
+                            // re-calculate hours length because we have changed hours value
+                            hoursLength = formatDate(newDate, hoursFormat).length;
+                            selectRange = [0, hoursLength];
+                        } else if (selectedIndex === 1) {
+                            newDate.setMinutes(minutes + incr * parseInt(options.minuteStep, 10));
+                            // re-calculate minutes length because we have changes minutes value
+                            minutesLength = formatDate(newDate, minutesFormat).length;
+                            selectRange = [hoursLength + sepLength, minutesLength];
+                        } else if (isSeconds) {
+                            newDate.setSeconds(seconds + incr * parseInt(options.secondStep, 10));
+                            // re-calculate seconds length because we have changes seconds value
+                            secondsLength = formatDate(newDate, secondsFormat).length;
+                            selectRange = [hoursLength + sepLength + minutesLength + sepLength, secondsLength];
+                        } else if (isMeridian) {
+                            if (!lateralMove) $timepicker.switchMeridian();
+                            selectRange = [hoursLength + sepLength + minutesLength + sepLength + (secondsLength + sepLength) * showSeconds, 2];
+                        }
+                        $timepicker.select(newDate, selectedIndex, true);
+                        createSelection(selectRange[0], selectRange[1]);
+                        parentScope.$digest();
+                    };
+
+                    // Private
+
+                    function createSelection (start, length) {
+                        var end = start + length;
+                        if (element[0].createTextRange) {
+                            var selRange = element[0].createTextRange();
+                            selRange.collapse(true);
+                            selRange.moveStart('character', start);
+                            selRange.moveEnd('character', end);
+                            selRange.select();
+                        } else if (element[0].setSelectionRange) {
+                            element[0].setSelectionRange(start, end);
+                        } else if (angular.isUndefined(element[0].selectionStart)) {
+                            element[0].selectionStart = start;
+                            element[0].selectionEnd = end;
+                        }
+                    }
+
+                    function focusElement () {
+                        element[0].focus();
+                    }
+
+                    // Overrides
+
+                    var _init = $timepicker.init;
+                    $timepicker.init = function () {
+                        if (isNative && options.useNative) {
+                            element.prop('type', 'time');
+                            element.css('-webkit-appearance', 'textfield');
+                            return;
+                        } else if (isTouch) {
+                            element.prop('type', 'text');
+                            element.attr('readonly', 'true');
+                            element.on('click', focusElement);
+                        }
+                        _init();
+                    };
+
+                    var _destroy = $timepicker.destroy;
+                    $timepicker.destroy = function () {
+                        if (isNative && options.useNative) {
+                            element.off('click', focusElement);
+                        }
+                        _destroy();
+                    };
+
+                    var _show = $timepicker.show;
+                    $timepicker.show = function () {
+                        if ((!isTouch && element.attr('readonly')) || element.attr('disabled')) return;
+                        _show();
+                        // use timeout to hookup the events to prevent
+                        // event bubbling from being processed imediately.
+                        $timeout(function () {
+                            if ($timepicker.$element) $timepicker.$element.on(isTouch ? 'touchstart' : 'mousedown', $timepicker.$onMouseDown);
+                            if (options.keyboard) {
+                                if (element) element.on('keydown', $timepicker.$onKeyDown);
+                            }
+                        }, 0, false);
+                    };
+
+                    var _hide = $timepicker.hide;
+                    $timepicker.hide = function (blur) {
+                        if (!$timepicker.$isShown) return;
+                        if ($timepicker.$element) $timepicker.$element.off(isTouch ? 'touchstart' : 'mousedown', $timepicker.$onMouseDown);
+                        if (options.keyboard) {
+                            if (element) element.off('keydown', $timepicker.$onKeyDown);
+                        }
+                        _hide(blur);
+                    };
+
+                    return $timepicker;
+
+                }
+
+                timepickerFactory.defaults = defaults;
+                return timepickerFactory;
+
+            }];
+
+        })
+
+
+        .directive('bsTimepicker', ["$window", "$parse", "$q", "$dateFormatter", "$dateParser", "$timepicker", function ($window, $parse, $q, $dateFormatter, $dateParser, $timepicker) {
+
+            var defaults = $timepicker.defaults;
+            var isNative = /(ip[ao]d|iphone|android)/ig.test($window.navigator.userAgent);
+
+            return {
+                restrict: 'EAC',
+                require: 'ngModel',
+                link: function postLink (scope, element, attr, controller) {
+
+                    // Directive options
+                    var options = {
+                        scope: scope
+                    };
+                    angular.forEach(['template', 'templateUrl', 'controller', 'controllerAs', 'placement', 'container', 'delay', 'trigger', 'keyboard', 'html', 'animation', 'autoclose', 'timeType', 'timeFormat', 'timezone', 'modelTimeFormat', 'useNative', 'hourStep', 'minuteStep', 'secondStep', 'length', 'arrowBehavior', 'iconUp', 'iconDown', 'roundDisplay', 'id', 'prefixClass', 'prefixEvent'], function (key) {
+                        if (angular.isDefined(attr[key])) options[key] = attr[key];
+                    });
+
+                    // use string regex match boolean attr falsy values, leave truthy values be
+                    var falseValueRegExp = /^(false|0|)$/i;
+                    angular.forEach(['html', 'container', 'autoclose', 'useNative', 'roundDisplay'], function (key) {
+                        if (angular.isDefined(attr[key]) && falseValueRegExp.test(attr[key])) {
+                            options[key] = false;
+                        }
+                    });
+
+                    // bind functions from the attrs to the show and hide events
+                    angular.forEach(['onBeforeShow', 'onShow', 'onBeforeHide', 'onHide'], function (key) {
+                        var bsKey = 'bs' + key.charAt(0).toUpperCase() + key.slice(1);
+                        if (angular.isDefined(attr[bsKey])) {
+                            options[key] = scope.$eval(attr[bsKey]);
+                        }
+                    });
+
+                    // Initialize timepicker
+                    if (isNative && (options.useNative || defaults.useNative)) options.timeFormat = 'HH:mm';
+                    var timepicker = $timepicker(element, controller, options);
+                    options = timepicker.$options;
+
+                    var lang = options.lang;
+                    var formatDate = function (date, format, timezone) {
+                        return $dateFormatter.formatDate(date, format, lang, timezone);
+                    };
+
+                    // Visibility binding support
+                    if (attr.bsShow) {
+                        scope.$watch(attr.bsShow, function (newValue, oldValue) {
+                            if (!timepicker || !angular.isDefined(newValue)) return;
+                            if (angular.isString(newValue)) newValue = !!newValue.match(/true|,?(timepicker),?/i);
+                            if (newValue === true) {
+                                timepicker.show();
+                            } else {
+                                timepicker.hide();
+                            }
+                        });
+                    }
+
+                    // Initialize parser
+                    var dateParser = $dateParser({
+                        format: options.timeFormat,
+                        lang: lang
+                    });
+
+                    // Observe attributes for changes
+                    angular.forEach(['minTime', 'maxTime'], function (key) {
+                        // console.warn('attr.$observe(%s)', key, attr[key]);
+                        if (angular.isDefined(attr[key])) {
+                            attr.$observe(key, function (newValue) {
+                                timepicker.$options[key] = dateParser.getTimeForAttribute(key, newValue);
+                                if (!isNaN(timepicker.$options[key])) timepicker.$build();
+                                validateAgainstMinMaxTime(controller.$dateValue);
+                            });
+                        }
+                    });
+
+                    // Watch model for changes
+                    scope.$watch(attr.ngModel, function (newValue, oldValue) {
+                        // console.warn('scope.$watch(%s)', attr.ngModel, newValue, oldValue, controller.$dateValue);
+                        timepicker.update(controller.$dateValue);
+                    }, true);
+
+                    function validateAgainstMinMaxTime (parsedTime) {
+                        if (!angular.isDate(parsedTime)) return;
+                        var isMinValid = isNaN(options.minTime) || new Date(parsedTime.getTime()).setFullYear(1970, 0, 1) >= options.minTime;
+                        var isMaxValid = isNaN(options.maxTime) || new Date(parsedTime.getTime()).setFullYear(1970, 0, 1) <= options.maxTime;
+                        var isValid = isMinValid && isMaxValid;
+                        controller.$setValidity('date', isValid);
+                        controller.$setValidity('min', isMinValid);
+                        controller.$setValidity('max', isMaxValid);
+                        // Only update the model when we have a valid date
+                        if (!isValid) {
+                            return;
+                        }
+                        controller.$dateValue = parsedTime;
+                    }
+
+                    // viewValue -> $parsers -> modelValue
+                    controller.$parsers.unshift(function (viewValue) {
+                        // console.warn('$parser("%s"): viewValue=%o', element.attr('ng-model'), viewValue);
+                        var date;
+                        // Null values should correctly reset the model value & validity
+                        if (!viewValue) {
+                            // BREAKING CHANGE:
+                            // return null (not undefined) when input value is empty, so angularjs 1.3
+                            // ngModelController can go ahead and run validators, like ngRequired
+                            controller.$setValidity('date', true);
+                            return null;
+                        }
+                        var parsedTime = angular.isDate(viewValue) ? viewValue : dateParser.parse(viewValue, controller.$dateValue);
+                        if (!parsedTime || isNaN(parsedTime.getTime())) {
+                            controller.$setValidity('date', false);
+                            // Return undefined, causes ngModelController to
+                            // invalidate model value
+                            return undefined;
+                        }
+                        validateAgainstMinMaxTime(parsedTime);
+
+                        if (options.timeType === 'string') {
+                            date = dateParser.timezoneOffsetAdjust(parsedTime, options.timezone, true);
+                            return formatDate(date, options.modelTimeFormat || options.timeFormat);
+                        }
+                        date = dateParser.timezoneOffsetAdjust(controller.$dateValue, options.timezone, true);
+                        if (options.timeType === 'number') {
+                            return date.getTime();
+                        } else if (options.timeType === 'unix') {
+                            return date.getTime() / 1000;
+                        } else if (options.timeType === 'iso') {
+                            return date.toISOString();
+                        }
+                        return new Date(date);
+                    });
+
+                    // modelValue -> $formatters -> viewValue
+                    controller.$formatters.push(function (modelValue) {
+                        // console.warn('$formatter("%s"): modelValue=%o (%o)', element.attr('ng-model'), modelValue, typeof modelValue);
+                        var date;
+                        if (angular.isUndefined(modelValue) || modelValue === null) {
+                            date = NaN;
+                        } else if (angular.isDate(modelValue)) {
+                            date = modelValue;
+                        } else if (options.timeType === 'string') {
+                            date = dateParser.parse(modelValue, null, options.modelTimeFormat);
+                        } else if (options.timeType === 'unix') {
+                            date = new Date(modelValue * 1000);
+                        } else {
+                            date = new Date(modelValue);
+                        }
+                        // Setup default value?
+                        // if(isNaN(date.getTime())) date = new Date(new Date().setMinutes(0) + 36e5);
+                        controller.$dateValue = dateParser.timezoneOffsetAdjust(date, options.timezone);
+                        return getTimeFormattedString();
+                    });
+
+                    // viewValue -> element
+                    controller.$render = function () {
+                        // console.warn('$render("%s"): viewValue=%o', element.attr('ng-model'), controller.$viewValue);
+                        element.val(getTimeFormattedString());
+                    };
+
+                    function getTimeFormattedString () {
+                        return !controller.$dateValue || isNaN(controller.$dateValue.getTime()) ? '' : formatDate(controller.$dateValue, options.timeFormat);
+                    }
+
+                    // Garbage collection
+                    scope.$on('$destroy', function () {
+                        if (timepicker) timepicker.destroy();
+                        options = null;
+                        timepicker = null;
+                    });
+
+                }
+            };
+
+        }]);
+
+})();
+'use strict';
+
+angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap.helpers.dimensions'])
+
+  .provider('$tooltip', function () {
+
+    var defaults = this.defaults = {
+      animation: 'am-fade',
+      customClass: '',
+      prefixClass: 'tooltip',
+      prefixEvent: 'tooltip',
+      container: false,
+      target: false,
+      placement: 'top',
+      templateUrl: 'tooltip/tooltip.tpl.html',
+      template: '',
+      titleTemplate: false,
+      trigger: 'hover focus',
+      keyboard: false,
+      html: false,
+      show: false,
+      title: '',
+      type: '',
+      delay: 0,
+      autoClose: false,
+      bsEnabled: true,
+      viewport: {
+        selector: 'body',
+        padding: 0
+      }
+    };
+
+    this.$get = ["$window", "$rootScope", "$bsCompiler", "$q", "$templateCache", "$http", "$animate", "$sce", "dimensions", "$$rAF", "$timeout", function ($window, $rootScope, $bsCompiler, $q, $templateCache, $http, $animate, $sce, dimensions, $$rAF, $timeout) {
+
+      var isNative = /(ip[ao]d|iphone|android)/ig.test($window.navigator.userAgent);
+      var isTouch = ('createTouch' in $window.document) && isNative;
+      var $body = angular.element($window.document);
+
+      function TooltipFactory (element, config) {
+
+        var $tooltip = {};
+
+        // Common vars
+        var options = $tooltip.$options = angular.extend({}, defaults, config);
+        var promise = $tooltip.$promise = $bsCompiler.compile(options);
+        var scope = $tooltip.$scope = options.scope && options.scope.$new() || $rootScope.$new();
+
+        var nodeName = element[0].nodeName.toLowerCase();
+        if (options.delay && angular.isString(options.delay)) {
+          var split = options.delay.split(',').map(parseFloat);
+          options.delay = split.length > 1 ? {show: split[0], hide: split[1]} : split[0];
+        }
+
+        // Store $id to identify the triggering element in events
+        // give priority to options.id, otherwise, try to use
+        // element id if defined
+        $tooltip.$id = options.id || element.attr('id') || '';
+
+        // Support scope as string options
+        if (options.title) {
+          scope.title = $sce.trustAsHtml(options.title);
+        }
+
+        // Provide scope helpers
+        scope.$setEnabled = function (isEnabled) {
+          scope.$$postDigest(function () {
+            $tooltip.setEnabled(isEnabled);
+          });
+        };
+        scope.$hide = function () {
+          scope.$$postDigest(function () {
+            $tooltip.hide();
+          });
+        };
+        scope.$show = function () {
+          scope.$$postDigest(function () {
+            $tooltip.show();
+          });
+        };
+        scope.$toggle = function () {
+          scope.$$postDigest(function () {
+            $tooltip.toggle();
+          });
+        };
+        // Publish isShown as a protected var on scope
+        $tooltip.$isShown = scope.$isShown = false;
+
+        // Private vars
+        var timeout;
+        var hoverState;
+
+        // Fetch, compile then initialize tooltip
+        var compileData;
+        var tipElement;
+        var tipContainer;
+        var tipScope;
+        promise.then(function (data) {
+          compileData = data;
+          $tooltip.init();
+        });
+
+        $tooltip.init = function () {
+
+          // Options: delay
+          if (options.delay && angular.isNumber(options.delay)) {
+            options.delay = {
+              show: options.delay,
+              hide: options.delay
+            };
+          }
+
+          // Replace trigger on touch devices ?
+          // if(isTouch && options.trigger === defaults.trigger) {
+          //   options.trigger.replace(/hover/g, 'click');
+          // }
+
+          // Options : container
+          if (options.container === 'self') {
+            tipContainer = element;
+          } else if (angular.isElement(options.container)) {
+            tipContainer = options.container;
+          } else if (options.container) {
+            tipContainer = findElement(options.container);
+          }
+
+          // Options: trigger
+          bindTriggerEvents();
+
+          // Options: target
+          if (options.target) {
+            options.target = angular.isElement(options.target) ? options.target : findElement(options.target);
+          }
+
+          // Options: show
+          if (options.show) {
+            scope.$$postDigest(function () {
+              if (options.trigger === 'focus') {
+                element[0].focus();
+              } else {
+                $tooltip.show();
+              }
+            });
+          }
+
+        };
+
+        $tooltip.destroy = function () {
+
+          // Unbind events
+          unbindTriggerEvents();
+
+          // Remove element
+          destroyTipElement();
+
+          // Destroy scope
+          scope.$destroy();
+
+        };
+
+        $tooltip.enter = function () {
+
+          clearTimeout(timeout);
+          hoverState = 'in';
+          if (!options.delay || !options.delay.show) {
+            return $tooltip.show();
+          }
+
+          timeout = setTimeout(function () {
+            if (hoverState === 'in') $tooltip.show();
+          }, options.delay.show);
+
+        };
+
+        $tooltip.show = function () {
+          if (!options.bsEnabled || $tooltip.$isShown) return;
+
+          scope.$emit(options.prefixEvent + '.show.before', $tooltip);
+          if (angular.isDefined(options.onBeforeShow) && angular.isFunction(options.onBeforeShow)) {
+            options.onBeforeShow($tooltip);
+          }
+          var parent;
+          var after;
+          if (options.container) {
+            parent = tipContainer;
+            if (tipContainer[0].lastChild) {
+              after = angular.element(tipContainer[0].lastChild);
+            } else {
+              after = null;
+            }
+          } else {
+            parent = null;
+            after = element;
+          }
+
+
+          // Hide any existing tipElement
+          if (tipElement) destroyTipElement();
+          // Fetch a cloned element linked from template
+          tipScope = $tooltip.$scope.$new();
+          tipElement = $tooltip.$element = compileData.link(tipScope, function (clonedElement, scope) {});
+
+          // Set the initial positioning.  Make the tooltip invisible
+          // so IE doesn't try to focus on it off screen.
+          tipElement.css({top: '-9999px', left: '-9999px', right: 'auto', display: 'block', visibility: 'hidden'});
+
+          // Options: animation
+          if (options.animation) tipElement.addClass(options.animation);
+          // Options: type
+          if (options.type) tipElement.addClass(options.prefixClass + '-' + options.type);
+          // Options: custom classes
+          if (options.customClass) tipElement.addClass(options.customClass);
+
+          // Append the element, without any animations.  If we append
+          // using $animate.enter, some of the animations cause the placement
+          // to be off due to the transforms.
+          if (after) {
+            after.after(tipElement);
+          } else {
+            parent.prepend(tipElement);
+          }
+
+          $tooltip.$isShown = scope.$isShown = true;
+          safeDigest(scope);
+
+          // Now, apply placement
+          $tooltip.$applyPlacement();
+
+          // Once placed, animate it.
+          // Support v1.2+ $animate
+          // https://github.com/angular/angular.js/issues/11713
+          if (angular.version.minor <= 2) {
+            $animate.enter(tipElement, parent, after, enterAnimateCallback);
+          } else {
+            $animate.enter(tipElement, parent, after).then(enterAnimateCallback);
+          }
+          safeDigest(scope);
+
+          $$rAF(function () {
+            // Once the tooltip is placed and the animation starts, make the tooltip visible
+            if (tipElement) tipElement.css({visibility: 'visible'});
+
+            // Bind events
+            if (options.keyboard) {
+              if (options.trigger !== 'focus') {
+                $tooltip.focus();
+              }
+              bindKeyboardEvents();
+            }
+          });
+
+          if (options.autoClose) {
+            bindAutoCloseEvents();
+          }
+
+        };
+
+        function enterAnimateCallback () {
+          scope.$emit(options.prefixEvent + '.show', $tooltip);
+          if (angular.isDefined(options.onShow) && angular.isFunction(options.onShow)) {
+            options.onShow($tooltip);
+          }
+        }
+
+        $tooltip.leave = function () {
+
+          clearTimeout(timeout);
+          hoverState = 'out';
+          if (!options.delay || !options.delay.hide) {
+            return $tooltip.hide();
+          }
+          timeout = setTimeout(function () {
+            if (hoverState === 'out') {
+              $tooltip.hide();
+            }
+          }, options.delay.hide);
+
+        };
+
+        var _blur;
+        var _tipToHide;
+        $tooltip.hide = function (blur) {
+
+          if (!$tooltip.$isShown) return;
+          scope.$emit(options.prefixEvent + '.hide.before', $tooltip);
+          if (angular.isDefined(options.onBeforeHide) && angular.isFunction(options.onBeforeHide)) {
+            options.onBeforeHide($tooltip);
+          }
+
+          // store blur value for leaveAnimateCallback to use
+          _blur = blur;
+
+          // store current tipElement reference to use
+          // in leaveAnimateCallback
+          _tipToHide = tipElement;
+
+          // Support v1.2+ $animate
+          // https://github.com/angular/angular.js/issues/11713
+          if (angular.version.minor <= 2) {
+            $animate.leave(tipElement, leaveAnimateCallback);
+          } else {
+            $animate.leave(tipElement).then(leaveAnimateCallback);
+          }
+
+          $tooltip.$isShown = scope.$isShown = false;
+          safeDigest(scope);
+
+          // Unbind events
+          if (options.keyboard && tipElement !== null) {
+            unbindKeyboardEvents();
+          }
+
+          if (options.autoClose && tipElement !== null) {
+            unbindAutoCloseEvents();
+          }
+        };
+
+        function leaveAnimateCallback () {
+          scope.$emit(options.prefixEvent + '.hide', $tooltip);
+          if (angular.isDefined(options.onHide) && angular.isFunction(options.onHide)) {
+            options.onHide($tooltip);
+          }
+
+          // check if current tipElement still references
+          // the same element when hide was called
+          if (tipElement === _tipToHide) {
+            // Allow to blur the input when hidden, like when pressing enter key
+            if (_blur && options.trigger === 'focus') {
+              return element[0].blur();
+            }
+
+            // clean up child scopes
+            destroyTipElement();
+          }
+        }
+
+        $tooltip.toggle = function (evt) {
+          if (evt) { evt.preventDefault(); }
+          if ($tooltip.$isShown) {
+            $tooltip.leave();
+          } else {
+            $tooltip.enter();
+          }
+        };
+
+        $tooltip.focus = function () {
+          tipElement[0].focus();
+        };
+
+        $tooltip.setEnabled = function (isEnabled) {
+          options.bsEnabled = isEnabled;
+        };
+
+        $tooltip.setViewport = function (viewport) {
+          options.viewport = viewport;
+        };
+
+        // Protected methods
+
+        $tooltip.$applyPlacement = function () {
+          if (!tipElement) return;
+
+          // Determine if we're doing an auto or normal placement
+          var placement = options.placement;
+          var autoToken = /\s?auto?\s?/i;
+          var autoPlace = autoToken.test(placement);
+
+          if (autoPlace) {
+            placement = placement.replace(autoToken, '') || defaults.placement;
+          }
+
+          // Need to add the position class before we get
+          // the offsets
+          tipElement.addClass(options.placement);
+
+          // Get the position of the target element
+          // and the height and width of the tooltip so we can center it.
+          var elementPosition = getPosition();
+          var tipWidth = tipElement.prop('offsetWidth');
+          var tipHeight = tipElement.prop('offsetHeight');
+
+          // Refresh viewport position
+          $tooltip.$viewport = options.viewport && findElement(options.viewport.selector || options.viewport);
+
+          // If we're auto placing, we need to check the positioning
+          if (autoPlace) {
+            var originalPlacement = placement;
+            var viewportPosition = getPosition($tooltip.$viewport);
+
+            if (/bottom/.test(originalPlacement) && elementPosition.bottom + tipHeight > viewportPosition.bottom) {
+              placement = originalPlacement.replace('bottom', 'top');
+            } else if (/top/.test(originalPlacement) && elementPosition.top - tipHeight < viewportPosition.top) {
+              placement = originalPlacement.replace('top', 'bottom');
+            }
+
+            if (/left/.test(originalPlacement) && elementPosition.left - tipWidth < viewportPosition.left) {
+              placement = placement.replace('left', 'right');
+            } else if (/right/.test(originalPlacement) && elementPosition.right + tipWidth > viewportPosition.width) {
+              placement = placement.replace('right', 'left');
+            }
+
+            tipElement.removeClass(originalPlacement).addClass(placement);
+          }
+
+          // Get the tooltip's top and left coordinates to center it with this directive.
+          var tipPosition = getCalculatedOffset(placement, elementPosition, tipWidth, tipHeight);
+          applyPlacement(tipPosition, placement);
+        };
+
+        $tooltip.$onKeyUp = function (evt) {
+          if (evt.which === 27 && $tooltip.$isShown) {
+            $tooltip.hide();
+            evt.stopPropagation();
+          }
+        };
+
+        $tooltip.$onFocusKeyUp = function (evt) {
+          if (evt.which === 27) {
+            element[0].blur();
+            evt.stopPropagation();
+          }
+        };
+
+        $tooltip.$onFocusElementMouseDown = function (evt) {
+          evt.preventDefault();
+          evt.stopPropagation();
+          // Some browsers do not auto-focus buttons (eg. Safari)
+          if ($tooltip.$isShown) {
+            element[0].blur();
+          } else {
+            element[0].focus();
+          }
+        };
+
+        // bind/unbind events
+        function bindTriggerEvents () {
+          var triggers = options.trigger.split(' ');
+          angular.forEach(triggers, function (trigger) {
+            if (trigger === 'click' || trigger === 'contextmenu') {
+              element.on(trigger, $tooltip.toggle);
+            } else if (trigger !== 'manual') {
+              element.on(trigger === 'hover' ? 'mouseenter' : 'focus', $tooltip.enter);
+              element.on(trigger === 'hover' ? 'mouseleave' : 'blur', $tooltip.leave);
+              if (nodeName === 'button' && trigger !== 'hover') {
+                element.on(isTouch ? 'touchstart' : 'mousedown', $tooltip.$onFocusElementMouseDown);
+              }
+            }
+          });
+        }
+
+        function unbindTriggerEvents () {
+          var triggers = options.trigger.split(' ');
+          for (var i = triggers.length; i--;) {
+            var trigger = triggers[i];
+            if (trigger === 'click' || trigger === 'contextmenu') {
+              element.off(trigger, $tooltip.toggle);
+            } else if (trigger !== 'manual') {
+              element.off(trigger === 'hover' ? 'mouseenter' : 'focus', $tooltip.enter);
+              element.off(trigger === 'hover' ? 'mouseleave' : 'blur', $tooltip.leave);
+              if (nodeName === 'button' && trigger !== 'hover') {
+                element.off(isTouch ? 'touchstart' : 'mousedown', $tooltip.$onFocusElementMouseDown);
+              }
+            }
+          }
+        }
+
+        function bindKeyboardEvents () {
+          if (options.trigger !== 'focus') {
+            tipElement.on('keyup', $tooltip.$onKeyUp);
+          } else {
+            element.on('keyup', $tooltip.$onFocusKeyUp);
+          }
+        }
+
+        function unbindKeyboardEvents () {
+          if (options.trigger !== 'focus') {
+            tipElement.off('keyup', $tooltip.$onKeyUp);
+          } else {
+            element.off('keyup', $tooltip.$onFocusKeyUp);
+          }
+        }
+
+        var _autoCloseEventsBinded = false;
+        function bindAutoCloseEvents () {
+          // use timeout to hookup the events to prevent
+          // event bubbling from being processed imediately.
+          $timeout(function () {
+            // Stop propagation when clicking inside tooltip
+            tipElement.on('click', stopEventPropagation);
+
+            // Hide when clicking outside tooltip
+            $body.on('click', $tooltip.hide);
+
+            _autoCloseEventsBinded = true;
+          }, 0, false);
+        }
+
+        function unbindAutoCloseEvents () {
+          if (_autoCloseEventsBinded) {
+            tipElement.off('click', stopEventPropagation);
+            $body.off('click', $tooltip.hide);
+            _autoCloseEventsBinded = false;
+          }
+        }
+
+        function stopEventPropagation (event) {
+          event.stopPropagation();
+        }
+
+        // Private methods
+
+        function getPosition ($element) {
+          $element = $element || (options.target || element);
+
+          var el = $element[0];
+          var isBody = el.tagName === 'BODY';
+
+          var elRect = el.getBoundingClientRect();
+          var rect = {};
+
+          // IE8 has issues with angular.extend and using elRect directly.
+          // By coping the values of elRect into a new object, we can continue to use extend
+          /* eslint-disable guard-for-in */
+          for (var p in elRect) {
+            // DO NOT use hasOwnProperty when inspecting the return of getBoundingClientRect.
+            rect[p] = elRect[p];
+          }
+          /* eslint-enable guard-for-in */
+
+          if (rect.width === null) {
+            // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
+            rect = angular.extend({}, rect, {width: elRect.right - elRect.left, height: elRect.bottom - elRect.top});
+          }
+          var elOffset = isBody ? {top: 0, left: 0} : dimensions.offset(el);
+          var scroll = {scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.prop('scrollTop') || 0};
+          var outerDims = isBody ? {width: document.documentElement.clientWidth, height: $window.innerHeight} : null;
+
+          return angular.extend({}, rect, scroll, outerDims, elOffset);
+        }
+
+        function getCalculatedOffset (placement, position, actualWidth, actualHeight) {
+          var offset;
+          var split = placement.split('-');
+
+          switch (split[0]) {
+            case 'right':
+              offset = {
+                top: position.top + position.height / 2 - actualHeight / 2,
+                left: position.left + position.width
+              };
+              break;
+            case 'bottom':
+              offset = {
+                top: position.top + position.height,
+                left: position.left + position.width / 2 - actualWidth / 2
+              };
+              break;
+            case 'left':
+              offset = {
+                top: position.top + position.height / 2 - actualHeight / 2,
+                left: position.left - actualWidth
+              };
+              break;
+            default:
+              offset = {
+                top: position.top - actualHeight,
+                left: position.left + position.width / 2 - actualWidth / 2
+              };
+              break;
+          }
+
+          if (!split[1]) {
+            return offset;
+          }
+
+          // Add support for corners @todo css
+          if (split[0] === 'top' || split[0] === 'bottom') {
+            switch (split[1]) {
+              case 'left':
+                offset.left = position.left;
+                break;
+              case 'right':
+                offset.left = position.left + position.width - actualWidth;
+                break;
+              default:
+                break;
+            }
+          } else if (split[0] === 'left' || split[0] === 'right') {
+            switch (split[1]) {
+              case 'top':
+                offset.top = position.top - actualHeight + position.height;
+                break;
+              case 'bottom':
+                offset.top = position.top;
+                break;
+              default:
+                break;
+            }
+          }
+
+          return offset;
+        }
+
+        function applyPlacement (offset, placement) {
+          var tip = tipElement[0];
+          var width = tip.offsetWidth;
+          var height = tip.offsetHeight;
+
+          // manually read margins because getBoundingClientRect includes difference
+          var marginTop = parseInt(dimensions.css(tip, 'margin-top'), 10);
+          var marginLeft = parseInt(dimensions.css(tip, 'margin-left'), 10);
+
+          // we must check for NaN for ie 8/9
+          if (isNaN(marginTop)) marginTop = 0;
+          if (isNaN(marginLeft)) marginLeft = 0;
+
+          offset.top = offset.top + marginTop;
+          offset.left = offset.left + marginLeft;
+
+          // dimensions setOffset doesn't round pixel values
+          // so we use setOffset directly with our own function
+          dimensions.setOffset(tip, angular.extend({
+            using: function (props) {
+              tipElement.css({
+                top: Math.round(props.top) + 'px',
+                left: Math.round(props.left) + 'px',
+                right: ''
+              });
+            }
+          }, offset), 0);
+
+          // check to see if placing tip in new offset caused the tip to resize itself
+          var actualWidth = tip.offsetWidth;
+          var actualHeight = tip.offsetHeight;
+
+          if (placement === 'top' && actualHeight !== height) {
+            offset.top = offset.top + height - actualHeight;
+          }
+
+          // If it's an exotic placement, exit now instead of
+          // applying a delta and changing the arrow
+          if (/top-left|top-right|bottom-left|bottom-right/.test(placement)) return;
+
+          var delta = getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight);
+
+          if (delta.left) {
+            offset.left += delta.left;
+          } else {
+            offset.top += delta.top;
+          }
+
+          dimensions.setOffset(tip, offset);
+
+          if (/top|right|bottom|left/.test(placement)) {
+            var isVertical = /top|bottom/.test(placement);
+            var arrowDelta = isVertical ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight;
+            var arrowOffsetPosition = isVertical ? 'offsetWidth' : 'offsetHeight';
+
+            replaceArrow(arrowDelta, tip[arrowOffsetPosition], isVertical);
+          }
+        }
+
+        // @source https://github.com/twbs/bootstrap/blob/v3.3.5/js/tooltip.js#L380
+        function getViewportAdjustedDelta (placement, position, actualWidth, actualHeight) {
+          var delta = {top: 0, left: 0};
+          if (!$tooltip.$viewport) return delta;
+
+          var viewportPadding = options.viewport && options.viewport.padding || 0;
+          var viewportDimensions = getPosition($tooltip.$viewport);
+
+          if (/right|left/.test(placement)) {
+            var topEdgeOffset = position.top - viewportPadding - viewportDimensions.scroll;
+            var bottomEdgeOffset = position.top + viewportPadding - viewportDimensions.scroll + actualHeight;
+            if (topEdgeOffset < viewportDimensions.top) { // top overflow
+              delta.top = viewportDimensions.top - topEdgeOffset;
+            } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
+              delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset;
+            }
+          } else {
+            var leftEdgeOffset = position.left - viewportPadding;
+            var rightEdgeOffset = position.left + viewportPadding + actualWidth;
+            if (leftEdgeOffset < viewportDimensions.left) { // left overflow
+              delta.left = viewportDimensions.left - leftEdgeOffset;
+            } else if (rightEdgeOffset > viewportDimensions.right) { // right overflow
+              delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset;
+            }
+          }
+
+          return delta;
+        }
+
+        function replaceArrow (delta, dimension, isHorizontal) {
+          var $arrow = findElement('.tooltip-arrow, .arrow', tipElement[0]);
+
+          $arrow.css(isHorizontal ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
+                .css(isHorizontal ? 'top' : 'left', '');
+        }
+
+        function destroyTipElement () {
+          // Cancel pending callbacks
+          clearTimeout(timeout);
+
+          if ($tooltip.$isShown && tipElement !== null) {
+            if (options.autoClose) {
+              unbindAutoCloseEvents();
+            }
+
+            if (options.keyboard) {
+              unbindKeyboardEvents();
+            }
+          }
+
+          if (tipScope) {
+            tipScope.$destroy();
+            tipScope = null;
+          }
+
+          if (tipElement) {
+            tipElement.remove();
+            tipElement = $tooltip.$element = null;
+          }
+        }
+
+        return $tooltip;
+
+      }
+
+      // Helper functions
+
+      function safeDigest (scope) {
+        /* eslint-disable no-unused-expressions */
+        scope.$$phase || (scope.$root && scope.$root.$$phase) || scope.$digest();
+        /* eslint-enable no-unused-expressions */
+      }
+
+      function findElement (query, element) {
+        return angular.element((element || document).querySelectorAll(query));
+      }
+
+      return TooltipFactory;
+
+    }];
+
+  })
+
+  .directive('bsTooltip', ["$window", "$location", "$sce", "$parse", "$tooltip", "$$rAF", function ($window, $location, $sce, $parse, $tooltip, $$rAF) {
+
+    return {
+      restrict: 'EAC',
+      scope: true,
+      link: function postLink (scope, element, attr, transclusion) {
+
+        var tooltip;
+        // Directive options
+        var options = {scope: scope};
+        angular.forEach(['template', 'templateUrl', 'controller', 'controllerAs', 'titleTemplate', 'placement', 'container', 'delay', 'trigger', 'html', 'animation', 'backdropAnimation', 'type', 'customClass', 'id'], function (key) {
+          if (angular.isDefined(attr[key])) options[key] = attr[key];
+        });
+
+        // use string regex match boolean attr falsy values, leave truthy values be
+        var falseValueRegExp = /^(false|0|)$/i;
+        angular.forEach(['html', 'container'], function (key) {
+          if (angular.isDefined(attr[key]) && falseValueRegExp.test(attr[key])) {
+            options[key] = false;
+          }
+        });
+
+        // bind functions from the attrs to the show and hide events
+        angular.forEach(['onBeforeShow', 'onShow', 'onBeforeHide', 'onHide'], function (key) {
+          var bsKey = 'bs' + key.charAt(0).toUpperCase() + key.slice(1);
+          if (angular.isDefined(attr[bsKey])) {
+            options[key] = scope.$eval(attr[bsKey]);
+          }
+        });
+
+        // should not parse target attribute (anchor tag), only data-target #1454
+        var dataTarget = element.attr('data-target');
+        if (angular.isDefined(dataTarget)) {
+          if (falseValueRegExp.test(dataTarget)) {
+            options.target = false;
+          } else {
+            options.target = dataTarget;
+          }
+        }
+
+        // overwrite inherited title value when no value specified
+        // fix for angular 1.3.1 531a8de72c439d8ddd064874bf364c00cedabb11
+        if (!scope.hasOwnProperty('title')) {
+          scope.title = '';
+        }
+
+        // Observe scope attributes for change
+        attr.$observe('title', function (newValue) {
+          if (angular.isDefined(newValue) || !scope.hasOwnProperty('title')) {
+            var oldValue = scope.title;
+            scope.title = $sce.trustAsHtml(newValue);
+            if (angular.isDefined(oldValue)) {
+              $$rAF(function () {
+                if (tooltip) tooltip.$applyPlacement();
+              });
+            }
+          }
+        });
+
+        attr.$observe('disabled', function (newValue) {
+          if (newValue && tooltip.$isShown) {
+            tooltip.hide();
+          }
+        });
+
+        // Support scope as an object
+        if (attr.bsTooltip) {
+          scope.$watch(attr.bsTooltip, function (newValue, oldValue) {
+            if (angular.isObject(newValue)) {
+              angular.extend(scope, newValue);
+            } else {
+              scope.title = newValue;
+            }
+            if (angular.isDefined(oldValue)) {
+              $$rAF(function () {
+                if (tooltip) tooltip.$applyPlacement();
+              });
+            }
+          }, true);
+        }
+
+        // Visibility binding support
+        if (attr.bsShow) {
+          scope.$watch(attr.bsShow, function (newValue, oldValue) {
+            if (!tooltip || !angular.isDefined(newValue)) return;
+            if (angular.isString(newValue)) newValue = !!newValue.match(/true|,?(tooltip),?/i);
+            if (newValue === true) {
+              tooltip.show();
+            } else {
+              tooltip.hide();
+            }
+          });
+        }
+
+        // Enabled binding support
+        if (attr.bsEnabled) {
+          scope.$watch(attr.bsEnabled, function (newValue, oldValue) {
+            // console.warn('scope.$watch(%s)', attr.bsEnabled, newValue, oldValue);
+            if (!tooltip || !angular.isDefined(newValue)) return;
+            if (angular.isString(newValue)) newValue = !!newValue.match(/true|1|,?(tooltip),?/i);
+            if (newValue === false) {
+              tooltip.setEnabled(false);
+            } else {
+              tooltip.setEnabled(true);
+            }
+          });
+        }
+
+        // Viewport support
+        if (attr.viewport) {
+          scope.$watch(attr.viewport, function (newValue) {
+            if (!tooltip || !angular.isDefined(newValue)) return;
+            tooltip.setViewport(newValue);
+          });
+        }
+
+        // Initialize popover
+        tooltip = $tooltip(element, options);
+
+        // Garbage collection
+        scope.$on('$destroy', function () {
+          if (tooltip) tooltip.destroy();
+          options = null;
+          tooltip = null;
+        });
+
+      }
+    };
+
+  }]);
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.dashboard')
+        .controller('DashboardController', DashboardController);
+
+    DashboardController.$inject = ['$scope', 'ChartData', '$timeout'];
+    function DashboardController($scope, ChartData, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // SPLINE
+          // ----------------------------------- 
+          vm.splineData = ChartData.load('server/chart/spline.json');
+          vm.splineOptions = {
+              series: {
+                  lines: {
+                      show: false
+                  },
+                  points: {
+                      show: true,
+                      radius: 4
+                  },
+                  splines: {
+                      show: true,
+                      tension: 0.4,
+                      lineWidth: 1,
+                      fill: 0.5
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#fcfcfc',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  min: 0,
+                  max: 150, // optional: use it for a clear represetation
+                  tickColor: '#eee',
+                  position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                  tickFormatter: function (v) {
+                      return v/* + ' visitors'*/;
+                  }
+              },
+              shadowSize: 0
+          };
+
+
+          // PANEL REFRESH EVENTS
+          // ----------------------------------- 
+
+          $scope.$on('panel-refresh', function(event, id) {
+            
+            console.log('Simulating chart refresh during 3s on #'+id);
+
+            // Instead of timeout you can request a chart data
+            $timeout(function(){
+              
+              // directive listen for to remove the spinner 
+              // after we end up to perform own operations
+              $scope.$broadcast('removeSpinner', id);
+              
+              console.log('Refreshed #' + id);
+
+            }, 3000);
+
+          });
+
+
+          // PANEL DISMISS EVENTS
+          // ----------------------------------- 
+
+          // Before remove panel
+          $scope.$on('panel-remove', function(event, id, deferred){
+            
+            console.log('Panel #' + id + ' removing');
+            
+            // Here is obligatory to call the resolve() if we pretend to remove the panel finally
+            // Not calling resolve() will NOT remove the panel
+            // It's up to your app to decide if panel should be removed or not
+            deferred.resolve();
+          
+          });
+
+          // Panel removed ( only if above was resolved() )
+          $scope.$on('panel-removed', function(event, id){
+
+            console.log('Panel #' + id + ' removed');
+
+          });
+
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.dashboard')
+        .controller('DashboardV2Controller', DashboardV2Controller);
+
+    DashboardV2Controller.$inject = ['$rootScope', '$scope', '$state'];
+    function DashboardV2Controller($rootScope, $scope, $state) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          
+          // Change layout mode
+          if( $state.includes('app-h') ) {
+            // Setup layout horizontal for demo
+            $rootScope.app.layout.horizontal = true;
+            $scope.$on('$destroy', function(){
+                $rootScope.app.layout.horizontal = false;
+            });            
+          }
+          else {
+            $rootScope.app.layout.isCollapsed = true;
+          }
+
+          // BAR STACKED
+          // ----------------------------------- 
+          vm.barStackedOptions = {
+              series: {
+                  stack: true,
+                  bars: {
+                      align: 'center',
+                      lineWidth: 0,
+                      show: true,
+                      barWidth: 0.6,
+                      fill: 0.9
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#fcfcfc',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  min: 0,
+                  max: 200, // optional: use it for a clear represetation
+                  position: ($rootScope.app.layout.isRTL ? 'right' : 'left'),
+                  tickColor: '#eee'
+              },
+              shadowSize: 0
+          };
+
+          // SPLINE
+          // ----------------------------------- 
+
+          vm.splineOptions = {
+              series: {
+                  lines: {
+                      show: false
+                  },
+                  points: {
+                      show: true,
+                      radius: 4
+                  },
+                  splines: {
+                      show: true,
+                      tension: 0.4,
+                      lineWidth: 1,
+                      fill: 0.5
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#fcfcfc',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  min: 0,
+                  max: 150, // optional: use it for a clear represetation
+                  tickColor: '#eee',
+                  position: ($rootScope.app.layout.isRTL ? 'right' : 'left'),
+                  tickFormatter: function (v) {
+                      return v/* + ' visitors'*/;
+                  }
+              },
+              shadowSize: 0
+          };
+        }
+    }
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.dashboard')
+        .controller('DashboardV3Controller', DashboardV3Controller);
+
+    DashboardV3Controller.$inject = ['$rootScope'];
+    function DashboardV3Controller($rootScope) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // SPLINE
+          // ----------------------------------- 
+
+          vm.splineOptions = {
+              series: {
+                  lines: {
+                      show: false
+                  },
+                  points: {
+                      show: true,
+                      radius: 4
+                  },
+                  splines: {
+                      show: true,
+                      tension: 0.4,
+                      lineWidth: 1,
+                      fill: 0.5
+                  }
+              },
+              grid: {
+                  borderColor: '#eee',
+                  borderWidth: 1,
+                  hoverable: true,
+                  backgroundColor: '#fcfcfc'
+              },
+              tooltip: true,
+              tooltipOpts: {
+                  content: function (label, x, y) { return x + ' : ' + y; }
+              },
+              xaxis: {
+                  tickColor: '#fcfcfc',
+                  mode: 'categories'
+              },
+              yaxis: {
+                  min: 0,
+                  max: 150, // optional: use it for a clear represetation
+                  tickColor: '#eee',
+                  position: ($rootScope.app.layout.isRTL ? 'right' : 'left'),
+                  tickFormatter: function (v) {
+                      return v/* + ' visitors'*/;
+                  }
+              },
+              shadowSize: 0
+          };
+
+
+          vm.seriesData = {
+            'CA': 11100,   // Canada
+            'DE': 2510,    // Germany
+            'FR': 3710,    // France
+            'AU': 5710,    // Australia
+            'GB': 8310,    // Great Britain
+            'RU': 9310,    // Russia
+            'BR': 6610,    // Brazil
+            'IN': 7810,    // India
+            'CN': 4310,    // China
+            'US': 839,     // USA
+            'SA': 410      // Saudi Arabia
+          };
+          
+          vm.markersData = [
+            { latLng:[41.90, 12.45],  name:'Vatican City'          },
+            { latLng:[43.73, 7.41],   name:'Monaco'                },
+            { latLng:[-0.52, 166.93], name:'Nauru'                 },
+            { latLng:[-8.51, 179.21], name:'Tuvalu'                },
+            { latLng:[7.11,171.06],   name:'Marshall Islands'      },
+            { latLng:[17.3,-62.73],   name:'Saint Kitts and Nevis' },
+            { latLng:[3.2,73.22],     name:'Maldives'              },
+            { latLng:[35.88,14.5],    name:'Malta'                 },
+            { latLng:[41.0,-71.06],   name:'New England'           },
+            { latLng:[12.05,-61.75],  name:'Grenada'               },
+            { latLng:[13.16,-59.55],  name:'Barbados'              },
+            { latLng:[17.11,-61.85],  name:'Antigua and Barbuda'   },
+            { latLng:[-4.61,55.45],   name:'Seychelles'            },
+            { latLng:[7.35,134.46],   name:'Palau'                 },
+            { latLng:[42.5,1.51],     name:'Andorra'               }
+          ];
+        }
+    }
+})();
+/**=========================================================
+ * Module: article.js
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .controller('ArticleController', ArticleController);
+
+    function ArticleController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.htmlContent = 'Article content...';
+
+          vm.postDemo = {};
+          vm.postDemo.tags = ['coding', 'less'];
+          vm.availableTags = ['coding', 'less', 'sass', 'angularjs', 'node', 'expressJS'];
+          vm.postDemo.categories = ['JAVASCRIPT','WEB'];
+          vm.availableCategories = ['JAVASCRIPT','WEB', 'BOOTSTRAP', 'SERVER', 'HTML5', 'CSS'];
+
+          vm.reviewers = [
+            { name: 'Adam',      email: 'adam@email.com',      age: 10 },
+            { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
+            { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
+            { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
+            { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
+            { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
+            { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
+            { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
+          ];
+
+
+          vm.alerts = [
+            { type: 'info', msg: 'There is an autosaved version of this article that is more recent than the version below. <a href="#" class="text-white">Restore</a>' }
+          ];
+
+          vm.closeAlert = function(index) {
+            vm.alerts.splice(index, 1);
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: calendar-ui.js
+ * This script handle the calendar demo with draggable 
+ * events and events creations
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .directive('calendar', calendar);
+
+    calendar.$inject = ['$rootScope'];
+    function calendar ($rootScope) {
+        var directive = {
+            link: link,
+            restrict: 'EA'
+        };
+        return directive;
+
+        function link(scope, element) {
+          
+          if(!$.fn.fullCalendar) return;
+          
+          // The element that will display the calendar
+          var calendar = element;
+
+          var demoEvents = createDemoEvents();
+
+          initExternalEvents(calendar);
+
+          initCalendar(calendar, demoEvents, $rootScope.app.layout.isRTL);
+        }
+    }
+
+
+    // global shared var to know what we are dragging
+    var draggingEvent = null;
+
+
+    /**
+     * ExternalEvent object
+     * @param jQuery Object elements Set of element as jQuery objects
+     */
+    function ExternalEvent(elements) {
+        
+        if (!elements) return;
+        
+        elements.each(function() {
+            var $this = $(this);
+            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            // it doesn't need to have a start or end
+            var calendarEventObject = {
+                title: $.trim($this.text()) // use the element's text as the event title
+            };
+
+            // store the Event Object in the DOM element so we can get to it later
+            $this.data('calendarEventObject', calendarEventObject);
+
+            // make the event draggable using jQuery UI
+            $this.draggable({
+                zIndex: 1070,
+                revert: true, // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
+
+        });
+    }
+
+    /**
+     * Invoke full calendar plugin and attach behavior
+     * @param  jQuery [calElement] The calendar dom element wrapped into jQuery
+     * @param  EventObject [events] An object with the event list to load when the calendar displays
+     */
+    function initCalendar(calElement, events, isRTL) {
+
+        // check to remove elements from the list
+        var removeAfterDrop = $('#remove-after-drop');
+
+        calElement.fullCalendar({
+            isRTL: isRTL,
+            header: {
+                left:   'prev,next today',
+                center: 'title',
+                right:  'month,agendaWeek,agendaDay'
+            },
+            buttonIcons: { // note the space at the beginning
+                prev:    ' fa fa-caret-left',
+                next:    ' fa fa-caret-right'
+            },
+            buttonText: {
+                today: 'today',
+                month: 'month',
+                week:  'week',
+                day:   'day'
+            },
+            editable: true,
+            droppable: true, // this allows things to be dropped onto the calendar 
+            drop: function(date, allDay) { // this function is called when something is dropped
+                
+                var $this = $(this),
+                    // retrieve the dropped element's stored Event Object
+                    originalEventObject = $this.data('calendarEventObject');
+
+                // if something went wrong, abort
+                if(!originalEventObject) return;
+
+                // clone the object to avoid multiple events with reference to the same object
+                var clonedEventObject = $.extend({}, originalEventObject);
+
+                // assign the reported date
+                clonedEventObject.start = date;
+                clonedEventObject.allDay = allDay;
+                clonedEventObject.backgroundColor = $this.css('background-color');
+                clonedEventObject.borderColor = $this.css('border-color');
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" 
+                // (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                calElement.fullCalendar('renderEvent', clonedEventObject, true);
+                
+                // if necessary remove the element from the list
+                if(removeAfterDrop.is(':checked')) {
+                  $this.remove();
+                }
+            },
+            eventDragStart: function (event/*, js, ui*/) {
+              draggingEvent = event;
+            },
+            // This array is the events sources
+            events: events
+        });
+    }
+
+    /**
+     * Inits the external events panel
+     * @param  jQuery [calElement] The calendar dom element wrapped into jQuery
+     */
+    function initExternalEvents(calElement){
+      // Panel with the external events list
+      var externalEvents = $('.external-events');
+
+      // init the external events in the panel
+      new ExternalEvent(externalEvents.children('div'));
+
+      // External event color is danger-red by default
+      var currColor = '#f6504d';
+      // Color selector button
+      var eventAddBtn = $('.external-event-add-btn');
+      // New external event name input
+      var eventNameInput = $('.external-event-name');
+      // Color switchers
+      var eventColorSelector = $('.external-event-color-selector .circle');
+
+      // Trash events Droparea 
+      $('.external-events-trash').droppable({
+        accept:       '.fc-event',
+        activeClass:  'active',
+        hoverClass:   'hovered',
+        tolerance:    'touch',
+        drop: function(event, ui) {
+          
+          // You can use this function to send an ajax request
+          // to remove the event from the repository
+          
+          if(draggingEvent) {
+            var eid = draggingEvent.id || draggingEvent._id;
+            // Remove the event
+            calElement.fullCalendar('removeEvents', eid);
+            // Remove the dom element
+            ui.draggable.remove();
+            // clear
+            draggingEvent = null;
+          }
+        }
+      });
+
+      eventColorSelector.click(function(e) {
+          e.preventDefault();
+          var $this = $(this);
+
+          // Save color
+          currColor = $this.css('background-color');
+          // De-select all and select the current one
+          eventColorSelector.removeClass('selected');
+          $this.addClass('selected');
+      });
+
+      eventAddBtn.click(function(e) {
+          e.preventDefault();
+          
+          // Get event name from input
+          var val = eventNameInput.val();
+          // Dont allow empty values
+          if ($.trim(val) === '') return;
+          
+          // Create new event element
+          var newEvent = $('<div/>').css({
+                              'background-color': currColor,
+                              'border-color':     currColor,
+                              'color':            '#fff'
+                          })
+                          .html(val);
+
+          // Prepends to the external events list
+          externalEvents.prepend(newEvent);
+          // Initialize the new event element
+          new ExternalEvent(newEvent);
+          // Clear input
+          eventNameInput.val('');
+      });
+    }
+
+    /**
+     * Creates an array of events to display in the first load of the calendar
+     * Wrap into this function a request to a source to get via ajax the stored events
+     * @return Array The array with the events
+     */
+    function createDemoEvents() {
+      // Date for the calendar events (dummy data)
+      var date = new Date();
+      var d = date.getDate(),
+          m = date.getMonth(),
+          y = date.getFullYear();
+
+      return  [
+                {
+                    title: 'All Day Event',
+                    start: new Date(y, m, 1),
+                    backgroundColor: '#f56954', //red 
+                    borderColor: '#f56954' //red
+                },
+                {
+                    title: 'Long Event',
+                    start: new Date(y, m, d - 5),
+                    end: new Date(y, m, d - 2),
+                    backgroundColor: '#f39c12', //yellow
+                    borderColor: '#f39c12' //yellow
+                },
+                {
+                    title: 'Meeting',
+                    start: new Date(y, m, d, 10, 30),
+                    allDay: false,
+                    backgroundColor: '#0073b7', //Blue
+                    borderColor: '#0073b7' //Blue
+                },
+                {
+                    title: 'Lunch',
+                    start: new Date(y, m, d, 12, 0),
+                    end: new Date(y, m, d, 14, 0),
+                    allDay: false,
+                    backgroundColor: '#00c0ef', //Info (aqua)
+                    borderColor: '#00c0ef' //Info (aqua)
+                },
+                {
+                    title: 'Birthday Party',
+                    start: new Date(y, m, d + 1, 19, 0),
+                    end: new Date(y, m, d + 1, 22, 30),
+                    allDay: false,
+                    backgroundColor: '#00a65a', //Success (green)
+                    borderColor: '#00a65a' //Success (green)
+                },
+                {
+                    title: 'Open Google',
+                    start: new Date(y, m, 28),
+                    end: new Date(y, m, 29),
+                    url: '//google.com/',
+                    backgroundColor: '#3c8dbc', //Primary (light-blue)
+                    borderColor: '#3c8dbc' //Primary (light-blue)
+                }
+            ];
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .service('LoadTreeService', LoadTreeService);
+
+    LoadTreeService.$inject = ['$resource'];
+    function LoadTreeService($resource) {
+        // Loads the list of files to populate the treeview
+        return $resource('server/editor/filetree.json');
+    }
+
+})();
+/**=========================================================
+ * Module: code-editor.js
+ * Codemirror code editor controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .controller('CodeEditorController', CodeEditorController);
+
+    CodeEditorController.$inject = ['$rootScope', '$scope', '$http', '$ocLazyLoad', 'filetree'];
+    function CodeEditorController($rootScope, $scope, $http, $ocLazyLoad, filetree) {
+        var vm = this;
+
+        layout();
+        activate();
+
+        ////////////////
+        /*jshint -W106*/
+        function layout() {
+          // Setup the layout mode 
+          $rootScope.app.useFullLayout = true;
+          $rootScope.app.hiddenFooter = true;
+          $rootScope.app.layout.isCollapsed = true;
+          
+          // Restore layout for demo
+          $scope.$on('$destroy', function(){
+              $rootScope.app.useFullLayout = false;
+              $rootScope.app.hiddenFooter = false;
+          });
+
+        }
+
+        function activate() {
+
+          // Set the tree data into the scope
+          vm.filetree_data = filetree;
+
+          // Available themes
+          vm.editorThemes = ['3024-day','3024-night','ambiance-mobile','ambiance','base16-dark','base16-light','blackboard','cobalt','eclipse','elegant','erlang-dark','lesser-dark','mbo','mdn-like','midnight','monokai','neat','neo','night','paraiso-dark','paraiso-light','pastel-on-dark','rubyblue','solarized','the-matrix','tomorrow-night-eighties','twilight','vibrant-ink','xq-dark','xq-light'];
+
+          vm.editorOpts = {
+            mode: 'javascript',
+            lineNumbers: true,
+            matchBrackets: true,
+            theme: 'mbo',
+            viewportMargin: Infinity
+          };
+
+          vm.refreshEditor = 0;
+
+          // Load dinamically the stylesheet for the selected theme
+          // You can use ozLazyLoad to load also the mode js based 
+          // on the file extension that is loaded (see handle_filetree)
+          vm.loadTheme = function() {
+            var BASE = 'vendor/codemirror/theme/';
+            $ocLazyLoad.load(BASE + vm.editorOpts.theme + '.css');
+            vm.refreshEditor = !vm.refreshEditor;
+          };
+          // load default theme
+          vm.loadTheme(vm.editorOpts.theme);
+          // Add some initial text
+          vm.code = '// Open a file from the left menu \n' +
+                        '// It will be requested to the server and loaded into the editor\n' +
+                        '// Also try adding a New File from the toolbar\n';
+
+
+          // Tree
+
+          var selectedBranch;
+          vm.handle_filetree = function(branch) {
+            
+            selectedBranch = branch;
+
+            var basePath = 'server/editor/';
+            var isFolder = !!branch.children.length;
+
+            console.log('You selected: ' + branch.label + ' - isFolder? ' + isFolder);
+
+            if ( ! isFolder ) {
+
+              $http
+                .get( basePath + branch.path )
+                .success(function(response){
+                  
+                  console.log('Loaded.. ' + branch.path);
+                  // set the new code into the editor
+                  vm.code = response;
+                  
+                  vm.editorOpts.mode = detectMode(branch.path);
+                  console.log( 'Mode is: ' + vm.editorOpts.mode);
+
+                });
+            }
+          };
+
+          function detectMode(file) {
+            var ext = file.split('.');
+            ext = ext ? ext[ext.length - 1] : '';
+            switch (ext) {
+              case 'html':  return 'htmlmixed';
+              case 'css':   return 'css';
+              default:      return 'javascript';
+            }
+          }
+
+          var tree;
+          tree = vm.filetree = {};
+
+          // Adds a new branch to the tree
+          vm.new_filetree = function() {
+            var b;
+            b = tree.get_selected_branch();
+
+            // if we select a leaf -> select the parent folder
+            if ( b && b.children.length === 0 ) {
+              b = tree.get_parent_branch(b);
+            }
+            
+            return tree.add_branch(b, {
+              'label': 'another.html',
+              'path': 'source/another.html'
+            });
+          };
+        }
+    }
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .controller('TodoController', TodoController);
+
+    TodoController.$inject = ['$filter'];
+    function TodoController($filter) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+           vm.items = [
+            {
+              todo: {title: 'Meeting with Mark at 7am.', description: 'Pellentesque convallis mauris eu elit imperdiet quis eleifend quam aliquet. '},
+              complete: true
+            },
+            {
+              todo: {title: 'Call Sonya. Talk about the new project.', description: ''},
+              complete: false
+            },
+            {
+              todo: {title: 'Find a new place for vacations', description: ''},
+              complete: false
+            }
+            ];
+          
+          vm.editingTodo = false;
+          vm.todo = {};
+
+          vm.addTodo = function() {
+            
+            if( vm.todo.title === '' ) return;
+            if( !vm.todo.description ) vm.todo.description = '';
+            
+            if( vm.editingTodo ) {
+              vm.todo = {};
+              vm.editingTodo = false;
+            }
+            else {
+              vm.items.push({todo: angular.copy(vm.todo), complete: false});
+              vm.todo.title = '';
+              vm.todo.description = '';
+            }
+          };
+          
+          vm.editTodo = function(index, $event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            vm.todo = vm.items[index].todo;
+            vm.editingTodo = true;
+          };
+
+          vm.removeTodo = function(index/*, $event*/) {
+            vm.items.splice(index, 1);
+          };
+          
+          vm.clearAll = function() {
+            vm.items = [];
+          };
+
+          vm.totalCompleted = function() {
+            return $filter('filter')(vm.items, function(item){
+              return item.complete;
+            }).length;
+          };
+
+          vm.totalPending = function() {
+            return $filter('filter')(vm.items, function(item){
+              return !item.complete;
+            }).length;
+          };
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: word-cloud.js
+ * Controller for jqCloud
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.extras')
+        .controller('WordCloudController', WordCloudController);
+
+    function WordCloudController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.words = [
+              {
+                text: 'Lorem',
+                weight: 13
+                //link: 'http://themicon.co'
+              }, {
+                text: 'Ipsum',
+                weight: 10.5
+              }, {
+                text: 'Dolor',
+                weight: 9.4
+              }, {
+                text: 'Sit',
+                weight: 8
+              }, {
+                text: 'Amet',
+                weight: 6.2
+              }, {
+                text: 'Consectetur',
+                weight: 5
+              }, {
+                text: 'Adipiscing',
+                weight: 5
+              }, {
+                text: 'Sit',
+                weight: 8
+              }, {
+                text: 'Amet',
+                weight: 6.2
+              }, {
+                text: 'Consectetur',
+                weight: 5
+              }, {
+                text: 'Adipiscing',
+                weight: 5
+              }
+          ];
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .controller('ColorPickerController', ColorPickerController);
+
+    function ColorPickerController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+           vm.hexPicker = {
+              color: ''
+            };
+
+            vm.rgbPicker = {
+              color: ''
+            };
+
+            vm.rgbaPicker = {
+              color: ''
+            };
+
+            vm.nonInput = {
+              color: ''
+            };
+
+            vm.resetColor = function() {
+              vm.hexPicker = {
+                color: '#ff0000'
+              };
+            };
+
+            vm.resetRBGColor = function() {
+              vm.rgbPicker = {
+                color: 'rgb(255,255,255)'
+              };
+            };
+
+            vm.resetRBGAColor = function() {
+              vm.rgbaPicker = {
+                color: 'rgb(255,255,255, 0.25)'
+              };
+            };
+
+            vm.resetNonInputColor = function() {
+              vm.nonInput = {
+                color: '#ffffff'
+              };
+            };
+        }
+    }
+})();
+/**=========================================================
+ * Module: filestyle.js
+ * Initializes the fielstyle plugin
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .directive('filestyle', filestyle);
+
+    function filestyle () {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element) {
+          var options = element.data();
+          
+          // old usage support
+          options.classInput = element.data('classinput') || options.classInput;
+          
+          element.filestyle(options);
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: form-imgcrop.js
+ * Image crop controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .controller('ImageCropController', ImageCropController);
+
+    ImageCropController.$inject = ['$scope'];
+    function ImageCropController($scope) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.reset = function() {
+            vm.myImage        = '';
+            vm.myCroppedImage = '';
+            vm.imgcropType    = 'square';
+          };
+
+          vm.reset();
+
+          var handleFileSelect=function(evt) {
+            var file=evt.currentTarget.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+              $scope.$apply(function(/*$scope*/){
+                vm.myImage=evt.target.result;
+              });
+            };
+            if(file)
+              reader.readAsDataURL(file);
+          };
+          
+          angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: FormValidationController
+ * Input validation with UI Validate
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .controller('FormValidationController', FormValidationController);
+
+    function FormValidationController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.notBlackListed = function(value) {
+            var blacklist = ['some@mail.com','another@email.com'];
+            return blacklist.indexOf(value) === -1;
+          };
+
+          vm.words = function(value) {
+            return value && value.split(' ').length;
+          };
+
+          vm.submitted = false;
+          vm.validateInput = function(name, type) {
+            var input = vm.formValidate[name];
+            return (input.$dirty || vm.submitted) && input.$error[type];
+          };
+
+          // Submit form
+          vm.submitForm = function() {
+            vm.submitted = true;
+            if (vm.formValidate.$valid) {
+              console.log('Submitted!!');
+            } else {
+              console.log('Not valid!!');
+              return false;
+            }
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: form-wizard.js
+ * Handles form wizard plugin and validation
+ =========================================================*/
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .directive('formWizard', formWizard);
+
+    formWizard.$inject = ['$parse'];
+    function formWizard ($parse) {
+        var directive = {
+            link: link,
+            restrict: 'A',
+            scope: true
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var validate = $parse(attrs.validateSteps)(scope),
+              wiz = new Wizard(attrs.steps, !!validate, element);
+          scope.wizard = wiz.init();
+        }
+
+        function Wizard (quantity, validate, element) {
+          
+          var self = this;
+          self.quantity = parseInt(quantity,10);
+          self.validate = validate;
+          self.element = element;
+          
+          self.init = function() {
+            self.createsteps(self.quantity);
+            self.go(1); // always start at fist step
+            return self;
+          };
+
+          self.go = function(step) {
+            
+            if ( angular.isDefined(self.steps[step]) ) {
+
+              if(self.validate && step !== 1) {
+                var form = $(self.element),
+                    group = form.children().children('div').get(step - 2);
+
+                if (false === form.parsley().validate( group.id )) {
+                  return false;
+                }
+              }
+
+              self.cleanall();
+              self.steps[step] = true;
+            }
+          };
+
+          self.active = function(step) {
+            return !!self.steps[step];
+          };
+
+          self.cleanall = function() {
+            for(var i in self.steps){
+              self.steps[i] = false;
+            }
+          };
+
+          self.createsteps = function(q) {
+            self.steps = [];
+            for(var i = 1; i <= q; i++) self.steps[i] = false;
+          };
+
+        }
+    }
+
+
+})();
+
+/**=========================================================
+ * Module: form-xeditable.js
+ * Form xEditable controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .controller('FormxEditableController', FormxEditableController);
+
+    FormxEditableController.$inject = ['$scope', 'editableOptions', 'editableThemes', '$filter', '$http'];
+    function FormxEditableController($scope, editableOptions, editableThemes, $filter, $http) {
+        var vm = this;
+        vm.title = 'Controller';
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          editableOptions.theme = 'bs3';
+
+          editableThemes.bs3.inputClass = 'input-sm';
+          editableThemes.bs3.buttonsClass = 'btn-sm';
+          editableThemes.bs3.submitTpl = '<button type="submit" class="btn btn-success"><span class="fa fa-check"></span></button>';
+          editableThemes.bs3.cancelTpl = '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
+                                           '<span class="fa fa-times text-muted"></span>'+
+                                         '</button>';
+
+          vm.user = {
+            email: 'email@example.com',
+            tel: '123-45-67',
+            number: 29,
+            range: 10,
+            url: 'http://example.com',
+            search: 'blabla',
+            color: '#6a4415',
+            date: null,
+            time: new Date(),
+            datetime: null,
+            month: null,
+            week: null,
+            desc: 'Sed pharetra euismod dolor, id feugiat ante volutpat eget. '
+          };
+
+          // Local select
+          // ----------------------------------- 
+
+          vm.user2 = {
+            status: 2
+          };
+
+          vm.statuses = [
+            {value: 1, text: 'status1'},
+            {value: 2, text: 'status2'},
+            {value: 3, text: 'status3'},
+            {value: 4, text: 'status4'}
+          ];
+
+          vm.showStatus = function() {
+            var selected = $filter('filter')(vm.statuses, {value: vm.user2.status});
+            return (vm.user2.status && selected.length) ? selected[0].text : 'Not set';
+          };
+
+          // select remote
+          // ----------------------------------- 
+
+          vm.user3 = {
+            id: 4,
+            text: 'admin' // original value
+          };
+
+          vm.groups = [];
+
+          vm.loadGroups = function() {
+            return vm.groups.length ? null : $http.get('server/xeditable-groups.json').success(function(data) {
+              vm.groups = data;
+            });
+          };
+
+          $scope.$watch('user3.id', function(newVal, oldVal) {
+            if (newVal !== oldVal) {
+              var selected = $filter('filter')(vm.groups, {id: vm.user3.id});
+              vm.user3.text = selected.length ? selected[0].text : null;
+            }
+          });
+
+          // Typeahead
+          // ----------------------------------- 
+
+          vm.user4 = {
+            state: 'Arizona'
+          };
+
+          vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
+        }
+    }
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .controller('FormDemoCtrl', FormDemoCtrl);
+
+    FormDemoCtrl.$inject = ['$resource'];
+    function FormDemoCtrl($resource) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          // the following allow to request array $resource instead of object (default)
+          var actions = {'get': {method: 'GET', isArray: true}};
+          
+          // Tags inputs
+          // ----------------------------------- 
+          var Cities = $resource('server/cities.json', {}, actions);
+
+          Cities.get(function(data){
+
+              vm.cities = data;
+
+          });
+          // for non ajax form just fill the scope variable
+          // vm.cities = ['Amsterdam','Washington','Sydney','Beijing','Cairo'];
+
+          // Slider demo values
+          vm.slider1 = 5;
+          vm.slider2 = 10;
+          vm.slider3 = 15;
+          vm.slider4 = 20;
+          vm.slider5 = 25;
+          vm.slider6 = 30;
+          vm.slider7 = 10;
+          vm.slider8 = [250,750];
+
+          // Chosen data
+          // ----------------------------------- 
+
+          var States = $resource('server/chosen-states.json', {},  {'query':    {method:'GET', isArray:true} });
+
+          vm.states = States.query();
+
+
+          vm.alertSubmit = function(){
+            alert('Form submitted!');
+            return false;
+          };
+
+          // Angular wysiwyg 
+          // ----------------------------------- 
+
+          vm.wysiwygContent = '<p> Write something here.. </p>';
+
+          // Text Angular (wysiwyg)
+          // ----------------------------------- 
+          
+          vm.htmlContent = '<h2>Try me!</h2><p>textAngular is a super cool WYSIWYG Text Editor directive for AngularJS</p><p><b>Features:</b></p><ol><li>Automatic Seamless Two-Way-Binding</li><li style="color: blue;">Super Easy <b>Theming</b> Options</li><li>Simple Editor Instance Creation</li><li>Safely Parses Html for Custom Toolbar Icons</li><li>Doesn&apos;t Use an iFrame</li><li>Works with Firefox, Chrome, and IE8+</li></ol><p><a href="https://github.com/fraywing/textAngular">Source</a> </p>';
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: masked,js
+ * Initializes the masked inputs
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .directive('masked', masked);
+
+    function masked () {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element) {
+          var $elem = $(element);
+          if($.fn.inputmask)
+            $elem.inputmask();
+        }
+    }
+
+})();
+
+/**
+ * AngularJS default filter with the following expression:
+ * "person in people | filter: {name: $select.search, age: $select.search}"
+ * performs a AND between 'name: $select.search' and 'age: $select.search'.
+ * We want to perform a OR.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .filter('propsFilter', propsFilter);
+
+    function propsFilter() {
+        return filterFilter;
+
+        ////////////////
+        function filterFilter(items, props) {
+          var out = [];
+
+          if (angular.isArray(items)) {
+            items.forEach(function(item) {
+              var itemMatches = false;
+
+              var keys = Object.keys(props);
+              for (var i = 0; i < keys.length; i++) {
+                var prop = keys[i];
+                var text = props[prop].toLowerCase();
+                if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                  itemMatches = true;
+                  break;
+                }
+              }
+
+              if (itemMatches) {
+                out.push(item);
+              }
+            });
+          } else {
+            // Let the output be the input untouched
+            out = items;
+          }
+
+          return out;
+        }
+    }
+
+})();
+/**=========================================================
+ * Module: tags-input.js
+ * Initializes the tag inputs plugin
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .directive('tagsinput', tagsinput);
+
+    tagsinput.$inject = ['$timeout'];
+    function tagsinput ($timeout) {
+        var directive = {
+            link: link,
+            require: 'ngModel',
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs, ngModel) {
+          element.on('itemAdded itemRemoved', function(){
+            // check if view value is not empty and is a string
+            // and update the view from string to an array of tags
+            if(ngModel.$viewValue && ngModel.$viewValue.split) {
+              ngModel.$setViewValue( ngModel.$viewValue.split(',') );
+              ngModel.$render();
+            }
+          });
+
+          $timeout(function(){
+            element.tagsinput();
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: uiselect.js
+ * uiSelect controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .controller('uiSelectController', uiSelectController);
+
+    uiSelectController.$inject = ['$scope', '$http'];
+    function uiSelectController($scope, $http) {
+        /* jshint validthis:true */
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.disabled = undefined;
+
+          vm.enable = function() {
+            vm.disabled = false;
+          };
+
+          vm.disable = function() {
+            vm.disabled = true;
+          };
+
+          vm.clear = function() {
+            vm.person.selected = undefined;
+            vm.address.selected = undefined;
+            vm.country.selected = undefined;
+          };
+
+          vm.person = {};
+          vm.people = [
+            { name: 'Adam',      email: 'adam@email.com',      age: 10 },
+            { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
+            { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
+            { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
+            { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
+            { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
+            { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
+            { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
+          ];
+
+          vm.address = {};
+          vm.refreshAddresses = function(address) {
+            var params = {address: address, sensor: false};
+            return $http.get(
+              '//maps.googleapis.com/maps/api/geocode/json',
+              {params: params}
+            ).then(function(response) {
+              vm.addresses = response.data.results;
+            });
+          };
+
+          vm.country = {};
+          vm.countries = [ // Taken from https://gist.github.com/unceus/6501985
+            {name: 'Afghanistan', code: 'AF'},
+            {name: 'Åland Islands', code: 'AX'},
+            {name: 'Albania', code: 'AL'},
+            {name: 'Algeria', code: 'DZ'},
+            {name: 'American Samoa', code: 'AS'},
+            {name: 'Andorra', code: 'AD'},
+            {name: 'Angola', code: 'AO'},
+            {name: 'Anguilla', code: 'AI'},
+            {name: 'Antarctica', code: 'AQ'},
+            {name: 'Antigua and Barbuda', code: 'AG'},
+            {name: 'Argentina', code: 'AR'},
+            {name: 'Armenia', code: 'AM'},
+            {name: 'Aruba', code: 'AW'},
+            {name: 'Australia', code: 'AU'},
+            {name: 'Austria', code: 'AT'},
+            {name: 'Azerbaijan', code: 'AZ'},
+            {name: 'Bahamas', code: 'BS'},
+            {name: 'Bahrain', code: 'BH'},
+            {name: 'Bangladesh', code: 'BD'},
+            {name: 'Barbados', code: 'BB'},
+            {name: 'Belarus', code: 'BY'},
+            {name: 'Belgium', code: 'BE'},
+            {name: 'Belize', code: 'BZ'},
+            {name: 'Benin', code: 'BJ'},
+            {name: 'Bermuda', code: 'BM'},
+            {name: 'Bhutan', code: 'BT'},
+            {name: 'Bolivia', code: 'BO'},
+            {name: 'Bosnia and Herzegovina', code: 'BA'},
+            {name: 'Botswana', code: 'BW'},
+            {name: 'Bouvet Island', code: 'BV'},
+            {name: 'Brazil', code: 'BR'},
+            {name: 'British Indian Ocean Territory', code: 'IO'},
+            {name: 'Brunei Darussalam', code: 'BN'},
+            {name: 'Bulgaria', code: 'BG'},
+            {name: 'Burkina Faso', code: 'BF'},
+            {name: 'Burundi', code: 'BI'},
+            {name: 'Cambodia', code: 'KH'},
+            {name: 'Cameroon', code: 'CM'},
+            {name: 'Canada', code: 'CA'},
+            {name: 'Cape Verde', code: 'CV'},
+            {name: 'Cayman Islands', code: 'KY'},
+            {name: 'Central African Republic', code: 'CF'},
+            {name: 'Chad', code: 'TD'},
+            {name: 'Chile', code: 'CL'},
+            {name: 'China', code: 'CN'},
+            {name: 'Christmas Island', code: 'CX'},
+            {name: 'Cocos (Keeling) Islands', code: 'CC'},
+            {name: 'Colombia', code: 'CO'},
+            {name: 'Comoros', code: 'KM'},
+            {name: 'Congo', code: 'CG'},
+            {name: 'Congo, The Democratic Republic of the', code: 'CD'},
+            {name: 'Cook Islands', code: 'CK'},
+            {name: 'Costa Rica', code: 'CR'},
+            {name: 'Cote D\'Ivoire', code: 'CI'},
+            {name: 'Croatia', code: 'HR'},
+            {name: 'Cuba', code: 'CU'},
+            {name: 'Cyprus', code: 'CY'},
+            {name: 'Czech Republic', code: 'CZ'},
+            {name: 'Denmark', code: 'DK'},
+            {name: 'Djibouti', code: 'DJ'},
+            {name: 'Dominica', code: 'DM'},
+            {name: 'Dominican Republic', code: 'DO'},
+            {name: 'Ecuador', code: 'EC'},
+            {name: 'Egypt', code: 'EG'},
+            {name: 'El Salvador', code: 'SV'},
+            {name: 'Equatorial Guinea', code: 'GQ'},
+            {name: 'Eritrea', code: 'ER'},
+            {name: 'Estonia', code: 'EE'},
+            {name: 'Ethiopia', code: 'ET'},
+            {name: 'Falkland Islands (Malvinas)', code: 'FK'},
+            {name: 'Faroe Islands', code: 'FO'},
+            {name: 'Fiji', code: 'FJ'},
+            {name: 'Finland', code: 'FI'},
+            {name: 'France', code: 'FR'},
+            {name: 'French Guiana', code: 'GF'},
+            {name: 'French Polynesia', code: 'PF'},
+            {name: 'French Southern Territories', code: 'TF'},
+            {name: 'Gabon', code: 'GA'},
+            {name: 'Gambia', code: 'GM'},
+            {name: 'Georgia', code: 'GE'},
+            {name: 'Germany', code: 'DE'},
+            {name: 'Ghana', code: 'GH'},
+            {name: 'Gibraltar', code: 'GI'},
+            {name: 'Greece', code: 'GR'},
+            {name: 'Greenland', code: 'GL'},
+            {name: 'Grenada', code: 'GD'},
+            {name: 'Guadeloupe', code: 'GP'},
+            {name: 'Guam', code: 'GU'},
+            {name: 'Guatemala', code: 'GT'},
+            {name: 'Guernsey', code: 'GG'},
+            {name: 'Guinea', code: 'GN'},
+            {name: 'Guinea-Bissau', code: 'GW'},
+            {name: 'Guyana', code: 'GY'},
+            {name: 'Haiti', code: 'HT'},
+            {name: 'Heard Island and Mcdonald Islands', code: 'HM'},
+            {name: 'Holy See (Vatican City State)', code: 'VA'},
+            {name: 'Honduras', code: 'HN'},
+            {name: 'Hong Kong', code: 'HK'},
+            {name: 'Hungary', code: 'HU'},
+            {name: 'Iceland', code: 'IS'},
+            {name: 'India', code: 'IN'},
+            {name: 'Indonesia', code: 'ID'},
+            {name: 'Iran, Islamic Republic Of', code: 'IR'},
+            {name: 'Iraq', code: 'IQ'},
+            {name: 'Ireland', code: 'IE'},
+            {name: 'Isle of Man', code: 'IM'},
+            {name: 'Israel', code: 'IL'},
+            {name: 'Italy', code: 'IT'},
+            {name: 'Jamaica', code: 'JM'},
+            {name: 'Japan', code: 'JP'},
+            {name: 'Jersey', code: 'JE'},
+            {name: 'Jordan', code: 'JO'},
+            {name: 'Kazakhstan', code: 'KZ'},
+            {name: 'Kenya', code: 'KE'},
+            {name: 'Kiribati', code: 'KI'},
+            {name: 'Korea, Democratic People\'s Republic of', code: 'KP'},
+            {name: 'Korea, Republic of', code: 'KR'},
+            {name: 'Kuwait', code: 'KW'},
+            {name: 'Kyrgyzstan', code: 'KG'},
+            {name: 'Lao People\'s Democratic Republic', code: 'LA'},
+            {name: 'Latvia', code: 'LV'},
+            {name: 'Lebanon', code: 'LB'},
+            {name: 'Lesotho', code: 'LS'},
+            {name: 'Liberia', code: 'LR'},
+            {name: 'Libyan Arab Jamahiriya', code: 'LY'},
+            {name: 'Liechtenstein', code: 'LI'},
+            {name: 'Lithuania', code: 'LT'},
+            {name: 'Luxembourg', code: 'LU'},
+            {name: 'Macao', code: 'MO'},
+            {name: 'Macedonia, The Former Yugoslav Republic of', code: 'MK'},
+            {name: 'Madagascar', code: 'MG'},
+            {name: 'Malawi', code: 'MW'},
+            {name: 'Malaysia', code: 'MY'},
+            {name: 'Maldives', code: 'MV'},
+            {name: 'Mali', code: 'ML'},
+            {name: 'Malta', code: 'MT'},
+            {name: 'Marshall Islands', code: 'MH'},
+            {name: 'Martinique', code: 'MQ'},
+            {name: 'Mauritania', code: 'MR'},
+            {name: 'Mauritius', code: 'MU'},
+            {name: 'Mayotte', code: 'YT'},
+            {name: 'Mexico', code: 'MX'},
+            {name: 'Micronesia, Federated States of', code: 'FM'},
+            {name: 'Moldova, Republic of', code: 'MD'},
+            {name: 'Monaco', code: 'MC'},
+            {name: 'Mongolia', code: 'MN'},
+            {name: 'Montserrat', code: 'MS'},
+            {name: 'Morocco', code: 'MA'},
+            {name: 'Mozambique', code: 'MZ'},
+            {name: 'Myanmar', code: 'MM'},
+            {name: 'Namibia', code: 'NA'},
+            {name: 'Nauru', code: 'NR'},
+            {name: 'Nepal', code: 'NP'},
+            {name: 'Netherlands', code: 'NL'},
+            {name: 'Netherlands Antilles', code: 'AN'},
+            {name: 'New Caledonia', code: 'NC'},
+            {name: 'New Zealand', code: 'NZ'},
+            {name: 'Nicaragua', code: 'NI'},
+            {name: 'Niger', code: 'NE'},
+            {name: 'Nigeria', code: 'NG'},
+            {name: 'Niue', code: 'NU'},
+            {name: 'Norfolk Island', code: 'NF'},
+            {name: 'Northern Mariana Islands', code: 'MP'},
+            {name: 'Norway', code: 'NO'},
+            {name: 'Oman', code: 'OM'},
+            {name: 'Pakistan', code: 'PK'},
+            {name: 'Palau', code: 'PW'},
+            {name: 'Palestinian Territory, Occupied', code: 'PS'},
+            {name: 'Panama', code: 'PA'},
+            {name: 'Papua New Guinea', code: 'PG'},
+            {name: 'Paraguay', code: 'PY'},
+            {name: 'Peru', code: 'PE'},
+            {name: 'Philippines', code: 'PH'},
+            {name: 'Pitcairn', code: 'PN'},
+            {name: 'Poland', code: 'PL'},
+            {name: 'Portugal', code: 'PT'},
+            {name: 'Puerto Rico', code: 'PR'},
+            {name: 'Qatar', code: 'QA'},
+            {name: 'Reunion', code: 'RE'},
+            {name: 'Romania', code: 'RO'},
+            {name: 'Russian Federation', code: 'RU'},
+            {name: 'Rwanda', code: 'RW'},
+            {name: 'Saint Helena', code: 'SH'},
+            {name: 'Saint Kitts and Nevis', code: 'KN'},
+            {name: 'Saint Lucia', code: 'LC'},
+            {name: 'Saint Pierre and Miquelon', code: 'PM'},
+            {name: 'Saint Vincent and the Grenadines', code: 'VC'},
+            {name: 'Samoa', code: 'WS'},
+            {name: 'San Marino', code: 'SM'},
+            {name: 'Sao Tome and Principe', code: 'ST'},
+            {name: 'Saudi Arabia', code: 'SA'},
+            {name: 'Senegal', code: 'SN'},
+            {name: 'Serbia and Montenegro', code: 'CS'},
+            {name: 'Seychelles', code: 'SC'},
+            {name: 'Sierra Leone', code: 'SL'},
+            {name: 'Singapore', code: 'SG'},
+            {name: 'Slovakia', code: 'SK'},
+            {name: 'Slovenia', code: 'SI'},
+            {name: 'Solomon Islands', code: 'SB'},
+            {name: 'Somalia', code: 'SO'},
+            {name: 'South Africa', code: 'ZA'},
+            {name: 'South Georgia and the South Sandwich Islands', code: 'GS'},
+            {name: 'Spain', code: 'ES'},
+            {name: 'Sri Lanka', code: 'LK'},
+            {name: 'Sudan', code: 'SD'},
+            {name: 'Suriname', code: 'SR'},
+            {name: 'Svalbard and Jan Mayen', code: 'SJ'},
+            {name: 'Swaziland', code: 'SZ'},
+            {name: 'Sweden', code: 'SE'},
+            {name: 'Switzerland', code: 'CH'},
+            {name: 'Syrian Arab Republic', code: 'SY'},
+            {name: 'Taiwan, Province of China', code: 'TW'},
+            {name: 'Tajikistan', code: 'TJ'},
+            {name: 'Tanzania, United Republic of', code: 'TZ'},
+            {name: 'Thailand', code: 'TH'},
+            {name: 'Timor-Leste', code: 'TL'},
+            {name: 'Togo', code: 'TG'},
+            {name: 'Tokelau', code: 'TK'},
+            {name: 'Tonga', code: 'TO'},
+            {name: 'Trinidad and Tobago', code: 'TT'},
+            {name: 'Tunisia', code: 'TN'},
+            {name: 'Turkey', code: 'TR'},
+            {name: 'Turkmenistan', code: 'TM'},
+            {name: 'Turks and Caicos Islands', code: 'TC'},
+            {name: 'Tuvalu', code: 'TV'},
+            {name: 'Uganda', code: 'UG'},
+            {name: 'Ukraine', code: 'UA'},
+            {name: 'United Arab Emirates', code: 'AE'},
+            {name: 'United Kingdom', code: 'GB'},
+            {name: 'United States', code: 'US'},
+            {name: 'United States Minor Outlying Islands', code: 'UM'},
+            {name: 'Uruguay', code: 'UY'},
+            {name: 'Uzbekistan', code: 'UZ'},
+            {name: 'Vanuatu', code: 'VU'},
+            {name: 'Venezuela', code: 'VE'},
+            {name: 'Vietnam', code: 'VN'},
+            {name: 'Virgin Islands, British', code: 'VG'},
+            {name: 'Virgin Islands, U.S.', code: 'VI'},
+            {name: 'Wallis and Futuna', code: 'WF'},
+            {name: 'Western Sahara', code: 'EH'},
+            {name: 'Yemen', code: 'YE'},
+            {name: 'Zambia', code: 'ZM'},
+            {name: 'Zimbabwe', code: 'ZW'}
+          ];
+
+
+          // Multiple
+          vm.someGroupFn = function (item){
+
+            if (item.name[0] >= 'A' && item.name[0] <= 'M')
+                return 'From A - M';
+
+            if (item.name[0] >= 'N' && item.name[0] <= 'Z')
+                return 'From N - Z';
+
+          };
+
+          vm.counter = 0;
+          vm.someFunction = function (item, model){
+            vm.counter++;
+            vm.eventResult = {item: item, model: model};
+          };
+
+          vm.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+
+          vm.multipleDemo = {};
+          vm.multipleDemo.colors = ['Blue','Red'];
+          vm.multipleDemo.selectedPeople = [vm.people[5], vm.people[4]];
+          vm.multipleDemo.selectedPeopleWithGroupBy = [vm.people[8], vm.people[6]];
+          vm.multipleDemo.selectedPeopleSimple = ['samantha@email.com','wladimir@email.com'];
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: upload.js
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .controller('FileUploadController', FileUploadController);
+
+    FileUploadController.$inject = ['FileUploader'];
+    function FileUploadController(FileUploader) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          var uploader = vm.uploader = new FileUploader({
+              url: 'server/upload.php'
+          });
+
+          // FILTERS
+
+          uploader.filters.push({
+              name: 'customFilter',
+              fn: function(/*item, options*/) {
+                  return this.queue.length < 10;
+              }
+          });
+
+          // CALLBACKS
+
+          uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+              console.info('onWhenAddingFileFailed', item, filter, options);
+          };
+          uploader.onAfterAddingFile = function(fileItem) {
+              console.info('onAfterAddingFile', fileItem);
+          };
+          uploader.onAfterAddingAll = function(addedFileItems) {
+              console.info('onAfterAddingAll', addedFileItems);
+          };
+          uploader.onBeforeUploadItem = function(item) {
+              console.info('onBeforeUploadItem', item);
+          };
+          uploader.onProgressItem = function(fileItem, progress) {
+              console.info('onProgressItem', fileItem, progress);
+          };
+          uploader.onProgressAll = function(progress) {
+              console.info('onProgressAll', progress);
+          };
+          uploader.onSuccessItem = function(fileItem, response, status, headers) {
+              console.info('onSuccessItem', fileItem, response, status, headers);
+          };
+          uploader.onErrorItem = function(fileItem, response, status, headers) {
+              console.info('onErrorItem', fileItem, response, status, headers);
+          };
+          uploader.onCancelItem = function(fileItem, response, status, headers) {
+              console.info('onCancelItem', fileItem, response, status, headers);
+          };
+          uploader.onCompleteItem = function(fileItem, response, status, headers) {
+              console.info('onCompleteItem', fileItem, response, status, headers);
+          };
+          uploader.onCompleteAll = function() {
+              console.info('onCompleteAll');
+          };
+
+          console.info('uploader', uploader);
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: validate-form.js
+ * Initializes the validation plugin Parsley
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.forms')
+        .directive('validateForm', validateForm);
+
+    function validateForm () {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element) {
+          var $elem = $(element);
+          if($.fn.parsley)
+            $elem.parsley();
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: flatdoc.js
+ * Creates the flatdoc markup and initializes the plugin
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.flatdoc')
+        .directive('flatdoc', flatdoc);
+
+    function flatdoc () {
+
+        var directive = {
+            template: '<div role="flatdoc"><div role="flatdoc-menu"></div><div role="flatdoc-content"></div></div>',
+            link: link,
+            restrict: 'EA'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          Flatdoc.run({
+            fetcher: Flatdoc.file(attrs.src)
+          });
+          
+          var $root = $('html, body');
+          $(document).on('flatdoc:ready', function() {
+            var docMenu = $('[role="flatdoc-menu"]');
+            docMenu.find('a').on('click', function(e) {
+              e.preventDefault(); e.stopPropagation();
+              
+              var $this = $(this);
+              
+              docMenu.find('a.active').removeClass('active');
+              $this.addClass('active');
+
+              $root.animate({
+                    scrollTop: $(this.getAttribute('href')).offset().top - ($('.topnavbar').height() + 10)
+                }, 800);
+            });
+
+          });
+        }
+    }
+
+
+})();
+
+/**=========================================================
+ * Module: skycons.js
+ * Include any animated weather icon from Skycons
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.icons')
+        .directive('skycon', skycon);
+
+    function skycon () {
+
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var skycons = new Skycons({'color': (attrs.color || 'white')});
+
+          element.html('<canvas width="' + attrs.width + '" height="' + attrs.height + '"></canvas>');
+
+          skycons.add(element.children()[0], attrs.skycon);
+
+          skycons.play();
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.lazyload')
+        .config(lazyloadConfig);
+
+    lazyloadConfig.$inject = ['$ocLazyLoadProvider', 'APP_REQUIRES'];
+    function lazyloadConfig($ocLazyLoadProvider, APP_REQUIRES){
+
+      // Lazy Load modules configuration
+      $ocLazyLoadProvider.config({
+        debug: false,
+        events: true,
+        modules: APP_REQUIRES.modules
+      });
+
+    }
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.lazyload')
+        .constant('APP_REQUIRES', {
+            // jQuery based and standalone scripts
+            scripts: {
+                'whirl':              ['vendor/whirl/dist/whirl.css'],
+                'classyloader':       ['vendor/jquery-classyloader/js/jquery.classyloader.min.js'],
+                'animo':              ['vendor/animo.js/animo.js'],
+                'fastclick':          ['vendor/fastclick/lib/fastclick.js'],
+                'modernizr':          ['vendor/modernizr/modernizr.custom.js'],
+                'animate':            ['vendor/animate.css/animate.min.css'],
+                'skycons':            ['vendor/skycons/skycons.js'],
+                'icons':              ['vendor/fontawesome/css/font-awesome.min.css',
+                    'vendor/simple-line-icons/css/simple-line-icons.css'],
+                'weather-icons':      ['vendor/weather-icons/css/weather-icons.min.css',
+                    'vendor/weather-icons/css/weather-icons-wind.min.css'],
+                'sparklines':         ['vendor/sparkline/index.js'],
+                'wysiwyg':            ['vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js',
+                    'vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js'],
+                'slimscroll':         ['vendor/slimScroll/jquery.slimscroll.min.js'],
+                'screenfull':         ['vendor/screenfull/dist/screenfull.js'],
+                'vector-map':         ['vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js',
+                    'vendor/ika.jvectormap/jquery-jvectormap-1.2.2.css'],
+                'vector-map-maps':    ['vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js',
+                    'vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js'],
+                'loadGoogleMapsJS':   ['vendor/load-google-maps/load-google-maps.js'],
+                'flot-chart':         ['vendor/Flot/jquery.flot.js'],
+                'flot-chart-plugins': ['vendor/flot.tooltip/js/jquery.flot.tooltip.min.js',
+                    'vendor/Flot/jquery.flot.resize.js',
+                    'vendor/Flot/jquery.flot.pie.js',
+                    'vendor/Flot/jquery.flot.time.js',
+                    'vendor/Flot/jquery.flot.categories.js',
+                    'vendor/flot-spline/js/jquery.flot.spline.min.js'],
+                // jquery core and widgets
+                'jquery-ui':          ['vendor/jquery-ui/ui/core.js',
+                    'vendor/jquery-ui/ui/widget.js'],
+                // loads only jquery required modules and touch support
+                'jquery-ui-widgets':  ['vendor/jquery-ui/ui/core.js',
+                    'vendor/jquery-ui/ui/widget.js',
+                    'vendor/jquery-ui/ui/mouse.js',
+                    'vendor/jquery-ui/ui/draggable.js',
+                    'vendor/jquery-ui/ui/droppable.js',
+                    'vendor/jquery-ui/ui/sortable.js',
+                    'vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js'],
+                'moment' :            ['vendor/moment/min/moment-with-locales.min.js'],
+                'inputmask':          ['vendor/jquery.inputmask/dist/jquery.inputmask.bundle.js'],
+                'flatdoc':            ['vendor/flatdoc/flatdoc.js'],
+                'codemirror':         ['vendor/codemirror/lib/codemirror.js',
+                    'vendor/codemirror/lib/codemirror.css'],
+                // modes for common web files
+                'codemirror-modes-web': ['vendor/codemirror/mode/javascript/javascript.js',
+                    'vendor/codemirror/mode/xml/xml.js',
+                    'vendor/codemirror/mode/htmlmixed/htmlmixed.js',
+                    'vendor/codemirror/mode/css/css.js'],
+                'taginput' :          ['vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
+                    'vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js'],
+                'filestyle':          ['vendor/bootstrap-filestyle/src/bootstrap-filestyle.js'],
+                'parsley':            ['vendor/parsleyjs/dist/parsley.min.js'],
+                'fullcalendar':       ['vendor/fullcalendar/dist/fullcalendar.min.js',
+                    'vendor/fullcalendar/dist/fullcalendar.css'],
+                'gcal':               ['vendor/fullcalendar/dist/gcal.js'],
+                'chartjs':            ['vendor/Chart.js/Chart.js'],
+                'morris':             ['vendor/raphael/raphael.js',
+                    'vendor/morris.js/morris.js',
+                    'vendor/morris.js/morris.css'],
+                'loaders.css':          ['vendor/loaders.css/loaders.css'],
+                'spinkit':              ['vendor/spinkit/css/spinkit.css']
+            },
+            // Angular based script (use the right module name)
+            modules: [
+                {name: 'toaster',                   files: ['vendor/angularjs-toaster/toaster.js',
+                    'vendor/angularjs-toaster/toaster.css']},
+                {name: 'localytics.directives',     files: ['vendor/chosen_v1.2.0/chosen.jquery.min.js',
+                    'vendor/chosen_v1.2.0/chosen.min.css',
+                    'vendor/angular-chosen-localytics/chosen.js'],
+                    serie: true},
+                {name: 'ngDialog',                  files: ['vendor/ngDialog/js/ngDialog.min.js',
+                    'vendor/ngDialog/css/ngDialog.min.css',
+                    'vendor/ngDialog/css/ngDialog-theme-default.min.css'] },
+                {name: 'ngWig',                     files: ['vendor/ngWig/dist/ng-wig.min.js'] },
+                {name: 'ngTable',                   files: ['vendor/ng-table/dist/ng-table.min.js',
+                    'vendor/ng-table/dist/ng-table.min.css']},
+                {name: 'ngTableExport',             files: ['vendor/ng-table-export/ng-table-export.js']},
+                {name: 'angularBootstrapNavTree',   files: ['vendor/angular-bootstrap-nav-tree/dist/abn_tree_directive.js',
+                    'vendor/angular-bootstrap-nav-tree/dist/abn_tree.css']},
+                {name: 'htmlSortable',              files: ['vendor/html.sortable/dist/html.sortable.js',
+                    'vendor/html.sortable/dist/html.sortable.angular.js']},
+                {name: 'xeditable',                 files: ['vendor/angular-xeditable/dist/js/xeditable.js',
+                    'vendor/angular-xeditable/dist/css/xeditable.css']},
+                {name: 'angularFileUpload',         files: ['vendor/angular-file-upload/dist/angular-file-upload.js']},
+                {name: 'ngImgCrop',                 files: ['vendor/ng-img-crop/compile/unminified/ng-img-crop.js',
+                    'vendor/ng-img-crop/compile/unminified/ng-img-crop.css']},
+                {name: 'ui.select',                 files: ['vendor/angular-ui-select/dist/select.js',
+                    'vendor/angular-ui-select/dist/select.css']},
+                {name: 'ui.codemirror',             files: ['vendor/angular-ui-codemirror/ui-codemirror.js']},
+                {name: 'angular-carousel',          files: ['vendor/angular-carousel/dist/angular-carousel.css',
+                    'vendor/angular-carousel/dist/angular-carousel.js']},
+                {name: 'infinite-scroll',           files: ['vendor/ngInfiniteScroll/build/ng-infinite-scroll.js']},
+                {name: 'ui.bootstrap-slider',       files: ['vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
+                    'vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
+                    'vendor/angular-bootstrap-slider/slider.js']},
+                {name: 'ui.grid',                   files: ['vendor/angular-ui-grid/ui-grid.min.css',
+                    'vendor/angular-ui-grid/ui-grid.min.js']},
+                {name: 'textAngular',               files: ['vendor/textAngular/dist/textAngular.css',
+                    'vendor/textAngular/dist/textAngular-rangy.min.js',
+                    'vendor/textAngular/dist/textAngular-sanitize.js',
+                    'vendor/textAngular/src/globals.js',
+                    'vendor/textAngular/src/factories.js',
+                    'vendor/textAngular/src/DOM.js',
+                    'vendor/textAngular/src/validators.js',
+                    'vendor/textAngular/src/taBind.js',
+                    'vendor/textAngular/src/main.js',
+                    'vendor/textAngular/dist/textAngularSetup.js'
+                ], serie: true},
+                {name: 'angular-rickshaw',          files: ['vendor/d3/d3.min.js',
+                    'vendor/rickshaw/rickshaw.js',
+                    'vendor/rickshaw/rickshaw.min.css',
+                    'vendor/angular-rickshaw/rickshaw.js'], serie: true},
+                {name: 'angular-chartist',          files: ['vendor/chartist/dist/chartist.min.css',
+                    'vendor/chartist/dist/chartist.js',
+                    'vendor/angular-chartist.js/dist/angular-chartist.js'], serie: true},
+                {name: 'ui.map',                    files: ['vendor/angular-ui-map/ui-map.js']},
+                {name: 'datatables',                files: ['vendor/datatables/media/css/jquery.dataTables.css',
+                    'vendor/datatables/media/js/jquery.dataTables.js',
+                    'vendor/angular-datatables/dist/angular-datatables.js'], serie: true},
+                {name: 'angular-jqcloud',           files: ['vendor/jqcloud2/dist/jqcloud.css',
+                    'vendor/jqcloud2/dist/jqcloud.js',
+                    'vendor/angular-jqcloud/angular-jqcloud.js']},
+                {name: 'angularGrid',               files: ['vendor/ag-grid/dist/ag-grid.css',
+                    'vendor/ag-grid/dist/ag-grid.js',
+                    'vendor/ag-grid/dist/theme-dark.css',
+                    'vendor/ag-grid/dist/theme-fresh.css']},
+                {name: 'ng-nestable',               files: ['vendor/ng-nestable/src/angular-nestable.js',
+                    'vendor/nestable/jquery.nestable.js']},
+                {name: 'akoenig.deckgrid',          files: ['vendor/angular-deckgrid/angular-deckgrid.js']},
+                {name: 'oitozero.ngSweetAlert',     files: ['vendor/sweetalert/dist/sweetalert.css',
+                    'vendor/sweetalert/dist/sweetalert.min.js',
+                    'vendor/angular-sweetalert/SweetAlert.js']},
+                {name: 'bm.bsTour',                 files: ['vendor/bootstrap-tour/build/css/bootstrap-tour.css',
+                    'vendor/bootstrap-tour/build/js/bootstrap-tour-standalone.js',
+                    'vendor/angular-bootstrap-tour/dist/angular-bootstrap-tour.js'], serie: true},
+                {name: 'ui.knob',                   files: ['vendor/angular-knob/src/angular-knob.js',
+                    'vendor/jquery-knob/dist/jquery.knob.min.js']},
+                {name: 'easypiechart',              files: ['vendor/jquery.easy-pie-chart/dist/angular.easypiechart.min.js']},
+                {name: 'colorpicker.module',        files: ['vendor/angular-bootstrap-colorpicker/css/colorpicker.css',
+                    'vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js']},
+                {name:'affix',                      files: ['vendor/affix/affix.js', 'vendor/affix/debounce.js', 'vendor/affix/dimensions.js']}
+
+            ]
+        })
+    ;
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.loadingbar')
+        .config(loadingbarConfig)
+        ;
+    loadingbarConfig.$inject = ['cfpLoadingBarProvider'];
+    function loadingbarConfig(cfpLoadingBarProvider){
+      cfpLoadingBarProvider.includeBar = true;
+      cfpLoadingBarProvider.includeSpinner = false;
+      cfpLoadingBarProvider.latencyThreshold = 500;
+      cfpLoadingBarProvider.parentSelector = '.wrapper > section';
+    }
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.loadingbar')
+        .run(loadingbarRun)
+        ;
+    loadingbarRun.$inject = ['$rootScope', '$timeout', 'cfpLoadingBar'];
+    function loadingbarRun($rootScope, $timeout, cfpLoadingBar){
+
+      // Loading bar transition
+      // ----------------------------------- 
+      var thBar;
+      $rootScope.$on('$stateChangeStart', function() {
+          if($('.wrapper > section').length) // check if bar container exists
+            thBar = $timeout(function() {
+              cfpLoadingBar.start();
+            }, 0); // sets a latency Threshold
+      });
+      $rootScope.$on('$stateChangeSuccess', function(event) {
+          event.targetScope.$watch('$viewContentLoaded', function () {
+            $timeout.cancel(thBar);
+            cfpLoadingBar.complete();
+          });
+      });
+
+    }
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.locale')
+        .config(localeConfig)
+        ;
+    localeConfig.$inject = ['tmhDynamicLocaleProvider'];
+    function localeConfig(tmhDynamicLocaleProvider){
+  
+      tmhDynamicLocaleProvider.localeLocationPattern('vendor/angular-i18n/angular-locale_{{locale}}.js');
+      // tmhDynamicLocaleProvider.useStorage('$cookieStore');
+
+    }
+})();
+/**=========================================================
+ * Module: locale.js
+ * Demo for locale settings
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.locale')
+        .controller('LocalizationController', LocalizationController);
+
+    LocalizationController.$inject = ['$rootScope', 'tmhDynamicLocale', '$locale'];
+    function LocalizationController($rootScope, tmhDynamicLocale, $locale) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          $rootScope.availableLocales = {
+            'en': 'English',
+            'es': 'Spanish',
+            'de': 'German',
+            'fr': 'French',
+            'ar': 'Arabic',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'zh': 'Chinese'};
+          
+          $rootScope.model = {selectedLocale: 'en'};
+          
+          $rootScope.$locale = $locale;
+          
+          $rootScope.changeLocale = tmhDynamicLocale.set;
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-pagination.js
+ * Provides a simple demo for pagination
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox')
+        .controller('MailboxController', MailboxController);
+
+    function MailboxController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.folders = [
+            {name: 'Inbox',   folder: 'inbox',   alert: 42, icon: 'fa-inbox' },
+            {name: 'Starred', folder: 'starred', alert: 10, icon: 'fa-star' },
+            {name: 'Sent',    folder: 'sent',    alert: 0,  icon: 'fa-paper-plane-o' },
+            {name: 'Draft',   folder: 'draft',   alert: 5,  icon: 'fa-edit' },
+            {name: 'Trash',   folder: 'trash',   alert: 0,  icon: 'fa-trash'}
+          ];
+
+          vm.labels = [
+            {name: 'Red',     color: 'danger'},
+            {name: 'Pink',    color: 'pink'},
+            {name: 'Blue',    color: 'info'},
+            {name: 'Yellow',  color: 'warning'}
+          ];
+
+          vm.mail = {
+            cc: false,
+            bcc: false
+          };
+          // Mailbox editr initial content
+          vm.content = '<p>Type something..</p>';
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox')
+        .controller('MailFolderController', MailFolderController);
+
+    MailFolderController.$inject = ['mails', '$stateParams'];
+    function MailFolderController(mails, $stateParams) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          
+          vm.folder = {};
+          // no filter for inbox
+          vm.folder.folder = $stateParams.folder === 'inbox' ? '' : $stateParams.folder;
+
+          mails.all().then(function(mails){
+            vm.mails = mails;
+          });
+        }
+    }
+})();
+
+// A RESTful factory for retrieving mails from json file
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox')
+        .factory('mails', mails);
+
+    mails.$inject = ['$http'];
+    function mails($http) {
+        var service = {
+            all: all,
+            get: get
+        };
+        return service;
+
+        ////////////////
+        
+        function readMails() {
+          var path = 'server/mails.json';
+          return $http.get(path).then(function (resp) {
+            return resp.data.mails;
+          });
+        }
+
+        function all() {
+          return readMails();
+        }
+
+        function get(id) {
+          return readMails().then(function(mails){
+            for (var i = 0; i < mails.length; i++) {
+              if (+mails[i].id === +id) return mails[i];
+            }
+            return null;
+          });
+        }
+    }
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.mailbox')
+        .controller('MailViewController', MailViewController);
+
+    MailViewController.$inject = ['mails', '$stateParams'];
+    function MailViewController(mails, $stateParams) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          mails.get($stateParams.mid).then(function(mail){
+            vm.mail = mail;
+          });
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: modals.js
+ * Provides a simple way to implement bootstrap modals from templates
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.maps')
+        .controller('ModalGmapController', ModalGmapController);
+
+    ModalGmapController.$inject = ['$uibModal'];
+    function ModalGmapController($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.open = function (size) {
+
+            //var modalInstance =
+            $uibModal.open({
+              templateUrl: '/myModalContent.html',
+              controller: ModalInstanceCtrl,
+              size: size
+            });
+          };
+
+          // Please note that $uibModalInstance represents a modal window (instance) dependency.
+          // It is not the same as the $uibModal service used above.
+
+          ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', '$timeout'];
+          function ModalInstanceCtrl($scope, $uibModalInstance, $timeout) {
+
+            $uibModalInstance.opened.then(function () {
+              var position = new google.maps.LatLng(33.790807, -117.835734);
+
+              $scope.mapOptionsModal = {
+                zoom: 14,
+                center: position,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+              };
+
+              // we use timeout to wait maps to be ready before add a markers
+              $timeout(function(){
+                // 1. Add a marker at the position it was initialized
+                new google.maps.Marker({
+                  map: $scope.myMapModal,
+                  position: position
+                });
+                // 2. Trigger a resize so the map is redrawed
+                google.maps.event.trigger($scope.myMapModal, 'resize');
+                // 3. Move to the center if it is misaligned
+                $scope.myMapModal.panTo(position);
+              });
+
+            });
+
+            $scope.ok = function () {
+              $uibModalInstance.close('closed');
+            };
+
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss('cancel');
+            };
+
+          }
+
+        }
+    }
+
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.maps')
+        .controller('GMapController', GMapController);
+
+    GMapController.$inject = ['$timeout'];
+    function GMapController($timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          var position = [
+              new google.maps.LatLng(33.790807, -117.835734),
+              new google.maps.LatLng(33.790807, -117.835734),
+              new google.maps.LatLng(33.790807, -117.835734),
+              new google.maps.LatLng(33.790807, -117.835734),
+              new google.maps.LatLng(33.787453, -117.835858)
+            ];
+          
+          vm.addMarker = addMarker;
+          // we use timeout to wait maps to be ready before add a markers
+          $timeout(function(){
+            addMarker(vm.myMap1, position[0]);
+            addMarker(vm.myMap2, position[1]);
+            addMarker(vm.myMap3, position[2]);
+            addMarker(vm.myMap5, position[3]);
+          });
+
+          vm.mapOptions1 = {
+            zoom: 14,
+            center: position[0],
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            scrollwheel: false
+          };
+
+          vm.mapOptions2 = {
+            zoom: 19,
+            center: position[1],
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+
+          vm.mapOptions3 = {
+            zoom: 14,
+            center: position[2],
+            mapTypeId: google.maps.MapTypeId.SATELLITE
+          };
+
+          vm.mapOptions4 = {
+            zoom: 14,
+            center: position[3],
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+
+          // for multiple markers
+          $timeout(function(){
+            addMarker(vm.myMap4, position[3]);
+            addMarker(vm.myMap4, position[4]);
+          });
+
+          // custom map style
+          var MapStyles = [{'featureType':'water','stylers':[{'visibility':'on'},{'color':'#bdd1f9'}]},{'featureType':'all','elementType':'labels.text.fill','stylers':[{'color':'#334165'}]},{featureType:'landscape',stylers:[{color:'#e9ebf1'}]},{featureType:'road.highway',elementType:'geometry',stylers:[{color:'#c5c6c6'}]},{featureType:'road.arterial',elementType:'geometry',stylers:[{color:'#fff'}]},{featureType:'road.local',elementType:'geometry',stylers:[{color:'#fff'}]},{featureType:'transit',elementType:'geometry',stylers:[{color:'#d8dbe0'}]},{featureType:'poi',elementType:'geometry',stylers:[{color:'#cfd5e0'}]},{featureType:'administrative',stylers:[{visibility:'on'},{lightness:33}]},{featureType:'poi.park',elementType:'labels',stylers:[{visibility:'on'},{lightness:20}]},{featureType:'road',stylers:[{color:'#d8dbe0',lightness:20}]}];
+          vm.mapOptions5 = {
+            zoom: 14,
+            center: position[3],
+            styles: MapStyles,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            scrollwheel: false
+          };
+
+          ///////////////
+          
+          function addMarker(map, position) {
+            return new google.maps.Marker({
+              map: map,
+              position: position
+            });
+          }
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: vector-map.js.js
+ * Init jQuery Vector Map plugin
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.maps')
+        .directive('vectorMap', vectorMap);
+
+    vectorMap.$inject = ['VectorMap'];
+    function vectorMap (VectorMap) {
+        var directive = {
+            link: link,
+            restrict: 'EA',
+            scope: {
+              seriesData: '=',
+              markersData: '='
+            }
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          
+          var defaultColors = {
+              markerColor:  '#23b7e5',      // the marker points
+              bgColor:      'transparent',      // the background
+              scaleColors:  ['#878c9a'],    // the color of the region in the serie
+              regionFill:   '#bbbec6'       // the base region color
+          };
+
+          var mapHeight   = attrs.height || '300',
+              options     = {
+                markerColor:  attrs.markerColor  || defaultColors.markerColor,
+                bgColor:      attrs.bgColor      || defaultColors.bgColor,
+                scale:        attrs.scale        || 1,
+                scaleColors:  attrs.scaleColors  || defaultColors.scaleColors,
+                regionFill:   attrs.regionFill   || defaultColors.regionFill,
+                mapName:      attrs.mapName      || 'world_mill_en'
+              };
+          
+          element.css('height', mapHeight);
+          
+          VectorMap.init( element , options, scope.seriesData, scope.markersData);
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: vector-map.js
+ * Services to initialize vector map plugin
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.maps')
+        .service('VectorMap', VectorMap);
+
+    function VectorMap() {
+        this.init = init;
+
+        ////////////////
+
+        function init($element, opts, series, markers) {
+          $element.vectorMap({
+            map:             opts.mapName,
+            backgroundColor: opts.bgColor,
+            zoomMin:         1,
+            zoomMax:         8,
+            zoomOnScroll:    false,
+            regionStyle: {
+              initial: {
+                'fill':           opts.regionFill,
+                'fill-opacity':   1,
+                'stroke':         'none',
+                'stroke-width':   1.5,
+                'stroke-opacity': 1
+              },
+              hover: {
+                'fill-opacity': 0.8
+              },
+              selected: {
+                fill: 'blue'
+              },
+              selectedHover: {
+              }
+            },
+            focusOn:{ x:0.4, y:0.6, scale: opts.scale},
+            markerStyle: {
+              initial: {
+                fill: opts.markerColor,
+                stroke: opts.markerColor
+              }
+            },
+            onRegionLabelShow: function(e, el, code) {
+              if ( series && series[code] )
+                el.html(el.html() + ': ' + series[code] + ' visitors');
+            },
+            markers: markers,
+            series: {
+                regions: [{
+                    values: series,
+                    scale: opts.scaleColors,
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+          });
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: vmaps,js
+ * jVector Maps support
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.maps')
+        .controller('VectorMapController', VectorMapController);
+
+    function VectorMapController() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.seriesData = {
+            'CA': 11100,   // Canada
+            'DE': 2510,    // Germany
+            'FR': 3710,    // France
+            'AU': 5710,    // Australia
+            'GB': 8310,    // Great Britain
+            'RU': 9310,    // Russia
+            'BR': 6610,    // Brazil
+            'IN': 7810,    // India
+            'CN': 4310,    // China
+            'US': 839,     // USA
+            'SA': 410      // Saudi Arabia
+          };
+          
+          vm.markersData = [
+            { latLng:[41.90, 12.45],  name:'Vatican City'          },
+            { latLng:[43.73, 7.41],   name:'Monaco'                },
+            { latLng:[-0.52, 166.93], name:'Nauru'                 },
+            { latLng:[-8.51, 179.21], name:'Tuvalu'                },
+            { latLng:[7.11,171.06],   name:'Marshall Islands'      },
+            { latLng:[17.3,-62.73],   name:'Saint Kitts and Nevis' },
+            { latLng:[3.2,73.22],     name:'Maldives'              },
+            { latLng:[35.88,14.5],    name:'Malta'                 },
+            { latLng:[41.0,-71.06],   name:'New England'           },
+            { latLng:[12.05,-61.75],  name:'Grenada'               },
+            { latLng:[13.16,-59.55],  name:'Barbados'              },
+            { latLng:[17.11,-61.85],  name:'Antigua and Barbuda'   },
+            { latLng:[-4.61,55.45],   name:'Seychelles'            },
+            { latLng:[7.35,134.46],   name:'Palau'                 },
+            { latLng:[42.5,1.51],     name:'Andorra'               }
+          ];
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: navbar-search.js
+ * Navbar search toggler * Auto dismiss on ESC key
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.navsearch')
+        .directive('searchOpen', searchOpen)
+        .directive('searchDismiss', searchDismiss);
+
+    //
+    // directives definition
+    // 
+    
+    function searchOpen () {
+        var directive = {
+            controller: searchOpenController,
+            restrict: 'A'
+        };
+        return directive;
+
+    }
+
+    function searchDismiss () {
+        var directive = {
+            controller: searchDismissController,
+            restrict: 'A'
+        };
+        return directive;
+        
+    }
+
+    //
+    // Contrller definition
+    // 
+    
+    searchOpenController.$inject = ['$scope', '$element', 'NavSearch'];
+    function searchOpenController ($scope, $element, NavSearch) {
+      $element
+        .on('click', function (e) { e.stopPropagation(); })
+        .on('click', NavSearch.toggle);
+    }
+
+    searchDismissController.$inject = ['$scope', '$element', 'NavSearch'];
+    function searchDismissController ($scope, $element, NavSearch) {
+      
+      var inputSelector = '.navbar-form input[type="text"]';
+
+      $(inputSelector)
+        .on('click', function (e) { e.stopPropagation(); })
+        .on('keyup', function(e) {
+          if (e.keyCode === 27) // ESC
+            NavSearch.dismiss();
+        });
+        
+      // click anywhere closes the search
+      $(document).on('click', NavSearch.dismiss);
+      // dismissable options
+      $element
+        .on('click', function (e) { e.stopPropagation(); })
+        .on('click', NavSearch.dismiss);
+    }
+
+})();
+
+
+/**=========================================================
+ * Module: nav-search.js
+ * Services to share navbar search functions
+ =========================================================*/
+ 
+(function() {
+    'use strict';
+
+    angular
+        .module('app.navsearch')
+        .service('NavSearch', NavSearch);
+
+    function NavSearch() {
+        this.toggle = toggle;
+        this.dismiss = dismiss;
+
+        ////////////////
+
+        var navbarFormSelector = 'form.navbar-form';
+
+        function toggle() {
+          var navbarForm = $(navbarFormSelector);
+
+          navbarForm.toggleClass('open');
+          
+          var isOpen = navbarForm.hasClass('open');
+          
+          navbarForm.find('input')[isOpen ? 'focus' : 'blur']();
+        }
+
+        function dismiss() {
+          $(navbarFormSelector)
+            .removeClass('open') // Close control
+            .find('input[type="text"]').blur() // remove focus
+            .val('') // Empty input
+            ;
+        }        
+    }
+})();
+
+/**=========================================================
+ * Module: demo-notify.js
+ * Provides a simple demo for notify
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.notify')
+        .controller('NotifyDemoCtrl', NotifyDemoCtrl);
+
+    NotifyDemoCtrl.$inject = ['Notify', '$timeout'];
+    function NotifyDemoCtrl(Notify, $timeout) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.msgHtml = '<em class="fa fa-check"></em> Message with icon..';
+
+          vm.notifyMsg = 'Some messages here..';
+          vm.notifyOpts = {
+            status: 'danger',
+            pos: 'bottom-center'
+          };
+
+          // Service usage example
+          $timeout(function(){
+            
+            Notify.alert( 
+                'This is a custom message from notify..', 
+                {status: 'success'}
+            );
+          
+          }, 500);
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: notify.js
+ * Directive for notify plugin
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.notify')
+        .directive('notify', notify);
+
+    notify.$inject = ['$window', 'Notify'];
+    function notify ($window, Notify) {
+
+        var directive = {
+            link: link,
+            restrict: 'A',
+            scope: {
+              options: '=',
+              message: '='
+            }
+        };
+        return directive;
+
+        function link(scope, element) {
+
+          element.on('click', function (e) {
+            e.preventDefault();
+            Notify.alert(scope.message, scope.options);
+          });
+        }
+
+    }
+
+})();
+
+
+/**=========================================================
+ * Module: notify.js
+ * Create a notifications that fade out automatically.
+ * Based on Notify addon from UIKit (http://getuikit.com/docs/addons_notify.html)
+ =========================================================*/
+
+(function() {
+    'use strict';
+    angular
+        .module('app.notify')
+        .service('Notify', Notify);
+
+    Notify.$inject = ['$timeout'];
+    function Notify($timeout) {
+
+        this.alert = notifyAlert;
+
+        ////////////////
+
+        function notifyAlert(msg, opts) {
+            if ( msg ) {
+                $timeout(function(){
+                    $.notify(msg, opts || {});
+                });
+            }
+        }
+    }
+
+})();
+
+/**
+ * Notify Addon definition as jQuery plugin
+ * Adapted version to work with Bootstrap classes
+ * More information http://getuikit.com/docs/addons_notify.html
+ */
+(function($){
+    'use strict';
+    var containers = {},
+        messages   = {},
+        notify     =  function(options){
+            if ($.type(options) === 'string') {
+                options = { message: options };
+            }
+            if (arguments[1]) {
+                options = $.extend(options, $.type(arguments[1]) === 'string' ? {status:arguments[1]} : arguments[1]);
+            }
+            return (new Message(options)).show();
+        },
+        closeAll  = function(group, instantly){
+            var id;
+            if(group) {
+                for(id in messages) { if(group===messages[id].group) messages[id].close(instantly); }
+            } else {
+                for(id in messages) { messages[id].close(instantly); }
+            }
+        };
+    var Message = function(options){
+        // var $this = this;
+        this.options = $.extend({}, Message.defaults, options);
+        this.uuid    = 'ID'+(new Date().getTime())+'RAND'+(Math.ceil(Math.random() * 100000));
+        this.element = $([
+            // @geedmo: alert-dismissable enables bs close icon
+            '<div class="uk-notify-message alert-dismissable">',
+                '<a class="close">&times;</a>',
+                '<div>'+this.options.message+'</div>',
+            '</div>'
+        ].join('')).data('notifyMessage', this);
+        // status
+        if (this.options.status) {
+            this.element.addClass('alert alert-'+this.options.status);
+            this.currentstatus = this.options.status;
+        }
+        this.group = this.options.group;
+        messages[this.uuid] = this;
+        if(!containers[this.options.pos]) {
+            containers[this.options.pos] = $('<div class="uk-notify uk-notify-'+this.options.pos+'"></div>').appendTo('body').on('click', '.uk-notify-message', function(){
+                $(this).data('notifyMessage').close();
+            });
+        }
+    };
+    $.extend(Message.prototype, {
+        uuid: false,
+        element: false,
+        timout: false,
+        currentstatus: '',
+        group: false,
+        show: function() {
+            if (this.element.is(':visible')) return;
+            var $this = this;
+            containers[this.options.pos].show().prepend(this.element);
+            var marginbottom = parseInt(this.element.css('margin-bottom'), 10);
+            this.element.css({'opacity':0, 'margin-top': -1*this.element.outerHeight(), 'margin-bottom':0}).animate({'opacity':1, 'margin-top': 0, 'margin-bottom':marginbottom}, function(){
+                if ($this.options.timeout) {
+                    var closefn = function(){ $this.close(); };
+                    $this.timeout = setTimeout(closefn, $this.options.timeout);
+                    $this.element.hover(
+                        function() { clearTimeout($this.timeout); },
+                        function() { $this.timeout = setTimeout(closefn, $this.options.timeout);  }
+                    );
+                }
+            });
+            return this;
+        },
+        close: function(instantly) {
+            var $this    = this,
+                finalize = function(){
+                    $this.element.remove();
+                    if(!containers[$this.options.pos].children().length) {
+                        containers[$this.options.pos].hide();
+                    }
+                    delete messages[$this.uuid];
+                };
+            if(this.timeout) clearTimeout(this.timeout);
+            if(instantly) {
+                finalize();
+            } else {
+                this.element.animate({'opacity':0, 'margin-top': -1* this.element.outerHeight(), 'margin-bottom':0}, function(){
+                    finalize();
+                });
+            }
+        },
+        content: function(html){
+            var container = this.element.find('>div');
+            if(!html) {
+                return container.html();
+            }
+            container.html(html);
+            return this;
+        },
+        status: function(status) {
+            if(!status) {
+                return this.currentstatus;
+            }
+            this.element.removeClass('alert alert-'+this.currentstatus).addClass('alert alert-'+status);
+            this.currentstatus = status;
+            return this;
+        }
+    });
+    Message.defaults = {
+        message: '',
+        status: 'normal',
+        timeout: 5000,
+        group: null,
+        pos: 'top-center'
+    };
+    
+    $.notify          = notify;
+    $.notify.message  = Message;
+    $.notify.closeAll = closeAll;
+    
+    return notify;
+}(jQuery));
+
+/**=========================================================
+ * Module: access-login.js
+ * Demo for login api
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.pages')
+        .controller('LoginFormController', LoginFormController);
+
+    LoginFormController.$inject = ['$http', '$state'];
+    function LoginFormController($http, $state) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          // bind here all data from the form
+          vm.account = {};
+          // place the message if something goes wrong
+          vm.authMsg = '';
+
+          vm.login = function() {
+            vm.authMsg = '';
+
+            if(vm.loginForm.$valid) {
+
+              $http
+                .post('api/account/login', {email: vm.account.email, password: vm.account.password})
+                .then(function(response) {
+                  // assumes if ok, response is an object with some data, if not, a string with error
+                  // customize according to your api
+                  if ( !response.account ) {
+                    vm.authMsg = 'Incorrect credentials.';
+                  }else{
+                    $state.go('app.dashboard');
+                  }
+                }, function() {
+                  vm.authMsg = 'Server Request Error';
+                });
+            }
+            else {
+              // set as dirty if the user click directly to login so we show the validation messages
+              /*jshint -W106*/
+              vm.loginForm.account_email.$dirty = true;
+              vm.loginForm.account_password.$dirty = true;
+            }
+          };
+        }
+    }
+})();
+
+///**=========================================================
+// * Module: access-register.js
+// * Demo for register account api
+// =========================================================*/
+//
+//(function() {
+//    'use strict';
+//
+//    angular
+//        .module('app.pages')
+//        .controller('RegisterFormController', RegisterFormController);
+//
+//    RegisterFormController.$inject = ['$http', '$state'];
+//    function RegisterFormController($http, $state) {
+//        var vm = this;
+//
+//        activate();
+//
+//        ////////////////
+//
+//        function activate() {
+//          // bind here all data from the form
+//          vm.account = {};
+//          // place the message if something goes wrong
+//          vm.authMsg = '';
+//
+//          vm.register = function() {
+//            vm.authMsg = '';
+//
+//            if(vm.registerForm.$valid) {
+//
+//              $http
+//                .post('api/account/register', {email: vm.account.email, password: vm.account.password})
+//                .then(function(response) {
+//                  // assumes if ok, response is an object with some data, if not, a string with error
+//                  // customize according to your api
+//                  if ( !response.account ) {
+//                    vm.authMsg = response;
+//                  }else{
+//                    $state.go('app.dashboard');
+//                  }
+//                }, function() {
+//                  vm.authMsg = 'Server Request Error';
+//                });
+//            }
+//            else {
+//              // set as dirty if the user click directly to login so we show the validation messages
+//              /*jshint -W106*/
+//              vm.registerForm.account_email.$dirty = true;
+//              vm.registerForm.account_password.$dirty = true;
+//              vm.registerForm.account_agreed.$dirty = true;
+//
+//            }
+//          };
+//        }
+//    }
+//})();
+
+/**=========================================================
+ * Module: helpers.js
+ * Provides helper functions for routes definition
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.routes')
+        .provider('RouteHelpers', RouteHelpersProvider)
+        ;
+
+    RouteHelpersProvider.$inject = ['APP_REQUIRES'];
+    function RouteHelpersProvider(APP_REQUIRES) {
+
+      /* jshint validthis:true */
+      return {
+        // provider access level
+        basepath: basepath,
+        resolveFor: resolveFor,
+        // controller access level
+        $get: function() {
+          return {
+            basepath: basepath,
+            resolveFor: resolveFor
+          };
+        }
+      };
+
+      // Set here the base of the relative path
+      // for all app views
+      function basepath(uri) {
+        return 'app/views/' + uri;
+      }
+
+      // Generates a resolve object by passing script names
+      // previously configured in constant.APP_REQUIRES
+      function resolveFor() {
+        var _args = arguments;
+        return {
+          deps: ['$ocLazyLoad','$q', function ($ocLL, $q) {
+            // Creates a promise chain for each argument
+            var promise = $q.when(1); // empty promise
+            for(var i=0, len=_args.length; i < len; i ++){
+              promise = andThen(_args[i]);
+            }
+            return promise;
+
+            // creates promise to chain dynamically
+            function andThen(_arg) {
+              // also support a function that returns a promise
+              if(typeof _arg === 'function')
+                  return promise.then(_arg);
+              else
+                  return promise.then(function() {
+                    // if is a module, pass the name. If not, pass the array
+                    var whatToLoad = getRequired(_arg);
+                    // simple error check
+                    if(!whatToLoad) return $.error('Route resolve: Bad resource name [' + _arg + ']');
+                    // finally, return a promise
+                    return $ocLL.load( whatToLoad );
+                  });
+            }
+            // check and returns required data
+            // analyze module items with the form [name: '', files: []]
+            // and also simple array of script files (for not angular js)
+            function getRequired(name) {
+              if (APP_REQUIRES.modules)
+                  for(var m in APP_REQUIRES.modules)
+                      if(APP_REQUIRES.modules[m].name && APP_REQUIRES.modules[m].name === name)
+                          return APP_REQUIRES.modules[m];
+              return APP_REQUIRES.scripts && APP_REQUIRES.scripts[name];
+            }
+
+          }]};
+      } // resolveFor
+
+    }
+
+
+})();
+
+
+/**=========================================================
+ * Module: config.js
+ * App routes and resources configuration
+ =========================================================*/
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.routes')
+        .config([ '$httpProvider', function($httpProvider) {
+            $httpProvider.interceptors.push('securityInterceptor');
+        }])
+        .provider('securityInterceptor', function() {
+            this.$get = ["$location", "$q", function($location, $q) {
+                return function(promise) {
+                    return promise.then(null, function(response) {
+                        if(response.status === 403 || response.status === 401) {
+                            $location.path('/unauthorized');
+                        }
+                        return $q.reject(response);
+                    });
+                };
+            }];
+        })
+        .config(routesConfig);
+
+
+
+    routesConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
+    function routesConfig($stateProvider, $locationProvider, $urlRouterProvider, helper){
+
+        // Set the following to true to enable the HTML5 Mode
+        // You may have to set <base> tag in index and a routing configuration in your server
+        $locationProvider.html5Mode(false);
+
+        // defaults to dashboard
+        $urlRouterProvider.otherwise('/page/login');
+
+        //$urlRouterProvider.deferIntercept();
+
+        //// Use instead
+        //$urlRouterProvider.otherwise( function($injector) {
+        //    var $state = $injector.get("$state");
+        //    $state.go('/page/login');
+        //});
+
+        //
+        // Application Routes
+        // -----------------------------------
+        $stateProvider
+            .state('privacy', {
+                url: '/app/privacy',
+                cache: false,
+                templateUrl: 'app/pages/privacy.html',
+                resolve: helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'modernizr', 'icons'),
+                controller: ['$rootScope', function($rootScope) {
+                    $rootScope.app.layout.isBoxed = false;
+                }]
+            })
+            .state('page', {
+                url: '/page',
+                data:{
+                    authenticate:false
+                },
+                cache: false,
+                templateUrl: 'app/pages/page.html',
+                resolve: helper.resolveFor('loaders.css', 'spinkit', 'whirl', 'modernizr', 'icons'),
+                controller: ['$rootScope', function($rootScope) {
+                    $rootScope.app.layout.isBoxed = false;
+                }]
+            })
+            .state('page.login', {
+                url: '/login',
+                title: 'Login',
+                cache: false,
+                templateUrl: 'app/pages/login.html',
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                }),
+                controller: 'LoginFormController'
+            })
+            .state('page.register', {
+                url: '/register',
+                title: 'Register',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'whirl'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                }),
+                templateUrl: 'app/pages/register.html'
+            })
+            .state('page.recover', {
+                url: '/recover',
+                title: 'Recover',
+                cache: false,
+                templateUrl: 'app/pages/recover.html'
+            })
+            .state('page.change', {
+                url: '/recover/change?{e}&{m}',
+                title: 'Change',
+                cache: false,
+                templateUrl: 'app/pages/recover-change.html'
+            })
+            .state('app', {
+                url: '/app',
+                abstract: true,
+                cache: false,
+                data:{
+                    authenticate:true
+                },
+                templateUrl: helper.basepath('app.html'),
+                resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl', 'oitozero.ngSweetAlert')
+            })
+            .state('app.dashboard', {
+                url: '/dashboard',
+                title: 'Dashboard',
+                cache: false,
+                templateUrl: helper.basepath('dashboard.html'),
+                controller: 'DashboardController',
+                resolve: angular.extend(helper.resolveFor('angularFileUpload', 'filestyle'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+            //.state('app.dashboard.profile', {
+            //    url: '/profile',
+            //    cache: false,
+            //    templateUrl: 'app/template/profile.tpl.html',
+            //    controller: 'DashboardController',
+            //    resolve: helper.resolveFor('angularFileUpload', 'filestyle'),
+            //})
+            .state('app.dashboard.update', {
+                url: '/profile/update',
+                cache: false,
+                templateUrl: 'app/template/profile-update.tpl.html',
+                controller: 'DashboardController',
+                resolve: helper.resolveFor('angularFileUpload', 'filestyle')
+
+            })
+            .state('app.dashboard.permissions', {
+                url: '/permissions',
+                cache: false,
+                templateUrl: 'app/template/permissions.tpl.html',
+                controller: 'DashboardController'
+            })
+            .state('app.mail', {
+                url: '/mail',
+                title: 'Mail',
+                cache: false,
+                templateUrl: helper.basepath('mail.html'),
+                resolve: helper.resolveFor('ngWig', 'ui.select'),
+                controller: 'MailController'
+            })
+            .state('app.sms', {
+                url: '/sms',
+                title: 'Sms',
+                cache: false,
+                templateUrl: helper.basepath('sms.html')
+            })
+            .state('app.people', {
+                url: '/people',
+                title: 'People',
+                data: {
+                    permissions: {
+                        only: ["executive.director", "administration.dept", "admin"], //"view.verified.staff"
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('people.html')
+                //controller:"PeopleController"
+            })
+            .state('app.people.adduser', {
+                url: '/create',
+                data: {
+                    permissions: {
+                        only: 'register.staff',
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                title: 'People',
+                templateUrl: helper.basepath('people-adduser.html'),
+                controller:'PeopleController'
+            })
+            .state('app.people.edit', {
+                url: '/:id/edit',
+                title: 'People',
+                data: {
+                    permissions: {
+                        only: 'register.staff',
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                templateUrl: helper.basepath('people-adduser.html'),
+                controller: 'PeopleUpdateController',
+                resolve: helper.resolveFor('whirl')
+            })
+            .state('app.roles', {
+                url: '/roles',
+                title: 'Permissions',
+                cache: false,
+                resolve: helper.resolveFor('modernizr', 'icons', 'toaster'),
+                templateUrl: helper.basepath('roles.html')
+            })
+            .state('app.airtime', {
+                url: '/airtime',
+                title: 'Airtime',
+                data: {
+                    permissions: {
+                        only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                templateUrl: helper.basepath('airtime.html'),
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'datatables', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
+                //controller: 'AirtimeDefaultController'
+            })
+            .state('app.airtime.create', {
+                url: '/create',
+                title: 'Generate Airtime',
+                cache: false,
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('airtime-create.html'),
+                        controller: 'AirtimeCreateController'
+                    }
+                },
+                resolve: helper.resolveFor('parsley', 'ui.select', 'taginput','inputmask','localytics.directives')
+            })
+            .state('app.airtime.details', {
+                url: '/:id',
+                title: 'Airtime',
+                cache: false,
+                templateUrl: helper.basepath('airtime-details.html'),
+                controller: 'AirtimeDetailController'
+            })
+            .state('app.client', {
+                url: '/client',
+                title: 'Client',
+                cache: false,
+                templateUrl: helper.basepath('client.html'),
+                resolve: helper.resolveFor('datatables')
+            })
+            .state('app.client.create', {
+                url: '/create',
+                cache: false,
+                title: 'Register Client',
+                views: {
+                    '@app': {
+                        resolve: helper.resolveFor('whirl'),
+                        templateUrl: helper.basepath('client-create.html')
+                    }
+                }
+            })
+            .state('app.client.edit', {
+                url: '/:id/edit',
+                title: 'Update Client',
+                cache: false,
+                views: {
+                    '@app' : {
+                        templateUrl: helper.basepath('client-create.html'),
+                        resolve: angular.extend({
+                            clientUpdate: function () {
+                                return true;
+                            }
+                        })
+                    }
+                }
+            })
+            .state('app.report', {
+                url: '/report',
+                title: 'Report',
+                data: {
+                    permissions: {
+                        only: ["staff", "generate.report"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                templateUrl: helper.basepath('report.html'),
+                controller: 'ReportController',
+                resolve: helper.resolveFor('colorpicker.module', 'ui.select', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
+            })
+            .state('app.report.view', {
+                url: '/view',
+                title: 'Report',
+                cache: false,
+                templateUrl: helper.basepath('report-view.html'),
+                resolve: helper.resolveFor('datatables'),
+                controller: 'ReportViewController'
+            })
+            .state('app.unauthorized', {
+                url: '/unauthorized',
+                title: 'unauthorized',
+                cache: false,
+                templateUrl: helper.basepath('unauthorized.html')
+            })
+            .state('app.driver', {
+                url: '/driver',
+                title: 'Driver\'s Report',
+                cache: false,
+                data: {
+                    permissions: {
+                        only: ["driver"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select', 'textAngular')),
+                templateUrl: helper.basepath('driver.html'),
+                controller: 'DriverController'
+            })
+            .state('app.driver.editReport', {
+                url: '/report/:id/edit',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('driver-addreport.html'),
+                controller: 'DriverController'
+            })
+            .state('app.driver.addReport', {
+                url: '/report/add',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('driver-addreport.html'),
+                controller: 'DriverController'
+            })
+            .state('app.driver.viewReport', {
+                url: '/report/view',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                templateUrl: helper.basepath('driver-viewreport.html'),
+                controller: 'DriverReportViewCtrl'
+            })
+            .state('app.assessment', {
+                url: '/assessment',
+                abstract: true,
+                cache: false,
+                data: {
+                    permissions: {
+                        only: ["staff"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                templateUrl: helper.basepath('assessment.html'),
+                resolve: angular.extend(helper.resolveFor('datatables'))
+            })
+            .state('app.assessment.create', {
+                url: '/create',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables', 'whirl')),
+                templateUrl: helper.basepath('assessment-form.html'),
+                controller: 'AssessmentController'
+            })
+            .state('app.assessment.edit', {
+                url: '/:id/edit',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('assessment-form.html')
+                    }
+                },
+                controller: 'AssessmentController'
+            })
+            .state('app.assessment.view', {
+                url: '/view',
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables')),
+                views: {
+                    "@app": {
+                        templateUrl: helper.basepath('assessment-record.html'),
+                        controller: 'AssessmentRecordController'
+                    }
+                }
+            })
+
+            //Admin
+            .state('app.admin', {
+                url: '/admin',
+                title: 'Admin',
+                abstract: true,
+                data: {
+                    authenticate:true,
+                    permissions: {
+                        only: ["supervisor", "traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                cache: false,
+                resolve: angular.extend(helper.resolveFor('datatables'))
+            })
+            .state('app.admin.airtime', {
+                url: '/airtime',
+                title: 'Airtime',
+                cache: false,
+                views: {
+                  '@app': {
+                      templateUrl: helper.basepath('admin-airtime.html')
+                  }
+                },
+                resolve: angular.extend(helper.resolveFor('loaders.css', 'spinkit', 'datatables', 'oitozero.ngSweetAlert', 'ngDialog', 'ngTable', 'moment', 'localytics.directives', 'ui.bootstrap-slider')),
+                //controller: 'AirtimeDefaultController'
+            })
+            .state('app.admin.target', {
+                url: '/target',
+                title: 'Target',
+                cache: false,
+                views: {
+                    "@app" : {
+                        templateUrl: helper.basepath('target.html'),
+                        controller: 'TargetController'
+                    }
+                },
+                resolve: angular.extend(helper.resolveFor('datatables', 'ui.select'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+            .state('app.admin.vehicles', {
+                url: '/vehicles',
+                title: 'Vehicles',
+                cache: false,
+                views: {
+                    "@app" : {
+                        templateUrl: helper.basepath('vehicle.html'),
+                        controller: 'VehicleController'
+                    }
+                },
+                resolve: angular.extend(helper.resolveFor('datatables'), {
+                    '_token' : ['tokenService', function(tokenService) {
+                        return tokenService.get();
+                    }]
+                })
+            })
+
+            .state('app.admin.assessment-supervise', {
+                url: '^/supervisor/:id',
+                cache: false,
+                data: {
+                    permissions: {
+                        only: ["supervisor"],
+                        redirectTo: 'app.unauthorized'
+                    }
+                },
+                views: {
+                    '@app': {
+                        templateUrl: helper.basepath('assessment-supervisor.html'),
+                        controller: 'SupervisorController'
+                    }
+                },
+                resolve: angular.extend(helper.resolveFor('datatables')),
+            })
+            .state('app.admin.assessment-log', {
+                url: '/record/:id',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('assessment-log.html'),
+                        controller: 'AssessmentLogController'
+                    }
+                }
+            })
+            .state('app.admin.assessment-config', {
+                url: '/settings',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('assessment-config.html'),
+                        //controller: 'AssessmentConfigController',
+                        //ControllerAs: 'AssessConfig'
+                    }
+                }
+            })
+            .state('app.admin.staff-report', {
+                url: '/staff/report/:id',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('admin-report-view.html'),
+                        controller: 'ReportViewController'
+                    }
+                }
+            })
+            .state('app.admin.driver-report', {
+                url: '/driver/report/:id',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('admin-driver-viewreport.html'),
+                        controller: 'DriverReportViewCtrl'
+                    }
+                }
+            })
+
+
+            //.state('app', {
+          //    url: '/app',
+          //    abstract: true,
+          //    templateUrl: helper.basepath('app.html'),
+          //    resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl')
+          //})
+          //.state('app.dashboard', {
+          //    url: '/dashboard',
+          //    title: 'Dashboard',
+          //    templateUrl: helper.basepath('dashboard.html'),
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins', 'weather-icons')
+          //})
+          //.state('app.dashboard_v2', {
+          //    url: '/dashboard_v2',
+          //    title: 'Dashboard v2',
+          //    templateUrl: helper.basepath('dashboard_v2.html'),
+          //    controller: 'DashboardV2Controller',
+          //    controllerAs: 'dash2',
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
+          //})
+          //.state('app.dashboard_v3', {
+          //    url: '/dashboard_v3',
+          //    title: 'Dashboard v3',
+          //    controller: 'DashboardV3Controller',
+          //    controllerAs: 'dash3',
+          //    templateUrl: helper.basepath('dashboard_v3.html'),
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins', 'vector-map', 'vector-map-maps')
+          //})
+          //.state('app.widgets', {
+          //    url: '/widgets',
+          //    title: 'Widgets',
+          //    templateUrl: helper.basepath('widgets.html'),
+          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
+          //})
+          //.state('app.buttons', {
+          //    url: '/buttons',
+          //    title: 'Buttons',
+          //    templateUrl: helper.basepath('buttons.html')
+          //})
+          //.state('app.colors', {
+          //    url: '/colors',
+          //    title: 'Colors',
+          //    templateUrl: helper.basepath('colors.html')
+          //})
+          //.state('app.localization', {
+          //    url: '/localization',
+          //    title: 'Localization',
+          //    templateUrl: helper.basepath('localization.html')
+          //})
+          //.state('app.infinite-scroll', {
+          //    url: '/infinite-scroll',
+          //    title: 'Infinite Scroll',
+          //    templateUrl: helper.basepath('infinite-scroll.html'),
+          //    resolve: helper.resolveFor('infinite-scroll')
+          //})
+          //.state('app.navtree', {
+          //    url: '/navtree',
+          //    title: 'Nav Tree',
+          //    templateUrl: helper.basepath('nav-tree.html'),
+          //    resolve: helper.resolveFor('angularBootstrapNavTree')
+          //})
+          //.state('app.nestable', {
+          //    url: '/nestable',
+          //    title: 'Nestable',
+          //    templateUrl: helper.basepath('nestable.html'),
+          //    resolve: helper.resolveFor('ng-nestable')
+          //})
+          //.state('app.sortable', {
+          //    url: '/sortable',
+          //    title: 'Sortable',
+          //    templateUrl: helper.basepath('sortable.html'),
+          //    resolve: helper.resolveFor('htmlSortable')
+          //})
+          //.state('app.notifications', {
+          //    url: '/notifications',
+          //    title: 'Notifications',
+          //    templateUrl: helper.basepath('notifications.html')
+          //})
+          //.state('app.carousel', {
+          //    url: '/carousel',
+          //    title: 'Carousel',
+          //    templateUrl: helper.basepath('carousel.html'),
+          //    resolve: helper.resolveFor('angular-carousel')
+          //})
+          //.state('app.ngdialog', {
+          //    url: '/ngdialog',
+          //    title: 'ngDialog',
+          //    templateUrl: helper.basepath('ngdialog.html'),
+          //    resolve: angular.extend(helper.resolveFor('ngDialog'),{
+          //      tpl: function() { return { path: helper.basepath('ngdialog-template.html') }; }
+          //    }),
+          //    controller: 'DialogIntroCtrl'
+          //})
+          //.state('app.sweetalert', {
+          //  url: '/sweetalert',
+          //  title: 'SweetAlert',
+          //  templateUrl: helper.basepath('sweetalert.html'),
+          //  resolve: helper.resolveFor('oitozero.ngSweetAlert')
+          //})
+          //.state('app.tour', {
+          //  url: '/tour',
+          //  title: 'Tour',
+          //  templateUrl: helper.basepath('tour.html'),
+          //  resolve: helper.resolveFor('bm.bsTour')
+          //})
+          //.state('app.interaction', {
+          //    url: '/interaction',
+          //    title: 'Interaction',
+          //    templateUrl: helper.basepath('interaction.html')
+          //})
+          //.state('app.spinners', {
+          //    url: '/spinners',
+          //    title: 'Spinners',
+          //    templateUrl: helper.basepath('spinners.html'),
+          //    resolve: helper.resolveFor('loaders.css', 'spinkit')
+          //})
+          //.state('app.dropdown-animations', {
+          //    url: '/dropdown-animations',
+          //    title: 'Dropdown Animations',
+          //    templateUrl: helper.basepath('dropdown-animations.html')
+          //})
+          //.state('app.panels', {
+          //    url: '/panels',
+          //    title: 'Panels',
+          //    templateUrl: helper.basepath('panels.html')
+          //})
+          //.state('app.portlets', {
+          //    url: '/portlets',
+          //    title: 'Portlets',
+          //    templateUrl: helper.basepath('portlets.html'),
+          //    resolve: helper.resolveFor('jquery-ui', 'jquery-ui-widgets')
+          //})
+          //.state('app.maps-google', {
+          //    url: '/maps-google',
+          //    title: 'Maps Google',
+          //    templateUrl: helper.basepath('maps-google.html'),
+          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
+          //})
+          //.state('app.maps-vector', {
+          //    url: '/maps-vector',
+          //    title: 'Maps Vector',
+          //    templateUrl: helper.basepath('maps-vector.html'),
+          //    controller: 'VectorMapController',
+          //    controllerAs: 'vmap',
+          //    resolve: helper.resolveFor('vector-map', 'vector-map-maps')
+          //})
+          //.state('app.grid', {
+          //    url: '/grid',
+          //    title: 'Grid',
+          //    templateUrl: helper.basepath('grid.html')
+          //})
+          //.state('app.grid-masonry', {
+          //    url: '/grid-masonry',
+          //    title: 'Grid Masonry',
+          //    templateUrl: helper.basepath('grid-masonry.html')
+          //})
+          //.state('app.grid-masonry-deck', {
+          //    url: '/grid-masonry-deck',
+          //    title: 'Grid Masonry',
+          //    templateUrl: helper.basepath('grid-masonry-deck.html'),
+          //    resolve: helper.resolveFor('spinkit', 'akoenig.deckgrid')
+          //})
+          //.state('app.typo', {
+          //    url: '/typo',
+          //    title: 'Typo',
+          //    templateUrl: helper.basepath('typo.html')
+          //})
+          //.state('app.icons-font', {
+          //    url: '/icons-font',
+          //    title: 'Icons Font',
+          //    templateUrl: helper.basepath('icons-font.html'),
+          //    resolve: helper.resolveFor('icons')
+          //})
+          //.state('app.icons-weather', {
+          //    url: '/icons-weather',
+          //    title: 'Icons Weather',
+          //    templateUrl: helper.basepath('icons-weather.html'),
+          //    resolve: helper.resolveFor('weather-icons', 'skycons')
+          //})
+          //.state('app.form-standard', {
+          //    url: '/form-standard',
+          //    title: 'Form Standard',
+          //    templateUrl: helper.basepath('form-standard.html')
+          //})
+          //.state('app.form-extended', {
+          //    url: '/form-extended',
+          //    title: 'Form Extended',
+          //    templateUrl: helper.basepath('form-extended.html'),
+          //    resolve: helper.resolveFor('colorpicker.module', 'codemirror', 'moment', 'taginput','inputmask','localytics.directives', 'ui.bootstrap-slider', 'ngWig', 'filestyle', 'textAngular')
+          //})
+          //.state('app.form-validation', {
+          //    url: '/form-validation',
+          //    title: 'Form Validation',
+          //    templateUrl: helper.basepath('form-validation.html'),
+          //    resolve: helper.resolveFor('ui.select', 'taginput','inputmask','localytics.directives')
+          //})
+          //.state('app.form-parsley', {
+          //    url: '/form-parsley',
+          //    title: 'Form Validation - Parsley',
+          //    templateUrl: helper.basepath('form-parsley.html'),
+          //    resolve: helper.resolveFor('parsley')
+          //})
+          //.state('app.form-wizard', {
+          //    url: '/form-wizard',
+          //    title: 'Form Wizard',
+          //    templateUrl: helper.basepath('form-wizard.html'),
+          //    resolve: helper.resolveFor('parsley')
+          //})
+          //.state('app.form-upload', {
+          //    url: '/form-upload',
+          //    title: 'Form upload',
+          //    templateUrl: helper.basepath('form-upload.html'),
+          //    resolve: helper.resolveFor('angularFileUpload', 'filestyle')
+          //})
+          //.state('app.form-xeditable', {
+          //    url: '/form-xeditable',
+          //    templateUrl: helper.basepath('form-xeditable.html'),
+          //    resolve: helper.resolveFor('xeditable')
+          //})
+          //.state('app.form-imagecrop', {
+          //    url: '/form-imagecrop',
+          //    templateUrl: helper.basepath('form-imagecrop.html'),
+          //    resolve: helper.resolveFor('ngImgCrop', 'filestyle')
+          //})
+          //.state('app.form-uiselect', {
+          //    url: '/form-uiselect',
+          //    templateUrl: helper.basepath('form-uiselect.html'),
+          //    controller: 'uiSelectController',
+          //    controllerAs: 'uisel',
+          //    resolve: helper.resolveFor('ui.select')
+          //})
+          //.state('app.chart-flot', {
+          //    url: '/chart-flot',
+          //    title: 'Chart Flot',
+          //    templateUrl: helper.basepath('chart-flot.html'),
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
+          //})
+          //.state('app.chart-radial', {
+          //    url: '/chart-radial',
+          //    title: 'Chart Radial',
+          //    templateUrl: helper.basepath('chart-radial.html'),
+          //    resolve: helper.resolveFor('classyloader', 'ui.knob', 'easypiechart')
+          //})
+          //.state('app.chart-js', {
+          //    url: '/chart-js',
+          //    title: 'Chart JS',
+          //    templateUrl: helper.basepath('chart-js.html'),
+          //    resolve: helper.resolveFor('chartjs')
+          //})
+          //.state('app.chart-rickshaw', {
+          //    url: '/chart-rickshaw',
+          //    title: 'Chart Rickshaw',
+          //    templateUrl: helper.basepath('chart-rickshaw.html'),
+          //    resolve: helper.resolveFor('angular-rickshaw')
+          //})
+          //.state('app.chart-morris', {
+          //    url: '/chart-morris',
+          //    title: 'Chart Morris',
+          //    templateUrl: helper.basepath('chart-morris.html'),
+          //    resolve: helper.resolveFor('morris')
+          //})
+          //.state('app.chart-chartist', {
+          //    url: '/chart-chartist',
+          //    title: 'Chart Chartist',
+          //    templateUrl: helper.basepath('chart-chartist.html'),
+          //    resolve: helper.resolveFor('angular-chartist')
+          //})
+          //.state('app.table-standard', {
+          //    url: '/table-standard',
+          //    title: 'Table Standard',
+          //    templateUrl: helper.basepath('table-standard.html')
+          //})
+          //.state('app.table-extended', {
+          //    url: '/table-extended',
+          //    title: 'Table Extended',
+          //    templateUrl: helper.basepath('table-extended.html')
+          //})
+          //.state('app.table-datatable', {
+          //    url: '/table-datatable',
+          //    title: 'Table Datatable',
+          //    templateUrl: helper.basepath('table-datatable.html'),
+          //    resolve: helper.resolveFor('datatables')
+          //})
+          //.state('app.table-xeditable', {
+          //    url: '/table-xeditable',
+          //    templateUrl: helper.basepath('table-xeditable.html'),
+          //    resolve: helper.resolveFor('xeditable')
+          //})
+          //.state('app.table-ngtable', {
+          //    url: '/table-ngtable',
+          //    templateUrl: helper.basepath('table-ngtable.html'),
+          //    resolve: helper.resolveFor('ngTable', 'ngTableExport')
+          //})
+          //.state('app.table-uigrid', {
+          //    url: '/table-uigrid',
+          //    templateUrl: helper.basepath('table-uigrid.html'),
+          //    resolve: helper.resolveFor('ui.grid')
+          //})
+          //.state('app.table-angulargrid', {
+          //    url: '/table-angulargrid',
+          //    templateUrl: helper.basepath('table-angulargrid.html'),
+          //    resolve: helper.resolveFor('angularGrid')
+          //})
+          //.state('app.timeline', {
+          //    url: '/timeline',
+          //    title: 'Timeline',
+          //    templateUrl: helper.basepath('timeline.html')
+          //})
+          //.state('app.calendar', {
+          //    url: '/calendar',
+          //    title: 'Calendar',
+          //    templateUrl: helper.basepath('calendar.html'),
+          //    resolve: helper.resolveFor('jquery-ui', 'jquery-ui-widgets', 'moment', 'fullcalendar')
+          //})
+          //.state('app.invoice', {
+          //    url: '/invoice',
+          //    title: 'Invoice',
+          //    templateUrl: helper.basepath('invoice.html')
+          //})
+          //.state('app.search', {
+          //    url: '/search',
+          //    title: 'Search',
+          //    templateUrl: helper.basepath('search.html'),
+          //    resolve: helper.resolveFor('moment', 'localytics.directives', 'ui.bootstrap-slider')
+          //})
+          //.state('app.todo', {
+          //    url: '/todo',
+          //    title: 'Todo List',
+          //    templateUrl: helper.basepath('todo.html'),
+          //    controller: 'TodoController',
+          //    controllerAs: 'todo'
+          //})
+          //.state('app.profile', {
+          //    url: '/profile',
+          //    title: 'Profile',
+          //    templateUrl: helper.basepath('profile.html'),
+          //    resolve: helper.resolveFor('loadGoogleMapsJS', function() { return loadGoogleMaps(); }, 'ui.map')
+          //})
+          //.state('app.code-editor', {
+          //    url: '/code-editor',
+          //    templateUrl: helper.basepath('code-editor.html'),
+          //    controller: 'CodeEditorController',
+          //    controllerAs: 'coder',
+          //    resolve: {
+          //        deps: helper.resolveFor('codemirror', 'ui.codemirror', 'codemirror-modes-web', 'angularBootstrapNavTree').deps,
+          //        filetree: ['LoadTreeService', function (LoadTreeService) {
+          //            return LoadTreeService.get().$promise.then(function (res) {
+          //                return res.data;
+          //            });
+          //        }]
+          //    }
+          //})
+          //.state('app.template', {
+          //    url: '/template',
+          //    title: 'Blank Template',
+          //    templateUrl: helper.basepath('template.html')
+          //})
+          //.state('app.documentation', {
+          //    url: '/documentation',
+          //    title: 'Documentation',
+          //    templateUrl: helper.basepath('documentation.html'),
+          //    resolve: helper.resolveFor('flatdoc')
+          //})
+          //// Forum
+          //// -----------------------------------
+          //.state('app.forum', {
+          //    url: '/forum',
+          //    title: 'Forum',
+          //    templateUrl: helper.basepath('forum.html')
+          //})
+          //.state('app.forum-topics', {
+          //    url: '/forum/topics/:catid',
+          //    title: 'Forum Topics',
+          //    templateUrl: helper.basepath('forum-topics.html')
+          //})
+          //.state('app.forum-discussion', {
+          //    url: '/forum/discussion/:topid',
+          //    title: 'Forum Discussion',
+          //    templateUrl: helper.basepath('forum-discussion.html')
+          //})
+          //// Blog
+          //// -----------------------------------
+          //.state('app.blog', {
+          //    url: '/blog',
+          //    title: 'Blog',
+          //    templateUrl: helper.basepath('blog.html'),
+          //    resolve: helper.resolveFor('angular-jqcloud')
+          //})
+          //.state('app.blog-post', {
+          //    url: '/post',
+          //    title: 'Post',
+          //    templateUrl: helper.basepath('blog-post.html'),
+          //    resolve: helper.resolveFor('angular-jqcloud')
+          //})
+          //.state('app.articles', {
+          //    url: '/articles',
+          //    title: 'Articles',
+          //    templateUrl: helper.basepath('blog-articles.html'),
+          //    resolve: helper.resolveFor('datatables')
+          //})
+          //.state('app.article-view', {
+          //    url: '/article/:id',
+          //    title: 'Article View',
+          //    templateUrl: helper.basepath('blog-article-view.html'),
+          //    resolve: helper.resolveFor('ui.select', 'textAngular')
+          //})
+          //// eCommerce
+          //// -----------------------------------
+          //.state('app.orders', {
+          //    url: '/orders',
+          //    title: 'Orders',
+          //    templateUrl: helper.basepath('ecommerce-orders.html'),
+          //    resolve: helper.resolveFor('datatables')
+          //})
+          //.state('app.order-view', {
+          //    url: '/order-view',
+          //    title: 'Order View',
+          //    templateUrl: helper.basepath('ecommerce-order-view.html')
+          //})
+          //.state('app.products', {
+          //    url: '/products',
+          //    title: 'Products',
+          //    templateUrl: helper.basepath('ecommerce-products.html'),
+          //    resolve: helper.resolveFor('datatables')
+          //})
+          //.state('app.product-view', {
+          //    url: '/product/:id',
+          //    title: 'Product View',
+          //    templateUrl: helper.basepath('ecommerce-product-view.html')
+          //})
+          //// Mailbox
+          //// -----------------------------------
+          //.state('app.mailbox', {
+          //    url: '/mailbox',
+          //    title: 'Mailbox',
+          //    abstract: true,
+          //    templateUrl: helper.basepath('mailbox.html')
+          //})
+          //.state('app.mailbox.folder', {
+          //    url: '/folder/:folder',
+          //    title: 'Mailbox',
+          //    templateUrl: helper.basepath('mailbox-inbox.html')
+          //})
+          //.state('app.mailbox.view', {
+          //    url : '/{mid:[0-9]{1,4}}',
+          //    title: 'View mail',
+          //    templateUrl: helper.basepath('mailbox-view.html'),
+          //    resolve: helper.resolveFor('ngWig')
+          //})
+          //.state('app.mailbox.compose', {
+          //    url: '/compose',
+          //    title: 'Mailbox',
+          //    templateUrl: helper.basepath('mailbox-compose.html'),
+          //    resolve: helper.resolveFor('ngWig')
+          //})
+          ////
+          //// Multiple level example
+          //// -----------------------------------
+          //.state('app.multilevel', {
+          //    url: '/multilevel',
+          //    title: 'Multilevel',
+          //    template: '<h3>Multilevel Views</h3>' + '<div class="lead ba p">View @ Top Level ' + '<div ui-view=""></div> </div>'
+          //})
+          //.state('app.multilevel.level1', {
+          //    url: '/level1',
+          //    title: 'Multilevel - Level1',
+          //    template: '<div class="lead ba p">View @ Level 1' + '<div ui-view=""></div> </div>'
+          //})
+          //.state('app.multilevel.level1.item', {
+          //    url: '/item',
+          //    title: 'Multilevel - Level1',
+          //    template: '<div class="lead ba p"> Menu item @ Level 1</div>'
+          //})
+          //.state('app.multilevel.level1.level2', {
+          //    url: '/level2',
+          //    title: 'Multilevel - Level2',
+          //    template: '<div class="lead ba p">View @ Level 2'  + '<div ui-view=""></div> </div>'
+          //})
+          //.state('app.multilevel.level1.level2.level3', {
+          //    url: '/level3',
+          //    title: 'Multilevel - Level3',
+          //    template: '<div class="lead ba p">View @ Level 3' + '<div ui-view=""></div> </div>'
+          //})
+          //.state('app.multilevel.level1.level2.level3.item', {
+          //    url: '/item',
+          //    title: 'Multilevel - Level3 Item',
+          //    template: '<div class="lead ba p"> Menu item @ Level 3</div>'
+          //})
+          ////
+          //// Single Page Routes
+          //// -----------------------------------
+          //.state('page', {
+          //    url: '/page',
+          //    templateUrl: 'app/pages/page.html',
+          //    resolve: helper.resolveFor('modernizr', 'icons'),
+          //    controller: ['$rootScope', function($rootScope) {
+          //        $rootScope.app.layout.isBoxed = false;
+          //    }]
+          //})
+          //.state('page.login', {
+          //    url: '/login',
+          //    title: 'Login',
+          //    templateUrl: 'app/pages/login.html'
+          //})
+          //.state('page.register', {
+          //    url: '/register',
+          //    title: 'Register',
+          //    templateUrl: 'app/pages/register.html'
+          //})
+          //.state('page.recover', {
+          //    url: '/recover',
+          //    title: 'Recover',
+          //    templateUrl: 'app/pages/recover.html'
+          //})
+          //.state('page.lock', {
+          //    url: '/lock',
+          //    title: 'Lock',
+          //    templateUrl: 'app/pages/lock.html'
+          //})
+          //.state('page.404', {
+          //    url: '/404',
+          //    title: 'Not Found',
+          //    templateUrl: 'app/pages/404.html'
+          //})
+          ////
+          //// Horizontal layout
+          //// -----------------------------------
+          //.state('app-h', {
+          //    url: '/app-h',
+          //    abstract: true,
+          //    templateUrl: helper.basepath( 'app-h.html' ),
+          //    resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl')
+          //})
+          //.state('app-h.dashboard_v2', {
+          //    url: '/dashboard_v2',
+          //    title: 'Dashboard v2',
+          //    templateUrl: helper.basepath('dashboard_v2.html'),
+          //    controller: 'DashboardV2Controller',
+          //    controllerAs: 'dash2',
+          //    resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
+          //})
+          //
+          // CUSTOM RESOLVES
+          //   Add your own resolves properties
+          //   following this object extend
+          //   method
+          // -----------------------------------
+          // .state('app.someroute', {
+          //   url: '/some_url',
+          //   templateUrl: 'path_to_template.html',
+          //   controller: 'someController',
+          //   resolve: angular.extend(
+          //     helper.resolveFor(), {
+          //     // YOUR RESOLVES GO HERE
+          //     }
+          //   )
+          // })
+          ;
+
+    } // routesConfig
+
+})();
+
+
+/**
+ * Created by dfash on 6/10/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.routes')
+        .run(['$rootScope', '$state', 'loginFactory', '$location',
+            function ($rootScope, $state, loginFactory, $location) {
+
+
+                $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+                    //if toState requires authenticate and user is not logged in
+                    if (toState.data.authenticate) {
+
+                        //if user is not logged in
+                        if(!loginFactory.getUserStatus()) {
+
+                            //save anticipated state
+                            loginFactory.toState = toState;
+
+                            $state.transitionTo('page.login');
+                            event.preventDefault();
+                        }
+
+                        //handle when user refreshes unauthorized page
+                        if(toState.name == 'app.unauthorized' && fromState.name == '') {
+                            $state.go('app.dashboard');
+                        }
+
+                    }
+
+                    //if toState is 'page.login' And user is already logged in
+                    if (toState.name == 'page.login' && loginFactory.getUserStatus()) {
+
+                        if (fromState.name != '') {
+                            $state.go(fromState.name);//return state
+                        }
+                        else {
+                            $state.go('app.dashboard');//go to default state
+                        }
+                        event.preventDefault();
+                    }
+
+                    //confirm if user is logged in
+                    if (loginFactory.getUserStatus()) {
+                        loginFactory.authCheck();
+                    }
+                });
+
+            }])
+})();
+(function() {
+  'use strict';
+
+  angular
+      .module('app.settings')
+      .run(settingsRun);
+
+  settingsRun.$inject = ['$rootScope', '$localStorage'];
+
+  function settingsRun($rootScope, $localStorage){
+
+    // Global Settings
+    // -----------------------------------
+    $rootScope.app = {
+      name: 'Rockcity FM Radio',
+      description: 'Rockcity FM Radio Station Ogun state',
+      year: ((new Date()).getFullYear()),
+      layout: {
+        isFixed: true,
+        isCollapsed: false,
+        isBoxed: false,
+        isRTL: false,
+        horizontal: false,
+        isFloat: false,
+        asideHover: false,
+        theme: null,
+        asideScrollbar: false
+      },
+      useFullLayout: false,
+      hiddenFooter: false,
+      offsidebarOpen: false,
+      asideToggled: false,
+      viewAnimation: 'ng-fadeInUp'
+    };
+
+    // Setup the layout mode
+    $rootScope.app.layout.horizontal = ( $rootScope.$stateParams.layout === 'app-h') ;
+
+     //Restore layout settings [*** UNCOMMENT TO ENABLE ***]
+     //if( angular.isDefined($localStorage.layout) )
+     //  $rootScope.app.layout = $localStorage.layout;
+     //else
+     //  $localStorage.layout = $rootScope.app.layout;
+     //
+     //$rootScope.$watch('app.layout', function () {
+     //  $localStorage.layout = $rootScope.app.layout;
+     //}, true);
+
+    // Close submenu when sidebar change from collapsed to normal
+    $rootScope.$watch('app.layout.isCollapsed', function(newValue) {
+      if( newValue === false )
+        $rootScope.$broadcast('closeSidebarMenu');
+    });
+
+  }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.preloader')
+        .directive('preloader', preloader);
+
+    preloader.$inject = ['$animate', '$timeout', '$q'];
+    function preloader ($animate, $timeout, $q) {
+
+        var directive = {
+            restrict: 'EAC',
+            template: 
+              '<div class="preloader-progress">' +
+                  '<div class="preloader-progress-bar" ' +
+                       'ng-style="{width: loadCounter + \'%\'}"></div>' +
+              '</div>'
+            ,
+            link: link
+        };
+        return directive;
+
+        ///////
+
+        function link(scope, el) {
+
+          scope.loadCounter = 0;
+
+          var counter  = 0,
+              timeout;
+
+          // disables scrollbar
+          angular.element('body').css('overflow', 'hidden');
+          // ensure class is present for styling
+          el.addClass('preloader');
+
+          appReady().then(endCounter);
+
+          timeout = $timeout(startCounter);
+
+          ///////
+
+          function startCounter() {
+
+            var remaining = 100 - counter;
+            counter = counter + (0.015 * Math.pow(1 - Math.sqrt(remaining), 2));
+
+            scope.loadCounter = parseInt(counter, 10);
+
+            timeout = $timeout(startCounter, 20);
+          }
+
+          function endCounter() {
+
+            $timeout.cancel(timeout);
+
+            scope.loadCounter = 100;
+
+            $timeout(function(){
+              // animate preloader hiding
+              $animate.addClass(el, 'preloader-hidden');
+              // retore scrollbar
+              angular.element('body').css('overflow', '');
+            }, 300);
+          }
+
+          function appReady() {
+            var deferred = $q.defer();
+            var viewsLoaded = 0;
+            // if this doesn't sync with the real app ready
+            // a custom event must be used instead
+            var off = scope.$on('$viewContentLoaded', function () {
+              viewsLoaded ++;
+              // we know there are at least two views to be loaded 
+              // before the app is ready (1-index.html 2-app*.html)
+              if ( viewsLoaded === 2) {
+                // with resolve this fires only once
+                $timeout(function(){
+                  deferred.resolve();
+                }, 3000);
+
+                off();
+              }
+
+            });
+
+            return deferred.promise;
+          }
+
+        } //link
+    }
+
+})();
+/**=========================================================
+ * Collapse panels * [panel-collapse]
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelCollapse', panelCollapse);
+
+    function panelCollapse () {
+        var directive = {
+            controller: Controller,
+            restrict: 'A',
+            scope: false
+        };
+        return directive;
+    }
+
+    Controller.$inject = ['$scope', '$element', '$timeout', '$localStorage'];
+    function Controller ($scope, $element, $timeout, $localStorage) {
+      var storageKeyName = 'panelState';
+
+      // Prepare the panel to be collapsible
+      var $elem   = $($element),
+          parent  = $elem.closest('.panel'), // find the first parent panel
+          panelId = parent.attr('id');
+
+      // Load the saved state if exists
+      var currentState = loadPanelState( panelId );
+      if ( typeof currentState !== 'undefined') {
+        $timeout(function(){
+            $scope[panelId] = currentState; },
+          10);
+      }
+
+      // bind events to switch icons
+      $element.bind('click', function(e) {
+        e.preventDefault();
+        savePanelState( panelId, !$scope[panelId] );
+
+      });
+  
+      // Controller helpers
+      function savePanelState(id, state) {
+        if(!id) return false;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        if(!data) { data = {}; }
+        data[id] = state;
+        $localStorage[storageKeyName] = angular.toJson(data);
+      }
+      function loadPanelState(id) {
+        if(!id) return false;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        if(data) {
+          return data[id];
+        }
+      }
+    }
+
+})();
+
+/**=========================================================
+ * Dismiss panels * [panel-dismiss]
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelDismiss', panelDismiss);
+
+    function panelDismiss () {
+
+        var directive = {
+            controller: Controller,
+            restrict: 'A'
+        };
+        return directive;
+
+    }
+
+    Controller.$inject = ['$scope', '$element', '$q', 'Utils'];
+    function Controller ($scope, $element, $q, Utils) {
+      var removeEvent   = 'panel-remove',
+          removedEvent  = 'panel-removed';
+
+      $element.on('click', function (e) {
+        e.preventDefault();
+
+        // find the first parent panel
+        var parent = $(this).closest('.panel');
+
+        removeElement();
+
+        function removeElement() {
+          var deferred = $q.defer();
+          var promise = deferred.promise;
+          
+          // Communicate event destroying panel
+          $scope.$emit(removeEvent, parent.attr('id'), deferred);
+          promise.then(destroyMiddleware);
+        }
+
+        // Run the animation before destroy the panel
+        function destroyMiddleware() {
+          if(Utils.support.animation) {
+            parent.animo({animation: 'bounceOut'}, destroyPanel);
+          }
+          else destroyPanel();
+        }
+
+        function destroyPanel() {
+
+          var col = parent.parent();
+          parent.remove();
+          // remove the parent if it is a row and is empty and not a sortable (portlet)
+          col
+            .filter(function() {
+            var el = $(this);
+            return (el.is('[class*="col-"]:not(.sortable)') && el.children('*').length === 0);
+          }).remove();
+
+          // Communicate event destroyed panel
+          $scope.$emit(removedEvent, parent.attr('id'));
+
+        }
+
+      });
+    }
+})();
+
+
+
+/**=========================================================
+ * Refresh panels
+ * [panel-refresh] * [data-spinner="standard"]
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelRefresh', panelRefresh);
+
+    function panelRefresh () {
+        var directive = {
+            controller: Controller,
+            restrict: 'A',
+            scope: false
+        };
+        return directive;
+
+    }
+
+    Controller.$inject = ['$scope', '$element'];
+    function Controller ($scope, $element) {
+      var refreshEvent   = 'panel-refresh',
+          whirlClass     = 'whirl',
+          defaultSpinner = 'standard';
+
+      // catch clicks to toggle panel refresh
+      $element.on('click', function (e) {
+        e.preventDefault();
+
+        var $this   = $(this),
+            panel   = $this.parents('.panel').eq(0),
+            spinner = $this.data('spinner') || defaultSpinner
+            ;
+
+        // start showing the spinner
+        panel.addClass(whirlClass + ' ' + spinner);
+
+        // Emit event when refresh clicked
+        $scope.$emit(refreshEvent, panel.attr('id'));
+
+      });
+
+      // listen to remove spinner
+      $scope.$on('removeSpinner', removeSpinner);
+
+      // method to clear the spinner when done
+      function removeSpinner (ev, id) {
+        if (!id) return;
+        var newid = id.charAt(0) === '#' ? id : ('#'+id);
+        angular
+          .element(newid)
+          .removeClass(whirlClass);
+      }
+    }
+})();
+
+
+
+/**=========================================================
+ * Module panel-tools.js
+ * Directive tools to control panels.
+ * Allows collapse, refresh and dismiss (remove)
+ * Saves panel state in browser storage
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('paneltool', paneltool);
+
+    paneltool.$inject = ['$compile', '$timeout'];
+    function paneltool ($compile, $timeout) {
+        var directive = {
+            link: link,
+            restrict: 'E',
+            scope: false
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+
+          var templates = {
+            /* jshint multistr: true */
+            collapse:'<a href="#" panel-collapse="" uib-tooltip="Collapse Panel" ng-click="{{panelId}} = !{{panelId}}"> \
+                        <em ng-show="{{panelId}}" class="fa fa-plus ng-no-animation"></em> \
+                        <em ng-show="!{{panelId}}" class="fa fa-minus ng-no-animation"></em> \
+                      </a>',
+            dismiss: '<a href="#" panel-dismiss="" uib-tooltip="Close Panel">\
+                       <em class="fa fa-times"></em>\
+                     </a>',
+            refresh: '<a href="#" panel-refresh="" data-spinner="{{spinner}}" uib-tooltip="Refresh Panel">\
+                       <em class="fa fa-refresh"></em>\
+                     </a>'
+          };
+
+          var tools = scope.panelTools || attrs;
+
+          $timeout(function() {
+            element.html(getTemplate(element, tools )).show();
+            $compile(element.contents())(scope);
+
+            element.addClass('pull-right');
+          });
+
+          function getTemplate( elem, attrs ){
+            var temp = '';
+            attrs = attrs || {};
+            if(attrs.toolCollapse)
+              temp += templates.collapse.replace(/{{panelId}}/g, (elem.parent().parent().attr('id')) );
+            if(attrs.toolDismiss)
+              temp += templates.dismiss;
+            if(attrs.toolRefresh)
+              temp += templates.refresh.replace(/{{spinner}}/g, attrs.toolRefresh);
+            return temp;
+          }
+        }// link
+    }
+
+})();
+
+/**=========================================================
+ * Module: demo-panels.js
+ * Provides a simple demo for panel actions
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .controller('PanelsCtrl', PanelsCtrl);
+
+    PanelsCtrl.$inject = ['$scope', '$timeout'];
+    function PanelsCtrl($scope, $timeout) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // PANEL COLLAPSE EVENTS
+          // ----------------------------------- 
+
+          // We can use panel id name for the boolean flag to [un]collapse the panel
+          $scope.$watch('panelDemo1',function(newVal){
+              
+              console.log('panelDemo1 collapsed: ' + newVal);
+
+          });
+
+
+          // PANEL DISMISS EVENTS
+          // ----------------------------------- 
+
+          // Before remove panel
+          $scope.$on('panel-remove', function(event, id, deferred){
+            
+            console.log('Panel #' + id + ' removing');
+            
+            // Here is obligatory to call the resolve() if we pretend to remove the panel finally
+            // Not calling resolve() will NOT remove the panel
+            // It's up to your app to decide if panel should be removed or not
+            deferred.resolve();
+          
+          });
+
+          // Panel removed ( only if above was resolved() )
+          $scope.$on('panel-removed', function(event, id){
+
+            console.log('Panel #' + id + ' removed');
+
+          });
+
+
+          // PANEL REFRESH EVENTS
+          // ----------------------------------- 
+
+          $scope.$on('panel-refresh', function(event, id) {
+            var secs = 3;
+            
+            console.log('Refreshing during ' + secs +'s #'+id);
+
+            $timeout(function(){
+              // directive listen for to remove the spinner 
+              // after we end up to perform own operations
+              $scope.$broadcast('removeSpinner', id);
+              
+              console.log('Refreshed #' + id);
+
+            }, 3000);
+
+          });
+
+          // PANELS VIA NG-REPEAT
+          // ----------------------------------- 
+
+          $scope.panels = [
+            {
+              id: 'panelRepeat1',
+              title: 'Panel Title 1',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            },
+            {
+              id: 'panelRepeat2',
+              title: 'Panel Title 2',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            },
+            {
+              id: 'panelRepeat3',
+              title: 'Panel Title 3',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            }
+          ];
+        }
+
+    } //PanelsCtrl
+
+})();
+
+
+/**=========================================================
+ * Drag and drop any panel based on jQueryUI portlets
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('portlet', portlet);
+
+    portlet.$inject = ['$timeout', '$localStorage'];
+    function portlet ($timeout, $localStorage) {
+      var storageKeyName = 'portletState';
+
+      return {
+        restrict: 'A',
+        link: link
+      };
+
+      /////////////
+
+      function link(scope, element) {
+          
+        // not compatible with jquery sortable
+        if(!$.fn.sortable) return;
+
+        element.sortable({
+          connectWith:          '[portlet]', // same like directive 
+          items:                'div.panel',
+          handle:               '.portlet-handler',
+          opacity:              0.7,
+          placeholder:          'portlet box-placeholder',
+          cancel:               '.portlet-cancel',
+          forcePlaceholderSize: true,
+          iframeFix:            false,
+          tolerance:            'pointer',
+          helper:               'original',
+          revert:               200,
+          forceHelperSize:      true,
+          update:               savePortletOrder,
+          create:               loadPortletOrder
+        });
+
+      }
+
+
+      function savePortletOrder(event/*, ui*/) {
+        var self = event.target;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        
+        if(!data) { data = {}; }
+
+        data[self.id] = $(self).sortable('toArray');
+
+        if(data) {
+          $timeout(function() {
+            $localStorage[storageKeyName] = angular.toJson(data);
+          });
+        }
+      }
+
+      function loadPortletOrder(event) {
+        var self = event.target;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+
+        if(data) {
+          
+          var porletId = self.id,
+              panels   = data[porletId];
+
+          if(panels) {
+            var portlet = $('#'+porletId);
+            
+            $.each(panels, function(index, value) {
+               $('#'+value).appendTo(portlet);
+            });
+          }
+
+        }
+      }
+
+    }
+
+})();
+ 
+/**=========================================================
+ * Module: angular-grid.js
+ * Example for Angular Grid
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.tables')
+        .controller('AngularGridController', AngularGridController);
+
+    AngularGridController.$inject = ['$http'];
+    function AngularGridController($http) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            // Basic
+            var columnDefs = [
+                {headerName: 'Athlete', field: 'athlete', width: 150},
+                {headerName: 'Age', field: 'age', width: 90},
+                {headerName: 'Country', field: 'country', width: 120},
+                {headerName: 'Year', field: 'year', width: 90},
+                {headerName: 'Date', field: 'date', width: 110},
+                {headerName: 'Sport', field: 'sport', width: 110},
+                {headerName: 'Gold', field: 'gold', width: 100},
+                {headerName: 'Silver', field: 'silver', width: 100},
+                {headerName: 'Bronze', field: 'bronze', width: 100},
+                {headerName: 'Total', field: 'total', width: 100}
+            ];
+
+            vm.gridOptions = {
+                columnDefs: columnDefs,
+                rowData: null,
+                ready: function(api){
+                  api.sizeColumnsToFit();
+                }
+            };
+
+            // Filter Example
+            var irishAthletes = ['John Joe Nevin','Katie Taylor','Paddy Barnes','Kenny Egan','Darren Sutherland', 'Margaret Thatcher', 'Tony Blair', 'Ronald Regan', 'Barack Obama'];
+
+            var columnDefsFilter = [
+                {headerName: 'Athlete', field: 'athlete', width: 150, filter: 'set',
+                    filterParams: { cellHeight: 20, values: irishAthletes} },
+                {headerName: 'Age', field: 'age', width: 90, filter: 'number'},
+                {headerName: 'Country', field: 'country', width: 120},
+                {headerName: 'Year', field: 'year', width: 90},
+                {headerName: 'Date', field: 'date', width: 110},
+                {headerName: 'Sport', field: 'sport', width: 110},
+                {headerName: 'Gold', field: 'gold', width: 100, filter: 'number'},
+                {headerName: 'Silver', field: 'silver', width: 100, filter: 'number'},
+                {headerName: 'Bronze', field: 'bronze', width: 100, filter: 'number'},
+                {headerName: 'Total', field: 'total', width: 100, filter: 'number'}
+            ];
+
+            vm.gridOptions1 = {
+                columnDefs: columnDefsFilter,
+                rowData: null,
+                enableFilter: true,
+                ready: function(api){
+                  api.sizeColumnsToFit();
+                }
+
+            };
+
+
+            // Pinning Example
+
+            vm.gridOptions2 = {
+                columnDefs: columnDefs,
+                rowData: null,
+                pinnedColumnCount: 2,
+                ready: function(api){
+                  api.sizeColumnsToFit();
+                }
+            };
+
+            //-----------------------------
+            // Get the data from SERVER
+            //-----------------------------
+
+            $http.get('server/ag-owinners.json')
+                .then(function(res){
+                    // basic
+                    vm.gridOptions.api.setRowData(res.data);
+                    vm.gridOptions.api.sizeColumnsToFit();
+                    // filter
+                    vm.gridOptions1.api.setRowData(res.data);
+                    vm.gridOptions1.api.sizeColumnsToFit();
+
+                    // pinning
+                    vm.gridOptions2.api.setRowData(res.data);
+                    vm.gridOptions2.api.sizeColumnsToFit();
+                });
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: datatable,js
+ * Angular Datatable controller
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.tables')
+        .controller('DataTableController', DataTableController);
+
+    DataTableController.$inject = ['$resource', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
+    function DataTableController($resource, DTOptionsBuilder, DTColumnDefBuilder) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // Ajax
+
+          $resource('server/datatable.json').query().$promise.then(function(persons) {
+             vm.persons = persons;
+          });
+
+          // Changing data
+
+          vm.heroes = [{
+              'id': 860,
+              'firstName': 'Superman',
+              'lastName': 'Yoda'
+            }, {
+              'id': 870,
+              'firstName': 'Ace',
+              'lastName': 'Ventura'
+            }, {
+              'id': 590,
+              'firstName': 'Flash',
+              'lastName': 'Gordon'
+            }, {
+              'id': 803,
+              'firstName': 'Luke',
+              'lastName': 'Skywalker'
+            }
+          ];
+
+          vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
+          vm.dtColumnDefs = [
+              DTColumnDefBuilder.newColumnDef(0),
+              DTColumnDefBuilder.newColumnDef(1),
+              DTColumnDefBuilder.newColumnDef(2),
+              DTColumnDefBuilder.newColumnDef(3).notSortable()
+          ];
+          vm.person2Add = _buildPerson2Add(1);
+          vm.addPerson = addPerson;
+          vm.modifyPerson = modifyPerson;
+          vm.removePerson = removePerson;
+
+          function _buildPerson2Add(id) {
+              return {
+                  id: id,
+                  firstName: 'Foo' + id,
+                  lastName: 'Bar' + id
+              };
+          }
+          function addPerson() {
+              vm.heroes.push(angular.copy(vm.person2Add));
+              vm.person2Add = _buildPerson2Add(vm.person2Add.id + 1);
+          }
+          function modifyPerson(index) {
+              vm.heroes.splice(index, 1, angular.copy(vm.person2Add));
+              vm.person2Add = _buildPerson2Add(vm.person2Add.id + 1);
+          }
+          function removePerson(index) {
+              vm.heroes.splice(index, 1);
+          }
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: ng-grid.js
+ * ngGrid demo
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.tables')
+        .controller('NGGridController', NGGridController);
+
+    NGGridController.$inject = ['$scope', '$http', '$timeout'];
+    function NGGridController($scope, $http, $timeout) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          $scope.filterOptions = {
+              filterText: '',
+              useExternalFilter: true
+          };
+          $scope.totalServerItems = 0;
+          $scope.pagingOptions = {
+              pageSizes:   [250, 500, 1000],  // page size options
+              pageSize:    250,              // default page size
+              currentPage: 1                 // initial page
+          };
+
+          $scope.gridOptions = {
+              data:             'myData',
+              enablePaging:     true,
+              showFooter:       true,
+              rowHeight:        36,
+              headerRowHeight:  38,
+              totalServerItems: 'totalServerItems',
+              pagingOptions:    $scope.pagingOptions,
+              filterOptions:    $scope.filterOptions
+          };
+
+          $scope.setPagingData = function(data, page, pageSize){
+              // calc for pager
+              var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+              // Store data from server
+              $scope.myData = pagedData;
+              // Update server side data length
+              $scope.totalServerItems = data.length;
+
+              if (!$scope.$$phase) {
+                  $scope.$apply();
+              }
+
+          };
+
+          $scope.getPagedDataAsync = function (pageSize, page, searchText) {
+            var ngGridResourcePath = 'server/ng-grid-data.json';
+
+            $timeout(function () {
+
+                if (searchText) {
+                    var ft = searchText.toLowerCase();
+                    $http.get(ngGridResourcePath).success(function (largeLoad) {
+                        var data = largeLoad.filter(function(item) {
+                            return JSON.stringify(item).toLowerCase().indexOf(ft) !== -1;
+                        });
+                        $scope.setPagingData(data,page,pageSize);
+                    });
+                } else {
+                    $http.get(ngGridResourcePath).success(function (largeLoad) {
+                        $scope.setPagingData(largeLoad,page,pageSize);
+                    });
+                }
+            }, 100);
+          };
+
+
+          $scope.$watch('pagingOptions', function (newVal, oldVal) {
+              if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
+                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+              }
+          }, true);
+          $scope.$watch('filterOptions', function (newVal, oldVal) {
+              if (newVal !== oldVal) {
+                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+              }
+          }, true);
+
+          $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.tables')
+        .service('ngTableDataService', ngTableDataService);
+
+    function ngTableDataService() {
+        /* jshint validthis:true */
+        var self = this;
+        this.cache = null;
+        this.getData = getData;
+
+        ////////////////
+
+        function getData($defer, params, api) {
+          // if no cache, request data and filter
+          if ( ! self.cache ) {
+            if ( api ) {
+              api.get(function(data){
+                self.cache = data;
+                filterdata($defer, params);
+              });
+            }
+          }
+          else {
+            filterdata($defer, params);
+          }
+          
+          function filterdata($defer, params) {
+            var from = (params.page() - 1) * params.count();
+            var to = params.page() * params.count();
+            var filteredData = self.cache.result.slice(from, to);
+
+            params.total(self.cache.total);
+            $defer.resolve(filteredData);
+          }
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: NGTableCtrl.js
+ * Controller for ngTables
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.tables')
+        .controller('NGTableCtrl', NGTableCtrl);
+    /*jshint -W055 */
+    NGTableCtrl.$inject = ['$filter', 'ngTableParams', '$resource', '$timeout', 'ngTableDataService'];
+    function NGTableCtrl($filter, ngTableParams, $resource, $timeout, ngTableDataService) {
+        var vm = this;
+        vm.title = 'Controller';
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          var data = [
+              {name: 'Moroni',  age: 50, money: -10   },
+              {name: 'Tiancum', age: 43, money: 120   },
+              {name: 'Jacob',   age: 27, money: 5.5   },
+              {name: 'Nephi',   age: 29, money: -54   },
+              {name: 'Enos',    age: 34, money: 110   },
+              {name: 'Tiancum', age: 43, money: 1000  },
+              {name: 'Jacob',   age: 27, money: -201  },
+              {name: 'Nephi',   age: 29, money: 100   },
+              {name: 'Enos',    age: 34, money: -52.5 },
+              {name: 'Tiancum', age: 43, money: 52.1  },
+              {name: 'Jacob',   age: 27, money: 110   },
+              {name: 'Nephi',   age: 29, money: -55   },
+              {name: 'Enos',    age: 34, money: 551   },
+              {name: 'Tiancum', age: 43, money: -1410 },
+              {name: 'Jacob',   age: 27, money: 410   },
+              {name: 'Nephi',   age: 29, money: 100   },
+              {name: 'Enos',    age: 34, money: -100  }
+          ];
+
+          // SELECT ROWS
+          // ----------------------------------- 
+
+          vm.data = data;
+
+          vm.tableParams3 = new ngTableParams({
+              page: 1,            // show first page
+              count: 10          // count per page
+          }, {
+              total: data.length, // length of data
+              getData: function ($defer, params) {
+                  // use build-in angular filter
+                  var filteredData = params.filter() ?
+                          $filter('filter')(data, params.filter()) :
+                          data;
+                  var orderedData = params.sorting() ?
+                          $filter('orderBy')(filteredData, params.orderBy()) :
+                          data;
+
+                  params.total(orderedData.length); // set total for recalc pagination
+                  $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+              }
+          });
+
+          vm.changeSelection = function(user) {
+            console.info(user);
+          };
+
+          // EXPORT CSV
+          // -----------------------------------  
+
+          var data4 = [{name: 'Moroni', age: 50},
+              {name: 'Tiancum', age: 43},
+              {name: 'Jacob', age: 27},
+              {name: 'Nephi', age: 29},
+              {name: 'Enos', age: 34},
+              {name: 'Tiancum', age: 43},
+              {name: 'Jacob', age: 27},
+              {name: 'Nephi', age: 29},
+              {name: 'Enos', age: 34},
+              {name: 'Tiancum', age: 43},
+              {name: 'Jacob', age: 27},
+              {name: 'Nephi', age: 29},
+              {name: 'Enos', age: 34},
+              {name: 'Tiancum', age: 43},
+              {name: 'Jacob', age: 27},
+              {name: 'Nephi', age: 29},
+              {name: 'Enos', age: 34}];
+
+          vm.tableParams4 = new ngTableParams({
+              page: 1,            // show first page
+              count: 10           // count per page
+          }, {
+              total: data4.length, // length of data4
+              getData: function($defer, params) {
+                  $defer.resolve(data4.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+              }
+          });
+
+
+          // SORTING
+          // ----------------------------------- 
+
+
+
+          vm.tableParams = new ngTableParams({
+              page: 1,            // show first page
+              count: 10,          // count per page
+              sorting: {
+                  name: 'asc'     // initial sorting
+              }
+          }, {
+              total: data.length, // length of data
+              getData: function($defer, params) {
+                  // use build-in angular filter
+                  var orderedData = params.sorting() ?
+                          $filter('orderBy')(data, params.orderBy()) :
+                          data;
+          
+                  $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+              }
+          });
+
+          // FILTERS
+          // ----------------------------------- 
+
+          vm.tableParams2 = new ngTableParams({
+              page: 1,            // show first page
+              count: 10,          // count per page
+              filter: {
+                  name: '',
+                  age: ''
+                  // name: 'M'       // initial filter
+              }
+          }, {
+              total: data.length, // length of data
+              getData: function($defer, params) {
+                  // use build-in angular filter
+                  var orderedData = params.filter() ?
+                         $filter('filter')(data, params.filter()) :
+                         data;
+
+                  vm.users = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+
+                  params.total(orderedData.length); // set total for recalc pagination
+                  $defer.resolve(vm.users);
+              }
+          });
+
+          // AJAX
+          
+          var Api = $resource('server/table-data.json');
+
+          vm.tableParams5 = new ngTableParams({
+              page: 1,            // show first page
+              count: 10           // count per page
+          }, {
+              total: 0,           // length of data
+              counts: [],         // hide page counts control
+              getData: function($defer, params) {
+                  
+                  // Service using cache to avoid mutiple requests
+                  ngTableDataService.getData( $defer, params, Api);
+                  
+                  /* direct ajax request to api (perform result pagination on the server)
+                  Api.get(params.url(), function(data) {
+                      $timeout(function() {
+                          // update table params
+                          params.total(data.total);
+                          // set new data
+                          $defer.resolve(data.result);
+                      }, 500);
+                  });
+                  */
+              }
+          });
+        }
+    }
+})();
+
+
+
+/**=========================================================
+ * Module: demo-buttons.js
+ * Provides a simple demo for buttons actions
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.tables')
+        .controller('TablexEditableController', TablexEditableController);
+
+    TablexEditableController.$inject = ['$filter', '$http', 'editableOptions', 'editableThemes','$q'];
+    function TablexEditableController($filter, $http, editableOptions, editableThemes, $q) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // editable row
+          // ----------------------------------- 
+          vm.users = [
+            {id: 1, name: 'awesome user1', status: 2, group: 4, groupName: 'admin'},
+            {id: 2, name: 'awesome user2', status: undefined, group: 3, groupName: 'vip'},
+            {id: 3, name: 'awesome user3', status: 2, group: null}
+          ];
+
+          vm.statuses = [
+            {value: 1, text: 'status1'},
+            {value: 2, text: 'status2'},
+            {value: 3, text: 'status3'},
+            {value: 4, text: 'status4'}
+          ];
+
+          vm.groups = [];
+          vm.loadGroups = function() {
+            return vm.groups.length ? null : $http.get('server/xeditable-groups.json').success(function(data) {
+              vm.groups = data;
+            });
+          };
+
+          vm.showGroup = function(user) {
+            if(user.group && vm.groups.length) {
+              var selected = $filter('filter')(vm.groups, {id: user.group});
+              return selected.length ? selected[0].text : 'Not set';
+            } else {
+              return user.groupName || 'Not set';
+            }
+          };
+
+          vm.showStatus = function(user) {
+            var selected = [];
+            if(user.status) {
+              selected = $filter('filter')(vm.statuses, {value: user.status});
+            }
+            return selected.length ? selected[0].text : 'Not set';
+          };
+
+          vm.checkName = function(data, id) {
+            if (id === 2 && data !== 'awesome') {
+              return 'Username 2 should be `awesome`';
+            }
+          };
+
+          vm.saveUser = function(data, id) {
+            //vm.user not updated yet
+            angular.extend(data, {id: id});
+            console.log('Saving user: ' + id);
+            // return $http.post('/saveUser', data);
+          };
+
+          // remove user
+          vm.removeUser = function(index) {
+            vm.users.splice(index, 1);
+          };
+
+          // add user
+          vm.addUser = function() {
+            vm.inserted = {
+              id: vm.users.length+1,
+              name: '',
+              status: null,
+              group: null,
+              isNew: true
+            };
+            vm.users.push(vm.inserted);
+          };
+
+          // editable column
+          // ----------------------------------- 
+
+
+          vm.saveColumn = function(column) {
+            var results = [];
+            angular.forEach(vm.users, function(/*user*/) {
+              // results.push($http.post('/saveColumn', {column: column, value: user[column], id: user.id}));
+              console.log('Saving column: ' + column);
+            });
+            return $q.all(results);
+          };
+
+          // editable table
+          // ----------------------------------- 
+
+          // filter users to show
+          vm.filterUser = function(user) {
+            return user.isDeleted !== true;
+          };
+
+          // mark user as deleted
+          vm.deleteUser = function(id) {
+            var filtered = $filter('filter')(vm.users, {id: id});
+            if (filtered.length) {
+              filtered[0].isDeleted = true;
+            }
+          };
+
+          // cancel all changes
+          vm.cancel = function() {
+            for (var i = vm.users.length; i--;) {
+              var user = vm.users[i];
+              // undelete
+              if (user.isDeleted) {
+                delete user.isDeleted;
+              }
+              // remove new 
+              if (user.isNew) {
+                vm.users.splice(i, 1);
+              }
+            }
+          };
+
+          // save edits
+          vm.saveTable = function() {
+            var results = [];
+            for (var i = vm.users.length; i--;) {
+              var user = vm.users[i];
+              // actually delete user
+              if (user.isDeleted) {
+                vm.users.splice(i, 1);
+              }
+              // mark as not new 
+              if (user.isNew) {
+                user.isNew = false;
+              }
+
+              // send on server
+              // results.push($http.post('/saveUser', user));
+              console.log('Saving Table...');
+            }
+
+            return $q.all(results);
+          };
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: UIGridController
+  =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.tables')
+        .controller('UIGridController', UIGridController);
+
+    UIGridController.$inject = ['uiGridConstants', '$http'];
+    function UIGridController(uiGridConstants, $http) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // Basic example
+          // ----------------------------------- 
+
+          vm.gridOptions = {
+            rowHeight: 34,
+            data: [
+              {
+                  'name': 'Wilder Gonzales',
+                  'gender': 'male',
+                  'company': 'Geekko'
+              },
+              {
+                  'name': 'Georgina Schultz',
+                  'gender': 'female',
+                  'company': 'Suretech'
+              },
+              {
+                  'name': 'Carroll Buchanan',
+                  'gender': 'male',
+                  'company': 'Ecosys'
+              },
+              {
+                  'name': 'Valarie Atkinson',
+                  'gender': 'female',
+                  'company': 'Hopeli'
+              },
+              {
+                  'name': 'Schroeder Mathews',
+                  'gender': 'male',
+                  'company': 'Polarium'
+              },
+              {
+                  'name': 'Ethel Price',
+                  'gender': 'female',
+                  'company': 'Enersol'
+              },
+              {
+                  'name': 'Claudine Neal',
+                  'gender': 'female',
+                  'company': 'Sealoud'
+              },
+              {
+                  'name': 'Beryl Rice',
+                  'gender': 'female',
+                  'company': 'Velity'
+              },
+              {
+                  'name': 'Lynda Mendoza',
+                  'gender': 'female',
+                  'company': 'Dogspa'
+              },
+              {
+                  'name': 'Sarah Massey',
+                  'gender': 'female',
+                  'company': 'Bisba'
+              },
+              {
+                  'name': 'Robles Boyle',
+                  'gender': 'male',
+                  'company': 'Comtract'
+              },
+              {
+                  'name': 'Evans Hickman',
+                  'gender': 'male',
+                  'company': 'Parleynet'
+              },
+              {
+                  'name': 'Dawson Barber',
+                  'gender': 'male',
+                  'company': 'Dymi'
+              },
+              {
+                  'name': 'Bruce Strong',
+                  'gender': 'male',
+                  'company': 'Xyqag'
+              },
+              {
+                  'name': 'Nellie Whitfield',
+                  'gender': 'female',
+                  'company': 'Exospace'
+              },
+              {
+                  'name': 'Jackson Macias',
+                  'gender': 'male',
+                  'company': 'Aquamate'
+              },
+              {
+                  'name': 'Pena Pena',
+                  'gender': 'male',
+                  'company': 'Quarx'
+              },
+              {
+                  'name': 'Lelia Gates',
+                  'gender': 'female',
+                  'company': 'Proxsoft'
+              },
+              {
+                  'name': 'Letitia Vasquez',
+                  'gender': 'female',
+                  'company': 'Slumberia'
+              },
+              {
+                  'name': 'Trevino Moreno',
+                  'gender': 'male',
+                  'company': 'Conjurica'
+              }
+            ]
+          };
+          
+          // Complex example
+          // ----------------------------------- 
+
+          var data = [];
+           
+          vm.gridOptionsComplex = {
+              showGridFooter: true,
+              showColumnFooter: true,
+              enableFiltering: true,
+              columnDefs: [
+                  { field: 'name', width: '13%' },
+                  { field: 'address.street',aggregationType: uiGridConstants.aggregationTypes.sum, width: '13%' },
+                  { field: 'age', aggregationType: uiGridConstants.aggregationTypes.avg, aggregationHideLabel: true, width: '13%' },
+                  { name: 'ageMin', field: 'age', aggregationType: uiGridConstants.aggregationTypes.min, width: '13%', displayName: 'Age for min' },
+                  { name: 'ageMax', field: 'age', aggregationType: uiGridConstants.aggregationTypes.max, width: '13%', displayName: 'Age for max' },
+                  { name: 'customCellTemplate', 
+                    field: 'age', 
+                    width: '14%', 
+                    footerCellTemplate: '<div class="ui-grid-cell-contents bg-info text-center">Custom HTML</div>' 
+                  },
+                  { name: 'registered', field: 'registered', width: '20%', cellFilter: 'date', footerCellFilter: 'date', aggregationType: uiGridConstants.aggregationTypes.max }
+              ],
+              data: data,
+              onRegisterApi: function(gridApi) {
+                vm.gridApi = gridApi;
+              }
+          };
+           
+          $http.get('server/uigrid-complex.json')
+            .success(function(data) {
+              data.forEach( function(row) {
+                row.registered = Date.parse(row.registered);
+              });
+              vm.gridOptionsComplex.data = data;
+            });
+
+
+           vm.gridOptions1 = {
+              paginationPageSizes: [25, 50, 75],
+              paginationPageSize: 25,
+              columnDefs: [
+                { name: 'name' },
+                { name: 'gender' },
+                { name: 'company' }
+              ]
+            };
+           
+            $http.get('server/uigrid-100.json')
+            .success(function (data) {
+              vm.gridOptions1.data = data;
+            });
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: sidebar-menu.js
+ * Handle sidebar collapsible elements
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sidebar')
+        .controller('SidebarController', SidebarController);
+
+    SidebarController.$inject = ['$rootScope', '$scope', '$state', 'SidebarLoader', 'Utils'];
+    function SidebarController($rootScope, $scope, $state, SidebarLoader,  Utils) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            var collapseList = [];
+
+            // demo: when switch from collapse to hover, close all items
+            $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
+                if ( newVal === false && oldVal === true) {
+                    closeAllBut(-1);
+                }
+            });
+
+
+            // Load menu from json file
+            // -----------------------------------
+
+            SidebarLoader.getMenu(sidebarReady);
+
+            function sidebarReady(items) {
+                $scope.menuItems = items;
+            }
+
+            // Handle sidebar and collapse items
+            // ----------------------------------
+
+            $scope.getFormattedPermission =  function (item) {
+                if(item.permissions != "undefined")
+                    return item.permissions;
+            };
+
+            $scope.getMenuItemPropClasses = function(item) {
+                return (item.heading ? 'nav-heading' : '') +
+                    (isActive(item) ? ' active' : '') ;
+            };
+
+            $scope.addCollapse = function($index, item) {
+                collapseList[$index] = $rootScope.app.layout.asideHover ? true : !isActive(item);
+            };
+
+            $scope.isCollapse = function($index) {
+                return (collapseList[$index]);
+            };
+
+            $scope.toggleCollapse = function($index, isParentItem) {
+
+                // collapsed sidebar doesn't toggle drodopwn
+                if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) return true;
+
+                // make sure the item index exists
+                if( angular.isDefined( collapseList[$index] ) ) {
+                    if ( ! $scope.lastEventFromChild ) {
+                        collapseList[$index] = !collapseList[$index];
+                        closeAllBut($index);
+                    }
+                }
+                else if ( isParentItem ) {
+                    closeAllBut(-1);
+                }
+
+                $scope.lastEventFromChild = isChild($index);
+
+                return true;
+
+            };
+
+            // Controller helpers
+            // -----------------------------------
+
+            // Check item and children active state
+            function isActive(item) {
+
+                if(!item) return;
+
+                if( !item.sref || item.sref === '#') {
+                    var foundActive = false;
+                    angular.forEach(item.submenu, function(value) {
+                        if(isActive(value)) foundActive = true;
+                    });
+                    return foundActive;
+                }
+                else
+                    return $state.is(item.sref) || $state.includes(item.sref);
+            }
+
+            function closeAllBut(index) {
+                index += '';
+                for(var i in collapseList) {
+                    if(index < 0 || index.indexOf(i) < 0)
+                        collapseList[i] = true;
+                }
+            }
+
+            function isChild($index) {
+                /*jshint -W018*/
+                return (typeof $index === 'string') && !($index.indexOf('-') < 0);
+            }
+
+        } // activate
+    }
+
+})();
+
+/**=========================================================
+ * Module: sidebar.js
+ * Wraps the sidebar and handles collapsed state
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sidebar')
+        .directive('sidebar', sidebar);
+
+    sidebar.$inject = ['$rootScope', '$timeout', '$window', 'Utils'];
+    function sidebar ($rootScope, $timeout, $window, Utils) {
+        var $win = angular.element($window);
+        var directive = {
+            // bindToController: true,
+            // controller: Controller,
+            // controllerAs: 'vm',
+            link: link,
+            restrict: 'EA',
+            template: '<nav class="sidebar" ng-transclude></nav>',
+            transclude: true,
+            replace: true
+            // scope: {}
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+
+          var currentState = $rootScope.$state.current.name;
+          var $sidebar = element;
+
+          var eventName = Utils.isTouch() ? 'click' : 'mouseenter' ;
+          var subNav = $();
+
+          $sidebar.on( eventName, '.nav > li', function() {
+
+            if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) {
+
+              subNav.trigger('mouseleave');
+              subNav = toggleMenuItem( $(this), $sidebar);
+
+              // Used to detect click and touch events outside the sidebar          
+              sidebarAddBackdrop();
+
+            }
+
+          });
+
+          scope.$on('closeSidebarMenu', function() {
+            removeFloatingNav();
+          });
+
+          // Normalize state when resize to mobile
+          $win.on('resize', function() {
+            if( ! Utils.isMobile() )
+          	asideToggleOff();
+          });
+
+          // Adjustment on route changes
+          $rootScope.$on('$stateChangeStart', function(event, toState) {
+            currentState = toState.name;
+            // Hide sidebar automatically on mobile
+            asideToggleOff();
+
+            $rootScope.$broadcast('closeSidebarMenu');
+          });
+
+      	  // Autoclose when click outside the sidebar
+          if ( angular.isDefined(attrs.sidebarAnyclickClose) ) {
+            
+            var wrapper = $('.wrapper');
+            var sbclickEvent = 'click.sidebar';
+            
+            $rootScope.$watch('app.asideToggled', watchExternalClicks);
+
+          }
+
+          //////
+
+          function watchExternalClicks(newVal) {
+            // if sidebar becomes visible
+            if ( newVal === true ) {
+              $timeout(function(){ // render after current digest cycle
+                wrapper.on(sbclickEvent, function(e){
+                  // if not child of sidebar
+                  if( ! $(e.target).parents('.aside').length ) {
+                    asideToggleOff();
+                  }
+                });
+              });
+            }
+            else {
+              // dettach event
+              wrapper.off(sbclickEvent);
+            }
+          }
+
+          function asideToggleOff() {
+            $rootScope.app.asideToggled = false;
+            if(!scope.$$phase) scope.$apply(); // anti-pattern but sometimes necessary
+      	  }
+        }
+        
+        ///////
+
+        function sidebarAddBackdrop() {
+          var $backdrop = $('<div/>', { 'class': 'dropdown-backdrop'} );
+          $backdrop.insertAfter('.aside-inner').on('click mouseenter', function () {
+            removeFloatingNav();
+          });
+        }
+
+        // Open the collapse sidebar submenu items when on touch devices 
+        // - desktop only opens on hover
+        function toggleTouchItem($element){
+          $element
+            .siblings('li')
+            .removeClass('open')
+            .end()
+            .toggleClass('open');
+        }
+
+        // Handles hover to open items under collapsed menu
+        // ----------------------------------- 
+        function toggleMenuItem($listItem, $sidebar) {
+
+          removeFloatingNav();
+
+          var ul = $listItem.children('ul');
+          
+          if( !ul.length ) return $();
+          if( $listItem.hasClass('open') ) {
+            toggleTouchItem($listItem);
+            return $();
+          }
+
+          var $aside = $('.aside');
+          var $asideInner = $('.aside-inner'); // for top offset calculation
+          // float aside uses extra padding on aside
+          var mar = parseInt( $asideInner.css('padding-top'), 0) + parseInt( $aside.css('padding-top'), 0);
+          var subNav = ul.clone().appendTo( $aside );
+          
+          toggleTouchItem($listItem);
+
+          var itemTop = ($listItem.position().top + mar) - $sidebar.scrollTop();
+          var vwHeight = $win.height();
+
+          subNav
+            .addClass('nav-floating')
+            .css({
+              position: $rootScope.app.layout.isFixed ? 'fixed' : 'absolute',
+              top:      itemTop,
+              bottom:   (subNav.outerHeight(true) + itemTop > vwHeight) ? 0 : 'auto'
+            });
+
+          subNav.on('mouseleave', function() {
+            toggleTouchItem($listItem);
+            subNav.remove();
+          });
+
+          return subNav;
+        }
+
+        function removeFloatingNav() {
+          $('.dropdown-backdrop').remove();
+          $('.sidebar-subnav.nav-floating').remove();
+          $('.sidebar li.open').removeClass('open');
+        }
+    }
+
+
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sidebar')
+        .service('SidebarLoader', SidebarLoader);
+
+    SidebarLoader.$inject = ['$http'];
+    function SidebarLoader($http) {
+        this.getMenu = getMenu;
+
+        ////////////////
+
+        function getMenu(onReady, onError) {
+          var menuJson = 'server/sidebar-menu.json',
+              menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
+            
+          onError = onError || function() { alert('Failure loading menu'); };
+
+          $http
+            .get(menuURL)
+            .success(onReady)
+            .error(onError);
+        }
+    }
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sidebar')
+        .controller('UserBlockController', UserBlockController);
+
+    UserBlockController.$inject = ['$rootScope', '$scope', '$cookies'];
+    function UserBlockController($rootScope, $scope, $cookies) {
+
+        activate();
+
+        ////////////////
+
+
+        function activate() {
+
+            var profile = angular.fromJson($cookies.get('auth'));
+
+            $rootScope.user = {
+                name:     profile.lastname,
+                job:      'Administrator',
+                picture:  'app/img/user/04.jpg',
+            };
+
+            // Hides/show user avatar on sidebar
+            $rootScope.toggleUserBlock = function(){
+                $rootScope.$broadcast('toggleUserBlock');
+            };
+
+            $rootScope.userBlockVisible = true;
+
+            var detach = $rootScope.$on('toggleUserBlock', function(/*event, args*/) {
+
+                $rootScope.userBlockVisible = ! $rootScope.userBlockVisible;
+
+            });
+
+            $scope.$on('$destroy', detach);
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.translate')
+        .config(translateConfig)
+        ;
+    translateConfig.$inject = ['$translateProvider'];
+    function translateConfig($translateProvider){
+
+      $translateProvider.useStaticFilesLoader({
+          prefix : 'app/i18n/',
+          suffix : '.json'
+      });
+
+      $translateProvider.preferredLanguage('en');
+      $translateProvider.useLocalStorage();
+      $translateProvider.usePostCompiling(true);
+      $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
+
+    }
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.translate')
+        .run(translateRun)
+        ;
+    translateRun.$inject = ['$rootScope', '$translate'];
+    
+    function translateRun($rootScope, $translate){
+
+      // Internationalization
+      // ----------------------
+
+      $rootScope.language = {
+        // Handles language dropdown
+        listIsOpen: false,
+        // list of available languages
+        available: {
+          'en':       'English',
+          'es_AR':    'Español'
+        },
+        // display always the current ui language
+        init: function () {
+          var proposedLanguage = $translate.proposedLanguage() || $translate.use();
+          var preferredLanguage = $translate.preferredLanguage(); // we know we have set a preferred one in app.config
+          $rootScope.language.selected = $rootScope.language.available[ (proposedLanguage || preferredLanguage) ];
+        },
+        set: function (localeId) {
+          // Set the new idiom
+          $translate.use(localeId);
+          // save a reference for the current language
+          $rootScope.language.selected = $rootScope.language.available[localeId];
+          // finally toggle dropdown
+          $rootScope.language.listIsOpen = ! $rootScope.language.listIsOpen;
+        }
+      };
+
+      $rootScope.language.init();
+
+    }
+})();
+/**=========================================================
+ * Module: animate-enabled.js
+ * Enable or disables ngAnimate for element with directive
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('animateEnabled', animateEnabled);
+
+    animateEnabled.$inject = ['$animate'];
+    function animateEnabled ($animate) {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          scope.$watch(function () {
+            return scope.$eval(attrs.animateEnabled, scope);
+          }, function (newValue) {
+            $animate.enabled(!!newValue, element);
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: browser.js
+ * Browser detection
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .service('Browser', Browser);
+
+    Browser.$inject = ['$window'];
+    function Browser($window) {
+      return $window.jQBrowser;
+    }
+
+})();
+
+/**=========================================================
+ * Module: clear-storage.js
+ * Removes a key from the browser storage via element click
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('resetKey', resetKey);
+
+    resetKey.$inject = ['$state', '$localStorage'];
+    function resetKey ($state, $localStorage) {
+        var directive = {
+            link: link,
+            restrict: 'A',
+            scope: {
+              resetKey: '@'
+            }
+        };
+        return directive;
+
+        function link(scope, element) {
+          element.on('click', function (e) {
+              e.preventDefault();
+
+              if(scope.resetKey) {
+                delete $localStorage[scope.resetKey];
+                $state.go($state.current, {}, {reload: true});
+              }
+              else {
+                $.error('No storage key specified for reset.');
+              }
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: fullscreen.js
+ * Toggle the fullscreen mode on/off
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('toggleFullscreen', toggleFullscreen);
+
+    toggleFullscreen.$inject = ['Browser'];
+    function toggleFullscreen (Browser) {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element) {
+          // Not supported under IE
+          if( Browser.msie ) {
+            element.addClass('hide');
+          }
+          else {
+            element.on('click', function (e) {
+                e.preventDefault();
+
+                if (screenfull.enabled) {
+                  
+                  screenfull.toggle();
+                  
+                  // Switch icon indicator
+                  if(screenfull.isFullscreen)
+                    $(this).children('em').removeClass('fa-expand').addClass('fa-compress');
+                  else
+                    $(this).children('em').removeClass('fa-compress').addClass('fa-expand');
+
+                } else {
+                  $.error('Fullscreen not enabled');
+                }
+
+            });
+          }
+        }
+    }
+
+
+})();
+
+/**=========================================================
+ * Module: load-css.js
+ * Request and load into the current page a css file
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('loadCss', loadCss);
+
+    function loadCss () {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          element.on('click', function (e) {
+              if(element.is('a')) e.preventDefault();
+              var uri = attrs.loadCss,
+                  link;
+
+              if(uri) {
+                link = createLink(uri);
+                if ( !link ) {
+                  $.error('Error creating stylesheet link element.');
+                }
+              }
+              else {
+                $.error('No stylesheet location defined.');
+              }
+
+          });
+        }
+        
+        function createLink(uri) {
+          var linkId = 'autoloaded-stylesheet',
+              oldLink = $('#'+linkId).attr('id', linkId + '-old');
+
+          $('head').append($('<link/>').attr({
+            'id':   linkId,
+            'rel':  'stylesheet',
+            'href': uri
+          }));
+
+          if( oldLink.length ) {
+            oldLink.remove();
+          }
+
+          return $('#'+linkId);
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: now.js
+ * Provides a simple way to display the current time formatted
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('now', now);
+
+    now.$inject = ['dateFilter', '$interval'];
+    function now (dateFilter, $interval) {
+        var directive = {
+            link: link,
+            restrict: 'EA'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var format = attrs.format;
+
+          function updateTime() {
+            var dt = dateFilter(new Date(), format);
+            element.text(dt);
+          }
+
+          updateTime();
+          var intervalPromise = $interval(updateTime, 1000);
+
+          scope.$on('$destroy', function(){
+            $interval.cancel(intervalPromise);
+          });
+
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: table-checkall.js
+ * Tables check all checkbox
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('checkAll', checkAll);
+
+    function checkAll () {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element) {
+          element.on('change', function() {
+            var $this = $(this),
+                index= $this.index() + 1,
+                checkbox = $this.find('input[type="checkbox"]'),
+                table = $this.parents('table');
+            // Make sure to affect only the correct checkbox column
+            table.find('tbody > tr > td:nth-child('+index+') input[type="checkbox"]')
+              .prop('checked', checkbox[0].checked);
+
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: trigger-resize.js
+ * Triggers a window resize event from any element
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('triggerResize', triggerResize);
+
+    triggerResize.$inject = ['$window', '$timeout'];
+    function triggerResize ($window, $timeout) {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attributes) {
+          element.on('click', function(){
+            $timeout(function(){
+              // all IE friendly dispatchEvent
+              var evt = document.createEvent('UIEvents');
+              evt.initUIEvent('resize', true, false, $window, 0);
+              $window.dispatchEvent(evt);
+              // modern dispatchEvent way
+              // $window.dispatchEvent(new Event('resize'));
+            }, attributes.triggerResize || 300);
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: utils.js
+ * Utility library to use across the theme
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .service('Utils', Utils);
+
+    Utils.$inject = ['$window', 'APP_MEDIAQUERY'];
+    function Utils($window, APP_MEDIAQUERY) {
+
+        var $html = angular.element('html'),
+            $win  = angular.element($window),
+            $body = angular.element('body');
+
+        return {
+          // DETECTION
+          support: {
+            transition: (function() {
+                    var transitionEnd = (function() {
+
+                        var element = document.body || document.documentElement,
+                            transEndEventNames = {
+                                WebkitTransition: 'webkitTransitionEnd',
+                                MozTransition: 'transitionend',
+                                OTransition: 'oTransitionEnd otransitionend',
+                                transition: 'transitionend'
+                            }, name;
+
+                        for (name in transEndEventNames) {
+                            if (element.style[name] !== undefined) return transEndEventNames[name];
+                        }
+                    }());
+
+                    return transitionEnd && { end: transitionEnd };
+                })(),
+            animation: (function() {
+
+                var animationEnd = (function() {
+
+                    var element = document.body || document.documentElement,
+                        animEndEventNames = {
+                            WebkitAnimation: 'webkitAnimationEnd',
+                            MozAnimation: 'animationend',
+                            OAnimation: 'oAnimationEnd oanimationend',
+                            animation: 'animationend'
+                        }, name;
+
+                    for (name in animEndEventNames) {
+                        if (element.style[name] !== undefined) return animEndEventNames[name];
+                    }
+                }());
+
+                return animationEnd && { end: animationEnd };
+            })(),
+            requestAnimationFrame: window.requestAnimationFrame ||
+                                   window.webkitRequestAnimationFrame ||
+                                   window.mozRequestAnimationFrame ||
+                                   window.msRequestAnimationFrame ||
+                                   window.oRequestAnimationFrame ||
+                                   function(callback){ window.setTimeout(callback, 1000/60); },
+            /*jshint -W069*/
+            touch: (
+                ('ontouchstart' in window && navigator.userAgent.toLowerCase().match(/mobile|tablet/)) ||
+                (window.DocumentTouch && document instanceof window.DocumentTouch)  ||
+                (window.navigator['msPointerEnabled'] && window.navigator['msMaxTouchPoints'] > 0) || //IE 10
+                (window.navigator['pointerEnabled'] && window.navigator['maxTouchPoints'] > 0) || //IE >=11
+                false
+            ),
+            mutationobserver: (window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null)
+          },
+          // UTILITIES
+          isInView: function(element, options) {
+              /*jshint -W106*/
+              var $element = $(element);
+
+              if (!$element.is(':visible')) {
+                  return false;
+              }
+
+              var window_left = $win.scrollLeft(),
+                  window_top  = $win.scrollTop(),
+                  offset      = $element.offset(),
+                  left        = offset.left,
+                  top         = offset.top;
+
+              options = $.extend({topoffset:0, leftoffset:0}, options);
+
+              if (top + $element.height() >= window_top && top - options.topoffset <= window_top + $win.height() &&
+                  left + $element.width() >= window_left && left - options.leftoffset <= window_left + $win.width()) {
+                return true;
+              } else {
+                return false;
+              }
+          },
+          
+          langdirection: $html.attr('dir') === 'rtl' ? 'right' : 'left',
+
+          isTouch: function () {
+            return $html.hasClass('touch');
+          },
+
+          isSidebarCollapsed: function () {
+            return $body.hasClass('aside-collapsed');
+          },
+
+          isSidebarToggled: function () {
+            return $body.hasClass('aside-toggled');
+          },
+
+          isMobile: function () {
+            return $win.width() < APP_MEDIAQUERY.tablet;
+          }
+
+        };
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('custom', [
+            // request the the entire framework
+            'angle',
+            // or just modules
+            'app.core',
+            'app.sidebar'
+            /*...*/
+        ]);
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order', ['ngFileUpload', 'app.bootstrapui'])
+        .constant("baseURL", "/api/")
+})();
+
+// To run this code, edit file index.html or index.jade and change
+// html data-ng-app attribute from angle to myAppName
+// ----------------------------------------------------------------------
+
+(function() {
+    'use strict';
+
+    angular
+        .module('custom')
+        .controller('Controller', Controller);
+
+    Controller.$inject = ['$log'];
+    function Controller($log) {
+        // for controllerAs syntax
+        // var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          $log.log('I\'m a line from custom.js');
+        }
+    }
+})();
+
+/**
+ * Created by dfash on 5/30/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('tokenService', ['$http', 'baseURL', '$q', function ($http, baseURL, $q) {
+
+            this.get = function () {
+                return $http.get(baseURL + 'csrf').then(
+                    function (response) {
+                        return response.data;
+                    },
+                    function (response) {
+                        return response;
+                    }
+                );
+            }
+        }])
+})();
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('LoginFormController', ['$scope', 'loginFactory', '$cookies', '$rootScope', '$state', '_token', '$window',
+            function($scope, loginFactory, $cookies, $rootScope, $state, _token, $window) {
+
+                $scope.account = {email:'', password:'', _token: _token.data};
+
+                $scope.authMsg = false;
+
+                $scope.login = function () {
+
+                    $scope.disabled = true;
+
+                    loginFactory.user().login($scope.account).$promise.then(
+                        function(response) {
+
+                            $rootScope.auth = response;
+                            $cookies.put('auth', JSON.stringify($rootScope.auth));
+                            $rootScope.authenticated = true;
+
+                            if(loginFactory.toState){
+
+                                if(loginFactory.toState.name == 'app.unauthorized') {
+                                    $state.go('app.dashboard');
+                                    return;
+                                }
+
+                                $window.history.back();
+                                //if(loginFactory.toState.name == 'app.airtime.details'){}
+                                //$state.go(loginFactory.toState.name);
+                            }
+                            else {
+
+                                $state.go('app.dashboard');
+                            }
+
+                        },
+                        function (response) {
+                            $scope.disabled = false;
+                            if(response.status == 403) {
+                                $scope.authMsg = response.data;
+                            }
+                            else if(response.status == 422) {
+                                $scope.authMsg = 'Username or password not valid';
+                            }
+                            else {
+                                $scope.authMsg = 'Access denied! Try refreshing this page';
+                            }
+                        }
+                    );
+                };
+
+                $scope.logout = function() {
+                    loginFactory.logout();
+                };
+            }]);
+})();
+
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('loginFactory', ['$resource', '$cookies', '$rootScope', 'baseURL', '$state', 'PermissionStore', 'RoleStore',
+            function($resource, $cookies, $rootScope, baseURL, $state, PermissionStore, RoleStore) {
+
+                this.toState = null;
+                this.toParams = null;
+
+                this.getUserStatus = function() {
+                    var status = $cookies.get('auth');
+                    if(status) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                };
+
+                this.userData = function() {
+                    var userObj = angular.fromJson($cookies.get('auth'));
+                    return userObj;
+                };
+
+                this.authCheck = function() {
+                    $resource(baseURL + 'auth/check').get(
+                        function () {},
+                        function () {
+                            redirect();
+                        }
+                    );
+                };
+
+                $rootScope.logout = function() {
+                    $resource(baseURL + 'auth/logout').query(
+                        function (response) {
+                            redirect();
+                        }
+                    );
+
+                };
+
+                //$rootScope.logout = function() {
+                //    $resource(baseURL + 'auth/logout', null, {
+                //        'doLogout': { method: 'GET', headers: { 'X-Requested-With' :'XMLHttpRequest' }} }).doLogout(
+                //        function (response) {
+                //            redirect();
+                //        }
+                //    );
+                //
+                //};
+
+                this.user = function() {
+                    return $resource(baseURL + 'auth', null, {
+                        'login': {
+                            method:'POST',
+                            headers: { 'X-Requested-With' :'XMLHttpRequest' }
+                        }
+                    });
+                };
+
+                function redirect()
+                {
+                    $cookies.remove('auth');
+
+                    $rootScope.authenticated = false;
+                    $state.go('page.login');
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 6/9/16.
+ */
+
+(function () {
+    angular
+        .module('app.core')
+        .config(['$urlRouterProvider', function ($urlRouterProvider) {
+
+            // Prevent router from automatic state resolving
+            $urlRouterProvider.deferIntercept();
+
+            // Use instead
+            $urlRouterProvider.otherwise( function($injector) {
+                var $state = $injector.get("$state");
+                $state.go('page.login');
+            });
+        }]);
+})();
+/**
+ * Created by dfash on 6/9/16.
+ */
+
+(function () {
+    angular
+        .module('app.core')
+        .run(permissionRun);
+
+    function permissionRun(userFactory, PermissionStore, RoleStore, $urlRouter, $http){
+        //PermissionStore
+        //    .definePermission('create.airtime', function () {
+        //        return userFactory.userCan('approve.airtime');
+        //    });
+        //
+
+        // Example ajax call
+            $http
+                .get('/api/permission/controls')
+                .then(function (permissions) {
+                    //console.log(permissions);
+                    // Use RoleStore and PermissionStore to define permissions and roles
+                    angular.forEach(permissions.data.permissions, function ($permission) {
+                        //console.log($permission.slug);
+                        PermissionStore.definePermission($permission.slug, function () {
+                            return userFactory.userCan($permission.slug);
+                        })
+                    });
+
+                    //save roles
+                    angular.forEach(permissions.data.roles, function ($roles) {
+                        RoleStore.defineRole($roles.slug, function () {
+                            return userFactory.userIs($roles.slug);
+                        })
+                    });
+                    // or even set up whole session
+                })
+                .then(function () {
+
+                    //console.log(PermissionStore.getStore());
+                    //console.log(RoleStore.getStore());
+
+                    // Once permissions are set-up
+                    // kick-off router and start the application rendering
+                    $urlRouter.sync();
+                    // Also enable router to listen to url changes
+                    $urlRouter.listen();
+                });
+    }
+    permissionRun.$inject = ["userFactory", "PermissionStore", "RoleStore", "$urlRouter", "$http"];
+
+
+})();
+/**
+ * Created by dfash on 7/6/16.
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app.sidebar')
+        .directive('sideMenuPermission', function() {
+
+            return {
+                restrict: 'AE',
+                link: function (scope, elem, attrs) {
+                    //console.log(attrs);
+                    //console.log(scope.$eval(attrs.sideMenuPermission));
+                    console.log('Linking....');
+                }
+            }
+        });
+})();
+/**
+ * Created by dfash on 5/5/16.
+ */
+
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('RegisterFormController', ['$scope', 'registerFactory', 'loginFactory', '$timeout',
+            function($scope, registerFactory, loginFactory, $timeout) {
+
+                $scope.register = {lastname:'', firstname:'', email:'',
+                    password:'', password_confirm:'', agreed:false};
+                $scope.disabled = false;
+
+                $scope.submitReg = function() {
+
+                    $scope.authMsg = '';
+
+                    $scope.disabled = true;
+                    //posts data to the server $scope.register
+                    registerFactory.register().save($scope.register,
+                        function() {
+                            $scope.authMsg = false;
+                            $scope.succMsg = "Account created successfully";
+                            $scope.register = {lastname:'', firstname:'', email:'',
+                                password:'', password_confirm:'', agreed:false};
+                            $scope.registerForm.$setPristine();
+                            $scope.disabled = false;
+
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+
+                                $scope.succMsg = false;
+                                $scope.disabled = false;
+                                $scope.authMsg = "Registration failed. " + response.data;
+
+                            }
+                            else {
+                                $scope.succMsg = false;
+                                $scope.disabled = false;
+                                $scope.authMsg = "Server error please try again later..";
+                            }
+                        }
+                    )
+                }
+            }]);
+})();
+
+
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('registerFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.register = function() {
+                return $resource(baseURL + 'user', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            }
+        }]);
+})();
+/**
+ * Created by dfash on 7/10/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AssessmentConfigController', ['$scope', '$state', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function ($scope, $state, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.config = {"enable":false, "starts": "", "ends": ""};
+                vm.configs = {};
+
+                activate();
+
+                ////////////////
+
+                vm.submitSettings = function () {
+                    if(angular.isDefined(vm.config.id)) {
+                        assessmentService.getConfig().update({'id':parseInt(vm.config.id)}, vm.config,
+                            function(response){
+                                $state.reload();
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                                }
+                            }
+                        );
+                    }
+                    else {
+                        assessmentService.getConfig().save(vm.config,
+                            function(response){
+                                $state.reload();
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                                }
+                            }
+                        );
+                    }
+                };
+
+                vm.editConfig = function($index) {
+                    vm.config.id = vm.configs[$index].id;
+                    vm.config.enable = vm.configs[$index].enable == 1 ? true : false;
+                    vm.config.starts = new Date(vm.configs[$index].starts);
+                    vm.config.ends = new Date(vm.configs[$index].ends);
+                };
+
+                vm.isUpdate = function($index) {
+                    return vm.config.id == vm.configs[$index].id;
+                };
+
+
+                /////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    assessmentService.getConfig().query().$promise.then(
+                        function(response){
+                            vm.configs = response;
+                        },
+                        function(response) {
+                            vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    );
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2),
+                        DTColumnDefBuilder.newColumnDef(3).notSortable()
+                    ];
+
+                    vm.remove = remove;
+
+                    //TODO: add notification message
+                    function remove($index)
+                    {
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this Schedule?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    assessmentService.getConfig().delete({'id':parseInt(vm.configs[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.configs.splice($index, 1);
+                                            //vm.alerts[0] = {'type':'success', 'msg':'Schedule removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Schedule removed successfully', 'success');
+                                        },
+                                        function () {
+                                            vm.configMessage = 'Server error.';
+                                            if(response.status == 403) {
+                                                vm.configMessage = "Error: " + response.status + " " + response.statusText;
+                                            }
+                                            SweetAlert.swal('Cancelled', vm.configMessage, 'error');
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Schedule is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+
+            }]);
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('AssessConfigDatePickerCtrl', AssessConfigDatePickerCtrl);
+
+    function AssessConfigDatePickerCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            vm.today = function() {
+                vm.dt = new Date();
+            };
+            vm.today();
+
+            vm.clear = function () {
+                vm.dt = null;
+            };
+
+            // Disable weekend selection
+            vm.disabled = function(date, mode) {
+                return false;
+                //return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+            };
+
+            vm.toggleMin = function() {
+                vm.minDate = vm.minDate ? null : new Date();
+            };
+            vm.toggleMin();
+
+            vm.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                vm.opened = true;
+            };
+
+            vm.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+
+            vm.initDate = new Date('2019-10-20');
+            vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+            vm.format = vm.formats[0];
+        }
+    }
+})();
+
+
+/**
+ * Created by dfash on 7/10/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AssessmentLogController', ['$scope', 'assessmentService', '$state', '$stateParams',
+            function ($scope, assessmentService, $state, $stateParams) {
+
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+
+                assessmentService.getConfig().get({id: parseInt($stateParams.id)}).$promise.then(
+                    function(response){
+                        $scope.configs = response;
+                    },
+                    function(response) {
+                        $state.go('app.assessment.config');
+                    }
+                );
+
+                assessmentService.log().query({"id":parseInt($stateParams.id)}).$promise.then(
+                    function(response) {
+                        $scope.records = response;
+                    },
+                    function () {
+                        $state.go('app.assessment.config');
+                    }
+                );
+            }
+        ]);
+})();
+/**
+ * Created by dfash on 7/27/16.
+ */
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('DriverReportModalController', ModalController);
+
+    ModalController.$inject = ['$uibModal'];
+    function ModalController($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            vm.open = function (report) {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/template/driver-rpt-modal-temp.html',
+                    controller: ModalInstanceCtrl,
+                    resolve: angular.extend({
+                        report: function() { return report; }
+                    })
+                });
+
+                var state = $('#modal-state');
+                modalInstance.result.then(function () {
+                }, function () {
+                });
+            };
+
+            // Please note that $uibModalInstance represents a modal window (instance) dependency.
+            // It is not the same as the $uibModal service used above.
+
+            ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', 'report'];
+            function ModalInstanceCtrl($scope, $uibModalInstance, report) {
+
+                $scope.report = report;
+
+                $scope.stringtodate = function(date) {
+                    return new Date(date);
+                };
+
+                $scope.isTitle = function(mod) {
+                    return mod == title;
+                };
+
+                $scope.ok = function () {
+                    $uibModalInstance.close('closed');
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }
+        }
+    }
+
+})();
+
+/**
+ * Created by dfash on 7/9/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('DriverReportViewCtrl', ['$scope', '$rootScope', 'vehicleFactory', 'SweetAlert', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$state',
+            function($scope, $rootScope, vehicleFactory, SweetAlert, DTOptionsBuilder, DTColumnDefBuilder, $state) {
+
+                var vm = $scope;
+                //collapse the menu bar
+                //$rootScope.app.layout.isCollapsed = true;
+                vm.reports = {};
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                vm.created = function(date) {
+                    return new Date(date);
+                };
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    // Changing data
+                    //if its admin route page
+                    if($state.is('app.admin.driver-report'))
+                    {
+                        vm.dtColumnDefs = [
+                            DTColumnDefBuilder.newColumnDef(0),
+                            DTColumnDefBuilder.newColumnDef(1),
+                            DTColumnDefBuilder.newColumnDef(2),
+                            DTColumnDefBuilder.newColumnDef(3),
+                            DTColumnDefBuilder.newColumnDef(4).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(5).notSortable()
+                        ];
+
+                        vehicleFactory.getReports().query().$promise.then(
+                            function(response){
+                                vm.reports = response;
+                            },
+                            function(response) {
+                                vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+                    else
+                    {
+                        vm.dtColumnDefs = [
+                            DTColumnDefBuilder.newColumnDef(0),
+                            DTColumnDefBuilder.newColumnDef(1),
+                            DTColumnDefBuilder.newColumnDef(2),
+                            DTColumnDefBuilder.newColumnDef(3),
+                            DTColumnDefBuilder.newColumnDef(4).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(5).notSortable()
+                        ];
+
+                        vehicleFactory.driverReport().query().$promise.then(
+                            function(response){
+                                vm.reports = response;
+                            },
+                            function(response) {
+                                vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+
+                    vm.removeReport = removeReport;
+
+                    function removeReport($index)
+                    {
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this report?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    vehicleFactory.driverReport().delete({'id':parseInt(vm.reports[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.reports.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Report removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Report has been deleted.', 'success');
+                                        },
+                                        function () {
+                                            vm.clientMessage = 'Server error.';
+                                            if(response.status == 403) {
+                                                vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                                            }
+                                            SweetAlert.swal('Cancelled', vm.reportMessage, 'error');
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Report is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 6/22/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('DriverController', ['$scope', '$rootScope', 'vehicleFactory', '$state', '$stateParams',
+            function($scope, $rootScope, vehicleFactory, $state, $stateParams) {
+
+                //collapse the menu bar
+                //$rootScope.app.layout.isCollapsed = true;
+
+                var vm = $scope;
+                vm.report = { "info":{} }; // "water_level": "0", "oil_level": "0"};
+
+                activate();
+                ////////////////
+
+                vm.motors = vehicleFactory.vehicles().query().$promise.then(
+                    function (response) {
+                        vm.motors = response;
+                    }
+                );
+
+                vm.validateInput = function(name, type) {
+                    var input = vm.reportForm[name];
+                    return (!input.$pristine || vm.submitted) && input.$error[type];
+                };
+
+
+                if($state.is('app.driver.editReport')) {
+
+                    if(angular.isDefined($stateParams.id)) {
+
+                        console.log($stateParams.id);
+                        vehicleFactory.driverReport().get({'id': parseInt($stateParams.id)}).$promise.then(
+                            function (response) {
+                                vm.report = response;
+                            },
+                            function (response) {
+                                $state.go('app.driver.viewReport');
+                            }
+                        );
+                    }
+
+                }
+
+                function activate() {
+                    //vm.report.info.time_inspect = new Date();
+                    //vm.report.info.time_washed = new Date();
+
+                    vm.hstep = 1;
+                    vm.mstep = 15;
+
+                    vm.options = {
+                        hstep: [1, 2, 3],
+                        mstep: [1, 5, 10, 15, 25, 30]
+                    };
+
+                    vm.ismeridian = true;
+                    vm.toggleMode = function() {
+                        vm.ismeridian = ! vm.ismeridian;
+                    };
+
+                    vm.update = function() {
+                        var d = new Date();
+                        d.setHours( 14 );
+                        d.setMinutes( 0 );
+                        vm.mytime = d;
+                    };
+
+                    vm.changed = function () {
+                        console.log('Time changed to: ' + vm.mytime);
+                    };
+
+                    vm.clear = function() {
+                        vm.mytime = null;
+                    };
+                }
+
+                vm.submitReport = function(form) {
+
+                    vm.report.vehicle_id = vm.report.vehicle.id;
+
+                    //if its edit mode
+                    //Todo: add message to the screen
+                    if($state.is('app.driver.editReport')) {
+                        vehicleFactory.driverReport().update({'id':parseInt($stateParams.id)}, vm.report,
+                            function (response) {
+                                vm.report = response;
+                                $scope.alerts[0] = {'type':'success', 'msg':'Report updated successfully'};
+                                form.$setPristine();
+                            }, function(response){
+                                if(response.status == 403) {
+                                    $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                }
+                            }
+                        );
+                    }
+                    else {
+                        vehicleFactory.driverReport().report(vm.report,
+                            function () {
+                                vm.report = { "vehicle":vm.report.vehicle, "info":{} };
+                                $scope.alerts[0] = {'type':'success', 'msg':'Report saved successfully'};
+                                form.$setPristine();
+                            }, function(response){
+                                if(response.status == 403) {
+                                    $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                }
+                            }
+                        );
+                    }
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 7/27/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .directive('reportChallenge', [function () {
+            return {
+                templateUrl: 'app/directives/rpt-challenge.html',
+                replace: true,
+                scope: {
+                    challengesObject: '='
+                }
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 7/27/16.
+ */
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ReportModalController', ModalController);
+
+    ModalController.$inject = ['$uibModal'];
+    function ModalController($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            vm.open = function (modalTitle, subReport) {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/template/rpt-modal-temp.html',
+                    controller: ModalInstanceCtrl,
+                    resolve: angular.extend({
+                        title: function() { return modalTitle; },
+                        subReportArr: function() { return subReport; }
+                    })
+                });
+
+                var state = $('#modal-state');
+                modalInstance.result.then(function () {
+                    state.text('Modal dismissed with OK status');
+                }, function () {
+                    state.text('Modal dismissed with Cancel status');
+                });
+            };
+
+            // Please note that $uibModalInstance represents a modal window (instance) dependency.
+            // It is not the same as the $uibModal service used above.
+
+            ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', 'subReportArr', 'title'];
+            function ModalInstanceCtrl($scope, $uibModalInstance, subReportArr, title) {
+
+                $scope.modalTitle = title;
+                $scope.reportArr = angular.copy(subReportArr);
+
+                $scope.startDate = function(date) {
+                    return new Date(date);
+                };
+
+                $scope.isTitle = function(mod) {
+                    return mod == title;
+                };
+
+                $scope.ok = function () {
+                    $uibModalInstance.close('closed');
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }
+        }
+    }
+
+})();
+
+/**
+ * Created by dfash on 7/27/16.
+ */
+(function () {
+    angular
+        .module('app.order')
+        .directive('reportRemittance', [function () {
+            return {
+                templateUrl: 'app/directives/rpt-remittance.html',
+                replace: true,
+                scope: {
+                    remittancesObject: '='
+                }
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 7/27/16.
+ */
+(function () {
+    angular
+        .module('app.order')
+        .directive('reportTask', [function () {
+            return {
+                templateUrl: 'app/directives/rpt-task.html',
+                replace: true,
+                scope: {
+                    tasksObject: '='
+                }
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 6/16/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('uploadController', ['$scope', 'Upload', '$timeout', 'reportFactory', function ($scope, Upload, $timeout, reportFactory) {
+
+            $scope.files = reportFactory.files;
+            $scope.errorFiles = reportFactory.errorFiles;
+
+            $scope.$watch('files', function(newValue) {
+                reportFactory.files = newValue;
+            });
+
+            $scope.$watch('errorFiles', function(newValue) {
+                reportFactory.errorFiles = newValue;
+            });
+
+            $scope.uploadFiles = function (files, errFiles) {
+                reportFactory.files = files;
+                reportFactory.errorFiles = errFiles;
+                angular.forEach(files, function (file) {
+                    file.upload = Upload.upload({
+                        url: '/api/rep/files',
+                        data: {file: file}
+                    });
+
+                    file.upload.then(function (response) {
+                        $timeout(function () {
+                            file.result = response.data;
+                            reportFactory.appendUpload(file.result);
+                        });
+                    }, function (response) {
+                        if (response.status > 0)
+                            $scope.errorMsg = response.status + ': ' + response.data;
+                    }, function (evt) {
+                        //console.log(evt);
+                        file.progress = Math.min(100, parseInt(100.0 *
+                            evt.loaded / evt.total));
+                    });
+                });
+            };
+        }]);
+
+//        .controller('MyCtrl', ['$scope', 'Upload', function ($scope, Upload) {
+//            // upload later on reportForm submit or something similar
+//            $scope.submitUpload = function() {
+//                if ($scope.reportForm.file.$valid && $scope.file) {
+//                    $scope.upload($scope.file);
+//                }
+//            };
+//
+//            // upload on file select or drop
+//            $scope.upload = function (file) {
+//                Upload.upload({
+//                    url: 'upload/url',
+//                    data: {file: file, 'username': $scope.username}
+//                }).then(function (resp) {
+//                    console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+//                }, function (resp) {
+//                    console.log('Error status: ' + resp.status);
+//                }, function (evt) {
+//                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+//                    console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+//                });
+//            };
+//            // for multiple files:
+////            $scope.uploadFiles = function (files) {
+////                if (files && files.length) {
+////                    for (var i = 0; i < files.length; i++) {
+////                        Upload.upload({..., data: {file: files[i]}, ...})...;
+////                }
+////                // or send them all together for HTML5 browsers:
+////                Upload.upload({..., data: {file: files}, ...})...;
+////        }
+////}
+//}]);
+
+
+})();
+/**
+ * Created by dfash on 6/1/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .directive('reportUpload', [function () {
+            return {
+                templateUrl: 'app/directives/rpt-uploads.html',
+                replace: true,
+                scope: {
+                    uploadsObject: '='
+                }
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 6/1/16.
+ */
+
+(function () {
+    //angular
+    //    .module('app.order')
+    //    .service('fileUpload', ['$http', function ($http) {
+    //        this.uploadFileToUrl = function(file, uploadUrl){
+    //            var fd = new FormData();
+    //            fd.append('file', file);
+    //            $http.post(uploadUrl, fd, {
+    //                transformRequest: angular.identity,
+    //                headers: {'Content-Type': undefined}
+    //            }).success(function(){
+    //                })
+    //                .error(function(){
+    //                });
+    //        }
+    //    }]);
+
+})();
+/**
+ * Created by dfash on 7/27/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('ReportViewController', ['$scope', 'reportFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert', '$state',
+            function($scope, reportFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert, $state) {
+                var vm = $scope;
+                //collapse the menu bar
+                //$rootScope.app.layout.isCollapsed = true;
+                vm.reports = {};
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                vm.created = function(date){
+                    return new Date(date);
+                };
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    // Changing data
+
+                    if($state.is('app.admin.staff-report'))
+                    {
+                        vm.dtColumnDefs = [
+                            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(1).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(2).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(3).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(4).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(5).notSortable()
+                        ];
+
+                        reportFactory.getReports().query().$promise.then(
+                            function(response){
+                                vm.reports = response;
+                            },
+                            function(response) {
+                                vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+                    else
+                    {
+                        vm.dtColumnDefs = [
+                            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(1).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(2).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(3).notSortable(),
+                            DTColumnDefBuilder.newColumnDef(4).notSortable()
+                        ];
+
+                        reportFactory.report().query().$promise.then(
+                            function(response){
+                                vm.reports = response;
+                            },
+                            function(response) {
+                                vm.reportMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 5/27/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('ReportController', ['$scope', 'reportFactory', 'targetFactory', 'vehicleFactory',
+            function($scope, reportFactory, targetFactory, vehicleFactory) {
+
+                $scope.tab = 1;
+                $scope.tasks = [{}];
+                $scope.challenges = [{}];
+                $scope.remittances = [{}];
+                $scope.vehicles = [{}];
+
+                $scope.targets = targetFactory.getMyTargets().query().$promise.then(
+                    function (response) {
+                        $scope.targets = response;
+                    }
+                );
+
+                $scope.motors = vehicleFactory.vehicles().query().$promise.then(
+                    function (response) {
+                        $scope.motors = response;
+                    }
+                );
+
+                $scope.closeAll = function(objArray) {
+                    objArray.splice(1);
+                };
+
+                $scope.closeField = function(index, objArray) {
+                    objArray.splice(index, 1);
+                };
+
+                $scope.addField = function(objArray) {
+                    objArray.push({});
+                };
+
+                //
+                $scope.isSelected = function (checkTab) {
+                    return ($scope.tab === checkTab);
+                };
+
+                $scope.select = function(setTab) {
+                    $scope.tab = setTab;
+                };
+
+                $scope.submitReport = function (form) {
+
+                    var myReport = {"tasks": $scope.tasks, "challenges": $scope.challenges,
+                        "remittances": $scope.remittances, "vehicles": $scope.vehicles,
+                        "uploadedFiles": reportFactory.uploadedFiles
+                    };
+
+                    reportFactory.report().save(myReport,
+                        function () {
+
+                            $scope.tasks = [{}];
+                            $scope.challenges = [{}];
+                            $scope.remittances = [{}];
+                            $scope.vehicles = [{}];
+                            reportFactory.uploadedFiles = [];
+                            reportFactory.files = [];
+                            $scope.tab = 1;
+                            form.$setPristine();
+                        }, function () {
+
+                        }
+                    );
+                    form.$setPristine();
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 6/1/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('reportFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.files = [];
+            this.errorFiles = [];
+            this.uploadedFiles = [];
+
+            this.appendUpload = function (filename) {
+                this.uploadedFiles[this.uploadedFiles.length] = filename;
+
+            };
+
+            this.report = function() {
+                return $resource(baseURL + 'report', null, {
+                    'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                });
+            };
+
+            this.getReports = function() {
+                return $resource(baseURL + 'admin/staff-reps');
+            }
+
+        }]);
+})();
+///**
+// * Created by dfash on 6/1/16.
+// */
+//
+//(function () {
+//    angular
+//        .module('app.order')
+//        .controller('TargetCreateController', ['$scope', 'userFactory', function($scope, userFactory) {
+
+//            $scope.marketers = userFactory.marketers().query().$promise.then(
+//                function(response) {
+//                    $scope.marketers = response;
+//                }
+//            );
+//
+//
+//        }]);
+//})();
+
+/**
+ * Created by dfash on 6/5/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('TargetManageController', ['$scope', 'targetFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, targetFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                activate();
+
+                ////////////////
+
+                vm.startDate = function(date) {
+                    return new Date(date);
+                };
+
+                function activate() {
+
+                    // Changing data
+
+                    targetFactory.target().query().$promise.then(function(response) {
+                        vm.targets = response;
+                    });
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        //DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(4),
+                        DTColumnDefBuilder.newColumnDef(5).notSortable()
+                    ];
+
+                    vm.modifyTarget = modifyTarget;
+                    vm.removeTarget = removeTarget;
+
+                    function modifyTarget($index)
+                    {
+                        vm.target.id = vm.targets[$index].id;
+                        vm.target.name = vm.targets[$index].name;
+                        vm.target.startDate = new Date(vm.targets[$index].startDate.toString());
+                        vm.target.duration = vm.targets[$index].duration;
+                        vm.target.user_id = vm.targets[$index].user_id.toString();
+                        vm.target.amount = vm.targets[$index].amount;
+
+                        vm.select(1);
+                    }
+
+                    function removeTarget($index)
+                    {
+                        //alert box for clearing cart
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this target?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    targetFactory.getTargets().delete({'id':parseInt(vm.targets[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.targets.splice($index, 1);
+                                            $scope.alerts[0] = {'type':'success', 'msg':'Target deleted successfully'};
+                                        }, function(){
+                                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                        }
+                                    );
+                                    SweetAlert.swal('Deleted!', 'Selected target has been deleted.', 'success');
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Your data is safe :)', 'error');
+                                }
+                            });
+                        })();
+                    }
+
+                }
+            }
+        ]);
+})();
+/**
+ * Created by dfash on 5/27/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('TargetController', ['$scope', 'userFactory', 'targetFactory', '_token',
+            function($scope, userFactory, targetFactory, _token) {
+
+                $scope.tab = 1;
+
+                $scope.target = { '_token': _token.data};
+                //
+                $scope.isSelected = function (checkTab) {
+                    return ($scope.tab === checkTab);
+                };
+
+                $scope.select = function(setTab) {
+                    $scope.tab = setTab;
+
+                };
+
+                $scope.marketers = userFactory.marketers()
+                    .query().$promise.then(
+                    function (response) {
+                        $scope.marketers = response;
+                    }, function (response) {
+                    }
+                );
+
+                $scope.alerts = [];
+                $scope.closeAlert = function(index) {
+                    $scope.alerts.splice(index, 1);
+                };
+
+                $scope.submitTarget = function(form) {
+                    if(angular.isDefined($scope.target.id))
+                    {
+                        targetFactory.getTargets().update({'id':parseInt($scope.target.id)}, $scope.target).$promise.then(
+                            function () {
+                                $scope.alerts[0] = {'type':'success', 'msg':'Target saved successfully'};
+                                $scope.target = { '_token': _token.data};
+                                form.$setPristine();
+                            }, function(){
+                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                        );
+                    }
+                    else {
+                        targetFactory.target().save($scope.target,
+                            function () {
+                                $scope.alerts[0] = {'type':'success', 'msg':'Target saved successfully'};
+                                $scope.target = { '_token': _token.data};
+                                form.$setPristine();
+                            }, function(){
+                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                        );
+                    }
+                };
+
+                activateDate();
+                //date module
+                function activateDate() {
+                    $scope.today = function () {
+                        $scope.dt = new Date();
+                    };
+
+                    $scope.today();
+
+                    $scope.clear = function () {
+                        $scope.dt = null;
+                    };
+
+                    // Disable weekend selection
+                    $scope.disabled = function (date, mode) {
+                        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+                    };
+
+                    $scope.toggleMin = function () {
+                        $scope.minDate = $scope.minDate ? null : new Date();
+                    };
+                    $scope.toggleMin();
+
+                    $scope.open = function ($event) {
+                        $event.preventDefault();
+                        $event.stopPropagation();
+
+                        $scope.opened = true;
+                    };
+
+                    $scope.dateOptions = {
+                        formatYear: 'yy',
+                        startingDay: 1
+                    };
+
+                    $scope.initDate = new Date('2019-10-20');
+                    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                    $scope.format = $scope.formats[0];
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 6/1/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('targetFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+            this.target = function() {
+                return $resource(baseURL + "target", null, {'save':{method:"POST", headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            };
+
+            this.getTargets = function() {
+                return $resource(baseURL + "target/:id", null, {
+                    'update':{method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'save':{method:"POST", headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:"DELETE"}
+                });
+            };
+
+            this.getMyTargets = function() {
+                return $resource(baseURL + "target/:id/user");
+            };
+
+        }]);
+})();
+///**
+// * Created by dfash on 6/1/16.
+// */
+//
+//(function () {
+//    angular
+//        .module('app.order')
+//        .controller('VehicleCreateController', ['$scope', 'vehicleFactory', '_token',
+//            function($scope, vehicleFactory, _token) {
+//
+//
+//                $scope.vehicleForm = {/*'name': '', 'reg': '232', 'engineNo': 324535, 'colour':'err2',*/ '_token': ''};//_token.data};
+//
+//                $scope.alerts = [];
+//                $scope.closeAlert = function(index) {
+//                    $scope.alerts.splice(index, 1);
+//                };
+//
+//                $scope.submitVehicle = function() {
+//                    $scope.vehicleForm = {'name': '', 'reg': '', 'engineNo':'', 'colour':'', '_token': _token.data};
+//                    $scope.vForm.$setPristine();
+//                    //vehicleFactory.vehicle().save($scope.vehicleForm,
+//                    //    function () {
+//                    //        $scope.alerts[0] = {'type':'success', 'msg':'Vehicle added successfully'};
+//                    //        $scope.vehicleForm = {'name': '', 'reg': '', 'engineNo':'', 'colour':'', '_token': _token.data};
+//                    //        $scope.vForm.$setPristine();
+//                    //    },
+//                    //    function (response) {
+//                    //        $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+//                    //    }
+//                    //);
+//                };
+//
+//            }]);
+//})();
+/**
+ * Created by dfash on 6/6/16.
+ */
+
+/**
+ * Created by dfash on 6/5/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('VehicleManageController', ['$scope', 'vehicleFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, vehicleFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    vehicleFactory.vehicles().query().$promise.then(function(response) {
+                        vm.vehicles = response;
+                    });
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(10)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        //DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(4).notSortable()
+                    ];
+
+                    vm.modifyVehicle = modifyVehicle;
+                    vm.removeVehicle = removeVehicle;
+
+                    function modifyVehicle($index)
+                    {
+                        vm.vehicleForm.id = vm.vehicles[$index].id;
+                        vm.vehicleForm.name = vm.vehicles[$index].name;
+                        vm.vehicleForm.reg = vm.vehicles[$index].reg;
+                        vm.vehicleForm.eng = vm.vehicles[$index].eng;
+                        vm.vehicleForm.colour = vm.vehicles[$index].colour;
+
+                        vm.select(2);
+                    }
+
+                    function removeVehicle($index)
+                    {
+                        //alert box for clearing cart
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this vehicle?',
+                                text: 'Your will not be able to recover your selected items back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    vehicleFactory.vehicles().delete({'id':parseInt(vm.vehicles[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.vehicles.splice($index, 1);
+                                            $scope.alerts[0] = {'type':'success', 'msg':'Vehicle removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Selected vehicle has been deleted.', 'success');
+                                        }, function(){
+                                            if(response.status == 403) {
+                                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                                SweetAlert.swal('Cancelled', response.data, 'error');
+                                            }
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Your data is safe :)', 'error');
+                                }
+                            });
+                        })();
+                    }
+
+                }
+            }
+        ]);
+})();
+/**
+ * Created by dfash on 5/31/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('vehicleFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.vehicles = function() {
+                return $resource(baseURL + 'vehicle/:id', null, {
+                    'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'update':{method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE'}
+                });
+            };
+
+            this.driverReport = function() {
+                return $resource(baseURL + 'driver/report/:id', null, {
+                    'report': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'update':{method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE'}
+                });
+            };
+
+            this.getReports = function() {
+                return $resource(baseURL + 'admin/driver-reps');
+            }
+
+        }]);
+})();
+/**
+ * Created by dfash on 5/27/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('VehicleController', ['$scope', 'vehicleFactory', '_token',
+            function($scope, vehicleFactory, _token) {
+
+                $scope.vehicleForm = {/*'name': '', 'reg': '232', 'engineNo': 324535, 'colour':'err2',*/ '_token': _token.data};
+
+                //console.log(_token);
+                $scope.tab = 1;
+                $scope.vehicles = [{}];
+
+                //
+                $scope.isSelected = function (checkTab) {
+                    return ($scope.tab === checkTab);
+                };
+
+                $scope.select = function(setTab) {
+                    $scope.tab = setTab;
+
+                };
+
+
+                $scope.alerts = [];
+                $scope.closeAlert = function(index) {
+                    $scope.alerts.splice(index, 1);
+                };
+
+                $scope.submitVehicle = function(form) {
+
+                    if(angular.isDefined($scope.vehicleForm.id))
+                    {
+                        vehicleFactory.vehicles().update({'id':parseInt($scope.vehicleForm.id)}, $scope.vehicleForm).$promise.then(
+                            function () {
+                                $scope.alerts[0] = {'type':'success', 'msg':'Vehicle updated successfully'};
+                                $scope.vehicleForm = { '_token': _token.data};
+                                form.$setPristine();
+                            }, function(){
+                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                        );
+                    }
+                    else {
+                        vehicleFactory.vehicles().save($scope.vehicleForm,
+                            function () {
+                                $scope.alerts[0] = {'type':'success', 'msg':'Vehicle added successfully'};
+                                $scope.vehicleForm = {'name': '', 'reg': '', 'engineNo':'', 'colour':'', '_token': _token.data};
+                                form.$setPristine();
+
+                                $scope.select(1);
+                            },
+                            function (response) {
+                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                        );
+                    }
+                };
+
+            }]);
+})();
+/**
+ * Created by dfash on 7/8/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.showRecords = false;
+                vm.assessMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+                //
+                assessmentService.getAssessment().query()
+                    .$promise.then(
+                    function (response) {
+                        vm.records = response;
+                        vm.showRecords = true;
+                    }, function (response) {
+                        if(response.status == 403) {
+                            vm.assessMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    }
+                );
+
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable()
+                    ];
+
+                    vm.remove = remove;
+
+                    function remove($index)
+                    {
+                        //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this record?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
+                                        function () {
+
+                                            vm.records.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
+                                        },
+                                        function (response) {
+                                            if(response.status == 403) {
+                                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                            }
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/22/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = $scope;
+                vm.disableForm = false;
+                vm.showTimeFrame = false;
+                $scope.config = {};
+
+                $scope.form = {
+                    "id": null, "preview": 0,
+                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
+                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
+                    "part_two": { "review":[{}], "performance":{}},
+                    "part_three": {"competencies":{}},
+                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
+                };
+
+
+
+                assessmentService.getActiveConfig().get().$promise.then(
+                    function (response) {
+                        vm.showTimeFrame = true;
+                        $scope.config = response;
+
+                        if($state.is('app.assessment.create'))
+                            $scope.form.assessment_config_id = response.id;
+
+                        checkRouting(response);
+                    },
+                    function() {
+                        vm.disableForm = true;
+                    }
+                );
+
+
+                //routes to edit if user has a data already submitted
+                function checkRouting(response) {
+                    if($state.is('app.assessment.create')) {
+                        if (angular.isDefined(response.assessment)) {
+                            $state.go('app.assessment.edit', {"id": response.assessment.id});
+                        }
+                    }
+                }
+
+                //routing from create or from url
+                if($state.is('app.assessment.edit')) {
+                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                        function (response) {
+                            $scope.form = response;
+
+                            checkDataResp();
+                        },
+                        function() {
+                            $state.go('app.assessment.create', {"id":$scope.form.id});
+                        }
+                    );
+                }
+
+                vm.submitPreview = function() {
+                    $scope.form.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function (response) {
+
+                            $scope.form = response;
+                            toaster.pop('success', 'Assessment', 'Data saved.');
+
+                            checkDataResp();
+
+                            $state.go('app.assessment.edit', {"id":$scope.form.id});
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                vm.submitAssessment = function() {
+
+                    $scope.form.preview = 1;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function () {
+                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
+                        if($scope.form.part_two.review[0].length == 0)
+                            $scope.form.part_two.review = [{}];
+                    }
+
+                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
+                        $scope.form.part_two.performance = {};
+                    }
+
+                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
+                        $scope.form.part_three.competencies = {};
+                    }
+                };
+
+                //START-DATE functions
+                vm.today = function() {
+                    vm.dt = new Date();
+                };
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function(date, mode) {
+                    return false;
+                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
+                };
+
+                vm.toggleMin = function() {
+                    vm.minDate = vm.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function($event, dateObj) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    dateObj.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.dateFormat = vm.dateFormats[0];
+                //END: Date functions
+            }]);
+})();
+/**
+ * Created by dfash on 7/7/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.assessment = function() {
+                return $resource(baseURL + 'assessment', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getAssessment = function() {
+                return $resource(baseURL + 'assessment/:id', null,
+                    {
+                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.supervisor = function() {
+                return $resource(baseURL + 'supervisor', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getConfig = function() {
+                return $resource(baseURL + 'assessconfig/:id', null,
+                    {
+                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.getActiveConfig = function() {
+                return $resource(baseURL + 'activeconfig');
+            };
+
+            this.log = function() {
+                return $resource(baseURL + "assessment/records/:id");
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 7/8/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = this;
+
+                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
+
+
+                //manages for routing
+                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                    function (response) {
+                        if(response.supervisor != null)
+                            $scope.supervisor = response.supervisor;
+                        else {
+                            $scope.supervisor.assessment_id = response.id;
+                            checkDataResp();
+                        }
+                    },
+                    function() {
+                        $state.go('app.assessment.view');
+                    }
+                );
+
+
+                $scope.submitPreview = function() {
+                    $scope.supervisor.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    //set the function
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function (response) {
+
+                            $scope.supervisor = response;
+                            toaster.pop('success', 'Supervisor', 'Data saved.');
+
+                            checkDataResp();
+
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                $scope.submitComment = function() {
+
+                    $scope.supervisor.preview = 1;
+
+                    toaster.pop('wait', 'Supervisor', 'Processing your request');
+
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function () {
+                            toaster.pop('success', 'Supervisor', 'Data submitted.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
+                        $scope.supervisor.attributes = {};
+                    }
+
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
+                        $scope.supervisor.habbit = {};
+                    }
+
+                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
+                        $scope.supervisor.leadership = {};
+                    }
+                };
+
+            }]);
+})();
+/**
+ * Created by dfash on 5/25/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AdminAirtimeController', ['$rootScope', '$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+            function($rootScope, $scope, $resource, baseURL, $filter, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
+
+                var vm = $scope;
+
+                vm.showData = false;
+                vm.dataMessage = 'Loading...';
+                vm.isDisabled = false;
+
+
+                activate();
+
+                vm.search = function(form) {
+
+                    vm.isDisabled = true;
+
+                    $resource(baseURL + 'admin/airtime?min=:min&max=:max').query({'min': form.min_date.$modelValue, 'max': form.max_date.$modelValue}).$promise.then(
+                        function (response) {
+                            vm.isDisabled = false;
+                            vm.schedules = response;
+                        }
+                    );
+                };
+
+                ////////////////
+
+                function activate() {
+
+                    ////class
+                    vm.propClass = function(val) {
+                        return val == 1 ? 'label-success' : 'label-info';
+                    };
+
+                    vm.dateChanged = function(){
+
+                        console.log('clicked');
+                        if(vm.max_date <= vm.min_date){
+                            vm.max_date = null;
+                        }
+                    };
+
+                    // Changing data
+
+                    $resource(baseURL + 'admin/airtime').query().$promise.then(
+                        function (response) {
+                            vm.schedules = response;
+                        }
+                    );
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2),
+                        DTColumnDefBuilder.newColumnDef(3),
+                        DTColumnDefBuilder.newColumnDef(4),
+                        DTColumnDefBuilder.newColumnDef(5),
+                        DTColumnDefBuilder.newColumnDef(6),
+                        DTColumnDefBuilder.newColumnDef(7).notSortable()
+                    ];
+
+                }
+
+            }]);
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('MinDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('MaxDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                        vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('AirtimeCreateController',
+        ["$scope", "$cookies", "$rootScope", "toaster", "clientFactory", "userFactory", "productFactory", "airtimeFactory", "SweetAlert", "$uibModal", "$timeout", "$state", "loginFactory", function($scope, $cookies, $rootScope, toaster, clientFactory, userFactory, productFactory, airtimeFactory, SweetAlert, $uibModal, $timeout, $state, loginFactory) {
+
+            var vm = $scope;
+            //collapse the menu bar
+            $rootScope.app.layout.isCollapsed = true;
+
+            vm.tab = 1;
+            vm.bulkValid = false;
+            vm.slotValid = false;
+            vm.cart = [];
+            vm.orderButton = undefined;
+            vm.btn = {};
+
+            vm.form = {
+                price: 0.00,
+                period: '',
+
+                no_slots: "0",
+                slot_start_date: "",
+                slot_end_date: "",
+                fixSpotPrice: "",
+
+                broadcast: "0",
+                bulk_start_date:'',
+                bulk_end_date:'',
+                bulkPrice: "",
+                discount: '0',
+                commission: '0',
+                agree: false,
+            };
+
+            vm.cartTotals = 0;
+            vm.vat = 0;
+            vm.dsctAmnt = 0;
+            vm.commAmnt = 0;
+            vm.totalWOComm = 0;
+            vm.totalWComm = 0;
+
+            vm.periods = [{value:'premium', label:'Premium' }, {value:'regular', label:'Regular'}];
+
+            vm.client = {};
+            //TODO: implement this for
+            vm.refreshClient = function(search) {
+                clientFactory.getClients().query().$promise.then(
+                    function (response) {
+                        vm.clients = response;
+                    }
+                );
+            };
+
+            vm.slot_start_date = "";
+            vm.slot_end_date = "";
+
+            vm.getSlotRange = function(n) {
+                return new Array(parseInt(n));
+            };
+
+            vm.maxSlotRange = 0;
+
+            vm.maxSlotRangeChange = function() {
+                vm.maxSlotRange = angular.copy(vm.form.no_slots);
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.maxSlotRange);
+            };
+
+            vm.bulkRangeChanged = function() {
+                vm.form.bulkPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.broadcast);
+            };
+
+            vm.clearBulk = function() {
+                vm.form.broadcast = 0;
+                vm.form.bulk_start_date = null;
+                vm.form.bulk_end_date = null;
+                vm.bulkRangeChanged();
+            };
+
+            vm.clearSlot = function() {
+                vm.form.no_slots = 0;
+                vm.form.slot_start_date = null;
+                vm.form.slot_end_date = null;
+                vm.maxSlotRange = 0;
+                vm.fixForDate = {};
+                vm.scheduleSlots = [];
+                vm.btn.fixslot = false;
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.no_slots);
+            };
+
+            vm.fixForDate = {};
+            vm.scheduleSlots = [];
+
+            //validation for add slot button if all fixed time is set
+            vm.checkScheduleSlot = function() {
+                var valid = true;
+                if(vm.scheduleSlots.length) {
+                    for(var i=0; i<vm.scheduleSlots.length; i++) {
+                        valid = vm.scheduleSlots[i].tofix == vm.scheduleSlots[i].times.length;
+                    }
+                }
+                return valid;
+            };
+
+            //push into table
+            vm.pushToSchedule = function() {
+                vm.fixForDate.times = [];
+                vm.scheduleSlots.push(vm.fixForDate);
+                vm.recalculateSlot();
+            };
+
+            //recalculate slot if any changes
+            vm.recalculateSlot = function() {
+                var slot = angular.copy(vm.fixForDate.slot);
+                vm.maxSlotRange = parseInt(vm.maxSlotRange) - parseInt(slot);
+
+                vm.fixForDate = {slot:"1"};
+            };
+
+            //remove fixed spot from the table
+            vm.removeSchedule = function($index) {
+                vm.maxSlotRange = parseInt(vm.maxSlotRange) + parseInt(vm.scheduleSlots[$index].slot);
+                vm.scheduleSlots.splice($index, 1);
+
+                vm.calcFixedPrice();
+            };
+
+            vm.calcFixedPrice = function () {
+
+                vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.no_slots);
+
+                //selected  product price
+                var selProdPrice = parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]);
+
+                for(var i = 0; i < vm.scheduleSlots.length; i++) {
+                    var schtable = vm.scheduleSlots[i];
+
+                    //cal normal price for tofix slot and remove it from already calculated price
+                    var price = parseInt(schtable.tofix) * parseFloat(selProdPrice);
+
+                    vm.form.fixSpotPrice = parseFloat(vm.form.fixSpotPrice) + ( (parseInt(vm.product.selected.surcharge) / 100) * parseFloat(price) );
+                }
+            };
+
+            //submit order
+            vm.submitOrder = function () {
+
+                var airtime = {};
+
+                airtime.marketer = vm.marketer.selected;
+
+                airtime.client = vm.client.selected;
+
+                airtime.sub = {
+                    'discount':vm.form.discount,
+                    'discountAmt':vm.dsctAmnt,
+                    'commission': vm.form.commission,
+                    'commissionAmt': vm.commAmnt,
+                    'subTotal': vm.cartTotals,
+                    'vat': vm.vat,
+                    'grandTotal': vm.totalWOComm,
+                };
+
+                airtime.cart = vm.cart;
+
+                console.log(airtime);
+
+                toaster.pop('wait', 'Order', 'Processing your request');
+
+                vm.orderButton = true;
+                airtimeFactory.order().save(airtime,
+                    function (response) {
+
+                        toaster.pop('success', 'Order', 'Order has been received.');
+                        $timeout(function () {
+                            $state.go('app.airtime');
+                        }, 500);
+                    },
+                    function (response) {
+                        vm.orderButton = false;
+                        if(response.status == 403) {
+                            toaster.pop('error', 'Order', response.data);
+                        }
+                        else{
+                            toaster.pop('error', 'Order', 'Failed to process order!. please contact the administrator');
+                        }
+                    }
+                );
+            };
+
+
+            //set default to current user
+            vm.marketer = {'selected': loginFactory.userData()};
+
+            userFactory.marketers().query().$promise.then(
+                function (response) {
+                    vm.marketers = response;
+                }
+            );
+
+            vm.product = {};
+            vm.price = {index:'0'};
+            vm.products = productFactory.getProducts().query().$promise.then(
+                function (response) {
+                    vm.products = response;
+                }
+            );
+
+            vm.doDiscountCalc = function () {
+                vm.vat = (5/100)*vm.cartTotals;
+                vm.dsctAmnt = ((vm.form.discount)/100)*vm.cartTotals;
+                vm.commAmnt = ((vm.form.commission)/100)*vm.cartTotals;;
+                vm.totalWOComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt - vm.commAmnt;
+                vm.totalWComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt;
+            };
+
+            //get total price of a product
+            vm.calProductSubscription = function(itemIdx) {
+                var sum = 0;
+                for(var j=0; j<vm.cart[itemIdx].subscriptions.length; j++) {
+
+                    var subObj = vm.cart[itemIdx].subscriptions[j];
+
+                    sum += parseFloat(subObj.amount);// + parseFloat(subObj.subChargePrice);
+                }
+                return sum;
+            };
+
+            vm.calcCartTotalPrice = function() {
+                var sum = 0;
+                for(var i=0; i<vm.cart.length; i++) {
+                    sum += vm.calProductSubscription(i);
+                }
+                vm.cartTotals = sum;
+
+                //do discount calculations
+                vm.doDiscountCalc();
+            };
+
+            vm.deleteCartItem = function(index) {
+                delete vm.cart.splice(index,1);
+                vm.calcCartTotalPrice();
+            };
+
+            vm.deleteSubscription = function(itemIndex, subIndex) {
+                vm.cart[itemIndex].subscriptions.splice(subIndex, 1);
+                if(vm.cart[itemIndex].subscriptions.length == 0) vm.deleteCartItem(itemIndex);
+                vm.calcCartTotalPrice();
+            };
+
+            vm.productPrice = function () {
+                return parseFloat(vm.form.price);
+            };
+
+            vm.addBulk = function() {
+                //TODO: do validation here
+                if(vm.product.selected == '') return;
+
+                //pick number of broadcast
+                //pick bulkstartdate
+                //pick bulkenddate
+
+                var data = {
+                    broadcast:vm.form.broadcast,
+                    bulk_start_date:vm.form.bulk_start_date,
+                    bulk_end_date:vm.form.bulk_end_date,
+                    period: vm.form.period,
+                    amount: parseFloat(vm.form.bulkPrice),
+                };
+
+                vm.addItemToCart(); //attempts adding item to cart
+
+                var index = vm.cartItemIndex(vm.product.selected.id);
+                //for(var i = 0; i<vm.form.broadcast; i++)
+                //{
+                vm.cart[index].subscriptions.push(data);
+                //}
+
+                vm.calcCartTotalPrice();//recalculate cart price
+
+                vm.clearBulk();
+
+            };
+
+            //on add slot button clicked
+            vm.addSlot = function() {
+                if(vm.product.selected == '') return;
+                if(vm.form.price == 0) return;
+
+                //new item object is created here to the vm
+                vm.addItemToCart();
+
+                //pick number if slot
+                //pick slot start date
+                //pick slot end date
+                //pick slot calculated price
+                //pick isFixedOrDisplaced
+                //pick programmes fixtures (object) schedule
+
+                var data = {
+                    slots: vm.form.no_slots,
+                    slot_start_date: vm.form.slot_start_date,
+                    slot_end_date: vm.form.slot_end_date,
+                    isFixedOrDisplaced: vm.btn.fixslot,
+                    period: vm.form.period,
+                    amount: parseFloat(vm.form.fixSpotPrice),
+                    schedule: vm.scheduleSlots
+                };
+                var index = vm.cartItemIndex(vm.product.selected.id); //item obj created in vm.addItemToCart();
+                vm.cart[index].subscriptions.push(data);
+
+                vm.calcCartTotalPrice();
+
+                vm.clearSlot();
+            };
+
+            vm.clearScheduleTimes = function (schedule) {
+                schedule.times = [];
+            };
+
+            vm.minusBroadcast = function(itemIdx, subIdx) {
+                if(vm.cart[itemIdx].subscriptions[subIdx].broadcast == 501) return;
+                --vm.cart[itemIdx].subscriptions[subIdx].broadcast;
+                vm.calcCartTotalPrice();
+            };
+
+            vm.plusBroadcast = function (itemIdx, subIdx) {
+                ++vm.cart[itemIdx].subscriptions[subIdx].broadcast;
+                vm.calcCartTotalPrice();
+            };
+
+            vm.searchCartItem = function(product_id){
+                for(var i= 0; i<vm.cart.length; i++){
+                    if(vm.cart[i].id == product_id)
+                        return true;
+                }
+                return false;
+            };
+
+            vm.cartItemIndex = function(product_id) {
+                for(var i= 0; i<vm.cart.length; i++){
+                    if(vm.cart[i].id == product_id)
+                        return i;
+                }
+            };
+
+            vm.productChanged = function() {
+                vm.price = {index:0};
+                vm.form.period = 'premium';
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
+                vm.clearSlot();
+                vm.clearBulk();
+            };
+
+            vm.addItemToCart = function() {
+                var selectedProduct = angular.copy(vm.product.selected);
+                //selectedProduct.price = angular.copy(vm.product.selected.prices[vm.price.index]);
+                selectedProduct.subscriptions = [];
+                //check if product is not existing in the cart
+                if (!vm.searchCartItem(selectedProduct.id)) {
+                    vm.cart.push(selectedProduct);
+                }
+            };
+
+            vm.durationChange =  function() {
+                vm.form.period = 'premium';
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
+            };
+
+            vm.onPeriodChange = function() {
+                vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
+            };
+
+            //validate bulk date and time
+            vm.bulkValidate = function (type) {
+                vm.bulkValid = false;
+
+                if(type == 'date') {
+                    var bsd = new Date(vm.form.bulk_start_date);
+                    bsd.setHours(0,0,0,0);
+                    var bed = new Date(vm.form.bulk_end_date);
+                    bed.setHours(0,0,0,0);
+
+                    if(bed <= bsd) {
+                        vm.form.bulk_end_date = null;
+                    }
+                }
+
+                if(type == 'time')
+                {
+                    var bst = new Date(vm.form.bulk_start_date);
+                    var bet = new Date(vm.form.bulk_end_date);
+
+                    if(bet.getTime() <= bst.getTime()) {
+                        vm.form.bulk_end_date = null;
+                    }
+                }
+
+                if(vm.form.bulk_start_date && vm.form.bulk_end_date && vm.form.broadcast > 0)
+                {
+                    vm.bulkValid = true;
+                }
+
+                return vm.bulkValid;
+            };
+
+            //alert box for clearing cart
+            vm.emptyCart = function() {
+                SweetAlert.swal({
+                    title: 'Are you sure you want to empty your cart?',
+                    text: 'Your will not be able to recover your selected items back!',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel pls!',
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function(isConfirm){
+                    if (isConfirm) {
+                        vm.cart = [];
+                        vm.calcCartTotalPrice();
+                        SweetAlert.swal('Deleted!', 'Your cart is now empty.', 'success');
+                    } else {
+                        SweetAlert.swal('Cancelled', 'Your item is safe :)', 'error');
+                    }
+                });
+            };
+
+            activateOpenCartModal();
+
+            function activateOpenCartModal() {
+
+                vm.openCart = function (size) {
+
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'app/template/cart.tpl.html',
+                        controller: OpenCartModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            cart: function () {
+                                return vm.cart;
+                            },
+                            $rootScope: function() {
+                                return vm;
+                            }
+                        },
+                        cache: false
+                    });
+
+                    var state = $('#modal-state');
+                    modalInstance.result.then(function () {
+                        state.text('Modal dismissed with OK status');
+                    }, function () {
+                        state.text('Modal dismissed with Cancel status');
+                    });
+                };
+
+                // Please note that $uibModalInstance represents a modal window (instance) dependency.
+                // It is not the same as the $uibModal service used above.
+
+                OpenCartModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', '$rootScope', 'cart'];
+                function OpenCartModalInstanceCtrl($scope, $uibModalInstance, $rootScope, cart) {
+
+                    var vm = $scope;
+
+                    vm.cart = $rootScope.cart;
+
+                    vm.calProductSubscription = function (itemIdx) {
+                        return $rootScope.calProductSubscription(itemIdx);
+                    };
+                    vm.minusBroadcast = function(itemIdx, subIdx) {
+                        $rootScope.minusBroadcast(itemIdx, subIdx);
+                    };
+
+                    vm.plusBroadcast = function (itemIdx, subIdx) {
+                        $rootScope.plusBroadcast(itemIdx, subIdx);
+                    };
+
+                    vm.deleteCartItem = function(idx) {
+                        $rootScope.deleteCartItem(idx);
+                    };
+
+                    vm.deleteSubscription = function(itemIdx, subIdx) {
+                        $rootScope.deleteSubscription(itemIdx, subIdx);
+                    };
+
+                    vm.ok = function () {
+                        $uibModalInstance.close('closed');
+                    };
+
+                    vm.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }
+            }
+
+        }]);
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotStartDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotEndDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('FixedSlotDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('BulkStartDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('BulkEndDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('SlotTimeModalCtrl', SlotTimeModalCtrl);
+
+    SlotTimeModalCtrl.$inject = ['$uibModal'];
+    function SlotTimeModalCtrl($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            vm.open = function (size, $schedule) {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: '/myModalContent.html',
+                    controller: ModalInstanceCtrl,
+                    size: size,
+                    resolve: {
+                        $schedule: function () {
+                            return $schedule;
+                        }
+                    },
+                    cache: false
+                });
+
+                var state = $('#modal-state');
+                modalInstance.result.then(function () {
+                    state.text('Modal dismissed with OK status');
+                }, function () {
+                    state.text('Modal dismissed with Cancel status');
+                });
+            };
+
+            // Please note that $uibModalInstance represents a modal window (instance) dependency.
+            // It is not the same as the $uibModal service used above.
+
+            ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', '$schedule'];
+            function ModalInstanceCtrl($scope, $uibModalInstance, $schedule) {
+
+                $scope.scheduleRef = $schedule;
+
+                $scope.getSlotRange = function(n) {
+                    return new Array(parseInt(n));
+                };
+
+                $scope.ok = function () {
+                    $uibModalInstance.close('closed');
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }
+        }
+    }
+
+})();
+
+/**
+ * Created by dfash on 5/25/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AirtimeDefaultController', ['$rootScope', '$scope', '$resource', 'baseURL', '$filter', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+            function($rootScope, $scope, $resource, baseURL, $filter, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
+
+                var vm = $scope;
+
+                vm.showData = false;
+                vm.dataMessage = 'Loading...';
+                vm.isDisabled = false;
+
+
+                activate();
+
+                vm.search = function(form) {
+
+                    vm.isDisabled = true;
+
+                    $resource(baseURL + 'airtime?min=:min&max=:max').query({'min': form.min_date.$modelValue, 'max': form.max_date.$modelValue}).$promise.then(
+                        function (response) {
+                            vm.isDisabled = false;
+                            vm.schedules = response;
+                        }
+                    );
+                };
+
+                ////////////////
+
+                function activate() {
+
+                    ////class
+                    vm.propClass = function(val) {
+                        return val == 1 ? 'label-success' : 'label-info';
+                    };
+
+                    vm.dateChanged = function(){
+
+                        console.log('clicked');
+                        if(vm.max_date <= vm.min_date){
+                            vm.max_date = null;
+                        }
+                    };
+
+                    // Changing data
+
+                    $resource(baseURL + 'airtime').query().$promise.then(
+                        function (response) {
+                            vm.schedules = response;
+                        }
+                    );
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2),
+                        DTColumnDefBuilder.newColumnDef(3),
+                        DTColumnDefBuilder.newColumnDef(4),
+                        DTColumnDefBuilder.newColumnDef(5),
+                        DTColumnDefBuilder.newColumnDef(6),
+                        DTColumnDefBuilder.newColumnDef(7).notSortable()
+                    ];
+
+                }
+
+            }]);
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('MinDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+(function(){
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('MaxDateCtrl', ['$scope', function($scope) {
+
+            var vm = this;
+
+            activateDate();
+            //date module
+            function activateDate() {
+                vm.today = function () {
+                    vm.dt = new Date();
+                };
+
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function (date, mode) {
+
+                    return false;
+                    //return ( mode === 'day' /*&& ( date.getDay() === 0 || date.getDay() === 6 ) */);
+                };
+
+                vm.toggleMin = function () {
+                    vm.minDate = $scope.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                        vm.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.format = vm.formats[0];
+            }
+        }])
+})();
+
+/**
+ * Created by dfash on 6/11/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AirtimeDetailController', ['$scope', '$stateParams', 'airtimeFactory', '$state', '$rootScope',
+            function($scope, $stateParams, airtimeFactory, $state, $rootScope) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
+
+                var vm = $scope;
+
+                airtime();
+                activate();
+
+
+                ////////////////
+                //
+
+                vm.manage = {};
+
+
+                $scope.alerts = [];
+                $scope.closeAlert = function(index) {
+                    $scope.alerts.splice(index, 1);
+                };
+
+                function airtime() {
+                    vm.schedule = airtimeFactory.getAirtime().get({'id': parseInt($stateParams.id)}).$promise.then(
+                        function (response) {
+                            vm.schedule = response;
+                            vm.manage.validate = vm.schedule.schedule_alert.validate;
+                            vm.manage.recommend = vm.schedule.schedule_alert.recommend;
+                            vm.manage.approved = vm.schedule.schedule_alert.approved;
+                            vm.manage.programme = vm.schedule.schedule_alert.programme;
+                        },
+                        function() {
+                            $state.go('app.airtime');
+                        }
+                    );
+                }
+
+
+
+
+                function activate() {
+
+                    vm.airtimeRecommend = function() {
+                        if(!(vm.manage.validate)) {
+                            vm.manage.recommend = false;
+                            return true;
+                        }
+                        return false;
+                    };
+
+
+                    vm.airtimeApproved = function() {
+                        if(!(vm.manage.validate && vm.manage.recommend)) {
+                            vm.manage.approved = false;
+                            return true;
+                        }
+                        return false;
+                    };
+
+                    vm.airtimeProgramme = function () {
+
+                        if(!(vm.manage.validate && vm.manage.recommend && vm.manage.approved)) {
+                            vm.manage.programme = false;
+                            return true;
+                        }
+
+                        return false;
+
+                    };
+
+                    vm.validateSchedule = function() {
+                        $scope.alerts = [];
+                        airtimeFactory.validateAirtime().save({'id': vm.schedule.schedule_alert.id}, vm.manage).$promise.then(
+                            function(response) {
+                                airtime();
+                                $scope.alerts[0] = {'type':'success', 'msg':'Airtime has been validated'};
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                }
+                                if(response.status == 422) {
+                                    $scope.alerts[0] = {'type':'warning', 'msg':response.data};
+                                }
+                            }
+                        )
+                    };
+
+                    vm.recommendSchedule = function() {
+                        $scope.alerts = [];
+                        airtimeFactory.recommendAirtime().save({'id': vm.schedule.schedule_alert.id}, vm.manage).$promise.then(
+                            function(response) {
+                                airtime();
+                                $scope.alerts[0] = {'type':'success', 'msg':'Airtime successfully recommended for approval'};
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                }
+                                if(response.status == 422) {
+                                    $scope.alerts[0] = {'type':'warning', 'msg':response.data};
+                                }
+                            }
+
+                        )
+                    };
+
+                    vm.approveSchedule = function() {
+                        $scope.alerts = [];
+                        airtimeFactory.approveAirtime().save({'id': vm.schedule.schedule_alert.id}, vm.manage).$promise.then(
+                            function(response) {
+                                airtime();
+                                $scope.alerts[0] = {'type':'success', 'msg':'Airtime successfully approved for programme'};
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                }
+                                if(response.status == 422) {
+                                    $scope.alerts[0] = {'type':'warning', 'msg':response.data};
+                                }
+                            }
+
+                        )
+                    };
+
+                    vm.programmeSchedule = function() {
+                        $scope.alerts = [];
+                        airtimeFactory.programmeAirtime().save({'id': vm.schedule.schedule_alert.id}, vm.manage).$promise.then(
+                            function(response) {
+                                airtime();
+                                $scope.alerts[0] = {'type':'success', 'msg':'Airtime saved for programme'};
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                }
+                                if(response.status == 422) {
+                                    $scope.alerts[0] = {'type':'warning', 'msg':response.data};
+                                }
+                            }
+
+                        )
+                    };
+
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/7/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('airtimeGenService', ['$resource', 'baseURL', function($resource, baseURL) {
+
+
+        }]);
+})();
+/**
+ * Created by dfash on 5/25/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AirtimeController', ['$scope', '$resource', 'baseURL', '$filter', '$rootScope', 'ngTableParams', '$timeout', 'ngTableDataService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+            function($scope, $resource, baseURL, $filter, $rootScope, ngTableParams, $timeout, ngTableDataService, DTOptionsBuilder, DTColumnDefBuilder) {
+
+                //collapse the menu bar
+                $rootScope.app.layout.isCollapsed = true;
+
+                var vm = $scope;
+
+                vm.showData = false;
+                vm.dataMessage = 'Loading...';
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    $resource(baseURL + 'airtime').query().$promise.then(
+                        function (response) {
+                            vm.schedules = response;
+                        }
+                    );
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(6).notSortable()
+                    ];
+
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/7/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('airtimeFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.order = function () {
+                return $resource(baseURL + 'airtime', null, {'save':{'method':'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}})
+            };
+
+            this.getAirtime = function () {
+                return $resource(baseURL + 'airtime/:id');
+            };
+
+            this.validateAirtime = function () {
+                return $resource(baseURL + 'airtime/:id/validate', null, {'save':{'method': 'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            };
+
+            this.recommendAirtime = function () {
+                return $resource(baseURL + 'airtime/:id/recommend', null, {'save':{'method': 'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            };
+
+            this.approveAirtime = function () {
+                return $resource(baseURL + 'airtime/:id/approve', null, {'save':{'method': 'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            };
+
+            this.programmeAirtime = function () {
+                return $resource(baseURL + 'airtime/:id/programme', null, {'save':{'method': 'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 6/19/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ClientFormController', [
+            '$scope', 'clientFactory', 'toaster', '$stateParams', '$rootScope', '$state', '$timeout',
+            function($scope, clientFactory, toaster, $stateParams, $rootScope, $state, $timeout) {
+
+                var vm = $scope;
+                vm.disableView = false;
+
+                vm.client = {name:'', address:'', title:'Mr', firstname:'', lastname:'', mobile:'', email:''};
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                if($state.is('app.client.edit')) {
+
+                    vm.disableView = false;
+
+                    vm.client = clientFactory.getClients().get({id: parseInt($stateParams.id, 10)})
+                        .$promise.then(
+                        function(response) {
+                            vm.client = response;
+                        },
+                        function (response) {
+
+                            vm.disableView = true;
+
+                            if(response.status == 403){
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                            else if(response.status == 404){
+                                vm.alerts[0] = {'type':'danger', 'msg': "Client not found!."};
+                            }
+                        }
+                    );
+                }
+
+                vm.clientSubmit = function() {
+
+                    toaster.pop('wait', 'Client', 'Processing your request');
+
+                    if(vm.client.id) {
+                        clientFactory.update().save({'id':vm.client.id}, vm.client,
+                            function() {
+                                toaster.pop('success', 'Client', 'Data updated.');
+                                $timeout(function(){
+                                    $state.go('app.client');
+                                }, 500);
+                            },
+                            function (response) {
+                                if(response.status == 403) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', 'Data update Failed.');
+                                }
+                            }
+                        );
+                    }
+                    else
+                    {
+                        clientFactory.client().save(vm.client,
+                            function(){
+                                toaster.pop('success', 'Client Registration', 'Registration Successful.');
+                                $timeout(function(){
+                                    $state.go('app.client');
+                                }, 1000);
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', response.data);
+                                }
+                            }
+                        );
+                    }
+                };
+
+            }]);
+})();
+
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.showClient = false;
+                vm.clientMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                if(angular.isDefined($stateParams.id)) {
+
+                    //get client by id
+                    vm.client = clientFactory.getClients().get({id: parseInt($stateParams.id, 10)})
+                        .$promise.then(
+                        function (response) {
+                            vm.client = response;
+                            vm.showClient = true;
+                        }, function (response) {
+                            if(response.status == 403) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        }
+                    )
+                }
+
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    clientFactory.getClients().query().$promise.then(
+                        function(response){
+                            vm.clients = response;
+                            vm.showclient = true;
+                        },
+                        function(response) {
+                            vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    );
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(3).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(4).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(5).notSortable()
+                    ];
+
+                    vm.removeClient = removeClient;
+
+                    function removeClient($index)
+                    {
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this client?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    clientFactory.client().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.clients.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Client has been deleted.', 'success');
+                                        },
+                                        function () {
+                                            vm.clientMessage = 'Server error.';
+                                            if(response.status == 403) {
+                                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                                            }
+                                            SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Client data is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('clientFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.getClients = function(){
+                return $resource(baseURL + "client/:id");
+            };
+
+            this.clientEdit = function(){
+                return $resource(baseURL + "client/:id/edit");
+            };
+
+            this.update = function(){
+                return $resource(baseURL + "client/:id", null, { 'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }} });
+            };
+
+            this.client = function() {
+                return $resource(baseURL + 'client/:id', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 5/18/16.
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
+            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
+
+                var vm = $scope;
+                
+                vm.alerts = [];
+
+                vm.profile = {_token: _token};
+
+                vm.reset = {_token: _token};
+
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+
+                $resource(baseURL + 'contacts').query().$promise.then(
+                    function (response) {
+                        vm.contacts = response;
+                    }
+                );
+
+                //profile
+                vm.profile = loginFactory.userData();
+
+                //uploader object
+                vm.uploader = new FileUploader({
+                    url: baseURL +'user/'+vm.profile.id+'/upload'
+                });
+
+                //upload
+                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
+
+                //upload
+                vm.uploader.onCompleteAll = function() {
+                    vm.uploader.clearQueue();
+                };
+
+
+                //submit profile form
+                vm.updateProfile = function() {
+                    $resource(baseURL + 'user/:id', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.profile,
+                        function () {
+                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};
+                            }
+                        }
+                    );
+
+                    //console.log(vm.profile);
+                    //vm.uploader.uploadAll();
+                };
+
+                vm.updatePassword = function() {
+                    $resource(baseURL + 'user/:id?action=password', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.reset,
+                        function () {
+                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
+                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail ');
+                                toaster.pop('error', 'Error', 'Failed to reset password');
+                            }
+                            else{
+                                toaster.pop('error', 'Error', 'Failed: contact administrator');
+                            }
+                        }
+                    );
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 5/23/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('MailController', ['$scope', 'mailFactory', '$timeout', function($scope, mailFactory, $timeout) {
+
+            $scope.mail = {'to':{}, 'subject':'', 'cc':'', 'bcc':'',};
+            $scope.content = null;
+
+            $scope.disabled = undefined;
+
+            $scope.alerts = [];
+
+            $scope.closeAlert = function(index) {
+                $scope.alerts.splice(index, 1);
+            };
+
+            $scope.mailbox = {};
+
+            mailFactory.contacts().query().$promise.then(
+                function (response) {
+                    $scope.mailbox = response;
+                }
+            );
+
+            $scope.sendMail = function() {
+
+                $scope.alerts = [];
+                $scope.mailMsg = 'Please wait...';
+                $scope.disabled = true;
+                $scope.mail.msg = $scope.content;
+                $scope.mail.to = $scope.mailbox.selected.email;
+
+                mailFactory.mail().send($scope.mail,
+                    function (response) {
+                        $scope.mail = {'to':{}, 'subject':'', 'cc':'', 'bcc':''};
+                        $scope.content = null;
+                        $scope.disabled = false;
+                        $scope.mailoutForm.$setPristine();
+                        $scope.alerts[0] = {'type':'success', 'msg':'Mail sent successfully'};
+
+                        //$timeout(doTimeOut(), 1000);
+                    },
+                    function (response) {
+                        $scope.disabled = false;
+
+                        if(response.status == 403) {
+                            $scope.alerts[0] = {'type':'danger', 'msg':'Mail not sent'};
+                        }
+                        else {
+                            $scope.alerts[0] = {'type':'danger', 'msg':'Error sending mail!. Contact the administrator'};
+                        }
+
+                        //$timeout(doTimeOut(), 500);
+                    }
+                );
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 5/23/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('mailFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.mail = function () {
+                return $resource(baseURL + 'mail/mailout', null, { 'send': {method:'POST'} });
+            };
+
+            this.contacts = function () {
+                return $resource(baseURL + 'contacts');
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 4/30/16.
+ */
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('permissionFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.getRoles = function() {
+                return $resource(baseURL + "role");
+            };
+
+            this.roleEdit = function() {
+                return $resource(baseURL + "role/:id/edit", null, { 'update': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }} });
+            };
+
+            this.getPermissions = function() {
+                return $resource(baseURL + "permission");
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 4/30/16.
+ */
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('RolesController', ['$scope', '$uibModal', '$stateParams', 'rolesFactory',
+            function($scope, $uibModal, $stateParams, permissionFactory) {
+
+                $scope.showRoles = false;
+                $scope.roleMessage = 'loading..';
+                $scope.roleEdit = false;
+                $scope.permissionEdit = false;
+
+                $scope.roles = permissionFactory.roles().query().$promise.then(
+                    function(response){
+                        $scope.roles = response;
+                        $scope.showRoles = true;
+                    },
+                    function(response) {
+                        $scope.showRoles = false;
+                        console.log(response);
+                    }
+                );
+
+                //role modal on edit click
+                $scope.editRole = function (size, role) {
+
+                    //console.log($scope.role);
+                    var modalInstance = $uibModal.open({
+                        templateUrl: '/roleModal.html',
+                        controller: RoleModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            role: function () {
+                                return role;
+                            }
+                        }
+                    });
+
+                    //TODO: button event of the dialog
+                    modalInstance.result.then(function (updatedRole) { //on closed
+                        console.log('updated: ', updatedRole);
+                        //TODO: update database and reload $scope.roles
+                        //TODO: Flash message
+                    }, function () {
+                        //on cancel clicked
+                    });
+
+                    //instance of the modal dialog
+                    RoleModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', 'role'];
+                    function RoleModalInstanceCtrl($scope, $uibModalInstance, role) {
+
+                        $scope.role = angular.copy(role);
+                        $scope.title = angular.copy(role.name);
+
+                        $scope.ok = function () {
+                            $uibModalInstance.close($scope.role);
+                        };
+
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                    }
+
+                };
+
+                $scope.editPermission = function (size, role) {
+
+                    var modalInstance = $uibModal.open({
+                        templateUrl: '/permissionModal.html',
+                        controller: PermissionModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            role: function () {
+                                return role;
+                            }
+                        }
+                    });
+
+                    //TODO: button event of the dialog
+                    modalInstance.result.then(function (updatedPerm) { //on closed
+                        //TODO: update database with the new permission
+                        //TODO: Flash message
+                    }, function () {
+                        //on cancel clicked
+                    });
+
+                    //instance of the modal dialog
+                    PermissionModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance','permissionFactory', 'role'];
+                    function PermissionModalInstanceCtrl($scope, $uibModalInstance, rolesFactory, role) {
+
+                        $scope.role = angular.copy(role);
+                        $scope.permMessage = 'loading...';
+                        $scope.showPermissions = false;
+
+                        $scope.permissions = rolesFactory.roles().query().$promise.then(
+                            function(response){
+                                $scope.permissions = response;
+                                $scope.showPermissions = true;
+                            },
+                            function(response) {
+                                $scope.showPermissions = false;
+                                $scope.permMessage  = response.statusText;
+                            }
+                        );
+
+                        $scope.ok = function () {
+                            $uibModalInstance.close('close');
+                        };
+
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                    }
+
+                };
+
+
+            }]);
+})();
+/**
+ * Created by dfash on 6/4/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('PeopleUpdateController', ['$scope', 'toaster', 'userFactory', '$stateParams', 'permissionFactory',
+            function($scope, toaster, userFactory, $stateParams, permissionFactory){
+
+                var vm = $scope;
+
+                vm.disableView = false;
+
+                vm.account = {'firstname':'','lastname':'', 'email':'', 'password':'', 'password_confirm':'',
+                    'status':0, 'roles':{}, 'permissions':{} };
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+
+                permissionFactory.getRoles().query().$promise.then(
+                    function(response){
+                        vm.roles = response;
+                    }
+                );
+
+                //returns permission from database
+                permissionFactory.getPermissions().query().$promise.then(
+                    function(response){
+                        vm.permissions = response;
+                    }
+                );
+
+                //returns registered users
+                vm.account = userFactory.getUsers()
+                    .get({id: parseInt($stateParams.id)}).$promise.then(
+                    function (response) {
+                        vm.disableView = false;
+                        vm.account = response;
+                        check();
+                    },function (response) {
+
+                        vm.disableView = true;
+
+                        if(response.status == 403){
+                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                        }
+                        else if(response.status == 404){
+                            vm.alerts[0] = {'type':'danger', 'msg': "User not found!."};
+                        }
+                    }
+                );
+
+                function check()
+                {
+                    var roles = angular.copy(vm.account.roles);
+                    var permissions = angular.copy(vm.account.permissions);
+
+                    vm.account.roles = {};
+                    vm.account.permissions = {};
+
+                    angular.forEach(roles, function (value, key) {
+                        vm.account.roles[value.id] = true;
+                    });
+
+                    angular.forEach(permissions, function (value, key) {
+                        vm.account.permissions[value.id] = true;
+                    });
+                }
+
+                vm.submitUserForm = function() {
+                    toaster.pop('wait', 'User', 'Processing your request');
+
+                    validateRolesPerm();
+
+                    userFactory.getUsers().update({'id': parseInt($stateParams.id)}, vm.account).$promise.then(
+                        function() {
+                            //vm.account = {'status':0, 'roles':{}, 'permissions':{} };
+                            vm.alerts[0] = {'type':'success', 'msg':'Account successfully updated'};
+                            toaster.pop('success', 'User', 'Account updated successfully');
+                        },
+                        function(response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', response.statusText, response.data);
+                            }
+                            else {
+                                vm.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
+                                toaster.pop('error', response.statusText, response.data);
+                            }
+
+                        }
+                    );
+                };
+
+                function validateRolesPerm() {
+
+                    var roles = angular.copy(vm.account.roles);
+                    var permissions = angular.copy(vm.account.permissions);
+
+                    vm.account.roles = {};
+                    vm.account.permissions = {};
+
+                    angular.forEach(roles, function (value, key) {
+                        if (value == true) {
+                            this[key] = true;
+                        }
+                    }, vm.account.roles);
+
+                    angular.forEach(permissions, function (value, key) {
+                        if (value == true) {
+                            this[key] = true;
+                        }
+                    }, vm.account.permissions);
+                }
+
+            }]);
+})();
+
+/**
+ * Created by dfash on 5/21/16.
+ */
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('PeopleController', ['$scope', 'toaster', 'userFactory', 'registerFactory', 'permissionFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+        function($scope, toaster, userFactory, registerFactory, permissionFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert){
+
+            var vm = $scope;
+
+            //vm.search = {'roles': {'name':""}, 'permissions': {'name':""}, status:"0" };
+
+            vm.account = {'firstname':'','lastname':'', 'email':'', 'password':'', 'password_confirm':'',
+                'status':0, 'roles':{}, 'permissions':{} };
+            vm.showPeople = false;
+            vm.showPermissions = false;
+            vm.peopleMessage = 'Loading...';
+
+            vm.alerts = [];
+            vm.closeAlert = function(index) {
+                vm.alerts.splice(index, 1);
+            };
+            //return roles from database
+            permissionFactory.getRoles().query().$promise.then(
+                function(response){
+                    vm.roles = response;
+                }
+            );
+
+            //returns permission from database
+            permissionFactory.getPermissions().query().$promise.then(
+                function(response){
+                    vm.permissions = response;
+                }
+            );
+
+            ///////////////////
+
+            activate();
+
+            ////////////////
+
+            function activate() {
+
+                // Changing data
+
+                //returns registered users
+                userFactory.getUsers()
+                    .query().$promise.then(
+                    function (response) {
+                        vm.people = response;
+                        vm.showPeople = true;
+                    },function (response) {
+                        if(response.status == 403) {
+                            vm.showPeople = false;
+                            vm.peopleMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    }
+                );
+
+
+                vm.dtOptions = DTOptionsBuilder.newOptions()
+                    .withDisplayLength(100)
+                    .withPaginationType('full_numbers');
+
+                vm.dtColumnDefs = [
+                    DTColumnDefBuilder.newColumnDef(1),
+                    DTColumnDefBuilder.newColumnDef(2),
+                    DTColumnDefBuilder.newColumnDef(3),
+                    DTColumnDefBuilder.newColumnDef(4).notSortable()
+                ];
+
+                vm.removeUser = removeUser;
+
+                function removeUser($index)
+                {
+                    //alert box for clearing cart
+                    (function() {
+                        SweetAlert.swal({
+                            title: 'Are you sure you want to delete this user?',
+                            text: 'Your will not be able to recover your selected data back!',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#DD6B55',
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'No, cancel pls!',
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm){
+                            if (isConfirm) {
+                                userFactory.getUsers().delete({'id':parseInt(vm.people[$index].id)}).$promise.then(
+                                    function () {
+                                        vm.people.splice($index, 1);
+                                        $scope.alerts[0] = {'type':'success', 'msg':'User has been deleted successfully'};
+                                        SweetAlert.swal('Deleted!', 'User has been deleted.', 'success');
+                                    }, function(response){
+                                        vm.clientMessage = 'Server error.';
+                                        if(response.status == 403) {
+                                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                            vm.clientMessage = response.data;
+                                        }
+                                        SweetAlert.swal('Cancelled', vm.clientMessage, 'error');                                    }
+                                );
+                            } else {
+                                SweetAlert.swal('Cancelled', 'User data is safe :)', 'error');
+                            }
+                        });
+                    })();
+                }
+
+            }
+
+
+            vm.submitUserForm = function() {
+                toaster.pop('wait', 'User', 'Processing your request');
+
+                validateRolesPerm();
+
+                registerFactory.register().save(vm.account,
+                    function(response) {
+                        vm.account = {'status':0, 'roles':{}, 'permissions':{} };
+                        vm.alerts[0] = {'type':'success', 'msg':response.data};
+                        toaster.pop('success', 'User', 'Account successfully created');
+                    },
+                    function(response) {
+                        if(response.status == 403) {
+                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                            toaster.pop('error', response.statusText, response.data);
+                        }
+                        else {
+                            $scope.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
+                            toaster.pop('error', response.statusText, response.data);
+                        }
+                    }
+                );
+            };
+
+            function validateRolesPerm() {
+
+                var roles = angular.copy(vm.account.roles);
+                var permissions = angular.copy(vm.account.permissions);
+
+                vm.account.roles = {};
+                vm.account.permissions = {};
+
+                angular.forEach(roles, function (value, key) {
+                    if (value == true) {
+                        this[key] = true;
+                    }
+                }, vm.account.roles);
+
+                angular.forEach(permissions, function (value, key) {
+                    if (value == true) {
+                        this[key] = true;
+                    }
+                }, vm.account.permissions);
+            }
+
+        }]);
+})();
+
+/**
+ * Created by dfash on 5/3/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('productFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.getProducts = function(){
+                return $resource(baseURL + "product/:id", null, null);
+            };
+
+            //this.clientUpdate = function(){
+            //    return $resource(baseURL + "client/:id/edit", null, { 'update': {method:'POST'} });
+            //};
+            //
+            //this.client = function() {
+            //    return $resource(baseURL + '/client/:id', null, { 'save':{method:'POST'}});
+            //};
+
+        }]);
+})();
+
+/**
+ * Created by dfash on 5/3/16.
+ */
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('userFactory', ["$http", "$resource", "baseURL", "$q", function($http, $resource, baseURL, $q) {
+
+            //check if user [register|generate...] == permissions
+            this.userCan = function($slug){
+                return $http
+                    .get(baseURL + "user/can/"+ $slug)
+                    .then(function() {
+                        return $q.resolve();
+                    }, function () {
+                        return $q.reject();
+                    }
+                );
+            };
+
+            //check if user is [admin|marketer|....] == roles
+            this.userIs = function($slug){
+                return $http
+                    .get(baseURL + "user/is/"+ $slug)
+                    .then(function() {
+                        return $q.resolve();
+                    }, function () {
+                        return $q.reject();
+                    }
+                );
+            };
+
+            //get all user or get usr by id
+            this.getUsers = function(){
+                return $resource(baseURL + "user/:id", null, {
+                    'update':{
+                        method:'PUT',
+                        headers: { 'X-Requested-With' :'XMLHttpRequest' }
+                    },
+                    'delete':{method:"DELETE"}
+                });
+            };
+
+            this.userUpdate = function(){
+                return $resource(baseURL + "user/:id/edit", null, { 'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }} });
+            };
+
+            //get all marketers
+            this.marketers = function() {
+                return $resource(baseURL + "user/marketers");
+            };
+
+            //check and send a confirmation email for recovery
+            this.recover = function() {
+                return $resource(baseURL + "user/recover", null, {
+                    'confirm': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'change': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }} });
+            };
+
+
+        }]);
+})();
+
+/**
+ * Created by dfash on 5/21/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('UserModelController', ['$scope', 'loginFactory', function($scope, loginFactory) {
+            //$scope.logout = function() {
+            //    loginFactory.logout();
+            //};
+        }]);
+})();
+/**
+ * Created by dfash on 6/13/16.
+ */
+
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('RecoverPasswordController', ['$scope', 'userFactory', '$state', '$stateParams',
+            function($scope, userFactory, $state, $stateParams) {
+
+                var vm = $scope;
+
+                vm.recover = {email:''};
+
+                vm.disableView = false;
+
+                if($state.is('page.change')) {
+                    vm.recover.email = $stateParams.e;
+                    vm.recover.token = $stateParams.m;
+                }
+
+                vm.submitRecoverForm = function() {
+                    vm.showSuccess = false;
+                    vm.showError = false;
+                    vm.disableView = true;
+                    //posts data to the server vm.register
+                    userFactory.recover().confirm(vm.recover).$promise.then(
+                        function() {
+                            vm.disableView = false;
+                            vm.showSuccess = true;
+                            vm.showError = false;
+                            vm.authMsg = "Reset link has been sent to your email.";
+                            vm.recover = {email:''};
+                            vm.registerForm.$setPristine();
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.showSuccess = false;
+                                vm.showError = true;
+                                vm.disableView = false;
+                                vm.authMsg = response.data;
+                            }
+                        }
+                    )
+                };
+
+                vm.submitChangePwd = function() {
+                    vm.showSuccess = false;
+                    vm.showError = false;
+                    vm.disableView = true;
+                    userFactory.recover().change(vm.recover).$promise.then(
+                        function() {
+                            vm.disableView = false;
+                            vm.showSuccess = true;
+                            vm.showError = false;
+                            vm.authMsg = "Password successfully changed.";
+                            vm.recover = {};
+                            vm.changePwdForm.$setPristine();
+                        },
+                        function(response) {
+                            if(response.status == 403) {
+                                vm.showSuccess = false;
+                                vm.showError = true;
+                                vm.disableView = false;
+                                vm.authMsg = response.data;
+                            }
+                        }
+                    );
+                }
+            }]);
+})();

@@ -1,1 +1,2245 @@
-angular.module("xeditable",[]).value("editableOptions",{theme:"default",icon_set:"default",buttons:"right",blurElem:"cancel",blurForm:"ignore",activate:"focus",isDisabled:!1,activationEvent:"click"}),angular.module("xeditable").directive("editableBsdate",["editableDirectiveFactory",function(t){return t({directiveName:"editableBsdate",inputTpl:"<div></div>",render:function(){this.parent.render.call(this);var t=angular.element('<input type="text" class="form-control" ng-model="$data"/>'),e=angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>'),a=angular.element('<span class="input-group-btn"></span>');t.attr("datepicker-popup",this.attrs.eDatepickerPopupXEditable||"yyyy/MM/dd"),t.attr("is-open",this.attrs.eIsOpen),t.attr("date-disabled",this.attrs.eDateDisabled),t.attr("datepicker-popup",this.attrs.eDatepickerPopup),t.attr("datepicker-mode",this.attrs.eDatepickerMode||"day"),t.attr("min-date",this.attrs.eMinDate),t.attr("max-date",this.attrs.eMaxDate),t.attr("show-weeks",this.attrs.eShowWeeks||!0),t.attr("starting-day",this.attrs.eStartingDay||0),t.attr("init-date",this.attrs.eInitDate||new Date),t.attr("min-mode",this.attrs.eMinMode||"day"),t.attr("max-mode",this.attrs.eMaxMode||"year"),t.attr("format-day",this.attrs.eFormatDay||"dd"),t.attr("format-month",this.attrs.eFormatMonth||"MMMM"),t.attr("format-year",this.attrs.eFormatYear||"yyyy"),t.attr("format-day-header",this.attrs.eFormatDayHeader||"EEE"),t.attr("format-day-title",this.attrs.eFormatDayTitle||"MMMM yyyy"),t.attr("format-month-title",this.attrs.eFormatMonthTitle||"yyyy"),t.attr("year-range",this.attrs.eYearRange||20),t.attr("show-button-bar",this.attrs.eShowButtonBar||!0),t.attr("current-text",this.attrs.eCurrentText||"Today"),t.attr("clear-text",this.attrs.eClearText||"Clear"),t.attr("close-text",this.attrs.eCloseText||"Done"),t.attr("close-on-date-selection",this.attrs.eCloseOnDateSelection||!0),t.attr("date-picker-append-to-body",this.attrs.eDatePickerAppendToBody||!1),t.attr("date-disabled",this.attrs.eDateDisabled),e.attr("ng-click",this.attrs.eNgClick),a.append(e),this.inputEl.prepend(t),this.inputEl.append(a),this.inputEl.removeAttr("class"),this.inputEl.attr("class","input-group")}})}]),angular.module("xeditable").directive("editableBstime",["editableDirectiveFactory",function(t){return t({directiveName:"editableBstime",inputTpl:"<timepicker></timepicker>",render:function(){this.parent.render.call(this);var t=angular.element('<div class="well well-small" style="display:inline-block;"></div>');t.attr("ng-model",this.inputEl.attr("ng-model")),this.inputEl.removeAttr("ng-model"),this.attrs.eNgChange&&(t.attr("ng-change",this.inputEl.attr("ng-change")),this.inputEl.removeAttr("ng-change")),this.inputEl.wrap(t)}})}]),angular.module("xeditable").directive("editableCheckbox",["editableDirectiveFactory",function(t){return t({directiveName:"editableCheckbox",inputTpl:'<input type="checkbox">',render:function(){this.parent.render.call(this),this.attrs.eTitle&&(this.inputEl.wrap("<label></label>"),this.inputEl.parent().append(this.attrs.eTitle))},autosubmit:function(){var t=this;t.inputEl.bind("change",function(){setTimeout(function(){t.scope.$apply(function(){t.scope.$form.$submit()})},500)})}})}]),angular.module("xeditable").directive("editableChecklist",["editableDirectiveFactory","editableNgOptionsParser",function(t,e){return t({directiveName:"editableChecklist",inputTpl:"<span></span>",useCopy:!0,render:function(){this.parent.render.call(this);var t=e(this.attrs.eNgOptions),a='<label ng-repeat="'+t.ngRepeat+'"><input type="checkbox" checklist-model="$parent.$data" checklist-value="'+t.locals.valueFn+'"><span ng-bind="'+t.locals.displayFn+'"></span></label>';this.inputEl.removeAttr("ng-model"),this.inputEl.removeAttr("ng-options"),this.inputEl.html(a)}})}]),angular.module("xeditable").directive("editableCombodate",["editableDirectiveFactory","editableCombodate",function(t,e){return t({directiveName:"editableCombodate",inputTpl:'<input type="text">',render:function(){this.parent.render.call(this);var t={value:new Date(this.scope.$data)},a=this;angular.forEach(["format","template","minYear","maxYear","yearDescending","minuteStep","secondStep","firstItem","errorClass","customClass","roundTime","smartDays"],function(e){var i="e"+e.charAt(0).toUpperCase()+e.slice(1);i in a.attrs&&(t[e]=a.attrs[i])});var i=e.getInstance(this.inputEl,t);i.$widget.find("select").bind("change",function(t){a.scope.$data=new Date(i.getValue()).toISOString()})}})}]),function(){var t="text|password|email|tel|number|url|search|color|date|datetime|time|month|week|file".split("|");angular.forEach(t,function(t){var e="editable"+t.charAt(0).toUpperCase()+t.slice(1);angular.module("xeditable").directive(e,["editableDirectiveFactory",function(a){return a({directiveName:e,inputTpl:'<input type="'+t+'">'})}])}),angular.module("xeditable").directive("editableRange",["editableDirectiveFactory",function(t){return t({directiveName:"editableRange",inputTpl:'<input type="range" id="range" name="range">',render:function(){this.parent.render.call(this),this.inputEl.after("<output>{{$data}}</output>")}})}])}(),angular.module("xeditable").directive("editableRadiolist",["editableDirectiveFactory","editableNgOptionsParser",function(t,e){return t({directiveName:"editableRadiolist",inputTpl:"<span></span>",render:function(){this.parent.render.call(this);var t=e(this.attrs.eNgOptions),a='<label ng-repeat="'+t.ngRepeat+'"><input type="radio" ng-disabled="'+this.attrs.eNgDisabled+'" ng-model="$parent.$data" value="{{'+t.locals.valueFn+'}}"><span ng-bind="'+t.locals.displayFn+'"></span></label>';this.inputEl.removeAttr("ng-model"),this.inputEl.removeAttr("ng-options"),this.inputEl.html(a)},autosubmit:function(){var t=this;t.inputEl.bind("change",function(){setTimeout(function(){t.scope.$apply(function(){t.scope.$form.$submit()})},500)})}})}]),angular.module("xeditable").directive("editableSelect",["editableDirectiveFactory",function(t){return t({directiveName:"editableSelect",inputTpl:"<select></select>",autosubmit:function(){var t=this;t.inputEl.bind("change",function(){t.scope.$apply(function(){t.scope.$form.$submit()})})}})}]),angular.module("xeditable").directive("editableTextarea",["editableDirectiveFactory",function(t){return t({directiveName:"editableTextarea",inputTpl:"<textarea></textarea>",addListeners:function(){var t=this;t.parent.addListeners.call(t),t.single&&"no"!==t.buttons&&t.autosubmit()},autosubmit:function(){var t=this;t.inputEl.bind("keydown",function(e){(e.ctrlKey||e.metaKey)&&13===e.keyCode&&t.scope.$apply(function(){t.scope.$form.$submit()})})}})}]),angular.module("xeditable").factory("editableController",["$q","editableUtils",function(t,e){function a(t,a,i,n,r,o,s,l,u,c){var d,h,p=this;p.scope=t,p.elem=i,p.attrs=a,p.inputEl=null,p.editorEl=null,p.single=!0,p.error="",p.theme=r[s.theme]||r["default"],p.parent={},p.icon_set="default"===s.icon_set?o["default"][s.theme]:o.external[s.icon_set],p.inputTpl="",p.directiveName="",p.useCopy=!1,p.single=null,p.buttons="right",p.init=function(e){if(p.single=e,p.name=a.eName||a[p.directiveName],!a[p.directiveName])throw"You should provide value for `"+p.directiveName+"` in editable element!";d=n(a[p.directiveName]),p.single?p.buttons=p.attrs.buttons||s.buttons:p.buttons="no",a.eName&&p.scope.$watch("$data",function(t){p.scope.$form.$data[a.eName]=t}),a.onshow&&(p.onshow=function(){return p.catchError(n(a.onshow)(t))}),a.onhide&&(p.onhide=function(){return n(a.onhide)(t)}),a.oncancel&&(p.oncancel=function(){return n(a.oncancel)(t)}),a.onbeforesave&&(p.onbeforesave=function(){return p.catchError(n(a.onbeforesave)(t))}),a.onaftersave&&(p.onaftersave=function(){return p.catchError(n(a.onaftersave)(t))}),t.$parent.$watch(a[p.directiveName],function(t,e){p.setLocalValue(),p.handleEmpty()})},p.render=function(){var t=p.theme;p.inputEl=angular.element(p.inputTpl),p.controlsEl=angular.element(t.controlsTpl),p.controlsEl.append(p.inputEl),"no"!==p.buttons&&(p.buttonsEl=angular.element(t.buttonsTpl),p.submitEl=angular.element(t.submitTpl),p.cancelEl=angular.element(t.cancelTpl),p.icon_set&&(p.submitEl.find("span").addClass(p.icon_set.ok),p.cancelEl.find("span").addClass(p.icon_set.cancel)),p.buttonsEl.append(p.submitEl).append(p.cancelEl),p.controlsEl.append(p.buttonsEl),p.inputEl.addClass("editable-has-buttons")),p.errorEl=angular.element(t.errorTpl),p.controlsEl.append(p.errorEl),p.editorEl=angular.element(p.single?t.formTpl:t.noformTpl),p.editorEl.append(p.controlsEl);for(var i in a.$attr)if(!(i.length<=1)){var n=!1,r=i.substring(1,2);if("e"===i.substring(0,1)&&r===r.toUpperCase()&&(n=i.substring(1),"Form"!==n&&"NgSubmit"!==n)){n=n.substring(0,1).toLowerCase()+e.camelToDash(n.substring(1));var o="value"!==n&&""===a[i]?n:a[i];p.inputEl.attr(n,o)}}p.inputEl.addClass("editable-input"),p.inputEl.attr("ng-model","$data"),p.editorEl.addClass(e.camelToDash(p.directiveName)),p.single&&(p.editorEl.attr("editable-form","$form"),p.editorEl.attr("blur",p.attrs.blur||("no"===p.buttons?"cancel":s.blurElem))),angular.isFunction(t.postrender)&&t.postrender.call(p)},p.setLocalValue=function(){p.scope.$data=p.useCopy?angular.copy(d(t.$parent)):d(t.$parent)},p.show=function(){return p.setLocalValue(),p.render(),i.after(p.editorEl),u(p.editorEl)(t),p.addListeners(),i.addClass("editable-hide"),p.onshow()},p.hide=function(){return p.editorEl.remove(),i.removeClass("editable-hide"),p.onhide()},p.cancel=function(){p.oncancel()},p.addListeners=function(){p.inputEl.bind("keyup",function(t){if(p.single)switch(t.keyCode){case 27:p.scope.$apply(function(){p.scope.$form.$cancel()})}}),p.single&&"no"===p.buttons&&p.autosubmit(),p.editorEl.bind("click",function(t){t.which&&1!==t.which||p.scope.$form.$visible&&(p.scope.$form._clicked=!0)})},p.setWaiting=function(t){t?(h=!p.inputEl.attr("disabled")&&!p.inputEl.attr("ng-disabled")&&!p.inputEl.attr("ng-enabled"),h&&(p.inputEl.attr("disabled","disabled"),p.buttonsEl&&p.buttonsEl.find("button").attr("disabled","disabled"))):h&&(p.inputEl.removeAttr("disabled"),p.buttonsEl&&p.buttonsEl.find("button").removeAttr("disabled"))},p.activate=function(t,e){setTimeout(function(){var a=p.inputEl[0];"focus"===s.activate&&a.focus&&(t&&(e=e||t,a.onfocus=function(){var a=this;setTimeout(function(){a.setSelectionRange(t,e)})}),a.focus()),"select"===s.activate&&a.select&&a.select()},0)},p.setError=function(e){angular.isObject(e)||(t.$error=e,p.error=e)},p.catchError=function(t,e){return angular.isObject(t)&&e!==!0?c.when(t).then(angular.bind(this,function(t){this.catchError(t,!0)}),angular.bind(this,function(t){this.catchError(t,!0)})):e&&angular.isObject(t)&&t.status&&200!==t.status&&t.data&&angular.isString(t.data)?(this.setError(t.data),t=t.data):angular.isString(t)&&this.setError(t),t},p.save=function(){d.assign(t.$parent,p.useCopy?angular.copy(p.scope.$data):p.scope.$data)},p.handleEmpty=function(){var e=d(t.$parent),a=null===e||void 0===e||""===e||angular.isArray(e)&&0===e.length;i.toggleClass("editable-empty",a)},p.autosubmit=angular.noop,p.onshow=angular.noop,p.onhide=angular.noop,p.oncancel=angular.noop,p.onbeforesave=angular.noop,p.onaftersave=angular.noop}return a.$inject=["$scope","$attrs","$element","$parse","editableThemes","editableIcons","editableOptions","$rootScope","$compile","$q"],a}]),angular.module("xeditable").factory("editableDirectiveFactory",["$parse","$compile","editableThemes","$rootScope","$document","editableController","editableFormController","editableOptions",function(t,e,a,i,n,r,o,s){return function(e){return{restrict:"A",scope:!0,require:[e.directiveName,"?^form"],controller:r,link:function(a,r,l,u){var c,d=u[0],h=!1;if(u[1])c=u[1],h=void 0===l.eSingle;else if(l.eForm){var p=t(l.eForm)(a);if(p)c=p,h=!0;else for(var m=0;m<n[0].forms.length;m++)if(n[0].forms[m].name===l.eForm){c=null,h=!0;break}}angular.forEach(e,function(t,e){void 0!==d[e]&&(d.parent[e]=d[e])}),angular.extend(d,e);var f=angular.isDefined(l.editDisabled)?a.$eval(l.editDisabled):s.isDisabled;if(!f)if(d.init(!h),a.$editable=d,r.addClass("editable"),h)if(c){if(a.$form=c,!a.$form.$addEditable)throw"Form with editable elements should have `editable-form` attribute.";a.$form.$addEditable(d)}else i.$$editableBuffer=i.$$editableBuffer||{},i.$$editableBuffer[l.eForm]=i.$$editableBuffer[l.eForm]||[],i.$$editableBuffer[l.eForm].push(d),a.$form=null;else a.$form=o(),a.$form.$addEditable(d),l.eForm&&(a.$parent[l.eForm]=a.$form),l.eForm&&!l.eClickable||(r.addClass("editable-click"),r.bind(s.activationEvent,function(t){t.preventDefault(),t.editable=d,a.$apply(function(){a.$form.$show()})}))}}}}]),angular.module("xeditable").factory("editableFormController",["$parse","$document","$rootScope","editablePromiseCollection","editableUtils",function(t,e,a,i,n){var r=[],o=function(t,e){if(e==t)return!0;for(var a=e.parentNode;null!==a;){if(a==t)return!0;a=a.parentNode}return!1},s=function(t,e){var a=!0,i=t.$editables;return angular.forEach(i,function(t){var i=t.editorEl[0];o(i,e.target)&&(a=!1)}),a};e.bind("click",function(t){if(!(t.which&&1!==t.which||t.isDefaultPrevented())){for(var e=[],i=[],n=0;n<r.length;n++)r[n]._clicked?r[n]._clicked=!1:r[n].$waiting||("cancel"===r[n]._blur&&s(r[n],t)&&e.push(r[n]),"submit"===r[n]._blur&&s(r[n],t)&&i.push(r[n]));(e.length||i.length)&&a.$apply(function(){angular.forEach(e,function(t){t.$cancel()}),angular.forEach(i,function(t){t.$submit()})})}}),a.$on("closeEdit",function(){for(var t=0;t<r.length;t++)r[t].$hide()});var l={$addEditable:function(t){this.$editables.push(t),t.elem.bind("$destroy",angular.bind(this,this.$removeEditable,t)),t.scope.$form||(t.scope.$form=this),this.$visible&&t.catchError(t.show()),t.catchError(t.setWaiting(this.$waiting))},$removeEditable:function(t){for(var e=0;e<this.$editables.length;e++)if(this.$editables[e]===t)return void this.$editables.splice(e,1)},$show:function(){if(!this.$visible){this.$visible=!0;var t=i();t.when(this.$onshow()),this.$setError(null,""),angular.forEach(this.$editables,function(e){t.when(e.show())}),t.then({onWait:angular.bind(this,this.$setWaiting),onTrue:angular.bind(this,this.$activate),onFalse:angular.bind(this,this.$activate),onString:angular.bind(this,this.$activate)}),setTimeout(angular.bind(this,function(){this._clicked=!1,-1===n.indexOf(r,this)&&r.push(this)}),0)}},$activate:function(t){var e;if(this.$editables.length){if(angular.isString(t))for(e=0;e<this.$editables.length;e++)if(this.$editables[e].name===t)return void this.$editables[e].activate();for(e=0;e<this.$editables.length;e++)if(this.$editables[e].error)return void this.$editables[e].activate();this.$editables[0].activate(this.$editables[0].elem[0].selectionStart,this.$editables[0].elem[0].selectionEnd)}},$hide:function(){this.$visible&&(this.$visible=!1,this.$onhide(),angular.forEach(this.$editables,function(t){t.hide()}),n.arrayRemove(r,this))},$cancel:function(){this.$visible&&(this.$oncancel(),angular.forEach(this.$editables,function(t){t.cancel()}),this.$hide())},$setWaiting:function(t){this.$waiting=!!t,angular.forEach(this.$editables,function(e){e.setWaiting(!!t)})},$setError:function(t,e){angular.forEach(this.$editables,function(a){t&&a.name!==t||a.setError(e)})},$submit:function(){function t(t){var e=i();e.when(this.$onbeforesave()),e.then({onWait:angular.bind(this,this.$setWaiting),onTrue:t?angular.bind(this,this.$save):angular.bind(this,this.$hide),onFalse:angular.bind(this,this.$hide),onString:angular.bind(this,this.$activate)})}if(!this.$waiting){this.$setError(null,"");var e=i();angular.forEach(this.$editables,function(t){e.when(t.onbeforesave())}),e.then({onWait:angular.bind(this,this.$setWaiting),onTrue:angular.bind(this,t,!0),onFalse:angular.bind(this,t,!1),onString:angular.bind(this,this.$activate)})}},$save:function(){angular.forEach(this.$editables,function(t){t.save()});var t=i();t.when(this.$onaftersave()),angular.forEach(this.$editables,function(e){t.when(e.onaftersave())}),t.then({onWait:angular.bind(this,this.$setWaiting),onTrue:angular.bind(this,this.$hide),onFalse:angular.bind(this,this.$hide),onString:angular.bind(this,this.$activate)})},$onshow:angular.noop,$oncancel:angular.noop,$onhide:angular.noop,$onbeforesave:angular.noop,$onaftersave:angular.noop};return function(){return angular.extend({$editables:[],$visible:!1,$waiting:!1,$data:{},_clicked:!1,_blur:null},l)}}]),angular.module("xeditable").directive("editableForm",["$rootScope","$parse","editableFormController","editableOptions",function(t,e,a,i){return{restrict:"A",require:["form"],compile:function(){return{pre:function(e,i,n,r){var o,s=r[0];n.editableForm?e[n.editableForm]&&e[n.editableForm].$show?(o=e[n.editableForm],angular.extend(s,o)):(o=a(),e[n.editableForm]=o,angular.extend(o,s)):(o=a(),angular.extend(s,o));var l=t.$$editableBuffer,u=s.$name;u&&l&&l[u]&&(angular.forEach(l[u],function(t){o.$addEditable(t)}),delete l[u])},post:function(t,a,n,r){var o;o=n.editableForm&&t[n.editableForm]&&t[n.editableForm].$show?t[n.editableForm]:r[0],n.onshow&&(o.$onshow=angular.bind(o,e(n.onshow),t)),n.onhide&&(o.$onhide=angular.bind(o,e(n.onhide),t)),n.oncancel&&(o.$oncancel=angular.bind(o,e(n.oncancel),t)),n.shown&&e(n.shown)(t)&&o.$show(),o._blur=n.blur||i.blurForm,n.ngSubmit||n.submit||(n.onbeforesave&&(o.$onbeforesave=function(){return e(n.onbeforesave)(t,{$data:o.$data})}),n.onaftersave&&(o.$onaftersave=function(){return e(n.onaftersave)(t,{$data:o.$data})}),a.bind("submit",function(e){e.preventDefault(),t.$apply(function(){o.$submit()})})),a.bind("click",function(t){t.which&&1!==t.which||o.$visible&&(o._clicked=!0)})}}}}}]),angular.module("xeditable").factory("editablePromiseCollection",["$q",function(t){function e(){return{promises:[],hasFalse:!1,hasString:!1,when:function(e,a){if(e===!1)this.hasFalse=!0;else if(!a&&angular.isObject(e))this.promises.push(t.when(e));else{if(!angular.isString(e))return;this.hasString=!0}},then:function(e){function a(){s.hasString||s.hasFalse?!s.hasString&&s.hasFalse?n():r():i()}e=e||{};var i=e.onTrue||angular.noop,n=e.onFalse||angular.noop,r=e.onString||angular.noop,o=e.onWait||angular.noop,s=this;this.promises.length?(o(!0),t.all(this.promises).then(function(t){o(!1),angular.forEach(t,function(t){s.when(t,!0)}),a()},function(t){o(!1),r()})):a()}}}return e}]),angular.module("xeditable").factory("editableUtils",[function(){return{indexOf:function(t,e){if(t.indexOf)return t.indexOf(e);for(var a=0;a<t.length;a++)if(e===t[a])return a;return-1},arrayRemove:function(t,e){var a=this.indexOf(t,e);return a>=0&&t.splice(a,1),e},camelToDash:function(t){var e=/[A-Z]/g;return t.replace(e,function(t,e){return(e?"-":"")+t.toLowerCase()})},dashToCamel:function(t){var e=/([\:\-\_]+(.))/g,a=/^moz([A-Z])/;return t.replace(e,function(t,e,a,i){return i?a.toUpperCase():a}).replace(a,"Moz$1")}}}]),angular.module("xeditable").factory("editableNgOptionsParser",[function(){function t(t){var a;if(!(a=t.match(e)))throw"ng-options parse error";var i,n=a[2]||a[1],r=a[4]||a[6],o=a[5],s=(a[3]||"",a[2]?a[1]:r),l=a[7],u=a[8],c=u?a[8]:null;return void 0===o?(i=r+" in "+l,void 0!==u&&(i+=" track by "+c)):i="("+o+", "+r+") in "+l,{ngRepeat:i,locals:{valueName:r,keyName:o,valueFn:s,displayFn:n}}}var e=/^\s*(.*?)(?:\s+as\s+(.*?))?(?:\s+group\s+by\s+(.*))?\s+for\s+(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+(.*?)(?:\s+track\s+by\s+(.*?))?$/;return t}]),angular.module("xeditable").factory("editableCombodate",[function(){function t(t,e){if(this.$element=angular.element(t),"INPUT"!=this.$element[0].nodeName)throw"Combodate should be applied to INPUT element";this.defaults={format:"YYYY-MM-DD HH:mm",template:"D / MMM / YYYY   H : mm",value:null,minYear:1970,maxYear:2015,yearDescending:!0,minuteStep:5,secondStep:1,firstItem:"empty",errorClass:null,customClass:"",roundTime:!0,smartDays:!0},this.options=angular.extend({},this.defaults,e),this.init()}return t.prototype={constructor:t,init:function(){if(this.map={day:["D","date"],month:["M","month"],year:["Y","year"],hour:["[Hh]","hours"],minute:["m","minutes"],second:["s","seconds"],ampm:["[Aa]",""]},this.$widget=angular.element('<span class="combodate"></span>').html(this.getTemplate()),this.initCombos(),this.options.smartDays){var t=this;this.$widget.find("select").bind("change",function(e){(angular.element(e.target).hasClass("month")||angular.element(e.target).hasClass("year"))&&t.fillCombo("day")})}this.$widget.find("select").css("width","auto"),this.$element.css("display","none").after(this.$widget),this.setValue(this.$element.val()||this.options.value)},getTemplate:function(){var t=this.options.template,e=this.options.customClass;return angular.forEach(this.map,function(e,a){e=e[0];var i=new RegExp(e+"+"),n=e.length>1?e.substring(1,2):e;t=t.replace(i,"{"+n+"}")}),t=t.replace(/ /g,"&nbsp;"),angular.forEach(this.map,function(a,i){a=a[0];var n=a.length>1?a.substring(1,2):a;t=t.replace("{"+n+"}",'<select class="'+i+" "+e+'"></select>')}),t},initCombos:function(){for(var t in this.map){var e=this.$widget[0].querySelectorAll("."+t);this["$"+t]=e.length?angular.element(e):null,this.fillCombo(t)}},fillCombo:function(t){var e=this["$"+t];if(e){var a="fill"+t.charAt(0).toUpperCase()+t.slice(1),i=this[a](),n=e.val();e.html("");for(var r=0;r<i.length;r++)e.append('<option value="'+i[r][0]+'">'+i[r][1]+"</option>");e.val(n)}},fillCommon:function(t){var e,a=[];if("name"===this.options.firstItem){e=moment.relativeTime||moment.langData()._relativeTime;var i="function"==typeof e[t]?e[t](1,!0,t,!1):e[t];i=i.split(" ").reverse()[0],a.push(["",i])}else"empty"===this.options.firstItem&&a.push(["",""]);return a},fillDay:function(){var t,e,a=this.fillCommon("d"),i=-1!==this.options.template.indexOf("DD"),n=31;if(this.options.smartDays&&this.$month&&this.$year){var r=parseInt(this.$month.val(),10),o=parseInt(this.$year.val(),10);isNaN(r)||isNaN(o)||(n=moment([o,r]).daysInMonth())}for(e=1;n>=e;e++)t=i?this.leadZero(e):e,a.push([e,t]);return a},fillMonth:function(){var t,e,a=this.fillCommon("M"),i=-1!==this.options.template.indexOf("MMMM"),n=-1!==this.options.template.indexOf("MMM"),r=-1!==this.options.template.indexOf("MM");for(e=0;11>=e;e++)t=i?moment().date(1).month(e).format("MMMM"):n?moment().date(1).month(e).format("MMM"):r?this.leadZero(e+1):e+1,a.push([e,t]);return a},fillYear:function(){var t,e,a=[],i=-1!==this.options.template.indexOf("YYYY");for(e=this.options.maxYear;e>=this.options.minYear;e--)t=i?e:(e+"").substring(2),a[this.options.yearDescending?"push":"unshift"]([e,t]);return a=this.fillCommon("y").concat(a)},fillHour:function(){var t,e,a=this.fillCommon("h"),i=-1!==this.options.template.indexOf("h"),n=(-1!==this.options.template.indexOf("H"),-1!==this.options.template.toLowerCase().indexOf("hh")),r=i?1:0,o=i?12:23;for(e=r;o>=e;e++)t=n?this.leadZero(e):e,a.push([e,t]);return a},fillMinute:function(){var t,e,a=this.fillCommon("m"),i=-1!==this.options.template.indexOf("mm");for(e=0;59>=e;e+=this.options.minuteStep)t=i?this.leadZero(e):e,a.push([e,t]);return a},fillSecond:function(){var t,e,a=this.fillCommon("s"),i=-1!==this.options.template.indexOf("ss");for(e=0;59>=e;e+=this.options.secondStep)t=i?this.leadZero(e):e,a.push([e,t]);return a},fillAmpm:function(){var t=-1!==this.options.template.indexOf("a"),e=(-1!==this.options.template.indexOf("A"),[["am",t?"am":"AM"],["pm",t?"pm":"PM"]]);return e},getValue:function(t){var e,a={},i=this,n=!1;return angular.forEach(this.map,function(t,e){if("ampm"!==e){var r="day"===e?1:0;return a[e]=i["$"+e]?parseInt(i["$"+e].val(),10):r,isNaN(a[e])?(n=!0,!1):void 0}}),n?"":(this.$ampm&&(12===a.hour?a.hour="am"===this.$ampm.val()?0:12:a.hour="am"===this.$ampm.val()?a.hour:a.hour+12),e=moment([a.year,a.month,a.day,a.hour,a.minute,a.second]),this.highlight(e),t=void 0===t?this.options.format:t,null===t?e.isValid()?e:null:e.isValid()?e.format(t):"")},setValue:function(t){function e(t,e){var a={};return angular.forEach(t.children("option"),function(t,i){var n=angular.element(t).attr("value");if(""!==n){var r=Math.abs(n-e);("undefined"==typeof a.distance||r<a.distance)&&(a={value:n,distance:r})}}),a.value}if(t){var a="string"==typeof t?moment(t,this.options.format,!0):moment(t),i=this,n={};a.isValid()&&(angular.forEach(this.map,function(t,e){"ampm"!==e&&(n[e]=a[t[1]]())}),this.$ampm&&(n.hour>=12?(n.ampm="pm",n.hour>12&&(n.hour-=12)):(n.ampm="am",0===n.hour&&(n.hour=12))),angular.forEach(n,function(t,a){i["$"+a]&&("minute"===a&&i.options.minuteStep>1&&i.options.roundTime&&(t=e(i["$"+a],t)),"second"===a&&i.options.secondStep>1&&i.options.roundTime&&(t=e(i["$"+a],t)),i["$"+a].val(t))}),this.options.smartDays&&this.fillCombo("day"),this.$element.val(a.format(this.options.format)).triggerHandler("change"))}},highlight:function(t){t.isValid()?this.options.errorClass?this.$widget.removeClass(this.options.errorClass):this.$widget.find("select").css("border-color",this.borderColor):this.options.errorClass?this.$widget.addClass(this.options.errorClass):(this.borderColor||(this.borderColor=this.$widget.find("select").css("border-color")),this.$widget.find("select").css("border-color","red"))},leadZero:function(t){return 9>=t?"0"+t:t},destroy:function(){this.$widget.remove(),this.$element.removeData("combodate").show()}},{getInstance:function(e,a){return new t(e,a)}}}]),angular.module("xeditable").factory("editableIcons",function(){var t={"default":{bs2:{ok:"icon-ok icon-white",cancel:"icon-remove"},bs3:{ok:"glyphicon glyphicon-ok",cancel:"glyphicon glyphicon-remove"}},external:{"font-awesome":{ok:"fa fa-check",cancel:"fa fa-times"}}};return t}),angular.module("xeditable").factory("editableThemes",function(){var t={"default":{formTpl:'<form class="editable-wrap"></form>',noformTpl:'<span class="editable-wrap"></span>',controlsTpl:'<span class="editable-controls"></span>',inputTpl:"",errorTpl:'<div class="editable-error" ng-show="$error" ng-bind="$error"></div>',buttonsTpl:'<span class="editable-buttons"></span>',submitTpl:'<button type="submit">save</button>',cancelTpl:'<button type="button" ng-click="$form.$cancel()">cancel</button>'},bs2:{formTpl:'<form class="form-inline editable-wrap" role="form"></form>',noformTpl:'<span class="editable-wrap"></span>',controlsTpl:'<div class="editable-controls controls control-group" ng-class="{\'error\': $error}"></div>',inputTpl:"",errorTpl:'<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',buttonsTpl:'<span class="editable-buttons"></span>',submitTpl:'<button type="submit" class="btn btn-primary"><span></span></button>',cancelTpl:'<button type="button" class="btn" ng-click="$form.$cancel()"><span></span></button>'},bs3:{formTpl:'<form class="form-inline editable-wrap" role="form"></form>',noformTpl:'<span class="editable-wrap"></span>',controlsTpl:'<div class="editable-controls form-group" ng-class="{\'has-error\': $error}"></div>',inputTpl:"",errorTpl:'<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',buttonsTpl:'<span class="editable-buttons"></span>',submitTpl:'<button type="submit" class="btn btn-primary"><span></span></button>',cancelTpl:'<button type="button" class="btn btn-default" ng-click="$form.$cancel()"><span></span></button>',buttonsClass:"",inputClass:"",postrender:function(){switch(this.directiveName){case"editableText":case"editableSelect":case"editableTextarea":case"editableEmail":case"editableTel":case"editableNumber":case"editableUrl":case"editableSearch":case"editableDate":case"editableDatetime":case"editableBsdate":case"editableTime":case"editableMonth":case"editableWeek":if(this.inputEl.addClass("form-control"),this.theme.inputClass){if(this.inputEl.attr("multiple")&&("input-sm"===this.theme.inputClass||"input-lg"===this.theme.inputClass))break;this.inputEl.addClass(this.theme.inputClass)}break;case"editableCheckbox":this.editorEl.addClass("checkbox")}this.buttonsEl&&this.theme.buttonsClass&&this.buttonsEl.find("button").addClass(this.theme.buttonsClass)}}};return t});
+/*!
+angular-xeditable - 0.1.10
+Edit-in-place for angular.js
+Build date: 2016-02-16 
+*/
+/**
+ * Angular-xeditable module 
+ *
+ */
+angular.module('xeditable', [])
+
+
+/**
+ * Default options. 
+ *
+ * @namespace editable-options
+ */
+//todo: maybe better have editableDefaults, not options...
+.value('editableOptions', {
+  /**
+   * Theme. Possible values `bs3`, `bs2`, `default`.
+   * 
+   * @var {string} theme
+   * @memberOf editable-options
+   */  
+  theme: 'default',
+  /**
+   * Icon Set. Possible values `font-awesome`, `default`.
+   * 
+   * @var {string} icon set
+   * @memberOf editable-options
+   */  
+  icon_set: 'default',
+  /**
+   * Whether to show buttons for single editalbe element.  
+   * Possible values `right` (default), `no`.
+   * 
+   * @var {string} buttons
+   * @memberOf editable-options
+   */    
+  buttons: 'right',
+  /**
+   * Default value for `blur` attribute of single editable element.  
+   * Can be `cancel|submit|ignore`.
+   * 
+   * @var {string} blurElem
+   * @memberOf editable-options
+   */
+  blurElem: 'cancel',
+  /**
+   * Default value for `blur` attribute of editable form.  
+   * Can be `cancel|submit|ignore`.
+   * 
+   * @var {string} blurForm
+   * @memberOf editable-options
+   */
+  blurForm: 'ignore',
+  /**
+   * How input elements get activated. Possible values: `focus|select|none`.
+   *
+   * @var {string} activate
+   * @memberOf editable-options
+   */
+  activate: 'focus',
+  /**
+   * Whether to disable x-editable. Can be overloaded on each element.
+   *
+   * @var {boolean} isDisabled
+   * @memberOf editable-options
+   */
+   isDisabled: false,
+  
+  /**
+   * Event, on which the edit mode gets activated. 
+   * Can be any event.
+   *
+   * @var {string} activationEvent
+   * @memberOf editable-options
+   */
+  activationEvent: 'click'
+
+});
+
+/*
+Angular-ui bootstrap datepicker
+http://angular-ui.github.io/bootstrap/#/datepicker
+*/
+angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFactory',
+	function(editableDirectiveFactory) {
+		return editableDirectiveFactory({
+			directiveName: 'editableBsdate',
+			inputTpl: '<div></div>',
+			render: function() {
+				/** This basically renders a datepicker as in the example shown in 
+				**  http://angular-ui.github.io/bootstrap/#/datepicker
+				**  The attributes are all the same as in the bootstrap-ui datepicker with e- as prefix
+				**/
+				this.parent.render.call(this);
+
+				var inputDatePicker = angular.element('<input type="text" class="form-control" ng-model="$data"/>');
+				var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
+				var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
+
+				inputDatePicker.attr('datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
+				inputDatePicker.attr('is-open', this.attrs.eIsOpen);
+				inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
+				inputDatePicker.attr('datepicker-popup', this.attrs.eDatepickerPopup);
+				inputDatePicker.attr('datepicker-mode', this.attrs.eDatepickerMode || 'day');
+				inputDatePicker.attr('min-date', this.attrs.eMinDate);
+				inputDatePicker.attr('max-date', this.attrs.eMaxDate);
+				inputDatePicker.attr('show-weeks', this.attrs.eShowWeeks || true);
+				inputDatePicker.attr('starting-day', this.attrs.eStartingDay || 0);
+				inputDatePicker.attr('init-date', this.attrs.eInitDate || new Date());
+				inputDatePicker.attr('min-mode', this.attrs.eMinMode || 'day');
+				inputDatePicker.attr('max-mode', this.attrs.eMaxMode || 'year');
+				inputDatePicker.attr('format-day', this.attrs.eFormatDay || 'dd');
+				inputDatePicker.attr('format-month', this.attrs.eFormatMonth || 'MMMM');
+				inputDatePicker.attr('format-year', this.attrs.eFormatYear || 'yyyy');
+				inputDatePicker.attr('format-day-header', this.attrs.eFormatDayHeader || 'EEE');
+				inputDatePicker.attr('format-day-title', this.attrs.eFormatDayTitle || 'MMMM yyyy');
+				inputDatePicker.attr('format-month-title', this.attrs.eFormatMonthTitle || 'yyyy');
+				inputDatePicker.attr('year-range', this.attrs.eYearRange || 20);
+				inputDatePicker.attr('show-button-bar', this.attrs.eShowButtonBar || true);
+				inputDatePicker.attr('current-text', this.attrs.eCurrentText || 'Today');
+				inputDatePicker.attr('clear-text', this.attrs.eClearText || 'Clear');
+				inputDatePicker.attr('close-text', this.attrs.eCloseText || 'Done');
+				inputDatePicker.attr('close-on-date-selection', this.attrs.eCloseOnDateSelection || true);
+				inputDatePicker.attr('date-picker-append-to-body', this.attrs.eDatePickerAppendToBody || false);
+				inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
+
+				buttonDatePicker.attr('ng-click',this.attrs.eNgClick);
+
+				buttonWrapper.append(buttonDatePicker);
+				this.inputEl.prepend(inputDatePicker);
+				this.inputEl.append(buttonWrapper);
+
+				this.inputEl.removeAttr('class');
+				this.inputEl.attr('class','input-group');
+
+			}
+    });
+}]);
+/*
+Angular-ui bootstrap editable timepicker
+http://angular-ui.github.io/bootstrap/#/timepicker
+*/
+angular.module('xeditable').directive('editableBstime', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableBstime',
+      inputTpl: '<timepicker></timepicker>',
+      render: function() {
+        this.parent.render.call(this);
+
+        // timepicker can't update model when ng-model set directly to it
+        // see: https://github.com/angular-ui/bootstrap/issues/1141
+        // so we wrap it into DIV
+        var div = angular.element('<div class="well well-small" style="display:inline-block;"></div>');
+
+        // move ng-model to wrapping div
+        div.attr('ng-model', this.inputEl.attr('ng-model'));
+        this.inputEl.removeAttr('ng-model');
+
+        // move ng-change to wrapping div
+        if(this.attrs.eNgChange) {
+          div.attr('ng-change', this.inputEl.attr('ng-change'));
+          this.inputEl.removeAttr('ng-change');
+        }
+
+        // wrap
+        this.inputEl.wrap(div);
+      }
+    });
+}]);
+//checkbox
+angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableCheckbox',
+      inputTpl: '<input type="checkbox">',
+      render: function() {
+        this.parent.render.call(this);
+        if(this.attrs.eTitle) {
+          this.inputEl.wrap('<label></label>');
+          this.inputEl.parent().append(this.attrs.eTitle);
+        }
+      },
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('change', function() {
+          setTimeout(function() {
+            self.scope.$apply(function() {
+              self.scope.$form.$submit();
+            });
+          }, 500);
+        });
+      }
+    });
+}]);
+
+// checklist
+angular.module('xeditable').directive('editableChecklist', [
+  'editableDirectiveFactory',
+  'editableNgOptionsParser',
+  function(editableDirectiveFactory, editableNgOptionsParser) {
+    return editableDirectiveFactory({
+      directiveName: 'editableChecklist',
+      inputTpl: '<span></span>',
+      useCopy: true,
+      render: function() {
+        this.parent.render.call(this);
+        var parsed = editableNgOptionsParser(this.attrs.eNgOptions);
+        var html = '<label ng-repeat="'+parsed.ngRepeat+'">'+
+          '<input type="checkbox" checklist-model="$parent.$data" checklist-value="'+parsed.locals.valueFn+'">'+
+          '<span ng-bind="'+parsed.locals.displayFn+'"></span></label>';
+
+        this.inputEl.removeAttr('ng-model');
+        this.inputEl.removeAttr('ng-options');
+        this.inputEl.html(html);
+      }
+    });
+}]);
+
+angular.module('xeditable').directive('editableCombodate', ['editableDirectiveFactory', 'editableCombodate',
+  function(editableDirectiveFactory, editableCombodate) {
+    return editableDirectiveFactory({
+      directiveName: 'editableCombodate',
+      inputTpl: '<input type="text">',
+      render: function() {
+        this.parent.render.call(this);
+
+        var options = {
+          value: new Date(this.scope.$data)
+        };
+        var self = this;
+        angular.forEach(["format", "template", "minYear", "maxYear", "yearDescending", "minuteStep", "secondStep", "firstItem", "errorClass", "customClass", "roundTime", "smartDays"], function(name) {
+
+          var attrName = "e" + name.charAt(0).toUpperCase() + name.slice(1);
+          if (attrName in self.attrs) {
+            options[name] = self.attrs[attrName];
+          }
+        });
+
+        var combodate = editableCombodate.getInstance(this.inputEl, options);
+        combodate.$widget.find('select').bind('change', function(e) {
+          self.scope.$data = (new Date(combodate.getValue())).toISOString();
+        });
+      }
+    });
+  }
+]);
+
+/*
+Input types: text|email|tel|number|url|search|color|date|datetime|time|month|week
+*/
+
+(function() {
+
+  var types = 'text|password|email|tel|number|url|search|color|date|datetime|time|month|week|file'.split('|');
+
+  //todo: datalist
+  
+  // generate directives
+  angular.forEach(types, function(type) {
+    var directiveName = 'editable'+type.charAt(0).toUpperCase() + type.slice(1);
+    angular.module('xeditable').directive(directiveName, ['editableDirectiveFactory',
+      function(editableDirectiveFactory) {
+        return editableDirectiveFactory({
+          directiveName: directiveName,
+          inputTpl: '<input type="'+type+'">'
+        });
+    }]);
+  });
+
+  //`range` is bit specific
+  angular.module('xeditable').directive('editableRange', ['editableDirectiveFactory',
+    function(editableDirectiveFactory) {
+      return editableDirectiveFactory({
+        directiveName: 'editableRange',
+        inputTpl: '<input type="range" id="range" name="range">',
+        render: function() {
+          this.parent.render.call(this);
+          this.inputEl.after('<output>{{$data}}</output>');
+        }        
+      });
+  }]);
+
+}());
+
+
+// radiolist
+angular.module('xeditable').directive('editableRadiolist', [
+  'editableDirectiveFactory',
+  'editableNgOptionsParser',
+  function(editableDirectiveFactory, editableNgOptionsParser) {
+    return editableDirectiveFactory({
+      directiveName: 'editableRadiolist',
+      inputTpl: '<span></span>',
+      render: function() {
+        this.parent.render.call(this);
+        var parsed = editableNgOptionsParser(this.attrs.eNgOptions);
+        var html = '<label ng-repeat="'+parsed.ngRepeat+'">'+
+          '<input type="radio" ng-disabled="' + this.attrs.eNgDisabled + '" ng-model="$parent.$data" value="{{'+parsed.locals.valueFn+'}}">'+
+          '<span ng-bind="'+parsed.locals.displayFn+'"></span></label>';
+
+        this.inputEl.removeAttr('ng-model');
+        this.inputEl.removeAttr('ng-options');
+        this.inputEl.html(html);
+      },
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('change', function() {
+          setTimeout(function() {
+            self.scope.$apply(function() {
+              self.scope.$form.$submit();
+            });
+          }, 500);
+        });
+      }
+    });
+}]);
+
+//select
+angular.module('xeditable').directive('editableSelect', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableSelect',
+      inputTpl: '<select></select>',
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('change', function() {
+          self.scope.$apply(function() {
+            self.scope.$form.$submit();
+          });
+        });
+      }
+    });
+}]);
+//textarea
+angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableTextarea',
+      inputTpl: '<textarea></textarea>',
+      addListeners: function() {
+        var self = this;
+        self.parent.addListeners.call(self);
+        // submit textarea by ctrl+enter even with buttons
+        if (self.single && self.buttons !== 'no') {
+          self.autosubmit();
+        }
+      },
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('keydown', function(e) {
+          if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
+            self.scope.$apply(function() {
+              self.scope.$form.$submit();
+            });
+          }
+        });
+      }
+    });
+}]);
+
+/**
+ * EditableController class. 
+ * Attached to element with `editable-xxx` directive.
+ *
+ * @namespace editable-element
+ */
+/*
+TODO: this file should be refactored to work more clear without closures!
+*/
+angular.module('xeditable').factory('editableController', 
+  ['$q', 'editableUtils',
+  function($q, editableUtils) {
+
+  //EditableController function
+  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q'];
+  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q) {
+    var valueGetter;
+
+    //if control is disabled - it does not participate in waiting process
+    var inWaiting;
+
+    var self = this;
+
+    self.scope = $scope;
+    self.elem = $element;
+    self.attrs = $attrs;
+    self.inputEl = null;
+    self.editorEl = null;
+    self.single = true;
+    self.error = '';
+    self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
+    self.parent = {};
+
+    //will be undefined if icon_set is default and theme is default
+    self.icon_set = editableOptions.icon_set === 'default' ? editableIcons.default[editableOptions.theme] : editableIcons.external[editableOptions.icon_set];
+
+    //to be overwritten by directive
+    self.inputTpl = '';
+    self.directiveName = '';
+
+    // with majority of controls copy is not needed, but..
+    // copy MUST NOT be used for `select-multiple` with objects as items
+    // copy MUST be used for `checklist`
+    self.useCopy = false;
+
+    //runtime (defaults)
+    self.single = null;
+
+    /**
+     * Attributes defined with `e-*` prefix automatically transfered from original element to
+     * control.  
+     * For example, if you set `<span editable-text="user.name" e-style="width: 100px"`>
+     * then input will appear as `<input style="width: 100px">`.  
+     * See [demo](#text-customize).
+     * 
+     * @var {any|attribute} e-*
+     * @memberOf editable-element
+     */ 
+
+    /**
+     * Whether to show ok/cancel buttons. Values: `right|no`.
+     * If set to `no` control automatically submitted when value changed.  
+     * If control is part of form buttons will never be shown. 
+     * 
+     * @var {string|attribute} buttons
+     * @memberOf editable-element
+     */    
+    self.buttons = 'right'; 
+    /**
+     * Action when control losses focus. Values: `cancel|submit|ignore`.
+     * Has sense only for single editable element.
+     * Otherwise, if control is part of form - you should set `blur` of form, not of individual element.
+     * 
+     * @var {string|attribute} blur
+     * @memberOf editable-element
+     */     
+    // no real `blur` property as it is transfered to editable form
+
+    //init
+    self.init = function(single) {
+      self.single = single;
+
+      self.name = $attrs.eName || $attrs[self.directiveName];
+      /*
+      if(!$attrs[directiveName] && !$attrs.eNgModel && ($attrs.eValue === undefined)) {
+        throw 'You should provide value for `'+directiveName+'` or `e-value` in editable element!';
+      }
+      */
+      if($attrs[self.directiveName]) {
+        valueGetter = $parse($attrs[self.directiveName]);
+      } else {
+        throw 'You should provide value for `'+self.directiveName+'` in editable element!';
+      }
+
+      // settings for single and non-single
+      if (!self.single) {
+        // hide buttons for non-single
+        self.buttons = 'no';
+      } else {
+        self.buttons = self.attrs.buttons || editableOptions.buttons;
+      }
+
+      //if name defined --> watch changes and update $data in form
+      if($attrs.eName) {
+        self.scope.$watch('$data', function(newVal){
+          self.scope.$form.$data[$attrs.eName] = newVal;
+        });
+      }
+
+      /**
+       * Called when control is shown.  
+       * See [demo](#select-remote).
+       * 
+       * @var {method|attribute} onshow
+       * @memberOf editable-element
+       */
+      if($attrs.onshow) {
+        self.onshow = function() {
+          return self.catchError($parse($attrs.onshow)($scope));
+        };
+      }
+
+      /**
+       * Called when control is hidden after both save or cancel.  
+       * 
+       * @var {method|attribute} onhide
+       * @memberOf editable-element
+       */
+      if($attrs.onhide) {
+        self.onhide = function() {
+          return $parse($attrs.onhide)($scope);
+        };
+      }
+
+      /**
+       * Called when control is cancelled.  
+       * 
+       * @var {method|attribute} oncancel
+       * @memberOf editable-element
+       */
+      if($attrs.oncancel) {
+        self.oncancel = function() {
+          return $parse($attrs.oncancel)($scope);
+        };
+      }          
+
+      /**
+       * Called during submit before value is saved to model.  
+       * See [demo](#onbeforesave).
+       * 
+       * @var {method|attribute} onbeforesave
+       * @memberOf editable-element
+       */
+      if ($attrs.onbeforesave) {
+        self.onbeforesave = function() {
+          return self.catchError($parse($attrs.onbeforesave)($scope));
+        };
+      }
+
+      /**
+       * Called during submit after value is saved to model.  
+       * See [demo](#onaftersave).
+       * 
+       * @var {method|attribute} onaftersave
+       * @memberOf editable-element
+       */
+      if ($attrs.onaftersave) {
+        self.onaftersave = function() {
+          return self.catchError($parse($attrs.onaftersave)($scope));
+        };
+      }
+
+      // watch change of model to update editable element
+      // now only add/remove `editable-empty` class.
+      // Initially this method called with newVal = undefined, oldVal = undefined
+      // so no need initially call handleEmpty() explicitly
+      $scope.$parent.$watch($attrs[self.directiveName], function(newVal, oldVal) {
+        self.setLocalValue();
+        self.handleEmpty();
+      });
+    };
+
+    self.render = function() {
+      var theme = self.theme;
+
+      //build input
+      self.inputEl = angular.element(self.inputTpl);
+
+      //build controls
+      self.controlsEl = angular.element(theme.controlsTpl);
+      self.controlsEl.append(self.inputEl);
+
+      //build buttons
+      if(self.buttons !== 'no') {
+        self.buttonsEl = angular.element(theme.buttonsTpl);
+        self.submitEl = angular.element(theme.submitTpl);
+        self.cancelEl = angular.element(theme.cancelTpl);
+        if(self.icon_set) {
+          self.submitEl.find('span').addClass(self.icon_set.ok);
+          self.cancelEl.find('span').addClass(self.icon_set.cancel);
+        }
+        self.buttonsEl.append(self.submitEl).append(self.cancelEl);
+        self.controlsEl.append(self.buttonsEl);
+        
+        self.inputEl.addClass('editable-has-buttons');
+      }
+
+      //build error
+      self.errorEl = angular.element(theme.errorTpl);
+      self.controlsEl.append(self.errorEl);
+
+      //build editor
+      self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
+      self.editorEl.append(self.controlsEl);
+
+      // transfer `e-*|data-e-*|x-e-*` attributes
+      for(var k in $attrs.$attr) {
+        if(k.length <= 1) {
+          continue;
+        }
+        var transferAttr = false;
+        var nextLetter = k.substring(1, 2);
+
+        // if starts with `e` + uppercase letter
+        if(k.substring(0, 1) === 'e' && nextLetter === nextLetter.toUpperCase()) {
+          transferAttr = k.substring(1); // cut `e`
+        } else {
+          continue;
+        }
+        
+        // exclude `form` and `ng-submit`, 
+        if(transferAttr === 'Form' || transferAttr === 'NgSubmit') {
+          continue;
+        }
+
+        // convert back to lowercase style
+        transferAttr = transferAttr.substring(0, 1).toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));  
+
+        // workaround for attributes without value (e.g. `multiple = "multiple"`)
+        // except for 'e-value'
+        var attrValue = (transferAttr !== 'value' && $attrs[k] === '') ? transferAttr : $attrs[k];
+
+        // set attributes to input
+        self.inputEl.attr(transferAttr, attrValue);
+      }
+
+      self.inputEl.addClass('editable-input');
+      self.inputEl.attr('ng-model', '$data');
+
+      // add directiveName class to editor, e.g. `editable-text`
+      self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
+
+      if(self.single) {
+        self.editorEl.attr('editable-form', '$form');
+        // transfer `blur` to form
+        self.editorEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
+      }
+
+      //apply `postrender` method of theme
+      if(angular.isFunction(theme.postrender)) {
+        theme.postrender.call(self);
+      }
+
+    };
+
+    // with majority of controls copy is not needed, but..
+    // copy MUST NOT be used for `select-multiple` with objects as items
+    // copy MUST be used for `checklist`
+    self.setLocalValue = function() {
+      self.scope.$data = self.useCopy ? 
+        angular.copy(valueGetter($scope.$parent)) : 
+        valueGetter($scope.$parent);
+    };
+
+    //show
+    self.show = function() {
+      // set value of scope.$data
+      self.setLocalValue();
+
+      /*
+      Originally render() was inside init() method, but some directives polluting editorEl,
+      so it is broken on second openning.
+      Cloning is not a solution as jqLite can not clone with event handler's.
+      */
+      self.render();
+
+      // insert into DOM
+      $element.after(self.editorEl);
+
+      // compile (needed to attach ng-* events from markup)
+      $compile(self.editorEl)($scope);
+
+      // attach listeners (`escape`, autosubmit, etc)
+      self.addListeners();
+
+      // hide element
+      $element.addClass('editable-hide');
+
+      // onshow
+      return self.onshow();
+    };
+
+    //hide
+    self.hide = function() {
+      
+      self.editorEl.remove();
+      $element.removeClass('editable-hide');
+
+      // onhide
+      return self.onhide();
+    };
+
+    // cancel
+    self.cancel = function() {
+      // oncancel
+      self.oncancel();
+      // don't call hide() here as it called in form's code
+    };
+
+    /*
+    Called after show to attach listeners
+    */
+    self.addListeners = function() {
+      // bind keyup for `escape`
+      self.inputEl.bind('keyup', function(e) {
+          if(!self.single) {
+            return;
+          }
+
+          // todo: move this to editable-form!
+          switch(e.keyCode) {
+            // hide on `escape` press
+            case 27:
+              self.scope.$apply(function() {
+                self.scope.$form.$cancel();
+              });
+            break;
+          }
+      });
+
+      // autosubmit when `no buttons`
+      if (self.single && self.buttons === 'no') {
+        self.autosubmit();
+      }
+
+      // click - mark element as clicked to exclude in document click handler
+      self.editorEl.bind('click', function(e) {
+        // ignore right/middle button click
+        if (e.which && e.which !== 1) {
+          return;
+        }
+
+        if (self.scope.$form.$visible) {
+          self.scope.$form._clicked = true;
+        }
+      });
+    };
+
+    // setWaiting
+    self.setWaiting = function(value) {
+      if (value) {
+        // participate in waiting only if not disabled
+        inWaiting = !self.inputEl.attr('disabled') &&
+                    !self.inputEl.attr('ng-disabled') &&
+                    !self.inputEl.attr('ng-enabled');
+        if (inWaiting) {
+          self.inputEl.attr('disabled', 'disabled');
+          if(self.buttonsEl) {
+            self.buttonsEl.find('button').attr('disabled', 'disabled');
+          }
+        }
+      } else {
+        if (inWaiting) {
+          self.inputEl.removeAttr('disabled');
+          if (self.buttonsEl) {
+            self.buttonsEl.find('button').removeAttr('disabled');
+          }
+        }
+      }
+    };
+
+    self.activate = function(start, end) {
+      setTimeout(function() {
+        var el = self.inputEl[0];
+        if (editableOptions.activate === 'focus' && el.focus) {
+          if(start){
+            end = end || start;
+            el.onfocus = function(){
+              var that = this;
+              setTimeout(function(){
+                that.setSelectionRange(start,end);
+              });
+            };
+          }
+          el.focus();
+        }
+        if (editableOptions.activate === 'select' && el.select) {
+          el.select();
+        }
+      }, 0);
+    };
+
+    self.setError = function(msg) {
+      if(!angular.isObject(msg)) {
+        $scope.$error = msg;
+        self.error = msg;
+      }
+    };
+
+    /*
+    Checks that result is string or promise returned string and shows it as error message
+    Applied to onshow, onbeforesave, onaftersave
+    */
+    self.catchError = function(result, noPromise) {
+      if (angular.isObject(result) && noPromise !== true) {
+        $q.when(result).then(
+          //success and fail handlers are equal
+          angular.bind(this, function(r) {
+            this.catchError(r, true);
+          }),
+          angular.bind(this, function(r) {
+            this.catchError(r, true);
+          })
+        );
+      //check $http error
+      } else if (noPromise && angular.isObject(result) && result.status &&
+        (result.status !== 200) && result.data && angular.isString(result.data)) {
+        this.setError(result.data);
+        //set result to string: to let form know that there was error
+        result = result.data;
+      } else if (angular.isString(result)) {
+        this.setError(result);
+      }
+      return result;
+    };
+
+    self.save = function() {
+      valueGetter.assign($scope.$parent,
+          self.useCopy ? angular.copy(self.scope.$data) : self.scope.$data);
+
+      // no need to call handleEmpty here as we are watching change of model value
+      // self.handleEmpty();
+    };
+
+    /*
+    attach/detach `editable-empty` class to element
+    */
+    self.handleEmpty = function() {
+      var val = valueGetter($scope.$parent);
+      var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0); 
+      $element.toggleClass('editable-empty', isEmpty);
+    };
+
+    /*
+    Called when `buttons = "no"` to submit automatically
+    */
+    self.autosubmit = angular.noop;
+
+    self.onshow = angular.noop;
+    self.onhide = angular.noop;
+    self.oncancel = angular.noop;
+    self.onbeforesave = angular.noop;
+    self.onaftersave = angular.noop;
+  }
+
+  return EditableController;
+}]);
+
+/*
+editableFactory is used to generate editable directives (see `/directives` folder)
+Inside it does several things:
+- detect form for editable element. Form may be one of three types:
+  1. autogenerated form (for single editable elements)
+  2. wrapper form (element wrapped by <form> tag)
+  3. linked form (element has `e-form` attribute pointing to existing form)
+
+- attach editableController to element
+
+Depends on: editableController, editableFormFactory
+*/
+angular.module('xeditable').factory('editableDirectiveFactory',
+['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController', 'editableOptions',
+function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController, editableOptions) {
+
+  //directive object
+  return function(overwrites) {
+    return {
+      restrict: 'A',
+      scope: true,
+      require: [overwrites.directiveName, '?^form'],
+      controller: editableController,
+      link: function(scope, elem, attrs, ctrl) {
+        // editable controller
+        var eCtrl = ctrl[0];
+
+        // form controller
+        var eFormCtrl;
+
+        // this variable indicates is element is bound to some existing form, 
+        // or it's single element who's form will be generated automatically
+        // By default consider single element without any linked form.ß
+        var hasForm = false;
+     
+        // element wrapped by form
+        if(ctrl[1]) {
+          eFormCtrl = ctrl[1];
+          hasForm = attrs.eSingle === undefined;
+        } else if(attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
+          var getter = $parse(attrs.eForm)(scope);
+          if(getter) { // form exists in scope (above), e.g. editable column
+            eFormCtrl = getter;
+            hasForm = true;
+          } else { // form exists below or not exist at all: check document.forms
+            for(var i=0; i<$document[0].forms.length;i++){
+              if($document[0].forms[i].name === attrs.eForm) {
+                // form is below and not processed yet
+                eFormCtrl = null;
+                hasForm = true;
+                break;
+              }
+            }
+          }
+        }
+
+        /*
+        if(hasForm && !attrs.eName) {
+          throw 'You should provide `e-name` for editable element inside form!';
+        }
+        */
+
+        //check for `editable-form` attr in form
+        /*
+        if(eFormCtrl && ) {
+          throw 'You should provide `e-name` for editable element inside form!';
+        }
+        */
+
+        // store original props to `parent` before merge
+        angular.forEach(overwrites, function(v, k) {
+          if(eCtrl[k] !== undefined) {
+            eCtrl.parent[k] = eCtrl[k];
+          }
+        });
+
+        // merge overwrites to base editable controller
+        angular.extend(eCtrl, overwrites);
+
+        // x-editable can be disabled using editableOption or edit-disabled attribute
+        var disabled = angular.isDefined(attrs.editDisabled) ?
+          scope.$eval(attrs.editDisabled) :
+          editableOptions.isDisabled;
+
+        if (disabled) {
+          return;
+        }
+        
+        // init editable ctrl
+        eCtrl.init(!hasForm);
+
+        // publich editable controller as `$editable` to be referenced in html
+        scope.$editable = eCtrl;
+
+        // add `editable` class to element
+        elem.addClass('editable');
+
+        // hasForm
+        if(hasForm) {
+          if(eFormCtrl) {
+            scope.$form = eFormCtrl;
+            if(!scope.$form.$addEditable) {
+              throw 'Form with editable elements should have `editable-form` attribute.';
+            }
+            scope.$form.$addEditable(eCtrl);
+          } else {
+            // future form (below): add editable controller to buffer and add to form later
+            $rootScope.$$editableBuffer = $rootScope.$$editableBuffer || {};
+            $rootScope.$$editableBuffer[attrs.eForm] = $rootScope.$$editableBuffer[attrs.eForm] || [];
+            $rootScope.$$editableBuffer[attrs.eForm].push(eCtrl);
+            scope.$form = null; //will be re-assigned later
+          }
+        // !hasForm
+        } else {
+          // create editableform controller
+          scope.$form = editableFormController();
+          // add self to editable controller
+          scope.$form.$addEditable(eCtrl);
+
+          // if `e-form` provided, publish local $form in scope
+          if(attrs.eForm) {
+            scope.$parent[attrs.eForm] = scope.$form;
+          }
+
+          // bind click - if no external form defined
+          if(!attrs.eForm || attrs.eClickable) {
+            elem.addClass('editable-click');
+            elem.bind(editableOptions.activationEvent, function(e) {
+              e.preventDefault();
+              e.editable = eCtrl;
+              scope.$apply(function(){
+                scope.$form.$show();
+              });
+            });
+          }
+        }
+
+      }
+    };
+  };
+}]);
+
+/*
+Returns editableForm controller
+*/
+angular.module('xeditable').factory('editableFormController', 
+  ['$parse', '$document', '$rootScope', 'editablePromiseCollection', 'editableUtils',
+  function($parse, $document, $rootScope, editablePromiseCollection, editableUtils) {
+
+  // array of opened editable forms
+  var shown = [];
+
+  //Check if the child element correspond or is a descendant of the parent element
+  var isSelfOrDescendant = function (parent, child) {
+    if (child == parent) {
+      return true;
+    }
+
+    var node = child.parentNode;
+    while (node !== null) {
+      if (node == parent) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+    return false;
+  };
+  
+  //Check if it is a real blur : if the click event appear on a shown editable elem, this is not a blur.
+  var isBlur = function(shown, event) {
+    var isBlur = true;
+
+    var editables = shown.$editables;
+    angular.forEach(editables, function(v){
+      var element = v.editorEl[0];
+      if (isSelfOrDescendant(element, event.target))
+        isBlur = false;
+      
+    });
+    return isBlur;
+  };
+  
+  // bind click to body: cancel|submit|ignore forms
+  $document.bind('click', function(e) {
+    // ignore right/middle button click
+    if ((e.which && e.which !== 1) || e.isDefaultPrevented()) {
+      return;
+    }
+
+    var toCancel = [];
+    var toSubmit = [];
+    for (var i=0; i<shown.length; i++) {
+
+      // exclude clicked
+      if (shown[i]._clicked) {
+        shown[i]._clicked = false;
+        continue;
+      }
+
+      // exclude waiting
+      if (shown[i].$waiting) {
+        continue;
+      }
+
+      if (shown[i]._blur === 'cancel' && isBlur(shown[i], e)) {
+        toCancel.push(shown[i]);
+      }
+
+      if (shown[i]._blur === 'submit' && isBlur(shown[i], e)) {
+        toSubmit.push(shown[i]);
+      }
+    }
+
+    if (toCancel.length || toSubmit.length) {
+      $rootScope.$apply(function() {
+        angular.forEach(toCancel, function(v){ v.$cancel(); });
+        angular.forEach(toSubmit, function(v){ v.$submit(); });
+      });
+    }
+  });
+ 
+  $rootScope.$on('closeEdit', function() {
+    for(var i=0; i < shown.length; i++) {
+      shown[i].$hide();
+    }
+  }); 
+
+  var base = {
+    $addEditable: function(editable) {
+      //console.log('add editable', editable.elem, editable.elem.bind);
+      this.$editables.push(editable);
+
+      //'on' is not supported in angular 1.0.8
+      editable.elem.bind('$destroy', angular.bind(this, this.$removeEditable, editable));
+
+      //bind editable's local $form to self (if not bound yet, below form) 
+      if (!editable.scope.$form) {
+        editable.scope.$form = this;
+      }
+
+      //if form already shown - call show() of new editable
+      if (this.$visible) {
+        editable.catchError(editable.show());
+      }
+      editable.catchError(editable.setWaiting(this.$waiting));
+    },
+
+    $removeEditable: function(editable) {
+      //arrayRemove
+      for(var i=0; i < this.$editables.length; i++) {
+        if(this.$editables[i] === editable) {
+          this.$editables.splice(i, 1);
+          return;
+        }
+      }
+    },
+
+    /**
+     * Shows form with editable controls.
+     * 
+     * @method $show()
+     * @memberOf editable-form
+     */
+    $show: function() {
+      if (this.$visible) {
+        return;
+      }
+
+      this.$visible = true;
+
+      var pc = editablePromiseCollection();
+
+      //own show
+      pc.when(this.$onshow());
+
+      //clear errors
+      this.$setError(null, '');
+
+      //children show
+      angular.forEach(this.$editables, function(editable) {
+        pc.when(editable.show());
+      });
+
+      //wait promises and activate
+      pc.then({
+        onWait: angular.bind(this, this.$setWaiting), 
+        onTrue: angular.bind(this, this.$activate), 
+        onFalse: angular.bind(this, this.$activate), 
+        onString: angular.bind(this, this.$activate)
+      });
+
+      // add to internal list of shown forms
+      // setTimeout needed to prevent closing right after opening (e.g. when trigger by button)
+      setTimeout(angular.bind(this, function() {
+        // clear `clicked` to get ready for clicks on visible form
+        this._clicked = false;
+        if(editableUtils.indexOf(shown, this) === -1) {
+          shown.push(this);
+        }
+      }), 0);      
+    },
+
+    /**
+     * Sets focus on form field specified by `name`.
+     * 
+     * @method $activate(name)
+     * @param {string} name name of field
+     * @memberOf editable-form
+     */
+    $activate: function(name) {
+      var i;
+      if (this.$editables.length) {
+        //activate by name
+        if (angular.isString(name)) {
+          for(i=0; i<this.$editables.length; i++) {
+            if (this.$editables[i].name === name) {
+              this.$editables[i].activate();
+              return;
+            }
+          }
+        }
+
+        //try activate error field
+        for(i=0; i<this.$editables.length; i++) {
+          if (this.$editables[i].error) {
+            this.$editables[i].activate();
+            return;
+          }
+        }
+
+        //by default activate first field
+        this.$editables[0].activate(this.$editables[0].elem[0].selectionStart, this.$editables[0].elem[0].selectionEnd);
+      }
+    },
+
+    /**
+     * Hides form with editable controls without saving.
+     * 
+     * @method $hide()
+     * @memberOf editable-form
+     */
+    $hide: function() {
+      if (!this.$visible) {
+        return;
+      }      
+      this.$visible = false;
+      // self hide
+      this.$onhide();
+      // children's hide
+      angular.forEach(this.$editables, function(editable) {
+        editable.hide();
+      });
+
+      // remove from internal list of shown forms
+      editableUtils.arrayRemove(shown, this);
+    },
+
+    /**
+     * Triggers `oncancel` event and calls `$hide()`.
+     * 
+     * @method $cancel()
+     * @memberOf editable-form
+     */
+    $cancel: function() {
+      if (!this.$visible) {
+        return;
+      }      
+      // self cancel
+      this.$oncancel();
+      // children's cancel      
+      angular.forEach(this.$editables, function(editable) {
+        editable.cancel();
+      });
+      // self hide
+      this.$hide();
+    },    
+
+    $setWaiting: function(value) {
+      this.$waiting = !!value;
+      // we can't just set $waiting variable and use it via ng-disabled in children
+      // because in editable-row form is not accessible
+      angular.forEach(this.$editables, function(editable) {
+        editable.setWaiting(!!value);
+      });
+    },
+
+    /**
+     * Shows error message for particular field.
+     * 
+     * @method $setError(name, msg)
+     * @param {string} name name of field
+     * @param {string} msg error message
+     * @memberOf editable-form
+     */
+    $setError: function(name, msg) {
+      angular.forEach(this.$editables, function(editable) {
+        if(!name || editable.name === name) {
+          editable.setError(msg);
+        }
+      });
+    },
+
+    $submit: function() {
+      if (this.$waiting) {
+        return;
+      } 
+
+      //clear errors
+      this.$setError(null, '');
+
+      //children onbeforesave
+      var pc = editablePromiseCollection();
+      angular.forEach(this.$editables, function(editable) {
+        pc.when(editable.onbeforesave());
+      });
+
+      /*
+      onbeforesave result:
+      - true/undefined: save data and close form
+      - false: close form without saving
+      - string: keep form open and show error
+      */
+      pc.then({
+        onWait: angular.bind(this, this.$setWaiting), 
+        onTrue: angular.bind(this, checkSelf, true), 
+        onFalse: angular.bind(this, checkSelf, false), 
+        onString: angular.bind(this, this.$activate)
+      });
+
+      //save
+      function checkSelf(childrenTrue){
+        var pc = editablePromiseCollection();
+        pc.when(this.$onbeforesave());
+        pc.then({
+          onWait: angular.bind(this, this.$setWaiting), 
+          onTrue: childrenTrue ? angular.bind(this, this.$save) : angular.bind(this, this.$hide), 
+          onFalse: angular.bind(this, this.$hide), 
+          onString: angular.bind(this, this.$activate)
+        });
+      }
+    },
+
+    $save: function() {
+      // write model for each editable
+      angular.forEach(this.$editables, function(editable) {
+        editable.save();
+      });
+
+      //call onaftersave of self and children
+      var pc = editablePromiseCollection();
+      pc.when(this.$onaftersave());
+      angular.forEach(this.$editables, function(editable) {
+        pc.when(editable.onaftersave());
+      });
+
+      /*
+      onaftersave result:
+      - true/undefined/false: just close form
+      - string: keep form open and show error
+      */
+      pc.then({
+        onWait: angular.bind(this, this.$setWaiting), 
+        onTrue: angular.bind(this, this.$hide), 
+        onFalse: angular.bind(this, this.$hide), 
+        onString: angular.bind(this, this.$activate)
+      });
+    },
+
+    $onshow: angular.noop,
+    $oncancel: angular.noop,
+    $onhide: angular.noop,
+    $onbeforesave: angular.noop,
+    $onaftersave: angular.noop
+  };
+
+  return function() {
+    return angular.extend({
+      $editables: [],
+      /**
+       * Form visibility flag.
+       * 
+       * @var {bool} $visible
+       * @memberOf editable-form
+       */
+      $visible: false,
+      /**
+       * Form waiting flag. It becomes `true` when form is loading or saving data.
+       * 
+       * @var {bool} $waiting
+       * @memberOf editable-form
+       */
+      $waiting: false,
+      $data: {},
+      _clicked: false,
+      _blur: null
+    }, base);
+  };
+}]);
+
+/**
+ * EditableForm directive. Should be defined in <form> containing editable controls.  
+ * It add some usefull methods to form variable exposed to scope by `name="myform"` attribute.
+ *
+ * @namespace editable-form
+ */
+angular.module('xeditable').directive('editableForm',
+  ['$rootScope', '$parse', 'editableFormController', 'editableOptions',
+  function($rootScope, $parse, editableFormController, editableOptions) {
+    return {
+      restrict: 'A',
+      require: ['form'],
+      //require: ['form', 'editableForm'],
+      //controller: EditableFormController,
+      compile: function() {
+        return {
+          pre: function(scope, elem, attrs, ctrl) {
+            var form = ctrl[0];
+            var eForm;
+
+            //if `editableForm` has value - publish smartly under this value
+            //this is required only for single editor form that is created and removed
+            if(attrs.editableForm) {
+              if(scope[attrs.editableForm] && scope[attrs.editableForm].$show) {
+                eForm = scope[attrs.editableForm];
+                angular.extend(form, eForm);
+              } else {
+                eForm = editableFormController();
+                scope[attrs.editableForm] = eForm;
+                angular.extend(eForm, form);
+              }
+            } else { //just merge to form and publish if form has name
+              eForm = editableFormController();
+              angular.extend(form, eForm);
+            }
+
+            //read editables from buffer (that appeared before FORM tag)
+            var buf = $rootScope.$$editableBuffer;
+            var name = form.$name;
+            if(name && buf && buf[name]) {
+              angular.forEach(buf[name], function(editable) {
+                eForm.$addEditable(editable);
+              });
+              delete buf[name];
+            }
+          },
+          post: function(scope, elem, attrs, ctrl) {
+            var eForm;
+
+            if(attrs.editableForm && scope[attrs.editableForm] && scope[attrs.editableForm].$show) {
+              eForm = scope[attrs.editableForm];
+            } else {
+              eForm = ctrl[0];
+            }
+
+            /**
+             * Called when form is shown.
+             * 
+             * @var {method|attribute} onshow 
+             * @memberOf editable-form
+             */
+            if(attrs.onshow) {
+              eForm.$onshow = angular.bind(eForm, $parse(attrs.onshow), scope);
+            }
+
+            /**
+             * Called when form hides after both save or cancel.
+             * 
+             * @var {method|attribute} onhide 
+             * @memberOf editable-form
+             */
+            if(attrs.onhide) {
+              eForm.$onhide = angular.bind(eForm, $parse(attrs.onhide), scope);
+            }
+
+            /**
+             * Called when form is cancelled.
+             * 
+             * @var {method|attribute} oncancel
+             * @memberOf editable-form
+             */
+            if(attrs.oncancel) {
+              eForm.$oncancel = angular.bind(eForm, $parse(attrs.oncancel), scope);
+            }
+
+            /**
+             * Whether form initially rendered in shown state.
+             *
+             * @var {bool|attribute} shown
+             * @memberOf editable-form
+             */
+            if(attrs.shown && $parse(attrs.shown)(scope)) {
+              eForm.$show();
+            }
+
+            /**
+             * Action when form losses focus. Values: `cancel|submit|ignore`.
+             * Default is `ignore`.
+             * 
+             * @var {string|attribute} blur
+             * @memberOf editable-form
+             */
+            eForm._blur = attrs.blur || editableOptions.blurForm;
+
+            // onbeforesave, onaftersave
+            if(!attrs.ngSubmit && !attrs.submit) {
+              /**
+               * Called after all children `onbeforesave` callbacks but before saving form values
+               * to model.  
+               * If at least one children callback returns `non-string` - it will not not be called.  
+               * See [editable-form demo](#editable-form) for details.
+               * 
+               * @var {method|attribute} onbeforesave
+               * @memberOf editable-form
+               * 
+               */
+              if(attrs.onbeforesave) {
+                eForm.$onbeforesave = function() {
+                  return $parse(attrs.onbeforesave)(scope, {$data: eForm.$data});
+                };
+              }
+
+              /**
+               * Called when form values are saved to model.  
+               * See [editable-form demo](#editable-form) for details.
+               * 
+               * @var {method|attribute} onaftersave 
+               * @memberOf editable-form
+               * 
+               */
+              if(attrs.onaftersave) {
+                eForm.$onaftersave = function() {
+                  return $parse(attrs.onaftersave)(scope, {$data: eForm.$data});
+                };
+              }
+
+              elem.bind('submit', function(event) {
+                event.preventDefault();
+                scope.$apply(function() {
+                  eForm.$submit();
+                });
+              });
+            }
+
+
+            // click - mark form as clicked to exclude in document click handler
+            elem.bind('click', function(e) {
+              // ignore right/middle button click
+              if (e.which && e.which !== 1) {
+                return;
+              }
+
+              if (eForm.$visible) {
+                eForm._clicked = true;
+              }
+            });   
+
+          }
+        };
+      }
+    };
+}]);
+/**
+ * editablePromiseCollection
+ *  
+ * Collect results of function calls. Shows waiting if there are promises. 
+ * Finally, applies callbacks if:
+ * - onTrue(): all results are true and all promises resolved to true
+ * - onFalse(): at least one result is false or promise resolved to false
+ * - onString(): at least one result is string or promise rejected or promise resolved to string
+ */
+
+angular.module('xeditable').factory('editablePromiseCollection', ['$q', function($q) { 
+
+  function promiseCollection() {
+    return {
+      promises: [],
+      hasFalse: false,
+      hasString: false,
+      when: function(result, noPromise) {
+        if (result === false) {
+          this.hasFalse = true;
+        } else if (!noPromise && angular.isObject(result)) {
+          this.promises.push($q.when(result));
+        } else if (angular.isString(result)){
+          this.hasString = true;
+        } else { //result === true || result === undefined || result === null
+          return;
+        }
+      },
+      //callbacks: onTrue, onFalse, onString
+      then: function(callbacks) {
+        callbacks = callbacks || {};
+        var onTrue = callbacks.onTrue || angular.noop;
+        var onFalse = callbacks.onFalse || angular.noop;
+        var onString = callbacks.onString || angular.noop;
+        var onWait = callbacks.onWait || angular.noop;
+
+        var self = this;
+
+        if (this.promises.length) {
+          onWait(true);
+          $q.all(this.promises).then(
+            //all resolved       
+            function(results) {
+              onWait(false);
+              //check all results via same `when` method (without checking promises)
+              angular.forEach(results, function(result) {
+                self.when(result, true);  
+              });
+              applyCallback();
+            },
+            //some rejected
+            function(error) { 
+              onWait(false);
+              onString();
+            }
+            );
+        } else {
+          applyCallback();
+        }
+
+        function applyCallback() {
+          if (!self.hasString && !self.hasFalse) {
+            onTrue();
+          } else if (!self.hasString && self.hasFalse) {
+            onFalse();
+          } else {
+            onString();
+          }
+        }
+
+      }
+    };
+  }
+
+  return promiseCollection;
+
+}]);
+
+/**
+ * editableUtils
+ */
+ angular.module('xeditable').factory('editableUtils', [function() {
+  return {
+    indexOf: function (array, obj) {
+      if (array.indexOf) return array.indexOf(obj);
+
+      for ( var i = 0; i < array.length; i++) {
+        if (obj === array[i]) return i;
+      }
+      return -1;
+    },
+
+    arrayRemove: function (array, value) {
+      var index = this.indexOf(array, value);
+      if (index >= 0) {
+        array.splice(index, 1);
+      }
+      return value;
+    },
+
+    // copy from https://github.com/angular/angular.js/blob/master/src/Angular.js
+    camelToDash: function(str) {
+      var SNAKE_CASE_REGEXP = /[A-Z]/g;
+      return str.replace(SNAKE_CASE_REGEXP, function(letter, pos) {
+        return (pos ? '-' : '') + letter.toLowerCase();
+      });
+    },
+
+    dashToCamel: function(str) {
+      var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
+      var MOZ_HACK_REGEXP = /^moz([A-Z])/;
+      return str.
+      replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
+        return offset ? letter.toUpperCase() : letter;
+      }).
+      replace(MOZ_HACK_REGEXP, 'Moz$1');
+    }
+  };
+}]);
+
+/**
+ * editableNgOptionsParser
+ *
+ * see: https://github.com/angular/angular.js/blob/master/src/ng/directive/select.js#L131
+ */
+ angular.module('xeditable').factory('editableNgOptionsParser', [function() {
+  //0000111110000000000022220000000000000000000000333300000000000000444444444444444000000000555555555555555000000066666666666666600000000000000007777000000000000000000088888
+  var NG_OPTIONS_REGEXP = /^\s*(.*?)(?:\s+as\s+(.*?))?(?:\s+group\s+by\s+(.*))?\s+for\s+(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+(.*?)(?:\s+track\s+by\s+(.*?))?$/;
+
+  function parser(optionsExp) {
+    var match;
+
+    if (! (match = optionsExp.match(NG_OPTIONS_REGEXP))) {
+      throw 'ng-options parse error';
+    }
+
+    var 
+    displayFn = match[2] || match[1],
+    valueName = match[4] || match[6],
+    keyName = match[5],
+    groupByFn = match[3] || '',
+    valueFn = match[2] ? match[1] : valueName,
+    valuesFn = match[7],
+    track = match[8],
+    trackFn = track ? match[8] : null;
+
+    var ngRepeat;
+    if (keyName === undefined) { // array
+      ngRepeat = valueName + ' in ' + valuesFn;
+      if (track !== undefined) {
+        ngRepeat += ' track by '+trackFn;
+      }
+    } else { // object
+      ngRepeat = '('+keyName+', '+valueName+') in '+valuesFn;
+    }
+    
+    // group not supported yet
+    return {
+      ngRepeat: ngRepeat,
+      locals: {
+        valueName: valueName,
+        keyName: keyName,
+        valueFn: valueFn,
+        displayFn: displayFn
+      }
+    };
+  }
+
+  return parser;
+}]);
+
+/**
+ * editableCombodate
+ *
+ * angular version of https://github.com/vitalets/combodate
+ */
+angular.module('xeditable').factory('editableCombodate', [function() {
+  function Combodate(element, options) {
+    this.$element = angular.element(element);
+
+    if(this.$element[0].nodeName != 'INPUT') {
+      throw 'Combodate should be applied to INPUT element';
+    }
+
+    this.defaults = {
+      //in this format value stored in original input
+      format: 'YYYY-MM-DD HH:mm',
+      //in this format items in dropdowns are displayed
+      template: 'D / MMM / YYYY   H : mm',
+      //initial value, can be `new Date()`
+      value: null,
+      minYear: 1970,
+      maxYear: 2015,
+      yearDescending: true,
+      minuteStep: 5,
+      secondStep: 1,
+      firstItem: 'empty', //'name', 'empty', 'none'
+      errorClass: null,
+      customClass: '',
+      roundTime: true, // whether to round minutes and seconds if step > 1
+      smartDays: true // whether days in combo depend on selected month: 31, 30, 28
+    };
+
+    this.options = angular.extend({}, this.defaults, options);
+    this.init();
+  }
+
+  Combodate.prototype = {
+    constructor: Combodate,
+    init: function () {
+      this.map = {
+        //key   regexp    moment.method
+        day:    ['D',    'date'], 
+        month:  ['M',    'month'], 
+        year:   ['Y',    'year'], 
+        hour:   ['[Hh]', 'hours'],
+        minute: ['m',    'minutes'], 
+        second: ['s',    'seconds'],
+        ampm:   ['[Aa]', ''] 
+      };
+      
+      this.$widget = angular.element('<span class="combodate"></span>').html(this.getTemplate());
+      
+      this.initCombos();
+      
+      if (this.options.smartDays) {
+        var combo = this;
+        this.$widget.find('select').bind('change', function(e) {
+          // update days count if month or year changes
+          if (angular.element(e.target).hasClass('month') || angular.element(e.target).hasClass('year')) {
+            combo.fillCombo('day');
+          }
+        });        
+      }
+
+      this.$widget.find('select').css('width', 'auto');
+
+      // hide original input and insert widget                                       
+      this.$element.css('display', 'none').after(this.$widget);
+      
+      // set initial value
+      this.setValue(this.$element.val() || this.options.value);
+    },
+    
+    /*
+     Replace tokens in template with <select> elements 
+     */         
+     getTemplate: function() {
+      var tpl = this.options.template;
+      var customClass = this.options.customClass;
+
+      //first pass
+      angular.forEach(this.map, function(v, k) {
+        v = v[0]; 
+        var r = new RegExp(v+'+');
+        var token = v.length > 1 ? v.substring(1, 2) : v;
+        
+        tpl = tpl.replace(r, '{'+token+'}');
+      });
+
+      //replace spaces with &nbsp;
+      tpl = tpl.replace(/ /g, '&nbsp;');
+
+      //second pass
+      angular.forEach(this.map, function(v, k) {
+        v = v[0];
+        var token = v.length > 1 ? v.substring(1, 2) : v;
+
+        tpl = tpl.replace('{'+token+'}', '<select class="'+k+' '+customClass+'"></select>');
+      });   
+
+      return tpl;
+    },
+    
+    /*
+     Initialize combos that presents in template 
+     */        
+     initCombos: function() {
+      for (var k in this.map) {
+        var c = this.$widget[0].querySelectorAll('.'+k);
+        // set properties like this.$day, this.$month etc.
+        this['$'+k] = c.length ? angular.element(c) : null;
+        // fill with items
+        this.fillCombo(k);
+      }
+    },
+
+    /*
+     Fill combo with items 
+     */        
+     fillCombo: function(k) {
+      var $combo = this['$'+k];
+      if (!$combo) {
+        return;
+      }
+
+      // define method name to fill items, e.g `fillDays`
+      var f = 'fill' + k.charAt(0).toUpperCase() + k.slice(1); 
+      var items = this[f]();
+      var value = $combo.val();
+
+      $combo.html('');
+      for(var i=0; i<items.length; i++) {
+        $combo.append('<option value="'+items[i][0]+'">'+items[i][1]+'</option>');
+      }
+
+      $combo.val(value);
+    },
+
+    /*
+     Initialize items of combos. Handles `firstItem` option 
+     */
+     fillCommon: function(key) {
+      var values = [], relTime;
+
+      if(this.options.firstItem === 'name') {
+        //need both to support moment ver < 2 and  >= 2
+        relTime = moment.relativeTime || moment.langData()._relativeTime; 
+        var header = typeof relTime[key] === 'function' ? relTime[key](1, true, key, false) : relTime[key];
+        //take last entry (see momentjs lang files structure) 
+        header = header.split(' ').reverse()[0];                
+        values.push(['', header]);
+      } else if(this.options.firstItem === 'empty') {
+        values.push(['', '']);
+      }
+      return values;
+    },  
+
+
+    /*
+    fill day
+    */
+    fillDay: function() {
+      var items = this.fillCommon('d'), name, i,
+      twoDigit = this.options.template.indexOf('DD') !== -1,
+      daysCount = 31;
+
+      // detect days count (depends on month and year)
+      // originally https://github.com/vitalets/combodate/pull/7
+      if (this.options.smartDays && this.$month && this.$year) {
+        var month = parseInt(this.$month.val(), 10);
+        var year = parseInt(this.$year.val(), 10);
+
+        if (!isNaN(month) && !isNaN(year)) {
+          daysCount = moment([year, month]).daysInMonth();
+        }
+      }
+
+      for (i = 1; i <= daysCount; i++) {
+        name = twoDigit ? this.leadZero(i) : i;
+        items.push([i, name]);
+      }
+      return items;
+    },
+    
+    /*
+    fill month
+    */
+    fillMonth: function() {
+      var items = this.fillCommon('M'), name, i, 
+      longNames = this.options.template.indexOf('MMMM') !== -1,
+      shortNames = this.options.template.indexOf('MMM') !== -1,
+      twoDigit = this.options.template.indexOf('MM') !== -1;
+
+      for(i=0; i<=11; i++) {
+        if(longNames) {
+          //see https://github.com/timrwood/momentjs.com/pull/36
+          name = moment().date(1).month(i).format('MMMM');
+        } else if(shortNames) {
+          name = moment().date(1).month(i).format('MMM');
+        } else if(twoDigit) {
+          name = this.leadZero(i+1);
+        } else {
+          name = i+1;
+        }
+        items.push([i, name]);
+      } 
+      return items;
+    },
+    
+    /*
+    fill year
+    */
+    fillYear: function() {
+      var items = [], name, i, 
+      longNames = this.options.template.indexOf('YYYY') !== -1;
+
+      for(i=this.options.maxYear; i>=this.options.minYear; i--) {
+        name = longNames ? i : (i+'').substring(2);
+        items[this.options.yearDescending ? 'push' : 'unshift']([i, name]);
+      }
+      
+      items = this.fillCommon('y').concat(items);
+      
+      return items;
+    },
+    
+    /*
+    fill hour
+    */
+    fillHour: function() {
+      var items = this.fillCommon('h'), name, i,
+      h12 = this.options.template.indexOf('h') !== -1,
+      h24 = this.options.template.indexOf('H') !== -1,
+      twoDigit = this.options.template.toLowerCase().indexOf('hh') !== -1,
+      min = h12 ? 1 : 0, 
+      max = h12 ? 12 : 23;
+
+      for(i=min; i<=max; i++) {
+        name = twoDigit ? this.leadZero(i) : i;
+        items.push([i, name]);
+      } 
+      return items;
+    },
+
+    /*
+    fill minute
+    */
+    fillMinute: function() {
+      var items = this.fillCommon('m'), name, i,
+      twoDigit = this.options.template.indexOf('mm') !== -1;
+
+      for(i=0; i<=59; i+= this.options.minuteStep) {
+        name = twoDigit ? this.leadZero(i) : i;
+        items.push([i, name]);
+      }
+      return items;
+    },
+    
+    /*
+    fill second
+    */
+    fillSecond: function() {
+      var items = this.fillCommon('s'), name, i,
+      twoDigit = this.options.template.indexOf('ss') !== -1;
+
+      for(i=0; i<=59; i+= this.options.secondStep) {
+        name = twoDigit ? this.leadZero(i) : i;
+        items.push([i, name]);
+      }    
+      return items;
+    },
+    
+    /*
+    fill ampm
+    */
+    fillAmpm: function() {
+      var ampmL = this.options.template.indexOf('a') !== -1,
+      ampmU = this.options.template.indexOf('A') !== -1,            
+      items = [
+      ['am', ampmL ? 'am' : 'AM'],
+      ['pm', ampmL ? 'pm' : 'PM']
+      ];
+      return items;
+    },
+
+    /*
+     Returns current date value from combos. 
+     If format not specified - `options.format` used.
+     If format = `null` - Moment object returned.
+     */
+     getValue: function(format) {
+      var dt, values = {}, 
+      that = this,
+      notSelected = false;
+
+      //getting selected values    
+      angular.forEach(this.map, function(v, k) {
+        if(k === 'ampm') {
+          return;
+        }
+        var def = k === 'day' ? 1 : 0;
+
+        values[k] = that['$'+k] ? parseInt(that['$'+k].val(), 10) : def; 
+        
+        if(isNaN(values[k])) {
+         notSelected = true;
+         return false; 
+       }
+     });
+      
+      //if at least one visible combo not selected - return empty string
+      if(notSelected) {
+       return '';
+     }
+
+      //convert hours 12h --> 24h 
+      if(this.$ampm) {
+        //12:00 pm --> 12:00 (24-h format, midday), 12:00 am --> 00:00 (24-h format, midnight, start of day)
+        if(values.hour === 12) {
+          values.hour = this.$ampm.val() === 'am' ? 0 : 12;                    
+        } else {
+          values.hour = this.$ampm.val() === 'am' ? values.hour : values.hour+12;
+        }
+      }
+      
+      dt = moment([values.year, values.month, values.day, values.hour, values.minute, values.second]);
+      
+      //highlight invalid date
+      this.highlight(dt);
+
+      format = format === undefined ? this.options.format : format;
+      if(format === null) {
+       return dt.isValid() ? dt : null; 
+     } else {
+       return dt.isValid() ? dt.format(format) : ''; 
+     }
+   },
+
+   setValue: function(value) {
+    if(!value) {
+      return;
+    }
+
+      // parse in strict mode (third param `true`)
+      var dt = typeof value === 'string' ? moment(value, this.options.format, true) : moment(value),
+      that = this,
+      values = {};
+      
+      //function to find nearest value in select options
+      function getNearest($select, value) {
+        var delta = {};
+        angular.forEach($select.children('option'), function(opt, i){
+          var optValue = angular.element(opt).attr('value');
+
+          if(optValue === '') return;
+          var distance = Math.abs(optValue - value); 
+          if(typeof delta.distance === 'undefined' || distance < delta.distance) {
+            delta = {value: optValue, distance: distance};
+          } 
+        }); 
+        return delta.value;
+      }
+      
+      if(dt.isValid()) {
+        //read values from date object
+        angular.forEach(this.map, function(v, k) {
+          if(k === 'ampm') {
+            return; 
+          }
+          values[k] = dt[v[1]]();
+        });
+
+        if(this.$ampm) {
+          //12:00 pm --> 12:00 (24-h format, midday), 12:00 am --> 00:00 (24-h format, midnight, start of day)
+          if(values.hour >= 12) {
+            values.ampm = 'pm';
+            if(values.hour > 12) {
+              values.hour -= 12;
+            }
+          } else {
+            values.ampm = 'am';
+            if(values.hour === 0) {
+              values.hour = 12;
+            }
+          }
+        }
+
+        angular.forEach(values, function(v, k) {
+          //call val() for each existing combo, e.g. this.$hour.val()
+          if(that['$'+k]) {
+
+            if(k === 'minute' && that.options.minuteStep > 1 && that.options.roundTime) {
+             v = getNearest(that['$'+k], v);
+           }
+           
+           if(k === 'second' && that.options.secondStep > 1 && that.options.roundTime) {
+             v = getNearest(that['$'+k], v);
+           }                       
+           
+           that['$'+k].val(v);
+         }
+       });
+
+        // update days count
+        if (this.options.smartDays) {
+          this.fillCombo('day');
+        }
+
+        this.$element.val(dt.format(this.options.format)).triggerHandler('change');
+      }
+    },
+    
+    /*
+     highlight combos if date is invalid
+     */
+     highlight: function(dt) {
+      if(!dt.isValid()) {
+        if(this.options.errorClass) {
+          this.$widget.addClass(this.options.errorClass);
+        } else {
+          //store original border color
+          if(!this.borderColor) {
+            this.borderColor = this.$widget.find('select').css('border-color'); 
+          }
+          this.$widget.find('select').css('border-color', 'red');
+        }
+      } else {
+        if(this.options.errorClass) {
+          this.$widget.removeClass(this.options.errorClass);
+        } else {
+          this.$widget.find('select').css('border-color', this.borderColor);
+        }  
+      }
+    },
+    
+    leadZero: function(v) {
+      return v <= 9 ? '0' + v : v; 
+    },
+    
+    destroy: function() {
+      this.$widget.remove();
+      this.$element.removeData('combodate').show();
+    }
+
+  };
+
+  return {
+    getInstance: function(element, options) {
+      return new Combodate(element, options);
+    }
+  };
+}]);
+
+/*
+Editable icons:
+- default
+- font-awesome
+
+*/
+angular.module('xeditable').factory('editableIcons', function() {
+
+  var icons = {
+    //Icon-set to use, defaults to bootstrap icons
+    default: {
+      'bs2': {
+        ok: 'icon-ok icon-white',
+        cancel: 'icon-remove'
+      },
+      'bs3': {
+        ok: 'glyphicon glyphicon-ok',
+        cancel: 'glyphicon glyphicon-remove'
+      }
+    },
+    external: {
+      'font-awesome': {
+        ok: 'fa fa-check',
+        cancel: 'fa fa-times'
+      }
+    }
+  };
+
+  return icons;
+});
+
+/*
+Editable themes:
+- default
+- bootstrap 2
+- bootstrap 3
+
+Note: in postrender() `this` is instance of editableController
+*/
+angular.module('xeditable').factory('editableThemes', function() {
+  var themes = {
+    //default
+    'default': {
+      formTpl:      '<form class="editable-wrap"></form>',
+      noformTpl:    '<span class="editable-wrap"></span>',
+      controlsTpl:  '<span class="editable-controls"></span>',
+      inputTpl:     '',
+      errorTpl:     '<div class="editable-error" ng-show="$error" ng-bind="$error"></div>',
+      buttonsTpl:   '<span class="editable-buttons"></span>',
+      submitTpl:    '<button type="submit">save</button>',
+      cancelTpl:    '<button type="button" ng-click="$form.$cancel()">cancel</button>'
+    },
+
+    //bs2
+    'bs2': {
+      formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
+      noformTpl:   '<span class="editable-wrap"></span>',
+      controlsTpl: '<div class="editable-controls controls control-group" ng-class="{\'error\': $error}"></div>',
+      inputTpl:    '',
+      errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
+      buttonsTpl:  '<span class="editable-buttons"></span>',
+      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
+      cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
+                      '<span></span>'+
+                   '</button>'
+
+    },
+
+    //bs3
+    'bs3': {
+      formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
+      noformTpl:   '<span class="editable-wrap"></span>',
+      controlsTpl: '<div class="editable-controls form-group" ng-class="{\'has-error\': $error}"></div>',
+      inputTpl:    '',
+      errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
+      buttonsTpl:  '<span class="editable-buttons"></span>',
+      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
+      cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
+                     '<span></span>'+
+                   '</button>',
+
+      //bs3 specific prop to change buttons class: btn-sm, btn-lg
+      buttonsClass: '',
+      //bs3 specific prop to change standard inputs class: input-sm, input-lg
+      inputClass: '',
+      postrender: function() {
+        //apply `form-control` class to std inputs
+        switch(this.directiveName) {
+          case 'editableText':
+          case 'editableSelect':
+          case 'editableTextarea':
+          case 'editableEmail':
+          case 'editableTel':
+          case 'editableNumber':
+          case 'editableUrl':
+          case 'editableSearch':
+          case 'editableDate':
+          case 'editableDatetime':
+          case 'editableBsdate':
+          case 'editableTime':
+          case 'editableMonth':
+          case 'editableWeek':
+            this.inputEl.addClass('form-control');
+            if(this.theme.inputClass) {
+              // don`t apply `input-sm` and `input-lg` to select multiple
+              // should be fixed in bs itself!
+              if(this.inputEl.attr('multiple') &&
+                (this.theme.inputClass === 'input-sm' || this.theme.inputClass === 'input-lg')) {
+                  break;
+              }
+              this.inputEl.addClass(this.theme.inputClass);
+            }
+          break;
+          case 'editableCheckbox':
+              this.editorEl.addClass('checkbox');
+        }
+
+        //apply buttonsClass (bs3 specific!)
+        if(this.buttonsEl && this.theme.buttonsClass) {
+          this.buttonsEl.find('button').addClass(this.theme.buttonsClass);
+        }
+      }
+    }
+  };
+
+  return themes;
+});
