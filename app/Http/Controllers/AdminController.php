@@ -14,13 +14,13 @@ class AdminController extends Controller
     public function getOrders(Request $request) {
         if($request->get('min') && $request->get('max')) {
 
-            $schedules = Schedule::where('user_id', Auth::user()->id)
+            $schedules = Schedule::all()
                 ->latest()
                 ->search(Carbon::parse($request->get('min'))->toDateTimeString(), Carbon::parse($request->get('max'))->toDateTimeString())
                 ->currentUser()->get();
         }
         else {
-            $schedules = Schedule::where('user_id', Auth::user()->id)
+            $schedules = Schedule::all()
                 ->latest()
                 ->currentUser()->get();
         }

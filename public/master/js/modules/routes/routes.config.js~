@@ -1,0 +1,159 @@
+/**=========================================================
+ * Module: config.js
+ * App routes and resources configuration
+ =========================================================*/
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.routes')
+        .run(['$rootScope', '$state', 'loginFactory',
+            function($rootScope, $state, loginFactory) {
+
+                $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+                    if (toState.data.authenticate && !loginFactory.getUserStatus()) {
+                        $state.transitionTo('login');
+                        event.preventDefault();
+                    }
+
+                    if (toState.name == 'login' && loginFactory.getUserStatus()) {
+                        if (fromState.name != '') {
+                            $state.transitionTo(fromState.name);
+                        } else {
+                            $state.transitionTo('app.dashboard');
+                        }
+                        event.preventDefault();
+                    }
+                });
+
+            }])
+        .config(routesConfig);
+
+    routesConfig.$inject = ['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider'];
+    function routesConfig($stateProvider, $locationProvider, $urlRouterProvider, helper){
+        
+        // Set the following to true to enable the HTML5 Mode
+        // You may have to set <base> tag in index and a routing configuration in your server
+        $locationProvider.html5Mode(false);
+
+        // defaults to dashboard
+        //$urlRouterProvider.otherwise('/app/singleview');
+        $urlRouterProvider.otherwise('/');
+
+        // 
+        // Application Routes
+        // -----------------------------------   
+        $stateProvider
+            .state('page', {
+                url: '/page',
+                abstract: true,
+                templateUrl: helper.basepath('page.html'),
+                resolve: helper.resolveFor('modernizr', 'icons')
+            })
+            .state('page.login', {
+                url: '/',
+                data:{
+                    authenticate:false
+                },
+                title: 'Login',
+                templateUrl: 'app/pages/login.html',
+                controller: 'LoginFormController',
+                resolve: helper.resolveFor('modernizr', 'icons')
+            })
+            .state('app', {
+                url: '/app',
+                abstract: true,
+                data:{
+                    authenticate:true
+                },
+                templateUrl: helper.basepath('app.html'),
+                resolve: helper.resolveFor('modernizr', 'icons')
+            })
+            .state('app.dashboard', {
+                url: '/dashboard',
+                title: 'Dashboard',
+                templateUrl: helper.basepath('dashboard.html')
+            })
+            .state('app.mail', {
+                url: '/mail',
+                title: 'Mail',
+                templateUrl: helper.basepath('mail.html'),
+                //resolve: helper.resolveFor('ngWig')
+            })
+            .state('app.sms', {
+                url: '/sms',
+                title: 'Sms',
+                templateUrl: helper.basepath('sms.html')
+            })
+            .state('app.marketer', {
+                url: '/marketer',
+                title: 'Marketer',
+                templateUrl: helper.basepath('marketer.html')
+            })
+            .state('app.marketer.create', {
+                url: '/create',
+                title: 'Register Marketer',
+                views: {
+                    '@app': {
+                        templateUrl: helper.basepath('marketer-reg.html')
+                    }
+                }
+            })
+            .state('app.roles', {
+                url: '/roles',
+                title: 'Permissions',
+                templateUrl: helper.basepath('roles.html')
+            })
+            .state('app.airtime', {
+                url: '/airtime',
+                title: 'Airtime',
+                templateUrl: helper.basepath('airtime.html')
+            })
+            .state('app.airtime.create', {
+                url: '/create',
+                title: 'Generate Airtime',
+                views: {
+                    '@app': {
+                        templateUrl: helper.basepath('airtime-create.html')
+                    }
+                }
+            })
+            .state('app.client', {
+                url: '/client',
+                title: 'Client',
+                templateUrl: helper.basepath('client.html'),
+            })
+            .state('app.client.create', {
+                url: '/create',
+                title: 'Register Client',
+                views: {
+                    '@app': {
+                        templateUrl: helper.basepath('client-create.html')
+                    }
+                }
+            })
+          // 
+          // CUSTOM RESOLVES
+          //   Add your own resolves properties
+          //   following this object extend
+          //   method
+          // ----------------------------------- 
+          // .state('app.someroute', {
+          //   url: '/some_url',
+          //   templateUrl: 'path_to_template.html',
+          //   controller: 'someController',
+          //   resolve: angular.extend(
+          //     helper.resolveFor(), {
+          //     // YOUR RESOLVES GO HERE
+          //     }
+          //   )
+          // })
+          ;
+
+    } // routesConfig
+
+})();
+

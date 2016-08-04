@@ -95,7 +95,7 @@
 
     <div class="footer" style="color: white; padding: 1px; background-color: orangered;">
         <p style="font-family: sans-serif; font-size: 8">This is an automated system email. Please do not reply to this email.</p>
-        <p align="center"><sup>&copy;</sup>{{date('Y')}} - <a href="http://wwww.rockcityfmradio.com" _target="blank">Rockcity</a> </p>
+        <p align="center"><sup>&copy;</sup>{{date('Y')}} - <a href="http://www.rockcityfmradio.com" _target="blank">Rockcity</a> </p>
     </div>
 
 </div>
