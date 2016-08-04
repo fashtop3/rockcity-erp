@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth.basic');
+        $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['getOrders']]);
+    }
+
     public function getOrders(Request $request) {
         if($request->get('min') && $request->get('max')) {
 
@@ -25,7 +32,6 @@ class AdminController extends Controller
                 ->currentUser()->get();
         }
 
-
         if(!$schedules) {
             return response('Order empty', 403);
         }
@@ -36,7 +42,6 @@ class AdminController extends Controller
             $schedule->client->toArray();
             $schedule->scheduleAlert->toArray();
         }
-
 
         return response($schedules);
     }
