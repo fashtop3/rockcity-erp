@@ -1,13 +1,13 @@
 @extends('pdf')
 
 @section('content')
-    <h3 class="text-center">AIRTIME ORDER</h3>
+    <h4 class="text-center">AIRTIME ORDER</h4>
     <hr>
 
     <table class="table table-bordered">
         <tr>
             <td><p>Date: <span class="text-muted">{{$schedule->created_at}}</span></p></td>
-            <td><p>Order No.: <span class="text-muted">{{$schedule->id}}</span></p></td>
+            <td><p>Order No.: <span class="text-muted">{{$schedule->order_no}}</span></p></td>
         </tr>
     </table>
     <table class="table table-bordered">

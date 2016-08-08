@@ -7,8 +7,8 @@
 
     angular
         .module('app.order')
-        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert', '$state',
+            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert, $state) {
 
                 var vm = $scope;
 
@@ -46,15 +46,28 @@
 
                     // Changing data
 
-                    clientFactory.getClients().query().$promise.then(
-                        function(response){
-                            vm.clients = response;
-                            vm.showclient = true;
-                        },
-                        function(response) {
-                            vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                        }
-                    );
+                    if($state.is('app.admin.clients')) {
+                        clientFactory.getAllClients().query().$promise.then(
+                            function(response){
+                                vm.clients = response;
+                                vm.showclient = true;
+                            },
+                            function(response) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+                    else {
+                        clientFactory.getClients().query().$promise.then(
+                            function(response){
+                                vm.clients = response;
+                                vm.showclient = true;
+                            },
+                            function(response) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
 
 
                     vm.dtOptions = DTOptionsBuilder.newOptions()

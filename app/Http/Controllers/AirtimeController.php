@@ -68,16 +68,6 @@ class AirtimeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -134,7 +124,7 @@ class AirtimeController extends Controller
 
             ScheduleAlert::create(['schedule_id' => $schedule->id, 'token' => bcrypt(Carbon::now())]);
 
-            $schedule['order_no'] = Schedule::orderNo(Carbon::now()->format('n'), $schedule->id);
+            $schedule['order_no'] = Schedule::orderNo(Carbon::now()->format('n'), $schedule->id.time(0));
             $schedule->save();
 
             //mail out the invoice

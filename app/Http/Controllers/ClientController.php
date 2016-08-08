@@ -38,15 +38,17 @@ class ClientController extends Controller
         return response('No clients found', 422);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getAllClients()
     {
-        //
+        $clients = Client::all();
+
+        if($clients) {
+            return response($clients, 201);
+        }
+
+        return response('No clients found', 422);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -153,7 +155,11 @@ class ClientController extends Controller
 
         //check if client is created by current user
         if($client->user_id != $this->user->id) {
-            return response('You are not authorized to update client', 403);
+
+            //if the current user is not an admin or ....
+            if(!$this->user->is('admin|executive.director|head.marketing')) {
+                return response('You are not authorized to delete client', 403);
+            }
         }
 
         if(!$client) {

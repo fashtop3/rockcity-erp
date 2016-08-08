@@ -174,6 +174,7 @@ Route::group(['middleware' => ['web'] ], function () {
 
     Route::resource('/api/user', 'UserController');
 
+    Route::get('/api/clients', 'ClientController@getAllClients');
     Route::post('/api/client/{id}', 'ClientController@update');
     Route::resource('/api/client', 'ClientController');
 

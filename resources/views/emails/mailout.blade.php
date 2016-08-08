@@ -20,7 +20,7 @@
     </div>
 
     <div class="footer" style="color: black; border: 1px solid grey; background-color: grey;">
-        <p align="center"><sup>&copy;</sup>{{date('Y')}} - <a href="http://wwww.rockcityfmradio.com" _target="blank">Rockcity</a> </p>
+        <p align="center"><sup>&copy;</sup>{{date('Y')}} - <a href="http://www.rockcityfmradio.com" _target="blank">Rockcity</a> </p>
     </div>
 </div>
 

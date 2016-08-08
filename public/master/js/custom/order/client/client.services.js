@@ -9,6 +9,10 @@
         .module('app.order')
         .service('clientFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
+            this.getAllClients = function(){
+                return $resource(baseURL + "clients");
+            };
+
             this.getClients = function(){
                 return $resource(baseURL + "client/:id");
             };

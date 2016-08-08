@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                        <img src="/app/img/rockcity.jpg" alt="Rockcity Logo" />
+                        <img src="/app/img/rockcity.png" alt="Rockcity Logo" />
                     </div>
                     <div class="col-sm-8">
                         <address>
