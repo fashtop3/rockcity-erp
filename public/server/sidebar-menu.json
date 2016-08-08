@@ -95,7 +95,7 @@
   {
     "text": "Airtime Orders",
     "permissions" : ["admin", "executive.director", "administration.dept"],
-    "icon": "icon-target",
+    "icon": "fa fa-reorder",
      "sref": "app.admin.airtime",
     "translate": "admin.ORDER"
   },
@@ -149,7 +149,7 @@
   {
     "text": "View all clients",
     "permissions" : ["admin", "executive.director", "administration.dept"],
-    "icon": "icon-target",
+    "icon": "icon-user-following",
     "sref": "app.admin.clients",
     "translate": "Clients"
   }
