@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-3 control-label">Client's Name</label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.name.$error.required && !clientForm.name.$pristine}">
-                                <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-]+$/" ng-model="client.name" class="form-control" id="name" name="name" placeholder="Enter Client's Name" required/>
+                                <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-\&.\(\)\/\'\^]+$/" ng-model="client.name" class="form-control" id="name" name="name" placeholder="Enter Client's Name" required/>
                                 <span ng-show="!clientForm.name.$pristine &amp;&amp; clientForm.name.$error.required" class="text-danger">This field is required</span>
                                 <span ng-show="!clientForm.name.$pristine &amp;&amp; clientForm.name.$error.pattern" class="text-danger">This field must be a valid name</span>
                             </div>
@@ -35,7 +35,7 @@
 
                             <label for="name" class="col-sm-3 control-label">Street No.</label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.street_no.$error.required && !clientForm.street_no.$pristine}">
-                                <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-]+$/" ng-model="client.street_no" class="form-control" id="street_no" name="street_no" placeholder="Enter Street number" required/>
+                                <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-\&.\(\)#\'\^]+$/" ng-model="client.street_no" class="form-control" id="street_no" name="street_no" placeholder="Enter Street number" required/>
                                 <span ng-show="!clientForm.street_no.$pristine &amp;&amp; clientForm.street_no.$error.required" class="text-danger">This field is required</span>
                                 <span ng-show="!clientForm.street_no.$pristine &amp;&amp; clientForm.street_no.$error.pattern" class="text-danger">This field must be a valid street number</span>
                             </div>

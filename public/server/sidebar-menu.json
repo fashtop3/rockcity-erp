@@ -140,8 +140,8 @@
     "sref": "#",
     "icon": "icon-people",
     "submenu": [
-      { "text": "View", "permissions": ["register.staff"], "sref": "app.people", "translate": "sidebar.nav.people.VIEW"},
-      { "text": "View", "permissions": ["register.staff"], "sref": "app.people.adduser", "translate": "sidebar.nav.people.REGISTER"}
+      { "text": "View", "sref": "app.people", "translate": "sidebar.nav.people.VIEW"},
+      { "text": "Add user", "permissions": ["register.staff"], "sref": "app.people.adduser", "translate": "sidebar.nav.people.REGISTER"}
     ],
     "translate": "sidebar.nav.people.MENU"
   },

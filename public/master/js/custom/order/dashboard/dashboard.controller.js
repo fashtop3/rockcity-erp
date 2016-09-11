@@ -12,6 +12,7 @@
                 var vm = $scope;
                 
                 vm.alerts = [];
+                vm.passwordAlerts = [];
 
                 vm.profile = {_token: _token};
 
@@ -51,12 +52,12 @@
                 vm.updateProfile = function() {
                     $resource(baseURL + 'user/:id', null, {'update':{method:'PUT'}})
                         .update({'id':vm.profile.id}, vm.profile,
-                        function () {
-                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
+                        function (response) {
+                            vm.alerts[0] = {'type':'success', 'msg':response.data};
                         },
                         function (response) {
                             if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
                             }
                         }
                     );
@@ -68,14 +69,14 @@
                 vm.updatePassword = function() {
                     $resource(baseURL + 'user/:id?action=password', null, {'update':{method:'PUT'}})
                         .update({'id':vm.profile.id}, vm.reset,
-                        function () {
-                            vm.alerts[0] = {'type':'success', 'msg':'Profile updated successfully'};
-                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail');
+                        function (response) {
+                            vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
                         },
                         function (response) {
                             if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':'Profile update failed'};                            toaster.pop('success', 'Sent', 'Reset link has been sent to your mail ');
-                                toaster.pop('error', 'Error', 'Failed to reset password');
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
                             }
                             else{
                                 toaster.pop('error', 'Error', 'Failed: contact administrator');

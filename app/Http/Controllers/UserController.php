@@ -20,6 +20,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use UploadefdFile;
@@ -193,21 +194,16 @@ class UserController extends Controller
      */
     public  function show($id)
     {
-
         if(Auth::user()->id != $id) {
             if(!Auth::user()->canRegisterStaff()) {
                 return response('You are not authorized to edit this account', 403);
             }
         }
-
         //TOdo: or if user is admin to validate using roles and perimissions
-
         $user = User::findOrFail($id);
-
         //get user roles and permissions
         $user->roles->toArray();
         $user->permissions->toArray();
-
         return response($user);
     }
 
@@ -218,37 +214,41 @@ class UserController extends Controller
      */
     public function update($id, Request $request)
     {
-
         $user = User::find($id);
-
         //Todo: admin check first using else if
-
         if($id != Auth::user()->id) {
             if( !Auth::user()->canRegisterStaff() ) {
                 return response('You are not authorized to update this account', 403);
             }
         }
-
-
         //changing user's password
         if($request->get('action') && $request->get('action') == 'password') {
-
             //validate request for password reset
-//            $this->validate($request, [
-//               'new_password' => 'required|between:6,8',
-//                'password' => 'required|between:6,8',
-//            ]);
-
-            return $this->sendResetLink($user);
+            $validator = Validator::make($request->all(), [
+               'new_password' => 'required|between:6,8',
+                'password_confirm' => 'required|same:new_password',
+                'password' => 'required|between:6,8',
+            ]);
+            if($validator->fails()) {
+                return response($validator->errors(), 403);
+            }
+            $current = $request->get('password');
+            $new = $request->get('new_password');
+            if(Hash::check($current, $user->password)) {
+                $user->password = Hash::make($new);
+                $user->save();
+               return response(['data'=>'Password changed. will be effective next login.'])
+                   ->header('Content-Type', 'text/plain');
+            }
+            return response('Authentication Failed', 403 );
         }
-
 
         if($user) {
             $user->update($request->all());
 
             $this->setRolePermission($request, $user);
 
-            return response('Account successfully updated.');
+            return response(['data'=>'Account successfully updated.']);
         }
 
         return response('User not found', 403);
@@ -264,30 +264,22 @@ class UserController extends Controller
     {
         if(!User::find($id))
             return response('User not found', 403);
-
         $file = $request->all()['file'];
-
         $filename = 'user_'.$id.'.'.$file->getClientOriginalExtension();
         $file->move(public_path() .'/app/img/user/', $filename);
-
         Upload::Create(['user_id' => $id, 'filename' => $filename, 'thumbnail' => $file->getRealPath()]);
-
         return response('File uploaded successfully');
-
     }
 
     public function destroy($id)
     {
         $user = User::find($id);
-
         if(!$user) {
             return response('User not found', 403);
         }
-
         if(Auth::user()->id == $id) {
             return response('Unauthorized operation', 403);
         }
-
         if(Auth::user()->canRegisterStaff()) {
 
             if($user->delete()) {

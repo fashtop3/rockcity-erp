@@ -41,7 +41,7 @@
             // ----------------------------------
 
             $scope.getFormattedPermission =  function (item) {
-                if(item.permissions != "undefined")
+                if(item.permissions)
                     return item.permissions;
             };
 

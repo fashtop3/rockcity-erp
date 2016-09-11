@@ -78,7 +78,9 @@
     <div class="panel-heading">Change Password</div>
     <form class="form-horizontal" role="form" ng-submit="updatePassword()" name="pwdForm" novalidate>
         <div class="panel-body">
-
+            <div>
+                <uib-alert ng-repeat="alert in passwordAlerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+            </div>
             <fieldset>
                 <div class="form-group has-feedback">
                     <label class="col-sm-3 control-label">New Password <abbr class="text-danger" title="Password">*</abbr></label>
