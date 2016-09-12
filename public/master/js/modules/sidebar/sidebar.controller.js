@@ -41,7 +41,7 @@
             // ----------------------------------
 
             $scope.getFormattedPermission =  function (item) {
-                if(item.permissions)
+                if(angular.isDefined(item.permissions))
                     return item.permissions;
             };
 
