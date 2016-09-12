@@ -23,7 +23,7 @@
                 if(angular.isDefined($stateParams.id)) {
 
                     //get client by id
-                    vm.client = clientFactory.getClients().get({id: parseInt($stateParams.id, 10)})
+                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
                         .$promise.then(
                         function (response) {
                             vm.client = response;
@@ -47,7 +47,7 @@
                     // Changing data
 
                     if($state.is('app.admin.clients')) {
-                        clientFactory.getAllClients().query().$promise.then(
+                        clientFactory.clients().query().$promise.then(
                             function(response){
                                 vm.clients = response;
                                 vm.showclient = true;
@@ -58,7 +58,7 @@
                         );
                     }
                     else {
-                        clientFactory.getClients().query().$promise.then(
+                        clientFactory.clients().query().$promise.then(
                             function(response){
                                 vm.clients = response;
                                 vm.showclient = true;
@@ -99,7 +99,7 @@
                                 closeOnCancel: false
                             }, function(isConfirm){
                                 if (isConfirm) {
-                                    clientFactory.client().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
+                                    clientFactory.clients().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
                                         function () {
                                             vm.clients.splice($index, 1);
                                             vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
