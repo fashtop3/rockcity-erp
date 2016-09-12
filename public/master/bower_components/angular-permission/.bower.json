@@ -1,6 +1,6 @@
 {
   "name": "angular-permission",
-  "version": "3.1.6",
+  "version": "3.1.7",
   "authors": [
     "Rafael Vidaurre <narzerus@gmail.com> (http://www.rafaelvidaurre.com)",
     "Blazej Krysiak <blazej.krysiak@gmail.com>"
@@ -44,14 +44,13 @@
   "dependencies": {
     "angular": ">=1.4.8"
   },
-  "_release": "3.1.6",
+  "_release": "3.1.7",
   "_resolution": {
     "type": "version",
-    "tag": "v3.1.6",
-    "commit": "117b45814a50e766edcbec555a9a0b042bfc7f78"
+    "tag": "v3.1.7",
+    "commit": "e6aff727b369855b76c69d4f01c06c16c4f7c81c"
   },
   "_source": "https://github.com/Narzerus/angular-permission.git",
   "_target": "~3.1.6",
-  "_originalSource": "angular-permission",
-  "_direct": true
+  "_originalSource": "angular-permission"
 }

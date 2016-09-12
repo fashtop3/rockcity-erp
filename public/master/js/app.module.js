@@ -20,7 +20,7 @@
             'app.core',
             'app.routes',
             'app.sidebar',
-            'app.navsearch',
+            //'app.navsearch',
             'app.preloader',
             'app.loadingbar',
             'app.translate',
@@ -30,12 +30,12 @@
             'app.flatdoc',
             'app.notify',
             'app.bootstrapui',
-            'app.elements',
+            //'app.elements',
             'app.panels',
-            'app.charts',
+            //'app.charts',
             'app.forms',
-            'app.locale',
-            'app.maps',
+            //'app.locale',
+            //'app.maps',
             'app.pages',
             'app.tables',
             'app.extras',
@@ -44,7 +44,7 @@
             'app.order',
             //import
             'app.affix',
-            'app.datetime',
+            'app.datetime'
         ])
 })();
 

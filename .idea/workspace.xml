@@ -2,10 +2,824 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a676137-a53d-407b-85e0-7c18b8c76649" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/bower.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/dist/angular-chartist.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/dist/angular-chartist.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/config.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/options.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/browser-sync.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/build.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/changelog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/clean.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/default.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/lint.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/release.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/scripts.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/test.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulp/tasks/watch.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/gulpfile.babel.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/4.4.0/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/.jshintignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/.jshintrc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/.rock.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/ajax.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/bars.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/colors.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/css/extensions.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/css/lines.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/data/data.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/data/data.jsonp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/data/data2.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/data/status.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/extensions.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/fixed.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/formatter.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/gaps.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/hover.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/interp_cardinal.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/interp_linear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/interp_step.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/offset_pct.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/offset_stack.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/offset_stream.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/offset_value.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/om_bar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/om_curves.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/om_lines.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/om_percent.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/om_scatter.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/om_stack.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/om_step.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/images/om_stream.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/inconsistent.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/js/extensions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/jsonp.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/legend.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/lineplot.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/lines.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/logscale.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/milliseconds.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/multi.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/negative.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/refresh.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/resize.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/scaled.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/scatterplot.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/ajax.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/colors.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/extensions.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/lines.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/logscale.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/scaled.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/scatterplot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/simple.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/start.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/status.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/stops.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/screenshots/y_axis.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/series.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/simple.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/socket.io/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/socket.io/app.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/socket.io/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/socket.io/socket.io.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/sparse.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/start.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/status.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/stops.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/timescale.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/x_axis.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/examples/y_axis.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Class.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Fixtures.Time.Local.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Fixtures.Time.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Graph.Axis.X.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Graph.Axis.Y.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Graph.Legend.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Graph.RangeSlider.Preview.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Graph.Renderer.Multi.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Graph.Renderer.Scatterplot.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Graph.Renderer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Graph.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Series.FixedDuration.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/Rickshaw.Series.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tests/data/simple.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/example_01.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/example_02.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/example_03.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/example_04.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/example_05.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/example_06.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/example_07.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/introduction.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/transform.pl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/transform_epoch.pl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/transform_region.pl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/vendor/prettify/prettify.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/tutorial/vendor/prettify/prettify.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/vendor/d3.layout.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/vendor/d3.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/vendor/d3.v2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/vendor/d3.v3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/angular-permission/.bower.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/chartist.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/chartjs.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/chartjs.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/charts.module.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/classyloader.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/flot-data.service.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/flot.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/flot.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/morris.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/morris.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/piecharts.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/rickshaw.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/charts/sparklines.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/dashboard/dashboard.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/dashboard/dashboard.module.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/dashboard/dashboard.v2.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/dashboard/dashboard.v3.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/carousel.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/dialog.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/elements.module.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/infinite-scroll.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/masonry-deck.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/navtree.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/nestable.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/scroll.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/sortable.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/sweetalert.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/toaster.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/elements/tour.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/locale/locale.config.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/locale/locale.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/locale/locale.module.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/maps/maps-google-modal.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/maps/maps-google.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/maps/maps.module.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/maps/vector-map.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/maps/vector-map.service.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/maps/vector-maps.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/navsearch/navsearch.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/navsearch/navsearch.module.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/js/modules/navsearch/navsearch.service.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/logos/browser-stack.png" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/logos/browser-stack.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/FontAwesome.otf" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/FontAwesome.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.eot" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.ttf" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.woff" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.woff2" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.woff2" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/partials/sidebar.html" afterPath="$PROJECT_DIR$/public/app/views/partials/sidebar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/jade/views/partials/sidebar.jade" afterPath="$PROJECT_DIR$/public/master/jade/views/partials/sidebar.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/modules/sidebar/sidebar.controller.js" afterPath="$PROJECT_DIR$/public/master/js/modules/sidebar/sidebar.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/css/app-rtl.css" afterPath="$PROJECT_DIR$/public/app/css/app-rtl.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/css/app.css" afterPath="$PROJECT_DIR$/public/app/css/app.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/css/bootstrap-rtl.css" afterPath="$PROJECT_DIR$/public/app/css/bootstrap-rtl.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/css/bootstrap.css" afterPath="$PROJECT_DIR$/public/app/css/bootstrap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/js/app.js" afterPath="$PROJECT_DIR$/public/app/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/js/base.js" afterPath="$PROJECT_DIR$/public/app/js/base.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/CHANGELOG.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/CONTRIBUTING.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/LICENSE" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/karma.conf.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/karma.conf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/package.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-chartist.js/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/LICENSE.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/LICENSE.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ng.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ng.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ng.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ng.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ng.min.js.map" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ng.min.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ui.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ui.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ui.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ui.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ui.min.js.map" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission-ui.min.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission.min.js.map" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-permission/dist/angular-permission.min.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/CHANGELOG.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/LICENSE" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/rickshaw.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-rickshaw/rickshaw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/.gitignore" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/.jshintrc" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/.jshintrc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/.travis.yml" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/LICENSE" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/demo/index.html" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/demo/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/dist/mask.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/dist/mask.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/dist/mask.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/dist/mask.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/gulpfile.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/gulpfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/index.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/karma.conf.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/karma.conf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/package.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/protractor.config.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/protractor.config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/protractor.travis.config.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/protractor.travis.config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/src/mask.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/src/mask.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/test/maskSpec.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/test/maskSpec.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/test/maskSpec.protractor.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-mask/test/maskSpec.protractor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/LICENSE-MIT" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/LICENSE-MIT" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/dist/ui-scroll-jqlite.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/dist/ui-scroll-jqlite.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/dist/ui-scroll-jqlite.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/dist/ui-scroll-jqlite.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/dist/ui-scroll.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/dist/ui-scroll.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/dist/ui-scroll.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/dist/ui-scroll.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/src/ui-scroll-jqlite.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/src/ui-scroll-jqlite.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/src/ui-scroll.js" afterPath="$PROJECT_DIR$/public/master/bower_components/angular-ui-scroll/src/ui-scroll.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/d3/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/d3/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/d3/LICENSE" afterPath="$PROJECT_DIR$/public/master/bower_components/d3/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/d3/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/d3/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/d3/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/d3/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/d3/d3.js" afterPath="$PROJECT_DIR$/public/master/bower_components/d3/d3.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/d3/d3.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/d3/d3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/.gitignore" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/.npmignore" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/.npmignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/HELP-US-OUT.txt" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/HELP-US-OUT.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/css/font-awesome.css" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/css/font-awesome.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/css/font-awesome.css.map" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/css/font-awesome.css.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/css/font-awesome.min.css" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/css/font-awesome.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.svg" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/fonts/fontawesome-webfont.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/animated.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/animated.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/bordered-pulled.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/bordered-pulled.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/core.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/core.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/fixed-width.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/fixed-width.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/font-awesome.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/font-awesome.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/icons.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/icons.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/larger.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/larger.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/list.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/list.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/mixins.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/mixins.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/path.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/path.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/rotated-flipped.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/rotated-flipped.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/screen-reader.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/screen-reader.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/stacked.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/stacked.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/variables.less" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/less/variables.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_animated.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_animated.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_bordered-pulled.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_bordered-pulled.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_core.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_core.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_fixed-width.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_fixed-width.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_icons.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_icons.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_larger.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_larger.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_list.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_list.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_mixins.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_mixins.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_path.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_path.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_rotated-flipped.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_rotated-flipped.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_screen-reader.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_screen-reader.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_stacked.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_stacked.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_variables.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/_variables.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/font-awesome.scss" afterPath="$PROJECT_DIR$/public/master/bower_components/font-awesome/scss/font-awesome.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/Gruntfile.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/Gruntfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/LICENSE.txt" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/dist/jqcloud.css" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/dist/jqcloud.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/dist/jqcloud.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/dist/jqcloud.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/dist/jqcloud.min.css" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/dist/jqcloud.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/dist/jqcloud.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/dist/jqcloud.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/package.json" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/src/jqcloud.css" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/src/jqcloud.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/src/jqcloud.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jqcloud2/src/jqcloud.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/AUTHORS.txt" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/AUTHORS.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/LICENSE.txt" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.min.map" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.min.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.slim.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.slim.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.slim.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.slim.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.slim.min.map" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/dist/jquery.slim.min.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/.jshintrc" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/.jshintrc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/jsonp.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/jsonp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/load.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/load.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/parseJSON.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/parseJSON.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/parseXML.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/parseXML.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/script.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/script.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/var/location.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/var/location.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/var/nonce.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/var/nonce.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/var/rquery.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/var/rquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/xhr.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/ajax/xhr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/attr.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/attr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/classes.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/classes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/prop.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/prop.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/val.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/attributes/val.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/callbacks.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/callbacks.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/DOMEval.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/DOMEval.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/access.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/access.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/init.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/init.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/parseHTML.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/parseHTML.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/ready.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/ready.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/var/rsingleTag.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/core/var/rsingleTag.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/addGetHookIf.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/addGetHookIf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/adjustCSS.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/adjustCSS.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/curCSS.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/curCSS.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/defaultDisplay.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/defaultDisplay.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/hiddenVisibleSelectors.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/hiddenVisibleSelectors.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/showHide.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/showHide.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/cssExpand.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/cssExpand.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/getStyles.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/getStyles.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/isHidden.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/isHidden.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/rmargin.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/rmargin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/rnumnonpx.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/rnumnonpx.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/swap.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/css/var/swap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/Data.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/Data.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/accepts.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/accepts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/var/acceptData.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/var/acceptData.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/var/dataPriv.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/var/dataPriv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/var/dataUser.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/data/var/dataUser.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/deferred.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/deferred.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/deferred/exceptionHook.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/deferred/exceptionHook.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/deprecated.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/deprecated.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/dimensions.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/dimensions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/effects.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/effects.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/effects/Tween.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/effects/Tween.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/effects/animatedSelector.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/effects/animatedSelector.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/effects/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/effects/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/ajax.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/ajax.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/alias.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/alias.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/focusin.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/focusin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/trigger.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/event/trigger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/exports/amd.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/exports/amd.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/exports/global.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/exports/global.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/intro.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/intro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/jquery.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/_evalUrl.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/_evalUrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/buildFragment.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/buildFragment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/createSafeFragment.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/createSafeFragment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/getAll.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/getAll.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/setGlobalEval.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/setGlobalEval.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/nodeNames.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/nodeNames.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/rcheckableType.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/rcheckableType.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/rleadingWhitespace.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/rleadingWhitespace.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/rscriptType.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/rscriptType.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/rtagName.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/var/rtagName.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/wrapMap.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/manipulation/wrapMap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/offset.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/offset.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/outro.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/outro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/queue.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/queue.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/queue/delay.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/queue/delay.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/selector-native.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/selector-native.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/selector-sizzle.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/selector-sizzle.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/selector.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/selector.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/serialize.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/serialize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing/findFilter.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing/findFilter.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing/var/dir.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing/var/dir.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing/var/rneedsContext.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing/var/rneedsContext.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing/var/siblings.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/traversing/var/siblings.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/arr.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/arr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/class2type.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/class2type.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/concat.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/concat.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/deletedIds.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/deletedIds.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/document.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/document.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/documentElement.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/documentElement.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/hasOwn.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/hasOwn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/indexOf.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/indexOf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/pnum.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/pnum.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/push.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/push.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/rcssNum.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/rcssNum.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/rnotwhite.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/rnotwhite.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/slice.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/slice.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/support.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/toString.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/var/toString.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery/src/wrap.js" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery/src/wrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/banner.txt" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/banner.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/raphael.amd.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/raphael.amd.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/raphael.core.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/raphael.core.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/raphael.svg.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/raphael.svg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/raphael.vml.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/raphael.vml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/test/svg/dom.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/test/svg/dom.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/test/vml/dom.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/dev/test/vml/dom.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/license.txt" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/license.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/raphael.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/raphael.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/raphael.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/raphael.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/raphael.no-deps.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/raphael.no-deps.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/raphael.no-deps.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/raphael.no-deps.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/raphael/webpack.config.js" afterPath="$PROJECT_DIR$/public/master/bower_components/raphael/webpack.config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/CONTRIBUTING.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/LICENSE" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/Makefile" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/Makefile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/README.md" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/package.json" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/rickshaw.css" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/rickshaw.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/rickshaw.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/rickshaw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/rickshaw.min.css" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/rickshaw.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/rickshaw.min.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/rickshaw.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/css/detail.css" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/css/detail.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/css/graph.css" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/css/graph.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/css/legend.css" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/css/legend.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/helpers/endUMD.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/helpers/endUMD.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/helpers/startUMD.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/helpers/startUMD.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Class.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Class.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Color.Palette.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Color.Palette.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Compat.ClassList.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Compat.ClassList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.Color.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.Color.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.Number.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.Number.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.RandomData.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.RandomData.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.Time.Local.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.Time.Local.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.Time.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Fixtures.Time.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Ajax.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Ajax.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Annotate.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Annotate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Axis.Time.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Axis.Time.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Axis.X.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Axis.X.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Axis.Y.Scaled.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Axis.Y.Scaled.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Axis.Y.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Axis.Y.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Behavior.Series.Highlight.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Behavior.Series.Highlight.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Behavior.Series.Order.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Behavior.Series.Order.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Behavior.Series.Toggle.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Behavior.Series.Toggle.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.HoverDetail.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.HoverDetail.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.JSONP.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.JSONP.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Legend.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Legend.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.RangeSlider.Preview.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.RangeSlider.Preview.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.RangeSlider.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.RangeSlider.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Area.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Area.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Bar.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Bar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Line.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Line.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.LinePlot.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.LinePlot.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Multi.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Multi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.ScatterPlot.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.ScatterPlot.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Stack.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.Stack.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Renderer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Smoother.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Smoother.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Socketio.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.Socketio.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Graph.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Series.FixedDuration.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Series.FixedDuration.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Series.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.Series.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.js" afterPath="$PROJECT_DIR$/public/master/bower_components/rickshaw/src/js/Rickshaw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/sparkline/.bower.json" afterPath="$PROJECT_DIR$/public/master/bower_components/sparkline/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/sparkline/index.js" afterPath="$PROJECT_DIR$/public/master/bower_components/sparkline/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/app.module.js" afterPath="$PROJECT_DIR$/public/master/js/app.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js" afterPath="$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/Chart.js/Chart.js" afterPath="$PROJECT_DIR$/public/vendor/Chart.js/Chart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.categories.js" afterPath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.categories.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.js" afterPath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.pie.js" afterPath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.pie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.resize.js" afterPath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.resize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.time.js" afterPath="$PROJECT_DIR$/public/vendor/Flot/jquery.flot.time.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ag-grid/dist/ag-grid.css" afterPath="$PROJECT_DIR$/public/vendor/ag-grid/dist/ag-grid.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ag-grid/dist/ag-grid.js" afterPath="$PROJECT_DIR$/public/vendor/ag-grid/dist/ag-grid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ag-grid/dist/theme-dark.css" afterPath="$PROJECT_DIR$/public/vendor/ag-grid/dist/theme-dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ag-grid/dist/theme-fresh.css" afterPath="$PROJECT_DIR$/public/vendor/ag-grid/dist/theme-fresh.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-bootstrap-colorpicker/css/colorpicker.css" afterPath="$PROJECT_DIR$/public/vendor/angular-bootstrap-colorpicker/css/colorpicker.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js" afterPath="$PROJECT_DIR$/public/vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-bootstrap-nav-tree/dist/abn_tree.css" afterPath="$PROJECT_DIR$/public/vendor/angular-bootstrap-nav-tree/dist/abn_tree.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-bootstrap-nav-tree/dist/abn_tree_directive.js" afterPath="$PROJECT_DIR$/public/vendor/angular-bootstrap-nav-tree/dist/abn_tree_directive.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-bootstrap-slider/slider.js" afterPath="$PROJECT_DIR$/public/vendor/angular-bootstrap-slider/slider.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-bootstrap-tour/dist/angular-bootstrap-tour.js" afterPath="$PROJECT_DIR$/public/vendor/angular-bootstrap-tour/dist/angular-bootstrap-tour.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-carousel/dist/angular-carousel.css" afterPath="$PROJECT_DIR$/public/vendor/angular-carousel/dist/angular-carousel.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-carousel/dist/angular-carousel.js" afterPath="$PROJECT_DIR$/public/vendor/angular-carousel/dist/angular-carousel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-chosen-localytics/chosen.js" afterPath="$PROJECT_DIR$/public/vendor/angular-chosen-localytics/chosen.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-datatables/dist/angular-datatables.js" afterPath="$PROJECT_DIR$/public/vendor/angular-datatables/dist/angular-datatables.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-deckgrid/angular-deckgrid.js" afterPath="$PROJECT_DIR$/public/vendor/angular-deckgrid/angular-deckgrid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-file-upload/dist/angular-file-upload.js" afterPath="$PROJECT_DIR$/public/vendor/angular-file-upload/dist/angular-file-upload.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_ar.js" afterPath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_ar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_de.js" afterPath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_de.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_en.js" afterPath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_es.js" afterPath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_es.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_fr.js" afterPath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_fr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_ja.js" afterPath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_ja.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_ko.js" afterPath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_ko.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_zh.js" afterPath="$PROJECT_DIR$/public/vendor/angular-i18n/angular-locale_zh.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-jqcloud/angular-jqcloud.js" afterPath="$PROJECT_DIR$/public/vendor/angular-jqcloud/angular-jqcloud.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-knob/src/angular-knob.js" afterPath="$PROJECT_DIR$/public/vendor/angular-knob/src/angular-knob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-rickshaw/rickshaw.js" afterPath="$PROJECT_DIR$/public/vendor/angular-rickshaw/rickshaw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-sweetalert/SweetAlert.js" afterPath="$PROJECT_DIR$/public/vendor/angular-sweetalert/SweetAlert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-ui-codemirror/ui-codemirror.js" afterPath="$PROJECT_DIR$/public/vendor/angular-ui-codemirror/ui-codemirror.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-ui-grid/ui-grid.css" afterPath="$PROJECT_DIR$/public/vendor/angular-ui-grid/ui-grid.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-ui-grid/ui-grid.js" afterPath="$PROJECT_DIR$/public/vendor/angular-ui-grid/ui-grid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-ui-grid/ui-grid.min.css" afterPath="$PROJECT_DIR$/public/vendor/angular-ui-grid/ui-grid.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-ui-grid/ui-grid.min.js" afterPath="$PROJECT_DIR$/public/vendor/angular-ui-grid/ui-grid.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-ui-map/ui-map.js" afterPath="$PROJECT_DIR$/public/vendor/angular-ui-map/ui-map.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-ui-select/dist/select.css" afterPath="$PROJECT_DIR$/public/vendor/angular-ui-select/dist/select.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-ui-select/dist/select.js" afterPath="$PROJECT_DIR$/public/vendor/angular-ui-select/dist/select.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-xeditable/dist/css/xeditable.css" afterPath="$PROJECT_DIR$/public/vendor/angular-xeditable/dist/css/xeditable.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angular-xeditable/dist/js/xeditable.js" afterPath="$PROJECT_DIR$/public/vendor/angular-xeditable/dist/js/xeditable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angularjs-toaster/toaster.css" afterPath="$PROJECT_DIR$/public/vendor/angularjs-toaster/toaster.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/angularjs-toaster/toaster.js" afterPath="$PROJECT_DIR$/public/vendor/angularjs-toaster/toaster.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/animate.css/animate.min.css" afterPath="$PROJECT_DIR$/public/vendor/animate.css/animate.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/animo.js/animo.js" afterPath="$PROJECT_DIR$/public/vendor/animo.js/animo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/bootstrap-filestyle/src/bootstrap-filestyle.js" afterPath="$PROJECT_DIR$/public/vendor/bootstrap-filestyle/src/bootstrap-filestyle.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" afterPath="$PROJECT_DIR$/public/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js" afterPath="$PROJECT_DIR$/public/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/bootstrap-tour/build/css/bootstrap-tour.css" afterPath="$PROJECT_DIR$/public/vendor/bootstrap-tour/build/css/bootstrap-tour.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/bootstrap-tour/build/js/bootstrap-tour-standalone.js" afterPath="$PROJECT_DIR$/public/vendor/bootstrap-tour/build/js/bootstrap-tour-standalone.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js" afterPath="$PROJECT_DIR$/public/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js" afterPath="$PROJECT_DIR$/public/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/chartist/dist/chartist.js" afterPath="$PROJECT_DIR$/public/vendor/chartist/dist/chartist.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/chartist/dist/chartist.min.css" afterPath="$PROJECT_DIR$/public/vendor/chartist/dist/chartist.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/chosen_v1.2.0/chosen.jquery.min.js" afterPath="$PROJECT_DIR$/public/vendor/chosen_v1.2.0/chosen.jquery.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/chosen_v1.2.0/chosen.min.css" afterPath="$PROJECT_DIR$/public/vendor/chosen_v1.2.0/chosen.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/addon/mode/overlay.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/addon/mode/overlay.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/lib/codemirror.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/lib/codemirror.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/lib/codemirror.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/lib/codemirror.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/apl/apl.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/apl/apl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/asciiarmor/asciiarmor.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/asciiarmor/asciiarmor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/asn.1/asn.1.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/asn.1/asn.1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/asterisk/asterisk.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/asterisk/asterisk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/brainfuck/brainfuck.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/brainfuck/brainfuck.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/clike/clike.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/clike/clike.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/clojure/clojure.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/clojure/clojure.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/cmake/cmake.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/cmake/cmake.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/cobol/cobol.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/cobol/cobol.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/coffeescript/coffeescript.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/coffeescript/coffeescript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/commonlisp/commonlisp.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/commonlisp/commonlisp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/crystal/crystal.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/crystal/crystal.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/css/css.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/css/css.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/cypher/cypher.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/cypher/cypher.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/d/d.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/d/d.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/dart/dart.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/dart/dart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/diff/diff.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/diff/diff.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/django/django.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/django/django.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/dockerfile/dockerfile.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/dockerfile/dockerfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/dtd/dtd.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/dtd/dtd.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/dylan/dylan.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/dylan/dylan.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/ebnf/ebnf.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/ebnf/ebnf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/ecl/ecl.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/ecl/ecl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/eiffel/eiffel.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/eiffel/eiffel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/elm/elm.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/elm/elm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/erlang/erlang.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/erlang/erlang.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/factor/factor.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/factor/factor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/fcl/fcl.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/fcl/fcl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/forth/forth.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/forth/forth.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/fortran/fortran.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/fortran/fortran.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/gas/gas.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/gas/gas.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/gfm/gfm.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/gfm/gfm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/gherkin/gherkin.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/gherkin/gherkin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/go/go.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/go/go.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/groovy/groovy.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/groovy/groovy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/haml/haml.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/haml/haml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/handlebars/handlebars.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/handlebars/handlebars.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/haskell-literate/haskell-literate.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/haskell-literate/haskell-literate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/haskell/haskell.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/haskell/haskell.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/haxe/haxe.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/haxe/haxe.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/htmlembedded/htmlembedded.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/htmlembedded/htmlembedded.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/htmlmixed/htmlmixed.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/htmlmixed/htmlmixed.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/http/http.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/http/http.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/idl/idl.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/idl/idl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/jade/jade.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/jade/jade.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/javascript/javascript.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/javascript/javascript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/jinja2/jinja2.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/jinja2/jinja2.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/jsx/jsx.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/jsx/jsx.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/julia/julia.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/julia/julia.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/livescript/livescript.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/livescript/livescript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/lua/lua.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/lua/lua.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/markdown/markdown.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/markdown/markdown.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/mathematica/mathematica.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/mathematica/mathematica.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/meta.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/meta.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/mirc/mirc.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/mirc/mirc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/mllike/mllike.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/mllike/mllike.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/modelica/modelica.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/modelica/modelica.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/mscgen/mscgen.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/mscgen/mscgen.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/mumps/mumps.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/mumps/mumps.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/nginx/nginx.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/nginx/nginx.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/nsis/nsis.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/nsis/nsis.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/ntriples/ntriples.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/ntriples/ntriples.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/octave/octave.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/octave/octave.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/oz/oz.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/oz/oz.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/pascal/pascal.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/pascal/pascal.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/pegjs/pegjs.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/pegjs/pegjs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/perl/perl.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/perl/perl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/php/php.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/php/php.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/pig/pig.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/pig/pig.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/properties/properties.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/properties/properties.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/puppet/puppet.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/puppet/puppet.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/python/python.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/python/python.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/q/q.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/q/q.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/r/r.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/r/r.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/rpm/rpm.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/rpm/rpm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/rst/rst.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/rst/rst.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/ruby/ruby.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/ruby/ruby.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/rust/rust.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/rust/rust.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/sass/sass.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/sass/sass.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/scheme/scheme.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/scheme/scheme.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/shell/shell.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/shell/shell.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/sieve/sieve.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/sieve/sieve.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/slim/slim.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/slim/slim.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/smalltalk/smalltalk.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/smalltalk/smalltalk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/smarty/smarty.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/smarty/smarty.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/solr/solr.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/solr/solr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/soy/soy.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/soy/soy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/sparql/sparql.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/sparql/sparql.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/spreadsheet/spreadsheet.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/spreadsheet/spreadsheet.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/sql/sql.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/sql/sql.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/stex/stex.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/stex/stex.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/stylus/stylus.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/stylus/stylus.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/swift/swift.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/swift/swift.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/tcl/tcl.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/tcl/tcl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/textile/textile.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/textile/textile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/tiddlywiki/tiddlywiki.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/tiddlywiki/tiddlywiki.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/tiddlywiki/tiddlywiki.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/tiddlywiki/tiddlywiki.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/tiki/tiki.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/tiki/tiki.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/tiki/tiki.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/tiki/tiki.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/toml/toml.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/toml/toml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/tornado/tornado.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/tornado/tornado.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/troff/troff.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/troff/troff.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/ttcn-cfg/ttcn-cfg.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/ttcn-cfg/ttcn-cfg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/ttcn/ttcn.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/ttcn/ttcn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/turtle/turtle.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/turtle/turtle.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/twig/twig.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/twig/twig.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/vb/vb.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/vb/vb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/vbscript/vbscript.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/vbscript/vbscript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/velocity/velocity.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/velocity/velocity.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/verilog/verilog.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/verilog/verilog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/vhdl/vhdl.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/vhdl/vhdl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/vue/vue.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/vue/vue.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/xml/xml.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/xml/xml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/xquery/xquery.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/xquery/xquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/yaml-frontmatter/yaml-frontmatter.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/yaml-frontmatter/yaml-frontmatter.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/yaml/yaml.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/yaml/yaml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/mode/z80/z80.js" afterPath="$PROJECT_DIR$/public/vendor/codemirror/mode/z80/z80.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/3024-day.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/3024-day.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/3024-night.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/3024-night.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/abcdef.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/abcdef.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/ambiance-mobile.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/ambiance-mobile.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/ambiance.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/ambiance.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/base16-dark.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/base16-dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/base16-light.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/base16-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/bespin.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/bespin.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/blackboard.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/blackboard.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/cobalt.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/cobalt.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/colorforth.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/colorforth.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/dracula.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/dracula.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/eclipse.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/eclipse.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/elegant.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/elegant.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/erlang-dark.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/erlang-dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/hopscotch.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/hopscotch.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/icecoder.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/icecoder.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/isotope.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/isotope.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/lesser-dark.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/lesser-dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/liquibyte.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/liquibyte.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/material.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/material.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/mbo.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/mbo.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/mdn-like.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/mdn-like.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/midnight.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/midnight.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/monokai.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/monokai.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/neat.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/neat.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/neo.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/neo.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/night.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/night.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/paraiso-dark.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/paraiso-dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/paraiso-light.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/paraiso-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/pastel-on-dark.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/pastel-on-dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/railscasts.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/railscasts.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/rubyblue.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/rubyblue.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/seti.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/seti.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/solarized.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/solarized.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/the-matrix.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/the-matrix.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/tomorrow-night-bright.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/tomorrow-night-bright.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/tomorrow-night-eighties.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/tomorrow-night-eighties.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/ttcn.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/ttcn.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/twilight.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/twilight.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/vibrant-ink.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/vibrant-ink.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/xq-dark.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/xq-dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/xq-light.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/xq-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/yeti.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/yeti.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/codemirror/theme/zenburn.css" afterPath="$PROJECT_DIR$/public/vendor/codemirror/theme/zenburn.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/d3/d3.min.js" afterPath="$PROJECT_DIR$/public/vendor/d3/d3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/datatables/media/css/jquery.dataTables.css" afterPath="$PROJECT_DIR$/public/vendor/datatables/media/css/jquery.dataTables.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/datatables/media/js/jquery.dataTables.js" afterPath="$PROJECT_DIR$/public/vendor/datatables/media/js/jquery.dataTables.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/fastclick/lib/fastclick.js" afterPath="$PROJECT_DIR$/public/vendor/fastclick/lib/fastclick.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/flatdoc/flatdoc.js" afterPath="$PROJECT_DIR$/public/vendor/flatdoc/flatdoc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/flot-spline/js/jquery.flot.spline.min.js" afterPath="$PROJECT_DIR$/public/vendor/flot-spline/js/jquery.flot.spline.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/flot.tooltip/js/jquery.flot.tooltip.min.js" afterPath="$PROJECT_DIR$/public/vendor/flot.tooltip/js/jquery.flot.tooltip.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/fontawesome/css/font-awesome.min.css" afterPath="$PROJECT_DIR$/public/vendor/fontawesome/css/font-awesome.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/dist/fullcalendar.css" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/dist/fullcalendar.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/dist/fullcalendar.min.js" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/dist/fullcalendar.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/fullcalendar/dist/gcal.js" afterPath="$PROJECT_DIR$/public/vendor/fullcalendar/dist/gcal.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/html.sortable/dist/html.sortable.angular.js" afterPath="$PROJECT_DIR$/public/vendor/html.sortable/dist/html.sortable.angular.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/html.sortable/dist/html.sortable.js" afterPath="$PROJECT_DIR$/public/vendor/html.sortable/dist/html.sortable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ika.jvectormap/jquery-jvectormap-1.2.2.css" afterPath="$PROJECT_DIR$/public/vendor/ika.jvectormap/jquery-jvectormap-1.2.2.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js" afterPath="$PROJECT_DIR$/public/vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js" afterPath="$PROJECT_DIR$/public/vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js" afterPath="$PROJECT_DIR$/public/vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jqcloud2/dist/jqcloud.css" afterPath="$PROJECT_DIR$/public/vendor/jqcloud2/dist/jqcloud.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jqcloud2/dist/jqcloud.js" afterPath="$PROJECT_DIR$/public/vendor/jqcloud2/dist/jqcloud.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-classyloader/js/jquery.classyloader.min.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-classyloader/js/jquery.classyloader.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-knob/dist/jquery.knob.min.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-knob/dist/jquery.knob.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/jquery-ui.min.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/jquery-ui.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/accordion.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/accordion.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/autocomplete.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/autocomplete.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/button.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/button.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/core.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/core.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/datepicker.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/datepicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/dialog.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/dialog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/draggable.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/draggable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/droppable.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/droppable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-blind.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-blind.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-bounce.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-bounce.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-clip.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-clip.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-drop.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-drop.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-explode.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-explode.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-fade.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-fade.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-fold.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-fold.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-highlight.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-highlight.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-puff.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-puff.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-pulsate.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-pulsate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-scale.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-scale.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-shake.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-shake.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-size.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-size.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-slide.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-slide.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-transfer.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect-transfer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/effect.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/menu.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/menu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/mouse.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/mouse.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/position.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/position.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/progressbar.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/progressbar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/resizable.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/resizable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/selectable.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/selectable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/selectmenu.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/selectmenu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/slider.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/slider.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/sortable.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/sortable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/spinner.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/spinner.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/tabs.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/tabs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/tooltip.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/tooltip.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/widget.js" afterPath="$PROJECT_DIR$/public/vendor/jquery-ui/ui/widget.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery.easy-pie-chart/dist/angular.easypiechart.min.js" afterPath="$PROJECT_DIR$/public/vendor/jquery.easy-pie-chart/dist/angular.easypiechart.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jquery.inputmask/dist/jquery.inputmask.bundle.js" afterPath="$PROJECT_DIR$/public/vendor/jquery.inputmask/dist/jquery.inputmask.bundle.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js" afterPath="$PROJECT_DIR$/public/vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/load-google-maps/load-google-maps.js" afterPath="$PROJECT_DIR$/public/vendor/load-google-maps/load-google-maps.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/loaders.css/loaders.css" afterPath="$PROJECT_DIR$/public/vendor/loaders.css/loaders.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/marked/lib/marked.js" afterPath="$PROJECT_DIR$/public/vendor/marked/lib/marked.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/modernizr/modernizr.custom.js" afterPath="$PROJECT_DIR$/public/vendor/modernizr/modernizr.custom.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/moment/min/moment-with-locales.min.js" afterPath="$PROJECT_DIR$/public/vendor/moment/min/moment-with-locales.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/morris.js/morris.css" afterPath="$PROJECT_DIR$/public/vendor/morris.js/morris.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/morris.js/morris.js" afterPath="$PROJECT_DIR$/public/vendor/morris.js/morris.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/nestable/jquery.nestable.js" afterPath="$PROJECT_DIR$/public/vendor/nestable/jquery.nestable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ng-img-crop/compile/unminified/ng-img-crop.css" afterPath="$PROJECT_DIR$/public/vendor/ng-img-crop/compile/unminified/ng-img-crop.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ng-img-crop/compile/unminified/ng-img-crop.js" afterPath="$PROJECT_DIR$/public/vendor/ng-img-crop/compile/unminified/ng-img-crop.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ng-nestable/src/angular-nestable.js" afterPath="$PROJECT_DIR$/public/vendor/ng-nestable/src/angular-nestable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ng-table-export/ng-table-export.js" afterPath="$PROJECT_DIR$/public/vendor/ng-table-export/ng-table-export.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ng-table/dist/ng-table.min.css" afterPath="$PROJECT_DIR$/public/vendor/ng-table/dist/ng-table.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ng-table/dist/ng-table.min.js" afterPath="$PROJECT_DIR$/public/vendor/ng-table/dist/ng-table.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ngDialog/css/ngDialog-theme-default.min.css" afterPath="$PROJECT_DIR$/public/vendor/ngDialog/css/ngDialog-theme-default.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ngDialog/css/ngDialog.min.css" afterPath="$PROJECT_DIR$/public/vendor/ngDialog/css/ngDialog.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ngDialog/js/ngDialog.min.js" afterPath="$PROJECT_DIR$/public/vendor/ngDialog/js/ngDialog.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ngInfiniteScroll/build/ng-infinite-scroll.js" afterPath="$PROJECT_DIR$/public/vendor/ngInfiniteScroll/build/ng-infinite-scroll.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/ngWig/dist/ng-wig.min.js" afterPath="$PROJECT_DIR$/public/vendor/ngWig/dist/ng-wig.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/parsleyjs/dist/parsley.min.js" afterPath="$PROJECT_DIR$/public/vendor/parsleyjs/dist/parsley.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/raphael/raphael.js" afterPath="$PROJECT_DIR$/public/vendor/raphael/raphael.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/rickshaw/rickshaw.js" afterPath="$PROJECT_DIR$/public/vendor/rickshaw/rickshaw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/rickshaw/rickshaw.min.css" afterPath="$PROJECT_DIR$/public/vendor/rickshaw/rickshaw.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/screenfull/dist/screenfull.js" afterPath="$PROJECT_DIR$/public/vendor/screenfull/dist/screenfull.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js" afterPath="$PROJECT_DIR$/public/vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" afterPath="$PROJECT_DIR$/public/vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/simple-line-icons/css/simple-line-icons.css" afterPath="$PROJECT_DIR$/public/vendor/simple-line-icons/css/simple-line-icons.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/skycons/skycons.js" afterPath="$PROJECT_DIR$/public/vendor/skycons/skycons.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/slimScroll/jquery.slimscroll.min.js" afterPath="$PROJECT_DIR$/public/vendor/slimScroll/jquery.slimscroll.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/sparkline/index.js" afterPath="$PROJECT_DIR$/public/vendor/sparkline/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/spinkit/css/spinkit.css" afterPath="$PROJECT_DIR$/public/vendor/spinkit/css/spinkit.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/sweetalert/dist/sweetalert.css" afterPath="$PROJECT_DIR$/public/vendor/sweetalert/dist/sweetalert.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/sweetalert/dist/sweetalert.min.js" afterPath="$PROJECT_DIR$/public/vendor/sweetalert/dist/sweetalert.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular-rangy.min.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular-rangy.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular-sanitize.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular-sanitize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular-sanitize.min.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular-sanitize.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular.css" afterPath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular.min.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngular.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngularSetup.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/dist/textAngularSetup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/DOM.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/DOM.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/factories.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/factories.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/globals.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/globals.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/main.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/taBind.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/taBind.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/textAngular-sanitize.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/textAngular-sanitize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/textAngular.css" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/textAngular.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/textAngularSetup.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/textAngularSetup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/textAngular/src/validators.js" afterPath="$PROJECT_DIR$/public/vendor/textAngular/src/validators.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/weather-icons/css/weather-icons-wind.min.css" afterPath="$PROJECT_DIR$/public/vendor/weather-icons/css/weather-icons-wind.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/weather-icons/css/weather-icons.min.css" afterPath="$PROJECT_DIR$/public/vendor/weather-icons/css/weather-icons.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/vendor/whirl/dist/whirl.css" afterPath="$PROJECT_DIR$/public/vendor/whirl/dist/whirl.css" />
     </list>
     <ignored path="orders.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,71 +847,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="routes.config.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.851852">
-              <caret line="513" column="65" selection-start-line="513" selection-start-column="65" selection-end-line="513" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="client.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/app/views/client.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.0">
-              <caret line="6" column="61" selection-start-line="6" selection-start-column="61" selection-end-line="6" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="client.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="73" column="35" selection-start-line="73" selection-start-column="35" selection-end-line="73" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sidebar.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/app/views/partials/sidebar.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.09246575">
-              <caret line="3" column="63" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="63" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sidebar.jade" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/jade/views/partials/sidebar.jade">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sidebar.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/modules/sidebar/sidebar.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="42" column="41" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ClientController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.6296296">
+            <state vertical-scroll-proportion="-47.62963">
               <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-16.962963">
+              <caret line="194" column="55" selection-start-line="194" selection-start-column="55" selection-end-line="194" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AirtimeController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.36472604">
+              <caret line="134" column="57" selection-start-line="134" selection-start-column="57" selection-end-line="134" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="client-form.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="66" column="60" selection-start-line="66" selection-start-column="60" selection-end-line="66" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -107,17 +891,7 @@
         <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="24" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="client-form.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.666667">
-              <caret line="25" column="53" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="53" />
+              <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -139,7 +913,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/database/migrations/2016_04_13_055830_create_clients_table.php" />
         <option value="$PROJECT_DIR$/public/master/jade/index.jade" />
         <option value="$PROJECT_DIR$/app/Console/Commands/ScheduleNotification.php" />
         <option value="$PROJECT_DIR$/public/app/views/assessment-log.html" />
@@ -166,14 +939,9 @@
         <option value="$PROJECT_DIR$/public/master/js/custom/login/login.services.js" />
         <option value="$PROJECT_DIR$/public/master/js/custom/order/dashboard/dashboard.controller.js" />
         <option value="$PROJECT_DIR$/public/app/template/profile-update.tpl.html" />
-        <option value="$PROJECT_DIR$/public/master/js/custom/remove-html.cache.js" />
         <option value="$PROJECT_DIR$/public/app/views/client-create.html" />
-        <option value="$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js" />
-        <option value="$PROJECT_DIR$/public/app/js/app.js" />
-        <option value="$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js" />
         <option value="$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AssessmentController.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/public/master/js/custom/login/login-form.controller.js" />
         <option value="$PROJECT_DIR$/storage/logs/laravel.log" />
         <option value="$PROJECT_DIR$/.env" />
@@ -183,13 +951,19 @@
         <option value="$PROJECT_DIR$/app/Schedule.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PDFController.php" />
         <option value="$PROJECT_DIR$/resources/views/pdf/airtime.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" />
         <option value="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" />
-        <option value="$PROJECT_DIR$/public/master/js/custom/order/client/client.controller.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" />
         <option value="$PROJECT_DIR$/public/master/js/modules/sidebar/sidebar.controller.js" />
-        <option value="$PROJECT_DIR$/public/app/views/partials/sidebar.html" />
         <option value="$PROJECT_DIR$/public/master/jade/views/partials/sidebar.jade" />
+        <option value="$PROJECT_DIR$/public/app/views/partials/sidebar.html" />
+        <option value="$PROJECT_DIR$/public/master/js/custom/order/client/client.controller.js" />
+        <option value="$PROJECT_DIR$/public/app/js/app.js" />
+        <option value="$PROJECT_DIR$/public/master/js/custom/remove-html.cache.js" />
+        <option value="$PROJECT_DIR$/public/master/js/app.module.js" />
+        <option value="$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js" />
+        <option value="$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" />
       </list>
     </option>
   </component>
@@ -313,10 +1087,6 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -328,43 +1098,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pdf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="orders" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rockcity-erp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="orders" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rockcity-erp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -391,7 +1125,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="side&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/jade/views/partials/sidebar.jade&#10;sid&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/sidebar.html&#10;client&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;ClientController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client.controller.js&#10;client.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client.html&#10;route&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;pdf&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airt&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;user&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/UserController.php&#10;airti&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;lo&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;ro&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;log&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;AssessmentController.php&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AssessmentController.php&#10;assessmentService&#9;null&#9;null&#10;AssessmentController&#9;null&#9;null&#10;PDFController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;AirtimeController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;airtimeFactory&#9;null&#9;null&#10;AirtimeCreateController&#9;null&#9;null&#10;getAllClients&#9;null&#9;null&#10;clientFactory&#9;null&#9;null&#10;ClientFormController&#9;null&#9;null&#10;client-create.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client-create.html&#10;profi&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/template/profile-update.tpl.html&#10;app.js&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;app.j&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;loginFactory&#9;null&#9;null&#10;DashboardController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/dashboard/dashboard.controller.js&#10;UserController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/UserController.php&#10;rout&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;rout.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;permi&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;PeopleUpdateController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people-update.controller.js&#10;peopl&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/people.html&#10;airtim.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/airtime.html&#10;airtim.h&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/admin-airtime.html&#10;airt.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/airtime-create.html&#10;repor.h&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/report.html&#10;repor&#9;null&#9;null&#10;sideme&#9;FILE&#9;file:///var/www/rockcity-erp/public/server/sidebar-menu.json&#10;client-create&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client-create.html&#10;profile&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/template/profile-update.tpl.html&#10;rou&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;dashboardC&#9;null&#9;null&#10;sideb&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/sidebar.html&#10;side.con&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/sidebar/sidebar.controller.js&#10;pdf/ai&#9;FILE&#9;file:///var/www/html/rockcity/orders/resources/views/pdf/airtime.blade.php&#10;emails/ai&#9;FILE&#9;file:///var/www/html/rockcity/orders/resources/views/emails/airtime.blade.php&#10;airtimcon&#9;FILE&#9;file:///var/www/html/rockcity/orders/app/Http/Controllers/AirtimeController.php" />
+    <property name="SearchEverywhereHistoryKey" value="AirtimeController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;client&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;route&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;Clien&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;app.j&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;peop&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people.controller.js&#10;sid&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/sidebar.html&#10;side&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/jade/views/partials/sidebar.jade&#10;ClientController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client.controller.js&#10;client.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client.html&#10;pdf&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airt&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;user&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/UserController.php&#10;airti&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;lo&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;ro&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;log&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;AssessmentController.php&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AssessmentController.php&#10;assessmentService&#9;null&#9;null&#10;AssessmentController&#9;null&#9;null&#10;PDFController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airtimeFactory&#9;null&#9;null&#10;AirtimeCreateController&#9;null&#9;null&#10;getAllClients&#9;null&#9;null&#10;clientFactory&#9;null&#9;null&#10;ClientFormController&#9;null&#9;null&#10;client-create.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client-create.html&#10;profi&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/template/profile-update.tpl.html&#10;app.js&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;loginFactory&#9;null&#9;null&#10;DashboardController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/dashboard/dashboard.controller.js&#10;UserController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/UserController.php&#10;rout&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;rout.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;permi&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;PeopleUpdateController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people-update.controller.js&#10;peopl&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/people.html&#10;airtim.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/airtime.html&#10;airtim.h&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/admin-airtime.html&#10;airt.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/airtime-create.html&#10;repor.h&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/report.html&#10;repor&#9;null&#9;null&#10;sideme&#9;FILE&#9;file:///var/www/rockcity-erp/public/server/sidebar-menu.json&#10;client-create&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client-create.html&#10;profile&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/template/profile-update.tpl.html&#10;rou&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;dashboardC&#9;null&#9;null&#10;sideb&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/sidebar.html&#10;side.con&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/sidebar/sidebar.controller.js&#10;pdf/ai&#9;FILE&#9;file:///var/www/html/rockcity/orders/resources/views/pdf/airtime.blade.php" />
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="js.buildTools.gulp.gulp_package_dir" value="/usr/lib/node_modules/gulp" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
@@ -465,13 +1199,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="39" width="1323" height="729" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32654658" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26385635" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26385635" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967892" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32810047" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32811275" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3265306" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23575331" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -485,7 +1220,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -508,34 +1242,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/app/views/admin-airtime.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.425926">
-          <caret line="17" column="51" selection-start-line="17" selection-start-column="49" selection-end-line="17" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/views/airtime.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.296296">
-          <caret line="90" column="18" selection-start-line="90" selection-start-column="18" selection-end-line="90" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/views/people.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46232876">
-          <caret line="69" column="81" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/sidebar/sidebar.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/people/people-update.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -613,20 +1319,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/remove-html.cache.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3535188">
-          <caret line="12" column="45" selection-start-line="12" selection-start-column="45" selection-end-line="12" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03764321">
-          <caret line="16968" column="11" selection-start-line="16968" selection-start-column="11" selection-end-line="16968" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/app/views/client-create.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15410958">
@@ -676,13 +1368,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48287672">
-          <caret line="155" column="30" selection-start-line="155" selection-start-column="30" selection-end-line="155" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/master/js/custom/login/login-form.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1767594">
@@ -708,6 +1393,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.5185184">
           <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -722,6 +1408,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1849315">
           <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -736,6 +1423,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.185185">
           <caret line="47" column="102" selection-start-line="47" selection-start-column="102" selection-end-line="47" selection-end-column="102" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -757,13 +1445,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.24657534">
           <caret line="1030" column="20" selection-start-line="1030" selection-start-column="20" selection-end-line="1030" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52397263">
-          <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -792,6 +1474,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46232876">
           <caret line="22" column="39" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -818,38 +1501,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.666667">
-          <caret line="25" column="53" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="24" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.6296296">
-          <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="35" selection-start-line="73" selection-start-column="35" selection-end-line="73" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/master/js/modules/sidebar/sidebar.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -860,7 +1511,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/master/jade/views/partials/sidebar.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.2651391">
           <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
           <folding />
         </state>
@@ -868,8 +1519,114 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/views/partials/sidebar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09246575">
-          <caret line="3" column="63" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="63" />
+        <state vertical-scroll-proportion="0.061643835">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/people/people.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="90" column="48" selection-start-line="90" selection-start-column="48" selection-end-line="90" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+          <folding>
+            <marker date="1473706724054" expanded="true" signature="3309:5388" placeholder="//..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/modules/lazyload/lazyload.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321918">
+          <caret line="6402" column="78" selection-start-line="6402" selection-start-column="68" selection-end-line="6402" selection-end-column="78" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <marker date="1473710634006" expanded="true" signature="219434:219446" placeholder="..." />
+            <marker date="1473710634006" expanded="true" signature="274527:274744" placeholder="..." />
+            <marker date="1473710634006" expanded="true" signature="274824:274905" placeholder="..." />
+            <marker date="1473710634006" expanded="true" signature="275014:275097" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/app.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.058919802">
+          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/remove-html.cache.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20621932">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/modules/core/core.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="66" column="60" selection-start-line="66" selection-start-column="60" selection-end-line="66" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-47.62963">
+          <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.962963">
+          <caret line="194" column="55" selection-start-line="194" selection-start-column="55" selection-end-line="194" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36472604">
+          <caret line="134" column="57" selection-start-line="134" selection-start-column="57" selection-end-line="134" selection-end-column="57" />
           <folding />
         </state>
       </provider>

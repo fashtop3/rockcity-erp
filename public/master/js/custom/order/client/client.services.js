@@ -15,7 +15,7 @@
 
             this.update = function(){
                 return $resource(baseURL + "client/:id/edit", null, {
-                    'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
                 });
             };
 

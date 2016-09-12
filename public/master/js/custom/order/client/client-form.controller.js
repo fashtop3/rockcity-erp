@@ -60,7 +60,7 @@
                     }
                     else
                     {
-                        clientFactory.client().save(vm.client,
+                        clientFactory.clients().save(vm.client,
                             function(response){
                                 toaster.pop('success', 'Client Registration', response.data);
                                 $timeout(function(){

@@ -1,7 +1,7 @@
 /*!
  * angular-ui-scroll
  * https://github.com/angular-ui/ui-scroll.git
- * Version: 1.4.1 -- 2016-04-17T11:47:46.064Z
+ * Version: 1.5.1 -- 2016-06-27T18:18:39.277Z
  * License: MIT
  */
  
@@ -228,6 +228,9 @@ angular.module('ui.scroll.jqlite', ['ui.scroll']).service('jqLiteExtras', ['$log
         },
         outerHeight: function outerHeight(option) {
           return getWidthHeight(this[0], 'height', option ? 'outerfull' : 'outer');
+        },
+        outerWidth: function outerWidth(option) {
+          return getWidthHeight(this[0], 'width', option ? 'outerfull' : 'outer');
         },
 
 

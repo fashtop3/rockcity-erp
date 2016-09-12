@@ -128,7 +128,12 @@ class AirtimeController extends Controller
             $schedule->save();
 
             //mail out the invoice
-            Event::fire(new ScheduleHasBeenPlaced($schedule));
+            try{
+                Event::fire(new ScheduleHasBeenPlaced($schedule));
+            }
+            catch(\Exception $e) {
+                return response('Unable to process Order: Mail Server not online contact Administrator', 403);
+            }
 
 
             DB::commit();

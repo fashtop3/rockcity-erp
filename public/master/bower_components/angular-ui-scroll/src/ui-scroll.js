@@ -13,12 +13,22 @@
 angular.module('ui.scroll', [])
   .directive('uiScrollViewport', function () {
     return {
+      restrict: 'A',
       controller: [
+        '$log',
         '$scope',
         '$element',
-        function (scope, element) {
-          this.viewport = element;
-          return this;
+        function (console, scope, element) {
+          let self = this;
+          self.container = element;
+          self.viewport = element;
+
+          angular.forEach(element.children(),
+            (child => {
+              if (child.tagName.toLowerCase() === 'tbody') {
+                self.viewport = angular.element(child);
+              }
+            }));
         }
       ]
     };
@@ -33,14 +43,14 @@ angular.module('ui.scroll', [])
     function (console, $injector, $rootScope, $timeout, $q, $parse) {
       const $animate = ($injector.has && $injector.has('$animate')) ? $injector.get('$animate') : null;
       const isAngularVersionLessThen1_3 = angular.version.major === 1 && angular.version.minor < 3;
-      //const log = console.debug || console.log;
 
       return {
-        require: ['?^uiScrollViewport'],
+        require: ['?^^uiScrollViewport'],
+        restrict: 'A',
         transclude: 'element',
         priority: 1000,
         terminal: true,
-        compile
+        link: link
       };
 
       // Element manipulation routines
@@ -90,7 +100,7 @@ angular.module('ui.scroll', [])
         return [($animate.leave(wrapper.element)).then(() => wrapper.scope.$destroy())];
       }
 
-      function Buffer(itemName, $scope, linker, bufferSize) {
+      function Buffer(bufferSize) {
         const buffer = Object.create(Array.prototype);
 
         angular.extend(buffer, {
@@ -113,6 +123,7 @@ angular.module('ui.scroll', [])
               ++buffer.next;
               buffer.insert('append', item);
             });
+            buffer.maxIndex = buffer.eof ? buffer.next - 1 : Math.max(buffer.next - 1, buffer.maxIndex);
           },
 
           prepend(items) {
@@ -120,6 +131,7 @@ angular.module('ui.scroll', [])
               --buffer.first;
               buffer.insert('prepend', item);
             });
+            buffer.minIndex = buffer.bof ? buffer.minIndex = buffer.first : Math.min(buffer.first, buffer.minIndex);
           },
 
           /**
@@ -129,15 +141,9 @@ angular.module('ui.scroll', [])
            * operations: 'append', 'prepend', 'insert', 'remove', 'update', 'none'
            */
           insert(operation, item) {
-            const itemScope = $scope.$new();
             const wrapper = {
-              item,
-              scope: itemScope
+              item : item
             };
-
-            itemScope[itemName] = item;
-
-            linker(itemScope, (clone) => wrapper.element = clone);
 
             if (operation % 1 === 0) {// it is an insert
               wrapper.op = 'insert';
@@ -171,12 +177,19 @@ angular.module('ui.scroll', [])
             return removeElementAnimated(arg1);
           },
 
-          setUpper() {
-            buffer.maxIndex = buffer.eof ? buffer.next - 1 : Math.max(buffer.next - 1, buffer.maxIndex);
-          },
-
-          setLower() {
-            buffer.minIndex = buffer.bof ? buffer.minIndex = buffer.first : Math.min(buffer.first, buffer.minIndex);
+          effectiveHeight(elements) {
+            if (!elements.length)
+              return 0;
+            let top = Number.MAX_VALUE;
+            let bottom = Number.MIN_VALUE;
+            elements.forEach((wrapper) => {
+              if (wrapper.element[0].offsetParent) {
+                // element style is not display:none
+                top = Math.min(top, wrapper.element.offset().top);
+                bottom = Math.max(bottom, wrapper.element.offset().top + wrapper.element.outerHeight(true));
+              }
+            });
+            return Math.max(0, bottom - top);
           }
 
         });
@@ -184,12 +197,13 @@ angular.module('ui.scroll', [])
         return buffer;
       }
 
-      function Viewport(buffer, element, controllers, attrs) {
+      function Viewport(buffer, element, viewportController, attrs) {
         const PADDING_MIN = 0.3;
         const PADDING_DEFAULT = 0.5;
-        let topPadding = null;
-        let bottomPadding = null;
-        const viewport = controllers[0] && controllers[0].viewport ? controllers[0].viewport : angular.element(window);
+        let topPadding;
+        let bottomPadding;
+        const viewport = viewportController && viewportController.viewport ? viewportController.viewport : angular.element(window);
+        const container = viewportController && viewportController.container ? viewportController.container : undefined;
 
         viewport.css({
           'overflow-y': 'auto',
@@ -201,11 +215,10 @@ angular.module('ui.scroll', [])
 
           angular.extend(cache, {
             add(item) {
-              for (let i = cache.length - 1; i >= 0; i--) {
-                if(cache[i].index === item.scope.$index) {
-                  cache[i].height = item.element.outerHeight();
-                  return;
-                }
+              let existedItem = cache.find(i => i.index === item.scope.$index);
+              if (existedItem) {
+                existedItem.height = item.element.outerHeight();
+                return;
               }
               cache.push({
                 index: item.scope.$index,
@@ -252,6 +265,11 @@ angular.module('ui.scroll', [])
             bottomPadding = new Padding(template);
             element.before(topPadding);
             element.after(bottomPadding);
+          },
+
+          applyContainerStyle() {
+            if (container && container !== viewport)
+              viewport.css('height', window.getComputedStyle(container[0]).height);
           },
 
           bottomDataPos() {
@@ -340,72 +358,56 @@ angular.module('ui.scroll', [])
             }
           },
 
-          adjustPadding(adjustScrollTop) {
-            if (!buffer.length) {
+          adjustPadding() {
+            if (!buffer.length)
               return;
-            }
 
-            // percise heights calculation, items that were in buffer once
-            let topPaddingHeight = 0;
-            let bottomPaddingHeight = 0;
+            // precise heights calculation, items that were in buffer once
+            let topPaddingHeight = topPadding.cache.reduce((summ, item) => summ + (item.index < buffer.first ? item.height : 0), 0);
+            let bottomPaddingHeight = bottomPadding.cache.reduce((summ, item) => summ + (item.index >= buffer.next ? item.height : 0), 0);
 
-            if(topPadding.cache.length) {
-              for (let i = topPadding.cache.length - 1; i >= 0; i--) {
-                if (topPadding.cache[i].index < buffer.first) {
-                  topPaddingHeight += topPadding.cache[i].height;
-                }
-              }
-            }
-            if(bottomPadding.cache.length) {
-              for (let i = bottomPadding.cache.length - 1; i >= 0; i--) {
-                if(bottomPadding.cache[i].index >= buffer.next) {
-                  bottomPaddingHeight += bottomPadding.cache[i].height;
-                }
-              }
-            }
+            // average item height based on buffer data
+            let visibleItemsHeight = buffer.reduce((summ, item) => summ + item.element.outerHeight(true), 0);
+            let averageItemHeight = (visibleItemsHeight + topPaddingHeight + bottomPaddingHeight) / (buffer.maxIndex - buffer.minIndex + 1);
 
             // average heights calculation, items that have never been reached
-            let topPaddingHeightAdd = 0;
-            let bottomPaddingHeightAdd = 0;
-            let adjustTopPadding = buffer.minIndexUser && buffer.minIndex > buffer.minIndexUser;
-            let adjustBottomPadding = buffer.maxIndexUser && buffer.maxIndex < buffer.maxIndexUser;
+            let adjustTopPadding = buffer.minIndexUser !== null && buffer.minIndex > buffer.minIndexUser;
+            let adjustBottomPadding = buffer.maxIndexUser !== null && buffer.maxIndex < buffer.maxIndexUser;
+            let topPaddingHeightAdd = adjustTopPadding ? (buffer.minIndex - buffer.minIndexUser) * averageItemHeight : 0;
+            let bottomPaddingHeightAdd = adjustBottomPadding ? (buffer.maxIndexUser - buffer.maxIndex) * averageItemHeight : 0;
 
-            if(adjustTopPadding || adjustBottomPadding) {
-              let visibleItemsHeight = 0;
-              for (let i = buffer.length - 1; i >= 0; i--) {
-                visibleItemsHeight += buffer[i].element.outerHeight(true);
-              }
-              let averageItemHeight = (visibleItemsHeight + topPaddingHeight + bottomPaddingHeight) / (buffer.maxIndex - buffer.minIndex + 1);
-              topPaddingHeightAdd = adjustTopPadding ? (buffer.minIndex - buffer.minIndexUser) * averageItemHeight : 0;
-              bottomPaddingHeightAdd = adjustBottomPadding ? (buffer.maxIndexUser - buffer.maxIndex) * averageItemHeight : 0;
-            }
-
-            // paddings combine adjustement
-            let topPaddingHeightOld = topPadding.height();
+            // paddings combine adjustment
             topPadding.height(topPaddingHeight + topPaddingHeightAdd);
             bottomPadding.height(bottomPaddingHeight + bottomPaddingHeightAdd);
+          },
 
-            // additional scrollTop adjustement in case of datasource.minIndex external set
-            if (adjustScrollTop && adjustTopPadding && topPaddingHeightAdd) {
+          adjustScrollTopAfterMinIndexSet(topPaddingHeightOld) {
+            // additional scrollTop adjustment in case of datasource.minIndex external set
+            if (buffer.minIndexUser !== null && buffer.minIndex > buffer.minIndexUser) {
               let diff = topPadding.height() - topPaddingHeightOld;
               viewport.scrollTop(viewport.scrollTop() + diff);
             }
           },
 
-          adjustScrollTopAfterPrepend(height) {
+          adjustScrollTopAfterPrepend(updates) {
+            if(!updates.prepended.length)
+              return;
+            const height = buffer.effectiveHeight(updates.prepended);
             const paddingHeight = topPadding.height() - height;
-
             if (paddingHeight >= 0) {
               topPadding.height(paddingHeight);
-            } else {
+            }
+            else {
               topPadding.height(0);
               viewport.scrollTop(viewport.scrollTop() - paddingHeight);
             }
           },
+
           resetTopPadding() {
             topPadding.height(0);
             topPadding.cache.clear();
           },
+
           resetBottomPadding() {
             bottomPadding.height(0);
             bottomPadding.cache.clear();
@@ -417,34 +419,25 @@ angular.module('ui.scroll', [])
 
       function Adapter($attr, viewport, buffer, adjustBuffer) {
         const viewportScope = viewport.scope() || $rootScope;
-        const setTopVisible = $attr.topVisible ? $parse($attr.topVisible).assign : angular.noop;
-        const setTopVisibleElement = $attr.topVisibleElement ? $parse($attr.topVisibleElement).assign : angular.noop;
-        const setTopVisibleScope = $attr.topVisibleScope ? $parse($attr.topVisibleScope).assign : angular.noop;
-        const setIsLoading = $attr.isLoading ? $parse($attr.isLoading).assign : angular.noop;
+        let disabled = false;
+        let self = this;
+
+        createValueInjector('adapter')(self);
+        let topVisibleInjector = createValueInjector('topVisible');
+        let topVisibleElementInjector = createValueInjector('topVisibleElement');
+        let topVisibleScopeInjector = createValueInjector('topVisibleScope');
+        let isLoadingInjector = createValueInjector('isLoading');
+
+        // Adapter API definition
+
+        Object.defineProperty(this, 'disabled', {
+          get: () => disabled,
+          set: (value) => (!(disabled = value)) ? adjustBuffer() : null
+        });
 
         this.isLoading = false;
-
-        function applyUpdate(wrapper, newItems) {
-          if (!angular.isArray(newItems)) {
-            return;
-          }
-
-          let keepIt;
-          let pos = (buffer.indexOf(wrapper)) + 1;
-
-          newItems.reverse().forEach((newItem) => {
-            if (newItem === wrapper.item) {
-              keepIt = true;
-              pos--;
-            } else {
-              buffer.insert(pos, newItem);
-            }
-          });
-
-          if (!keepIt) {
-            wrapper.op = 'remove';
-          }
-        }
+        this.isBOF = () => buffer.bof;
+        this.isEOF = () => buffer.eof;
 
         this.applyUpdates = (arg1, arg2) => {
           if (angular.isFunction(arg1)) {
@@ -479,15 +472,14 @@ angular.module('ui.scroll', [])
           adjustBuffer();
         };
 
-        this.loading = function (value) {
-          this.isLoading = value;
-          setIsLoading(viewportScope, value);
+        this.loading = (value) => {
+          isLoadingInjector(value);
         };
 
-        this.calculateProperties = function () {
-          let i, item, itemHeight, itemTop, isNewRow, rowTop;
+        this.calculateProperties = () => {
+          let item, itemHeight, itemTop, isNewRow, rowTop;
           let topHeight = 0;
-          for (i = 0; i < buffer.length; i++) {
+          for (let i = 0; i < buffer.length; i++) {
             item = buffer[i];
             itemTop = item.element.offset().top;
             isNewRow = rowTop !== itemTop;
@@ -499,401 +491,449 @@ angular.module('ui.scroll', [])
               topHeight += itemHeight;
             } else {
               if (isNewRow) {
-                this.topVisible = item.item;
-                this.topVisibleElement = item.element;
-                this.topVisibleScope = item.scope;
-                setTopVisible(viewportScope, item.item);
-                setTopVisibleElement(viewportScope, item.element);
-                setTopVisibleScope(viewportScope, item.scope);
+                topVisibleInjector(item.item);
+                topVisibleElementInjector(item.element);
+                topVisibleScopeInjector(item.scope);
               }
               break;
-
             }
           }
         };
-      }
 
-      function compile(elementTemplate, attr, compileLinker) {
-        const match = attr.uiScroll.match(/^\s*(\w+)\s+in\s+([\w\.]+)\s*$/);
+        // private function definitions
 
-        if (!(match)) {
-          throw new Error('Expected uiScroll in form of \'_item_ in _datasource_\' but got \'' + attr.uiScroll + '\'');
+        function createValueInjector(attribute) {
+          let expression = $attr[attribute];
+          let scope = viewportScope;
+          let assign;
+          if (expression) {
+            let match = expression.match(/^(\S+)(?:\s+on\s+(\w(?:\w|\d)*))?$/);
+            if (!match)
+              throw new Error('Expected injection expression in form of \'target\' or \'target on controller\' but got \'' + expression + '\'');
+            let target = match[1];
+            let controllerName = match[2];
+            if (controllerName) {
+              let candidate = viewport;
+              scope = undefined;
+              while (candidate.length) {
+                let controller = candidate.attr('ng-controller');
+                if (controller === controllerName) {
+                  scope = candidate.scope();
+                  break;
+                }
+                candidate = candidate.parent();
+              }
+              if (!scope)
+                throw new Error('Failed to locate target controller \'' + controllerName + '\' to inject \'' + target + '\'');
+            }
+            assign = $parse(target).assign;
+          }
+          return (value) => {
+            if (self !== value) // just to avoid injecting adapter reference in the adapter itself. Kludgy, I know.
+              self[attribute] = value;
+            if (assign)
+              assign(scope, value);
+          };
         }
 
-        const itemName = match[1];
-        const datasourceName = match[2];
-        const bufferSize = Math.max(3, +attr.bufferSize || 10);
-        var startIndex = +attr.startIndex || 1;
+        function applyUpdate(wrapper, newItems) {
+          if (!angular.isArray(newItems)) {
+            return;
+          }
 
-        return function link($scope, element, $attr, controllers, linker) {
-          // starting from angular 1.2 compileLinker usage is deprecated
-          linker = linker || compileLinker;
+          let keepIt;
+          let pos = (buffer.indexOf(wrapper)) + 1;
 
-          const datasource = (() => {
-            let isDatasourceValid = function () {
-              return angular.isObject(_datasource) && angular.isFunction(_datasource.get);
-            };
-
-            let _datasource = $parse(datasourceName)($scope); // try to get datasource on scope
-            if (!isDatasourceValid()) {
-              _datasource = $injector.get(datasourceName); // try to inject datasource as service
-              if (!isDatasourceValid()) {
-                throw new Error(datasourceName + ' is not a valid datasource');
-              }
+          newItems.reverse().forEach((newItem) => {
+            if (newItem === wrapper.item) {
+              keepIt = true;
+              pos--;
+            } else {
+              buffer.insert(pos, newItem);
             }
-
-            let minIndexDesc = Object.getOwnPropertyDescriptor(_datasource, 'minIndex');
-            if(!minIndexDesc || (!minIndexDesc.set && !minIndexDesc.get)) {
-              Object.defineProperty(_datasource, 'minIndex', {
-                set: function (value) {
-                  this._minIndex = value;
-                  onDatasourceMinIndexChanged(value);
-                },
-                get: function get() {
-                  return this._minIndex;
-                }
-              });
-            }
-
-            let maxIndexDesc = Object.getOwnPropertyDescriptor(_datasource, 'maxIndex');
-            if(!maxIndexDesc || (!maxIndexDesc.set && !maxIndexDesc.get)) {
-              Object.defineProperty(_datasource, 'maxIndex', {
-                set: function (value) {
-                  this._maxIndex = value;
-                  onDatasourceMaxIndexChanged(value);
-                },
-                get: function get() {
-                  return this._maxIndex;
-                }
-              });
-            }
-
-            return _datasource;
-          })();
-
-          let ridActual = 0;// current data revision id
-          let pending = [];
-          let buffer = new Buffer(itemName, $scope, linker, bufferSize);
-          let viewport = new Viewport(buffer, element, controllers, $attr);
-          let adapter = new Adapter($attr, viewport, buffer, () => {
-            dismissPendingRequests();
-            adjustBuffer(ridActual);
           });
 
-          var onDatasourceMinIndexChanged = function(value) {
-            $timeout(function(){
-              buffer.minIndexUser = value;
-              if(!pending.length) {
-                viewport.adjustPadding(true);
-              }
-            });
-          };
-          var onDatasourceMaxIndexChanged = function(value) {
-            $timeout(function(){
-              buffer.maxIndexUser = value;
-              if(!pending.length) {
-                viewport.adjustPadding();
-              }
-            });
-          };
+          if (!keepIt) {
+            wrapper.op = 'remove';
+          }
+        }
 
-          const fetchNext = (() => {
-            if (datasource.get.length !== 2) {
-              return (success) => datasource.get(buffer.next, bufferSize, success);
-            }
+      }
 
-            return (success) => {
+      function link($scope, element, $attr, controllers, linker) {
+
+        const match = $attr.uiScroll.match(/^\s*(\w+)\s+in\s+([(\w|\$)\.]+)\s*$/);
+
+        if (!(match))
+          throw new Error('Expected uiScroll in form of \'_item_ in _datasource_\' but got \'' + $attr.uiScroll + '\'');
+
+        let datasource = null;
+        const itemName = match[1];
+        const datasourceName = match[2];
+        const bufferSize = Math.max(3, +$attr.bufferSize || 10);
+        const viewportController = controllers[0];
+        let startIndex = parseInt($attr.startIndex, 10);
+        startIndex = isNaN(startIndex) ? 1 : startIndex;
+        let ridActual = 0;// current data revision id
+        let pending = [];
+
+        let buffer = new Buffer(bufferSize);
+        let viewport = new Viewport(buffer, element, viewportController, $attr);
+        let adapter = new Adapter($attr, viewport, buffer, adjustBuffer);
+        if (viewportController)
+          viewportController.adapter = adapter;
+
+        let isDatasourceValid = () => angular.isObject(datasource) && angular.isFunction(datasource.get);
+        datasource = $parse(datasourceName)($scope); // try to get datasource on scope
+        if (!isDatasourceValid()) {
+          datasource = $injector.get(datasourceName); // try to inject datasource as service
+          if (!isDatasourceValid()) {
+            throw new Error(datasourceName + ' is not a valid datasource');
+          }
+        }
+
+        let indexStore = {};
+        function defineProperty(datasource, propName, propUserName) {
+          let descriptor = Object.getOwnPropertyDescriptor(datasource, propName);
+          if (!descriptor || (!descriptor.set && ! descriptor.get)) {
+            Object.defineProperty(datasource, propName, {
+              set: (value) => {
+                indexStore[propName] = value;
+                $timeout(() => {
+                  buffer[propUserName] = value;
+                  if(!pending.length) {
+                    let topPaddingHeightOld = viewport.topDataPos();
+                    viewport.adjustPadding();
+                    if(propName === 'minIndex'){
+                      viewport.adjustScrollTopAfterMinIndexSet(topPaddingHeightOld);
+                    }
+                  }
+                });
+              },
+              get: () => indexStore[propName]
+            });
+          }
+        }
+
+        defineProperty(datasource, 'minIndex', 'minIndexUser');
+        defineProperty(datasource, 'maxIndex', 'maxIndexUser');
+
+        const fetchNext = (datasource.get.length !== 2) ? (success) => datasource.get(buffer.next, bufferSize, success)
+          : (success) => {
               datasource.get({
                 index: buffer.next,
                 append: buffer.length ? buffer[buffer.length - 1].item : void 0,
                 count: bufferSize
               }, success);
             };
-          })();
 
-          const fetchPrevious = (() => {
-            if (datasource.get.length !== 2) {
-              return (success) => datasource.get(buffer.first - bufferSize, bufferSize, success);
-            }
-
-            return (success) => {
+        const fetchPrevious = (datasource.get.length !== 2) ? (success) => datasource.get(buffer.first - bufferSize, bufferSize, success)
+          : (success) => {
               datasource.get({
                 index: buffer.first - bufferSize,
                 prepend: buffer.length ? buffer[0].item : void 0,
                 count: bufferSize
               }, success);
             };
-          })();
 
-          if ($attr.adapter) {
-            // so we have an adapter on $scope
-            let adapterOnScope = $parse($attr.adapter)($scope);
+        adapter.reload = reload;
 
-            if (!angular.isObject(adapterOnScope)) {
-              $parse($attr.adapter).assign($scope, {});
-              adapterOnScope = $parse($attr.adapter)($scope);
-            }
+        /**
+         * Build padding elements
+         *
+         * Calling linker is the only way I found to get access to the tag name of the template
+         * to prevent the directive scope from pollution a new scope is created and destroyed
+         * right after the builder creation is completed
+         */
+        linker((clone, scope) => {
+          viewport.createPaddingElements(clone[0]);
+          // we do not include the clone in the DOM. It means that the nested directives will not
+          // be able to reach the parent directives, but in this case it is intentional because we
+          // created the clone to access the template tag name
+          scope.$destroy();
+          clone.remove();
+        });
 
-            adapter = angular.extend(adapterOnScope, adapter);
-          }
+        $scope.$on('$destroy', () => {
+          unbindEvents();
+          viewport.unbind('mousewheel', wheelHandler);
+        });
 
-          /**
-           * Build padding elements
-           *
-           * Calling linker is the only way I found to get access to the tag name of the template
-           * to prevent the directive scope from pollution a new scope is created and destroyed
-           * right after the builder creation is completed
-           */
-          linker($scope.$new(), (template, scope) => {
-            viewport.createPaddingElements(template[0]);
-            // Destroy template's scope to remove any watchers on it.
-            scope.$destroy();
-            // We don't need template anymore.
-            template.remove();
-          });
+        viewport.bind('mousewheel', wheelHandler);
 
-          adapter.reload = reload;
-
-          $scope.$on('$destroy', () => {
-            // clear the buffer. It is necessary to remove the elements and $destroy the scopes
-            //  *******  buffer.clear(); there is no need to reset the buffer especially because the elements are not destroyed by this anyway
-            unbindEvents();
-            viewport.unbind('mousewheel', wheelHandler);
-          });
-
-          viewport.bind('mousewheel', wheelHandler);
-
+        $timeout(() => {
+          viewport.applyContainerStyle();
           reload();
+        });
 
-          /* Functions definitions */
+        /* Private function definitions */
 
-          function bindEvents() {
-            viewport.bind('resize', resizeAndScrollHandler);
-            viewport.bind('scroll', resizeAndScrollHandler);
-          }
+        function isInvalid(rid) {
+          return (rid && rid !== ridActual) || $scope.$$destroyed;
+        }
 
-          function unbindEvents() {
-            viewport.unbind('resize', resizeAndScrollHandler);
-            viewport.unbind('scroll', resizeAndScrollHandler);
-          }
+        function bindEvents() {
+          viewport.bind('resize', resizeAndScrollHandler);
+          viewport.bind('scroll', resizeAndScrollHandler);
+        }
 
-          function dismissPendingRequests() {
-            ridActual++;
-            pending = [];
-          }
+        function unbindEvents() {
+          viewport.unbind('resize', resizeAndScrollHandler);
+          viewport.unbind('scroll', resizeAndScrollHandler);
+        }
 
-          function reload() {
-            dismissPendingRequests();
-            viewport.resetTopPadding();
-            viewport.resetBottomPadding();
+        function reload() {
+          viewport.resetTopPadding();
+          viewport.resetBottomPadding();
 
-            if (arguments.length)
-              startIndex = arguments[0];
+          if (arguments.length)
+            startIndex = arguments[0];
 
-            buffer.reset(startIndex);
-            adjustBuffer(ridActual);
-          }
+          buffer.reset(startIndex);
+          adjustBuffer();
+        }
 
-          function isElementVisible(wrapper) {
-            return wrapper.element.height() && wrapper.element[0].offsetParent;
-          }
+        function isElementVisible(wrapper) {
+          return wrapper.element.height() && wrapper.element[0].offsetParent;
+        }
 
-          function visibilityWatcher(wrapper) {
-            if (isElementVisible(wrapper)) {
-              buffer.forEach((item) => {
-                if (angular.isFunction(item.unregisterVisibilityWatcher)) {
-                  item.unregisterVisibilityWatcher();
-                  delete item.unregisterVisibilityWatcher;
-                }
-              });
-              adjustBuffer();
-            }
-          }
-
-          function insertWrapperContent(wrapper, sibling) {
-            viewport.insertElement(wrapper.element, sibling);
-
-            if (isElementVisible(wrapper)) {
-              return true;
-            }
-
-            wrapper.unregisterVisibilityWatcher = wrapper.scope.$watch(() => visibilityWatcher(wrapper));
-
-            return false;
-          }
-
-          function processBufferedItems(rid) {
-            let keepFetching = false;
-            let promises = [];
-            const toBePrepended = [];
-            const toBeRemoved = [];
-
-            function getPreSibling(i) {
-              return (i > 0) ? buffer[i - 1].element : undefined;
-            }
-
-            buffer.forEach((wrapper, i) => {
-              switch (wrapper.op) {
-                case 'prepend':
-                  toBePrepended.unshift(wrapper);
-                  break;
-                case 'append':
-                  keepFetching = insertWrapperContent(wrapper, getPreSibling(i)) || keepFetching;
-                  wrapper.op = 'none';
-                  break;
-                case 'insert':
-                  promises = promises.concat(viewport.insertElementAnimated(wrapper.element, getPreSibling(i)));
-                  wrapper.op = 'none';
-                  break;
-                case 'remove':
-                  toBeRemoved.push(wrapper);
+        function visibilityWatcher(wrapper) {
+          if (isElementVisible(wrapper)) {
+            buffer.forEach((item) => {
+              if (angular.isFunction(item.unregisterVisibilityWatcher)) {
+                item.unregisterVisibilityWatcher();
+                delete item.unregisterVisibilityWatcher;
               }
             });
-
-            toBeRemoved.forEach((wrapper) => promises = promises.concat(buffer.remove(wrapper)));
-
-            if (toBePrepended.length) {
-              let adjustedPaddingHeight = 0;
-
-              toBePrepended.forEach((wrapper) => {
-                keepFetching = insertWrapperContent(wrapper) || keepFetching;
-                wrapper.op = 'none';
-                adjustedPaddingHeight += wrapper.element.outerHeight(true);
-              });
-
-              viewport.adjustScrollTopAfterPrepend(adjustedPaddingHeight);
-            }
-
-            // re-index the buffer
-            buffer.forEach((item, i) => item.scope.$index = buffer.first + i);
-
-            // schedule another adjustBuffer after animation completion
-            if (promises.length) {
-              $q.all(promises).then(() => {
-                viewport.adjustPadding();
-                // log "Animation completed rid #{rid}"
-                return adjustBuffer(rid);
-              });
-            } else {
-              viewport.adjustPadding();
-            }
-
-            return keepFetching;
+            adjustBuffer();
           }
+        }
 
-          function enqueueFetch(rid, keepFetching) {
-            if (viewport.shouldLoadBottom() && keepFetching) {
-                  // keepFetching = true means that at least one item app/prepended in the last batch had height > 0
+        function insertWrapperContent(wrapper, insertAfter) {
+          createElement(wrapper, insertAfter, viewport.insertElement);
+          if (!isElementVisible(wrapper)) {
+            wrapper.unregisterVisibilityWatcher = wrapper.scope.$watch(() => visibilityWatcher(wrapper));
+          }
+          wrapper.element.addClass('ng-hide'); // hide inserted elements before data binding
+        }
+
+        function createElement(wrapper, insertAfter, insertElement) {
+          let promises;
+          let sibling = (insertAfter > 0) ? buffer[insertAfter - 1].element : undefined;
+          linker((clone, scope) => {
+            promises = insertElement(clone, sibling);
+            wrapper.element = clone;
+            wrapper.scope = scope;
+            scope[itemName] = wrapper.item;
+          });
+          if (adapter.transform)
+            adapter.transform(wrapper.scope, wrapper.element);
+          return promises;
+        }
+
+        function updateDOM() {
+
+          let promises = [];
+          const toBePrepended = [];
+          const toBeRemoved = [];
+          const inserted = [];
+
+          buffer.forEach((wrapper, i) => {
+            switch (wrapper.op) {
+              case 'prepend':
+                toBePrepended.unshift(wrapper);
+                break;
+              case 'append':
+                insertWrapperContent(wrapper, i);
+                wrapper.op = 'none';
+                inserted.push(wrapper);
+                break;
+              case 'insert':
+                promises = promises.concat(createElement(wrapper, i, viewport.insertElementAnimated));
+                wrapper.op = 'none';
+                inserted.push(wrapper);
+                break;
+              case 'remove':
+                toBeRemoved.push(wrapper);
+            }
+          });
+
+          toBeRemoved.forEach((wrapper) => promises = promises.concat(buffer.remove(wrapper)));
+
+          if (toBePrepended.length)
+            toBePrepended.forEach((wrapper) => {
+              insertWrapperContent(wrapper);
+              wrapper.op = 'none';
+            });
+
+          buffer.forEach((item, i) => item.scope.$index = buffer.first + i);
+
+          return {
+            prepended: toBePrepended,
+            removed: toBeRemoved,
+            inserted: inserted,
+            animated: promises
+          };
+
+        }
+
+        function updatePaddings(rid, updates) {
+          // schedule another adjustBuffer after animation completion
+          if (updates.animated.length) {
+            $q.all(updates.animated).then(() => {
+              viewport.adjustPadding();
+              adjustBuffer(rid);
+            });
+          } else {
+            viewport.adjustPadding();
+          }
+        }
+
+        function enqueueFetch(rid, updates) {
+          if (viewport.shouldLoadBottom()) {
+            if(!updates || buffer.effectiveHeight(updates.inserted) > 0) {
+              // this means that at least one item appended in the last batch has height > 0
               if (pending.push(true) === 1) {
                 fetch(rid);
-                adapter.loading(true);              
+                adapter.loading(true);
               }
-            } else if (viewport.shouldLoadTop() && (keepFetching || pending[0])) {
-                // pending[0] = true means that previous fetch was appending. We need to force at least one prepend
-                // BTW there will always be at least 1 element in the pending array because bottom is fetched first
+            }
+          } else if (viewport.shouldLoadTop()) {
+            if ((!updates || buffer.effectiveHeight(updates.prepended) > 0) || pending[0]) {
+              // this means that at least one item appended in the last batch has height > 0
+              // pending[0] = true means that previous fetch was appending. We need to force at least one prepend
+              // BTW there will always be at least 1 element in the pending array because bottom is fetched first
               if (pending.push(false) === 1) {
                 fetch(rid);
-                adapter.loading(true);              
+                adapter.loading(true);
               }
             }
-          }          
+          }
+        }
 
-          function adjustBuffer(rid) {
-            // We need the item bindings to be processed before we can do adjustment
-            $timeout(() => {
-
-              processBufferedItems(rid);
-              enqueueFetch(rid, true);
-
-              if (!pending.length) {
-                adapter.calculateProperties();
-              }
-            });
+        function adjustBuffer(rid) {
+          if(!rid) { // dismiss pending requests
+            pending = [];
+            rid = ++ridActual;
           }
 
-          function adjustBufferAfterFetch(rid) {
-            // We need the item bindings to be processed before we can do adjustment
-            $timeout(() => {
+          let updates = updateDOM();
 
-              enqueueFetch(rid, processBufferedItems(rid));
-              pending.shift();
+          // We need the item bindings to be processed before we can do adjustment
+          $timeout(() => {
 
-              if (pending.length) 
-                fetch(rid);
-              else {
-                adapter.loading(false);
-                bindEvents();
-                adapter.calculateProperties();
-              }
-            });
-          }
+            // show elements after data binging has been done
+            updates.inserted.forEach(w => w.element.removeClass('ng-hide'));
+            updates.prepended.forEach(w => w.element.removeClass('ng-hide'));
 
-          function fetch(rid) {
-            if (pending[0]) {// scrolling down
-              if (buffer.length && !viewport.shouldLoadBottom()) {
+            if (isInvalid(rid)) {
+              return;
+            }
+
+            updatePaddings(rid, updates);
+            enqueueFetch(rid);
+
+            if (!pending.length) {
+              adapter.calculateProperties();
+            }
+          });
+        }
+
+        function adjustBufferAfterFetch(rid) {
+          let updates = updateDOM();
+
+          // We need the item bindings to be processed before we can do adjustment
+          $timeout(() => {
+
+            // show elements after data binging has been done
+            updates.inserted.forEach(w => w.element.removeClass('ng-hide'));
+            updates.prepended.forEach(w => w.element.removeClass('ng-hide'));
+
+            viewport.adjustScrollTopAfterPrepend(updates);
+
+            if (isInvalid(rid)) {
+              return;
+            }
+
+            updatePaddings(rid, updates);
+            enqueueFetch(rid, updates);
+            pending.shift();
+
+            if (pending.length)
+              fetch(rid);
+            else {
+              adapter.loading(false);
+              bindEvents();
+              adapter.calculateProperties();
+            }
+          });
+        }
+
+        function fetch(rid) {
+          if (pending[0]) {// scrolling down
+            if (buffer.length && !viewport.shouldLoadBottom()) {
+              adjustBufferAfterFetch(rid);
+            } else {
+              fetchNext((result) => {
+                if (isInvalid(rid)) {
+                  return;
+                }
+
+                if (result.length < bufferSize) {
+                  buffer.eof = true;
+                }
+
+                if (result.length > 0) {
+                  viewport.clipTop();
+                  buffer.append(result);
+                }
+
                 adjustBufferAfterFetch(rid);
-              } else {
-                fetchNext((result) => {
-                  if ((rid && rid !== ridActual) || $scope.$$destroyed) {
-                    return;
-                  }
+              });
+            }
+          } else {  // scrolling up
+            if (buffer.length && !viewport.shouldLoadTop()) {
+              adjustBufferAfterFetch(rid);
+            } else {
+              fetchPrevious((result) => {
+                if (isInvalid(rid)) {
+                  return;
+                }
 
-                  if (result.length < bufferSize) {
-                    buffer.eof = true;
-                  }
+                if (result.length < bufferSize) {
+                  buffer.bof = true;
+                  // log 'bof is reached'
+                }
 
-                  if (result.length > 0) {
-                    viewport.clipTop();
-                    buffer.append(result);
-                    buffer.setUpper();
+                if (result.length > 0) {
+                  if (buffer.length) {
+                    viewport.clipBottom();
                   }
+                  buffer.prepend(result);
+                }
 
-                  adjustBufferAfterFetch(rid);
-                });
-              }
-            } else {  // scrolling up
-              if (buffer.length && !viewport.shouldLoadTop()) {
                 adjustBufferAfterFetch(rid);
-              } else {
-                fetchPrevious((result) => {
-                  if ((rid && rid !== ridActual) || $scope.$$destroyed) {
-                    return;
-                  }
-
-                  if (result.length < bufferSize) {
-                    buffer.bof = true;
-                    // log 'bof is reached'
-                  }
-
-                  if (result.length > 0) {
-                    if (buffer.length) {
-                      viewport.clipBottom();
-                    }
-                    buffer.prepend(result);
-                    buffer.setLower();
-                  }
-
-                  adjustBufferAfterFetch(rid);
-                });
-              }
+              });
             }
           }
+        }
 
-          function resizeAndScrollHandler() {
-            if (!$rootScope.$$phase && !adapter.isLoading) {
+        function resizeAndScrollHandler() {
+          if (!$rootScope.$$phase && !adapter.isLoading && !adapter.disabled) {
 
-              enqueueFetch(ridActual, true);
+            enqueueFetch(ridActual);
 
-              if (pending.length) {
-                unbindEvents();
-              } else {
-                adapter.calculateProperties();
-                $scope.$apply();
-              }
+            if (pending.length) {
+              unbindEvents();
+            } else {
+              adapter.calculateProperties();
+              $scope.$apply();
             }
           }
+        }
 
-          function wheelHandler(event) {
+        function wheelHandler(event) {
+          if(!adapter.disabled) {
             let scrollTop = viewport[0].scrollTop;
             let yMax = viewport[0].scrollHeight - viewport[0].clientHeight;
 
@@ -901,7 +941,7 @@ angular.module('ui.scroll', [])
               event.preventDefault();
             }
           }
-        };
+        }
       }
     }
   ]);

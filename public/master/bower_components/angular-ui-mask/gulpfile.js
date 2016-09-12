@@ -24,9 +24,7 @@ gulp.task('default', ['build', 'test']);
 gulp.task('build', ['scripts']);
 gulp.task('test', ['build', 'protractor', 'karma']);
 gulp.task('ci', ['protractor-sauce','karma-sauce'], function() {
-    sauceConnectProcess.close(function() {
-        console.log("Closed Sauce Connect process");
-    });
+    closeSauceConnect();
 });
 
 gulp.task('watch', ['build', 'karma-watch'], function() {
@@ -105,10 +103,19 @@ gulp.task('start-sauce-connect', function(callback) {
     });
 });
 
+function closeSauceConnect() {
+    sauceConnectProcess.close(function() {
+        console.log("Closed Sauce Connect process");
+    });
+}
+
 gulp.task('karma-sauce', ['build', 'start-sauce-connect'], function(callback) {
   var customLaunchers = geSaLaKaCuLa({
     'Windows 7': {
-      'internet explorer': '9..11',
+      'internet explorer': '10..11'
+    },
+    'Windows 10': {
+      'MicrosoftEdge': '13'
     },
     'OS X 10.10': {
       'chrome': '43..44',
@@ -121,7 +128,10 @@ gulp.task('karma-sauce', ['build', 'start-sauce-connect'], function(callback) {
       karma: Server,
       customLaunchers: customLaunchers
   }, function(code) {
-      callback();
+      if (code) {
+          closeSauceConnect();
+      }
+      callback(code);
   });
 });
 
@@ -145,6 +155,7 @@ var runProtractor = function(configFile, callback) {
             'autoStartStopServer': true
         }))
         .on('error', function(e) {
+            closeSauceConnect();
             callback(e);
         })
         .on('end', function() {

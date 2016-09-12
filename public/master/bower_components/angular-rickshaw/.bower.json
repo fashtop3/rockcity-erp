@@ -27,11 +27,11 @@
   },
   "devDependencies": {},
   "homepage": "https://github.com/ngyewch/angular-rickshaw",
-  "_release": "67443d8c3e",
+  "_release": "071858d672",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "67443d8c3e5cedc88d9478c38db4a8cd1787da6a"
+    "commit": "071858d67204ba882c6d0e43fbebeecc49c290e9"
   },
   "_source": "https://github.com/ngyewch/angular-rickshaw.git",
   "_target": "master",

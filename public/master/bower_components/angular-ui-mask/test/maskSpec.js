@@ -280,6 +280,22 @@ describe("uiMask", function () {
         input.val("811").triggerHandler("input");
         expect(input.val()).toBe("81.1_.__-___.__");
     });
+
+    it("should set the model value properly even if it's not full", function() {
+      var input1 = compileElement('<input ui-mask="{{mask}}" ng-model="x" allow-invalid-value/>');
+      var input2 = compileElement('<input ui-mask="{{mask}}" ng-model="x" ui-options="{allowInvalidValue: true}"/>');
+      scope.$apply("mask = '9999'");
+
+      input1.val('11').triggerHandler("change");
+      expect(scope.x).toBe("11");
+
+      input2.val('22').triggerHandler("change");
+      expect(scope.x).toBe("22");
+
+      scope.$apply("x = '33'");
+      expect(input1.val()).toBe("33__");
+      expect(input2.val()).toBe("33__");
+    });
   });
 
   describe("verify change is called", function () {
@@ -294,9 +310,9 @@ describe("uiMask", function () {
         doneCount++;
         done();
       });
-      input.val("aa").triggerHandler("input");
+      input.val("aa").triggerHandler("change");
       input.triggerHandler("blur");
-      input.val("aa").triggerHandler("input");
+      input.val("aa").triggerHandler("change");
       input.triggerHandler("blur");
     });
 
@@ -789,6 +805,44 @@ describe("uiMask", function () {
       input.triggerHandler("blur");
       expect(scope.test.input.$invalid).toBe(false);
     });
+    
+    it("should clear input on ctrl+z pressed", function() {
+      var form  = compileElement(formHtml);
+      var input = form.find("input");
+      
+      function triggerKeyboardEvent(el, type, keyCode, ctrlKey) {
+        var eventObj = document.createEvent('Events');
+
+        if (eventObj.initEvent) {
+          eventObj.initEvent('key' + type, true, true);
+        }
+
+        eventObj.keyCode = keyCode;
+        eventObj.which = keyCode;
+        eventObj.ctrlKey = ctrlKey;
+
+        el.dispatchEvent(eventObj);
+      }
+      
+      var triggerCtrlZ = function (element) {
+        triggerKeyboardEvent(element[0], 'down', 90, true);
+        triggerKeyboardEvent(element[0], 'up');
+      };
+
+      var triggerInput = function(element) {
+	var evt = document.createEvent('HTMLEvents');
+        evt.initEvent('input', false, true);
+        element[0].dispatchEvent(evt);
+      };
+      
+      scope.$apply("mask = '99.99.9999'");
+      input.val('11111111');
+      triggerInput(input);
+      expect(input.clone().val()).toBe('11.11.1111');
+      triggerCtrlZ(input);
+      scope.$digest();
+      expect(input.clone().val()).toBe('__.__.____');
+    })
   });
 
   describe("Configuration Provider", function() {
