@@ -42,9 +42,10 @@ class Schedule extends Model
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->toAtomString();
     }
 
-    public static function orderNo($month, $id)
+    public static function setOrderNo(Schedule &$schedule)
     {
-        return self::$prefix[$month] . $id;
+        $month = Carbon::now()->format('n');
+        $schedule['order_no'] = self::$prefix[$month] . str_pad($schedule->id, 10, '0', STR_PAD_LEFT);
     }
 
 //    public function subscriptions()

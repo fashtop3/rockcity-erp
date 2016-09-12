@@ -148,77 +148,81 @@ Route::get('api/contacts', 'UserController@contacts');
 |
 */
 
-Route::group(['prefix' => 'api', 'middleware' => ['web'] ], function () {
-
-    Route::get('/csrf', function() {
-        return csrf_token();
-    });
-
-    Route::post('/auth',    'UserController@checkAuth');
-    Route::get('/auth/check',    'UserController@isAuth');
-
-    Route::get('/auth/logout',    'UserController@logoutUser');
-//    Route::get('/auth/logout',    'Auth\AuthController@logout');
-
-    //user routing
-    Route::post('/user/{id}', 'UserController@update');
-    Route::post('/user/{id}/upload', 'UserController@upload');
-    Route::post('/user/recover', 'UserController@recover');
-    Route::put('/user/recover', 'UserController@changePassword');
-    Route::get('/user/marketers', 'UserController@getMarketers');
-
-    //check user permissions
-    Route::get('/user/can/{slug}', 'UserController@userCan');
-    Route::get('/user/is/{slug}', 'UserController@userIs');
-
-    Route::resource('/user', 'UserController');
-
-    Route::get('/clients', 'ClientController@getAllClients');
-    Route::post('/client/{id}', 'ClientController@update');
-    Route::resource('/client', 'ClientController');
-
-    Route::resource('/role', 'RoleController');
-    Route::resource('/permission/controls', 'PermissionController@controls');
-    Route::resource('/permission', 'PermissionController');
-
-    Route::resource('/marketer', 'MarketerController');
-    Route::get('/product', 'ProductController@index');
-
-    Route::post('/mail/mailout', 'MailController@sendCustomMail');
-
-    //airtime validation
-    Route::post('/airtime/{id}/validate', 'AirtimeController@validateScheduledAirtime');
-    Route::post('/airtime/{id}/recommend', 'AirtimeController@recommendScheduledAirtime');
-    Route::post('/airtime/{id}/approve', 'AirtimeController@approveScheduledAirtime');
-    Route::post('/airtime/{id}/programme', 'AirtimeController@programmesScheduledAirtime');
-
-    Route::resource('/airtime', 'AirtimeController');
-
-    //vehicle and driver's report
-    Route::resource('/driver/report', 'DriverController');
-    Route::resource('/vehicle', 'VehicleController');
-
-    //target and staff controls
-    Route::get('/target/user', 'TargetController@getMyTargets');
-    Route::get('/target/{user_id}/user', 'TargetController@getUserTargets');
-    Route::resource('/target', 'TargetController');
-
-    Route::post('api/rep/files', 'ReportController@upload');
-    Route::resource('/report', 'ReportController');
+Route::group(['middleware' => ['web'] ], function () {
 
     Route::get('pdf/{id}/airtime', 'PDFController@airtimePDF');
 
-    //assessments
-    Route::get('/activeconfig', 'AssessmentConfigController@getActive');
-    Route::resource('/assessconfig', 'AssessmentConfigController');
-    Route::get('/assessment/records/{id}', 'AssessmentController@records');
-    Route::resource('/assessment', 'AssessmentController');
-    Route::resource('/supervisor', 'SupervisorController');
+    /**
+     * Add prefix 'api' to url
+     */
+    Route::group(['prefix' => 'api'], function() {
+        Route::get('/csrf', function() {
+            return csrf_token();
+        });
+        Route::post('/auth',    'UserController@checkAuth');
+        Route::get('/auth/check',    'UserController@isAuth');
 
-    Route::get('/admin/airtime', 'AdminController@getOrders');
-    Route::get('/admin/driver-reps', 'DriverController@getReports');
-    Route::get('/admin/staff-reps', 'ReportController@getReports');
+        Route::get('/auth/logout',    'UserController@logoutUser');
+//    Route::get('/auth/logout',    'Auth\AuthController@logout');
 
+        //user routing
+        Route::put('/user/{id}/edit', 'UserController@update');
+//    Route::post('/user/{id}/upload', 'UserController@upload');
+        Route::post('/user/recover', 'UserController@recover');
+        Route::put('/user/recover', 'UserController@changePassword');
+        Route::get('/user/marketers', 'UserController@getMarketers');
+
+        //check user permissions
+        Route::get('/user/can/{slug}', 'UserController@userCan');
+        Route::get('/user/is/{slug}', 'UserController@userIs');
+
+        Route::resource('/user', 'UserController');
+
+        Route::get('/client', 'ClientController@getAllClients');
+        Route::put('/client/{id}/edit', 'ClientController@update');
+        Route::resource('/client', 'ClientController');
+
+        Route::resource('/role', 'RoleController');
+        Route::resource('/permission/controls', 'PermissionController@controls');
+        Route::resource('/permission', 'PermissionController');
+
+        Route::resource('/marketer', 'MarketerController');
+        Route::get('/product', 'ProductController@index');
+
+        Route::post('/mail/mailout', 'MailController@sendCustomMail');
+
+        //airtime validation
+        Route::post('/airtime/{id}/validate', 'AirtimeController@validateScheduledAirtime');
+        Route::post('/airtime/{id}/recommend', 'AirtimeController@recommendScheduledAirtime');
+        Route::post('/airtime/{id}/approve', 'AirtimeController@approveScheduledAirtime');
+        Route::post('/airtime/{id}/programme', 'AirtimeController@programmesScheduledAirtime');
+
+        Route::resource('/airtime', 'AirtimeController');
+
+        //vehicle and driver's report
+        Route::resource('/driver/report', 'DriverController');
+        Route::resource('/vehicle', 'VehicleController');
+
+        //target and staff controls
+        Route::get('/target/user', 'TargetController@getMyTargets');
+        Route::get('/target/{user_id}/user', 'TargetController@getUserTargets');
+        Route::resource('/target', 'TargetController');
+
+        Route::post('api/rep/files', 'ReportController@upload');
+        Route::resource('/report', 'ReportController');
+
+        //assessments
+        Route::get('/activeconfig', 'AssessmentConfigController@getActive');
+        Route::resource('/assessconfig', 'AssessmentConfigController');
+        Route::get('/assessment/records/{id}', 'AssessmentController@records');
+        Route::resource('/assessment', 'AssessmentController');
+        Route::resource('/supervisor', 'SupervisorController');
+
+        Route::get('/admin/airtime', 'AdminController@getOrders');
+        Route::get('/admin/driver-reps', 'DriverController@getReports');
+        Route::get('/admin/staff-reps', 'ReportController@getReports');
+
+    });
 });
 
 //Route::filter('api.csrf', function($route, $request)

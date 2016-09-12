@@ -20,6 +20,14 @@ class User extends Authenticatable implements HasRoleAndPermissionContract, CanR
         'firstname', 'lastname', 'email', 'password', 'status',
     ];
 
+    const Contact_Developer = 'fashtop3@gmail.com';
+    const Contact_Admin = 'niran.malaolu@rockcityfmradio.com';
+    const Contact_ED = 'bukky.malaolu@rockcityfmradio.com';
+    const Contact_Account = 'yinka.adelowo@rockcityfmradio.com';
+    const Contact_Support = 'mpo@rockcityfmradio.com';
+    const Contact_Traffic = 'wale.ogunbiyi@rockcityfmradio.com';
+    const Contact_Marketing = 'olufunso.adeniran@rockcityfmradio.com';
+
     /**
      * The attributes excluded from the model's JSON form.
      *

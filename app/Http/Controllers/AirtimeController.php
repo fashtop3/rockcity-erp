@@ -124,7 +124,7 @@ class AirtimeController extends Controller
 
             ScheduleAlert::create(['schedule_id' => $schedule->id, 'token' => bcrypt(Carbon::now())]);
 
-            $schedule['order_no'] = Schedule::orderNo(Carbon::now()->format('n'), $schedule->id.time(0));
+            Schedule::setOrderNo($schedule);
             $schedule->save();
 
             //mail out the invoice
@@ -132,7 +132,7 @@ class AirtimeController extends Controller
 
 
             DB::commit();
-            return response('Order submitted successfully');
+            return response(['data'=>'Order submitted successfully']);
         }
 
         return response('Order processing failed', 403);
@@ -173,41 +173,6 @@ class AirtimeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-
-    /**
      * @param $id
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -236,7 +201,7 @@ class AirtimeController extends Controller
             $this->sendEmailNotification($alert);
 
             if($alert->validate) {
-                return response("Airtime has been validated");
+                return response(['data'=>"Airtime has been validated"]);
             }
             else {
                 return response("Airtime rejected for validation!.", 422);
@@ -287,7 +252,7 @@ class AirtimeController extends Controller
             $this->sendEmailNotification($alert);
 
             if($alert->recommend) {
-                return response('Airtime successfully recommended for approval');
+                return response(['data'=>'Airtime successfully recommended for approval']);
             }
             else {
                 return response('Airtime not recommended for approval', 422);
@@ -337,7 +302,7 @@ class AirtimeController extends Controller
             $this->sendEmailNotification($alert);
 
             if($alert->approved) {
-                return response('Airtime successfully approved for programme');
+                return response(['data'=>'Airtime successfully approved for programme']);
             }
             else {
                 return response('Airtime denied for approval!.', 422);
@@ -387,7 +352,7 @@ class AirtimeController extends Controller
 
                 if($alert->programme) {
 
-                    return response('Airtime saved for programme');
+                    return response(['data'=>'Airtime saved for programme']);
                 }
                 else {
                     return response('Airtime rejected for programme', 422);

@@ -22,18 +22,14 @@
                 };
 
                 if($state.is('app.client.edit')) {
-
                     vm.disableView = false;
-
-                    vm.client = clientFactory.getClients().get({id: parseInt($stateParams.id, 10)})
+                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
                         .$promise.then(
                         function(response) {
                             vm.client = response;
                         },
                         function (response) {
-
                             vm.disableView = true;
-
                             if(response.status == 403){
                                 vm.alerts[0] = {'type':'danger', 'msg':response.data};
                             }
@@ -45,13 +41,11 @@
                 }
 
                 vm.clientSubmit = function() {
-
                     toaster.pop('wait', 'Client', 'Processing your request');
-
                     if(vm.client.id) {
                         clientFactory.update().save({'id':vm.client.id}, vm.client,
-                            function() {
-                                toaster.pop('success', 'Client', 'Data updated.');
+                            function(response) {
+                                toaster.pop('success', 'Client', response.data);
                                 $timeout(function(){
                                     $state.go('app.client');
                                 }, 500);
@@ -59,7 +53,7 @@
                             function (response) {
                                 if(response.status == 403) {
                                     vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                    toaster.pop('error', 'Client', 'Data update Failed.');
+                                    toaster.pop('error', 'Client', response.data);
                                 }
                             }
                         );
@@ -67,8 +61,8 @@
                     else
                     {
                         clientFactory.client().save(vm.client,
-                            function(){
-                                toaster.pop('success', 'Client Registration', 'Registration Successful.');
+                            function(response){
+                                toaster.pop('success', 'Client Registration', response.data);
                                 $timeout(function(){
                                     $state.go('app.client');
                                 }, 1000);

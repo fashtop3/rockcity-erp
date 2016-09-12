@@ -17,7 +17,7 @@ class ScheduleMailer extends Mailer
 
     public function sendAlertToHeadOfMarketing(Schedule $schedule, $subject)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => User::Contact_Marketing];
         $subject = $subject . '(Order No: '. $schedule->order_no .')';
         $view = 'emails.airtime';
         $data = [ 'schedule' => $schedule ];
@@ -28,7 +28,7 @@ class ScheduleMailer extends Mailer
 
     public function sendAlertToHeadOfAccounting(Schedule $schedule, $subject)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => User::Contact_Account];
         $subject = $subject . '(Order No: '. $schedule->order_no .')';
         $view = 'emails.airtime';
         $data = [ 'schedule' => $schedule ];
@@ -39,7 +39,7 @@ class ScheduleMailer extends Mailer
 
     public function sendAlertToExecutiveDirector(Schedule $schedule, $subject)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => User::Contact_ED];
         $subject = $subject . '(Order No: '. $schedule->order_no .')';
         $view = 'emails.airtime';
         $data = [ 'schedule' => $schedule ];
@@ -50,7 +50,7 @@ class ScheduleMailer extends Mailer
 
     public function sendAlertToAdministrator(Schedule $schedule, $subject)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => User::Contact_Admin];
         $subject = $subject . '(Order No: '. $schedule->order_no .')';
         $view = 'emails.airtime';
         $data = [ 'schedule' => $schedule ];
@@ -61,7 +61,7 @@ class ScheduleMailer extends Mailer
 
     public function sendApprovalToTraffic(Schedule $schedule, $subject)
     {
-        $user = (object) ['email' => 'fashtop3@gmail.com'];
+        $user = (object) ['email' => User::Contact_Traffic];
         $subject = $subject . '(Order No: '. $schedule->order_no .')';
         $view = 'emails.airtime';
         $data = [ 'schedule' => $schedule ];

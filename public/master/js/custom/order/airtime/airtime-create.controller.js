@@ -52,7 +52,7 @@
             vm.client = {};
             //TODO: implement this for
             vm.refreshClient = function(search) {
-                clientFactory.getClients().query().$promise.then(
+                clientFactory.clients().query().$promise.then(
                     function (response) {
                         vm.clients = response;
                     }
@@ -165,7 +165,7 @@
                     'commissionAmt': vm.commAmnt,
                     'subTotal': vm.cartTotals,
                     'vat': vm.vat,
-                    'grandTotal': vm.totalWOComm,
+                    'grandTotal': vm.totalWOComm
                 };
 
                 airtime.cart = vm.cart;
@@ -178,7 +178,7 @@
                 airtimeFactory.order().save(airtime,
                     function (response) {
 
-                        toaster.pop('success', 'Order', 'Order has been received.');
+                        toaster.pop('success', 'Order', response.data);
                         $timeout(function () {
                             $state.go('app.airtime');
                         }, 500);

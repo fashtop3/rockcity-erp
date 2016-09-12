@@ -27,25 +27,21 @@ class ClientController extends Controller
      */
     public function index()
     {
-
         //only clients registered by current user
         $clients = Client::where('user_id', Auth::user()->id)->get();
 
         if($clients) {
-            return response($clients, 201);
+            return response($clients);
         }
-
         return response('No clients found', 422);
     }
 
     public function getAllClients()
     {
         $clients = Client::all();
-
         if($clients) {
-            return response($clients, 201);
+            return response($clients);
         }
-
         return response('No clients found', 422);
     }
 
@@ -70,11 +66,9 @@ class ClientController extends Controller
             'email' => 'required|email',
         ]);
 
-
         if($validator->fails()) {
             return response($validator->errors()->all(), 422);
         }
-
         //check if mail exists
         if(Client::mailExits($request->get('email'))) {
             return response('Client email already exists!', 403);
@@ -87,7 +81,6 @@ class ClientController extends Controller
         {
             return response('Error saving client\'s data', 403);
         }
-
         return response('Client\'s data saved successfully');
     }
 
@@ -100,11 +93,9 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::findOrFail($id);
-
         if($client) {
             return response($client, 201);
         }
-
         return response('Error client doesn\'t exists' , 403);
     }
 
@@ -150,9 +141,7 @@ class ClientController extends Controller
         if($validator->fails()) {
             return response($validator->errors()->all(), 422);
         }
-
         $client = Client::find($id);
-
         //check if client is created by current user
         if($client->user_id != $this->user->id) {
 
@@ -161,14 +150,12 @@ class ClientController extends Controller
                 return response('You are not authorized to delete client', 403);
             }
         }
-
         if(!$client) {
             return response('No record found', 403);
         }
-
         $client->update($request->all());
 
-        return response('Client data updated successfully');
+        return response(['data'=>'Client data updated successfully']);
     }
 
     /**
@@ -180,12 +167,9 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $client = Client::find($id);
-
-
         if(!$client) {
             return response('Client doesn\'t exists', 403);
         }
-
         //if account is not created by the current user
         if($client->user_id != $this->user->id) {
 
@@ -194,14 +178,12 @@ class ClientController extends Controller
                 return response('You are not authorized to delete client', 403);
             }
         }
-
-
         if(!empty($client->schedules()->get()->first())) {
             $client->delete();
-            return response('Client has been moved to trash');
+            return response(['data'=>'Client has been moved to trash']);
         }
 
         $client->forceDelete();
-        return response('Client deleted successfully');
+        return response(['data'=>'Client deleted successfully']);
     }
 }

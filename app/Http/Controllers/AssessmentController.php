@@ -43,16 +43,6 @@ class AssessmentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -212,7 +202,7 @@ class AssessmentController extends Controller
         }
 
         if($assessment->delete()) {
-            return response('Record deleted successfully');
+            return response(['data'=>'Record deleted successfully']);
         }
 
         return response('Failed to delete record!. contact the administrator', 403);

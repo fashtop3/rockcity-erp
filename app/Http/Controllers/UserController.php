@@ -43,19 +43,14 @@ class UserController extends Controller
 
     public function index()
     {
-
         $people = User::orderBy('id', 'desc')->get();
-
         if($people) {
             foreach($people as &$user) {
-
                 $user->roles->toArray();
                 $user->permissions->toArray();
             }
-
             return response($people);
         }
-
         return response('No user found!', 403);
     }
 
@@ -65,17 +60,14 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'password' => $request->get('password'),
         ];
-
         //if the credentials are wrong
         if(!Auth::attempt($credentials)) {
             return response('Username or password do not match', 403);
         }
-
         if(Auth::user()->status == 1) {
             Auth::logout();
             return response('Access denied contact Administrator!.', 403);
         }
-
         //Todo: correct this from registration controller
         //Auth::user()->upload->toArray();
         return response(Auth::user());
@@ -85,7 +77,7 @@ class UserController extends Controller
     public function isAuth()
     {
         if(Auth::check()){
-            return response('Authorized');
+            return response(Auth::user());
         }
 
         return response('Unauthorized', 403);
@@ -207,11 +199,7 @@ class UserController extends Controller
         return response($user);
     }
 
-    /**
-     * @param $id
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
+
     public function update($id, Request $request)
     {
         $user = User::find($id);
@@ -244,7 +232,9 @@ class UserController extends Controller
         }
 
         if($user) {
-            $user->update($request->all());
+            $input['firstname'] = $request->get('firstname');
+            $input['lastname'] = $request->get('lastname');
+            $user->update($input);
 
             $this->setRolePermission($request, $user);
 
@@ -294,12 +284,12 @@ class UserController extends Controller
     public function contacts()
     {
         $contacts = [
-            ['name'=>'Admin', 'email'=>'niran.malaolu@rockcityfmradio.com'],
-            ['name'=>'Executive Director', 'email'=>'bukky.malaolu@rockcityfmradio.com'],
-            ['name'=>'Account', 'email'=>'yinka.adelowo@rockcityfmradio.com'],
-            ['name'=>'Support', 'email'=>'mpo@rockcityfmradio.com'],
-            ['name'=>'Traffic', 'email'=>'wale.ogunbiyi@rockcityfmradio.com'],
-            ['name'=>'Marketing', 'email'=>'olufunso.adeniran@rockcityfmradio.com'],
+            ['name'=>'Admin', 'email'=> User::Contact_Admin ],
+            ['name'=>'Executive Director', 'email'=> User::Contact_ED ],
+            ['name'=>'Account', 'email'=> User::Contact_Account ],
+            ['name'=>'Support', 'email'=> User::Contact_Support ],
+            ['name'=>'Traffic', 'email'=> User::Contact_Traffic ],
+            ['name'=>'Marketing', 'email'=> User::Contact_Marketing ],
         ];
 
         return response($contacts);

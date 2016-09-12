@@ -10,7 +10,7 @@
         .module('app.order')
         .run(['$rootScope', '$templateCache', function($rootScope, $templateCache) {
             $rootScope.$on('$viewContentLoaded', function() {
-                $templateCache.removeAll();
+                //$templateCache.removeAll();
             });
         }]);
 })();

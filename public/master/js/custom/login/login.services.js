@@ -13,12 +13,10 @@
 
                 this.getUserStatus = function() {
                     var status = $cookies.get('auth');
-                    if(status) {
+                    if (status)
                         return true;
-                    }
-                    else {
-                        return false;
-                    }
+
+                    return false;
                 };
 
                 this.userData = function() {
@@ -28,7 +26,10 @@
 
                 this.authCheck = function() {
                     $resource(baseURL + 'auth/check').get(
-                        function () {},
+                        function (response) {
+                            $rootScope.auth = response;
+                            $cookies.put('auth', JSON.stringify($rootScope.auth));
+                        },
                         function () {
                             redirect();
                         }
@@ -66,7 +67,6 @@
                 function redirect()
                 {
                     $cookies.remove('auth');
-
                     $rootScope.authenticated = false;
                     $state.go('page.login');
                 }

@@ -13151,7 +13151,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         .module('app.order')
         .run(['$rootScope', '$templateCache', function($rootScope, $templateCache) {
             $rootScope.$on('$viewContentLoaded', function() {
-                $templateCache.removeAll();
+                //$templateCache.removeAll();
             });
         }]);
 })();
@@ -13191,32 +13191,24 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 $scope.authMsg = false;
 
                 $scope.login = function () {
-
                     $scope.disabled = true;
-
                     loginFactory.user().login($scope.account).$promise.then(
                         function(response) {
-
                             $rootScope.auth = response;
                             $cookies.put('auth', JSON.stringify($rootScope.auth));
                             $rootScope.authenticated = true;
-
                             if(loginFactory.toState){
-
                                 if(loginFactory.toState.name == 'app.unauthorized') {
                                     $state.go('app.dashboard');
                                     return;
                                 }
-
                                 $window.history.back();
                                 //if(loginFactory.toState.name == 'app.airtime.details'){}
                                 //$state.go(loginFactory.toState.name);
                             }
                             else {
-
                                 $state.go('app.dashboard');
                             }
-
                         },
                         function (response) {
                             $scope.disabled = false;
@@ -13255,12 +13247,10 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
                 this.getUserStatus = function() {
                     var status = $cookies.get('auth');
-                    if(status) {
+                    if (status)
                         return true;
-                    }
-                    else {
-                        return false;
-                    }
+
+                    return false;
                 };
 
                 this.userData = function() {
@@ -13270,7 +13260,10 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
                 this.authCheck = function() {
                     $resource(baseURL + 'auth/check').get(
-                        function () {},
+                        function (response) {
+                            $rootScope.auth = response;
+                            $cookies.put('auth', JSON.stringify($rootScope.auth));
+                        },
                         function () {
                             redirect();
                         }
@@ -13308,7 +13301,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 function redirect()
                 {
                     $cookies.remove('auth');
-
                     $rootScope.authenticated = false;
                     $state.go('page.login');
                 }
@@ -14892,6 +14884,410 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             }]);
 })();
 /**
+ * Created by dfash on 7/8/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.showRecords = false;
+                vm.assessMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+                //
+                assessmentService.getAssessment().query()
+                    .$promise.then(
+                    function (response) {
+                        vm.records = response;
+                        vm.showRecords = true;
+                    }, function (response) {
+                        if(response.status == 403) {
+                            vm.assessMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    }
+                );
+
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable()
+                    ];
+
+                    vm.remove = remove;
+
+                    function remove($index)
+                    {
+                        //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this record?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
+                                        function () {
+
+                                            vm.records.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
+                                        },
+                                        function (response) {
+                                            if(response.status == 403) {
+                                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                            }
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/22/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = $scope;
+                vm.disableForm = false;
+                vm.showTimeFrame = false;
+                $scope.config = {};
+
+                $scope.form = {
+                    "id": null, "preview": 0,
+                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
+                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
+                    "part_two": { "review":[{}], "performance":{}},
+                    "part_three": {"competencies":{}},
+                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
+                };
+
+
+
+                assessmentService.getActiveConfig().get().$promise.then(
+                    function (response) {
+                        vm.showTimeFrame = true;
+                        $scope.config = response;
+
+                        if($state.is('app.assessment.create'))
+                            $scope.form.assessment_config_id = response.id;
+
+                        checkRouting(response);
+                    },
+                    function() {
+                        vm.disableForm = true;
+                    }
+                );
+
+
+                //routes to edit if user has a data already submitted
+                function checkRouting(response) {
+                    if($state.is('app.assessment.create')) {
+                        if (angular.isDefined(response.assessment)) {
+                            $state.go('app.assessment.edit', {"id": response.assessment.id});
+                        }
+                    }
+                }
+
+                //routing from create or from url
+                if($state.is('app.assessment.edit')) {
+                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                        function (response) {
+                            $scope.form = response;
+
+                            checkDataResp();
+                        },
+                        function() {
+                            $state.go('app.assessment.create', {"id":$scope.form.id});
+                        }
+                    );
+                }
+
+                vm.submitPreview = function() {
+                    $scope.form.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function (response) {
+
+                            $scope.form = response;
+                            toaster.pop('success', 'Assessment', 'Data saved.');
+
+                            checkDataResp();
+
+                            $state.go('app.assessment.edit', {"id":$scope.form.id});
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                vm.submitAssessment = function() {
+
+                    $scope.form.preview = 1;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function () {
+                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
+                        if($scope.form.part_two.review[0].length == 0)
+                            $scope.form.part_two.review = [{}];
+                    }
+
+                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
+                        $scope.form.part_two.performance = {};
+                    }
+
+                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
+                        $scope.form.part_three.competencies = {};
+                    }
+                };
+
+                //START-DATE functions
+                vm.today = function() {
+                    vm.dt = new Date();
+                };
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function(date, mode) {
+                    return false;
+                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
+                };
+
+                vm.toggleMin = function() {
+                    vm.minDate = vm.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function($event, dateObj) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    dateObj.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.dateFormat = vm.dateFormats[0];
+                //END: Date functions
+            }]);
+})();
+/**
+ * Created by dfash on 7/7/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.assessment = function() {
+                return $resource(baseURL + 'assessment', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getAssessment = function() {
+                return $resource(baseURL + 'assessment/:id', null,
+                    {
+                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.supervisor = function() {
+                return $resource(baseURL + 'supervisor', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getConfig = function() {
+                return $resource(baseURL + 'assessconfig/:id', null,
+                    {
+                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.getActiveConfig = function() {
+                return $resource(baseURL + 'activeconfig');
+            };
+
+            this.log = function() {
+                return $resource(baseURL + "assessment/records/:id");
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 7/8/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = this;
+
+                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
+
+
+                //manages for routing
+                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                    function (response) {
+                        if(response.supervisor != null)
+                            $scope.supervisor = response.supervisor;
+                        else {
+                            $scope.supervisor.assessment_id = response.id;
+                            checkDataResp();
+                        }
+                    },
+                    function() {
+                        $state.go('app.assessment.view');
+                    }
+                );
+
+
+                $scope.submitPreview = function() {
+                    $scope.supervisor.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    //set the function
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function (response) {
+
+                            $scope.supervisor = response;
+                            toaster.pop('success', 'Supervisor', 'Data saved.');
+
+                            checkDataResp();
+
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                $scope.submitComment = function() {
+
+                    $scope.supervisor.preview = 1;
+
+                    toaster.pop('wait', 'Supervisor', 'Processing your request');
+
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function () {
+                            toaster.pop('success', 'Supervisor', 'Data submitted.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
+                        $scope.supervisor.attributes = {};
+                    }
+
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
+                        $scope.supervisor.habbit = {};
+                    }
+
+                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
+                        $scope.supervisor.leadership = {};
+                    }
+                };
+
+            }]);
+})();
+/**
  * Created by dfash on 5/25/16.
  */
 
@@ -15133,7 +15529,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             vm.client = {};
             //TODO: implement this for
             vm.refreshClient = function(search) {
-                clientFactory.getClients().query().$promise.then(
+                clientFactory.clients().query().$promise.then(
                     function (response) {
                         vm.clients = response;
                     }
@@ -15246,7 +15642,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                     'commissionAmt': vm.commAmnt,
                     'subTotal': vm.cartTotals,
                     'vat': vm.vat,
-                    'grandTotal': vm.totalWOComm,
+                    'grandTotal': vm.totalWOComm
                 };
 
                 airtime.cart = vm.cart;
@@ -15259,7 +15655,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 airtimeFactory.order().save(airtime,
                     function (response) {
 
-                        toaster.pop('success', 'Order', 'Order has been received.');
+                        toaster.pop('success', 'Order', response.data);
                         $timeout(function () {
                             $state.go('app.airtime');
                         }, 500);
@@ -16354,410 +16750,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }]);
 })();
 /**
- * Created by dfash on 7/8/16.
- */
-
-(function() {
-    angular
-        .module('app.order')
-        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
-
-                var vm = $scope;
-
-                vm.showRecords = false;
-                vm.assessMessage = "Loading...";
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-                $scope.datetostamp = function(date) {
-                    return new Date(date);
-                };
-                //
-                assessmentService.getAssessment().query()
-                    .$promise.then(
-                    function (response) {
-                        vm.records = response;
-                        vm.showRecords = true;
-                    }, function (response) {
-                        if(response.status == 403) {
-                            vm.assessMessage = "Error: " + response.status + " " + response.statusText;
-                        }
-                    }
-                );
-
-
-
-                activate();
-
-                ////////////////
-
-                function activate() {
-
-                    // Changing data
-                    vm.dtOptions = DTOptionsBuilder.newOptions()
-                        .withDisplayLength(100)
-                        .withPaginationType('full_numbers');
-
-                    vm.dtColumnDefs = [
-                        DTColumnDefBuilder.newColumnDef(0),
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(2).notSortable()
-                    ];
-
-                    vm.remove = remove;
-
-                    function remove($index)
-                    {
-                        //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
-                        (function() {
-                            SweetAlert.swal({
-                                title: 'Are you sure you want to delete this record?',
-                                text: 'Your will not be able to recover your selected data back!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, cancel pls!',
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm){
-                                if (isConfirm) {
-                                    assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
-                                        function () {
-
-                                            vm.records.splice($index, 1);
-                                            vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
-                                        },
-                                        function (response) {
-                                            if(response.status == 403) {
-                                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                            }
-                                        }
-                                    );
-                                } else {
-                                    SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
-                                }
-                            });
-                        })();
-
-                    }
-
-                }
-            }]);
-})();
-/**
- * Created by dfash on 6/22/16.
- */
-
-(function() {
-    angular
-        .module('app.order')
-        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
-            function($scope, toaster, assessmentService, $state, $stateParams) {
-
-                var vm = $scope;
-                vm.disableForm = false;
-                vm.showTimeFrame = false;
-                $scope.config = {};
-
-                $scope.form = {
-                    "id": null, "preview": 0,
-                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
-                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
-                    "part_two": { "review":[{}], "performance":{}},
-                    "part_three": {"competencies":{}},
-                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
-                };
-
-
-
-                assessmentService.getActiveConfig().get().$promise.then(
-                    function (response) {
-                        vm.showTimeFrame = true;
-                        $scope.config = response;
-
-                        if($state.is('app.assessment.create'))
-                            $scope.form.assessment_config_id = response.id;
-
-                        checkRouting(response);
-                    },
-                    function() {
-                        vm.disableForm = true;
-                    }
-                );
-
-
-                //routes to edit if user has a data already submitted
-                function checkRouting(response) {
-                    if($state.is('app.assessment.create')) {
-                        if (angular.isDefined(response.assessment)) {
-                            $state.go('app.assessment.edit', {"id": response.assessment.id});
-                        }
-                    }
-                }
-
-                //routing from create or from url
-                if($state.is('app.assessment.edit')) {
-                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
-                        function (response) {
-                            $scope.form = response;
-
-                            checkDataResp();
-                        },
-                        function() {
-                            $state.go('app.assessment.create', {"id":$scope.form.id});
-                        }
-                    );
-                }
-
-                vm.submitPreview = function() {
-                    $scope.form.preview = 0;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    assessmentService.assessment().save($scope.form,
-                        function (response) {
-
-                            $scope.form = response;
-                            toaster.pop('success', 'Assessment', 'Data saved.');
-
-                            checkDataResp();
-
-                            $state.go('app.assessment.edit', {"id":$scope.form.id});
-                        },
-                        function (response) {
-                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
-                        }
-                    );
-                };
-
-                //submit form
-                vm.submitAssessment = function() {
-
-                    $scope.form.preview = 1;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    assessmentService.assessment().save($scope.form,
-                        function () {
-                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
-                            $state.go('app.assessment.view');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
-                            }
-                        }
-                    );
-                };
-
-                var checkDataResp = function() {
-                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
-                        if($scope.form.part_two.review[0].length == 0)
-                            $scope.form.part_two.review = [{}];
-                    }
-
-                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
-                        $scope.form.part_two.performance = {};
-                    }
-
-                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
-                        $scope.form.part_three.competencies = {};
-                    }
-                };
-
-                //START-DATE functions
-                vm.today = function() {
-                    vm.dt = new Date();
-                };
-                vm.today();
-
-                vm.clear = function () {
-                    vm.dt = null;
-                };
-
-                // Disable weekend selection
-                vm.disabled = function(date, mode) {
-                    return false;
-                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
-                };
-
-                vm.toggleMin = function() {
-                    vm.minDate = vm.minDate ? null : new Date();
-                };
-                vm.toggleMin();
-
-                vm.open = function($event, dateObj) {
-                    $event.preventDefault();
-                    $event.stopPropagation();
-
-                    dateObj.opened = true;
-                };
-
-                vm.dateOptions = {
-                    formatYear: 'yy',
-                    startingDay: 1
-                };
-
-                vm.initDate = new Date('2019-10-20');
-                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-                vm.dateFormat = vm.dateFormats[0];
-                //END: Date functions
-            }]);
-})();
-/**
- * Created by dfash on 7/7/16.
- */
-
-(function(){
-    'use strict';
-
-    angular
-        .module('app.order')
-        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
-
-            this.assessment = function() {
-                return $resource(baseURL + 'assessment', null,
-                    {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
-                    }
-                )
-            };
-
-            this.getAssessment = function() {
-                return $resource(baseURL + 'assessment/:id', null,
-                    {
-                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                    }
-                );
-            };
-
-            this.supervisor = function() {
-                return $resource(baseURL + 'supervisor', null,
-                    {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
-                    }
-                )
-            };
-
-            this.getConfig = function() {
-                return $resource(baseURL + 'assessconfig/:id', null,
-                    {
-                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                    }
-                );
-            };
-
-            this.getActiveConfig = function() {
-                return $resource(baseURL + 'activeconfig');
-            };
-
-            this.log = function() {
-                return $resource(baseURL + "assessment/records/:id");
-            };
-
-        }]);
-})();
-/**
- * Created by dfash on 7/8/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
-            function($scope, toaster, assessmentService, $state, $stateParams) {
-
-                var vm = this;
-
-                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
-
-
-                //manages for routing
-                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
-                    function (response) {
-                        if(response.supervisor != null)
-                            $scope.supervisor = response.supervisor;
-                        else {
-                            $scope.supervisor.assessment_id = response.id;
-                            checkDataResp();
-                        }
-                    },
-                    function() {
-                        $state.go('app.assessment.view');
-                    }
-                );
-
-
-                $scope.submitPreview = function() {
-                    $scope.supervisor.preview = 0;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    //set the function
-                    assessmentService.supervisor().save($scope.supervisor,
-                        function (response) {
-
-                            $scope.supervisor = response;
-                            toaster.pop('success', 'Supervisor', 'Data saved.');
-
-                            checkDataResp();
-
-                        },
-                        function (response) {
-                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
-                        }
-                    );
-                };
-
-                //submit form
-                $scope.submitComment = function() {
-
-                    $scope.supervisor.preview = 1;
-
-                    toaster.pop('wait', 'Supervisor', 'Processing your request');
-
-                    assessmentService.supervisor().save($scope.supervisor,
-                        function () {
-                            toaster.pop('success', 'Supervisor', 'Data submitted.');
-                            $state.go('app.assessment.view');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
-                            }
-                        }
-                    );
-                };
-
-                var checkDataResp = function() {
-                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
-                        $scope.supervisor.attributes = {};
-                    }
-
-                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
-                        $scope.supervisor.habbit = {};
-                    }
-
-                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
-                        $scope.supervisor.leadership = {};
-                    }
-                };
-
-            }]);
-})();
-/**
  * Created by dfash on 6/19/16.
  */
 
@@ -16781,18 +16773,14 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 };
 
                 if($state.is('app.client.edit')) {
-
                     vm.disableView = false;
-
-                    vm.client = clientFactory.getClients().get({id: parseInt($stateParams.id, 10)})
+                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
                         .$promise.then(
                         function(response) {
                             vm.client = response;
                         },
                         function (response) {
-
                             vm.disableView = true;
-
                             if(response.status == 403){
                                 vm.alerts[0] = {'type':'danger', 'msg':response.data};
                             }
@@ -16804,13 +16792,11 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 }
 
                 vm.clientSubmit = function() {
-
                     toaster.pop('wait', 'Client', 'Processing your request');
-
                     if(vm.client.id) {
                         clientFactory.update().save({'id':vm.client.id}, vm.client,
-                            function() {
-                                toaster.pop('success', 'Client', 'Data updated.');
+                            function(response) {
+                                toaster.pop('success', 'Client', response.data);
                                 $timeout(function(){
                                     $state.go('app.client');
                                 }, 500);
@@ -16818,7 +16804,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                             function (response) {
                                 if(response.status == 403) {
                                     vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                    toaster.pop('error', 'Client', 'Data update Failed.');
+                                    toaster.pop('error', 'Client', response.data);
                                 }
                             }
                         );
@@ -16826,8 +16812,8 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                     else
                     {
                         clientFactory.client().save(vm.client,
-                            function(){
-                                toaster.pop('success', 'Client Registration', 'Registration Successful.');
+                            function(response){
+                                toaster.pop('success', 'Client Registration', response.data);
                                 $timeout(function(){
                                     $state.go('app.client');
                                 }, 1000);
@@ -16984,25 +16970,21 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         .module('app.order')
         .service('clientFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
-            this.getAllClients = function(){
-                return $resource(baseURL + "clients");
-            };
-
-            this.getClients = function(){
-                return $resource(baseURL + "client/:id");
-            };
-
-            this.clientEdit = function(){
-                return $resource(baseURL + "client/:id/edit");
-            };
+            //this.getAllClients = function(){
+            //    return $resource(baseURL + "clients");
+            //};
 
             this.update = function(){
-                return $resource(baseURL + "client/:id", null, { 'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }} });
+                return $resource(baseURL + "client/:id/edit", null, {
+                    'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                });
             };
 
-            this.client = function() {
-                return $resource(baseURL + 'client/:id', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            this.clients = function() {
+                return $resource(baseURL + 'client/:id', null, {
+                    'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                });
             };
 
         }]);
@@ -17059,14 +17041,16 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
                 //submit profile form
                 vm.updateProfile = function() {
-                    $resource(baseURL + 'user/:id', null, {'update':{method:'PUT'}})
+                    $resource(baseURL + 'user/:id/edit', null, {'update':{method:'PUT'}})
                         .update({'id':vm.profile.id}, vm.profile,
                         function (response) {
                             vm.alerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
                         },
                         function (response) {
                             if(response.status == 403) {
                                 vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
                             }
                         }
                     );
@@ -17076,7 +17060,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 };
 
                 vm.updatePassword = function() {
-                    $resource(baseURL + 'user/:id?action=password', null, {'update':{method:'PUT'}})
+                    $resource(baseURL + 'user/:id/edit?action=password', null, {'update':{method:'PUT'}})
                         .update({'id':vm.profile.id}, vm.reset,
                         function (response) {
                             vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
@@ -17088,6 +17072,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                                 toaster.pop('error', 'Error', response.data);
                             }
                             else{
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':'Failed: contact administrator'};
                                 toaster.pop('error', 'Error', 'Failed: contact administrator');
                             }
                         }

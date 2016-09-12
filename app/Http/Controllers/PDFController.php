@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Schedule;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -80,5 +81,9 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('pdf.airtime', compact('schedule'));
         return $pdf->stream('airtime_order.pdf');
+    }
+
+    public static function toFormat($date) {
+        return Carbon::parse($date)->toFormattedDateString();
     }
 }

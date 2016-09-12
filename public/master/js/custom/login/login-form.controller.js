@@ -13,32 +13,24 @@
                 $scope.authMsg = false;
 
                 $scope.login = function () {
-
                     $scope.disabled = true;
-
                     loginFactory.user().login($scope.account).$promise.then(
                         function(response) {
-
                             $rootScope.auth = response;
                             $cookies.put('auth', JSON.stringify($rootScope.auth));
                             $rootScope.authenticated = true;
-
                             if(loginFactory.toState){
-
                                 if(loginFactory.toState.name == 'app.unauthorized') {
                                     $state.go('app.dashboard');
                                     return;
                                 }
-
                                 $window.history.back();
                                 //if(loginFactory.toState.name == 'app.airtime.details'){}
                                 //$state.go(loginFactory.toState.name);
                             }
                             else {
-
                                 $state.go('app.dashboard');
                             }
-
                         },
                         function (response) {
                             $scope.disabled = false;

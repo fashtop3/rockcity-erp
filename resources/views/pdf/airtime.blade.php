@@ -6,7 +6,7 @@
 
     <table class="table table-bordered">
         <tr>
-            <td><p>Date: <span class="text-muted">{{$schedule->created_at}}</span></p></td>
+            <td><p>Date: <span class="text-muted">{{Carbon\Carbon::parse($schedule->created_at)->toDayDateTimeString()}}</span></p></td>
             <td><p>Order No.: <span class="text-muted">{{$schedule->order_no}}</span></p></td>
         </tr>
     </table>
@@ -36,8 +36,8 @@
                                             <span class="label label-info pull-right">{{$productSub['subscription']['period']}}</span>
                                             <h5 class="media-box-heading">BULK</h5>
                                             <small class="text-muted text-inverse">
-                                                <b>Start :</b> ({{$productSub['subscription']['bulk_start_date']}})
-                                                <b>End :</b> ({{$productSub['subscription']['bulk_end_date']}}) <br />
+                                                <b>Start :</b> ({{\Carbon\Carbon::parse($productSub['subscription']['bulk_start_date'])->toFormattedDateString()}})
+                                                <b>End :</b> ({{\Carbon\Carbon::parse($productSub['subscription']['bulk_end_date'])->toFormattedDateString()}}) <br />
                                                 <b>Broadcast: </b> {{$productSub['subscription']['broadcast']}}
                                             </small>
                                         </div>
@@ -65,8 +65,8 @@
                                             <span class="label label-info pull-right">{{$productSub['subscription']['period']}}</span>
                                             <h5 class="media-box-heading">SLOT</h5>
                                             <small class="text-muted text-inverse">
-                                                <b>Slot date :</b> {{$productSub['subscription']['slot_start_date']}}
-                                                <b> -- </b> {{$productSub['subscription']['slot_end_date']}}
+                                                <b>Slot date :</b> {{\Carbon\Carbon::parse($productSub['subscription']['slot_start_date'])->toFormattedDateString()}}
+                                                <b> -- </b> {{\Carbon\Carbon::parse($productSub['subscription']['slot_end_date'])->toFormattedDateString()}}
                                             </small><br />
                                             <small class="text-muted text-inverse">
                                                 <b>Slot :</b> {{$productSub['subscription']['slots']}}
@@ -83,13 +83,13 @@
                                                 </tr>
                                                 @foreach($productSub->slotDetails as $slotDetail)
                                                 <tr>
-                                                    <td>{{$slotDetail->schedule[0]['date']}}</td>
+                                                    <td>{{Carbon\Carbon::parse($slotDetail->schedule[0]['date'])->toFormattedDateString()}}</td>
                                                     <td>{{$slotDetail->schedule[0]['slot']}}</td>
                                                     <td>{{$slotDetail->schedule[0]['tofix']}}</td>
                                                     <td>
                                                         <span class="text text-primary">
                                                             @foreach($slotDetail->schedule[0]['times'] as $time)
-                                                            <small>{{$time}}, </small>
+                                                            <small>{{\Carbon\Carbon::parse($time)->format('h:i a')}}, </small>
                                                             @endforeach
                                                         </span>
                                                     </td>

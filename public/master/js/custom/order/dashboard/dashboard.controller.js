@@ -50,14 +50,16 @@
 
                 //submit profile form
                 vm.updateProfile = function() {
-                    $resource(baseURL + 'user/:id', null, {'update':{method:'PUT'}})
+                    $resource(baseURL + 'user/:id/edit', null, {'update':{method:'PUT'}})
                         .update({'id':vm.profile.id}, vm.profile,
                         function (response) {
                             vm.alerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
                         },
                         function (response) {
                             if(response.status == 403) {
                                 vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
                             }
                         }
                     );
@@ -67,7 +69,7 @@
                 };
 
                 vm.updatePassword = function() {
-                    $resource(baseURL + 'user/:id?action=password', null, {'update':{method:'PUT'}})
+                    $resource(baseURL + 'user/:id/edit?action=password', null, {'update':{method:'PUT'}})
                         .update({'id':vm.profile.id}, vm.reset,
                         function (response) {
                             vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
@@ -79,6 +81,7 @@
                                 toaster.pop('error', 'Error', response.data);
                             }
                             else{
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':'Failed: contact administrator'};
                                 toaster.pop('error', 'Error', 'Failed: contact administrator');
                             }
                         }
