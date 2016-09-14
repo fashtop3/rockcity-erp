@@ -2,75 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a676137-a53d-407b-85e0-7c18b8c76649" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/app/js/templates.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/app/views/partials/chat.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/app/views/partials/offsidebar.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/app/views/partials/settings.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/app/views/partials/test.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/jade/views/partials/chat.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/jade/views/partials/offsidebar.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/master/jade/views/partials/settings.jade" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/assessment-config.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/assessment/assessment-config.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/assessment-log.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/assessment/assessment-log.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/driver-report-modal.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/driver/driver-report-modal.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/driver-report-view.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/driver/driver-report-view.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/driver.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/driver/driver.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report-challenge.directive.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-challenge.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report-modal.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-modal.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report-remittance.directive.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-remittance.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report-task.directive.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-task.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report-upload.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-upload.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report-upload.directive.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-upload.directive.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report-upload.service.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-upload.service.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report-view.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-view.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/report.service.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/staff-report/report.service.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/target-create.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/target/target-create.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/target-manage.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/target/target-manage.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/target.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/target/target.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/target.service.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/target/target.service.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/vehicle-create.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle-create.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/vehicle-manage.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle-manage.controller.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/vehicle.service.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle.service.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/master/js/custom/report/vehicles.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicles.controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AssessmentConfigController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AssessmentConfigController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AssessmentController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AssessmentController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/DriverController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/DriverController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PDFController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PDFController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PermissionController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PermissionController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/SupervisorController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/SupervisorController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/TargetController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/TargetController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2016_04_13_055830_create_clients_table.php" afterPath="$PROJECT_DIR$/database/migrations/2016_04_13_055830_create_clients_table.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/js/app.js" afterPath="$PROJECT_DIR$/public/app/js/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/js/base.js" afterPath="$PROJECT_DIR$/public/app/js/base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/partials/sidebar.html" afterPath="$PROJECT_DIR$/public/app/views/partials/sidebar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/partials/top-navbar.html" afterPath="$PROJECT_DIR$/public/app/views/partials/top-navbar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/jade/views/partials/sidebar.jade" afterPath="$PROJECT_DIR$/public/master/jade/views/partials/sidebar.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/jade/views/partials/top-navbar.jade" afterPath="$PROJECT_DIR$/public/master/jade/views/partials/top-navbar.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/login/login-form.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/login/login-form.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/login/login.services.js" afterPath="$PROJECT_DIR$/public/master/js/custom/login/login.services.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/order/client/client.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/order/client/client.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js" afterPath="$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/order/user/user.service.js" afterPath="$PROJECT_DIR$/public/master/js/custom/order/user/user.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/permission/permission.run.js" afterPath="$PROJECT_DIR$/public/master/js/custom/permission/permission.run.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/remove-html.cache.js" afterPath="$PROJECT_DIR$/public/master/js/custom/remove-html.cache.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/modules/routes/route-helpers.provider.js" afterPath="$PROJECT_DIR$/public/master/js/modules/routes/route-helpers.provider.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js" afterPath="$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/modules/routes/routes.run.js" afterPath="$PROJECT_DIR$/public/master/js/modules/routes/routes.run.js" />
     </list>
     <ignored path="orders.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,101 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="report-upload.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-upload.service.js">
+      <file leaf-file-name="airtime-create.controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="report-view.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-view.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="target.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/target/target.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="target.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/target/target.service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="target-create.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/target/target-create.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="target-manage.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/target/target-manage.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vehicle.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle.service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vehicle-create.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle-create.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vehicle-manage.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle-manage.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vehicles.controller.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicles.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.1767594">
+              <caret line="57" column="21" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -437,6 +282,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orders" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rockcity-erp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -446,7 +305,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="rout.con&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;rout&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.run.js&#10;ou&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;top&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/top-navbar.html&#10;ro&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;airt&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;log&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;user&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/UserController.php&#10;login&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;route.&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;perm&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;ClientController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;cli&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client.controller.js&#10;route&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;client.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;permis&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.config.js&#10;logi&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login.services.js&#10;User&#9;FILE&#9;file:///var/www/rockcity-erp/app/User.php&#10;UserController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/UserController.php&#10;userFactory&#9;null&#9;null&#10;mail.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/mail.html&#10;side&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/jade/views/partials/sidebar.jade&#10;AirtimeController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;client&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;Clien&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;app.j&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;peop&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people.controller.js&#10;sid&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/sidebar.html&#10;client.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client.html&#10;pdf&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airti&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;lo&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;AssessmentController.php&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AssessmentController.php&#10;assessmentService&#9;null&#9;null&#10;AssessmentController&#9;null&#9;null&#10;PDFController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airtimeFactory&#9;null&#9;null&#10;AirtimeCreateController&#9;null&#9;null&#10;getAllClients&#9;null&#9;null&#10;clientFactory&#9;null&#9;null&#10;ClientFormController&#9;null&#9;null&#10;client-create.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client-create.html&#10;profi&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/template/profile-update.tpl.html&#10;app.js&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;loginFactory&#9;null&#9;null&#10;DashboardController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/dashboard/dashboard.controller.js&#10;rout.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;permi&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;PeopleUpdateController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people-update.controller.js&#10;peopl&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/people.html" />
+    <property name="SearchEverywhereHistoryKey" value="clientFactory&#9;null&#9;null&#10;air&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/airtime/airtime-create.controller.js&#10;rout.con&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;rout&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.run.js&#10;ou&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;top&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/top-navbar.html&#10;ro&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;airt&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;log&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;user&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/UserController.php&#10;login&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;route.&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;perm&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;ClientController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;cli&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client.controller.js&#10;route&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;client.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;permis&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.config.js&#10;logi&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login.services.js&#10;User&#9;FILE&#9;file:///var/www/rockcity-erp/app/User.php&#10;UserController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/UserController.php&#10;userFactory&#9;null&#9;null&#10;mail.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/mail.html&#10;side&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/jade/views/partials/sidebar.jade&#10;AirtimeController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;client&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;Clien&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;app.j&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;peop&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people.controller.js&#10;sid&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/sidebar.html&#10;client.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client.html&#10;pdf&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airti&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;lo&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;AssessmentController.php&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AssessmentController.php&#10;assessmentService&#9;null&#9;null&#10;AssessmentController&#9;null&#9;null&#10;PDFController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airtimeFactory&#9;null&#9;null&#10;AirtimeCreateController&#9;null&#9;null&#10;getAllClients&#9;null&#9;null&#10;ClientFormController&#9;null&#9;null&#10;client-create.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client-create.html&#10;profi&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/template/profile-update.tpl.html&#10;app.js&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;loginFactory&#9;null&#9;null&#10;DashboardController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/dashboard/dashboard.controller.js&#10;rout.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;permi&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;PeopleUpdateController&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people-update.controller.js" />
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="js.buildTools.gulp.gulp_package_dir" value="/usr/lib/node_modules/gulp" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
@@ -521,10 +380,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="39" width="1323" height="729" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32654658" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28337237" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28337237" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967892" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -564,22 +423,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/user/user.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/user/userModel.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/master/js/custom/permission/side-menu-permission.directive.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -956,6 +799,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicles.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle-manage.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -964,10 +815,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicles.controller.js">
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.2651391">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1767594">
+          <caret line="57" column="21" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
           <folding />
         </state>
       </provider>

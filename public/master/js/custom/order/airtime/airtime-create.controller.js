@@ -52,7 +52,7 @@
             vm.client = {};
             //TODO: implement this for
             vm.refreshClient = function(search) {
-                clientFactory.clients().query().$promise.then(
+                clientFactory.getAllClients().query().$promise.then(
                     function (response) {
                         vm.clients = response;
                     }
