@@ -20,7 +20,7 @@ class CreateClientsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade');
 
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('street_no');
             $table->string('street_name');
             $table->string('town');
@@ -28,9 +28,11 @@ class CreateClientsTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('mobile');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->unique(['user_id', 'name', 'email']);
         });
     }
 

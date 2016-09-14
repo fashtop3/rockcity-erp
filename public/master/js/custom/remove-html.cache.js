@@ -9,6 +9,7 @@
     angular
         .module('app.order')
         .run(['$rootScope', '$templateCache', function($rootScope, $templateCache) {
+            //$templateCache.removeAll(); //first remove template cache on refresh
             $rootScope.$on('$viewContentLoaded', function() {
                 //$templateCache.removeAll();
             });

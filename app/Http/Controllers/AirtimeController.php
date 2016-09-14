@@ -27,7 +27,7 @@ class AirtimeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth.basic');
+        $this->middleware('auth');
 
         $this->user = Auth::user();
     }

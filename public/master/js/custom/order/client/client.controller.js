@@ -47,7 +47,7 @@
                     // Changing data
 
                     if($state.is('app.admin.clients')) {
-                        clientFactory.clients().query().$promise.then(
+                        clientFactory.getAllClients().query().$promise.then(
                             function(response){
                                 vm.clients = response;
                                 vm.showclient = true;

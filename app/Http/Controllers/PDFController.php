@@ -17,7 +17,7 @@ class PDFController extends Controller
 
     public function __construct() {
 
-        $this->middleware('auth.basic');
+        $this->middleware('auth');
 
     }
     //

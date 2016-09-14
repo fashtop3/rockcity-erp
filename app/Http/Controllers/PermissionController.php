@@ -14,7 +14,7 @@ class PermissionController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth.basic', [ 'except' => ['controls'] ]);
+        $this->middleware('auth', [ 'except' => ['controls'] ]);
     }
 
     /**

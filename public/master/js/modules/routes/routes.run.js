@@ -7,18 +7,20 @@
 
     angular
         .module('app.routes')
-        .run(['$rootScope', '$state', 'loginFactory', '$location',
-            function ($rootScope, $state, loginFactory, $location) {
+        .run(['$rootScope', '$state', 'loginFactory', '$location', '$injector',
+            function ($rootScope, $state, loginFactory, $location, $injector) {
 
 
                 $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
+                    //confirm if user is logged in
+                    if(loginFactory.getUserStatus()) //to avoid indefinite loop
+                        loginFactory.authCheck();
+
                     //if toState requires authenticate and user is not logged in
                     if (toState.data.authenticate) {
 
-                        //if user is not logged in
                         if(!loginFactory.getUserStatus()) {
-
                             //save anticipated state
                             loginFactory.toState = toState;
 
@@ -26,6 +28,7 @@
                             event.preventDefault();
                         }
 
+                        //var $state = $injector.get("$state");
                         //handle when user refreshes unauthorized page
                         if(toState.name == 'app.unauthorized' && fromState.name == '') {
                             $state.go('app.dashboard');
@@ -45,10 +48,7 @@
                         event.preventDefault();
                     }
 
-                    //confirm if user is logged in
-                    if (loginFactory.getUserStatus()) {
-                        loginFactory.authCheck();
-                    }
+
                 });
 
             }])

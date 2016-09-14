@@ -14,7 +14,7 @@ class SupervisorController extends Controller
 {
     public function index()
     {
-        $this->middleware('auth.basic');
+        $this->middleware('auth');
         $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['store']]);
     }
 

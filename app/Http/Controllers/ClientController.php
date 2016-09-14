@@ -15,7 +15,7 @@ class ClientController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth.basic');
+        $this->middleware('auth');
 
         $this->user = Auth::user();
     }
@@ -55,10 +55,10 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:3',
-            'street_no' => 'required|string|min:3',
-            'street_name' => 'required|string|min:3',
-            'town' => 'required|string|min:3',
+            'name' => 'required|string',
+            'street_no' => 'required|string',
+            'street_name' => 'required|string',
+            'town' => 'required|string',
             'title' => 'required|alpha|min:2,max:6',
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
@@ -69,6 +69,7 @@ class ClientController extends Controller
         if($validator->fails()) {
             return response($validator->errors()->all(), 422);
         }
+
         //check if mail exists
         if(Client::mailExits($request->get('email'))) {
             return response('Client email already exists!', 403);
@@ -77,11 +78,13 @@ class ClientController extends Controller
         $input = $request->all();
         $input['user_id'] = $this->user->id;
 
-        if(!Client::create($input))
-        {
-            return response('Error saving client\'s data', 403);
+        try{
+            Client::create($input);
+            return response('Client\'s data saved successfully');
         }
-        return response('Client\'s data saved successfully');
+        catch(\Exception $e) {
+            return response('Error: client\'s data Exists', 403);
+        }
     }
 
     /**

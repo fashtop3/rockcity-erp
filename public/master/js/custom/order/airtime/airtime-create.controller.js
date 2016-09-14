@@ -8,7 +8,7 @@
 
     angular
         .module('app.order')
-        .controller('AirtimeCreateController',
+        .controller('AirtimeCreateController', ['$scope', '$cookies', '$rootScope', 'toaster', 'clientFactory', 'userFactory', 'productFactory', 'airtimeFactory', 'SweetAlert', '$uibModal', '$timeout', '$state', 'loginFactory',
         function($scope, $cookies, $rootScope, toaster, clientFactory, userFactory, productFactory, airtimeFactory, SweetAlert, $uibModal, $timeout, $state, loginFactory) {
 
             var vm = $scope;
@@ -502,7 +502,7 @@
                 }
             }
 
-        });
+        }]);
 })();
 
 (function(){

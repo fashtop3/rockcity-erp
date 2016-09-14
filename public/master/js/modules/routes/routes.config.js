@@ -10,7 +10,36 @@
     angular
         .module('app.routes')
         .config([ '$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
             $httpProvider.interceptors.push('securityInterceptor');
+            $httpProvider.interceptors.push(['$q', '$location', '$window', function ($q, $location, $window) {
+                return {
+                    'request': function(config) {
+                        console.log(config);
+                        var deferred = $q.defer();
+                        //console.log('before req');
+                        deferred.resolve(config);
+                        return deferred.promise;
+                    },
+                    'response': function(response) {
+                        //console.log('after req');
+                        if (response.status === 401) {
+                            console.log("Response 401");
+                        }
+                        return response || $q.when(response);
+                    },
+                    'responseError': function(rejection) {
+                        if (rejection.status === 401) {
+                            //console.log("Response Error 401! Redirecting to /signin...", rejection);
+
+                            // This works! Why?
+                            //$window.location.pathname = '/signin';
+                        }
+                        return $q.reject(rejection);
+                    }
+                };
+            }]);
+
         }])
         .provider('securityInterceptor', function() {
             this.$get = function($location, $q) {
@@ -24,6 +53,8 @@
                 };
             };
         })
+
+
         .config(routesConfig);
 
 

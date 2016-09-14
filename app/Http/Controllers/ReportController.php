@@ -25,7 +25,7 @@ class ReportController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth.basic');
+        $this->middleware('auth');
         $this->middleware('role:staff', ['only' => ['upload', 'store']]);
         $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['getReports']]);
     }

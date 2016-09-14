@@ -136,6 +136,9 @@ Route::get('mail/airtime', function() {
 
 
 Route::get('api/contacts', 'UserController@contacts');
+Route::get('/login', function() {
+    return redirect('/');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -160,9 +163,10 @@ Route::group(['middleware' => ['web'] ], function () {
             return csrf_token();
         });
         Route::post('/auth',    'UserController@checkAuth');
+//        Route::post('/auth',    'Auth\AuthController@login');
         Route::get('/auth/check',    'UserController@isAuth');
 
-        Route::get('/auth/logout',    'UserController@logoutUser');
+        Route::get('/auth/logout',    'Auth\AuthController@logout');
 //    Route::get('/auth/logout',    'Auth\AuthController@logout');
 
         //user routing
@@ -173,12 +177,10 @@ Route::group(['middleware' => ['web'] ], function () {
         Route::get('/user/marketers', 'UserController@getMarketers');
 
         //check user permissions
-        Route::get('/user/can/{slug}', 'UserController@userCan');
-        Route::get('/user/is/{slug}', 'UserController@userIs');
+        Route::get('/user/permissions', 'UserController@userPermissions');
 
         Route::resource('/user', 'UserController');
 
-        Route::get('/client', 'ClientController@getAllClients');
         Route::put('/client/{id}/edit', 'ClientController@update');
         Route::resource('/client', 'ClientController');
 
@@ -221,6 +223,7 @@ Route::group(['middleware' => ['web'] ], function () {
         Route::get('/admin/airtime', 'AdminController@getOrders');
         Route::get('/admin/driver-reps', 'DriverController@getReports');
         Route::get('/admin/staff-reps', 'ReportController@getReports');
+        Route::get('/admin/clients', 'ClientController@getAllClients');
 
     });
 });

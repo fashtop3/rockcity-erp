@@ -5,9 +5,12 @@
 (function () {
     angular
         .module('app.order')
-        .service('loginFactory', ['$resource', '$cookies', '$rootScope', 'baseURL', '$state', 'PermissionStore', 'RoleStore',
-            function($resource, $cookies, $rootScope, baseURL, $state, PermissionStore, RoleStore) {
+        .service('loginFactory', ['userFactory', '$resource', '$cookies', '$rootScope', 'baseURL', '$state', '$timeout', '$q',
+            function(userFactory, $resource, $cookies, $rootScope, baseURL, $state, $timeout, $q) {
 
+                //Removes Listeners before adding them
+                //This line will solve the problem for multiple broadcast call
+                $rootScope.$$listeners['userIsAuthenticated'] = [];
                 this.toState = null;
                 this.toParams = null;
 
@@ -25,35 +28,41 @@
                 };
 
                 this.authCheck = function() {
-                    $resource(baseURL + 'auth/check').get(
+                   return $resource(baseURL + 'auth/check').get(
                         function (response) {
                             $rootScope.auth = response;
                             $cookies.put('auth', JSON.stringify($rootScope.auth));
+
+                            $rootScope.$broadcast('userIsAuthenticated', { any: {} });
+
+                            //intercept routing to stabilize user permissions
+                            //$urlRouterProvider.deferIntercept();
                         },
-                        function () {
-                            redirect();
+                        function (response) {
+                           redirect();
                         }
                     );
                 };
+
+                /**
+                 *  listener
+                 */
+                $rootScope.$on('userIsAuthenticated', function(event, args) {
+                    //var anyThing = args.any;
+                    // do what you want to do
+                    userFactory.loadPermissions();
+                });
 
                 $rootScope.logout = function() {
-                    $resource(baseURL + 'auth/logout').query(
+                    console.log('logout clicked');
+                    $resource(baseURL + 'auth/logout').get(
                         function (response) {
+                            //console.log(response);
                             redirect();
                         }
                     );
 
                 };
-
-                //$rootScope.logout = function() {
-                //    $resource(baseURL + 'auth/logout', null, {
-                //        'doLogout': { method: 'GET', headers: { 'X-Requested-With' :'XMLHttpRequest' }} }).doLogout(
-                //        function (response) {
-                //            redirect();
-                //        }
-                //    );
-                //
-                //};
 
                 this.user = function() {
                     return $resource(baseURL + 'auth', null, {

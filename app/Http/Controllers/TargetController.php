@@ -14,7 +14,7 @@ class TargetController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth.basic');
+        $this->middleware('auth');
 
         $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['update', 'store', 'destroy']]);
 

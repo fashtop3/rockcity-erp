@@ -72,6 +72,13 @@
                                     vm.alerts[0] = {'type':'danger', 'msg':response.data};
                                     toaster.pop('error', 'Client', response.data);
                                 }
+                                else if(response.status == 422) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', response.data);
+                                } else {
+                                    vm.alerts[0] = {'type':'danger', 'msg':'Server Error contact site administrator'};
+                                    toaster.pop('error', 'Client', 'Server Error contact site administrator');
+                                }
                             }
                         );
                     }
@@ -80,3 +87,17 @@
             }]);
 })();
 
+
+(function () {
+    angular
+        .module('app.order')
+        .service('ServerResponse', function() {
+            this.successResponse = function() {
+
+            };
+
+            this.responseError = function() {
+
+            }
+        });
+})();

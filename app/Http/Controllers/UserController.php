@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth.basic', ['except' => ['checkAuth', 'isAuth', 'store', 'contacts', 'recover', 'changePassword'] ]);
+        $this->middleware('auth', ['except' => ['checkAuth', 'isAuth', 'store', 'contacts', 'recover', 'changePassword'] ]);
 
         $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['destroy']]);
 
@@ -101,34 +101,24 @@ class UserController extends Controller
         return response($role->users);
     }
 
-    public function userCan($slug)
+    public function userPermissions()
     {
-        $permission = Permission::where('slug', $slug)->get()->first();
+        $permissions = Auth::user()->permissions()->get();
+        $roles = Auth::user()->roles()->get();
+        $roleArr = [];
+        $permissionArr = [];
 
-        if(!$permission) {
-            return response('not found', 403);
+        if(!empty($permissions)) {
+            foreach($permissions as $permission) {
+                $permissionArr[] = $permission->slug;
+            }
         }
-
-        if(Auth::user()->can($permission->slug)) {
-            return response('Authorized');
+        if(!empty($roles)) {
+            foreach($roles as $role) {
+                $roleArr[] = $role->slug;
+            }
         }
-
-        return response('Unauthorized', 403);
-    }
-
-    public function userIs($slug)
-    {
-        $role = Role::where('slug', $slug)->get()->first();
-
-        if(!$role) {
-            return response('not found', 403);
-        }
-
-        if(Auth::user()->is($role->slug)) {
-            return response('Authorized');
-        }
-
-        return response('Unauthorized', 403);
+        return response(['permissions'=>$permissionArr, 'roles'=>$roleArr]);
     }
 
 

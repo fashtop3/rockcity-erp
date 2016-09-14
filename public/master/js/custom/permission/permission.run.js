@@ -7,6 +7,7 @@
         .module('app.core')
         .run(permissionRun);
 
+    permissionRun.$inject = ['userFactory', 'PermissionStore', 'RoleStore', '$urlRouter', '$http'];
     function permissionRun(userFactory, PermissionStore, RoleStore, $urlRouter, $http){
         //PermissionStore
         //    .definePermission('create.airtime', function () {

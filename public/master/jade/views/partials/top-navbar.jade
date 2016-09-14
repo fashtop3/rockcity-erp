@@ -29,7 +29,7 @@ nav.navbar.topnavbar(role='navigation')
             // START lock screen
             li
                 //logout() from usermodelcontroller
-                a(href="#", ng-click="logout()", title="Logout")
+                a(href="api/auth/logout", ng-click="logout()", title="Logout")
                     em.icon-lock
             // END lock screen
         // END Left navbar

@@ -1,0 +1,2 @@
+ //drop unique cols on clients
+	--alter table `clients` add CONSTRAINT UNIQUE clients_user_id_name_email_unique (user_id, name, email)
