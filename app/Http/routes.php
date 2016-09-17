@@ -224,6 +224,7 @@ Route::group(['middleware' => ['web'] ], function () {
         Route::get('/admin/driver-reps', 'DriverController@getReports');
         Route::get('/admin/staff-reps', 'ReportController@getReports');
         Route::get('/admin/clients', 'ClientController@getAllClients');
+        Route::put('/admin/user/{id}', 'UserController@profileUpdateByAdmin');
 
     });
 });

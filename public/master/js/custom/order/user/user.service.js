@@ -44,6 +44,10 @@
                     return false;
                 };
 
+                this.adminUserUpdate = function() {
+                    return $resource(baseURL + "admin/user/:id", null, {'update':{ method:'PUT'}});
+                };
+
                 //get all user or get usr by id
                 this.getUsers = function(){
                     return $resource(baseURL + "user/:id", null, {

@@ -15,7 +15,7 @@
             $httpProvider.interceptors.push(['$q', '$location', '$window', function ($q, $location, $window) {
                 return {
                     'request': function(config) {
-                        console.log(config);
+                        //console.log(config);
                         var deferred = $q.defer();
                         //console.log('before req');
                         deferred.resolve(config);

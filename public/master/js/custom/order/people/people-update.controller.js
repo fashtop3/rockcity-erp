@@ -75,10 +75,9 @@
 
                 vm.submitUserForm = function() {
                     toaster.pop('wait', 'User', 'Processing your request');
-
                     validateRolesPerm();
 
-                    userFactory.getUsers().update({'id': parseInt($stateParams.id)}, vm.account).$promise.then(
+                    userFactory.adminUserUpdate().update({'id': parseInt($stateParams.id)}, vm.account).$promise.then(
                         function() {
                             //vm.account = {'status':0, 'roles':{}, 'permissions':{} };
                             vm.alerts[0] = {'type':'success', 'msg':'Account successfully updated'};
@@ -91,7 +90,7 @@
                             }
                             else {
                                 vm.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
-                                toaster.pop('error', response.statusText, response.data);
+                                toaster.pop('error', response.statusText, 'Token mismatch... Please refresh');
                             }
 
                         }

@@ -133,12 +133,9 @@
             };
 
             vm.calcFixedPrice = function () {
-
                 vm.form.fixSpotPrice =  parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]) * parseInt(vm.form.no_slots);
-
                 //selected  product price
                 var selProdPrice = parseFloat(vm.product.selected.prices[vm.price.index][vm.form.period]);
-
                 for(var i = 0; i < vm.scheduleSlots.length; i++) {
                     var schtable = vm.scheduleSlots[i];
 
@@ -151,13 +148,9 @@
 
             //submit order
             vm.submitOrder = function () {
-
                 var airtime = {};
-
                 airtime.marketer = vm.marketer.selected;
-
                 airtime.client = vm.client.selected;
-
                 airtime.sub = {
                     'discount':vm.form.discount,
                     'discountAmt':vm.dsctAmnt,
@@ -167,17 +160,12 @@
                     'vat': vm.vat,
                     'grandTotal': vm.totalWOComm
                 };
-
                 airtime.cart = vm.cart;
-
                 console.log(airtime);
-
                 toaster.pop('wait', 'Order', 'Processing your request');
-
                 vm.orderButton = true;
                 airtimeFactory.order().save(airtime,
                     function (response) {
-
                         toaster.pop('success', 'Order', response.data);
                         $timeout(function () {
                             $state.go('app.airtime');
@@ -198,7 +186,6 @@
 
             //set default to current user
             vm.marketer = {'selected': loginFactory.userData()};
-
             userFactory.marketers().query().$promise.then(
                 function (response) {
                     vm.marketers = response;
@@ -214,10 +201,16 @@
             );
 
             vm.doDiscountCalc = function () {
+                //vm.vat = (5/100)*vm.cartTotals;
+                //vm.dsctAmnt = ((vm.form.discount)/100)*vm.cartTotals;
+                //vm.commAmnt = ((vm.form.commission)/100)*vm.cartTotals;
+                //vm.totalWOComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt - vm.commAmnt;
+                //vm.totalWComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt;
                 vm.vat = (5/100)*vm.cartTotals;
-                vm.dsctAmnt = ((vm.form.discount)/100)*vm.cartTotals;
-                vm.commAmnt = ((vm.form.commission)/100)*vm.cartTotals;;
-                vm.totalWOComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt - vm.commAmnt;
+                vm.dsctAmnt = ((vm.form.discount)/100)*vm.cartTotals; //amount discounted
+                var cartDiscounted = vm.cartTotals - vm.dsctAmnt;
+                vm.commAmnt = ((vm.form.commission)/100)*cartDiscounted; //%comm based on discounted price
+                vm.totalWOComm = vm.cartTotals - (vm.dsctAmnt+vm.commAmnt);
                 vm.totalWComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt;
             };
 
@@ -413,25 +406,27 @@
 
             //alert box for clearing cart
             vm.emptyCart = function() {
-                SweetAlert.swal({
-                    title: 'Are you sure you want to empty your cart?',
-                    text: 'Your will not be able to recover your selected items back!',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#DD6B55',
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'No, cancel pls!',
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function(isConfirm){
-                    if (isConfirm) {
-                        vm.cart = [];
-                        vm.calcCartTotalPrice();
-                        SweetAlert.swal('Deleted!', 'Your cart is now empty.', 'success');
-                    } else {
-                        SweetAlert.swal('Cancelled', 'Your item is safe :)', 'error');
-                    }
-                });
+                (function() {
+                    SweetAlert.swal({
+                        title: 'Are you sure you want to empty your cart?',
+                        text: 'Your will not be able to recover your selected items back!',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, delete it!',
+                        cancelButtonText: 'No, cancel pls!',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function(isConfirm){
+                        if (isConfirm) {
+                            vm.cart = [];
+                            vm.calcCartTotalPrice();
+                            SweetAlert.swal('Deleted!', 'Your cart is now empty.', 'success');
+                        } else {
+                            SweetAlert.swal('Cancelled', 'Your item is safe :)', 'error');
+                        }
+                    });
+                })();
             };
 
             activateOpenCartModal();

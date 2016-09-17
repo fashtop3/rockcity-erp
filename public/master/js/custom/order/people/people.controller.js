@@ -102,7 +102,8 @@
                                             $scope.alerts[0] = {'type':'danger', 'msg':response.data};
                                             vm.clientMessage = response.data;
                                         }
-                                        SweetAlert.swal('Cancelled', vm.clientMessage, 'error');                                    }
+                                        SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
+                                    }
                                 );
                             } else {
                                 SweetAlert.swal('Cancelled', 'User data is safe :)', 'error');

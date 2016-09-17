@@ -192,13 +192,14 @@ class UserController extends Controller
 
     public function update($id, Request $request)
     {
-        $user = User::find($id);
-        //Todo: admin check first using else if
-        if($id != Auth::user()->id) {
-            if( !Auth::user()->canRegisterStaff() ) {
-                return response('You are not authorized to update this account', 403);
-            }
+        //Todo: validate
+        try{
+            $user = User::findOrFail($id);
         }
+        catch(\Exception $e) {
+            return response('User not found', 403);
+        }
+
         //changing user's password
         if($request->get('action') && $request->get('action') == 'password') {
             //validate request for password reset
@@ -221,17 +222,47 @@ class UserController extends Controller
             return response('Authentication Failed', 403 );
         }
 
-        if($user) {
-            $input['firstname'] = $request->get('firstname');
-            $input['lastname'] = $request->get('lastname');
-            $user->update($input);
 
-            $this->setRolePermission($request, $user);
+        $input['firstname'] = $request->get('firstname');
+        $input['lastname'] = $request->get('lastname');
+        $user->update($input);
 
-            return response(['data'=>'Account successfully updated.']);
+        return response(['data'=>'Account successfully updated.']);
+    }
+
+    public function profileUpdateByAdmin($id, Request $request)
+    {
+        //Todo: validate please
+        $validator = Validator::make($request->all(), [
+            'password' => 'sometimes|required|between:6,8',
+            'password_confirm' => 'sometimes|required|same:password',
+        ]);
+        if($validator->fails()) {
+            return response('Invalid credentials', 403);
         }
 
-        return response('User not found', 403);
+        try {
+            if( !Auth::user()->canRegisterStaff() )
+                return response('You are not authorized to update this account', 403);
+
+            $user = User::findOrFail($id);
+        }
+        catch(\Exception $e)  {
+            return response('User not found', 403);
+        }
+
+        $input = [];
+
+        if(!empty($request->get('password'))) {
+            $input['password'] = Hash::make($request->get('password'));
+        }
+
+        $input['firstname'] = $request->get('firstname');
+        $input['lastname'] = $request->get('lastname');
+        $input['status'] = $request->get('status') ? 1 : 0;
+        $user->update($input);
+        $this->setRolePermission($request, $user);
+        return response(['data'=>'Account successfully updated.']);
     }
 
 
@@ -285,28 +316,19 @@ class UserController extends Controller
         return response($contacts);
     }
 
-    /**
-     * @param Request $request
-     * @param $user
-     */
     protected function setRolePermission(Request $request, $newUser)
     {
-        $user = Auth::user();
-        //check if user is logged in and has permission to register user
-        if($user && $user->can('register.staff')) {
+        //if is submitted
+        if(is_array($request->get('roles'))) {
 
-            //if is submitted
-            if(is_array($request->get('roles'))) {
+            //get the id's of roles from the array
+            $newUser->roles()->sync(array_keys($request->get('roles')));
+        }
 
-                //get the id's of roles from the array
-                $newUser->roles()->sync(array_keys($request->get('roles')));
-            }
+        if(is_array($request->get('permissions'))) {
 
-            if(is_array($request->get('permissions'))) {
-
-                //get id's of permissions from the array
-                $newUser->permissions()->sync(array_keys($request->get('permissions')));
-            }
+            //get id's of permissions from the array
+            $newUser->permissions()->sync(array_keys($request->get('permissions')));
         }
     }
 
