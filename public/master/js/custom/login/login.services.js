@@ -61,7 +61,10 @@
                     $resource(baseURL + 'auth/logout').get(
                         function (response) {
                             //console.log(response);
-                            redirect();
+                            vm.redirectToLogin();
+                        },
+                        function() {
+                            vm.redirectToLogin();
                         }
                     );
 
@@ -76,7 +79,7 @@
                     });
                 };
 
-                this.redirect = function()
+                this.redirectToLogin = function()
                 {
                     $cookies.remove('auth');
                     $rootScope.authenticated = false;

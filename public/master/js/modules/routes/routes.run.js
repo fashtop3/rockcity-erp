@@ -14,39 +14,42 @@
                 $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
                     if (toState.data.authenticate) {
+
                         loginFactory.toState = toState; //intending state
                         if(!loginFactory.getUserStatus()) {
-                            loginFactory.redirect();
+                            loginFactory.redirectToLogin();
                             event.preventDefault();
+                        }
+
+                        if(toState.name == 'app.unauthorized' && fromState.name == '') {
+                            $state.go('app.dashboard');
                         }
 
                         loginFactory.authCheck().then(
                             function () {
                                 userFactory.loadPermissions(); //load permissions
-
-                                if (toState.name == 'page.login') {
-
-                                    if (fromState.name != '') {
-                                        $state.go(fromState.name);//return state
-                                    }
-                                    else {
-                                        $state.go('app.dashboard');//go to default state
-                                    }
-                                    event.preventDefault();
-                                }
-
-                                if(toState.name == 'app.unauthorized' && fromState.name == '') {
-                                    $state.go('app.dashboard');
-                                }
                             }
                             ,
                             function () {
-                                if(!$state.is('page.login'))
-                                    loginFactory.redirect();
-                                event.preventDefault();
+                                if(!$state.is('page.login')){
+                                    loginFactory.redirectToLogin();
+                                    event.preventDefault();
+                                }
                             }
                         );
                     }//endif
+                    else {
+                        if (toState.name == 'page.login' && loginFactory.getUserStatus()) {
+
+                            if (fromState.name != '') {
+                                $state.go(fromState.name);//return state
+                            }
+                            else {
+                                $state.go('app.dashboard');//go to default state
+                            }
+                            event.preventDefault();
+                        }
+                    }
 
                     //if toState requires authenticate and user is not logged in
                     //if (toState.data.authenticate) {

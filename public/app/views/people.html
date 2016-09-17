@@ -63,7 +63,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="user in people | filter:search">
-                                <td class="text-muted"><a href="#">{{user.lastname+', '+user.firstname}}</a></td>
+                                <td class="text-muted"><a ui-sref="app.people.edit({id: user.id})">{{user.lastname+', '+user.firstname}}</a></td>
                                 <td><strong>{{user.email}}</strong></td>
                                 <td class="text-muted">{{user.status == '1' ? 'Blocked' : 'Active'}}</td>
                                 <td class="text-muted">{{user.created_at | date:'MMM d, y h:mm a'}}</td>
