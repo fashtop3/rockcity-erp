@@ -11,23 +11,23 @@
             function($urlRouter, $http, $resource, baseURL, $q) {
 
                 var vm = this;
-                vm.permissions = [];
-                vm.roles = [];
+                vm.permissions = []; // ["create.airtime", "edit.airtime", "approve.airtime", "validate.airtime", "deny.airtime", "recommend.approval", "programme.airtime", "view.verified.staff", "generate.airtime", "programmes.airtime.approved", "verify.staff", "view.remittance", "view.report", "generate.report", "manage.target", "manage.vehicle", "register.staff"];
+                vm.roles = [];//["admin", "traffic", "executive.director", "ict", "marketing", "accounting", "administration.dept", "programmes.dept", "head.accounting", "head.marketing", "news", "engineering", "driver", "staff", "supervisor"];
 
-                this.loadPermissions = function() {
+                this.loadPermissions = function(req) {
+                    var deferred = $q.defer();
                     $http.get(baseURL + "user/permissions").then(
                         function(response) {
                             vm.permissions = response.data.permissions;
                             vm.roles = response.data.roles;
-
-                            //// kick-off router and start the application rendering
-                            //$urlRouter.sync();
-                            //// Also enable router to listen to url changes
-                            //$urlRouter.listen();
-                        }, function () {
+                            deferred.resolve(response);
+                        }, function (response) {
                             vm.permissions = [];
                             vm.roles = [];
+                            deferred.reject(response);
                         });
+
+                    return deferred.promise;
                 };
 
                 this.userCan = function($slug) {

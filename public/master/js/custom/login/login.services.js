@@ -8,6 +8,7 @@
         .service('loginFactory', ['userFactory', '$resource', '$cookies', '$rootScope', 'baseURL', '$state', '$timeout', '$q',
             function(userFactory, $resource, $cookies, $rootScope, baseURL, $state, $timeout, $q) {
 
+                var vm = this;
                 //Removes Listeners before adding them
                 //This line will solve the problem for multiple broadcast call
                 $rootScope.$$listeners['userIsAuthenticated'] = [];
@@ -28,20 +29,22 @@
                 };
 
                 this.authCheck = function() {
-                   return $resource(baseURL + 'auth/check').get(
+
+                    var deferred = $q.defer();
+                    $resource(baseURL + 'auth/check').get(
                         function (response) {
                             $rootScope.auth = response;
                             $cookies.put('auth', JSON.stringify($rootScope.auth));
 
                             $rootScope.$broadcast('userIsAuthenticated', { any: {} });
-
-                            //intercept routing to stabilize user permissions
-                            //$urlRouterProvider.deferIntercept();
+                            deferred.resolve(response);
                         },
                         function (response) {
-                           redirect();
+                            deferred.reject(response);
                         }
                     );
+
+                    return deferred.promise;
                 };
 
                 /**
@@ -50,7 +53,7 @@
                 $rootScope.$on('userIsAuthenticated', function(event, args) {
                     //var anyThing = args.any;
                     // do what you want to do
-                    userFactory.loadPermissions();
+                    //userFactory.loadPermissions();
                 });
 
                 $rootScope.logout = function() {
@@ -73,7 +76,7 @@
                     });
                 };
 
-                function redirect()
+                this.redirect = function()
                 {
                     $cookies.remove('auth');
                     $rootScope.authenticated = false;

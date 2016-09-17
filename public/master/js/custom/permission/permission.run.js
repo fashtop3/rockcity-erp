@@ -16,8 +16,12 @@
         //
 
         // Example ajax call
-            $http
-                .get('/api/permission/controls')
+            $http({
+                method: 'GET',
+                url: '/api/permission/controls',
+                headers: { 'permission-controls' : true }
+            })
+                //.get('/api/permission/controls')
                 .then(function (permissions) {
                     //console.log(permissions);
                     // Use RoleStore and PermissionStore to define permissions and roles
@@ -43,9 +47,19 @@
 
                     // Once permissions are set-up
                     // kick-off router and start the application rendering
-                    $urlRouter.sync();
-                    // Also enable router to listen to url changes
-                    $urlRouter.listen();
+                    userFactory.loadPermissions().then(
+                        function(){
+                            $urlRouter.sync();
+                            // Also enable router to listen to url changes
+                            $urlRouter.listen();
+                        },
+                        function(){
+                            $urlRouter.sync();
+                            // Also enable router to listen to url changes
+                            $urlRouter.listen();
+                        }
+                    );
+
                 });
     }
 

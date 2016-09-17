@@ -12,12 +12,14 @@
         .config([ '$httpProvider', function($httpProvider) {
             $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
             $httpProvider.interceptors.push('securityInterceptor');
-            $httpProvider.interceptors.push(['$q', '$location', '$window', function ($q, $location, $window) {
+            $httpProvider.interceptors.push(['$q', '$injector', '$location', function ($q, $injector, $location) {
                 return {
                     'request': function(config) {
-                        //console.log(config);
+                        var userFactory = $injector.get('userFactory');
                         var deferred = $q.defer();
-                        //console.log('before req');
+                        if(angular.isDefined(config.headers['permission-controls'])) {
+                            //userFactory.loadPermissions();
+                        }
                         deferred.resolve(config);
                         return deferred.promise;
                     },
@@ -145,7 +147,11 @@
                     authenticate:true
                 },
                 templateUrl: helper.basepath('app.html'),
-                resolve: helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl', 'oitozero.ngSweetAlert')
+                resolve: angular.extend({
+                    //'loadPermissions': ['userFactory', function(userFactory) {
+                    //    return userFactory.loadPermissions();
+                    //}]
+                }, helper.resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl', 'oitozero.ngSweetAlert'))
             })
             .state('app.dashboard', {
                 url: '/dashboard',
@@ -204,7 +210,7 @@
                     }
                 },
                 cache: false,
-                resolve: angular.extend(helper.resolveFor('datatables')),
+                resolve: angular.extend( helper.resolveFor('datatables')),
                 templateUrl: helper.basepath('people.html')
                 //controller:"PeopleController"
             })
