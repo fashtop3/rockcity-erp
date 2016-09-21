@@ -68,8 +68,10 @@
                                                 <b>Slot date :</b> {{\Carbon\Carbon::parse($productSub['subscription']['slot_start_date'])->toFormattedDateString()}}
                                                 <b> -- </b> {{\Carbon\Carbon::parse($productSub['subscription']['slot_end_date'])->toFormattedDateString()}}
                                             </small><br />
+                                            <?php $period = $productSub['subscription']['period']; ?>
                                             <small class="text-muted text-inverse">
-                                                <b>Slot :</b> {{$productSub['subscription']['slots']}}
+                                                <b>Slot: </b> {{$productSub['subscription']['slots']}} <br />
+                                                <b>Programme: </b>{{Carbon\Carbon::parse($prog_time[$period.'_start'])->format('h:i a')}} - {{Carbon\Carbon::parse($prog_time[$period.'_end'])->format('h:i a')}}
                                             </small>
                                         </div><br />
                                         @if(count($productSub->slotDetails) > 0)

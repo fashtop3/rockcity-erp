@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ProductTime;
 use App\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -77,7 +78,8 @@ class PDFController extends Controller
 //        return view('pdf.airtime', compact('schedule', 'totalAmount'));
 //        $pdf = PDF::loadView('pdf.airtime', compact('schedule', 'totalAmount'));
 
-        return view('pdf.airtime', compact('schedule'));
+        $prog_time = ProductTime::first();
+        return view('pdf.airtime', compact('schedule', 'prog_time'));
 
         $pdf = PDF::loadView('pdf.airtime', compact('schedule'));
         return $pdf->stream('airtime_order.pdf');

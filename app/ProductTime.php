@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductTime extends Model
 {
+    protected $dates = [ 'premium_start', 'premium_end', 'regular_start','regular_end' ];
 
     public function getPremiumStartAttribute($time) {
         return Carbon::parse($time)->toDateTimeString();
