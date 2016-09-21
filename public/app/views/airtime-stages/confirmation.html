@@ -147,7 +147,8 @@
                                                                 <b> -- </b> {{sub.slot_end_date | date:'MMM d, y'}}
                                                             </small><br />
                                                             <small class="text-muted text-inverse">
-                                                                <b>Slot :</b> {{sub.slots}}
+                                                                <b>Slot: </b> {{sub.slots}} <br />
+                                                                <b>Programme: </b> {{progStartTime(sub.period) | date:'h:mm a'}} - {{progEndTime(sub.period) | date:'h:mm a'}}
                                                             </small>
                                                         </div><br />
                                                         <div class="table-responsive" ng-if="sub.schedule.length">

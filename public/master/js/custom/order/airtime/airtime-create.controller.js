@@ -31,7 +31,7 @@
                 slot_end_date: "",
                 fixSpotPrice: "",
 
-                broadcast: "0",
+                broadcast: null,
                 bulk_start_date:'',
                 bulk_end_date:'',
                 bulkPrice: "",
@@ -194,11 +194,20 @@
 
             vm.product = {};
             vm.price = {index:'0'};
-            vm.products = productFactory.getProducts().query().$promise.then(
+            vm.prog_time = "";
+            vm.products = productFactory.getProducts().get().$promise.then(
                 function (response) {
-                    vm.products = response;
+                    vm.products = response.products;
+                    vm.prog_time = response.prog_time;
                 }
             );
+
+            vm.progStartTime = function ($period) {
+                return new Date(vm.prog_time[$period + '_start']);
+            };
+            vm.progEndTime = function ($period) {
+                return new Date(vm.prog_time[$period + '_end']);
+            };
 
             vm.doDiscountCalc = function () {
                 //vm.vat = (5/100)*vm.cartTotals;
@@ -388,8 +397,8 @@
 
                 if(type == 'time')
                 {
-                    var bst = new Date(vm.form.bulk_start_date);
-                    var bet = new Date(vm.form.bulk_end_date);
+                    var bst = vm.form.bulk_start_date = new Date(vm.form.bulk_start_date);
+                    var bet = vm.form.bulk_end_date = new Date(vm.form.bulk_end_date);
 
                     if(bet.getTime() <= bst.getTime()) {
                         vm.form.bulk_end_date = null;
@@ -401,6 +410,7 @@
                     vm.bulkValid = true;
                 }
 
+                console.log('bulk-start: ', vm.form.bulk_start_date);
                 return vm.bulkValid;
             };
 

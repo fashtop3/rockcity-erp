@@ -36,7 +36,7 @@
                             $rootScope.auth = response;
                             $cookies.put('auth', JSON.stringify($rootScope.auth));
 
-                            $rootScope.$broadcast('userIsAuthenticated', { any: {} });
+                            //$rootScope.$broadcast('userIsAuthenticated', { any: {} });
                             deferred.resolve(response);
                         },
                         function (response) {

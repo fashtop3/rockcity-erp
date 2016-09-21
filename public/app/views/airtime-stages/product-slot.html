@@ -319,7 +319,7 @@
                         <div class="form-group" >
                             <div class="col-sm-6" ng-controller="BulkStartDateCtrl as bsctrl ">
                                 <p class="input-group">
-                                    <input type="text" ng-change="bulkValidate('date')" placeholder="end date" ng-readonly="true" name="bulk_start_date" uib-datepicker-popup="{{bsctrl.format}}" ng-model="form.bulk_start_date" is-open="bsctrl.opened" min-date="bsctrl.minDate" max-date="'2019-12-22'" uib-datepicker-options="bsctrl.dateOptions" date-disabled="bsctrl.disabled(date, mode)"
+                                    <input type="text" ng-change="bulkValidate('date')" placeholder="start date" ng-readonly="true" name="bulk_start_date" uib-datepicker-popup="{{bsctrl.format}}" ng-model="form.bulk_start_date" is-open="bsctrl.opened" min-date="bsctrl.minDate" max-date="'2019-12-22'" uib-datepicker-options="bsctrl.dateOptions" date-disabled="bsctrl.disabled(date, mode)"
                                            close-text="Close" class="form-control" />
                                       <span class="input-group-btn">
                                          <button type="button" ng-click="bsctrl.open($event)" class="btn btn-default">
@@ -330,14 +330,15 @@
                             </div>
                             <div class="col-sm-4">
                                 <!--<input type="text" ng-change="bulkValidate('time')" ng-disabled="!form.bulk_start_date" placeholder="time" class="form-control col-sm-2" ng-model="form.bulk_start_date" name="time" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="1" data-arrow-behavior="picker">-->
-                                <input type="text" class="form-control" size="8" ng-change="bulkValidate('time')" ng-disabled="!form.bulk_start_date" ng-model="form.bulk_start_date" data-time-format="HH:mm:ss" data-time-type="number" data-min-time="10:00:00" data-max-time="13:30:00" data-autoclose="1" name="time2" bs-timepicker>
+                                <!--<input type="text" class="form-control" size="8" ng-change="bulkValidate('time')" ng-disabled="!form.bulk_start_date" ng-model="form.bulk_start_date" data-time-format="HH:mm:ss" data-time-type="number" data-min-time="10:00:00" data-max-time="13:30:00" data-autoclose="1" name="time2" bs-timepicker>-->
+                                <input type="text" class="form-control" size="8" ng-change="bulkValidate('time')" ng-disabled="!form.bulk_start_date" ng-model="form.bulk_start_date" data-time-format="HH:mm:ss" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-6" ng-controller="BulkEndDateCtrl as bectrl">
                                 <p class="input-group">
-                                    <input type="text" ng-chabge="bulkValidate('date')" placeholder="end date" ng-readonly="true" name="form.bulk_end_date" uib-datepicker-popup="{{bectrl.format}}" ng-model="form.bulk_end_date" is-open="bectrl.opened" min-date="airtimeForm.bulk_start_date.$modelValue" max-date="'2019-12-22'" uib-datepicker-options="bectrl.dateOptions" date-disabled="bectrl.disabled(date, mode)"
+                                    <input type="text" ng-change="bulkValidate('date')" placeholder="end date" ng-readonly="true" name="form.bulk_end_date" uib-datepicker-popup="{{bectrl.format}}" ng-model="form.bulk_end_date" is-open="bectrl.opened" min-date="airtimeForm.bulk_start_date.$modelValue" max-date="'2019-12-22'" uib-datepicker-options="bectrl.dateOptions" date-disabled="bectrl.disabled(date, mode)"
                                            close-text="Close" class="form-control" />
                                       <span class="input-group-btn">
                                          <button type="button" ng-disabled="!form.bulk_start_date" ng-click="bectrl.open($event)" class="btn btn-default">
@@ -348,7 +349,8 @@
                             </div>
                             <div class="col-sm-4">
                                 <!--<input type="text" ng-change="bulkValidate('time')" ng-disabled="!form.bulk_end_date" placeholder="time" class="form-control col-sm-2" ng-model="form.bulk_end_date" name="time" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="1" data-arrow-behavior="picker">-->
-                                <input type="text" class="form-control" ng-change="bulkValidate('time')" size="8" ng-disabled="!form.bulk_end_date" ng-model="form.bulk_end_date" data-time-format="HH:mm:ss" data-time-type="number" data-min-time="10:00:00" data-max-time="13:30:00" data-autoclose="1" name="time2" bs-timepicker>
+                                <!--<input type="text" class="form-control" ng-change="bulkValidate('time')" size="8" ng-disabled="!form.bulk_end_date" ng-model="form.bulk_end_date" data-time-format="HH:mm:ss" data-time-type="number" data-min-time="10:00:00" data-max-time="13:30:00" data-autoclose="1" name="time2" bs-timepicker>-->
+                                <input type="text" class="form-control" ng-change="bulkValidate('time')" size="8" ng-disabled="!form.bulk_end_date" ng-model="form.bulk_end_date" data-time-format="HH:mm:ss" data-time-type="number" data-autoclose="1" name="time2" bs-timepicker>
                             </div>
                         </div>
 

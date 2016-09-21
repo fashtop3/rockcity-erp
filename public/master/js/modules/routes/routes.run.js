@@ -13,9 +13,9 @@
 
                 $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
+                    loginFactory.toState = toState; //intending state
                     if (toState.data.authenticate) {
 
-                        loginFactory.toState = toState; //intending state
                         if(!loginFactory.getUserStatus()) {
                             loginFactory.redirectToLogin();
                             event.preventDefault();

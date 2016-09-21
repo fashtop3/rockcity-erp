@@ -2,8 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a676137-a53d-407b-85e0-7c18b8c76649" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/database/migrations/2016_09_21_075608_add_soft_delete_to_schedule.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/js/app.js" afterPath="$PROJECT_DIR$/public/app/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/template/profile-update.tpl.html" afterPath="$PROJECT_DIR$/public/app/template/profile-update.tpl.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/airtime-stages/confirmation.html" afterPath="$PROJECT_DIR$/public/app/views/airtime-stages/confirmation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/airtime-stages/product-slot.html" afterPath="$PROJECT_DIR$/public/app/views/airtime-stages/product-slot.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/client-create.html" afterPath="$PROJECT_DIR$/public/app/views/client-create.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/client.html" afterPath="$PROJECT_DIR$/public/app/views/client.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/login/login.services.js" afterPath="$PROJECT_DIR$/public/master/js/custom/login/login.services.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js" afterPath="$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js" afterPath="$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/js/modules/routes/routes.run.js" afterPath="$PROJECT_DIR$/public/master/js/modules/routes/routes.run.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pdf.blade.php" afterPath="$PROJECT_DIR$/resources/views/pdf.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pdf/airtime.blade.php" afterPath="$PROJECT_DIR$/resources/views/pdf/airtime.blade.php" />
     </list>
     <ignored path="orders.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,90 +46,7 @@
     <favorites_list name="orders" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="routes.config.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="152" column="24" selection-start-line="150" selection-start-column="22" selection-end-line="152" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.run.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/modules/routes/routes.run.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AirtimeController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7986348">
-              <caret line="135" column="13" selection-start-line="130" selection-start-column="12" selection-end-line="135" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="people.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/app/views/people.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-33.333332">
-              <caret line="65" column="98" selection-start-line="65" selection-start-column="98" selection-end-line="65" selection-end-column="98" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="permission.run.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/permission/permission.run.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/user/user.service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="36" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.services.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/master/js/custom/login/login.services.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="63" column="46" selection-start-line="63" selection-start-column="46" selection-end-line="63" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.4444447">
-              <caret line="187" column="45" selection-start-line="187" selection-start-column="37" selection-end-line="187" selection-end-column="45" />
-              <folding>
-                <element signature="e#7#385#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -129,17 +62,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/app/template/profile-update.tpl.html" />
-        <option value="$PROJECT_DIR$/public/app/views/client-create.html" />
-        <option value="$PROJECT_DIR$/storage/logs/laravel.log" />
-        <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/app/Mailers/ScheduleMailer.php" />
-        <option value="$PROJECT_DIR$/app/Schedule.php" />
-        <option value="$PROJECT_DIR$/resources/views/pdf/airtime.blade.php" />
-        <option value="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" />
-        <option value="$PROJECT_DIR$/public/master/js/modules/sidebar/sidebar.controller.js" />
-        <option value="$PROJECT_DIR$/public/app/views/partials/sidebar.html" />
-        <option value="$PROJECT_DIR$/public/app/js/app.js" />
         <option value="$PROJECT_DIR$/public/master/js/app.module.js" />
         <option value="$PROJECT_DIR$/public/master/js/custom/remove-html.cache.js" />
         <option value="$PROJECT_DIR$/public/app/views/mail.html" />
@@ -155,11 +77,9 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AssessmentConfigController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AssessmentController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/DriverController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PDFController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PermissionController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/SupervisorController.php" />
@@ -167,19 +87,32 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" />
         <option value="$PROJECT_DIR$/public/master/jade/views/partials/sidebar.jade" />
         <option value="$PROJECT_DIR$/public/master/gulpfile.js" />
-        <option value="$PROJECT_DIR$/public/app/views/airtime-stages/confirmation.html" />
         <option value="$PROJECT_DIR$/public/master/js/custom/order/people/people-update.controller.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/public/master/js/custom/order/people/people.controller.js" />
-        <option value="$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/public/master/js/custom/order/user/user.service.js" />
         <option value="$PROJECT_DIR$/public/master/js/custom/permission/permission.run.js" />
-        <option value="$PROJECT_DIR$/public/master/js/custom/login/login.services.js" />
         <option value="$PROJECT_DIR$/public/app/views/people.html" />
         <option value="$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js" />
+        <option value="$PROJECT_DIR$/public/master/js/custom/login/login.services.js" />
         <option value="$PROJECT_DIR$/public/master/js/modules/routes/routes.run.js" />
+        <option value="$PROJECT_DIR$/public/app/template/profile-update.tpl.html" />
+        <option value="$PROJECT_DIR$/public/app/views/client.html" />
+        <option value="$PROJECT_DIR$/resources/views/pdf.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" />
+        <option value="$PROJECT_DIR$/public/app/views/client-create.html" />
+        <option value="$PROJECT_DIR$/app/ScheduleProductSub.php" />
+        <option value="$PROJECT_DIR$/resources/views/pdf/airtime.blade.php" />
+        <option value="$PROJECT_DIR$/public/app/views/airtime-stages/product-slot.html" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2016_09_21_075608_add_soft_delete_to_schedule.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2016_09_21_071024_create_product_times_table.php" />
+        <option value="$PROJECT_DIR$/app/Product.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" />
+        <option value="$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js" />
+        <option value="$PROJECT_DIR$/app/ProductTime.php" />
+        <option value="$PROJECT_DIR$/public/app/views/airtime-stages/confirmation.html" />
       </list>
     </option>
   </component>
@@ -340,7 +273,79 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="template" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orders" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rockcity-erp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="airtime-stages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orders" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rockcity-erp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orders" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rockcity-erp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="migrations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orders" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rockcity-erp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -353,7 +358,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="Airtime&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;peop&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/people.html&#10;per&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;log&#9;null&#9;null&#10;user&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/user/user.service.js&#10;rout&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;permis&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;rout.c&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;permiss.c&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.config.js&#10;UserController&#9;null&#9;null&#10;route.php&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;people&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people-update.controller.js&#10;confir&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/airtime-stages/confirmation.html&#10;cart&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/cart.tpl.html&#10;cart.tpl.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/cart.tpl.html&#10;side&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/jade/views/partials/sidebar.jade&#10;clientFactory&#9;null&#9;null&#10;air&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/airtime/airtime-create.controller.js&#10;rout.con&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;ou&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;top&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/top-navbar.html&#10;ro&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;airt&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;login&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;route.&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;perm&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;ClientController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;cli&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client.controller.js&#10;route&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;client.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;logi&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login.services.js&#10;User&#9;FILE&#9;file:///var/www/rockcity-erp/app/User.php&#10;userFactory&#9;null&#9;null&#10;mail.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/mail.html&#10;AirtimeController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;client&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;Clien&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;app.j&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;sid&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/sidebar.html&#10;client.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client.html&#10;pdf&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airti&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;lo&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;AssessmentController.php&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AssessmentController.php&#10;assessmentService&#9;null&#9;null&#10;AssessmentController&#9;null&#9;null&#10;PDFController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php&#10;airtimeFactory&#9;null&#9;null&#10;AirtimeCreateController&#9;null&#9;null&#10;getAllClients&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="conf&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/airtime-stages/confirmation.html&#10;rout&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;air&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;airt&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;airt-c&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/airtime-create.html&#10;airtim&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/airtime/airtime-create.controller.js&#10;client-cr&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client-create.html&#10;clientco&#9;null&#9;null&#10;pdf.bl&#9;FILE&#9;file:///var/www/rockcity-erp/resources/views/pdf.blade.php&#10;pdf/a&#9;FILE&#9;file:///var/www/rockcity-erp/resources/views/pdf/airtime.blade.php&#10;client.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client.html&#10;profile-up&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/template/profile-update.tpl.html&#10;Airtime&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;peop&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/people.html&#10;per&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;log&#9;null&#9;null&#10;user&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/user/user.service.js&#10;permis&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;rout.c&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;permiss.c&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.config.js&#10;UserController&#9;null&#9;null&#10;route.php&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;people&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/people/people-update.controller.js&#10;confir&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/airtime-stages/confirmation.html&#10;cart&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/cart.tpl.html&#10;cart.tpl.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/cart.tpl.html&#10;side&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/jade/views/partials/sidebar.jade&#10;clientFactory&#9;null&#9;null&#10;rout.con&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;ou&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;top&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/top-navbar.html&#10;ro&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;login&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login-form.controller.js&#10;route.&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/routes.php&#10;perm&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/permission/permission.run.js&#10;ClientController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;cli&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client.controller.js&#10;route&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/modules/routes/routes.config.js&#10;client.&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;logi&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/login/login.services.js&#10;User&#9;FILE&#9;file:///var/www/rockcity-erp/app/User.php&#10;userFactory&#9;null&#9;null&#10;mail.ht&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/mail.html&#10;AirtimeController&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/AirtimeController.php&#10;client&#9;FILE&#9;file:///var/www/rockcity-erp/public/master/js/custom/order/client/client-form.controller.js&#10;Clien&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/ClientController.php&#10;app.j&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/js/app.js&#10;sid&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/partials/sidebar.html&#10;client.html&#9;FILE&#9;file:///var/www/rockcity-erp/public/app/views/client.html&#10;pdf&#9;FILE&#9;file:///var/www/rockcity-erp/app/Http/Controllers/PDFController.php" />
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="js.buildTools.gulp.gulp_package_dir" value="/usr/lib/node_modules/gulp" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
@@ -428,13 +433,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="39" width="1323" height="729" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32654658" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2919594" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29664326" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967892" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32810047" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32811275" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3265306" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23575331" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -448,7 +454,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32810047" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -471,111 +476,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/bootstrapui/rating.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/bootstrapui/timepicker.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/bootstrapui/tooltip.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/bootstrapui/typeahead.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/lazyload/lazyload.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/lazyload/lazyload.constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/lazyload/lazyload.module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/assessment/assessment-log.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/assessment/assessment-config.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/driver/driver.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/driver/driver-report-modal.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/driver/driver-report-view.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/staff-report/report.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/staff-report/report.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-challenge.directive.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/staff-report/report-modal.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -728,15 +628,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/views/airtime-stages/confirmation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030716723">
-          <caret line="287" column="43" selection-start-line="287" selection-start-column="43" selection-end-line="287" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -744,7 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32423207">
           <caret line="237" column="44" selection-start-line="237" selection-start-column="44" selection-end-line="237" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -752,7 +642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.7030995">
           <caret line="76" column="75" selection-start-line="76" selection-start-column="75" selection-end-line="76" selection-end-column="75" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -760,25 +649,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7047308">
           <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28874388">
-          <caret line="200" column="14" selection-start-line="200" selection-start-column="14" selection-end-line="200" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.4444447">
-          <caret line="187" column="45" selection-start-line="187" selection-start-column="37" selection-end-line="187" selection-end-column="45" />
-          <folding>
-            <element signature="e#7#385#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -786,7 +656,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.37194127">
           <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -794,6 +663,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/views/people.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-33.333332">
+          <caret line="65" column="98" selection-start-line="65" selection-start-column="98" selection-end-line="65" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="492" column="21" selection-start-line="492" selection-start-column="16" selection-end-line="492" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/modules/routes/routes.run.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -809,39 +700,161 @@
     <entry file="file://$PROJECT_DIR$/public/master/js/custom/login/login.services.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="46" selection-start-line="63" selection-start-column="46" selection-end-line="63" selection-end-column="46" />
+          <caret line="39" column="54" selection-start-line="39" selection-start-column="54" selection-end-line="39" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/views/people.html">
+    <entry file="file://$PROJECT_DIR$/public/app/views/client.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-33.333332">
-          <caret line="65" column="98" selection-start-line="65" selection-start-column="98" selection-end-line="65" selection-end-column="98" />
+        <state vertical-scroll-proportion="-12.666667">
+          <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/routes/routes.config.js">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ClientController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="152" column="24" selection-start-line="150" selection-start-column="22" selection-end-line="152" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.76369864">
+          <caret line="65" column="34" selection-start-line="65" selection-start-column="34" selection-end-line="65" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/master/js/modules/routes/routes.run.js">
+    <entry file="file://$PROJECT_DIR$/public/app/template/profile-update.tpl.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+        <state vertical-scroll-proportion="-14.666667">
+          <caret line="109" column="138" selection-start-line="109" selection-start-column="75" selection-end-line="109" selection-end-column="138" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/views/client-create.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.62963">
+          <caret line="138" column="30" selection-start-line="138" selection-start-column="30" selection-end-line="138" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pdf.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.296296">
+          <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/views/airtime-create.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="31.037037">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pdf/airtime.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5856164">
+          <caret line="40" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.666667">
+          <caret line="190" column="35" selection-start-line="190" selection-start-column="35" selection-end-line="190" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2016_09_21_071024_create_product_times_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64122134">
+          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/views/airtime-stages/product-slot.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.6666665">
+          <caret line="352" column="276" selection-start-line="352" selection-start-column="276" selection-end-line="352" selection-end-column="276" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/ScheduleProductSub.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38676846">
+          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Schedule.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="28.0">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2016_09_21_075608_add_soft_delete_to_schedule.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64122134">
+          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.5555553">
+          <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7986348">
-          <caret line="135" column="13" selection-start-line="130" selection-start-column="12" selection-end-line="135" selection-end-column="13" />
+        <state vertical-scroll-proportion="-7.888889">
+          <caret line="75" column="6" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Product.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.369863">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/ProductTime.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.67808217">
+          <caret line="22" column="30" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
+          <folding>
+            <element signature="e#23#41#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/master/js/custom/order/airtime/airtime-create.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.851852">
+          <caret line="204" column="51" selection-start-line="204" selection-start-column="51" selection-end-line="204" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/views/airtime-stages/confirmation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52568495">
+          <caret line="162" column="40" selection-start-line="162" selection-start-column="40" selection-end-line="162" selection-end-column="40" />
           <folding />
         </state>
       </provider>

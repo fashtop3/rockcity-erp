@@ -204,6 +204,7 @@
                 url: '/people',
                 title: 'People',
                 data: {
+                    authenticate:true,
                     permissions: {
                         only: ["executive.director", "administration.dept", "admin"], //"view.verified.staff"
                         redirectTo: 'app.unauthorized'
@@ -217,6 +218,7 @@
             .state('app.people.adduser', {
                 url: '/create',
                 data: {
+                    authenticate:true,
                     permissions: {
                         only: 'register.staff',
                         redirectTo: 'app.unauthorized'
@@ -231,6 +233,7 @@
                 url: '/:id/edit',
                 title: 'People',
                 data: {
+                    authenticate:true,
                     permissions: {
                         only: 'register.staff',
                         redirectTo: 'app.unauthorized'
@@ -252,6 +255,7 @@
                 url: '/airtime',
                 title: 'Airtime',
                 data: {
+                    authenticate:true,
                     permissions: {
                         only: ["traffic", "accounting", "marketing", "head.accounting", "head.marketing", "executive.director", "administration.dept", "admin", "generate.airtime"],
                         redirectTo: 'app.unauthorized'
@@ -318,6 +322,7 @@
                 url: '/report',
                 title: 'Report',
                 data: {
+                    authenticate:true,
                     permissions: {
                         only: ["staff", "generate.report"],
                         redirectTo: 'app.unauthorized'
@@ -347,6 +352,7 @@
                 title: 'Driver\'s Report',
                 cache: false,
                 data: {
+                    authenticate:true,
                     permissions: {
                         only: ["driver"],
                         redirectTo: 'app.unauthorized'
@@ -382,6 +388,7 @@
                 abstract: true,
                 cache: false,
                 data: {
+                    authenticate:true,
                     permissions: {
                         only: ["staff"],
                         redirectTo: 'app.unauthorized'
@@ -484,6 +491,7 @@
                 url: '^/supervisor/:id',
                 cache: false,
                 data: {
+                    authenticate:true,
                     permissions: {
                         only: ["supervisor"],
                         redirectTo: 'app.unauthorized'

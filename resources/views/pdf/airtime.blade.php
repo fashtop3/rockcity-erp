@@ -114,7 +114,7 @@
                 @endforeach
             </td>
         </tr>
-        <tr><td width="80%"></td><td valign="bottom" width="20%"><p>Total: <strong>NGN {{ number_format($product->totals, 2)}}</strong></p></td></tr>
+        <tr><td valign="bottom"><p class="pull-right">Total: <strong>NGN {{ number_format($product->totals, 2)}}</strong></p></td></tr>
     </table>
     @endforeach
 

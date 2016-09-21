@@ -25,7 +25,7 @@
         <!--start: header-->
         <header class="jumbotron container-fluid">
             <div class="container">
-                <div class="row">
+                <div class="row col-sm-8 col-sm-offset-2">
                     <div class="col-sm-4">
                         <img src="/app/img/rockcity.png" alt="Rockcity Logo" />
                     </div>
@@ -45,7 +45,7 @@
         <!--end: header-->
 
         <section class="container">
-            <div class="row">
+            <div class="row col-sm-8 col-sm-offset-2">
                 @yield('content')
             </div>
         </section>

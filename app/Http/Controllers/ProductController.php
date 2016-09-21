@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\ProductTime;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,17 +23,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-
-        if($products) {
-            foreach($products as $product) {
-                $product['prices'] = $product->prices;
-            }
-
-            return response($products);
+        try{
+            $products = Product::with('prices')->get();
+            $time = ProductTime::first();
+            return response(['products' => $products, 'prog_time' => $time]);
         }
-
-        return response('No product found', 403);
+        catch(\Exception $e) {
+            return response('No product found', 403);
+        }
     }
 
     /**

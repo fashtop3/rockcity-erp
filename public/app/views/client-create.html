@@ -21,7 +21,7 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="name" class="col-sm-3 control-label">Client's Name</label>
+                            <label for="name" class="col-sm-3 control-label">Client's Name <abbr class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.name.$error.required && !clientForm.name.$pristine}">
                                 <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-\&.\(\)\/\'\^]+$/" ng-model="client.name" class="form-control" id="name" name="name" placeholder="Enter Client's Name" required/>
                                 <span ng-show="!clientForm.name.$pristine &amp;&amp; clientForm.name.$error.required" class="text-danger">This field is required</span>
@@ -33,7 +33,7 @@
                     <fieldset>
                         <div class="form-group">
 
-                            <label for="name" class="col-sm-3 control-label">Street No.</label>
+                            <label for="name" class="col-sm-3 control-label">Street No. <abbr class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.street_no.$error.required && !clientForm.street_no.$pristine}">
                                 <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-\&.\(\)#\'\^]+$/" ng-model="client.street_no" class="form-control" id="street_no" name="street_no" placeholder="Enter Street number" required/>
                                 <span ng-show="!clientForm.street_no.$pristine &amp;&amp; clientForm.street_no.$error.required" class="text-danger">This field is required</span>
@@ -45,7 +45,7 @@
                     <fieldset>
                         <div class="form-group">
 
-                            <label for="name" class="col-sm-3 control-label">Street Name</label>
+                            <label for="name" class="col-sm-3 control-label">Street Name <abbr class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.street_name.$error.required && !clientForm.street_name.$pristine}">
                                 <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z 0-9\-]+$/" ng-model="client.street_name" class="form-control" id="street_name" name="street_name" placeholder="Enter Street name" required/>
                                 <span ng-show="!clientForm.street_name.$pristine &amp;&amp; clientForm.street_name.$error.required" class="text-danger">This field is required</span>
@@ -56,7 +56,7 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="name" class="col-sm-3 control-label">Town</label>
+                            <label for="name" class="col-sm-3 control-label">Town <abbr class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.town.$error.required && !clientForm.town.$pristine}">
                                 <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z ]+$/" ng-model="client.town" class="form-control" id="town" name="town" placeholder="Enter Town" required/>
                                 <span ng-show="!clientForm.town.$pristine &amp;&amp; clientForm.town.$error.required" class="text-danger">This field is required</span>
@@ -75,7 +75,7 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="title" class="col-sm-3 control-label">Title</label>
+                            <label for="title" class="col-sm-3 control-label">Title <abbr class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.title.$error.required && !clientForm.title.$pristine}">
                                 <select name="title" ng-model="client.title" id="title" class="form-control" required>
                                     <option value="Miss">Miss.</option>
@@ -98,7 +98,7 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                            <label for="firstName" class="col-sm-3 control-label">First Name <abbr class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.firstname.$error.required && !clientForm.firstname.$pristine}">
                                 <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z]+$/" ng-model="client.firstname" class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" required/>
                                 <span ng-show="!clientForm.firstname.$pristine &amp;&amp; clientForm.firstname.$error.required" class="text-danger">This field is required</span>
@@ -109,7 +109,7 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="lastName" class="col-sm-3 control-label">Last Name</label>
+                            <label for="lastName" class="col-sm-3 control-label">Last Name <abbr class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': clientForm.lastname.$error.required && !clientForm.lastname.$pristine}">
                                 <input type="text" autocomplete="off" ng-pattern="/^[a-zA-Z]+$/" class="form-control" ng-model="client.lastname" name="lastname" id="lastname" placeholder="Enter Last Name" required/>
                                 <span ng-show="!clientForm.lastname.$pristine &amp;&amp; clientForm.lastname.$error.required" class="text-danger">This field is required</span>
@@ -120,7 +120,7 @@
 
                     <fieldset>
                         <div class="form-group" ng-class="{'has-error': clientForm.mobile.$error.required && !clientForm.mobile.$pristine}">
-                            <label for="mobile" class="col-sm-3 control-label">Phone Number</label>
+                            <label for="mobile" class="col-sm-3 control-label">Phone Number <abbr class="text-danger">*</abbr></label>
                             <div class="col-sm-7">
                                 <input type="text" autocomplete="off" ng-pattern="/^[0-9]{11,15}$/" ng-model="client.mobile" class="form-control col-sm-5" name="mobile" id="mobile" placeholder="Enter Phone Number" required/>
                                 <span ng-show="!clientForm.mobile.$pristine &amp;&amp; clientForm.mobile.$error.required" class="text-danger">This field is required</span>
@@ -132,9 +132,8 @@
                     <fieldset>
                         <div class="form-group">
                             <label for="email" class="control-label col-sm-3">Email</label>
-                            <div class="col-sm-7" ng-class="{'has-error': clientForm.email.$error.required && !clientForm.email.$pristine}">
-                                <input type="text" autocomplete="off" ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i" ng-model="client.email" class="form-control col-sm-9" name="email" id="email" placeholder="Enter email" required/>
-                                <span ng-show="!clientForm.email.$pristine &amp;&amp; clientForm.email.$error.required" class="text-danger">This field is required</span>
+                            <div class="col-sm-7" ng-class="{'has-error': clientForm.email.$error.pattern && !clientForm.email.$pristine}">
+                                <input type="text" autocomplete="off" ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i" ng-model="client.email" class="form-control col-sm-9" name="email" id="email" placeholder="Enter email"/>
                                 <span ng-show="!clientForm.email.$pristine &amp;&amp; clientForm.email.$error.pattern" class="text-danger">This field must be a valid email</span>
                             </div>
                         </div>

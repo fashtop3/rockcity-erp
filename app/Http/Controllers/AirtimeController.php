@@ -39,29 +39,33 @@ class AirtimeController extends Controller
     public function index(Request $request)
     {
 
+        $schedules = Schedule::where('user_id', Auth::user()->id);
+
         if($request->get('min') && $request->get('max')) {
 
             $schedules = Schedule::where('user_id', Auth::user()->id)
                 ->latest()
                 ->search(Carbon::parse($request->get('min'))->toDateTimeString(), Carbon::parse($request->get('max'))->toDateTimeString())
-                ->currentUser()->get();
+                ->currentUser()
+                ->with('user')
+                ->with('client')
+                ->with('scheduleAlert')
+                ->get();
         }
         else {
             $schedules = Schedule::where('user_id', Auth::user()->id)
-                ->latest()
-                ->currentUser()->get();
+                ->currentUser()
+                ->with('user')
+                ->with('client')
+                ->with('scheduleAlert')
+                ->get();
         }
 
+
+//        $schedules->get();
 
         if(!$schedules) {
             return response('Order empty', 403);
-        }
-
-        foreach($schedules as $schedule)
-        {
-            $schedule->user->toArray();
-            $schedule->client->toArray();
-            $schedule->scheduleAlert->toArray();
         }
 
         return response($schedules);
@@ -151,30 +155,31 @@ class AirtimeController extends Controller
      */
     public function show($id)
     {
-        $schedule = Schedule::find($id);
+        try{
+            $schedule = Schedule::findOrFail($id);
 
-        if(!$schedule) {
+            $schedule->user->toArray();
+            $schedule->client->toArray();
+            $schedule->schProducts->toArray();
+
+            foreach($schedule->schProducts as $product) {
+                $product->product->toArray();
+                $product->schProductSubs->toArray();
+                foreach($product->schProductSubs as $schProductSub) {
+                    if(!empty($schProductSub->slotDetails()->get())) {
+                        $schProductSub->slotDetails->toArray();
+                    }
+                    $product['totals'] += $schProductSub->subscription['amount'];
+                }
+            }
+
+            $schedule->scheduleAlert->toArray();
+
+            return response($schedule);
+        }
+        catch(\Exception $e) {
             return response('Airtime not found', 403);
         }
-
-        $schedule->user->toArray();
-        $schedule->client->toArray();
-        $schedule->schProducts->toArray();
-
-        foreach($schedule->schProducts as $product) {
-            $product->product->toArray();
-            $product->schProductSubs->toArray();
-            foreach($product->schProductSubs as $schProductSub) {
-                if(!empty($schProductSub->slotDetails()->get())) {
-                    $schProductSub->slotDetails->toArray();
-                }
-                $product['totals'] += $schProductSub->subscription['amount'];
-            }
-        }
-
-        $schedule->scheduleAlert->toArray();
-
-        return response($schedule);
     }
 
     /**

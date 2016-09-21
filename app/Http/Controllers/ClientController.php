@@ -63,7 +63,7 @@ class ClientController extends Controller
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
             'mobile' => 'required|numeric',
-            'email' => 'required|email',
+            'email' => 'sometimes|required|email',
         ]);
 
         if($validator->fails()) {
