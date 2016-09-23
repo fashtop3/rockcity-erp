@@ -265,28 +265,6 @@
     </div>
     <!-- END panel-->
 
-    <!--Attachement-->
-    <!-- START panel-->
-    <div id="attachPanel" class="panel panel-default">
-        <div ng-class="{'panel-heading-collapsed':attachPanel}" class="panel-heading">Attachment
-            <paneltool tool-collapse="tool-collapse" ng-init="attachPanel=true"></paneltool>
-        </div>
-        <!-- .panel-wrapper is the element to be collapsed-->
-        <div uib-collapse="attachPanel" class="panel-wrapper">
-            <div class="panel-body">
-                <div class="col-xs-12 col-sm-12">
-                    <div class="form-group">
-                        <label for="attachment">Upload Attachment</label>
-                        <input type="file" id="attachment" name="attachment">
-                        <p class="help-block">Only pdf and mp3 formats are allowed.</p>
-                    </div>
-                </div>
-            </div>
-            <!--<div class="panel-footer">Panel Footer</div>-->
-        </div>
-    </div>
-    <!-- END panel-->
-
     <!--Bulk Option-->
     <!-- START panel-->
     <div id="bulkPanel" class="panel panel-default" ng-if="product.selected.fixable">
@@ -380,5 +358,26 @@
     </div>
     <!-- END panel-->
 
+    <!--Attachement-->
+    <!-- START panel-->
+    <!--<div id="attachPanel" class="panel panel-default">-->
+        <!--<div ng-class="{'panel-heading-collapsed':attachPanel}" class="panel-heading">Attachment-->
+            <!--<paneltool tool-collapse="tool-collapse" ng-init="attachPanel=true"></paneltool>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; .panel-wrapper is the element to be collapsed&ndash;&gt;-->
+        <!--<div uib-collapse="attachPanel" class="panel-wrapper">-->
+            <!--<div class="panel-body">-->
+                <!--<div class="col-xs-12 col-sm-12">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="attachment">Upload Attachment</label>-->
+                        <!--<input type="file" id="attachment" name="attachment">-->
+                        <!--<p class="help-block">Only pdf and mp3 formats are allowed.</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<div class="panel-footer">Panel Footer</div>&ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+    <!-- END panel-->
 
 </div>
