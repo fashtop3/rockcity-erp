@@ -35,11 +35,18 @@
                                         <div class="">
                                             <span class="label label-info pull-right">{{$productSub['subscription']['period']}}</span>
                                             <h5 class="media-box-heading">BULK</h5>
-                                            <small class="text-muted text-inverse">
-                                                <b>Start :</b> ({{\Carbon\Carbon::parse($productSub['subscription']['bulk_start_date'])->toFormattedDateString()}})
-                                                <b>End :</b> ({{\Carbon\Carbon::parse($productSub['subscription']['bulk_end_date'])->toFormattedDateString()}}) <br />
-                                                <b>Broadcast: </b> {{$productSub['subscription']['broadcast']}}
-                                            </small>
+                                            <div class="text-muted text-inverse">
+                                                <small>
+                                                    <b>Start :</b> ({{\Carbon\Carbon::parse($productSub['subscription']['bulk_start_date'])->toFormattedDateString()}})
+                                                    <b>End :</b> ({{\Carbon\Carbon::parse($productSub['subscription']['bulk_end_date'])->toFormattedDateString()}}) <br />
+                                                    <b>Broadcast: </b> {{$productSub['subscription']['broadcast']}}
+                                                </small>
+                                            </div>
+                                            @if(!empty($productSub['subscription']['duration']))
+                                                <div class="text-muted text-inverse">
+                                                    <small><b>Duration: </b> {{$productSub['subscription']['duration']}}</small>
+                                                </div>
+                                            @endif
                                         </div>
                                     </td>
                                     <td width="15%">
@@ -64,16 +71,21 @@
                                         <div class="ph">
                                             <span class="label label-info pull-right">{{$productSub['subscription']['period']}}</span>
                                             <h5 class="media-box-heading">SLOT</h5>
-                                            <small class="text-muted text-inverse">
+                                            <div><small class="text-muted text-inverse">
                                                 <b>Slot date :</b> {{\Carbon\Carbon::parse($productSub['subscription']['slot_start_date'])->toFormattedDateString()}}
                                                 <b> -- </b> {{\Carbon\Carbon::parse($productSub['subscription']['slot_end_date'])->toFormattedDateString()}}
-                                            </small><br />
+                                            </small></div>
                                             <?php $period = $productSub['subscription']['period']; ?>
-                                            <small class="text-muted text-inverse">
-                                                <b>Slot: </b> {{$productSub['subscription']['slots']}} <br />
-                                                <b>Programme: </b>{{Carbon\Carbon::parse($prog_time[$period.'_start'])->format('h:i a')}} - {{Carbon\Carbon::parse($prog_time[$period.'_end'])->format('h:i a')}}
-                                            </small>
-                                        </div><br />
+                                            <?php $prog_time_range = Carbon\Carbon::parse($prog_time[$period.'_start'])->format('h:i a') . ' - '. Carbon\Carbon::parse($prog_time[$period.'_end'])->format('h:i a'); ?>
+                                            <div><small class="text-muted text-inverse"><b>Programme: </b>{{$prog_time_range}}</small></div>
+                                            <div><small class="text-muted text-inverse">
+                                                <b>Slot: </b> {{$productSub['subscription']['slots']}};
+                                             @if(!empty($productSub['subscription']['duration']))
+                                                        &nbsp;&nbsp;<b>Duration: </b> {{$productSub['subscription']['duration']}}
+                                             @endif
+                                                </small>
+                                            </div>
+                                        </div> <br />
                                         @if(count($productSub->slotDetails) > 0)
                                         <div class="table-responsive">
                                             <table class="table table-bordered">
@@ -84,18 +96,28 @@
                                                     <th>Time</th>
                                                 </tr>
                                                 @foreach($productSub->slotDetails as $slotDetail)
-                                                <tr>
-                                                    <td>{{Carbon\Carbon::parse($slotDetail->schedule[0]['date'])->toFormattedDateString()}}</td>
-                                                    <td>{{$slotDetail->schedule[0]['slot']}}</td>
-                                                    <td>{{$slotDetail->schedule[0]['tofix']}}</td>
-                                                    <td>
-                                                        <span class="text text-primary">
-                                                            @foreach($slotDetail->schedule[0]['times'] as $time)
-                                                            <small>{{\Carbon\Carbon::parse($time)->format('h:i a')}}, </small>
-                                                            @endforeach
-                                                        </span>
-                                                    </td>
-                                                </tr>
+                                                    @for($i = 0; $i<count($slotDetail->schedule); $i++)
+                                                    <tr>
+                                                        <td>{{Carbon\Carbon::parse($slotDetail->schedule[$i]['date'])->toFormattedDateString()}}</td>
+                                                        <td>{{$slotDetail->schedule[$i]['slot']}}</td>
+                                                        <td>{{$slotDetail->schedule[$i]['tofix']}}</td>
+                                                        @if($slotDetail->schedule[$i]['tofix'])
+                                                            <td>
+                                                                <span class="text text-primary">
+                                                                    @foreach($slotDetail->schedule[$i]['times'] as $time)
+                                                                    <small>{{\Carbon\Carbon::parse($time)->format('h:i a')}}, </small>
+                                                                    @endforeach
+                                                                </span>
+                                                            </td>
+                                                        @else
+                                                            <td>
+                                                            <span class="text text-primary">
+                                                                <small>{{$prog_time_range}}</small>
+                                                            </span>
+                                                            </td>
+                                                        @endif
+                                                    </tr>
+                                                    @endfor
                                                 @endforeach
                                             </table>
                                         </div>

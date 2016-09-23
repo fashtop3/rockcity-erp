@@ -25,6 +25,7 @@
             vm.form = {
                 price: 0.00,
                 period: '',
+                duration:null,
 
                 no_slots: "0",
                 slot_start_date: "",
@@ -79,6 +80,7 @@
 
             vm.clearBulk = function() {
                 vm.form.broadcast = 0;
+                vm.form.duration = null;
                 vm.form.bulk_start_date = null;
                 vm.form.bulk_end_date = null;
                 vm.bulkRangeChanged();
@@ -86,6 +88,7 @@
 
             vm.clearSlot = function() {
                 vm.form.no_slots = 0;
+                vm.form.duration = null;
                 vm.form.slot_start_date = null;
                 vm.form.slot_end_date = null;
                 vm.maxSlotRange = 0;
@@ -274,6 +277,7 @@
                     bulk_start_date:vm.form.bulk_start_date,
                     bulk_end_date:vm.form.bulk_end_date,
                     period: vm.form.period,
+                    duration: vm.form.duration,
                     amount: parseFloat(vm.form.bulkPrice),
                 };
 
@@ -312,6 +316,7 @@
                     slot_end_date: vm.form.slot_end_date,
                     isFixedOrDisplaced: vm.btn.fixslot,
                     period: vm.form.period,
+                    duration: vm.form.duration,
                     amount: parseFloat(vm.form.fixSpotPrice),
                     schedule: vm.scheduleSlots
                 };
@@ -373,6 +378,8 @@
 
             vm.durationChange =  function() {
                 vm.form.period = 'premium';
+                //can package the whole price object here
+                vm.form.duration = vm.product.selected.prices[vm.price.index].duration;
                 vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
             };
 
@@ -495,6 +502,14 @@
 
                     vm.deleteSubscription = function(itemIdx, subIdx) {
                         $rootScope.deleteSubscription(itemIdx, subIdx);
+                    };
+
+                    vm.progStartTime = function($period) {
+                        return $rootScope.progStartTime($period);
+                    };
+
+                    vm.progEndTime = function($period) {
+                        return $rootScope.progEndTime($period);
                     };
 
                     vm.ok = function () {

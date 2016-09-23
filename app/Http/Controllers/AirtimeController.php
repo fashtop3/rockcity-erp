@@ -136,7 +136,7 @@ class AirtimeController extends Controller
                 Event::fire(new ScheduleHasBeenPlaced($schedule));
             }
             catch(\Exception $e) {
-                return response('Unable to process Order: Mail Server not online contact Administrator', 403);
+                return response('Error: Mail Server not reachable! try again or contact Administrator', 403);
             }
 
 

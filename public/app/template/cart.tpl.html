@@ -70,7 +70,9 @@
                                                     <b> -- </b> {{sub.slot_end_date | date:'MMM d, y'}}
                                                 </small><br />
                                                 <small class="text-muted text-inverse">
-                                                    <b>Slot :</b> {{sub.slots}}
+                                                    <b>Slot :</b> {{sub.slots}} <br />
+                                                    <div ng-if="sub.duration"><b>Duration: </b> {{sub.duration}} <br /></div>
+                                                    <b>Programme: </b> {{progStartTime(sub.period) | date:'h:mm a'}} - {{progEndTime(sub.period) | date:'h:mm a'}}
                                                 </small>
                                             </div><br />
                                             <div class="table-responsive" ng-if="sub.schedule.length">
@@ -85,7 +87,8 @@
                                                         <td>{{schedule.date | date:'MMM d, y'}}</td>
                                                         <td>{{schedule.slot}}</td>
                                                         <td>{{schedule.tofix}}</td>
-                                                        <td><span class="text text-primary"><small ng-repeat="t in schedule.times">{{t | date:'h:mm a'}}, </small></span></td>
+                                                        <td ng-if="schedule.tofix > 0"><span class="text text-primary"><small ng-repeat="t in schedule.times">{{t | date:'h:mm a'}}, </small></span></td>
+                                                        <td ng-if="!schedule.tofix || schedule.tofix == '0'"><span class="text text-primary"><small>{{progStartTime(sub.period) | date:'h:mm a'}} - {{progEndTime(sub.period) | date:'h:mm a'}} </small></span></td>
                                                     </tr>
                                                 </table>
                                             </div>

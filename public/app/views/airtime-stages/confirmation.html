@@ -107,10 +107,13 @@
                                                         <div class="ph">
                                                             <span class="label label-info pull-right">{{sub.period}}</span>
                                                             <h4 class="media-box-heading">BULK</h4>
-                                                            <small class="text-muted text-inverse">
-                                                                <b>Start :</b> ({{sub.bulk_start_date | date:'MMM d, y h:mm a'}})
-                                                                <b>End :</b> ({{sub.bulk_end_date | date:'MMM d, y h:mm a'}} )
-                                                            </small>
+                                                            <div class="text-muted text-inverse">
+                                                                <small>
+                                                                    <b>Start :</b> ({{sub.bulk_start_date | date:'MMM d, y h:mm a'}})
+                                                                    <b>End :</b> ({{sub.bulk_end_date | date:'MMM d, y h:mm a'}} )
+                                                                </small>
+                                                            </div>
+                                                            <div class="text-muted text-inverse" ng-if="sub.duration"><small><b>Duration: </b> {{sub.duration}}</small></div>
                                                         </div>
                                                     </td>
                                                     <td class="wd-sm">
@@ -142,14 +145,17 @@
                                                         <div class="ph">
                                                             <span class="label label-info pull-right">{{sub.period}}</span>
                                                             <h4 class="media-box-heading">SLOT <small ng-if="sub.fixedSpot" class="text-muted">(Fixed)</small></h4>
-                                                            <small class="text-muted text-inverse">
-                                                                <b>Slot date :</b> {{sub.slot_start_date | date:'MMM d, y'}}
-                                                                <b> -- </b> {{sub.slot_end_date | date:'MMM d, y'}}
-                                                            </small><br />
-                                                            <small class="text-muted text-inverse">
-                                                                <b>Slot: </b> {{sub.slots}} <br />
-                                                                <b>Programme: </b> {{progStartTime(sub.period) | date:'h:mm a'}} - {{progEndTime(sub.period) | date:'h:mm a'}}
-                                                            </small>
+                                                            <div class="text-muted text-inverse">
+                                                                <small>
+                                                                    <b>Slot date :</b> {{sub.slot_start_date | date:'MMM d, y'}}
+                                                                    <b> -- </b> {{sub.slot_end_date | date:'MMM d, y'}}
+                                                                </small>
+                                                            </div>
+                                                            <div class="text-muted text-inverse">
+                                                                <small><b>Programme: </b> {{progStartTime(sub.period) | date:'h:mm a'}} - {{progEndTime(sub.period) | date:'h:mm a'}}</small>
+                                                            </div>
+                                                            <div><b>Slot: </b> {{sub.slots}}</div>
+                                                            <div class="text-muted text-inverse" ng-if="sub.duration"><small><b>Duration: </b> {{sub.duration}} </small></div>
                                                         </div><br />
                                                         <div class="table-responsive" ng-if="sub.schedule.length">
                                                             <table class="table table-bordered">
@@ -163,7 +169,8 @@
                                                                     <td>{{schedule.date | date:'MMM d, y'}}</td>
                                                                     <td>{{schedule.slot}}</td>
                                                                     <td>{{schedule.tofix}}</td>
-                                                                    <td><span class="text text-primary"><small ng-repeat="t in schedule.times">{{t | date:'h:mm a'}}, </small></span></td>
+                                                                    <td ng-if="schedule.tofix > 0"><span class="text text-primary"><small ng-repeat="t in schedule.times">{{t | date:'h:mm a'}}, </small></span></td>
+                                                                    <td ng-if="!schedule.tofix || schedule.tofix == '0'"><span class="text text-primary"><small>{{progStartTime(sub.period) | date:'h:mm a'}} - {{progEndTime(sub.period) | date:'h:mm a'}} </small></span></td>
                                                                 </tr>
                                                             </table>
                                                         </div>
