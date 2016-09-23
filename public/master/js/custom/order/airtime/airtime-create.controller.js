@@ -80,7 +80,6 @@
 
             vm.clearBulk = function() {
                 vm.form.broadcast = 0;
-                vm.form.duration = null;
                 vm.form.bulk_start_date = null;
                 vm.form.bulk_end_date = null;
                 vm.bulkRangeChanged();
@@ -88,7 +87,6 @@
 
             vm.clearSlot = function() {
                 vm.form.no_slots = 0;
-                vm.form.duration = null;
                 vm.form.slot_start_date = null;
                 vm.form.slot_end_date = null;
                 vm.maxSlotRange = 0;

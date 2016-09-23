@@ -37,16 +37,17 @@
                                             <h5 class="media-box-heading">BULK</h5>
                                             <div class="text-muted text-inverse">
                                                 <small>
-                                                    <b>Start :</b> ({{\Carbon\Carbon::parse($productSub['subscription']['bulk_start_date'])->toFormattedDateString()}})
-                                                    <b>End :</b> ({{\Carbon\Carbon::parse($productSub['subscription']['bulk_end_date'])->toFormattedDateString()}}) <br />
-                                                    <b>Broadcast: </b> {{$productSub['subscription']['broadcast']}}
+                                                    <b>Start: </b>{{\Carbon\Carbon::parse($productSub['subscription']['bulk_start_date'])->toFormattedDateString()}}; &nbsp;&nbsp;
+                                                    <b>End: </b>{{\Carbon\Carbon::parse($productSub['subscription']['bulk_end_date'])->toFormattedDateString()}}
                                                 </small>
                                             </div>
+                                            <div class="text-muted text-inverse">
+                                                <small><b>Broadcast: </b>{{$productSub['subscription']['broadcast']}}; &nbsp;&nbsp;
                                             @if(!empty($productSub['subscription']['duration']))
-                                                <div class="text-muted text-inverse">
-                                                    <small><b>Duration: </b> {{$productSub['subscription']['duration']}}</small>
-                                                </div>
+                                                <b>Duration: </b> {{$productSub['subscription']['duration']}}
                                             @endif
+                                                </small>
+                                            </div>
                                         </div>
                                     </td>
                                     <td width="15%">

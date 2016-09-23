@@ -53,17 +53,17 @@
     'use strict';
 
     angular
+        .module('app.bootstrapui', []);
+})();
+(function() {
+    'use strict';
+
+    angular
         .module('app.affix', [
             'ngStrap.affix'
         ]);
 })();
 
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui', []);
-})();
 (function() {
     'use strict';
 
@@ -202,6 +202,15 @@
     'use strict';
 
     angular
+        .module('app.utils', [
+          'app.colors'
+          ]);
+})();
+
+(function() {
+    'use strict';
+
+    angular
         .module('app.tables', []);
 })();
 (function() {
@@ -209,540 +218,6 @@
 
     angular
         .module('app.translate', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils', [
-          'app.colors'
-          ]);
-})();
-
-(function(){
-    'use strict';
-
-    angular
-        .module('ngStrap.affix', ['mgcrea.ngStrap.helpers.dimensions', 'mgcrea.ngStrap.helpers.debounce'])
-        .provider('$affix', function () {
-
-            var defaults = this.defaults = {
-                offsetTop: 'auto',
-                inlineStyles: true
-            };
-
-            this.$get = ["$window", "debounce", "dimensions", function ($window, debounce, dimensions) {
-
-                var bodyEl = angular.element($window.document.body);
-                var windowEl = angular.element($window);
-
-                function AffixFactory (element, config) {
-
-                    var $affix = {};
-
-                    // Common vars
-                    var options = angular.extend({}, defaults, config);
-                    var targetEl = options.target;
-
-                    // Initial private vars
-                    var reset = 'affix affix-top affix-bottom';
-                    var setWidth = false;
-                    var initialAffixTop = 0;
-                    var initialOffsetTop = 0;
-                    var offsetTop = 0;
-                    var offsetBottom = 0;
-                    var affixed = null;
-                    var unpin = null;
-
-                    var parent = element.parent();
-                    // Options: custom parent
-                    if (options.offsetParent) {
-                        if (options.offsetParent.match(/^\d+$/)) {
-                            for (var i = 0; i < (options.offsetParent * 1) - 1; i++) {
-                                parent = parent.parent();
-                            }
-                        } else {
-                            parent = angular.element(options.offsetParent);
-                        }
-                    }
-
-                    $affix.init = function () {
-
-                        this.$parseOffsets();
-                        initialOffsetTop = dimensions.offset(element[0]).top + initialAffixTop;
-                        setWidth = !element[0].style.width;
-
-                        // Bind events
-                        targetEl.on('scroll', this.checkPosition);
-                        targetEl.on('click', this.checkPositionWithEventLoop);
-                        windowEl.on('resize', this.$debouncedOnResize);
-
-                        // Both of these checkPosition() calls are necessary for the case where
-                        // the user hits refresh after scrolling to the bottom of the page.
-                        this.checkPosition();
-                        this.checkPositionWithEventLoop();
-
-                    };
-
-                    $affix.destroy = function () {
-
-                        // Unbind events
-                        targetEl.off('scroll', this.checkPosition);
-                        targetEl.off('click', this.checkPositionWithEventLoop);
-                        windowEl.off('resize', this.$debouncedOnResize);
-
-                    };
-
-                    $affix.checkPositionWithEventLoop = function () {
-
-                        // IE 9 throws an error if we use 'this' instead of '$affix'
-                        // in this setTimeout call
-                        setTimeout($affix.checkPosition, 1);
-
-                    };
-
-                    $affix.checkPosition = function () {
-                        // if (!this.$element.is(':visible')) return
-
-                        var scrollTop = getScrollTop();
-                        var position = dimensions.offset(element[0]);
-                        var elementHeight = dimensions.height(element[0]);
-
-                        // Get required affix class according to position
-                        var affix = getRequiredAffixClass(unpin, position, elementHeight);
-
-                        // Did affix status changed this last check?
-                        if (affixed === affix) return;
-                        affixed = affix;
-
-                        if (affix === 'top') {
-                            unpin = null;
-                            if (setWidth) {
-                                element.css('width', '');
-                            }
-                            if (options.inlineStyles) {
-                                element.css('position', (options.offsetParent) ? '' : 'relative');
-                                element.css('top', '');
-                            }
-                        } else if (affix === 'bottom') {
-                            if (options.offsetUnpin) {
-                                unpin = -(options.offsetUnpin * 1);
-                            } else {
-                                // Calculate unpin threshold when affixed to bottom.
-                                // Hopefully the browser scrolls pixel by pixel.
-                                unpin = position.top - scrollTop;
-                            }
-                            if (setWidth) {
-                                element.css('width', '');
-                            }
-                            if (options.inlineStyles) {
-                                element.css('position', (options.offsetParent) ? '' : 'relative');
-                                element.css('top', (options.offsetParent) ? '' : ((bodyEl[0].offsetHeight - offsetBottom - elementHeight - initialOffsetTop) + 'px'));
-                            }
-                        } else { // affix === 'middle'
-                            unpin = null;
-                            if (setWidth) {
-                                element.css('width', element[0].offsetWidth + 'px');
-                            }
-                            if (options.inlineStyles) {
-                                element.css('position', 'fixed');
-                                element.css('top', initialAffixTop + 'px');
-                            }
-                        }
-
-                        // Add proper affix class
-                        element.removeClass(reset).addClass('affix' + ((affix !== 'middle') ? '-' + affix : ''));
-
-                    };
-
-                    $affix.$onResize = function () {
-                        $affix.$parseOffsets();
-                        $affix.checkPosition();
-                    };
-                    $affix.$debouncedOnResize = debounce($affix.$onResize, 50);
-
-                    $affix.$parseOffsets = function () {
-                        var initialPosition = element.css('position');
-                        // Reset position to calculate correct offsetTop
-                        if (options.inlineStyles) {
-                            element.css('position', (options.offsetParent) ? '' : 'relative');
-                        }
-
-                        if (options.offsetTop) {
-                            if (options.offsetTop === 'auto') {
-                                options.offsetTop = '+0';
-                            }
-                            if (options.offsetTop.match(/^[-+]\d+$/)) {
-                                initialAffixTop = - options.offsetTop * 1;
-                                if (options.offsetParent) {
-                                    offsetTop = dimensions.offset(parent[0]).top + (options.offsetTop * 1);
-                                } else {
-                                    offsetTop = dimensions.offset(element[0]).top - dimensions.css(element[0], 'marginTop', true) + (options.offsetTop * 1);
-                                }
-                            } else {
-                                offsetTop = options.offsetTop * 1;
-                            }
-                        }
-
-                        if (options.offsetBottom) {
-                            if (options.offsetParent && options.offsetBottom.match(/^[-+]\d+$/)) {
-                                // add 1 pixel due to rounding problems...
-                                offsetBottom = getScrollHeight() - (dimensions.offset(parent[0]).top + dimensions.height(parent[0])) + (options.offsetBottom * 1) + 1;
-                            } else {
-                                offsetBottom = options.offsetBottom * 1;
-                            }
-                        }
-
-                        // Bring back the element's position after calculations
-                        if (options.inlineStyles) {
-                            element.css('position', initialPosition);
-                        }
-                    };
-
-                    // Private methods
-
-                    function getRequiredAffixClass (_unpin, position, elementHeight) {
-                        var scrollTop = getScrollTop();
-                        var scrollHeight = getScrollHeight();
-
-                        if (scrollTop <= offsetTop) {
-                            return 'top';
-                        } else if (_unpin !== null && (scrollTop + _unpin <= position.top)) {
-                            return 'middle';
-                        } else if (offsetBottom !== null && (position.top + elementHeight + initialAffixTop >= scrollHeight - offsetBottom)) {
-                            return 'bottom';
-                        }
-                        return 'middle';
-                    }
-
-                    function getScrollTop () {
-                        return targetEl[0] === $window ? $window.pageYOffset : targetEl[0].scrollTop;
-                    }
-
-                    function getScrollHeight () {
-                        return targetEl[0] === $window ? $window.document.body.scrollHeight : targetEl[0].scrollHeight;
-                    }
-
-                    $affix.init();
-                    return $affix;
-
-                }
-
-                return AffixFactory;
-
-            }];
-
-        })
-
-        .directive('bsAffix', ["$affix", "$window", function ($affix, $window) {
-
-            return {
-                restrict: 'EAC',
-                require: '^?bsAffixTarget',
-                link: function postLink (scope, element, attr, affixTarget) {
-
-                    var options = {scope: scope, target: affixTarget ? affixTarget.$element : angular.element($window)};
-                    angular.forEach(['offsetTop', 'offsetBottom', 'offsetParent', 'offsetUnpin', 'inlineStyles'], function (key) {
-                        if (angular.isDefined(attr[key])) {
-                            var option = attr[key];
-                            if (/true/i.test(option)) option = true;
-                            if (/false/i.test(option)) option = false;
-                            options[key] = option;
-                        }
-                    });
-
-                    var affix = $affix(element, options);
-                    scope.$on('$destroy', function () {
-                        if (affix) affix.destroy();
-                        options = null;
-                        affix = null;
-                    });
-
-                }
-            };
-
-        }])
-
-        .directive('bsAffixTarget', function () {
-            return {
-                controller: ["$element", function ($element) {
-                    this.$element = $element;
-                }]
-            };
-        });
-})();
-
-(function () {
-    'use strict';
-
-    angular.module('mgcrea.ngStrap.helpers.debounce', [])
-
-        // @source jashkenas/underscore
-        // @url https://github.com/jashkenas/underscore/blob/1.5.2/underscore.js#L693
-        .factory('debounce', ["$timeout", function ($timeout) {
-            return function (func, wait, immediate) {
-                var timeout = null;
-                return function () {
-                    var context = this;
-                    var args = arguments;
-                    var callNow = immediate && !timeout;
-                    if (timeout) {
-                        $timeout.cancel(timeout);
-                    }
-                    timeout = $timeout(function later () {
-                        timeout = null;
-                        if (!immediate) {
-                            func.apply(context, args);
-                        }
-                    }, wait, false);
-                    if (callNow) {
-                        func.apply(context, args);
-                    }
-                    return timeout;
-                };
-            };
-        }])
-
-
-// @source jashkenas/underscore
-// @url https://github.com/jashkenas/underscore/blob/1.5.2/underscore.js#L661
-        .factory('throttle', ["$timeout", function ($timeout) {
-            return function (func, wait, options) {
-                var timeout = null;
-                if (!options) options = {};
-                return function () {
-                    var context = this;
-                    var args = arguments;
-                    if (!timeout) {
-                        if (options.leading !== false) {
-                            func.apply(context, args);
-                        }
-                        timeout = $timeout(function later () {
-                            timeout = null;
-                            if (options.trailing !== false) {
-                                func.apply(context, args);
-                            }
-                        }, wait, false);
-                    }
-                };
-            };
-        }]);
-
-})();
-(function () {
-
-    'use strict';
-
-    angular.module('mgcrea.ngStrap.helpers.dimensions', [])
-
-        .factory('dimensions', function () {
-
-            var fn = {};
-
-            /**
-             * Test the element nodeName
-             * @param element
-             * @param name
-             */
-            var nodeName = fn.nodeName = function (element, name) {
-                return element.nodeName && element.nodeName.toLowerCase() === name.toLowerCase();
-            };
-
-            /**
-             * Returns the element computed style
-             * @param element
-             * @param prop
-             * @param extra
-             */
-            fn.css = function (element, prop, extra) {
-                var value;
-                if (element.currentStyle) { // IE
-                    value = element.currentStyle[prop];
-                } else if (window.getComputedStyle) {
-                    value = window.getComputedStyle(element)[prop];
-                } else {
-                    value = element.style[prop];
-                }
-                return extra === true ? parseFloat(value) || 0 : value;
-            };
-
-            /**
-             * Provides read-only equivalent of jQuery's offset function:
-             * @required-by bootstrap-tooltip, bootstrap-affix
-             * @url http://api.jquery.com/offset/
-             * @param element
-             */
-            fn.offset = function (element) {
-                var boxRect = element.getBoundingClientRect();
-                var docElement = element.ownerDocument;
-                return {
-                    width: boxRect.width || element.offsetWidth,
-                    height: boxRect.height || element.offsetHeight,
-                    top: boxRect.top + (window.pageYOffset || docElement.documentElement.scrollTop) - (docElement.documentElement.clientTop || 0),
-                    left: boxRect.left + (window.pageXOffset || docElement.documentElement.scrollLeft) - (docElement.documentElement.clientLeft || 0)
-                };
-            };
-
-            /**
-             * Provides set equivalent of jQuery's offset function:
-             * @required-by bootstrap-tooltip
-             * @url http://api.jquery.com/offset/
-             * @param element
-             * @param options
-             * @param i
-             */
-            fn.setOffset = function (element, options, i) {
-                var curPosition;
-                var curLeft;
-                var curCSSTop;
-                var curTop;
-                var curOffset;
-                var curCSSLeft;
-                var calculatePosition;
-                var position = fn.css(element, 'position');
-                var curElem = angular.element(element);
-                var props = {};
-
-                // Set position first, in-case top/left are set even on static elem
-                if (position === 'static') {
-                    element.style.position = 'relative';
-                }
-
-                curOffset = fn.offset(element);
-                curCSSTop = fn.css(element, 'top');
-                curCSSLeft = fn.css(element, 'left');
-                calculatePosition = (position === 'absolute' || position === 'fixed') &&
-                    (curCSSTop + curCSSLeft).indexOf('auto') > -1;
-
-                // Need to be able to calculate position if either
-                // top or left is auto and position is either absolute or fixed
-                if (calculatePosition) {
-                    curPosition = fn.position(element);
-                    curTop = curPosition.top;
-                    curLeft = curPosition.left;
-                } else {
-                    curTop = parseFloat(curCSSTop) || 0;
-                    curLeft = parseFloat(curCSSLeft) || 0;
-                }
-
-                if (angular.isFunction(options)) {
-                    options = options.call(element, i, curOffset);
-                }
-
-                if (options.top !== null) {
-                    props.top = (options.top - curOffset.top) + curTop;
-                }
-                if (options.left !== null) {
-                    props.left = (options.left - curOffset.left) + curLeft;
-                }
-
-                if ('using' in options) {
-                    options.using.call(curElem, props);
-                } else {
-                    curElem.css({
-                        top: props.top + 'px',
-                        left: props.left + 'px'
-                    });
-                }
-            };
-
-            /**
-             * Provides read-only equivalent of jQuery's position function
-             * @required-by bootstrap-tooltip, bootstrap-affix
-             * @url http://api.jquery.com/offset/
-             * @param element
-             */
-            fn.position = function (element) {
-
-                var offsetParentRect = {top: 0, left: 0};
-                var offsetParentEl;
-                var offset;
-
-                // Fixed elements are offset from window (parentOffset = {top:0, left: 0}, because it is it's only offset parent
-                if (fn.css(element, 'position') === 'fixed') {
-
-                    // We assume that getBoundingClientRect is available when computed position is fixed
-                    offset = element.getBoundingClientRect();
-
-                } else {
-
-                    // Get *real* offsetParentEl
-                    offsetParentEl = offsetParentElement(element);
-
-                    // Get correct offsets
-                    offset = fn.offset(element);
-                    if (!nodeName(offsetParentEl, 'html')) {
-                        offsetParentRect = fn.offset(offsetParentEl);
-                    }
-
-                    // Add offsetParent borders
-                    offsetParentRect.top += fn.css(offsetParentEl, 'borderTopWidth', true);
-                    offsetParentRect.left += fn.css(offsetParentEl, 'borderLeftWidth', true);
-                }
-
-                // Subtract parent offsets and element margins
-                return {
-                    width: element.offsetWidth,
-                    height: element.offsetHeight,
-                    top: offset.top - offsetParentRect.top - fn.css(element, 'marginTop', true),
-                    left: offset.left - offsetParentRect.left - fn.css(element, 'marginLeft', true)
-                };
-
-            };
-
-            /**
-             * Returns the closest, non-statically positioned offsetParent of a given element
-             * @required-by fn.position
-             * @param element
-             */
-            function offsetParentElement (element) {
-                var docElement = element.ownerDocument;
-                var offsetParent = element.offsetParent || docElement;
-                if (nodeName(offsetParent, '#document')) return docElement.documentElement;
-                while (offsetParent && !nodeName(offsetParent, 'html') && fn.css(offsetParent, 'position') === 'static') {
-                    offsetParent = offsetParent.offsetParent;
-                }
-                return offsetParent || docElement.documentElement;
-            }
-
-            /**
-             * Provides equivalent of jQuery's height function
-             * @required-by bootstrap-affix
-             * @url http://api.jquery.com/height/
-             * @param element
-             * @param outer
-             */
-            fn.height = function (element, outer) {
-                var value = element.offsetHeight;
-                if (outer) {
-                    value += fn.css(element, 'marginTop', true) + fn.css(element, 'marginBottom', true);
-                } else {
-                    value -= fn.css(element, 'paddingTop', true) + fn.css(element, 'paddingBottom', true) + fn.css(element, 'borderTopWidth', true) + fn.css(element, 'borderBottomWidth', true);
-                }
-                return value;
-            };
-
-            /**
-             * Provides equivalent of jQuery's width function
-             * @required-by bootstrap-affix
-             * @url http://api.jquery.com/width/
-             * @param element
-             * @param outer
-             */
-            fn.width = function (element, outer) {
-                var value = element.offsetWidth;
-                if (outer) {
-                    value += fn.css(element, 'marginLeft', true) + fn.css(element, 'marginRight', true);
-                } else {
-                    value -= fn.css(element, 'paddingLeft', true) + fn.css(element, 'paddingRight', true) + fn.css(element, 'borderLeftWidth', true) + fn.css(element, 'borderRightWidth', true);
-                }
-                return value;
-            };
-
-            return fn;
-
-        });
-
 })();
 /**=========================================================
  * Module: demo-alerts.js
@@ -1304,6 +779,531 @@
     }
 })();
 
+(function(){
+    'use strict';
+
+    angular
+        .module('ngStrap.affix', ['mgcrea.ngStrap.helpers.dimensions', 'mgcrea.ngStrap.helpers.debounce'])
+        .provider('$affix', function () {
+
+            var defaults = this.defaults = {
+                offsetTop: 'auto',
+                inlineStyles: true
+            };
+
+            this.$get = ["$window", "debounce", "dimensions", function ($window, debounce, dimensions) {
+
+                var bodyEl = angular.element($window.document.body);
+                var windowEl = angular.element($window);
+
+                function AffixFactory (element, config) {
+
+                    var $affix = {};
+
+                    // Common vars
+                    var options = angular.extend({}, defaults, config);
+                    var targetEl = options.target;
+
+                    // Initial private vars
+                    var reset = 'affix affix-top affix-bottom';
+                    var setWidth = false;
+                    var initialAffixTop = 0;
+                    var initialOffsetTop = 0;
+                    var offsetTop = 0;
+                    var offsetBottom = 0;
+                    var affixed = null;
+                    var unpin = null;
+
+                    var parent = element.parent();
+                    // Options: custom parent
+                    if (options.offsetParent) {
+                        if (options.offsetParent.match(/^\d+$/)) {
+                            for (var i = 0; i < (options.offsetParent * 1) - 1; i++) {
+                                parent = parent.parent();
+                            }
+                        } else {
+                            parent = angular.element(options.offsetParent);
+                        }
+                    }
+
+                    $affix.init = function () {
+
+                        this.$parseOffsets();
+                        initialOffsetTop = dimensions.offset(element[0]).top + initialAffixTop;
+                        setWidth = !element[0].style.width;
+
+                        // Bind events
+                        targetEl.on('scroll', this.checkPosition);
+                        targetEl.on('click', this.checkPositionWithEventLoop);
+                        windowEl.on('resize', this.$debouncedOnResize);
+
+                        // Both of these checkPosition() calls are necessary for the case where
+                        // the user hits refresh after scrolling to the bottom of the page.
+                        this.checkPosition();
+                        this.checkPositionWithEventLoop();
+
+                    };
+
+                    $affix.destroy = function () {
+
+                        // Unbind events
+                        targetEl.off('scroll', this.checkPosition);
+                        targetEl.off('click', this.checkPositionWithEventLoop);
+                        windowEl.off('resize', this.$debouncedOnResize);
+
+                    };
+
+                    $affix.checkPositionWithEventLoop = function () {
+
+                        // IE 9 throws an error if we use 'this' instead of '$affix'
+                        // in this setTimeout call
+                        setTimeout($affix.checkPosition, 1);
+
+                    };
+
+                    $affix.checkPosition = function () {
+                        // if (!this.$element.is(':visible')) return
+
+                        var scrollTop = getScrollTop();
+                        var position = dimensions.offset(element[0]);
+                        var elementHeight = dimensions.height(element[0]);
+
+                        // Get required affix class according to position
+                        var affix = getRequiredAffixClass(unpin, position, elementHeight);
+
+                        // Did affix status changed this last check?
+                        if (affixed === affix) return;
+                        affixed = affix;
+
+                        if (affix === 'top') {
+                            unpin = null;
+                            if (setWidth) {
+                                element.css('width', '');
+                            }
+                            if (options.inlineStyles) {
+                                element.css('position', (options.offsetParent) ? '' : 'relative');
+                                element.css('top', '');
+                            }
+                        } else if (affix === 'bottom') {
+                            if (options.offsetUnpin) {
+                                unpin = -(options.offsetUnpin * 1);
+                            } else {
+                                // Calculate unpin threshold when affixed to bottom.
+                                // Hopefully the browser scrolls pixel by pixel.
+                                unpin = position.top - scrollTop;
+                            }
+                            if (setWidth) {
+                                element.css('width', '');
+                            }
+                            if (options.inlineStyles) {
+                                element.css('position', (options.offsetParent) ? '' : 'relative');
+                                element.css('top', (options.offsetParent) ? '' : ((bodyEl[0].offsetHeight - offsetBottom - elementHeight - initialOffsetTop) + 'px'));
+                            }
+                        } else { // affix === 'middle'
+                            unpin = null;
+                            if (setWidth) {
+                                element.css('width', element[0].offsetWidth + 'px');
+                            }
+                            if (options.inlineStyles) {
+                                element.css('position', 'fixed');
+                                element.css('top', initialAffixTop + 'px');
+                            }
+                        }
+
+                        // Add proper affix class
+                        element.removeClass(reset).addClass('affix' + ((affix !== 'middle') ? '-' + affix : ''));
+
+                    };
+
+                    $affix.$onResize = function () {
+                        $affix.$parseOffsets();
+                        $affix.checkPosition();
+                    };
+                    $affix.$debouncedOnResize = debounce($affix.$onResize, 50);
+
+                    $affix.$parseOffsets = function () {
+                        var initialPosition = element.css('position');
+                        // Reset position to calculate correct offsetTop
+                        if (options.inlineStyles) {
+                            element.css('position', (options.offsetParent) ? '' : 'relative');
+                        }
+
+                        if (options.offsetTop) {
+                            if (options.offsetTop === 'auto') {
+                                options.offsetTop = '+0';
+                            }
+                            if (options.offsetTop.match(/^[-+]\d+$/)) {
+                                initialAffixTop = - options.offsetTop * 1;
+                                if (options.offsetParent) {
+                                    offsetTop = dimensions.offset(parent[0]).top + (options.offsetTop * 1);
+                                } else {
+                                    offsetTop = dimensions.offset(element[0]).top - dimensions.css(element[0], 'marginTop', true) + (options.offsetTop * 1);
+                                }
+                            } else {
+                                offsetTop = options.offsetTop * 1;
+                            }
+                        }
+
+                        if (options.offsetBottom) {
+                            if (options.offsetParent && options.offsetBottom.match(/^[-+]\d+$/)) {
+                                // add 1 pixel due to rounding problems...
+                                offsetBottom = getScrollHeight() - (dimensions.offset(parent[0]).top + dimensions.height(parent[0])) + (options.offsetBottom * 1) + 1;
+                            } else {
+                                offsetBottom = options.offsetBottom * 1;
+                            }
+                        }
+
+                        // Bring back the element's position after calculations
+                        if (options.inlineStyles) {
+                            element.css('position', initialPosition);
+                        }
+                    };
+
+                    // Private methods
+
+                    function getRequiredAffixClass (_unpin, position, elementHeight) {
+                        var scrollTop = getScrollTop();
+                        var scrollHeight = getScrollHeight();
+
+                        if (scrollTop <= offsetTop) {
+                            return 'top';
+                        } else if (_unpin !== null && (scrollTop + _unpin <= position.top)) {
+                            return 'middle';
+                        } else if (offsetBottom !== null && (position.top + elementHeight + initialAffixTop >= scrollHeight - offsetBottom)) {
+                            return 'bottom';
+                        }
+                        return 'middle';
+                    }
+
+                    function getScrollTop () {
+                        return targetEl[0] === $window ? $window.pageYOffset : targetEl[0].scrollTop;
+                    }
+
+                    function getScrollHeight () {
+                        return targetEl[0] === $window ? $window.document.body.scrollHeight : targetEl[0].scrollHeight;
+                    }
+
+                    $affix.init();
+                    return $affix;
+
+                }
+
+                return AffixFactory;
+
+            }];
+
+        })
+
+        .directive('bsAffix', ["$affix", "$window", function ($affix, $window) {
+
+            return {
+                restrict: 'EAC',
+                require: '^?bsAffixTarget',
+                link: function postLink (scope, element, attr, affixTarget) {
+
+                    var options = {scope: scope, target: affixTarget ? affixTarget.$element : angular.element($window)};
+                    angular.forEach(['offsetTop', 'offsetBottom', 'offsetParent', 'offsetUnpin', 'inlineStyles'], function (key) {
+                        if (angular.isDefined(attr[key])) {
+                            var option = attr[key];
+                            if (/true/i.test(option)) option = true;
+                            if (/false/i.test(option)) option = false;
+                            options[key] = option;
+                        }
+                    });
+
+                    var affix = $affix(element, options);
+                    scope.$on('$destroy', function () {
+                        if (affix) affix.destroy();
+                        options = null;
+                        affix = null;
+                    });
+
+                }
+            };
+
+        }])
+
+        .directive('bsAffixTarget', function () {
+            return {
+                controller: ["$element", function ($element) {
+                    this.$element = $element;
+                }]
+            };
+        });
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('mgcrea.ngStrap.helpers.debounce', [])
+
+        // @source jashkenas/underscore
+        // @url https://github.com/jashkenas/underscore/blob/1.5.2/underscore.js#L693
+        .factory('debounce', ["$timeout", function ($timeout) {
+            return function (func, wait, immediate) {
+                var timeout = null;
+                return function () {
+                    var context = this;
+                    var args = arguments;
+                    var callNow = immediate && !timeout;
+                    if (timeout) {
+                        $timeout.cancel(timeout);
+                    }
+                    timeout = $timeout(function later () {
+                        timeout = null;
+                        if (!immediate) {
+                            func.apply(context, args);
+                        }
+                    }, wait, false);
+                    if (callNow) {
+                        func.apply(context, args);
+                    }
+                    return timeout;
+                };
+            };
+        }])
+
+
+// @source jashkenas/underscore
+// @url https://github.com/jashkenas/underscore/blob/1.5.2/underscore.js#L661
+        .factory('throttle', ["$timeout", function ($timeout) {
+            return function (func, wait, options) {
+                var timeout = null;
+                if (!options) options = {};
+                return function () {
+                    var context = this;
+                    var args = arguments;
+                    if (!timeout) {
+                        if (options.leading !== false) {
+                            func.apply(context, args);
+                        }
+                        timeout = $timeout(function later () {
+                            timeout = null;
+                            if (options.trailing !== false) {
+                                func.apply(context, args);
+                            }
+                        }, wait, false);
+                    }
+                };
+            };
+        }]);
+
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('mgcrea.ngStrap.helpers.dimensions', [])
+
+        .factory('dimensions', function () {
+
+            var fn = {};
+
+            /**
+             * Test the element nodeName
+             * @param element
+             * @param name
+             */
+            var nodeName = fn.nodeName = function (element, name) {
+                return element.nodeName && element.nodeName.toLowerCase() === name.toLowerCase();
+            };
+
+            /**
+             * Returns the element computed style
+             * @param element
+             * @param prop
+             * @param extra
+             */
+            fn.css = function (element, prop, extra) {
+                var value;
+                if (element.currentStyle) { // IE
+                    value = element.currentStyle[prop];
+                } else if (window.getComputedStyle) {
+                    value = window.getComputedStyle(element)[prop];
+                } else {
+                    value = element.style[prop];
+                }
+                return extra === true ? parseFloat(value) || 0 : value;
+            };
+
+            /**
+             * Provides read-only equivalent of jQuery's offset function:
+             * @required-by bootstrap-tooltip, bootstrap-affix
+             * @url http://api.jquery.com/offset/
+             * @param element
+             */
+            fn.offset = function (element) {
+                var boxRect = element.getBoundingClientRect();
+                var docElement = element.ownerDocument;
+                return {
+                    width: boxRect.width || element.offsetWidth,
+                    height: boxRect.height || element.offsetHeight,
+                    top: boxRect.top + (window.pageYOffset || docElement.documentElement.scrollTop) - (docElement.documentElement.clientTop || 0),
+                    left: boxRect.left + (window.pageXOffset || docElement.documentElement.scrollLeft) - (docElement.documentElement.clientLeft || 0)
+                };
+            };
+
+            /**
+             * Provides set equivalent of jQuery's offset function:
+             * @required-by bootstrap-tooltip
+             * @url http://api.jquery.com/offset/
+             * @param element
+             * @param options
+             * @param i
+             */
+            fn.setOffset = function (element, options, i) {
+                var curPosition;
+                var curLeft;
+                var curCSSTop;
+                var curTop;
+                var curOffset;
+                var curCSSLeft;
+                var calculatePosition;
+                var position = fn.css(element, 'position');
+                var curElem = angular.element(element);
+                var props = {};
+
+                // Set position first, in-case top/left are set even on static elem
+                if (position === 'static') {
+                    element.style.position = 'relative';
+                }
+
+                curOffset = fn.offset(element);
+                curCSSTop = fn.css(element, 'top');
+                curCSSLeft = fn.css(element, 'left');
+                calculatePosition = (position === 'absolute' || position === 'fixed') &&
+                    (curCSSTop + curCSSLeft).indexOf('auto') > -1;
+
+                // Need to be able to calculate position if either
+                // top or left is auto and position is either absolute or fixed
+                if (calculatePosition) {
+                    curPosition = fn.position(element);
+                    curTop = curPosition.top;
+                    curLeft = curPosition.left;
+                } else {
+                    curTop = parseFloat(curCSSTop) || 0;
+                    curLeft = parseFloat(curCSSLeft) || 0;
+                }
+
+                if (angular.isFunction(options)) {
+                    options = options.call(element, i, curOffset);
+                }
+
+                if (options.top !== null) {
+                    props.top = (options.top - curOffset.top) + curTop;
+                }
+                if (options.left !== null) {
+                    props.left = (options.left - curOffset.left) + curLeft;
+                }
+
+                if ('using' in options) {
+                    options.using.call(curElem, props);
+                } else {
+                    curElem.css({
+                        top: props.top + 'px',
+                        left: props.left + 'px'
+                    });
+                }
+            };
+
+            /**
+             * Provides read-only equivalent of jQuery's position function
+             * @required-by bootstrap-tooltip, bootstrap-affix
+             * @url http://api.jquery.com/offset/
+             * @param element
+             */
+            fn.position = function (element) {
+
+                var offsetParentRect = {top: 0, left: 0};
+                var offsetParentEl;
+                var offset;
+
+                // Fixed elements are offset from window (parentOffset = {top:0, left: 0}, because it is it's only offset parent
+                if (fn.css(element, 'position') === 'fixed') {
+
+                    // We assume that getBoundingClientRect is available when computed position is fixed
+                    offset = element.getBoundingClientRect();
+
+                } else {
+
+                    // Get *real* offsetParentEl
+                    offsetParentEl = offsetParentElement(element);
+
+                    // Get correct offsets
+                    offset = fn.offset(element);
+                    if (!nodeName(offsetParentEl, 'html')) {
+                        offsetParentRect = fn.offset(offsetParentEl);
+                    }
+
+                    // Add offsetParent borders
+                    offsetParentRect.top += fn.css(offsetParentEl, 'borderTopWidth', true);
+                    offsetParentRect.left += fn.css(offsetParentEl, 'borderLeftWidth', true);
+                }
+
+                // Subtract parent offsets and element margins
+                return {
+                    width: element.offsetWidth,
+                    height: element.offsetHeight,
+                    top: offset.top - offsetParentRect.top - fn.css(element, 'marginTop', true),
+                    left: offset.left - offsetParentRect.left - fn.css(element, 'marginLeft', true)
+                };
+
+            };
+
+            /**
+             * Returns the closest, non-statically positioned offsetParent of a given element
+             * @required-by fn.position
+             * @param element
+             */
+            function offsetParentElement (element) {
+                var docElement = element.ownerDocument;
+                var offsetParent = element.offsetParent || docElement;
+                if (nodeName(offsetParent, '#document')) return docElement.documentElement;
+                while (offsetParent && !nodeName(offsetParent, 'html') && fn.css(offsetParent, 'position') === 'static') {
+                    offsetParent = offsetParent.offsetParent;
+                }
+                return offsetParent || docElement.documentElement;
+            }
+
+            /**
+             * Provides equivalent of jQuery's height function
+             * @required-by bootstrap-affix
+             * @url http://api.jquery.com/height/
+             * @param element
+             * @param outer
+             */
+            fn.height = function (element, outer) {
+                var value = element.offsetHeight;
+                if (outer) {
+                    value += fn.css(element, 'marginTop', true) + fn.css(element, 'marginBottom', true);
+                } else {
+                    value -= fn.css(element, 'paddingTop', true) + fn.css(element, 'paddingBottom', true) + fn.css(element, 'borderTopWidth', true) + fn.css(element, 'borderBottomWidth', true);
+                }
+                return value;
+            };
+
+            /**
+             * Provides equivalent of jQuery's width function
+             * @required-by bootstrap-affix
+             * @url http://api.jquery.com/width/
+             * @param element
+             * @param outer
+             */
+            fn.width = function (element, outer) {
+                var value = element.offsetWidth;
+                if (outer) {
+                    value += fn.css(element, 'marginLeft', true) + fn.css(element, 'marginRight', true);
+                } else {
+                    value -= fn.css(element, 'paddingLeft', true) + fn.css(element, 'paddingRight', true) + fn.css(element, 'borderLeftWidth', true) + fn.css(element, 'borderRightWidth', true);
+                }
+                return value;
+            };
+
+            return fn;
+
+        });
+
+})();
 (function() {
     'use strict';
 
@@ -8346,6 +8346,436 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 })();
 
 /**=========================================================
+ * Module: animate-enabled.js
+ * Enable or disables ngAnimate for element with directive
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('animateEnabled', animateEnabled);
+
+    animateEnabled.$inject = ['$animate'];
+    function animateEnabled ($animate) {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          scope.$watch(function () {
+            return scope.$eval(attrs.animateEnabled, scope);
+          }, function (newValue) {
+            $animate.enabled(!!newValue, element);
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: browser.js
+ * Browser detection
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .service('Browser', Browser);
+
+    Browser.$inject = ['$window'];
+    function Browser($window) {
+      return $window.jQBrowser;
+    }
+
+})();
+
+/**=========================================================
+ * Module: clear-storage.js
+ * Removes a key from the browser storage via element click
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('resetKey', resetKey);
+
+    resetKey.$inject = ['$state', '$localStorage'];
+    function resetKey ($state, $localStorage) {
+        var directive = {
+            link: link,
+            restrict: 'A',
+            scope: {
+              resetKey: '@'
+            }
+        };
+        return directive;
+
+        function link(scope, element) {
+          element.on('click', function (e) {
+              e.preventDefault();
+
+              if(scope.resetKey) {
+                delete $localStorage[scope.resetKey];
+                $state.go($state.current, {}, {reload: true});
+              }
+              else {
+                $.error('No storage key specified for reset.');
+              }
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: fullscreen.js
+ * Toggle the fullscreen mode on/off
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('toggleFullscreen', toggleFullscreen);
+
+    toggleFullscreen.$inject = ['Browser'];
+    function toggleFullscreen (Browser) {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element) {
+          // Not supported under IE
+          if( Browser.msie ) {
+            element.addClass('hide');
+          }
+          else {
+            element.on('click', function (e) {
+                e.preventDefault();
+
+                if (screenfull.enabled) {
+                  
+                  screenfull.toggle();
+                  
+                  // Switch icon indicator
+                  if(screenfull.isFullscreen)
+                    $(this).children('em').removeClass('fa-expand').addClass('fa-compress');
+                  else
+                    $(this).children('em').removeClass('fa-compress').addClass('fa-expand');
+
+                } else {
+                  $.error('Fullscreen not enabled');
+                }
+
+            });
+          }
+        }
+    }
+
+
+})();
+
+/**=========================================================
+ * Module: load-css.js
+ * Request and load into the current page a css file
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('loadCss', loadCss);
+
+    function loadCss () {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          element.on('click', function (e) {
+              if(element.is('a')) e.preventDefault();
+              var uri = attrs.loadCss,
+                  link;
+
+              if(uri) {
+                link = createLink(uri);
+                if ( !link ) {
+                  $.error('Error creating stylesheet link element.');
+                }
+              }
+              else {
+                $.error('No stylesheet location defined.');
+              }
+
+          });
+        }
+        
+        function createLink(uri) {
+          var linkId = 'autoloaded-stylesheet',
+              oldLink = $('#'+linkId).attr('id', linkId + '-old');
+
+          $('head').append($('<link/>').attr({
+            'id':   linkId,
+            'rel':  'stylesheet',
+            'href': uri
+          }));
+
+          if( oldLink.length ) {
+            oldLink.remove();
+          }
+
+          return $('#'+linkId);
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: now.js
+ * Provides a simple way to display the current time formatted
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('now', now);
+
+    now.$inject = ['dateFilter', '$interval'];
+    function now (dateFilter, $interval) {
+        var directive = {
+            link: link,
+            restrict: 'EA'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var format = attrs.format;
+
+          function updateTime() {
+            var dt = dateFilter(new Date(), format);
+            element.text(dt);
+          }
+
+          updateTime();
+          var intervalPromise = $interval(updateTime, 1000);
+
+          scope.$on('$destroy', function(){
+            $interval.cancel(intervalPromise);
+          });
+
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: table-checkall.js
+ * Tables check all checkbox
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('checkAll', checkAll);
+
+    function checkAll () {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element) {
+          element.on('change', function() {
+            var $this = $(this),
+                index= $this.index() + 1,
+                checkbox = $this.find('input[type="checkbox"]'),
+                table = $this.parents('table');
+            // Make sure to affect only the correct checkbox column
+            table.find('tbody > tr > td:nth-child('+index+') input[type="checkbox"]')
+              .prop('checked', checkbox[0].checked);
+
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: trigger-resize.js
+ * Triggers a window resize event from any element
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .directive('triggerResize', triggerResize);
+
+    triggerResize.$inject = ['$window', '$timeout'];
+    function triggerResize ($window, $timeout) {
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attributes) {
+          element.on('click', function(){
+            $timeout(function(){
+              // all IE friendly dispatchEvent
+              var evt = document.createEvent('UIEvents');
+              evt.initUIEvent('resize', true, false, $window, 0);
+              $window.dispatchEvent(evt);
+              // modern dispatchEvent way
+              // $window.dispatchEvent(new Event('resize'));
+            }, attributes.triggerResize || 300);
+          });
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: utils.js
+ * Utility library to use across the theme
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.utils')
+        .service('Utils', Utils);
+
+    Utils.$inject = ['$window', 'APP_MEDIAQUERY'];
+    function Utils($window, APP_MEDIAQUERY) {
+
+        var $html = angular.element('html'),
+            $win  = angular.element($window),
+            $body = angular.element('body');
+
+        return {
+          // DETECTION
+          support: {
+            transition: (function() {
+                    var transitionEnd = (function() {
+
+                        var element = document.body || document.documentElement,
+                            transEndEventNames = {
+                                WebkitTransition: 'webkitTransitionEnd',
+                                MozTransition: 'transitionend',
+                                OTransition: 'oTransitionEnd otransitionend',
+                                transition: 'transitionend'
+                            }, name;
+
+                        for (name in transEndEventNames) {
+                            if (element.style[name] !== undefined) return transEndEventNames[name];
+                        }
+                    }());
+
+                    return transitionEnd && { end: transitionEnd };
+                })(),
+            animation: (function() {
+
+                var animationEnd = (function() {
+
+                    var element = document.body || document.documentElement,
+                        animEndEventNames = {
+                            WebkitAnimation: 'webkitAnimationEnd',
+                            MozAnimation: 'animationend',
+                            OAnimation: 'oAnimationEnd oanimationend',
+                            animation: 'animationend'
+                        }, name;
+
+                    for (name in animEndEventNames) {
+                        if (element.style[name] !== undefined) return animEndEventNames[name];
+                    }
+                }());
+
+                return animationEnd && { end: animationEnd };
+            })(),
+            requestAnimationFrame: window.requestAnimationFrame ||
+                                   window.webkitRequestAnimationFrame ||
+                                   window.mozRequestAnimationFrame ||
+                                   window.msRequestAnimationFrame ||
+                                   window.oRequestAnimationFrame ||
+                                   function(callback){ window.setTimeout(callback, 1000/60); },
+            /*jshint -W069*/
+            touch: (
+                ('ontouchstart' in window && navigator.userAgent.toLowerCase().match(/mobile|tablet/)) ||
+                (window.DocumentTouch && document instanceof window.DocumentTouch)  ||
+                (window.navigator['msPointerEnabled'] && window.navigator['msMaxTouchPoints'] > 0) || //IE 10
+                (window.navigator['pointerEnabled'] && window.navigator['maxTouchPoints'] > 0) || //IE >=11
+                false
+            ),
+            mutationobserver: (window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null)
+          },
+          // UTILITIES
+          isInView: function(element, options) {
+              /*jshint -W106*/
+              var $element = $(element);
+
+              if (!$element.is(':visible')) {
+                  return false;
+              }
+
+              var window_left = $win.scrollLeft(),
+                  window_top  = $win.scrollTop(),
+                  offset      = $element.offset(),
+                  left        = offset.left,
+                  top         = offset.top;
+
+              options = $.extend({topoffset:0, leftoffset:0}, options);
+
+              if (top + $element.height() >= window_top && top - options.topoffset <= window_top + $win.height() &&
+                  left + $element.width() >= window_left && left - options.leftoffset <= window_left + $win.width()) {
+                return true;
+              } else {
+                return false;
+              }
+          },
+          
+          langdirection: $html.attr('dir') === 'rtl' ? 'right' : 'left',
+
+          isTouch: function () {
+            return $html.hasClass('touch');
+          },
+
+          isSidebarCollapsed: function () {
+            return $body.hasClass('aside-collapsed');
+          },
+
+          isSidebarToggled: function () {
+            return $body.hasClass('aside-toggled');
+          },
+
+          isMobile: function () {
+            return $win.width() < APP_MEDIAQUERY.tablet;
+          }
+
+        };
+    }
+})();
+
+/**=========================================================
  * Module: angular-grid.js
  * Example for Angular Grid
  =========================================================*/
@@ -9266,436 +9696,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
     }
 })();
-/**=========================================================
- * Module: animate-enabled.js
- * Enable or disables ngAnimate for element with directive
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .directive('animateEnabled', animateEnabled);
-
-    animateEnabled.$inject = ['$animate'];
-    function animateEnabled ($animate) {
-        var directive = {
-            link: link,
-            restrict: 'A'
-        };
-        return directive;
-
-        function link(scope, element, attrs) {
-          scope.$watch(function () {
-            return scope.$eval(attrs.animateEnabled, scope);
-          }, function (newValue) {
-            $animate.enabled(!!newValue, element);
-          });
-        }
-    }
-
-})();
-
-/**=========================================================
- * Module: browser.js
- * Browser detection
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .service('Browser', Browser);
-
-    Browser.$inject = ['$window'];
-    function Browser($window) {
-      return $window.jQBrowser;
-    }
-
-})();
-
-/**=========================================================
- * Module: clear-storage.js
- * Removes a key from the browser storage via element click
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .directive('resetKey', resetKey);
-
-    resetKey.$inject = ['$state', '$localStorage'];
-    function resetKey ($state, $localStorage) {
-        var directive = {
-            link: link,
-            restrict: 'A',
-            scope: {
-              resetKey: '@'
-            }
-        };
-        return directive;
-
-        function link(scope, element) {
-          element.on('click', function (e) {
-              e.preventDefault();
-
-              if(scope.resetKey) {
-                delete $localStorage[scope.resetKey];
-                $state.go($state.current, {}, {reload: true});
-              }
-              else {
-                $.error('No storage key specified for reset.');
-              }
-          });
-        }
-    }
-
-})();
-
-/**=========================================================
- * Module: fullscreen.js
- * Toggle the fullscreen mode on/off
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .directive('toggleFullscreen', toggleFullscreen);
-
-    toggleFullscreen.$inject = ['Browser'];
-    function toggleFullscreen (Browser) {
-        var directive = {
-            link: link,
-            restrict: 'A'
-        };
-        return directive;
-
-        function link(scope, element) {
-          // Not supported under IE
-          if( Browser.msie ) {
-            element.addClass('hide');
-          }
-          else {
-            element.on('click', function (e) {
-                e.preventDefault();
-
-                if (screenfull.enabled) {
-                  
-                  screenfull.toggle();
-                  
-                  // Switch icon indicator
-                  if(screenfull.isFullscreen)
-                    $(this).children('em').removeClass('fa-expand').addClass('fa-compress');
-                  else
-                    $(this).children('em').removeClass('fa-compress').addClass('fa-expand');
-
-                } else {
-                  $.error('Fullscreen not enabled');
-                }
-
-            });
-          }
-        }
-    }
-
-
-})();
-
-/**=========================================================
- * Module: load-css.js
- * Request and load into the current page a css file
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .directive('loadCss', loadCss);
-
-    function loadCss () {
-        var directive = {
-            link: link,
-            restrict: 'A'
-        };
-        return directive;
-
-        function link(scope, element, attrs) {
-          element.on('click', function (e) {
-              if(element.is('a')) e.preventDefault();
-              var uri = attrs.loadCss,
-                  link;
-
-              if(uri) {
-                link = createLink(uri);
-                if ( !link ) {
-                  $.error('Error creating stylesheet link element.');
-                }
-              }
-              else {
-                $.error('No stylesheet location defined.');
-              }
-
-          });
-        }
-        
-        function createLink(uri) {
-          var linkId = 'autoloaded-stylesheet',
-              oldLink = $('#'+linkId).attr('id', linkId + '-old');
-
-          $('head').append($('<link/>').attr({
-            'id':   linkId,
-            'rel':  'stylesheet',
-            'href': uri
-          }));
-
-          if( oldLink.length ) {
-            oldLink.remove();
-          }
-
-          return $('#'+linkId);
-        }
-    }
-
-})();
-
-/**=========================================================
- * Module: now.js
- * Provides a simple way to display the current time formatted
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .directive('now', now);
-
-    now.$inject = ['dateFilter', '$interval'];
-    function now (dateFilter, $interval) {
-        var directive = {
-            link: link,
-            restrict: 'EA'
-        };
-        return directive;
-
-        function link(scope, element, attrs) {
-          var format = attrs.format;
-
-          function updateTime() {
-            var dt = dateFilter(new Date(), format);
-            element.text(dt);
-          }
-
-          updateTime();
-          var intervalPromise = $interval(updateTime, 1000);
-
-          scope.$on('$destroy', function(){
-            $interval.cancel(intervalPromise);
-          });
-
-        }
-    }
-
-})();
-
-/**=========================================================
- * Module: table-checkall.js
- * Tables check all checkbox
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .directive('checkAll', checkAll);
-
-    function checkAll () {
-        var directive = {
-            link: link,
-            restrict: 'A'
-        };
-        return directive;
-
-        function link(scope, element) {
-          element.on('change', function() {
-            var $this = $(this),
-                index= $this.index() + 1,
-                checkbox = $this.find('input[type="checkbox"]'),
-                table = $this.parents('table');
-            // Make sure to affect only the correct checkbox column
-            table.find('tbody > tr > td:nth-child('+index+') input[type="checkbox"]')
-              .prop('checked', checkbox[0].checked);
-
-          });
-        }
-    }
-
-})();
-
-/**=========================================================
- * Module: trigger-resize.js
- * Triggers a window resize event from any element
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .directive('triggerResize', triggerResize);
-
-    triggerResize.$inject = ['$window', '$timeout'];
-    function triggerResize ($window, $timeout) {
-        var directive = {
-            link: link,
-            restrict: 'A'
-        };
-        return directive;
-
-        function link(scope, element, attributes) {
-          element.on('click', function(){
-            $timeout(function(){
-              // all IE friendly dispatchEvent
-              var evt = document.createEvent('UIEvents');
-              evt.initUIEvent('resize', true, false, $window, 0);
-              $window.dispatchEvent(evt);
-              // modern dispatchEvent way
-              // $window.dispatchEvent(new Event('resize'));
-            }, attributes.triggerResize || 300);
-          });
-        }
-    }
-
-})();
-
-/**=========================================================
- * Module: utils.js
- * Utility library to use across the theme
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.utils')
-        .service('Utils', Utils);
-
-    Utils.$inject = ['$window', 'APP_MEDIAQUERY'];
-    function Utils($window, APP_MEDIAQUERY) {
-
-        var $html = angular.element('html'),
-            $win  = angular.element($window),
-            $body = angular.element('body');
-
-        return {
-          // DETECTION
-          support: {
-            transition: (function() {
-                    var transitionEnd = (function() {
-
-                        var element = document.body || document.documentElement,
-                            transEndEventNames = {
-                                WebkitTransition: 'webkitTransitionEnd',
-                                MozTransition: 'transitionend',
-                                OTransition: 'oTransitionEnd otransitionend',
-                                transition: 'transitionend'
-                            }, name;
-
-                        for (name in transEndEventNames) {
-                            if (element.style[name] !== undefined) return transEndEventNames[name];
-                        }
-                    }());
-
-                    return transitionEnd && { end: transitionEnd };
-                })(),
-            animation: (function() {
-
-                var animationEnd = (function() {
-
-                    var element = document.body || document.documentElement,
-                        animEndEventNames = {
-                            WebkitAnimation: 'webkitAnimationEnd',
-                            MozAnimation: 'animationend',
-                            OAnimation: 'oAnimationEnd oanimationend',
-                            animation: 'animationend'
-                        }, name;
-
-                    for (name in animEndEventNames) {
-                        if (element.style[name] !== undefined) return animEndEventNames[name];
-                    }
-                }());
-
-                return animationEnd && { end: animationEnd };
-            })(),
-            requestAnimationFrame: window.requestAnimationFrame ||
-                                   window.webkitRequestAnimationFrame ||
-                                   window.mozRequestAnimationFrame ||
-                                   window.msRequestAnimationFrame ||
-                                   window.oRequestAnimationFrame ||
-                                   function(callback){ window.setTimeout(callback, 1000/60); },
-            /*jshint -W069*/
-            touch: (
-                ('ontouchstart' in window && navigator.userAgent.toLowerCase().match(/mobile|tablet/)) ||
-                (window.DocumentTouch && document instanceof window.DocumentTouch)  ||
-                (window.navigator['msPointerEnabled'] && window.navigator['msMaxTouchPoints'] > 0) || //IE 10
-                (window.navigator['pointerEnabled'] && window.navigator['maxTouchPoints'] > 0) || //IE >=11
-                false
-            ),
-            mutationobserver: (window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null)
-          },
-          // UTILITIES
-          isInView: function(element, options) {
-              /*jshint -W106*/
-              var $element = $(element);
-
-              if (!$element.is(':visible')) {
-                  return false;
-              }
-
-              var window_left = $win.scrollLeft(),
-                  window_top  = $win.scrollTop(),
-                  offset      = $element.offset(),
-                  left        = offset.left,
-                  top         = offset.top;
-
-              options = $.extend({topoffset:0, leftoffset:0}, options);
-
-              if (top + $element.height() >= window_top && top - options.topoffset <= window_top + $win.height() &&
-                  left + $element.width() >= window_left && left - options.leftoffset <= window_left + $win.width()) {
-                return true;
-              } else {
-                return false;
-              }
-          },
-          
-          langdirection: $html.attr('dir') === 'rtl' ? 'right' : 'left',
-
-          isTouch: function () {
-            return $html.hasClass('touch');
-          },
-
-          isSidebarCollapsed: function () {
-            return $body.hasClass('aside-collapsed');
-          },
-
-          isSidebarToggled: function () {
-            return $body.hasClass('aside-toggled');
-          },
-
-          isMobile: function () {
-            return $win.width() < APP_MEDIAQUERY.tablet;
-          }
-
-        };
-    }
-})();
-
 (function() {
     'use strict';
 
@@ -10104,6 +10104,789 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }]);
 })();
 /**
+ * Created by dfash on 7/8/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.showRecords = false;
+                vm.assessMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+                //
+                assessmentService.getAssessment().query()
+                    .$promise.then(
+                    function (response) {
+                        vm.records = response;
+                        vm.showRecords = true;
+                    }, function (response) {
+                        if(response.status == 403) {
+                            vm.assessMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    }
+                );
+
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable()
+                    ];
+
+                    vm.remove = remove;
+
+                    function remove($index)
+                    {
+                        //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this record?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
+                                        function () {
+
+                                            vm.records.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
+                                        },
+                                        function (response) {
+                                            if(response.status == 403) {
+                                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                            }
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/22/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = $scope;
+                vm.disableForm = false;
+                vm.showTimeFrame = false;
+                $scope.config = {};
+
+                $scope.form = {
+                    "id": null, "preview": 0,
+                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
+                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
+                    "part_two": { "review":[{}], "performance":{}},
+                    "part_three": {"competencies":{}},
+                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
+                };
+
+
+
+                assessmentService.getActiveConfig().get().$promise.then(
+                    function (response) {
+                        vm.showTimeFrame = true;
+                        $scope.config = response;
+
+                        if($state.is('app.assessment.create'))
+                            $scope.form.assessment_config_id = response.id;
+
+                        checkRouting(response);
+                    },
+                    function() {
+                        vm.disableForm = true;
+                    }
+                );
+
+
+                //routes to edit if user has a data already submitted
+                function checkRouting(response) {
+                    if($state.is('app.assessment.create')) {
+                        if (angular.isDefined(response.assessment)) {
+                            $state.go('app.assessment.edit', {"id": response.assessment.id});
+                        }
+                    }
+                }
+
+                //routing from create or from url
+                if($state.is('app.assessment.edit')) {
+                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                        function (response) {
+                            $scope.form = response;
+
+                            checkDataResp();
+                        },
+                        function() {
+                            $state.go('app.assessment.create', {"id":$scope.form.id});
+                        }
+                    );
+                }
+
+                vm.submitPreview = function() {
+                    $scope.form.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function (response) {
+
+                            $scope.form = response;
+                            toaster.pop('success', 'Assessment', 'Data saved.');
+
+                            checkDataResp();
+
+                            $state.go('app.assessment.edit', {"id":$scope.form.id});
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                vm.submitAssessment = function() {
+
+                    $scope.form.preview = 1;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function () {
+                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
+                        if($scope.form.part_two.review[0].length == 0)
+                            $scope.form.part_two.review = [{}];
+                    }
+
+                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
+                        $scope.form.part_two.performance = {};
+                    }
+
+                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
+                        $scope.form.part_three.competencies = {};
+                    }
+                };
+
+                //START-DATE functions
+                vm.today = function() {
+                    vm.dt = new Date();
+                };
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function(date, mode) {
+                    return false;
+                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
+                };
+
+                vm.toggleMin = function() {
+                    vm.minDate = vm.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function($event, dateObj) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    dateObj.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.dateFormat = vm.dateFormats[0];
+                //END: Date functions
+            }]);
+})();
+/**
+ * Created by dfash on 7/7/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.assessment = function() {
+                return $resource(baseURL + 'assessment', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getAssessment = function() {
+                return $resource(baseURL + 'assessment/:id', null,
+                    {
+                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.supervisor = function() {
+                return $resource(baseURL + 'supervisor', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getConfig = function() {
+                return $resource(baseURL + 'assessconfig/:id', null,
+                    {
+                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.getActiveConfig = function() {
+                return $resource(baseURL + 'activeconfig');
+            };
+
+            this.log = function() {
+                return $resource(baseURL + "assessment/records/:id");
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 7/8/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = this;
+
+                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
+
+
+                //manages for routing
+                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                    function (response) {
+                        if(response.supervisor != null)
+                            $scope.supervisor = response.supervisor;
+                        else {
+                            $scope.supervisor.assessment_id = response.id;
+                            checkDataResp();
+                        }
+                    },
+                    function() {
+                        $state.go('app.assessment.view');
+                    }
+                );
+
+
+                $scope.submitPreview = function() {
+                    $scope.supervisor.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    //set the function
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function (response) {
+
+                            $scope.supervisor = response;
+                            toaster.pop('success', 'Supervisor', 'Data saved.');
+
+                            checkDataResp();
+
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                $scope.submitComment = function() {
+
+                    $scope.supervisor.preview = 1;
+
+                    toaster.pop('wait', 'Supervisor', 'Processing your request');
+
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function () {
+                            toaster.pop('success', 'Supervisor', 'Data submitted.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
+                        $scope.supervisor.attributes = {};
+                    }
+
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
+                        $scope.supervisor.habbit = {};
+                    }
+
+                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
+                        $scope.supervisor.leadership = {};
+                    }
+                };
+
+            }]);
+})();
+/**
+ * Created by dfash on 5/18/16.
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
+            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
+
+                var vm = $scope;
+                
+                vm.alerts = [];
+                vm.passwordAlerts = [];
+
+                vm.profile = {_token: _token};
+
+                vm.reset = {_token: _token};
+
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+
+                $resource(baseURL + 'contacts').query().$promise.then(
+                    function (response) {
+                        vm.contacts = response;
+                    }
+                );
+
+                //profile
+                vm.profile = loginFactory.userData();
+
+                //uploader object
+                vm.uploader = new FileUploader({
+                    url: baseURL +'user/'+vm.profile.id+'/upload'
+                });
+
+                //upload
+                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
+
+                //upload
+                vm.uploader.onCompleteAll = function() {
+                    vm.uploader.clearQueue();
+                };
+
+
+                //submit profile form
+                vm.updateProfile = function() {
+                    $resource(baseURL + 'user/:id/edit', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.profile,
+                        function (response) {
+                            vm.alerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
+                            }
+                        }
+                    );
+
+                    //console.log(vm.profile);
+                    //vm.uploader.uploadAll();
+                };
+
+                vm.updatePassword = function() {
+                    $resource(baseURL + 'user/:id/edit?action=password', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.reset,
+                        function (response) {
+                            vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
+                            }
+                            else{
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':'Failed: contact administrator'};
+                                toaster.pop('error', 'Error', 'Failed: contact administrator');
+                            }
+                        }
+                    );
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/4/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('PeopleUpdateController', ['$scope', 'toaster', 'userFactory', '$stateParams', 'permissionFactory',
+            function($scope, toaster, userFactory, $stateParams, permissionFactory){
+
+                var vm = $scope;
+
+                vm.disableView = false;
+
+                vm.account = {'firstname':'','lastname':'', 'email':'', 'password':'', 'password_confirm':'',
+                    'status':0, 'roles':{}, 'permissions':{} };
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+
+                permissionFactory.getRoles().query().$promise.then(
+                    function(response){
+                        vm.roles = response;
+                    }
+                );
+
+                //returns permission from database
+                permissionFactory.getPermissions().query().$promise.then(
+                    function(response){
+                        vm.permissions = response;
+                    }
+                );
+
+                //returns registered users
+                vm.account = userFactory.getUsers()
+                    .get({id: parseInt($stateParams.id)}).$promise.then(
+                    function (response) {
+                        vm.disableView = false;
+                        vm.account = response;
+                        check();
+                    },function (response) {
+
+                        vm.disableView = true;
+
+                        if(response.status == 403){
+                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                        }
+                        else if(response.status == 404){
+                            vm.alerts[0] = {'type':'danger', 'msg': "User not found!."};
+                        }
+                    }
+                );
+
+                function check()
+                {
+                    var roles = angular.copy(vm.account.roles);
+                    var permissions = angular.copy(vm.account.permissions);
+
+                    vm.account.roles = {};
+                    vm.account.permissions = {};
+
+                    angular.forEach(roles, function (value, key) {
+                        vm.account.roles[value.id] = true;
+                    });
+
+                    angular.forEach(permissions, function (value, key) {
+                        vm.account.permissions[value.id] = true;
+                    });
+                }
+
+                vm.submitUserForm = function() {
+                    toaster.pop('wait', 'User', 'Processing your request');
+                    validateRolesPerm();
+
+                    userFactory.adminUserUpdate().update({'id': parseInt($stateParams.id)}, vm.account).$promise.then(
+                        function() {
+                            //vm.account = {'status':0, 'roles':{}, 'permissions':{} };
+                            vm.alerts[0] = {'type':'success', 'msg':'Account successfully updated'};
+                            toaster.pop('success', 'User', 'Account updated successfully');
+                        },
+                        function(response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', response.statusText, response.data);
+                            }
+                            else {
+                                vm.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
+                                toaster.pop('error', response.statusText, 'Token mismatch... Please refresh');
+                            }
+
+                        }
+                    );
+                };
+
+                function validateRolesPerm() {
+
+                    var roles = angular.copy(vm.account.roles);
+                    var permissions = angular.copy(vm.account.permissions);
+
+                    vm.account.roles = {};
+                    vm.account.permissions = {};
+
+                    angular.forEach(roles, function (value, key) {
+                        if (value == true) {
+                            this[key] = true;
+                        }
+                    }, vm.account.roles);
+
+                    angular.forEach(permissions, function (value, key) {
+                        if (value == true) {
+                            this[key] = true;
+                        }
+                    }, vm.account.permissions);
+                }
+
+            }]);
+})();
+
+/**
+ * Created by dfash on 5/21/16.
+ */
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('PeopleController', ['$scope', 'toaster', 'userFactory', 'registerFactory', 'permissionFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+        function($scope, toaster, userFactory, registerFactory, permissionFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert){
+
+            var vm = $scope;
+
+            //vm.search = {'roles': {'name':""}, 'permissions': {'name':""}, status:"0" };
+
+            vm.account = {'firstname':'','lastname':'', 'email':'', 'password':'', 'password_confirm':'',
+                'status':0, 'roles':{}, 'permissions':{} };
+            vm.showPeople = false;
+            vm.showPermissions = false;
+            vm.peopleMessage = 'Loading...';
+
+            vm.alerts = [];
+            vm.closeAlert = function(index) {
+                vm.alerts.splice(index, 1);
+            };
+            //return roles from database
+            permissionFactory.getRoles().query().$promise.then(
+                function(response){
+                    vm.roles = response;
+                }
+            );
+
+            //returns permission from database
+            permissionFactory.getPermissions().query().$promise.then(
+                function(response){
+                    vm.permissions = response;
+                }
+            );
+
+            ///////////////////
+
+            activate();
+
+            ////////////////
+
+            function activate() {
+
+                // Changing data
+
+                //returns registered users
+                userFactory.getUsers()
+                    .query().$promise.then(
+                    function (response) {
+                        vm.people = response;
+                        vm.showPeople = true;
+                    },function (response) {
+                        if(response.status == 403) {
+                            vm.showPeople = false;
+                            vm.peopleMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    }
+                );
+
+
+                vm.dtOptions = DTOptionsBuilder.newOptions()
+                    .withDisplayLength(100)
+                    .withPaginationType('full_numbers');
+
+                vm.dtColumnDefs = [
+                    DTColumnDefBuilder.newColumnDef(1),
+                    DTColumnDefBuilder.newColumnDef(2),
+                    DTColumnDefBuilder.newColumnDef(3),
+                    DTColumnDefBuilder.newColumnDef(4).notSortable()
+                ];
+
+                vm.removeUser = removeUser;
+
+                function removeUser($index)
+                {
+                    //alert box for clearing cart
+                    (function() {
+                        SweetAlert.swal({
+                            title: 'Are you sure you want to delete this user?',
+                            text: 'Your will not be able to recover your selected data back!',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#DD6B55',
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'No, cancel pls!',
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm){
+                            if (isConfirm) {
+                                userFactory.getUsers().delete({'id':parseInt(vm.people[$index].id)}).$promise.then(
+                                    function () {
+                                        vm.people.splice($index, 1);
+                                        $scope.alerts[0] = {'type':'success', 'msg':'User has been deleted successfully'};
+                                        SweetAlert.swal('Deleted!', 'User has been deleted.', 'success');
+                                    }, function(response){
+                                        vm.clientMessage = 'Server error.';
+                                        if(response.status == 403) {
+                                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                            vm.clientMessage = response.data;
+                                        }
+                                        SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
+                                    }
+                                );
+                            } else {
+                                SweetAlert.swal('Cancelled', 'User data is safe :)', 'error');
+                            }
+                        });
+                    })();
+                }
+
+            }
+
+
+            vm.submitUserForm = function() {
+                toaster.pop('wait', 'User', 'Processing your request');
+
+                validateRolesPerm();
+
+                registerFactory.register().save(vm.account,
+                    function(response) {
+                        vm.account = {'status':0, 'roles':{}, 'permissions':{} };
+                        vm.alerts[0] = {'type':'success', 'msg':response.data};
+                        toaster.pop('success', 'User', 'Account successfully created');
+                    },
+                    function(response) {
+                        if(response.status == 403) {
+                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                            toaster.pop('error', response.statusText, response.data);
+                        }
+                        else {
+                            $scope.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
+                            toaster.pop('error', response.statusText, response.data);
+                        }
+                    }
+                );
+            };
+
+            function validateRolesPerm() {
+
+                var roles = angular.copy(vm.account.roles);
+                var permissions = angular.copy(vm.account.permissions);
+
+                vm.account.roles = {};
+                vm.account.permissions = {};
+
+                angular.forEach(roles, function (value, key) {
+                    if (value == true) {
+                        this[key] = true;
+                    }
+                }, vm.account.roles);
+
+                angular.forEach(permissions, function (value, key) {
+                    if (value == true) {
+                        this[key] = true;
+                    }
+                }, vm.account.permissions);
+            }
+
+        }]);
+})();
+
+/**
  * Created by dfash on 5/25/16.
  */
 
@@ -10373,7 +11156,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
             vm.clearBulk = function() {
                 vm.form.broadcast = 0;
-                vm.form.duration = null;
                 vm.form.bulk_start_date = null;
                 vm.form.bulk_end_date = null;
                 vm.bulkRangeChanged();
@@ -10381,7 +11163,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
             vm.clearSlot = function() {
                 vm.form.no_slots = 0;
-                vm.form.duration = null;
                 vm.form.slot_start_date = null;
                 vm.form.slot_end_date = null;
                 vm.maxSlotRange = 0;
@@ -11586,264 +12367,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }]);
 })();
 /**
- * Created by dfash on 7/8/16.
- */
-
-(function() {
-    angular
-        .module('app.order')
-        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
-
-                var vm = $scope;
-
-                vm.showRecords = false;
-                vm.assessMessage = "Loading...";
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-                $scope.datetostamp = function(date) {
-                    return new Date(date);
-                };
-                //
-                assessmentService.getAssessment().query()
-                    .$promise.then(
-                    function (response) {
-                        vm.records = response;
-                        vm.showRecords = true;
-                    }, function (response) {
-                        if(response.status == 403) {
-                            vm.assessMessage = "Error: " + response.status + " " + response.statusText;
-                        }
-                    }
-                );
-
-
-
-                activate();
-
-                ////////////////
-
-                function activate() {
-
-                    // Changing data
-                    vm.dtOptions = DTOptionsBuilder.newOptions()
-                        .withDisplayLength(100)
-                        .withPaginationType('full_numbers');
-
-                    vm.dtColumnDefs = [
-                        DTColumnDefBuilder.newColumnDef(0),
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(2).notSortable()
-                    ];
-
-                    vm.remove = remove;
-
-                    function remove($index)
-                    {
-                        //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
-                        (function() {
-                            SweetAlert.swal({
-                                title: 'Are you sure you want to delete this record?',
-                                text: 'Your will not be able to recover your selected data back!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, cancel pls!',
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm){
-                                if (isConfirm) {
-                                    assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
-                                        function () {
-
-                                            vm.records.splice($index, 1);
-                                            vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
-                                        },
-                                        function (response) {
-                                            if(response.status == 403) {
-                                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                            }
-                                        }
-                                    );
-                                } else {
-                                    SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
-                                }
-                            });
-                        })();
-
-                    }
-
-                }
-            }]);
-})();
-/**
- * Created by dfash on 6/22/16.
- */
-
-(function() {
-    angular
-        .module('app.order')
-        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
-            function($scope, toaster, assessmentService, $state, $stateParams) {
-
-                var vm = $scope;
-                vm.disableForm = false;
-                vm.showTimeFrame = false;
-                $scope.config = {};
-
-                $scope.form = {
-                    "id": null, "preview": 0,
-                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
-                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
-                    "part_two": { "review":[{}], "performance":{}},
-                    "part_three": {"competencies":{}},
-                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
-                };
-
-
-
-                assessmentService.getActiveConfig().get().$promise.then(
-                    function (response) {
-                        vm.showTimeFrame = true;
-                        $scope.config = response;
-
-                        if($state.is('app.assessment.create'))
-                            $scope.form.assessment_config_id = response.id;
-
-                        checkRouting(response);
-                    },
-                    function() {
-                        vm.disableForm = true;
-                    }
-                );
-
-
-                //routes to edit if user has a data already submitted
-                function checkRouting(response) {
-                    if($state.is('app.assessment.create')) {
-                        if (angular.isDefined(response.assessment)) {
-                            $state.go('app.assessment.edit', {"id": response.assessment.id});
-                        }
-                    }
-                }
-
-                //routing from create or from url
-                if($state.is('app.assessment.edit')) {
-                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
-                        function (response) {
-                            $scope.form = response;
-
-                            checkDataResp();
-                        },
-                        function() {
-                            $state.go('app.assessment.create', {"id":$scope.form.id});
-                        }
-                    );
-                }
-
-                vm.submitPreview = function() {
-                    $scope.form.preview = 0;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    assessmentService.assessment().save($scope.form,
-                        function (response) {
-
-                            $scope.form = response;
-                            toaster.pop('success', 'Assessment', 'Data saved.');
-
-                            checkDataResp();
-
-                            $state.go('app.assessment.edit', {"id":$scope.form.id});
-                        },
-                        function (response) {
-                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
-                        }
-                    );
-                };
-
-                //submit form
-                vm.submitAssessment = function() {
-
-                    $scope.form.preview = 1;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    assessmentService.assessment().save($scope.form,
-                        function () {
-                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
-                            $state.go('app.assessment.view');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
-                            }
-                        }
-                    );
-                };
-
-                var checkDataResp = function() {
-                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
-                        if($scope.form.part_two.review[0].length == 0)
-                            $scope.form.part_two.review = [{}];
-                    }
-
-                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
-                        $scope.form.part_two.performance = {};
-                    }
-
-                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
-                        $scope.form.part_three.competencies = {};
-                    }
-                };
-
-                //START-DATE functions
-                vm.today = function() {
-                    vm.dt = new Date();
-                };
-                vm.today();
-
-                vm.clear = function () {
-                    vm.dt = null;
-                };
-
-                // Disable weekend selection
-                vm.disabled = function(date, mode) {
-                    return false;
-                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
-                };
-
-                vm.toggleMin = function() {
-                    vm.minDate = vm.minDate ? null : new Date();
-                };
-                vm.toggleMin();
-
-                vm.open = function($event, dateObj) {
-                    $event.preventDefault();
-                    $event.stopPropagation();
-
-                    dateObj.opened = true;
-                };
-
-                vm.dateOptions = {
-                    formatYear: 'yy',
-                    startingDay: 1
-                };
-
-                vm.initDate = new Date('2019-10-20');
-                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-                vm.dateFormat = vm.dateFormats[0];
-                //END: Date functions
-            }]);
-})();
-/**
- * Created by dfash on 7/7/16.
+ * Created by dfash on 5/3/16.
  */
 
 (function(){
@@ -11851,144 +12375,23 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
     angular
         .module('app.order')
-        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
+        .service('productFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
-            this.assessment = function() {
-                return $resource(baseURL + 'assessment', null,
-                    {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
-                    }
-                )
+            this.getProducts = function(){
+                return $resource(baseURL + "product/:id", null, null);
             };
 
-            this.getAssessment = function() {
-                return $resource(baseURL + 'assessment/:id', null,
-                    {
-                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                    }
-                );
-            };
-
-            this.supervisor = function() {
-                return $resource(baseURL + 'supervisor', null,
-                    {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
-                    }
-                )
-            };
-
-            this.getConfig = function() {
-                return $resource(baseURL + 'assessconfig/:id', null,
-                    {
-                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                    }
-                );
-            };
-
-            this.getActiveConfig = function() {
-                return $resource(baseURL + 'activeconfig');
-            };
-
-            this.log = function() {
-                return $resource(baseURL + "assessment/records/:id");
-            };
+            //this.clientUpdate = function(){
+            //    return $resource(baseURL + "client/:id/edit", null, { 'update': {method:'POST'} });
+            //};
+            //
+            //this.client = function() {
+            //    return $resource(baseURL + '/client/:id', null, { 'save':{method:'POST'}});
+            //};
 
         }]);
 })();
-/**
- * Created by dfash on 7/8/16.
- */
 
-(function () {
-    angular
-        .module('app.order')
-        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
-            function($scope, toaster, assessmentService, $state, $stateParams) {
-
-                var vm = this;
-
-                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
-
-
-                //manages for routing
-                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
-                    function (response) {
-                        if(response.supervisor != null)
-                            $scope.supervisor = response.supervisor;
-                        else {
-                            $scope.supervisor.assessment_id = response.id;
-                            checkDataResp();
-                        }
-                    },
-                    function() {
-                        $state.go('app.assessment.view');
-                    }
-                );
-
-
-                $scope.submitPreview = function() {
-                    $scope.supervisor.preview = 0;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    //set the function
-                    assessmentService.supervisor().save($scope.supervisor,
-                        function (response) {
-
-                            $scope.supervisor = response;
-                            toaster.pop('success', 'Supervisor', 'Data saved.');
-
-                            checkDataResp();
-
-                        },
-                        function (response) {
-                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
-                        }
-                    );
-                };
-
-                //submit form
-                $scope.submitComment = function() {
-
-                    $scope.supervisor.preview = 1;
-
-                    toaster.pop('wait', 'Supervisor', 'Processing your request');
-
-                    assessmentService.supervisor().save($scope.supervisor,
-                        function () {
-                            toaster.pop('success', 'Supervisor', 'Data submitted.');
-                            $state.go('app.assessment.view');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
-                            }
-                        }
-                    );
-                };
-
-                var checkDataResp = function() {
-                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
-                        $scope.supervisor.attributes = {};
-                    }
-
-                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
-                        $scope.supervisor.habbit = {};
-                    }
-
-                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
-                        $scope.supervisor.leadership = {};
-                    }
-                };
-
-            }]);
-})();
 /**
  * Created by dfash on 6/19/16.
  */
@@ -12249,727 +12652,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             };
 
         }]);
-})();
-/**
- * Created by dfash on 5/18/16.
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
-            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
-
-                var vm = $scope;
-                
-                vm.alerts = [];
-                vm.passwordAlerts = [];
-
-                vm.profile = {_token: _token};
-
-                vm.reset = {_token: _token};
-
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-
-                $resource(baseURL + 'contacts').query().$promise.then(
-                    function (response) {
-                        vm.contacts = response;
-                    }
-                );
-
-                //profile
-                vm.profile = loginFactory.userData();
-
-                //uploader object
-                vm.uploader = new FileUploader({
-                    url: baseURL +'user/'+vm.profile.id+'/upload'
-                });
-
-                //upload
-                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
-                    console.info('onErrorItem', fileItem, response, status, headers);
-                };
-
-                //upload
-                vm.uploader.onCompleteAll = function() {
-                    vm.uploader.clearQueue();
-                };
-
-
-                //submit profile form
-                vm.updateProfile = function() {
-                    $resource(baseURL + 'user/:id/edit', null, {'update':{method:'PUT'}})
-                        .update({'id':vm.profile.id}, vm.profile,
-                        function (response) {
-                            vm.alerts[0] = {'type':'success', 'msg':response.data};
-                            toaster.pop('success', 'Sent', response.data);
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Error', response.data);
-                            }
-                        }
-                    );
-
-                    //console.log(vm.profile);
-                    //vm.uploader.uploadAll();
-                };
-
-                vm.updatePassword = function() {
-                    $resource(baseURL + 'user/:id/edit?action=password', null, {'update':{method:'PUT'}})
-                        .update({'id':vm.profile.id}, vm.reset,
-                        function (response) {
-                            vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
-                            toaster.pop('success', 'Sent', response.data);
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.passwordAlerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Error', response.data);
-                            }
-                            else{
-                                vm.passwordAlerts[0] = {'type':'danger', 'msg':'Failed: contact administrator'};
-                                toaster.pop('error', 'Error', 'Failed: contact administrator');
-                            }
-                        }
-                    );
-                }
-            }]);
-})();
-/**
- * Created by dfash on 5/23/16.
- */
-
-(function(){
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('MailController', ['$scope', 'mailFactory', '$timeout', function($scope, mailFactory, $timeout) {
-
-            $scope.mail = {'to':{}, 'subject':'', 'cc':'', 'bcc':'',};
-            $scope.content = null;
-
-            $scope.disabled = undefined;
-
-            $scope.alerts = [];
-
-            $scope.closeAlert = function(index) {
-                $scope.alerts.splice(index, 1);
-            };
-
-            $scope.mailbox = {};
-
-            mailFactory.contacts().query().$promise.then(
-                function (response) {
-                    $scope.mailbox = response;
-                }
-            );
-
-            $scope.sendMail = function() {
-
-                $scope.alerts = [];
-                $scope.mailMsg = 'Please wait...';
-                $scope.disabled = true;
-                $scope.mail.msg = $scope.content;
-                $scope.mail.to = $scope.mailbox.selected.email;
-
-                mailFactory.mail().send($scope.mail,
-                    function (response) {
-                        $scope.mail = {'to':{}, 'subject':'', 'cc':'', 'bcc':''};
-                        $scope.content = null;
-                        $scope.disabled = false;
-                        $scope.mailoutForm.$setPristine();
-                        $scope.alerts[0] = {'type':'success', 'msg':'Mail sent successfully'};
-
-                        //$timeout(doTimeOut(), 1000);
-                    },
-                    function (response) {
-                        $scope.disabled = false;
-
-                        if(response.status == 403) {
-                            $scope.alerts[0] = {'type':'danger', 'msg':'Mail not sent'};
-                        }
-                        else {
-                            $scope.alerts[0] = {'type':'danger', 'msg':'Error sending mail!. Contact the administrator'};
-                        }
-
-                        //$timeout(doTimeOut(), 500);
-                    }
-                );
-            };
-
-        }]);
-})();
-/**
- * Created by dfash on 5/23/16.
- */
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .service('mailFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-
-            this.mail = function () {
-                return $resource(baseURL + 'mail/mailout', null, { 'send': {method:'POST'} });
-            };
-
-            this.contacts = function () {
-                return $resource(baseURL + 'contacts');
-            };
-
-        }]);
-})();
-/**
- * Created by dfash on 6/4/16.
- */
-
-(function(){
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('PeopleUpdateController', ['$scope', 'toaster', 'userFactory', '$stateParams', 'permissionFactory',
-            function($scope, toaster, userFactory, $stateParams, permissionFactory){
-
-                var vm = $scope;
-
-                vm.disableView = false;
-
-                vm.account = {'firstname':'','lastname':'', 'email':'', 'password':'', 'password_confirm':'',
-                    'status':0, 'roles':{}, 'permissions':{} };
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-
-                permissionFactory.getRoles().query().$promise.then(
-                    function(response){
-                        vm.roles = response;
-                    }
-                );
-
-                //returns permission from database
-                permissionFactory.getPermissions().query().$promise.then(
-                    function(response){
-                        vm.permissions = response;
-                    }
-                );
-
-                //returns registered users
-                vm.account = userFactory.getUsers()
-                    .get({id: parseInt($stateParams.id)}).$promise.then(
-                    function (response) {
-                        vm.disableView = false;
-                        vm.account = response;
-                        check();
-                    },function (response) {
-
-                        vm.disableView = true;
-
-                        if(response.status == 403){
-                            vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                        }
-                        else if(response.status == 404){
-                            vm.alerts[0] = {'type':'danger', 'msg': "User not found!."};
-                        }
-                    }
-                );
-
-                function check()
-                {
-                    var roles = angular.copy(vm.account.roles);
-                    var permissions = angular.copy(vm.account.permissions);
-
-                    vm.account.roles = {};
-                    vm.account.permissions = {};
-
-                    angular.forEach(roles, function (value, key) {
-                        vm.account.roles[value.id] = true;
-                    });
-
-                    angular.forEach(permissions, function (value, key) {
-                        vm.account.permissions[value.id] = true;
-                    });
-                }
-
-                vm.submitUserForm = function() {
-                    toaster.pop('wait', 'User', 'Processing your request');
-                    validateRolesPerm();
-
-                    userFactory.adminUserUpdate().update({'id': parseInt($stateParams.id)}, vm.account).$promise.then(
-                        function() {
-                            //vm.account = {'status':0, 'roles':{}, 'permissions':{} };
-                            vm.alerts[0] = {'type':'success', 'msg':'Account successfully updated'};
-                            toaster.pop('success', 'User', 'Account updated successfully');
-                        },
-                        function(response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', response.statusText, response.data);
-                            }
-                            else {
-                                vm.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
-                                toaster.pop('error', response.statusText, 'Token mismatch... Please refresh');
-                            }
-
-                        }
-                    );
-                };
-
-                function validateRolesPerm() {
-
-                    var roles = angular.copy(vm.account.roles);
-                    var permissions = angular.copy(vm.account.permissions);
-
-                    vm.account.roles = {};
-                    vm.account.permissions = {};
-
-                    angular.forEach(roles, function (value, key) {
-                        if (value == true) {
-                            this[key] = true;
-                        }
-                    }, vm.account.roles);
-
-                    angular.forEach(permissions, function (value, key) {
-                        if (value == true) {
-                            this[key] = true;
-                        }
-                    }, vm.account.permissions);
-                }
-
-            }]);
-})();
-
-/**
- * Created by dfash on 5/21/16.
- */
-(function(){
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('PeopleController', ['$scope', 'toaster', 'userFactory', 'registerFactory', 'permissionFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-        function($scope, toaster, userFactory, registerFactory, permissionFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert){
-
-            var vm = $scope;
-
-            //vm.search = {'roles': {'name':""}, 'permissions': {'name':""}, status:"0" };
-
-            vm.account = {'firstname':'','lastname':'', 'email':'', 'password':'', 'password_confirm':'',
-                'status':0, 'roles':{}, 'permissions':{} };
-            vm.showPeople = false;
-            vm.showPermissions = false;
-            vm.peopleMessage = 'Loading...';
-
-            vm.alerts = [];
-            vm.closeAlert = function(index) {
-                vm.alerts.splice(index, 1);
-            };
-            //return roles from database
-            permissionFactory.getRoles().query().$promise.then(
-                function(response){
-                    vm.roles = response;
-                }
-            );
-
-            //returns permission from database
-            permissionFactory.getPermissions().query().$promise.then(
-                function(response){
-                    vm.permissions = response;
-                }
-            );
-
-            ///////////////////
-
-            activate();
-
-            ////////////////
-
-            function activate() {
-
-                // Changing data
-
-                //returns registered users
-                userFactory.getUsers()
-                    .query().$promise.then(
-                    function (response) {
-                        vm.people = response;
-                        vm.showPeople = true;
-                    },function (response) {
-                        if(response.status == 403) {
-                            vm.showPeople = false;
-                            vm.peopleMessage = "Error: " + response.status + " " + response.statusText;
-                        }
-                    }
-                );
-
-
-                vm.dtOptions = DTOptionsBuilder.newOptions()
-                    .withDisplayLength(100)
-                    .withPaginationType('full_numbers');
-
-                vm.dtColumnDefs = [
-                    DTColumnDefBuilder.newColumnDef(1),
-                    DTColumnDefBuilder.newColumnDef(2),
-                    DTColumnDefBuilder.newColumnDef(3),
-                    DTColumnDefBuilder.newColumnDef(4).notSortable()
-                ];
-
-                vm.removeUser = removeUser;
-
-                function removeUser($index)
-                {
-                    //alert box for clearing cart
-                    (function() {
-                        SweetAlert.swal({
-                            title: 'Are you sure you want to delete this user?',
-                            text: 'Your will not be able to recover your selected data back!',
-                            type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#DD6B55',
-                            confirmButtonText: 'Yes, delete it!',
-                            cancelButtonText: 'No, cancel pls!',
-                            closeOnConfirm: false,
-                            closeOnCancel: false
-                        }, function(isConfirm){
-                            if (isConfirm) {
-                                userFactory.getUsers().delete({'id':parseInt(vm.people[$index].id)}).$promise.then(
-                                    function () {
-                                        vm.people.splice($index, 1);
-                                        $scope.alerts[0] = {'type':'success', 'msg':'User has been deleted successfully'};
-                                        SweetAlert.swal('Deleted!', 'User has been deleted.', 'success');
-                                    }, function(response){
-                                        vm.clientMessage = 'Server error.';
-                                        if(response.status == 403) {
-                                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
-                                            vm.clientMessage = response.data;
-                                        }
-                                        SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
-                                    }
-                                );
-                            } else {
-                                SweetAlert.swal('Cancelled', 'User data is safe :)', 'error');
-                            }
-                        });
-                    })();
-                }
-
-            }
-
-
-            vm.submitUserForm = function() {
-                toaster.pop('wait', 'User', 'Processing your request');
-
-                validateRolesPerm();
-
-                registerFactory.register().save(vm.account,
-                    function(response) {
-                        vm.account = {'status':0, 'roles':{}, 'permissions':{} };
-                        vm.alerts[0] = {'type':'success', 'msg':response.data};
-                        toaster.pop('success', 'User', 'Account successfully created');
-                    },
-                    function(response) {
-                        if(response.status == 403) {
-                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
-                            toaster.pop('error', response.statusText, response.data);
-                        }
-                        else {
-                            $scope.alerts[0] = {'type':'danger', 'msg':'Token mismatch... Please refresh'};
-                            toaster.pop('error', response.statusText, response.data);
-                        }
-                    }
-                );
-            };
-
-            function validateRolesPerm() {
-
-                var roles = angular.copy(vm.account.roles);
-                var permissions = angular.copy(vm.account.permissions);
-
-                vm.account.roles = {};
-                vm.account.permissions = {};
-
-                angular.forEach(roles, function (value, key) {
-                    if (value == true) {
-                        this[key] = true;
-                    }
-                }, vm.account.roles);
-
-                angular.forEach(permissions, function (value, key) {
-                    if (value == true) {
-                        this[key] = true;
-                    }
-                }, vm.account.permissions);
-            }
-
-        }]);
-})();
-
-/**
- * Created by dfash on 4/30/16.
- */
-
-/**
- * Created by dfash on 4/29/16.
- */
-
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.order')
-        .service('permissionFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-
-            this.getRoles = function() {
-                return $resource(baseURL + "role");
-            };
-
-            this.roleEdit = function() {
-                return $resource(baseURL + "role/:id/edit", null, { 'update': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }} });
-            };
-
-            this.getPermissions = function() {
-                return $resource(baseURL + "permission");
-            };
-        }]);
-})();
-/**
- * Created by dfash on 4/30/16.
- */
-
-/**
- * Created by dfash on 4/29/16.
- */
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('RolesController', ['$scope', '$uibModal', '$stateParams', 'rolesFactory',
-            function($scope, $uibModal, $stateParams, permissionFactory) {
-
-                $scope.showRoles = false;
-                $scope.roleMessage = 'loading..';
-                $scope.roleEdit = false;
-                $scope.permissionEdit = false;
-
-                $scope.roles = permissionFactory.roles().query().$promise.then(
-                    function(response){
-                        $scope.roles = response;
-                        $scope.showRoles = true;
-                    },
-                    function(response) {
-                        $scope.showRoles = false;
-                        console.log(response);
-                    }
-                );
-
-                //role modal on edit click
-                $scope.editRole = function (size, role) {
-
-                    //console.log($scope.role);
-                    var modalInstance = $uibModal.open({
-                        templateUrl: '/roleModal.html',
-                        controller: RoleModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            role: function () {
-                                return role;
-                            }
-                        }
-                    });
-
-                    //TODO: button event of the dialog
-                    modalInstance.result.then(function (updatedRole) { //on closed
-                        console.log('updated: ', updatedRole);
-                        //TODO: update database and reload $scope.roles
-                        //TODO: Flash message
-                    }, function () {
-                        //on cancel clicked
-                    });
-
-                    //instance of the modal dialog
-                    RoleModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', 'role'];
-                    function RoleModalInstanceCtrl($scope, $uibModalInstance, role) {
-
-                        $scope.role = angular.copy(role);
-                        $scope.title = angular.copy(role.name);
-
-                        $scope.ok = function () {
-                            $uibModalInstance.close($scope.role);
-                        };
-
-                        $scope.cancel = function () {
-                            $uibModalInstance.dismiss('cancel');
-                        };
-                    }
-
-                };
-
-                $scope.editPermission = function (size, role) {
-
-                    var modalInstance = $uibModal.open({
-                        templateUrl: '/permissionModal.html',
-                        controller: PermissionModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            role: function () {
-                                return role;
-                            }
-                        }
-                    });
-
-                    //TODO: button event of the dialog
-                    modalInstance.result.then(function (updatedPerm) { //on closed
-                        //TODO: update database with the new permission
-                        //TODO: Flash message
-                    }, function () {
-                        //on cancel clicked
-                    });
-
-                    //instance of the modal dialog
-                    PermissionModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance','permissionFactory', 'role'];
-                    function PermissionModalInstanceCtrl($scope, $uibModalInstance, rolesFactory, role) {
-
-                        $scope.role = angular.copy(role);
-                        $scope.permMessage = 'loading...';
-                        $scope.showPermissions = false;
-
-                        $scope.permissions = rolesFactory.roles().query().$promise.then(
-                            function(response){
-                                $scope.permissions = response;
-                                $scope.showPermissions = true;
-                            },
-                            function(response) {
-                                $scope.showPermissions = false;
-                                $scope.permMessage  = response.statusText;
-                            }
-                        );
-
-                        $scope.ok = function () {
-                            $uibModalInstance.close('close');
-                        };
-
-                        $scope.cancel = function () {
-                            $uibModalInstance.dismiss('cancel');
-                        };
-                    }
-
-                };
-
-
-            }]);
-})();
-/**
- * Created by dfash on 5/3/16.
- */
-
-(function(){
-    'use strict';
-
-    angular
-        .module('app.order')
-        .service('productFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-
-            this.getProducts = function(){
-                return $resource(baseURL + "product/:id", null, null);
-            };
-
-            //this.clientUpdate = function(){
-            //    return $resource(baseURL + "client/:id/edit", null, { 'update': {method:'POST'} });
-            //};
-            //
-            //this.client = function() {
-            //    return $resource(baseURL + '/client/:id', null, { 'save':{method:'POST'}});
-            //};
-
-        }]);
-})();
-
-/**
- * Created by dfash on 6/13/16.
- */
-
-(function () {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('RecoverPasswordController', ['$scope', 'userFactory', '$state', '$stateParams',
-            function($scope, userFactory, $state, $stateParams) {
-
-                var vm = $scope;
-
-                vm.recover = {email:''};
-
-                vm.disableView = false;
-
-                if($state.is('page.change')) {
-                    vm.recover.email = $stateParams.e;
-                    vm.recover.token = $stateParams.m;
-                }
-
-                vm.submitRecoverForm = function() {
-                    vm.showSuccess = false;
-                    vm.showError = false;
-                    vm.disableView = true;
-                    //posts data to the server vm.register
-                    userFactory.recover().confirm(vm.recover).$promise.then(
-                        function() {
-                            vm.disableView = false;
-                            vm.showSuccess = true;
-                            vm.showError = false;
-                            vm.authMsg = "Reset link has been sent to your email.";
-                            vm.recover = {email:''};
-                            vm.registerForm.$setPristine();
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.showSuccess = false;
-                                vm.showError = true;
-                                vm.disableView = false;
-                                vm.authMsg = response.data;
-                            }
-                        }
-                    )
-                };
-
-                vm.submitChangePwd = function() {
-                    vm.showSuccess = false;
-                    vm.showError = false;
-                    vm.disableView = true;
-                    userFactory.recover().change(vm.recover).$promise.then(
-                        function() {
-                            vm.disableView = false;
-                            vm.showSuccess = true;
-                            vm.showError = false;
-                            vm.authMsg = "Password successfully changed.";
-                            vm.recover = {};
-                            vm.changePwdForm.$setPristine();
-                        },
-                        function(response) {
-                            if(response.status == 403) {
-                                vm.showSuccess = false;
-                                vm.showError = true;
-                                vm.disableView = false;
-                                vm.authMsg = response.data;
-                            }
-                        }
-                    );
-                }
-            }]);
 })();
 /**
  * Created by dfash on 5/3/16.
@@ -14483,4 +14165,320 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 };
 
             }]);
+})();
+/**
+ * Created by dfash on 6/13/16.
+ */
+
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('RecoverPasswordController', ['$scope', 'userFactory', '$state', '$stateParams',
+            function($scope, userFactory, $state, $stateParams) {
+
+                var vm = $scope;
+
+                vm.recover = {email:''};
+
+                vm.disableView = false;
+
+                if($state.is('page.change')) {
+                    vm.recover.email = $stateParams.e;
+                    vm.recover.token = $stateParams.m;
+                }
+
+                vm.submitRecoverForm = function() {
+                    vm.showSuccess = false;
+                    vm.showError = false;
+                    vm.disableView = true;
+                    //posts data to the server vm.register
+                    userFactory.recover().confirm(vm.recover).$promise.then(
+                        function() {
+                            vm.disableView = false;
+                            vm.showSuccess = true;
+                            vm.showError = false;
+                            vm.authMsg = "Reset link has been sent to your email.";
+                            vm.recover = {email:''};
+                            vm.registerForm.$setPristine();
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.showSuccess = false;
+                                vm.showError = true;
+                                vm.disableView = false;
+                                vm.authMsg = response.data;
+                            }
+                        }
+                    )
+                };
+
+                vm.submitChangePwd = function() {
+                    vm.showSuccess = false;
+                    vm.showError = false;
+                    vm.disableView = true;
+                    userFactory.recover().change(vm.recover).$promise.then(
+                        function() {
+                            vm.disableView = false;
+                            vm.showSuccess = true;
+                            vm.showError = false;
+                            vm.authMsg = "Password successfully changed.";
+                            vm.recover = {};
+                            vm.changePwdForm.$setPristine();
+                        },
+                        function(response) {
+                            if(response.status == 403) {
+                                vm.showSuccess = false;
+                                vm.showError = true;
+                                vm.disableView = false;
+                                vm.authMsg = response.data;
+                            }
+                        }
+                    );
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 4/30/16.
+ */
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('permissionFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.getRoles = function() {
+                return $resource(baseURL + "role");
+            };
+
+            this.roleEdit = function() {
+                return $resource(baseURL + "role/:id/edit", null, { 'update': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }} });
+            };
+
+            this.getPermissions = function() {
+                return $resource(baseURL + "permission");
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 4/30/16.
+ */
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('RolesController', ['$scope', '$uibModal', '$stateParams', 'rolesFactory',
+            function($scope, $uibModal, $stateParams, permissionFactory) {
+
+                $scope.showRoles = false;
+                $scope.roleMessage = 'loading..';
+                $scope.roleEdit = false;
+                $scope.permissionEdit = false;
+
+                $scope.roles = permissionFactory.roles().query().$promise.then(
+                    function(response){
+                        $scope.roles = response;
+                        $scope.showRoles = true;
+                    },
+                    function(response) {
+                        $scope.showRoles = false;
+                        console.log(response);
+                    }
+                );
+
+                //role modal on edit click
+                $scope.editRole = function (size, role) {
+
+                    //console.log($scope.role);
+                    var modalInstance = $uibModal.open({
+                        templateUrl: '/roleModal.html',
+                        controller: RoleModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            role: function () {
+                                return role;
+                            }
+                        }
+                    });
+
+                    //TODO: button event of the dialog
+                    modalInstance.result.then(function (updatedRole) { //on closed
+                        console.log('updated: ', updatedRole);
+                        //TODO: update database and reload $scope.roles
+                        //TODO: Flash message
+                    }, function () {
+                        //on cancel clicked
+                    });
+
+                    //instance of the modal dialog
+                    RoleModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance', 'role'];
+                    function RoleModalInstanceCtrl($scope, $uibModalInstance, role) {
+
+                        $scope.role = angular.copy(role);
+                        $scope.title = angular.copy(role.name);
+
+                        $scope.ok = function () {
+                            $uibModalInstance.close($scope.role);
+                        };
+
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                    }
+
+                };
+
+                $scope.editPermission = function (size, role) {
+
+                    var modalInstance = $uibModal.open({
+                        templateUrl: '/permissionModal.html',
+                        controller: PermissionModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            role: function () {
+                                return role;
+                            }
+                        }
+                    });
+
+                    //TODO: button event of the dialog
+                    modalInstance.result.then(function (updatedPerm) { //on closed
+                        //TODO: update database with the new permission
+                        //TODO: Flash message
+                    }, function () {
+                        //on cancel clicked
+                    });
+
+                    //instance of the modal dialog
+                    PermissionModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance','permissionFactory', 'role'];
+                    function PermissionModalInstanceCtrl($scope, $uibModalInstance, rolesFactory, role) {
+
+                        $scope.role = angular.copy(role);
+                        $scope.permMessage = 'loading...';
+                        $scope.showPermissions = false;
+
+                        $scope.permissions = rolesFactory.roles().query().$promise.then(
+                            function(response){
+                                $scope.permissions = response;
+                                $scope.showPermissions = true;
+                            },
+                            function(response) {
+                                $scope.showPermissions = false;
+                                $scope.permMessage  = response.statusText;
+                            }
+                        );
+
+                        $scope.ok = function () {
+                            $uibModalInstance.close('close');
+                        };
+
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                    }
+
+                };
+
+
+            }]);
+})();
+/**
+ * Created by dfash on 5/23/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('MailController', ['$scope', 'mailFactory', '$timeout', function($scope, mailFactory, $timeout) {
+
+            $scope.mail = {'to':{}, 'subject':'', 'cc':'', 'bcc':'',};
+            $scope.content = null;
+
+            $scope.disabled = undefined;
+
+            $scope.alerts = [];
+
+            $scope.closeAlert = function(index) {
+                $scope.alerts.splice(index, 1);
+            };
+
+            $scope.mailbox = {};
+
+            mailFactory.contacts().query().$promise.then(
+                function (response) {
+                    $scope.mailbox = response;
+                }
+            );
+
+            $scope.sendMail = function() {
+
+                $scope.alerts = [];
+                $scope.mailMsg = 'Please wait...';
+                $scope.disabled = true;
+                $scope.mail.msg = $scope.content;
+                $scope.mail.to = $scope.mailbox.selected.email;
+
+                mailFactory.mail().send($scope.mail,
+                    function (response) {
+                        $scope.mail = {'to':{}, 'subject':'', 'cc':'', 'bcc':''};
+                        $scope.content = null;
+                        $scope.disabled = false;
+                        $scope.mailoutForm.$setPristine();
+                        $scope.alerts[0] = {'type':'success', 'msg':'Mail sent successfully'};
+
+                        //$timeout(doTimeOut(), 1000);
+                    },
+                    function (response) {
+                        $scope.disabled = false;
+
+                        if(response.status == 403) {
+                            $scope.alerts[0] = {'type':'danger', 'msg':'Mail not sent'};
+                        }
+                        else {
+                            $scope.alerts[0] = {'type':'danger', 'msg':'Error sending mail!. Contact the administrator'};
+                        }
+
+                        //$timeout(doTimeOut(), 500);
+                    }
+                );
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 5/23/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('mailFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.mail = function () {
+                return $resource(baseURL + 'mail/mailout', null, { 'send': {method:'POST'} });
+            };
+
+            this.contacts = function () {
+                return $resource(baseURL + 'contacts');
+            };
+
+        }]);
 })();
