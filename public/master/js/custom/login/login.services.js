@@ -5,8 +5,8 @@
 (function () {
     angular
         .module('app.order')
-        .service('loginFactory', ['userFactory', '$resource', '$cookies', '$rootScope', 'baseURL', '$state', '$timeout', '$q',
-            function(userFactory, $resource, $cookies, $rootScope, baseURL, $state, $timeout, $q) {
+        .service('loginFactory', ['$cacheFactory', 'userFactory', '$resource', '$cookies', '$rootScope', 'baseURL', '$state', '$timeout', '$q',
+            function($cacheFactory, userFactory, $resource, $cookies, $rootScope, baseURL, $state, $timeout, $q) {
 
                 var vm = this;
                 //Removes Listeners before adding them
@@ -58,6 +58,7 @@
 
                 $rootScope.logout = function() {
                     console.log('logout clicked');
+                    //$cacheFactory.get('templates').removeAll();
                     $resource(baseURL + 'auth/logout').get(
                         function (response) {
                             //console.log(response);
