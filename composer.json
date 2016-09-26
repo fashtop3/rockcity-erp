@@ -12,7 +12,8 @@
         "h4cc/wkhtmltoimage-i386": "0.12.x",
         "barryvdh/laravel-snappy": "^0.3.0",
 	"bican/roles": "2.1.*",
-	"guzzlehttp/guzzle": "~5.3|~6.0"
+	"guzzlehttp/guzzle": "~5.3|~6.0",
+        "trexology/promocodes": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
