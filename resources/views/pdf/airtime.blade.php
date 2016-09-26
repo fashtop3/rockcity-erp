@@ -13,7 +13,7 @@
     <table class="table table-bordered">
         <tr>
             <td><p>Client Name: <span class="text-muted">{{$schedule->client->name}}</span></p></td>
-            <td><p><em class="fa fa-home fa-lg"></em> <span class="text-muted">{{$schedule->client->street_name.' '.$schedule->client->street_no.', '.$schedule->client->town}}</span></p></td>
+            <td><p><em class="fa fa-home fa-lg"></em> <span class="text-muted">{{$schedule->client->street_no.' '.$schedule->client->street_name.', '.$schedule->client->town}}</span></p></td>
             <td><p><em class="fa fa-phone fa-lg"></em> <span class="text-muted">{{$schedule->client->mobile}}</span></p></td>
         </tr>
     </table>
