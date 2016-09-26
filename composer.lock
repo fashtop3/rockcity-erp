@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b2778d5870e58b3332cbf79eed3a8094",
-    "content-hash": "d11dc8611fbd6146cb9afe6fae0de79c",
+    "hash": "495f26b5849daff5bd45c2a2e5c70b38",
+    "content-hash": "b5b20b75aa2c8b83263dce8773bf2b22",
     "packages": [
         {
             "name": "barryvdh/laravel-snappy",
@@ -2191,6 +2191,50 @@
                 "dump"
             ],
             "time": "2016-07-26 08:03:56"
+        },
+        {
+            "name": "trexology/promocodes",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Trexology/Promocodes.git",
+                "reference": "4846f3813ceba18e6a43eebd0e8cb437d7f467f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Trexology/Promocodes/zipball/4846f3813ceba18e6a43eebd0e8cb437d7f467f6",
+                "reference": "4846f3813ceba18e6a43eebd0e8cb437d7f467f6",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Trexology\\Promocodes\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "trexology"
+                }
+            ],
+            "description": "Promotional Codes Generator for Laravel 5.1",
+            "homepage": "https://github.com/trexology/promocodes",
+            "keywords": [
+                "coupon code",
+                "discount code",
+                "laravel",
+                "php",
+                "promo code"
+            ],
+            "time": "2016-08-18 03:26:15"
         },
         {
             "name": "vlucas/phpdotenv",

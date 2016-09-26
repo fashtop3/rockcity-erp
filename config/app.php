@@ -158,6 +158,11 @@ return [
          */
         Bican\Roles\RolesServiceProvider::class,
 
+        /**
+         * Promocode
+         */
+        Trexology\Promocodes\PromocodesServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -218,6 +223,11 @@ return [
          */
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Image' => Barryvdh\Snappy\Facades\SnappyImage::class,
+
+        /**
+         * promocode
+         */
+        'Promocodes' => Trexology\Promocodes\Facades\Promocodes::class
 
     ],
 
