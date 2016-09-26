@@ -31,7 +31,8 @@
                 function airtime() {
                     vm.schedule = airtimeFactory.getAirtime().get({'id': parseInt($stateParams.id)}).$promise.then(
                         function (response) {
-                            vm.schedule = response;
+                            vm.schedule = response.schedule;
+                            vm.prog_time = response.prog_time;
                             vm.manage.validate = vm.schedule.schedule_alert.validate;
                             vm.manage.recommend = vm.schedule.schedule_alert.recommend;
                             vm.manage.approved = vm.schedule.schedule_alert.approved;
@@ -44,7 +45,13 @@
                 }
 
 
-
+                vm.prog_time = "";
+                vm.progStartTime = function ($period) {
+                    return new Date(vm.prog_time[$period + '_start']);
+                };
+                vm.progEndTime = function ($period) {
+                    return new Date(vm.prog_time[$period + '_end']);
+                };
 
                 function activate() {
 
@@ -55,7 +62,6 @@
                         }
                         return false;
                     };
-
 
                     vm.airtimeApproved = function() {
                         if(!(vm.manage.validate && vm.manage.recommend)) {

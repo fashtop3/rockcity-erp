@@ -62,6 +62,12 @@
     'use strict';
 
     angular
+        .module('app.bootstrapui', []);
+})();
+(function() {
+    'use strict';
+
+    angular
         .module('app.colors', []);
 })();
 (function() {
@@ -88,12 +94,6 @@
             'tmh.dynamicLocale',
             'ui.utils'
         ]);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui', []);
 })();
 /**
  * Created by dfash on 5/3/16.
@@ -126,13 +126,13 @@
     'use strict';
 
     angular
-        .module('app.icons', []);
+        .module('app.forms', []);
 })();
 (function() {
     'use strict';
 
     angular
-        .module('app.forms', []);
+        .module('app.icons', []);
 })();
 (function() {
     'use strict';
@@ -174,14 +174,6 @@
     'use strict';
 
     angular
-        .module('app.preloader', []);
-})();
-
-
-(function() {
-    'use strict';
-
-    angular
         .module('app.routes', [
             'app.lazyload'
         ]);
@@ -190,13 +182,21 @@
     'use strict';
 
     angular
-        .module('app.sidebar', []);
+        .module('app.settings', []);
 })();
 (function() {
     'use strict';
 
     angular
-        .module('app.settings', []);
+        .module('app.preloader', []);
+})();
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sidebar', []);
 })();
 (function() {
     'use strict';
@@ -744,170 +744,6 @@
         });
 
 })();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.colors')
-        .constant('APP_COLORS', {
-          'primary':                '#5d9cec',
-          'success':                '#27c24c',
-          'info':                   '#23b7e5',
-          'warning':                '#ff902b',
-          'danger':                 '#f05050',
-          'inverse':                '#131e26',
-          'green':                  '#37bc9b',
-          'pink':                   '#f532e5',
-          'purple':                 '#7266ba',
-          'dark':                   '#3a3f51',
-          'yellow':                 '#fad732',
-          'gray-darker':            '#232735',
-          'gray-dark':              '#3a3f51',
-          'gray':                   '#dde6e9',
-          'gray-light':             '#e4eaec',
-          'gray-lighter':           '#edf1f2'
-        })
-        ;
-})();
-/**=========================================================
- * Module: colors.js
- * Services to retrieve global colors
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.colors')
-        .service('Colors', Colors);
-
-    Colors.$inject = ['APP_COLORS'];
-    function Colors(APP_COLORS) {
-        this.byName = byName;
-
-        ////////////////
-
-        function byName(name) {
-          return (APP_COLORS[name] || '#fff');
-        }
-    }
-
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.core')
-        .config(coreConfig);
-
-    coreConfig.$inject = ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$animateProvider'];
-    function coreConfig($controllerProvider, $compileProvider, $filterProvider, $provide, $animateProvider){
-
-      var core = angular.module('app.core');
-      // registering components after bootstrap
-      core.controller = $controllerProvider.register;
-      core.directive  = $compileProvider.directive;
-      core.filter     = $filterProvider.register;
-      core.factory    = $provide.factory;
-      core.service    = $provide.service;
-      core.constant   = $provide.constant;
-      core.value      = $provide.value;
-
-      // Disables animation on items with class .ng-no-animation
-      $animateProvider.classNameFilter(/^((?!(ng-no-animation)).)*$/);
-
-    }
-
-})();
-/**=========================================================
- * Module: constants.js
- * Define constants to inject across the application
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.core')
-        .constant('APP_MEDIAQUERY', {
-          'desktopLG':             1200,
-          'desktop':                992,
-          'tablet':                 768,
-          'mobile':                 480
-        })
-      ;
-
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.core')
-        .run(appRun);
-
-    appRun.$inject = ['$rootScope', '$state', '$stateParams',  '$window', '$templateCache', 'Colors'];
-    
-    function appRun($rootScope, $state, $stateParams, $window, $templateCache, Colors) {
-      
-      // Set reference to access them from any scope
-      $rootScope.$state = $state;
-      $rootScope.$stateParams = $stateParams;
-      $rootScope.$storage = $window.localStorage;
-
-      // Uncomment this to disable template cache
-      /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-          if (typeof(toState) !== 'undefined'){
-            $templateCache.remove(toState.templateUrl);
-          }
-      });*/
-
-      // Allows to use branding color with interpolation
-      // {{ colorByName('primary') }}
-      $rootScope.colorByName = Colors.byName;
-
-      // cancel click event easily
-      $rootScope.cancel = function($event) {
-        $event.stopPropagation();
-      };
-
-      // Hooks Example
-      // ----------------------------------- 
-
-      // Hook not found
-      $rootScope.$on('$stateNotFound',
-        function(event, unfoundState/*, fromState, fromParams*/) {
-            console.log(unfoundState.to); // "lazy.state"
-            console.log(unfoundState.toParams); // {a:1, b:2}
-            console.log(unfoundState.options); // {inherit:false} + default options
-        });
-      // Hook error
-      $rootScope.$on('$stateChangeError',
-        function(event, toState, toParams, fromState, fromParams, error){
-          console.log(error);
-        });
-      // Hook success
-      $rootScope.$on('$stateChangeSuccess',
-        function(/*event, toState, toParams, fromState, fromParams*/) {
-          // display new view from top
-          $window.scrollTo(0, 0);
-          // Save the route title
-          $rootScope.currTitle = $state.current.title;
-        });
-
-      // Load a title dynamically
-      $rootScope.currTitle = $state.current.title;
-      $rootScope.pageTitle = function() {
-        var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
-        document.title = title;
-        return title;
-      };      
-
-    }
-
-})();
-
-
 /**=========================================================
  * Module: demo-alerts.js
  * Provides a simple demo for pagination
@@ -1467,6 +1303,170 @@
         }
     }
 })();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors')
+        .constant('APP_COLORS', {
+          'primary':                '#5d9cec',
+          'success':                '#27c24c',
+          'info':                   '#23b7e5',
+          'warning':                '#ff902b',
+          'danger':                 '#f05050',
+          'inverse':                '#131e26',
+          'green':                  '#37bc9b',
+          'pink':                   '#f532e5',
+          'purple':                 '#7266ba',
+          'dark':                   '#3a3f51',
+          'yellow':                 '#fad732',
+          'gray-darker':            '#232735',
+          'gray-dark':              '#3a3f51',
+          'gray':                   '#dde6e9',
+          'gray-light':             '#e4eaec',
+          'gray-lighter':           '#edf1f2'
+        })
+        ;
+})();
+/**=========================================================
+ * Module: colors.js
+ * Services to retrieve global colors
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.colors')
+        .service('Colors', Colors);
+
+    Colors.$inject = ['APP_COLORS'];
+    function Colors(APP_COLORS) {
+        this.byName = byName;
+
+        ////////////////
+
+        function byName(name) {
+          return (APP_COLORS[name] || '#fff');
+        }
+    }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .config(coreConfig);
+
+    coreConfig.$inject = ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$animateProvider'];
+    function coreConfig($controllerProvider, $compileProvider, $filterProvider, $provide, $animateProvider){
+
+      var core = angular.module('app.core');
+      // registering components after bootstrap
+      core.controller = $controllerProvider.register;
+      core.directive  = $compileProvider.directive;
+      core.filter     = $filterProvider.register;
+      core.factory    = $provide.factory;
+      core.service    = $provide.service;
+      core.constant   = $provide.constant;
+      core.value      = $provide.value;
+
+      // Disables animation on items with class .ng-no-animation
+      $animateProvider.classNameFilter(/^((?!(ng-no-animation)).)*$/);
+
+    }
+
+})();
+/**=========================================================
+ * Module: constants.js
+ * Define constants to inject across the application
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .constant('APP_MEDIAQUERY', {
+          'desktopLG':             1200,
+          'desktop':                992,
+          'tablet':                 768,
+          'mobile':                 480
+        })
+      ;
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .run(appRun);
+
+    appRun.$inject = ['$rootScope', '$state', '$stateParams',  '$window', '$templateCache', 'Colors'];
+    
+    function appRun($rootScope, $state, $stateParams, $window, $templateCache, Colors) {
+      
+      // Set reference to access them from any scope
+      $rootScope.$state = $state;
+      $rootScope.$stateParams = $stateParams;
+      $rootScope.$storage = $window.localStorage;
+
+      // Uncomment this to disable template cache
+      /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+          if (typeof(toState) !== 'undefined'){
+            $templateCache.remove(toState.templateUrl);
+          }
+      });*/
+
+      // Allows to use branding color with interpolation
+      // {{ colorByName('primary') }}
+      $rootScope.colorByName = Colors.byName;
+
+      // cancel click event easily
+      $rootScope.cancel = function($event) {
+        $event.stopPropagation();
+      };
+
+      // Hooks Example
+      // ----------------------------------- 
+
+      // Hook not found
+      $rootScope.$on('$stateNotFound',
+        function(event, unfoundState/*, fromState, fromParams*/) {
+            console.log(unfoundState.to); // "lazy.state"
+            console.log(unfoundState.toParams); // {a:1, b:2}
+            console.log(unfoundState.options); // {inherit:false} + default options
+        });
+      // Hook error
+      $rootScope.$on('$stateChangeError',
+        function(event, toState, toParams, fromState, fromParams, error){
+          console.log(error);
+        });
+      // Hook success
+      $rootScope.$on('$stateChangeSuccess',
+        function(/*event, toState, toParams, fromState, fromParams*/) {
+          // display new view from top
+          $window.scrollTo(0, 0);
+          // Save the route title
+          $rootScope.currTitle = $state.current.title;
+        });
+
+      // Load a title dynamically
+      $rootScope.currTitle = $state.current.title;
+      $rootScope.pageTitle = function() {
+        var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
+        document.title = title;
+        return title;
+      };      
+
+    }
+
+})();
+
 
 (function () {
     'use strict';
@@ -4893,39 +4893,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
 })();
 
-/**=========================================================
- * Module: skycons.js
- * Include any animated weather icon from Skycons
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.icons')
-        .directive('skycon', skycon);
-
-    function skycon () {
-
-        var directive = {
-            link: link,
-            restrict: 'A'
-        };
-        return directive;
-
-        function link(scope, element, attrs) {
-          var skycons = new Skycons({'color': (attrs.color || 'white')});
-
-          element.html('<canvas width="' + attrs.width + '" height="' + attrs.height + '"></canvas>');
-
-          skycons.add(element.children()[0], attrs.skycon);
-
-          skycons.play();
-        }
-    }
-
-})();
-
 (function() {
     'use strict';
 
@@ -5913,6 +5880,39 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
           var $elem = $(element);
           if($.fn.parsley)
             $elem.parsley();
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: skycons.js
+ * Include any animated weather icon from Skycons
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.icons')
+        .directive('skycon', skycon);
+
+    function skycon () {
+
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var skycons = new Skycons({'color': (attrs.color || 'white')});
+
+          element.html('<canvas width="' + attrs.width + '" height="' + attrs.height + '"></canvas>');
+
+          skycons.add(element.children()[0], attrs.skycon);
+
+          skycons.play();
         }
     }
 
@@ -7069,99 +7069,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
 })();
  
-(function() {
-    'use strict';
-
-    angular
-        .module('app.preloader')
-        .directive('preloader', preloader);
-
-    preloader.$inject = ['$animate', '$timeout', '$q'];
-    function preloader ($animate, $timeout, $q) {
-
-        var directive = {
-            restrict: 'EAC',
-            template: 
-              '<div class="preloader-progress">' +
-                  '<div class="preloader-progress-bar" ' +
-                       'ng-style="{width: loadCounter + \'%\'}"></div>' +
-              '</div>'
-            ,
-            link: link
-        };
-        return directive;
-
-        ///////
-
-        function link(scope, el) {
-
-          scope.loadCounter = 0;
-
-          var counter  = 0,
-              timeout;
-
-          // disables scrollbar
-          angular.element('body').css('overflow', 'hidden');
-          // ensure class is present for styling
-          el.addClass('preloader');
-
-          appReady().then(endCounter);
-
-          timeout = $timeout(startCounter);
-
-          ///////
-
-          function startCounter() {
-
-            var remaining = 100 - counter;
-            counter = counter + (0.015 * Math.pow(1 - Math.sqrt(remaining), 2));
-
-            scope.loadCounter = parseInt(counter, 10);
-
-            timeout = $timeout(startCounter, 20);
-          }
-
-          function endCounter() {
-
-            $timeout.cancel(timeout);
-
-            scope.loadCounter = 100;
-
-            $timeout(function(){
-              // animate preloader hiding
-              $animate.addClass(el, 'preloader-hidden');
-              // retore scrollbar
-              angular.element('body').css('overflow', '');
-            }, 300);
-          }
-
-          function appReady() {
-            var deferred = $q.defer();
-            var viewsLoaded = 0;
-            // if this doesn't sync with the real app ready
-            // a custom event must be used instead
-            var off = scope.$on('$viewContentLoaded', function () {
-              viewsLoaded ++;
-              // we know there are at least two views to be loaded 
-              // before the app is ready (1-index.html 2-app*.html)
-              if ( viewsLoaded === 2) {
-                // with resolve this fires only once
-                $timeout(function(){
-                  deferred.resolve();
-                }, 3000);
-
-                off();
-              }
-
-            });
-
-            return deferred.promise;
-          }
-
-        } //link
-    }
-
-})();
 /**=========================================================
  * Module: helpers.js
  * Provides helper functions for routes definition
@@ -7923,6 +7830,157 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
             }])
 })();
+(function() {
+  'use strict';
+
+  angular
+      .module('app.settings')
+      .run(settingsRun);
+
+  settingsRun.$inject = ['$rootScope', '$localStorage'];
+
+  function settingsRun($rootScope, $localStorage){
+
+    // Global Settings
+    // -----------------------------------
+    $rootScope.app = {
+      name: 'Rockcity FM Radio',
+      description: 'Rockcity FM Radio Station Ogun state',
+      year: ((new Date()).getFullYear()),
+      layout: {
+        isFixed: true,
+        isCollapsed: false,
+        isBoxed: false,
+        isRTL: false,
+        horizontal: false,
+        isFloat: false,
+        asideHover: false,
+        theme: null,
+        asideScrollbar: false
+      },
+      useFullLayout: false,
+      hiddenFooter: false,
+      offsidebarOpen: false,
+      asideToggled: false,
+      viewAnimation: 'ng-fadeInUp'
+    };
+
+    // Setup the layout mode
+    $rootScope.app.layout.horizontal = ( $rootScope.$stateParams.layout === 'app-h') ;
+
+     //Restore layout settings [*** UNCOMMENT TO ENABLE ***]
+     //if( angular.isDefined($localStorage.layout) )
+     //  $rootScope.app.layout = $localStorage.layout;
+     //else
+     //  $localStorage.layout = $rootScope.app.layout;
+     //
+     //$rootScope.$watch('app.layout', function () {
+     //  $localStorage.layout = $rootScope.app.layout;
+     //}, true);
+
+    // Close submenu when sidebar change from collapsed to normal
+    $rootScope.$watch('app.layout.isCollapsed', function(newValue) {
+      if( newValue === false )
+        $rootScope.$broadcast('closeSidebarMenu');
+    });
+
+  }
+
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.preloader')
+        .directive('preloader', preloader);
+
+    preloader.$inject = ['$animate', '$timeout', '$q'];
+    function preloader ($animate, $timeout, $q) {
+
+        var directive = {
+            restrict: 'EAC',
+            template: 
+              '<div class="preloader-progress">' +
+                  '<div class="preloader-progress-bar" ' +
+                       'ng-style="{width: loadCounter + \'%\'}"></div>' +
+              '</div>'
+            ,
+            link: link
+        };
+        return directive;
+
+        ///////
+
+        function link(scope, el) {
+
+          scope.loadCounter = 0;
+
+          var counter  = 0,
+              timeout;
+
+          // disables scrollbar
+          angular.element('body').css('overflow', 'hidden');
+          // ensure class is present for styling
+          el.addClass('preloader');
+
+          appReady().then(endCounter);
+
+          timeout = $timeout(startCounter);
+
+          ///////
+
+          function startCounter() {
+
+            var remaining = 100 - counter;
+            counter = counter + (0.015 * Math.pow(1 - Math.sqrt(remaining), 2));
+
+            scope.loadCounter = parseInt(counter, 10);
+
+            timeout = $timeout(startCounter, 20);
+          }
+
+          function endCounter() {
+
+            $timeout.cancel(timeout);
+
+            scope.loadCounter = 100;
+
+            $timeout(function(){
+              // animate preloader hiding
+              $animate.addClass(el, 'preloader-hidden');
+              // retore scrollbar
+              angular.element('body').css('overflow', '');
+            }, 300);
+          }
+
+          function appReady() {
+            var deferred = $q.defer();
+            var viewsLoaded = 0;
+            // if this doesn't sync with the real app ready
+            // a custom event must be used instead
+            var off = scope.$on('$viewContentLoaded', function () {
+              viewsLoaded ++;
+              // we know there are at least two views to be loaded 
+              // before the app is ready (1-index.html 2-app*.html)
+              if ( viewsLoaded === 2) {
+                // with resolve this fires only once
+                $timeout(function(){
+                  deferred.resolve();
+                }, 3000);
+
+                off();
+              }
+
+            });
+
+            return deferred.promise;
+          }
+
+        } //link
+    }
+
+})();
 /**=========================================================
  * Module: sidebar-menu.js
  * Handle sidebar collapsible elements
@@ -8285,64 +8343,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             $scope.$on('$destroy', detach);
         }
     }
-})();
-
-(function() {
-  'use strict';
-
-  angular
-      .module('app.settings')
-      .run(settingsRun);
-
-  settingsRun.$inject = ['$rootScope', '$localStorage'];
-
-  function settingsRun($rootScope, $localStorage){
-
-    // Global Settings
-    // -----------------------------------
-    $rootScope.app = {
-      name: 'Rockcity FM Radio',
-      description: 'Rockcity FM Radio Station Ogun state',
-      year: ((new Date()).getFullYear()),
-      layout: {
-        isFixed: true,
-        isCollapsed: false,
-        isBoxed: false,
-        isRTL: false,
-        horizontal: false,
-        isFloat: false,
-        asideHover: false,
-        theme: null,
-        asideScrollbar: false
-      },
-      useFullLayout: false,
-      hiddenFooter: false,
-      offsidebarOpen: false,
-      asideToggled: false,
-      viewAnimation: 'ng-fadeInUp'
-    };
-
-    // Setup the layout mode
-    $rootScope.app.layout.horizontal = ( $rootScope.$stateParams.layout === 'app-h') ;
-
-     //Restore layout settings [*** UNCOMMENT TO ENABLE ***]
-     //if( angular.isDefined($localStorage.layout) )
-     //  $rootScope.app.layout = $localStorage.layout;
-     //else
-     //  $localStorage.layout = $rootScope.app.layout;
-     //
-     //$rootScope.$watch('app.layout', function () {
-     //  $localStorage.layout = $rootScope.app.layout;
-     //}, true);
-
-    // Close submenu when sidebar change from collapsed to normal
-    $rootScope.$watch('app.layout.isCollapsed', function(newValue) {
-      if( newValue === false )
-        $rootScope.$broadcast('closeSidebarMenu');
-    });
-
-  }
-
 })();
 
 /**=========================================================
@@ -10105,762 +10105,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }]);
 })();
 /**
- * Created by dfash on 7/8/16.
- */
-
-(function() {
-    angular
-        .module('app.order')
-        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
-
-                var vm = $scope;
-
-                vm.showRecords = false;
-                vm.assessMessage = "Loading...";
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-                $scope.datetostamp = function(date) {
-                    return new Date(date);
-                };
-                //
-                assessmentService.getAssessment().query()
-                    .$promise.then(
-                    function (response) {
-                        vm.records = response;
-                        vm.showRecords = true;
-                    }, function (response) {
-                        if(response.status == 403) {
-                            vm.assessMessage = "Error: " + response.status + " " + response.statusText;
-                        }
-                    }
-                );
-
-
-
-                activate();
-
-                ////////////////
-
-                function activate() {
-
-                    // Changing data
-                    vm.dtOptions = DTOptionsBuilder.newOptions()
-                        .withDisplayLength(100)
-                        .withPaginationType('full_numbers');
-
-                    vm.dtColumnDefs = [
-                        DTColumnDefBuilder.newColumnDef(0),
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(2).notSortable()
-                    ];
-
-                    vm.remove = remove;
-
-                    function remove($index)
-                    {
-                        //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
-                        (function() {
-                            SweetAlert.swal({
-                                title: 'Are you sure you want to delete this record?',
-                                text: 'Your will not be able to recover your selected data back!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, cancel pls!',
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm){
-                                if (isConfirm) {
-                                    assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
-                                        function () {
-
-                                            vm.records.splice($index, 1);
-                                            vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
-                                        },
-                                        function (response) {
-                                            if(response.status == 403) {
-                                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                            }
-                                        }
-                                    );
-                                } else {
-                                    SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
-                                }
-                            });
-                        })();
-
-                    }
-
-                }
-            }]);
-})();
-/**
- * Created by dfash on 6/22/16.
- */
-
-(function() {
-    angular
-        .module('app.order')
-        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
-            function($scope, toaster, assessmentService, $state, $stateParams) {
-
-                var vm = $scope;
-                vm.disableForm = false;
-                vm.showTimeFrame = false;
-                $scope.config = {};
-
-                $scope.form = {
-                    "id": null, "preview": 0,
-                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
-                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
-                    "part_two": { "review":[{}], "performance":{}},
-                    "part_three": {"competencies":{}},
-                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
-                };
-
-
-
-                assessmentService.getActiveConfig().get().$promise.then(
-                    function (response) {
-                        vm.showTimeFrame = true;
-                        $scope.config = response;
-
-                        if($state.is('app.assessment.create'))
-                            $scope.form.assessment_config_id = response.id;
-
-                        checkRouting(response);
-                    },
-                    function() {
-                        vm.disableForm = true;
-                    }
-                );
-
-
-                //routes to edit if user has a data already submitted
-                function checkRouting(response) {
-                    if($state.is('app.assessment.create')) {
-                        if (angular.isDefined(response.assessment)) {
-                            $state.go('app.assessment.edit', {"id": response.assessment.id});
-                        }
-                    }
-                }
-
-                //routing from create or from url
-                if($state.is('app.assessment.edit')) {
-                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
-                        function (response) {
-                            $scope.form = response;
-
-                            checkDataResp();
-                        },
-                        function() {
-                            $state.go('app.assessment.create', {"id":$scope.form.id});
-                        }
-                    );
-                }
-
-                vm.submitPreview = function() {
-                    $scope.form.preview = 0;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    assessmentService.assessment().save($scope.form,
-                        function (response) {
-
-                            $scope.form = response;
-                            toaster.pop('success', 'Assessment', 'Data saved.');
-
-                            checkDataResp();
-
-                            $state.go('app.assessment.edit', {"id":$scope.form.id});
-                        },
-                        function (response) {
-                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
-                        }
-                    );
-                };
-
-                //submit form
-                vm.submitAssessment = function() {
-
-                    $scope.form.preview = 1;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    assessmentService.assessment().save($scope.form,
-                        function () {
-                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
-                            $state.go('app.assessment.view');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
-                            }
-                        }
-                    );
-                };
-
-                var checkDataResp = function() {
-                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
-                        if($scope.form.part_two.review[0].length == 0)
-                            $scope.form.part_two.review = [{}];
-                    }
-
-                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
-                        $scope.form.part_two.performance = {};
-                    }
-
-                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
-                        $scope.form.part_three.competencies = {};
-                    }
-                };
-
-                //START-DATE functions
-                vm.today = function() {
-                    vm.dt = new Date();
-                };
-                vm.today();
-
-                vm.clear = function () {
-                    vm.dt = null;
-                };
-
-                // Disable weekend selection
-                vm.disabled = function(date, mode) {
-                    return false;
-                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
-                };
-
-                vm.toggleMin = function() {
-                    vm.minDate = vm.minDate ? null : new Date();
-                };
-                vm.toggleMin();
-
-                vm.open = function($event, dateObj) {
-                    $event.preventDefault();
-                    $event.stopPropagation();
-
-                    dateObj.opened = true;
-                };
-
-                vm.dateOptions = {
-                    formatYear: 'yy',
-                    startingDay: 1
-                };
-
-                vm.initDate = new Date('2019-10-20');
-                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-                vm.dateFormat = vm.dateFormats[0];
-                //END: Date functions
-            }]);
-})();
-/**
- * Created by dfash on 7/7/16.
- */
-
-(function(){
-    'use strict';
-
-    angular
-        .module('app.order')
-        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
-
-            this.assessment = function() {
-                return $resource(baseURL + 'assessment', null,
-                    {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
-                    }
-                )
-            };
-
-            this.getAssessment = function() {
-                return $resource(baseURL + 'assessment/:id', null,
-                    {
-                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                    }
-                );
-            };
-
-            this.supervisor = function() {
-                return $resource(baseURL + 'supervisor', null,
-                    {
-                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
-                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
-                    }
-                )
-            };
-
-            this.getConfig = function() {
-                return $resource(baseURL + 'assessconfig/:id', null,
-                    {
-                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                    }
-                );
-            };
-
-            this.getActiveConfig = function() {
-                return $resource(baseURL + 'activeconfig');
-            };
-
-            this.log = function() {
-                return $resource(baseURL + "assessment/records/:id");
-            };
-
-        }]);
-})();
-/**
- * Created by dfash on 7/8/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
-            function($scope, toaster, assessmentService, $state, $stateParams) {
-
-                var vm = this;
-
-                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
-
-
-                //manages for routing
-                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
-                    function (response) {
-                        if(response.supervisor != null)
-                            $scope.supervisor = response.supervisor;
-                        else {
-                            $scope.supervisor.assessment_id = response.id;
-                            checkDataResp();
-                        }
-                    },
-                    function() {
-                        $state.go('app.assessment.view');
-                    }
-                );
-
-
-                $scope.submitPreview = function() {
-                    $scope.supervisor.preview = 0;
-
-                    toaster.pop('wait', 'Assessment', 'Processing your request');
-
-                    //set the function
-                    assessmentService.supervisor().save($scope.supervisor,
-                        function (response) {
-
-                            $scope.supervisor = response;
-                            toaster.pop('success', 'Supervisor', 'Data saved.');
-
-                            checkDataResp();
-
-                        },
-                        function (response) {
-                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
-                        }
-                    );
-                };
-
-                //submit form
-                $scope.submitComment = function() {
-
-                    $scope.supervisor.preview = 1;
-
-                    toaster.pop('wait', 'Supervisor', 'Processing your request');
-
-                    assessmentService.supervisor().save($scope.supervisor,
-                        function () {
-                            toaster.pop('success', 'Supervisor', 'Data submitted.');
-                            $state.go('app.assessment.view');
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
-                            }
-                        }
-                    );
-                };
-
-                var checkDataResp = function() {
-                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
-                        $scope.supervisor.attributes = {};
-                    }
-
-                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
-                        $scope.supervisor.habbit = {};
-                    }
-
-                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
-                        $scope.supervisor.leadership = {};
-                    }
-                };
-
-            }]);
-})();
-/**
- * Created by dfash on 6/19/16.
- */
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('ClientFormController', [
-            '$scope', 'clientFactory', 'toaster', '$stateParams', '$rootScope', '$state', '$timeout',
-            function($scope, clientFactory, toaster, $stateParams, $rootScope, $state, $timeout) {
-
-                var vm = $scope;
-                vm.disableView = false;
-
-                vm.client = {name:'', address:'', title:'Mr', firstname:'', lastname:'', mobile:'', email:''};
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-                if($state.is('app.client.edit')) {
-                    vm.disableView = false;
-                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
-                        .$promise.then(
-                        function(response) {
-                            vm.client = response;
-                        },
-                        function (response) {
-                            vm.disableView = true;
-                            if(response.status == 403){
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                            }
-                            else if(response.status == 404){
-                                vm.alerts[0] = {'type':'danger', 'msg': "Client not found!."};
-                            }
-                        }
-                    );
-                }
-
-                vm.clientSubmit = function() {
-                    toaster.pop('wait', 'Client', 'Processing your request');
-                    if(vm.client.id) {
-                        clientFactory.update().save({'id':vm.client.id}, vm.client,
-                            function(response) {
-                                toaster.pop('success', 'Client', response.data);
-                                $timeout(function(){
-                                    $state.go('app.client');
-                                }, 500);
-                            },
-                            function (response) {
-                                if(response.status == 403) {
-                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                    toaster.pop('error', 'Client', response.data);
-                                }
-                            }
-                        );
-                    }
-                    else
-                    {
-                        clientFactory.clients().save(vm.client,
-                            function(response){
-                                toaster.pop('success', 'Client Registration', response.data);
-                                $timeout(function(){
-                                    $state.go('app.client');
-                                }, 1000);
-                            },
-                            function(response) {
-                                if(response.status == 403) {
-                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                    toaster.pop('error', 'Client', response.data);
-                                }
-                                else if(response.status == 422) {
-                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                    toaster.pop('error', 'Client', response.data);
-                                } else {
-                                    vm.alerts[0] = {'type':'danger', 'msg':'Server Error contact site administrator'};
-                                    toaster.pop('error', 'Client', 'Server Error contact site administrator');
-                                }
-                            }
-                        );
-                    }
-                };
-
-            }]);
-})();
-
-
-(function () {
-    angular
-        .module('app.order')
-        .service('ServerResponse', function() {
-            this.successResponse = function() {
-
-            };
-
-            this.responseError = function() {
-
-            }
-        });
-})();
-
-/**
- * Created by dfash on 4/29/16.
- */
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert', '$state',
-            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert, $state) {
-
-                var vm = $scope;
-
-                vm.showClient = false;
-                vm.clientMessage = "Loading...";
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-                if(angular.isDefined($stateParams.id)) {
-
-                    //get client by id
-                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
-                        .$promise.then(
-                        function (response) {
-                            vm.client = response;
-                            vm.showClient = true;
-                        }, function (response) {
-                            if(response.status == 403) {
-                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                            }
-                        }
-                    )
-                }
-
-
-
-                activate();
-
-                ////////////////
-
-                function activate() {
-
-                    // Changing data
-
-                    if($state.is('app.admin.clients')) {
-                        clientFactory.getAllClients().query().$promise.then(
-                            function(response){
-                                vm.clients = response;
-                                vm.showclient = true;
-                            },
-                            function(response) {
-                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                            }
-                        );
-                    }
-                    else {
-                        clientFactory.clients().query().$promise.then(
-                            function(response){
-                                vm.clients = response;
-                                vm.showclient = true;
-                            },
-                            function(response) {
-                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                            }
-                        );
-                    }
-
-
-                    vm.dtOptions = DTOptionsBuilder.newOptions()
-                        .withDisplayLength(100)
-                        .withPaginationType('full_numbers');
-
-                    vm.dtColumnDefs = [
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(2).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(3).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(4).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(5).notSortable()
-                    ];
-
-                    vm.removeClient = removeClient;
-
-                    function removeClient($index)
-                    {
-                        (function() {
-                            SweetAlert.swal({
-                                title: 'Are you sure you want to delete this client?',
-                                text: 'Your will not be able to recover your selected data back!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, cancel pls!',
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm){
-                                if (isConfirm) {
-                                    clientFactory.clients().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
-                                        function () {
-                                            vm.clients.splice($index, 1);
-                                            vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
-                                            SweetAlert.swal('Deleted!', 'Client has been deleted.', 'success');
-                                        },
-                                        function () {
-                                            vm.clientMessage = 'Server error.';
-                                            if(response.status == 403) {
-                                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                                            }
-                                            SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
-                                        }
-                                    );
-                                } else {
-                                    SweetAlert.swal('Cancelled', 'Client data is safe :)', 'error');
-                                }
-                            });
-                        })();
-
-                    }
-
-                }
-
-            }]);
-})();
-/**
- * Created by dfash on 4/29/16.
- */
-
-(function(){
-    'use strict';
-
-    angular
-        .module('app.order')
-        .service('clientFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-
-            this.getAllClients = function(){
-                return $resource(baseURL + "admin/clients");
-            };
-
-            this.update = function(){
-                return $resource(baseURL + "client/:id/edit", null, {
-                    'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                });
-            };
-
-            this.clients = function() {
-                return $resource(baseURL + 'client/:id', null, {
-                    'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                });
-            };
-
-        }]);
-})();
-/**
- * Created by dfash on 5/18/16.
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
-            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
-
-                var vm = $scope;
-                
-                vm.alerts = [];
-                vm.passwordAlerts = [];
-
-                vm.profile = {_token: _token};
-
-                vm.reset = {_token: _token};
-
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-
-                $resource(baseURL + 'contacts').query().$promise.then(
-                    function (response) {
-                        vm.contacts = response;
-                    }
-                );
-
-                //profile
-                vm.profile = loginFactory.userData();
-
-                //uploader object
-                vm.uploader = new FileUploader({
-                    url: baseURL +'user/'+vm.profile.id+'/upload'
-                });
-
-                //upload
-                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
-                    console.info('onErrorItem', fileItem, response, status, headers);
-                };
-
-                //upload
-                vm.uploader.onCompleteAll = function() {
-                    vm.uploader.clearQueue();
-                };
-
-
-                //submit profile form
-                vm.updateProfile = function() {
-                    $resource(baseURL + 'user/:id/edit', null, {'update':{method:'PUT'}})
-                        .update({'id':vm.profile.id}, vm.profile,
-                        function (response) {
-                            vm.alerts[0] = {'type':'success', 'msg':response.data};
-                            toaster.pop('success', 'Sent', response.data);
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Error', response.data);
-                            }
-                        }
-                    );
-
-                    //console.log(vm.profile);
-                    //vm.uploader.uploadAll();
-                };
-
-                vm.updatePassword = function() {
-                    $resource(baseURL + 'user/:id/edit?action=password', null, {'update':{method:'PUT'}})
-                        .update({'id':vm.profile.id}, vm.reset,
-                        function (response) {
-                            vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
-                            toaster.pop('success', 'Sent', response.data);
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.passwordAlerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Error', response.data);
-                            }
-                            else{
-                                vm.passwordAlerts[0] = {'type':'danger', 'msg':'Failed: contact administrator'};
-                                toaster.pop('error', 'Error', 'Failed: contact administrator');
-                            }
-                        }
-                    );
-                }
-            }]);
-})();
-/**
  * Created by dfash on 5/25/16.
  */
 
@@ -11270,7 +10514,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 vm.dsctAmnt = ((vm.form.discount)/100)*vm.cartTotals; //amount discounted
                 var cartDiscounted = vm.cartTotals - vm.dsctAmnt;
                 vm.commAmnt = ((vm.form.commission)/100)*cartDiscounted; //%comm based on discounted price
-                vm.totalWOComm = vm.cartTotals - (vm.dsctAmnt+vm.commAmnt);
+                vm.totalWOComm = (vm.cartTotals - (vm.dsctAmnt+vm.commAmnt)) + vm.vat;
                 vm.totalWComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt;
             };
 
@@ -12125,7 +11369,8 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 function airtime() {
                     vm.schedule = airtimeFactory.getAirtime().get({'id': parseInt($stateParams.id)}).$promise.then(
                         function (response) {
-                            vm.schedule = response;
+                            vm.schedule = response.schedule;
+                            vm.prog_time = response.prog_time;
                             vm.manage.validate = vm.schedule.schedule_alert.validate;
                             vm.manage.recommend = vm.schedule.schedule_alert.recommend;
                             vm.manage.approved = vm.schedule.schedule_alert.approved;
@@ -12138,7 +11383,13 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 }
 
 
-
+                vm.prog_time = "";
+                vm.progStartTime = function ($period) {
+                    return new Date(vm.prog_time[$period + '_start']);
+                };
+                vm.progEndTime = function ($period) {
+                    return new Date(vm.prog_time[$period + '_end']);
+                };
 
                 function activate() {
 
@@ -12149,7 +11400,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                         }
                         return false;
                     };
-
 
                     vm.airtimeApproved = function() {
                         if(!(vm.manage.validate && vm.manage.recommend)) {
@@ -12339,6 +11589,762 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             };
 
         }]);
+})();
+/**
+ * Created by dfash on 7/8/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentRecordController', ['$scope', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.showRecords = false;
+                vm.assessMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+                //
+                assessmentService.getAssessment().query()
+                    .$promise.then(
+                    function (response) {
+                        vm.records = response;
+                        vm.showRecords = true;
+                    }, function (response) {
+                        if(response.status == 403) {
+                            vm.assessMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    }
+                );
+
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable()
+                    ];
+
+                    vm.remove = remove;
+
+                    function remove($index)
+                    {
+                        //Todo: there is a bug here .... on delete record, the dialog boxes doesn't close
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this record?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    assessmentService.getAssessment().delete({'id':parseInt(vm.records[$index].id)}).$promise.then(
+                                        function () {
+
+                                            vm.records.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Assessment data removed successfully'};
+                                        },
+                                        function (response) {
+                                            if(response.status == 403) {
+                                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                            }
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Assessment data is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/22/16.
+ */
+
+(function() {
+    angular
+        .module('app.order')
+        .controller('AssessmentController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = $scope;
+                vm.disableForm = false;
+                vm.showTimeFrame = false;
+                $scope.config = {};
+
+                $scope.form = {
+                    "id": null, "preview": 0,
+                    "part_one": { "personal":{ "date_confirm": {"date":'', "opened":false}, "appraisal_date": {"date":'', "opened":false} },
+                        "qualifications":[{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false},{"date":'', "opened":false}]},
+                    "part_two": { "review":[{}], "performance":{}},
+                    "part_three": {"competencies":{}},
+                    "supervisor": {"preview":0,"attributes":{}, "habit":{}, "leadership":{}}
+                };
+
+
+
+                assessmentService.getActiveConfig().get().$promise.then(
+                    function (response) {
+                        vm.showTimeFrame = true;
+                        $scope.config = response;
+
+                        if($state.is('app.assessment.create'))
+                            $scope.form.assessment_config_id = response.id;
+
+                        checkRouting(response);
+                    },
+                    function() {
+                        vm.disableForm = true;
+                    }
+                );
+
+
+                //routes to edit if user has a data already submitted
+                function checkRouting(response) {
+                    if($state.is('app.assessment.create')) {
+                        if (angular.isDefined(response.assessment)) {
+                            $state.go('app.assessment.edit', {"id": response.assessment.id});
+                        }
+                    }
+                }
+
+                //routing from create or from url
+                if($state.is('app.assessment.edit')) {
+                    assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                        function (response) {
+                            $scope.form = response;
+
+                            checkDataResp();
+                        },
+                        function() {
+                            $state.go('app.assessment.create', {"id":$scope.form.id});
+                        }
+                    );
+                }
+
+                vm.submitPreview = function() {
+                    $scope.form.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function (response) {
+
+                            $scope.form = response;
+                            toaster.pop('success', 'Assessment', 'Data saved.');
+
+                            checkDataResp();
+
+                            $state.go('app.assessment.edit', {"id":$scope.form.id});
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                vm.submitAssessment = function() {
+
+                    $scope.form.preview = 1;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    assessmentService.assessment().save($scope.form,
+                        function () {
+                            toaster.pop('success', 'Assessment', 'Data submitted for review.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Assessment', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if(angular.isDefined($scope.form.part_two.review) && $scope.form.part_two.review.length == 0) {
+                        if($scope.form.part_two.review[0].length == 0)
+                            $scope.form.part_two.review = [{}];
+                    }
+
+                    if(angular.isDefined($scope.form.part_two.performance) && $scope.form.part_two.performance.length == 0) {
+                        $scope.form.part_two.performance = {};
+                    }
+
+                    if(angular.isDefined($scope.form.part_three.competencies) && $scope.form.part_three.competencies.length == 0) {
+                        $scope.form.part_three.competencies = {};
+                    }
+                };
+
+                //START-DATE functions
+                vm.today = function() {
+                    vm.dt = new Date();
+                };
+                vm.today();
+
+                vm.clear = function () {
+                    vm.dt = null;
+                };
+
+                // Disable weekend selection
+                vm.disabled = function(date, mode) {
+                    return false;
+                    //return ( mode === 'day' && ( date.getDay() === 0 /*|| date.getDay() === 6*/ ) );
+                };
+
+                vm.toggleMin = function() {
+                    vm.minDate = vm.minDate ? null : new Date();
+                };
+                vm.toggleMin();
+
+                vm.open = function($event, dateObj) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+
+                    dateObj.opened = true;
+                };
+
+                vm.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                vm.initDate = new Date('2019-10-20');
+                vm.dateFormats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                vm.dateFormat = vm.dateFormats[0];
+                //END: Date functions
+            }]);
+})();
+/**
+ * Created by dfash on 7/7/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('assessmentService', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.assessment = function() {
+                return $resource(baseURL + 'assessment', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getAssessment = function() {
+                return $resource(baseURL + 'assessment/:id', null,
+                    {
+                        'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.supervisor = function() {
+                return $resource(baseURL + 'supervisor', null,
+                    {
+                        "save": {method: 'POST',  headers: { 'X-Requested-With' :'XMLHttpRequest'}},
+                        "update": {method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest'}}
+                    }
+                )
+            };
+
+            this.getConfig = function() {
+                return $resource(baseURL + 'assessconfig/:id', null,
+                    {
+                        'save': {method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        'update': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                        "delete": {method:"DELETE", headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                    }
+                );
+            };
+
+            this.getActiveConfig = function() {
+                return $resource(baseURL + 'activeconfig');
+            };
+
+            this.log = function() {
+                return $resource(baseURL + "assessment/records/:id");
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 7/8/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('SupervisorController', ['$scope', 'toaster', 'assessmentService', '$state', '$stateParams',
+            function($scope, toaster, assessmentService, $state, $stateParams) {
+
+                var vm = this;
+
+                $scope.supervisor = {"preview":0,"attributes":{}, "habit":{}, "leadership":{}};
+
+
+                //manages for routing
+                assessmentService.getAssessment().get({"id":$stateParams.id}).$promise.then(
+                    function (response) {
+                        if(response.supervisor != null)
+                            $scope.supervisor = response.supervisor;
+                        else {
+                            $scope.supervisor.assessment_id = response.id;
+                            checkDataResp();
+                        }
+                    },
+                    function() {
+                        $state.go('app.assessment.view');
+                    }
+                );
+
+
+                $scope.submitPreview = function() {
+                    $scope.supervisor.preview = 0;
+
+                    toaster.pop('wait', 'Assessment', 'Processing your request');
+
+                    //set the function
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function (response) {
+
+                            $scope.supervisor = response;
+                            toaster.pop('success', 'Supervisor', 'Data saved.');
+
+                            checkDataResp();
+
+                        },
+                        function (response) {
+                            toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                        }
+                    );
+                };
+
+                //submit form
+                $scope.submitComment = function() {
+
+                    $scope.supervisor.preview = 1;
+
+                    toaster.pop('wait', 'Supervisor', 'Processing your request');
+
+                    assessmentService.supervisor().save($scope.supervisor,
+                        function () {
+                            toaster.pop('success', 'Supervisor', 'Data submitted.');
+                            $state.go('app.assessment.view');
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Supervisor', 'Data submission Failed.');
+                            }
+                        }
+                    );
+                };
+
+                var checkDataResp = function() {
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.attributes.length == 0) {
+                        $scope.supervisor.attributes = {};
+                    }
+
+                    if($scope.supervisor.habit != "undefined" && $scope.supervisor.habit.length == 0) {
+                        $scope.supervisor.habbit = {};
+                    }
+
+                    if($scope.supervisor.leadership != "undefined" && $scope.supervisor.leadership.length == 0) {
+                        $scope.supervisor.leadership = {};
+                    }
+                };
+
+            }]);
+})();
+/**
+ * Created by dfash on 6/19/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ClientFormController', [
+            '$scope', 'clientFactory', 'toaster', '$stateParams', '$rootScope', '$state', '$timeout',
+            function($scope, clientFactory, toaster, $stateParams, $rootScope, $state, $timeout) {
+
+                var vm = $scope;
+                vm.disableView = false;
+
+                vm.client = {name:'', address:'', title:'Mr', firstname:'', lastname:'', mobile:'', email:''};
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                if($state.is('app.client.edit')) {
+                    vm.disableView = false;
+                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
+                        .$promise.then(
+                        function(response) {
+                            vm.client = response;
+                        },
+                        function (response) {
+                            vm.disableView = true;
+                            if(response.status == 403){
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                            else if(response.status == 404){
+                                vm.alerts[0] = {'type':'danger', 'msg': "Client not found!."};
+                            }
+                        }
+                    );
+                }
+
+                vm.clientSubmit = function() {
+                    toaster.pop('wait', 'Client', 'Processing your request');
+                    if(vm.client.id) {
+                        clientFactory.update().save({'id':vm.client.id}, vm.client,
+                            function(response) {
+                                toaster.pop('success', 'Client', response.data);
+                                $timeout(function(){
+                                    $state.go('app.client');
+                                }, 500);
+                            },
+                            function (response) {
+                                if(response.status == 403) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', response.data);
+                                }
+                            }
+                        );
+                    }
+                    else
+                    {
+                        clientFactory.clients().save(vm.client,
+                            function(response){
+                                toaster.pop('success', 'Client Registration', response.data);
+                                $timeout(function(){
+                                    $state.go('app.client');
+                                }, 1000);
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', response.data);
+                                }
+                                else if(response.status == 422) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', response.data);
+                                } else {
+                                    vm.alerts[0] = {'type':'danger', 'msg':'Server Error contact site administrator'};
+                                    toaster.pop('error', 'Client', 'Server Error contact site administrator');
+                                }
+                            }
+                        );
+                    }
+                };
+
+            }]);
+})();
+
+
+(function () {
+    angular
+        .module('app.order')
+        .service('ServerResponse', function() {
+            this.successResponse = function() {
+
+            };
+
+            this.responseError = function() {
+
+            }
+        });
+})();
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert', '$state',
+            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert, $state) {
+
+                var vm = $scope;
+
+                vm.showClient = false;
+                vm.clientMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                if(angular.isDefined($stateParams.id)) {
+
+                    //get client by id
+                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
+                        .$promise.then(
+                        function (response) {
+                            vm.client = response;
+                            vm.showClient = true;
+                        }, function (response) {
+                            if(response.status == 403) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        }
+                    )
+                }
+
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    if($state.is('app.admin.clients')) {
+                        clientFactory.getAllClients().query().$promise.then(
+                            function(response){
+                                vm.clients = response;
+                                vm.showclient = true;
+                            },
+                            function(response) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+                    else {
+                        clientFactory.clients().query().$promise.then(
+                            function(response){
+                                vm.clients = response;
+                                vm.showclient = true;
+                            },
+                            function(response) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(3).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(4).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(5).notSortable()
+                    ];
+
+                    vm.removeClient = removeClient;
+
+                    function removeClient($index)
+                    {
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this client?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    clientFactory.clients().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.clients.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Client has been deleted.', 'success');
+                                        },
+                                        function () {
+                                            vm.clientMessage = 'Server error.';
+                                            if(response.status == 403) {
+                                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                                            }
+                                            SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Client data is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('clientFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.getAllClients = function(){
+                return $resource(baseURL + "admin/clients");
+            };
+
+            this.update = function(){
+                return $resource(baseURL + "client/:id/edit", null, {
+                    'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                });
+            };
+
+            this.clients = function() {
+                return $resource(baseURL + 'client/:id', null, {
+                    'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                });
+            };
+
+        }]);
+})();
+/**
+ * Created by dfash on 5/18/16.
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
+            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
+
+                var vm = $scope;
+                
+                vm.alerts = [];
+                vm.passwordAlerts = [];
+
+                vm.profile = {_token: _token};
+
+                vm.reset = {_token: _token};
+
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+
+                $resource(baseURL + 'contacts').query().$promise.then(
+                    function (response) {
+                        vm.contacts = response;
+                    }
+                );
+
+                //profile
+                vm.profile = loginFactory.userData();
+
+                //uploader object
+                vm.uploader = new FileUploader({
+                    url: baseURL +'user/'+vm.profile.id+'/upload'
+                });
+
+                //upload
+                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
+
+                //upload
+                vm.uploader.onCompleteAll = function() {
+                    vm.uploader.clearQueue();
+                };
+
+
+                //submit profile form
+                vm.updateProfile = function() {
+                    $resource(baseURL + 'user/:id/edit', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.profile,
+                        function (response) {
+                            vm.alerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
+                            }
+                        }
+                    );
+
+                    //console.log(vm.profile);
+                    //vm.uploader.uploadAll();
+                };
+
+                vm.updatePassword = function() {
+                    $resource(baseURL + 'user/:id/edit?action=password', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.reset,
+                        function (response) {
+                            vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
+                            }
+                            else{
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':'Failed: contact administrator'};
+                                toaster.pop('error', 'Error', 'Failed: contact administrator');
+                            }
+                        }
+                    );
+                }
+            }]);
 })();
 /**
  * Created by dfash on 5/23/16.
@@ -13069,6 +13075,225 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }]);
 })();
 /**
+ * Created by dfash on 7/10/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AssessmentConfigController', ['$scope', '$state', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function ($scope, $state, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.config = {"enable":false, "starts": "", "ends": ""};
+                vm.configs = {};
+
+                activate();
+
+                ////////////////
+
+                vm.submitSettings = function () {
+                    if(angular.isDefined(vm.config.id)) {
+                        assessmentService.getConfig().update({'id':parseInt(vm.config.id)}, vm.config,
+                            function(response){
+                                $state.reload();
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                                }
+                            }
+                        );
+                    }
+                    else {
+                        assessmentService.getConfig().save(vm.config,
+                            function(response){
+                                $state.reload();
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                                }
+                            }
+                        );
+                    }
+                };
+
+                vm.editConfig = function($index) {
+                    vm.config.id = vm.configs[$index].id;
+                    vm.config.enable = vm.configs[$index].enable == 1 ? true : false;
+                    vm.config.starts = new Date(vm.configs[$index].starts);
+                    vm.config.ends = new Date(vm.configs[$index].ends);
+                };
+
+                vm.isUpdate = function($index) {
+                    return vm.config.id == vm.configs[$index].id;
+                };
+
+
+                /////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    assessmentService.getConfig().query().$promise.then(
+                        function(response){
+                            vm.configs = response;
+                        },
+                        function(response) {
+                            vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    );
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2),
+                        DTColumnDefBuilder.newColumnDef(3).notSortable()
+                    ];
+
+                    vm.remove = remove;
+
+                    //TODO: add notification message
+                    function remove($index)
+                    {
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this Schedule?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    assessmentService.getConfig().delete({'id':parseInt(vm.configs[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.configs.splice($index, 1);
+                                            //vm.alerts[0] = {'type':'success', 'msg':'Schedule removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Schedule removed successfully', 'success');
+                                        },
+                                        function () {
+                                            vm.configMessage = 'Server error.';
+                                            if(response.status == 403) {
+                                                vm.configMessage = "Error: " + response.status + " " + response.statusText;
+                                            }
+                                            SweetAlert.swal('Cancelled', vm.configMessage, 'error');
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Schedule is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+
+            }]);
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('AssessConfigDatePickerCtrl', AssessConfigDatePickerCtrl);
+
+    function AssessConfigDatePickerCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            vm.today = function() {
+                vm.dt = new Date();
+            };
+            vm.today();
+
+            vm.clear = function () {
+                vm.dt = null;
+            };
+
+            // Disable weekend selection
+            vm.disabled = function(date, mode) {
+                return false;
+                //return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+            };
+
+            vm.toggleMin = function() {
+                vm.minDate = vm.minDate ? null : new Date();
+            };
+            vm.toggleMin();
+
+            vm.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                vm.opened = true;
+            };
+
+            vm.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+
+            vm.initDate = new Date('2019-10-20');
+            vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+            vm.format = vm.formats[0];
+        }
+    }
+})();
+
+
+/**
+ * Created by dfash on 7/10/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AssessmentLogController', ['$scope', 'assessmentService', '$state', '$stateParams',
+            function ($scope, assessmentService, $state, $stateParams) {
+
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+
+                assessmentService.getConfig().get({id: parseInt($stateParams.id)}).$promise.then(
+                    function(response){
+                        $scope.configs = response;
+                    },
+                    function(response) {
+                        $state.go('app.assessment.config');
+                    }
+                );
+
+                assessmentService.log().query({"id":parseInt($stateParams.id)}).$promise.then(
+                    function(response) {
+                        $scope.records = response;
+                    },
+                    function () {
+                        $state.go('app.assessment.config');
+                    }
+                );
+            }
+        ]);
+})();
+/**
  * Created by dfash on 7/27/16.
  */
 (function() {
@@ -13370,469 +13595,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 }
 
             }]);
-})();
-/**
- * Created by dfash on 7/10/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('AssessmentConfigController', ['$scope', '$state', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-            function ($scope, $state, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
-
-                var vm = $scope;
-
-                vm.config = {"enable":false, "starts": "", "ends": ""};
-                vm.configs = {};
-
-                activate();
-
-                ////////////////
-
-                vm.submitSettings = function () {
-                    if(angular.isDefined(vm.config.id)) {
-                        assessmentService.getConfig().update({'id':parseInt(vm.config.id)}, vm.config,
-                            function(response){
-                                $state.reload();
-                            },
-                            function(response) {
-                                if(response.status == 403) {
-                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
-                                }
-                            }
-                        );
-                    }
-                    else {
-                        assessmentService.getConfig().save(vm.config,
-                            function(response){
-                                $state.reload();
-                            },
-                            function(response) {
-                                if(response.status == 403) {
-                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
-                                }
-                            }
-                        );
-                    }
-                };
-
-                vm.editConfig = function($index) {
-                    vm.config.id = vm.configs[$index].id;
-                    vm.config.enable = vm.configs[$index].enable == 1 ? true : false;
-                    vm.config.starts = new Date(vm.configs[$index].starts);
-                    vm.config.ends = new Date(vm.configs[$index].ends);
-                };
-
-                vm.isUpdate = function($index) {
-                    return vm.config.id == vm.configs[$index].id;
-                };
-
-
-                /////////////
-
-                function activate() {
-
-                    // Changing data
-
-                    assessmentService.getConfig().query().$promise.then(
-                        function(response){
-                            vm.configs = response;
-                        },
-                        function(response) {
-                            vm.configsMessage = "Error: " + response.status + " " + response.statusText;
-                        }
-                    );
-
-
-                    vm.dtOptions = DTOptionsBuilder.newOptions()
-                        .withDisplayLength(100)
-                        .withPaginationType('full_numbers');
-
-                    vm.dtColumnDefs = [
-                        DTColumnDefBuilder.newColumnDef(0).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(2),
-                        DTColumnDefBuilder.newColumnDef(3).notSortable()
-                    ];
-
-                    vm.remove = remove;
-
-                    //TODO: add notification message
-                    function remove($index)
-                    {
-                        (function() {
-                            SweetAlert.swal({
-                                title: 'Are you sure you want to delete this Schedule?',
-                                text: 'Your will not be able to recover your selected data back!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, cancel pls!',
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm){
-                                if (isConfirm) {
-                                    assessmentService.getConfig().delete({'id':parseInt(vm.configs[$index].id)}).$promise.then(
-                                        function () {
-                                            vm.configs.splice($index, 1);
-                                            //vm.alerts[0] = {'type':'success', 'msg':'Schedule removed successfully'};
-                                            SweetAlert.swal('Deleted!', 'Schedule removed successfully', 'success');
-                                        },
-                                        function () {
-                                            vm.configMessage = 'Server error.';
-                                            if(response.status == 403) {
-                                                vm.configMessage = "Error: " + response.status + " " + response.statusText;
-                                            }
-                                            SweetAlert.swal('Cancelled', vm.configMessage, 'error');
-                                        }
-                                    );
-                                } else {
-                                    SweetAlert.swal('Cancelled', 'Schedule is safe :)', 'error');
-                                }
-                            });
-                        })();
-
-                    }
-
-                }
-
-            }]);
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('AssessConfigDatePickerCtrl', AssessConfigDatePickerCtrl);
-
-    function AssessConfigDatePickerCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-            vm.today = function() {
-                vm.dt = new Date();
-            };
-            vm.today();
-
-            vm.clear = function () {
-                vm.dt = null;
-            };
-
-            // Disable weekend selection
-            vm.disabled = function(date, mode) {
-                return false;
-                //return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-            };
-
-            vm.toggleMin = function() {
-                vm.minDate = vm.minDate ? null : new Date();
-            };
-            vm.toggleMin();
-
-            vm.open = function($event) {
-                $event.preventDefault();
-                $event.stopPropagation();
-
-                vm.opened = true;
-            };
-
-            vm.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-            };
-
-            vm.initDate = new Date('2019-10-20');
-            vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            vm.format = vm.formats[0];
-        }
-    }
-})();
-
-
-/**
- * Created by dfash on 7/10/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('AssessmentLogController', ['$scope', 'assessmentService', '$state', '$stateParams',
-            function ($scope, assessmentService, $state, $stateParams) {
-
-                $scope.datetostamp = function(date) {
-                    return new Date(date);
-                };
-
-                assessmentService.getConfig().get({id: parseInt($stateParams.id)}).$promise.then(
-                    function(response){
-                        $scope.configs = response;
-                    },
-                    function(response) {
-                        $state.go('app.assessment.config');
-                    }
-                );
-
-                assessmentService.log().query({"id":parseInt($stateParams.id)}).$promise.then(
-                    function(response) {
-                        $scope.records = response;
-                    },
-                    function () {
-                        $state.go('app.assessment.config');
-                    }
-                );
-            }
-        ]);
-})();
-///**
-// * Created by dfash on 6/1/16.
-// */
-//
-//(function () {
-//    angular
-//        .module('app.order')
-//        .controller('TargetCreateController', ['$scope', 'userFactory', function($scope, userFactory) {
-
-//            $scope.marketers = userFactory.marketers().query().$promise.then(
-//                function(response) {
-//                    $scope.marketers = response;
-//                }
-//            );
-//
-//
-//        }]);
-//})();
-
-/**
- * Created by dfash on 6/5/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('TargetManageController', ['$scope', 'targetFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-            function($scope, targetFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
-
-                var vm = $scope;
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-                activate();
-
-                ////////////////
-
-                vm.startDate = function(date) {
-                    return new Date(date);
-                };
-
-                function activate() {
-
-                    // Changing data
-
-                    targetFactory.target().query().$promise.then(function(response) {
-                        vm.targets = response;
-                    });
-
-                    vm.dtOptions = DTOptionsBuilder.newOptions()
-                        .withDisplayLength(100)
-                        .withPaginationType('full_numbers');
-
-                    vm.dtColumnDefs = [
-                        //DTColumnDefBuilder.newColumnDef(0).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(4),
-                        DTColumnDefBuilder.newColumnDef(5).notSortable()
-                    ];
-
-                    vm.modifyTarget = modifyTarget;
-                    vm.removeTarget = removeTarget;
-
-                    function modifyTarget($index)
-                    {
-                        vm.target.id = vm.targets[$index].id;
-                        vm.target.name = vm.targets[$index].name;
-                        vm.target.startDate = new Date(vm.targets[$index].startDate.toString());
-                        vm.target.duration = vm.targets[$index].duration;
-                        vm.target.user_id = vm.targets[$index].user_id.toString();
-                        vm.target.amount = vm.targets[$index].amount;
-
-                        vm.select(1);
-                    }
-
-                    function removeTarget($index)
-                    {
-                        //alert box for clearing cart
-                        (function() {
-                            SweetAlert.swal({
-                                title: 'Are you sure you want to delete this target?',
-                                text: 'Your will not be able to recover your selected data back!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, cancel pls!',
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm){
-                                if (isConfirm) {
-                                    targetFactory.getTargets().delete({'id':parseInt(vm.targets[$index].id)}).$promise.then(
-                                        function () {
-                                            vm.targets.splice($index, 1);
-                                            $scope.alerts[0] = {'type':'success', 'msg':'Target deleted successfully'};
-                                        }, function(){
-                                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
-                                        }
-                                    );
-                                    SweetAlert.swal('Deleted!', 'Selected target has been deleted.', 'success');
-                                } else {
-                                    SweetAlert.swal('Cancelled', 'Your data is safe :)', 'error');
-                                }
-                            });
-                        })();
-                    }
-
-                }
-            }
-        ]);
-})();
-/**
- * Created by dfash on 5/27/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('TargetController', ['$scope', 'userFactory', 'targetFactory', '_token',
-            function($scope, userFactory, targetFactory, _token) {
-
-                $scope.tab = 1;
-
-                $scope.target = { '_token': _token.data};
-                //
-                $scope.isSelected = function (checkTab) {
-                    return ($scope.tab === checkTab);
-                };
-
-                $scope.select = function(setTab) {
-                    $scope.tab = setTab;
-
-                };
-
-                $scope.marketers = userFactory.marketers()
-                    .query().$promise.then(
-                    function (response) {
-                        $scope.marketers = response;
-                    }, function (response) {
-                    }
-                );
-
-                $scope.alerts = [];
-                $scope.closeAlert = function(index) {
-                    $scope.alerts.splice(index, 1);
-                };
-
-                $scope.submitTarget = function(form) {
-                    if(angular.isDefined($scope.target.id))
-                    {
-                        targetFactory.getTargets().update({'id':parseInt($scope.target.id)}, $scope.target).$promise.then(
-                            function () {
-                                $scope.alerts[0] = {'type':'success', 'msg':'Target saved successfully'};
-                                $scope.target = { '_token': _token.data};
-                                form.$setPristine();
-                            }, function(){
-                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
-                            }
-                        );
-                    }
-                    else {
-                        targetFactory.target().save($scope.target,
-                            function () {
-                                $scope.alerts[0] = {'type':'success', 'msg':'Target saved successfully'};
-                                $scope.target = { '_token': _token.data};
-                                form.$setPristine();
-                            }, function(){
-                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
-                            }
-                        );
-                    }
-                };
-
-                activateDate();
-                //date module
-                function activateDate() {
-                    $scope.today = function () {
-                        $scope.dt = new Date();
-                    };
-
-                    $scope.today();
-
-                    $scope.clear = function () {
-                        $scope.dt = null;
-                    };
-
-                    // Disable weekend selection
-                    $scope.disabled = function (date, mode) {
-                        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-                    };
-
-                    $scope.toggleMin = function () {
-                        $scope.minDate = $scope.minDate ? null : new Date();
-                    };
-                    $scope.toggleMin();
-
-                    $scope.open = function ($event) {
-                        $event.preventDefault();
-                        $event.stopPropagation();
-
-                        $scope.opened = true;
-                    };
-
-                    $scope.dateOptions = {
-                        formatYear: 'yy',
-                        startingDay: 1
-                    };
-
-                    $scope.initDate = new Date('2019-10-20');
-                    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-                    $scope.format = $scope.formats[0];
-                }
-
-            }]);
-})();
-/**
- * Created by dfash on 6/1/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .service('targetFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-            this.target = function() {
-                return $resource(baseURL + "target", null, {'save':{method:"POST", headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
-            };
-
-            this.getTargets = function() {
-                return $resource(baseURL + "target/:id", null, {
-                    'update':{method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                    'save':{method:"POST", headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                    'delete':{method:"DELETE"}
-                });
-            };
-
-            this.getMyTargets = function() {
-                return $resource(baseURL + "target/:id/user");
-            };
-
-        }]);
 })();
 /**
  * Created by dfash on 7/27/16.
@@ -14254,6 +14016,250 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             this.getReports = function() {
                 return $resource(baseURL + 'admin/staff-reps');
             }
+
+        }]);
+})();
+///**
+// * Created by dfash on 6/1/16.
+// */
+//
+//(function () {
+//    angular
+//        .module('app.order')
+//        .controller('TargetCreateController', ['$scope', 'userFactory', function($scope, userFactory) {
+
+//            $scope.marketers = userFactory.marketers().query().$promise.then(
+//                function(response) {
+//                    $scope.marketers = response;
+//                }
+//            );
+//
+//
+//        }]);
+//})();
+
+/**
+ * Created by dfash on 6/5/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('TargetManageController', ['$scope', 'targetFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function($scope, targetFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                activate();
+
+                ////////////////
+
+                vm.startDate = function(date) {
+                    return new Date(date);
+                };
+
+                function activate() {
+
+                    // Changing data
+
+                    targetFactory.target().query().$promise.then(function(response) {
+                        vm.targets = response;
+                    });
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        //DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(4),
+                        DTColumnDefBuilder.newColumnDef(5).notSortable()
+                    ];
+
+                    vm.modifyTarget = modifyTarget;
+                    vm.removeTarget = removeTarget;
+
+                    function modifyTarget($index)
+                    {
+                        vm.target.id = vm.targets[$index].id;
+                        vm.target.name = vm.targets[$index].name;
+                        vm.target.startDate = new Date(vm.targets[$index].startDate.toString());
+                        vm.target.duration = vm.targets[$index].duration;
+                        vm.target.user_id = vm.targets[$index].user_id.toString();
+                        vm.target.amount = vm.targets[$index].amount;
+
+                        vm.select(1);
+                    }
+
+                    function removeTarget($index)
+                    {
+                        //alert box for clearing cart
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this target?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    targetFactory.getTargets().delete({'id':parseInt(vm.targets[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.targets.splice($index, 1);
+                                            $scope.alerts[0] = {'type':'success', 'msg':'Target deleted successfully'};
+                                        }, function(){
+                                            $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                                        }
+                                    );
+                                    SweetAlert.swal('Deleted!', 'Selected target has been deleted.', 'success');
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Your data is safe :)', 'error');
+                                }
+                            });
+                        })();
+                    }
+
+                }
+            }
+        ]);
+})();
+/**
+ * Created by dfash on 5/27/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('TargetController', ['$scope', 'userFactory', 'targetFactory', '_token',
+            function($scope, userFactory, targetFactory, _token) {
+
+                $scope.tab = 1;
+
+                $scope.target = { '_token': _token.data};
+                //
+                $scope.isSelected = function (checkTab) {
+                    return ($scope.tab === checkTab);
+                };
+
+                $scope.select = function(setTab) {
+                    $scope.tab = setTab;
+
+                };
+
+                $scope.marketers = userFactory.marketers()
+                    .query().$promise.then(
+                    function (response) {
+                        $scope.marketers = response;
+                    }, function (response) {
+                    }
+                );
+
+                $scope.alerts = [];
+                $scope.closeAlert = function(index) {
+                    $scope.alerts.splice(index, 1);
+                };
+
+                $scope.submitTarget = function(form) {
+                    if(angular.isDefined($scope.target.id))
+                    {
+                        targetFactory.getTargets().update({'id':parseInt($scope.target.id)}, $scope.target).$promise.then(
+                            function () {
+                                $scope.alerts[0] = {'type':'success', 'msg':'Target saved successfully'};
+                                $scope.target = { '_token': _token.data};
+                                form.$setPristine();
+                            }, function(){
+                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                        );
+                    }
+                    else {
+                        targetFactory.target().save($scope.target,
+                            function () {
+                                $scope.alerts[0] = {'type':'success', 'msg':'Target saved successfully'};
+                                $scope.target = { '_token': _token.data};
+                                form.$setPristine();
+                            }, function(){
+                                $scope.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                        );
+                    }
+                };
+
+                activateDate();
+                //date module
+                function activateDate() {
+                    $scope.today = function () {
+                        $scope.dt = new Date();
+                    };
+
+                    $scope.today();
+
+                    $scope.clear = function () {
+                        $scope.dt = null;
+                    };
+
+                    // Disable weekend selection
+                    $scope.disabled = function (date, mode) {
+                        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+                    };
+
+                    $scope.toggleMin = function () {
+                        $scope.minDate = $scope.minDate ? null : new Date();
+                    };
+                    $scope.toggleMin();
+
+                    $scope.open = function ($event) {
+                        $event.preventDefault();
+                        $event.stopPropagation();
+
+                        $scope.opened = true;
+                    };
+
+                    $scope.dateOptions = {
+                        formatYear: 'yy',
+                        startingDay: 1
+                    };
+
+                    $scope.initDate = new Date('2019-10-20');
+                    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                    $scope.format = $scope.formats[0];
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 6/1/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .service('targetFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+            this.target = function() {
+                return $resource(baseURL + "target", null, {'save':{method:"POST", headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
+            };
+
+            this.getTargets = function() {
+                return $resource(baseURL + "target/:id", null, {
+                    'update':{method:"PUT", headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'save':{method:"POST", headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:"DELETE"}
+                });
+            };
+
+            this.getMyTargets = function() {
+                return $resource(baseURL + "target/:id/user");
+            };
 
         }]);
 })();

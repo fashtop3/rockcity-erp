@@ -98,7 +98,7 @@
                                 <div class="hidden-sm hidden-md hidden-lg"><br />
                                     <div class="ph">
                                         <h6 class="media-box-heading">Address</h6>
-                                        <small class="text-muted"><em>{{ schedule.client.street_name +' '+ schedule.client.street_no +', '+ schedule.client.town }}</em></small>
+                                        <small class="text-muted"><em>{{ schedule.client.street_no +' '+ schedule.client.street_name +', '+ schedule.client.town }}</em></small>
                                     </div><br />
                                     <div class="ph">
                                         <h6 class="media-box-heading">Phone</h6>
@@ -109,7 +109,7 @@
                             <td class="wd-sm hidden-xs">
                                 <div class="ph">
                                     <h6 class="media-box-heading">Address</h6>
-                                    <small class="text-muted"><em>{{ schedule.client.street_name +' '+ schedule.client.street_no +', '+ schedule.client.town }}</em></small>
+                                    <small class="text-muted"><em>{{ schedule.client.street_no +' '+ schedule.client.street_name +', '+ schedule.client.town }}</em></small>
                                 </div><br />
                                 <div class="ph">
                                     <h6 class="media-box-heading">Phone</h6>
@@ -146,12 +146,20 @@
                                                     <td class="wd-lg" colspan="2">
                                                         <div class="ph">
                                                             <span class="label label-info pull-right">{{sch_product_sub.subscription.period}}</span>
-                                                            <h5 class="media-box-heading">BULK</h5>
-                                                            <small class="text-muted text-inverse">
-                                                                <b>Start :</b> ({{sch_product_sub.subscription.bulk_start_date | date:'MMM d, y h:mm a'}})
-                                                                <b>End :</b> ({{sch_product_sub.subscription.bulk_end_date | date:'MMM d, y h:mm a'}}) <br />
-                                                                <b>Broadcast: </b> {{sch_product_sub.subscription.broadcast}}
-                                                            </small>
+                                                            <h4 class="media-box-heading">BULK</h4>
+
+                                                            <div class="text-muted text-inverse">
+                                                                <small>
+                                                                    <b>Start: </b> {{sch_product_sub.subscription.bulk_start_date | date:'MMM d, y h:mm a'}}; &nbsp;&nbsp;
+                                                                    <b>End: </b> {{sch_product_sub.subscription.bulk_end_date | date:'MMM d, y h:mm a'}}
+                                                                </small>
+                                                            </div>
+                                                            <div class="text-muted text-inverse">
+                                                                <small>
+                                                                    <b>Bulk: </b> {{sch_product_sub.subscription.broadcast}}; &nbsp;&nbsp;
+                                                                    <span ng-if="sch_product_sub.subscription.duration"><b>Duration: </b> {{sch_product_sub.subscription.duration}}</span>
+                                                                </small>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td class="wd-sm">
@@ -173,14 +181,19 @@
                                                     <td>
                                                         <div class="ph">
                                                             <span class="label label-info pull-right">{{sch_product_sub.subscription.period}}</span>
-                                                            <h5 class="media-box-heading">SLOT</h5>
-                                                            <small class="text-muted text-inverse">
-                                                                <b>Slot date :</b> {{sch_product_sub.subscription.slot_start_date | date:'MMM d, y'}}
-                                                                <b> -- </b> {{sch_product_sub.subscription.slot_end_date | date:'MMM d, y'}}
-                                                            </small><br />
-                                                            <small class="text-muted text-inverse">
-                                                                <b>Slot :</b> {{sch_product_sub.subscription.slots}}
-                                                            </small>
+                                                            <h4 class="media-box-heading">SLOT</h4>
+                                                            <div class="text-muted text-inverse">
+                                                                <small>
+                                                                    <b>Slot date: </b> {{sch_product_sub.subscription.slot_start_date | date:'MMM d, y'}}
+                                                                    <b> -- </b> {{sch_product_sub.subscription.slot_end_date | date:'MMM d, y'}}
+                                                                </small>
+                                                            </div>
+                                                            <div class="text-muted text-inverse">
+                                                                <small><b>Programme: </b> {{progStartTime(sch_product_sub.subscription.period) | date:'h:mm a'}} - {{progEndTime(sch_product_sub.subscription.period) | date:'h:mm a'}}</small>
+                                                            </div>
+                                                            <div class="text-muted text-inverse"><small><b>Slot: </b> {{sch_product_sub.subscription.slots}}; &nbsp;&nbsp;
+                                                                <span ng-if="sch_product_sub.subscription.duration"><b>Duration: </b> {{sch_product_sub.subscription.duration}}</span>
+                                                            </small></div>
                                                         </div><br />
                                                         <div class="table-responsive" ng-if="sch_product_sub.slot_details.length">
                                                             <table class="table table-bordered">
@@ -194,7 +207,9 @@
                                                                     <td>{{slot_schedule.date | date:'MMM d, y'}}</td>
                                                                     <td>{{slot_schedule.slot}}</td>
                                                                     <td>{{slot_schedule.tofix}}</td>
-                                                                    <td><span class="text text-primary"><small ng-repeat="t in slot_schedule.times track by $index">{{slot_schedule.times[$index] | date:'h:mm a'}}, </small></span></td>
+                                                                    <!--<td><span class="text text-primary"><small ng-repeat="t in slot_schedule.times track by $index">{{slot_schedule.times[$index] | date:'h:mm a'}}, </small></span></td>-->
+                                                                    <td ng-if="slot_schedule.tofix > 0"><span class="text text-primary"><small ng-repeat="t in slot_schedule.times track by $index">{{slot_schedule.times[$index] | date:'h:mm a'}}, </small></span></td>
+                                                                    <td ng-if="!slot_schedule.tofix || slot_schedule.tofix == '0'"><span class="text text-primary"><small>{{progStartTime(sch_product_sub.subscription.period) | date:'h:mm a'}} - {{progEndTime(sch_product_sub.subscription.period) | date:'h:mm a'}} </small></span></td>
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -259,57 +274,61 @@
                         </tr>
                         </tbody>
                     </table>
-                <li class="list-group-item" >
-                    <table class="wd-wide">
-                        <tbody>
-                        <tr>
-                            <td class="wd-sm text-inverse">
-                                <div class="ph">
-                                    <h5 class="media-box-heading text-muted">Discount({{schedule.discount}}%):</h5>
-                                </div>
-                            </td>
-                            <td class="wd-sm">
-                                <div class="ph text-inverse text-right">
-                                    <h5 class="media-box-heading"><strong>NGN {{schedule.discountAmt | number:2}}</strong></h5>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                <li class="list-group-item" >
-                    <table class="wd-wide">
-                        <tbody>
-                        <tr>
-                            <td class="wd-sm text-inverse">
-                                <div class="ph">
-                                    <h5 class="media-box-heading text-muted">Commission({{schedule.commission}}%):</h5>
-                                </div>
-                            </td>
-                            <td class="wd-sm">
-                                <div class="ph text-inverse text-right">
-                                    <h5 class="media-box-heading "><strong>NGN {{schedule.commissionAmt | number:2}}</strong></h5>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                <li class="list-group-item" >
-                    <table class="wd-wide">
-                        <tbody>
-                        <tr>
-                            <td class="wd-sm">
-                                <div class="ph text-inverse">
-                                    <h5 class="media-box-heading text-muted">VAT(5%):</h5>
-                                </div>
-                            </td>
-                            <td class="wd-sm">
-                                <div class="ph text-inverse text-right">
-                                    <h5 class="media-box-heading"><strong>NGN {{ ( (5/100) * schedule.subTotal )  | number:2}}</strong></h5>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                </li>
+                <!--<li class="list-group-item" >-->
+                    <!--<table class="wd-wide">-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<td class="wd-sm text-inverse">-->
+                                <!--<div class="ph">-->
+                                    <!--<h5 class="media-box-heading text-muted">Discount({{schedule.discount}}%):</h5>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td class="wd-sm">-->
+                                <!--<div class="ph text-inverse text-right">-->
+                                    <!--<h5 class="media-box-heading"><strong>NGN {{schedule.discountAmt | number:2}}</strong></h5>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="list-group-item" >-->
+                    <!--<table class="wd-wide">-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<td class="wd-sm text-inverse">-->
+                                <!--<div class="ph">-->
+                                    <!--<h5 class="media-box-heading text-muted">Commission({{schedule.commission}}%):</h5>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td class="wd-sm">-->
+                                <!--<div class="ph text-inverse text-right">-->
+                                    <!--<h5 class="media-box-heading "><strong>NGN {{schedule.commissionAmt | number:2}}</strong></h5>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="list-group-item" >-->
+                    <!--<table class="wd-wide">-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<td class="wd-sm">-->
+                                <!--<div class="ph text-inverse">-->
+                                    <!--<h5 class="media-box-heading text-muted">VAT(5%):</h5>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td class="wd-sm">-->
+                                <!--<div class="ph text-inverse text-right">-->
+                                    <!--<h5 class="media-box-heading"><strong>NGN {{ ( (5/100) * schedule.subTotal )  | number:2}}</strong></h5>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</li>-->
                 <li class="list-group-item" >
                     <table class="wd-wide">
                         <tbody>

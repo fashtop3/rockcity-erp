@@ -13,7 +13,7 @@
     <table class="table table-bordered">
         <tr>
             <td><p>Client Name: <span class="text-muted">{{$schedule->client->name}}</span></p></td>
-            <td><p><em class="fa fa-home fa-lg"></em> <span class="text-muted">{{$schedule->client->street_name.' '.$schedule->client->street_no.', '.$schedule->client->town}}</span></p></td>
+            <td><p><em class="fa fa-home fa-lg"></em> <span class="text-muted">{{$schedule->client->street_no.' '.$schedule->client->street_name.', '.$schedule->client->town}}</span></p></td>
             <td><p><em class="fa fa-phone fa-lg"></em> <span class="text-muted">{{$schedule->client->mobile}}</span></p></td>
         </tr>
     </table>
@@ -147,9 +147,9 @@
     <div class="col-sm-5 pull-right">
         <table class="table table-striped">
             <tr><td>Subtotal:</td><td><strong>NGN {{number_format($schedule->subTotal, 2)}}</strong></td></tr>
-            <tr><td>Discount({{$schedule->discount}}%):</td><td><strong>NGN {{number_format($schedule->discountAmt, 2)}}</strong></td></tr>
-            <tr><td>Commission({{$schedule->commission}}%):</td><td><strong>NGN {{number_format($schedule->commissionAmt, 2)}}</strong></td></tr>
-            <tr><td>VAT(5%):</td><td><strong>NGN {{number_format((5/100)*$schedule->subTotal, 2)}}</strong></td></tr>
+            {{--<tr><td>Discount({{$schedule->discount}}%):</td><td><strong>NGN {{number_format($schedule->discountAmt, 2)}}</strong></td></tr>--}}
+            {{--<tr><td>Commission({{$schedule->commission}}%):</td><td><strong>NGN {{number_format($schedule->commissionAmt, 2)}}</strong></td></tr>--}}
+            {{--<tr><td>VAT(5%):</td><td><strong>NGN {{number_format((5/100)*$schedule->subTotal, 2)}}</strong></td></tr>--}}
             <tr><td>GRAND TOTAL:</td><td><strong>NGN {{number_format($schedule->grandTotal, 2)}}</strong></td></tr>
         </table>
     </div>

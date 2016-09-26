@@ -17,10 +17,11 @@
                <span ng-show="loginForm.account_email.$dirty &amp;&amp; loginForm.account_email.$error.pattern" class="text-danger">This field must be a valid email address</span>
             </div>
             <div class="form-group has-feedback">
-               <input id="exampleInputPassword1" type="password" name="account_password" placeholder="Password" ng-pattern="/^[a-zA-Z0-9]{6,10}$/" ng-model="account.password" required="" class="form-control" />
+               <input id="exampleInputPassword1" type="password" name="account_password" placeholder="Password" ng-pattern="/^[!\$\@a-zA-Z0-9]{6,16}$/" ng-model="account.password" required="" class="form-control" />
                <span class="fa fa-lock form-control-feedback text-muted"></span>
                <span ng-show="loginForm.account_password.$dirty &amp;&amp; loginForm.account_password.$error.required" class="text-danger">This field is required</span>
-               <span ng-show="loginForm.account_password.$dirty &amp;&amp; loginForm.account_password.$error.pattern" class="text-danger">Input should match 'a-zA-Z0-9' and 6-10 length</span>            </div>
+               <span ng-show="loginForm.account_password.$dirty &amp;&amp; loginForm.account_password.$error.pattern" class="text-danger">Input should match '!$@a-zA-Z0-9' and 6-16 length</span>
+            </div>
             <div class="clearfix">
                <div class="checkbox c-checkbox pull-left mt0">
                   <label>

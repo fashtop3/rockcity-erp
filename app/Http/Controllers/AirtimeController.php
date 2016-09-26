@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Events\ScheduleHasBeenPlaced;
+use App\ProductTime;
 use App\Schedule;
 use App\ScheduleAlert;
 use App\ScheduleProduct;
@@ -156,6 +157,7 @@ class AirtimeController extends Controller
     public function show($id)
     {
         try{
+            $prog_time = ProductTime::first();
             $schedule = Schedule::findOrFail($id);
 
             $schedule->user->toArray();
@@ -175,7 +177,7 @@ class AirtimeController extends Controller
 
             $schedule->scheduleAlert->toArray();
 
-            return response($schedule);
+            return response(['schedule'=>$schedule, 'prog_time'=>$prog_time]);
         }
         catch(\Exception $e) {
             return response('Airtime not found', 403);
