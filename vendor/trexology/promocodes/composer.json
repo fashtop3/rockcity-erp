@@ -1,0 +1,28 @@
+{
+	"name": "trexology/promocodes",
+	"description": "Promotional Codes Generator for Laravel 5.1",
+	"keywords": [
+		"promo code",
+		"coupon code",
+		"discount code",
+		"laravel",
+		"php"
+	],
+	"homepage": "https://github.com/trexology/promocodes",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "trexology"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=5.4.0",
+		"laravel/framework": "~5.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Trexology\\Promocodes\\": "src/"
+		}
+	}
+}
