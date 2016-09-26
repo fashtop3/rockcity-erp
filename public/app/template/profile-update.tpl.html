@@ -86,7 +86,7 @@
                 <div class="form-group has-feedback">
                     <label class="col-sm-3 control-label">Old Password <abbr class="text-danger" title="Confirm password">*</abbr></label>
                     <div class="col-sm-8">
-                        <input type="password" placeholder="Enter Old password" name="password" ng-pattern="/^[a-zA-Z0-9]{6,10}$/" ng-model="reset.password" class="form-control" />
+                        <input type="password" placeholder="Enter Old password" name="password" ng-pattern="/^[!\$\@a-zA-Z0-9]{6,16}$/" ng-model="reset.password" class="form-control" />
                         <span class="fa fa-lock form-control-feedback text-muted"></span>
                         <span ng-show="pwdForm.password.$dirty &amp;&amp; pwdForm.password.$error.pattern" class="text-danger">Invalid password!.</span>
                     </div>
@@ -97,10 +97,10 @@
                 <div class="form-group has-feedback">
                     <label class="col-sm-3 control-label">New Password <abbr class="text-danger" title="Password">*</abbr></label>
                     <div class="col-sm-8">
-                        <input id="id-password" type="password" placeholder="Enter new password" type="new_password" name="new_password" ng-model="reset.new_password" ng-pattern="/^[a-zA-Z0-9]{6,10}$/" required="" class="form-control" />
+                        <input id="id-password" type="password" placeholder="Enter new password" type="new_password" name="new_password" ng-model="reset.new_password" ng-pattern="/^[!\$\@a-zA-Z0-9]{6,16}$/" required="" class="form-control" />
                         <span class="fa fa-lock form-control-feedback text-muted"></span>
                         <span ng-show="pwdForm.new_password.$dirty &amp;&amp; pwdForm.new_password.$error.required" class="text-danger">This field is required</span>
-                        <span ng-show="pwdForm.new_password.$dirty &amp;&amp; pwdForm.new_password.$error.pattern" class="text-danger">Input should match 'a-zA-Z0-9' and 6-8 length</span>
+                        <span ng-show="pwdForm.new_password.$dirty &amp;&amp; pwdForm.new_password.$error.pattern" class="text-danger">Input should match '!$@a-zA-Z0-9' and 6-16 length</span>
                     </div>
                 </div>
             </fieldset>

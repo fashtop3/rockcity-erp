@@ -220,7 +220,7 @@
                 vm.dsctAmnt = ((vm.form.discount)/100)*vm.cartTotals; //amount discounted
                 var cartDiscounted = vm.cartTotals - vm.dsctAmnt;
                 vm.commAmnt = ((vm.form.commission)/100)*cartDiscounted; //%comm based on discounted price
-                vm.totalWOComm = vm.cartTotals - (vm.dsctAmnt+vm.commAmnt);
+                vm.totalWOComm = (vm.cartTotals - (vm.dsctAmnt+vm.commAmnt)) + vm.vat;
                 vm.totalWComm = (vm.cartTotals + vm.vat) - vm.dsctAmnt;
             };
 

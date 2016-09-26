@@ -64,12 +64,12 @@
                         <label ng-if="!$stateParams.id" class="control-label col-sm-2">Password <abbr class="text-danger" title="Password">*</abbr></label>
                         <label ng-if="$stateParams.id" class="control-label col-sm-2">Password</label>
                         <div class="col-sm-8" ng-class="{'has-error': !userForm.password.$pristine &amp;&amp; userForm.password.$error.required}">
-                            <input ng-if="!$stateParams.id" id="id-password" placeholder="Enter password" type="password" name="password" ng-model="account.password" ng-pattern="/^[a-zA-Z0-9]{6,10}$/" required="" class="form-control" />
-                            <input ng-if="$stateParams.id" placeholder="Enter password" type="password" name="password" ng-model="account.password" ng-pattern="/^[a-zA-Z0-9]{6,10}$/" class="form-control" />
+                            <input ng-if="!$stateParams.id" id="id-password" placeholder="Enter password" type="password" name="password" ng-model="account.password" ng-pattern="/^[!\$\@a-zA-Z0-9]{6,16}$/" required="" class="form-control" />
+                            <input ng-if="$stateParams.id" placeholder="Enter password" type="password" name="password" ng-model="account.password" ng-pattern="/^[!\$\@a-zA-Z0-9]{6,16}$/" class="form-control" />
                             <span class="text-info"><small>Changing this field will affect user access to account please notice.</small></span>
                             <div>
                                 <span ng-show="!userForm.password.$pristine &amp;&amp; userForm.password.$error.required" class="text-danger">This field is required</span>
-                                <span ng-show="!userForm.password.$pristine &amp;&amp; userForm.password.$error.pattern" class="text-danger">Input should match 'a-zA-Z0-9' and 6-8 length</span>
+                                <span ng-show="!userForm.password.$pristine &amp;&amp; userForm.password.$error.pattern" class="text-danger">Input should match '!$@a-zA-Z0-9' and 6-16 length</span>
                             </div>
                         </div>
                     </div>

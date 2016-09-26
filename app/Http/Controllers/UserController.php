@@ -129,7 +129,7 @@ class UserController extends Controller
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
             'email' =>  'required|email',
-            'password'  =>  'required|between:6,8',
+            'password'  =>  'required|between:6,16',
             'status'    =>  'integer'
         ]);
 
@@ -204,9 +204,9 @@ class UserController extends Controller
         if($request->get('action') && $request->get('action') == 'password') {
             //validate request for password reset
             $validator = Validator::make($request->all(), [
-               'new_password' => 'required|between:6,8',
+               'new_password' => 'required|between:6,16',
                 'password_confirm' => 'required|same:new_password',
-                'password' => 'required|between:6,8',
+                'password' => 'required|between:6,16',
             ]);
             if($validator->fails()) {
                 return response($validator->errors(), 403);
@@ -234,7 +234,7 @@ class UserController extends Controller
     {
         //Todo: validate please
         $validator = Validator::make($request->all(), [
-            'password' => 'sometimes|required|between:6,8',
+            'password' => 'sometimes|required|between:6,16',
             'password_confirm' => 'sometimes|required|same:password',
         ]);
         if($validator->fails()) {
