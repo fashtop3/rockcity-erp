@@ -25,6 +25,7 @@ class CreateSchedulesTable extends Migration
             $table->decimal('subTotal', 12, 2);
             $table->decimal('grandTotal', 12, 2);
 
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
