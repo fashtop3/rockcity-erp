@@ -13,6 +13,8 @@ class Promocode extends Model
      */
     public $timestamps = false;
 
+    protected $dates = ['expiry_date'];
+
     /**
      * @var array
      */
