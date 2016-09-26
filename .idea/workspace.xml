@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4a676137-a53d-407b-85e0-7c18b8c76649" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" afterPath="$PROJECT_DIR$/public/master/bower_components/jquery-classyloader" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/app.php" afterPath="$PROJECT_DIR$/config/app.php" />
     </list>
     <ignored path="orders.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,11 +31,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="2016_05_17_221000_create_promocodes_table.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="2016_05_17_221000_create_promocodes_table.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/trexology/promocodes/src/migrations/2016_05_17_221000_create_promocodes_table.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58361775">
-              <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
+            <state vertical-scroll-proportion="-13.333333">
+              <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/app.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.81569964">
+              <caret line="229" column="70" selection-start-line="229" selection-start-column="70" selection-end-line="229" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -86,7 +97,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/master/js/modules/routes/route-helpers.provider.js" />
         <option value="$PROJECT_DIR$/public/master/js/custom/order/client/client-form.controller.js" />
         <option value="$PROJECT_DIR$/database/migrations/2016_04_13_055830_create_clients_table.php" />
         <option value="$PROJECT_DIR$/public/master/js/custom/order/client/client.services.js" />
@@ -137,6 +147,7 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php" />
         <option value="$PROJECT_DIR$/vendor/trexology/promocodes/src/migrations/2016_05_17_221000_create_promocodes_table.php" />
         <option value="$PROJECT_DIR$/vendor/trexology/promocodes/src/Model/Promocodes.php" />
+        <option value="$PROJECT_DIR$/config/app.php" />
       </list>
     </option>
   </component>
@@ -415,6 +426,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orders" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rockcity-erp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orders" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rockcity-erp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches">
@@ -552,13 +591,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/master/js/custom/report/vehicle/vehicle-create.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -912,8 +944,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/trexology/promocodes/src/migrations/2016_05_17_221000_create_promocodes_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58361775">
-          <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
+        <state vertical-scroll-proportion="-13.333333">
+          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.81569964">
+          <caret line="229" column="70" selection-start-line="229" selection-start-column="70" selection-end-line="229" selection-end-column="70" />
           <folding />
         </state>
       </provider>
