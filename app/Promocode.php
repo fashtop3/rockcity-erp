@@ -20,6 +20,6 @@ class Promocode extends Model
         'code',
         'reward',
         'quantity',
-        'is_used',
+        'expiry_date',
     ];
 }
