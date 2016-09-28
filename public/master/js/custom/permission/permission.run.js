@@ -28,6 +28,7 @@
                     angular.forEach(permissions.data.permissions, function ($permission) {
                         //console.log($permission.slug);
                         PermissionStore.definePermission($permission.slug, function () {
+                            //console.log($permission.slug);
                             return userFactory.userCan($permission.slug);
                         })
                     });
@@ -35,6 +36,7 @@
                     //save roles
                     angular.forEach(permissions.data.roles, function ($roles) {
                         RoleStore.defineRole($roles.slug, function () {
+                            //console.log($roles.slug);
                             return userFactory.userIs($roles.slug);
                         })
                     });

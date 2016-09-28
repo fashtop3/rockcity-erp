@@ -156,6 +156,9 @@ Route::get('/login', function() {
 |
 */
 
+Route::get('/promocode', 'PromocodeController@generate');
+Route::get('/promocode/reward', 'PromocodeController@gerReward');
+
 Route::group(['middleware' => ['web'] ], function () {
 
     Route::get('pdf/{id}/airtime', 'PDFController@airtimePDF');

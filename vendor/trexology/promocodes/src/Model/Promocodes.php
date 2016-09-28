@@ -100,7 +100,8 @@ class Promocodes extends Model
 		// if (count($collection) == 0 && count($this->codes) == 0) return true;
 
 		$count = Promocodes::where('code', $new)->count();
-		if ($count == 0) {
+
+		if ($count == 1) {
 			return true;
 		}
 		else{
@@ -148,7 +149,7 @@ class Promocodes extends Model
 	 *
 	 * @return static
 	 */
-	public function generateAndSave($amount = 1, $reward = null, $type = null, $expiry_date = null)
+	public function generateAndSave($amount = 1, $reward = null, $type = null, $expiry_date = null, $quantity = -1)
 	{
 		$data = collect([]);
 
@@ -158,6 +159,7 @@ class Promocodes extends Model
 			$promo->reward = $reward;
 			$promo->type = $type;
 			$promo->expiry_date = $expiry_date;
+			$promo->quantity = $quantity;
 			$promo->save();
 			$data->push($promo);
 		}
@@ -175,13 +177,14 @@ class Promocodes extends Model
 	 *
 	 * @return Promocodes / false
 	 */
-	public function generateCodeName($code, $reward = null, $type = null, $expiry_date = null)
+	public function generateCodeName($code, $reward = null, $type = null, $expiry_date = null, $quantity = -1)
 	{
 		if ($this->validate($code)) {
 			$this->code = $code;
 			$this->reward = $reward;
 			$this->type = $type;
 			$this->expiry_date = $expiry_date;
+			$this->quantity = $quantity;
 			$this->save();
 			return $this;
 		}
@@ -197,16 +200,27 @@ class Promocodes extends Model
 	 *
 	 * @return bool
 	 */
-	public function check($code)
+	public function check($code, $type)
 	{
-		return Promocodes::where('code', $code)
+		return Promocodes::where('code', $code)->where('type', $type)
 		// ->whereNull('is_used')
 		->where('quantity', '!=' , 0)
 		->where(function($q) {
-					 $q->whereDate('expiry_date', '<' , Carbon::today())
+					 $q->whereDate('expiry_date', '>' , Carbon::today())
 						 ->orWhereNull('expiry_date');
 		})
 		->count() > 0;
+	}
+
+	public function reward($code)
+	{
+		return Promocodes::where('code', $code)
+			// ->whereNull('is_used')
+			->where('quantity', '!=' , 0)
+			->where(function($q) {
+				$q->whereDate('expiry_date', '>' , Carbon::today())
+					->orWhereNull('expiry_date');
+			})->first()->reward;
 	}
 
 	/**
@@ -222,12 +236,14 @@ class Promocodes extends Model
 		// ->whereNull('is_used')
 		->where('quantity', '!=' , 0) // -1 for infinite
 		->where(function($q) {
-					 $q->whereDate('expiry_date', '<' , Carbon::today())
+					 $q->whereDate('expiry_date', '>' , Carbon::today())
 						 ->orWhereNull('expiry_date');
-		})
+		})//->toSql();
 		->first();
+
 		//
 		if ($record) {
+
 			if ($record->quantity > 0) {
 				$record->quantity--;
 			}

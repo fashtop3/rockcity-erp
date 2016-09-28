@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddPromocodeToSchedulesTable' => $baseDir . '/database/migrations/2016_09_28_171259_add_promocode_to_schedules_table.php',
     'CreateAssessmentPartOnesTable' => $baseDir . '/database/migrations/2016_07_07_144527_create_assessment_part_ones_table.php',
     'CreateAssessmentPartThreesTable' => $baseDir . '/database/migrations/2016_07_07_144545_create_assessment_part_threes_table.php',
     'CreateAssessmentPartTwosTable' => $baseDir . '/database/migrations/2016_07_07_144533_create_assessment_part_twos_table.php',

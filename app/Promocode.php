@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Trexology\Promocodes\Model\Promocodes;
 
-class Promocode extends Model
+class Promocode extends Promocodes
 {
     //
 

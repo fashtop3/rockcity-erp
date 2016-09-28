@@ -11,6 +11,7 @@ class Schedule extends Model
     protected $fillable = [
         'user_id',
         'client_id',
+        'promocode',
         'discount',
         'discountAmt',
         'commission',
@@ -35,6 +36,14 @@ class Schedule extends Model
     public function scopeCurrentUser($query)
     {
         return $query->where('user_id', Auth::user()->id);
+    }
+
+    public function setPromocodeAttribute($promocode) {
+        $this->attributes['promocode'] = serialize($promocode);
+    }
+
+    public function getPromocodeAttribute($promocode) {
+        return unserialize($promocode);
     }
 
     public function getCreatedAtAttribute($date)

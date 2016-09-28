@@ -17,6 +17,7 @@ class CreateSchedulesTable extends Migration
             $table->string('order_no');
             $table->integer('user_id')->unsigned();
             $table->integer('client_id')->unsigned();
+            $table->string('promocode');
 
             $table->integer('discount');
             $table->decimal('discountAmt', 12, 2);

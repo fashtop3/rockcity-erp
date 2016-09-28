@@ -38,7 +38,8 @@
                 bulkPrice: "",
                 discount: '0',
                 commission: '0',
-                agree: false,
+                promocode: {'discount':null, 'coupon':null},
+                agree: false
             };
 
             vm.cartTotals = 0;
@@ -153,6 +154,7 @@
                 airtime.marketer = vm.marketer.selected;
                 airtime.client = vm.client.selected;
                 airtime.sub = {
+                    'promocode': vm.form.promocode,
                     'discount':vm.form.discount,
                     'discountAmt':vm.dsctAmnt,
                     'commission': vm.form.commission,
