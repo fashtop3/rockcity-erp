@@ -36,9 +36,9 @@
                 bulk_start_date:'',
                 bulk_end_date:'',
                 bulkPrice: "",
+                promocode: {'discount':null, 'coupon':null},
                 discount: '0',
                 commission: '0',
-                promocode: {'discount':null, 'coupon':null},
                 agree: false
             };
 
@@ -48,6 +48,20 @@
             vm.commAmnt = 0;
             vm.totalWOComm = 0;
             vm.totalWComm = 0;
+
+            //respond to discount emit event
+            $scope.$on('discountPromocodeChanged', function(e, arg) {
+                vm.form.discount = arg.reward;
+                vm.form.promocode.discount = arg.promocode;
+                vm.doDiscountCalc();
+            });
+
+            //respond to commission emit event
+            $scope.$on('commissionPromocodeChanged', function(e, arg) {
+                vm.form.commission = arg.reward;
+                vm.form.promocode.coupon = arg.promocode;
+                vm.doDiscountCalc();
+            });
 
             vm.periods = [{value:'premium', label:'Premium' }, {value:'regular', label:'Regular'}];
 

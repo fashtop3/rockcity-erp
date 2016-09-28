@@ -157,7 +157,7 @@ Route::get('/login', function() {
 */
 
 Route::get('/promocode', 'PromocodeController@generate');
-Route::get('/promocode/reward', 'PromocodeController@gerReward');
+Route::get('/promocode/reward', 'PromocodeController@getReward');
 
 Route::group(['middleware' => ['web'] ], function () {
 
@@ -167,9 +167,8 @@ Route::group(['middleware' => ['web'] ], function () {
      * Add prefix 'api' to url
      */
     Route::group(['prefix' => 'api'], function() {
-        Route::get('/csrf', function() {
-            return csrf_token();
-        });
+        Route::get('/csrf', function() {return csrf_token();});
+
         Route::post('/auth',    'UserController@checkAuth');
 //        Route::post('/auth',    'Auth\AuthController@login');
         Route::get('/auth/check',    'UserController@isAuth');
@@ -233,6 +232,9 @@ Route::group(['middleware' => ['web'] ], function () {
         Route::get('/admin/staff-reps', 'ReportController@getReports');
         Route::get('/admin/clients', 'ClientController@getAllClients');
         Route::put('/admin/user/{id}', 'UserController@profileUpdateByAdmin');
+
+        Route::get('/promocode', 'PromocodeController@generate');
+        Route::get('/promocode/reward', 'PromocodeController@getReward');
 
     });
 });

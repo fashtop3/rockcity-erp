@@ -26,7 +26,7 @@ class PromocodeController extends Controller
         $c = $p->reward('RFXU-ZXWT');
     }
 
-    public function gerReward(Request $request)
+    public function getReward(Request $request)
     {
         $action = $request->get('action');
         $code = $request->get('code');
@@ -34,15 +34,15 @@ class PromocodeController extends Controller
         try{
             if($action == 'discount') {
                 if($this->promocode->check($code, $action)) {
-                    return response($this->promocode->reward($code));
+                    return response([ 'data'=> $this->promocode->reward($code)]);
                 }
                 else {
-                    return response('Discount code invalid', 403);
+                    return response('Coupon code invalid', 403);
                 }
             }
             else if($action == 'coupon') {
                 if($this->promocode->check($code, $action)) {
-                    return response($this->promocode->reward($code));
+                    return response([ 'data'=> $this->promocode->reward($code)]);
                 }
                 else {
                     return response('Coupon code invalid', 403);

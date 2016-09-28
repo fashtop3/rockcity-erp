@@ -13,24 +13,18 @@
                         <!--<label for="remark" class="control-label">Remarks</label>-->
                         <!--<textarea class="form-control" name="remark" id="remark" cols="30" rows="5"></textarea>-->
                     <!--</div>-->
-                    <div ng-class="{'has-feedback':discountError}" class="form-group" ng-controller="DiscountController">
+                    <div class="form-group" ng-controller="DiscountController">
                         <label for="discount" class="col-sm-3 control-label">Discount(%)</label>
-                        <div class="col-sm-6">
-                            <!--<select name="discount" ng-model="form.discount" ng-change="doDiscountCalc()" id="discount" class="form-control">-->
-                                <!--<option ng-repeat="i in [].constructor(31) track by $index" value="{{$index}}">{{$index}}</option>-->
-                            <!--</select>-->
-                            <input type="text" class="form-control" ng-disabled="disabled" name="discount" ng-model="code" ng-change="discountReward(form.discount, form.promocode)" id="discount" placeholder="Discount" />
+                        <div class="col-sm-6" ng-class="{'has-error':discountError, 'has-success':applied}">
+                            <input type="text" class="form-control" ng-disabled="disabled" name="discount" ng-model="code" ng-change="discountReward()" id="discount" placeholder="Discount" />
                             <span ng-show="discountError" class="text-danger">{{discountError}}</span>
                         </div>
                     </div>
-                    <div ng-class="{'has-feedback':couponError}" ng-controller="CouponController" permission permission-only="['executive.director', 'admin']" class="form-group">
+                    <div ng-controller="CommissionController" permission permission-only="['executive.director', 'admin']" class="form-group">
                         <label for="commission" class="col-sm-3 control-label">Commission(%)</label>
-                        <div class="col-sm-6">
-                            <!--<select name="commission" ng-model="form.commission" id="commission" ng-change="doDiscountCalc()" class="form-control">-->
-                                <!--<option ng-repeat="i in [].constructor(11) track by $index" value="{{$index}}">{{$index}}</option>-->
-                            <!--</select>-->
-                            <input type="text" class="form-control" ng-disabled="disabled" ng-model="code" ng-change="commissionReward(form.commission, form.promocode)" id="commission" name="commission" placeholder="Commission" />
-                            <span ng-show="couponError" class="text-danger">{{couponError}}</span>
+                        <div class="col-sm-6" ng-class="{'has-error':commissionError, 'has-success':applied}">
+                            <input type="text" class="form-control" ng-disabled="disabled" ng-model="code" ng-change="commissionReward()" id="commission" name="commission" placeholder="Commission" />
+                            <span ng-show="commissionError" class="text-danger">{{commissionError}}</span>
                         </div>
                     </div>
                 </div>
