@@ -13,6 +13,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        'App\Events\CouponGeneratedEvent' => [
+            'App\Listeners\OnCouponGenerated',
+        ],
+
         'App\Events\UserHasRegistered' => [
             'App\Listeners\EmailNotificationToUser',
         ],

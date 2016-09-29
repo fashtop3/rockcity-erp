@@ -12,6 +12,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 
 class PromocodeController extends Controller
 {
@@ -27,14 +28,20 @@ class PromocodeController extends Controller
         DB::beginTransaction();
         try{
             $coupon = Promocode::generateAndSave($amount, $reward, $type, $expiry_date, $quantity);
-            $subject = 'Coupon Generation Report @ '.Carbon::now()->toFormattedDateString();
+            $ty = $type == 'COUPON' ? 'Commission':ucfirst($type);
+            $subject = $ty.' Coupon Generation Report @ '.Carbon::now()->toDateTimeString();
             $csv = $this->getCSVCoupon($coupon);
-            Event::fire(new CouponGeneratedEvent(['subject'=> $subject, 'coupon'=>$csv]));
-            DB::commit();
-            return response(['data'=>'Coupon has been forwarded to your mail.']);
+            try{
+                Event::fire(new CouponGeneratedEvent(['subject'=> $subject, 'coupon'=>$csv]));
+                DB::commit();
+                return response(['data'=>'Coupon has been forwarded to your mail.']);
+            }
+            catch(\Exception $e) {
+                return response('Failed: Mail server not reachable try again', 403);
+            }
         }
         catch(\Exception $e) {
-            return response('Coupon code generation failed', 403);
+            return response('Coupon code generation failed contact site Administrator', 403);
         }
     }
 
@@ -42,6 +49,7 @@ class PromocodeController extends Controller
         $csv = 'ID,TYPE,CODE,REWARD,QUANTITY,EXPIRY'."\n";
         $result = $result->toArray();
         array_walk($result, function($coupon) use(&$csv) {
+            if($coupon['type']=='coupon') $coupon['type'] = 'COMMISSION';
             $csv .= "\"{$coupon['id']}\",\"{$coupon['type']}\",\"{$coupon['code']}\",\"{$coupon['reward']}\",\"{$coupon['quantity']}\",\"{$coupon['expiry_date']}\"";
             $csv .= "\n";
         });

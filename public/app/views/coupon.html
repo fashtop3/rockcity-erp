@@ -9,7 +9,7 @@
             <div class="panel-heading">
                 <small>Generated Coupon code will be sent to your mail.</small>
             </div>
-            <form novalidate ng-submit="generateCoupon()" class="form-horizontal" role="form">
+            <form novalidate ng-submit="generateCoupon()" name="formCoupon" class="form-horizontal" role="form">
 
                 <div class="panel-body">
 
@@ -23,8 +23,8 @@
                     <fieldset>
                         <div class="form-group">
                             <label for="type" class="control-label col-sm-3">Type:<abbr title="required" class="text-danger">*</abbr></label>
-                            <div class="col-sm-7">
-                                <select name="type" id="type" class="form-control" ng-model="couponForm.type">
+                            <div class="col-sm-7" ng-class="{'has-error': formCoupon.type.$error.required && !formCoupon.type.$pristine}">
+                                <select name="type" id="type" class="form-control" ng-model="couponForm.type" required>
                                     <option value="">--Choose--</option>
                                     <option value="DISCOUNT">Discount</option>
                                     <option value="COUPON">Commission</option>
@@ -36,8 +36,8 @@
                     <fieldset>
                         <div class="form-group">
                             <label for="reward" class="control-label col-sm-3">Reward:<abbr title="required" class="text-danger">*</abbr></label>
-                            <div class="col-sm-7">
-                                <select ng-disabled="couponForm.type == null" name="reward" id="reward" class="form-control" ng-model="couponForm.reward">
+                            <div class="col-sm-7" ng-class="{'has-error': formCoupon.reward.$error.required && !formCoupon.reward.$pristine}">
+                                <select ng-disabled="couponForm.type == null" name="reward" id="reward" required class="form-control" ng-model="couponForm.reward">
                                     <option value="">--Choose--</option>
                                     <option ng-if="couponForm.type == 'DISCOUNT'" ng-repeat="i in getRange(100) track by $index" value="{{$index+1}}">{{$index+1}}</option>
                                     <option ng-if="couponForm.type == 'COUPON'" ng-repeat="i in getRange(10) track by $index" value="{{$index+1}}">{{$index+1}}</option>
@@ -49,8 +49,8 @@
                    <fieldset>
                        <div class="form-group">
                            <label for="amount" class="control-label col-sm-3">Amount:<abbr title="required" class="text-danger">*</abbr></label>
-                           <div class="col-sm-7">
-                               <select name="quantity" id="amount" class="form-control" ng-model="couponForm.amount">
+                           <div class="col-sm-7" ng-class="{'has-error': formCoupon.amount.$error.required && !formCoupon.amount.$pristine}">
+                               <select name="amount" id="amount" class="form-control" ng-model="couponForm.amount" required>
                                    <option value="">--Choose--</option>
                                    <option ng-repeat="i in getRange(50) track by $index" value="{{$index+1}}">{{$index+1}}</option>
                                </select>
@@ -61,8 +61,8 @@
                     <fieldset>
                         <div class="form-group">
                             <label for="quantity" class="control-label col-sm-3">Quantity:<abbr title="required" class="text-danger">*</abbr></label>
-                            <div class="col-sm-7">
-                                <select name="quantity" id="quantity" class="form-control" ng-model="couponForm.quantity">
+                            <div class="col-sm-7" ng-class="{'has-error': formCoupon.quantity.$error.required && !formCoupon.quantity.$pristine}">
+                                <select name="quantity" id="quantity" class="form-control" ng-model="couponForm.quantity" required>
                                     <option value="">--Choose--</option>
                                     <option ng-repeat="i in getRange(5) track by $index" value="{{$index+1}}">{{$index+1}}</option>
                                 </select>
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="panel-footer">
-                    <button ng-disabled="disabled" class="btn btn-primary btn-block" type="submit">Generate</button>
+                    <button ng-disabled="disabled || formCoupon.$invalid" class="btn btn-primary btn-block" type="submit">Generate</button>
                 </div>
             </form>
         </div>

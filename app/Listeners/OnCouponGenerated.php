@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OnCouponGenerated
 {
@@ -31,14 +32,14 @@ class OnCouponGenerated
     public function handle(CouponGeneratedEvent $event)
     {
         $text = 'New Generated Coupon! please find the attached file';
-        $this->mailer->send(['text' => $text], [], function($message) use($event)
+        $this->mailer->raw($text, function($message) use($event)
         {
-            $filename = 'coupon_'.str_replace(' ', '_', Carbon::now()->toFormattedDateString()).'xls';
+            $filename = 'Coupon_'.str_replace(' ', '_', Carbon::now()->toDateTimeString()).'.xls';
 
             $message->to(Auth::user()->email)
                 ->from('noreply@rockcityfmradio.com', 'Noreply')
-                ->subject($event->data['subject']
-                ->attachData($event->data['coupon'], $filename));
+                ->subject($event->data['subject'])
+                ->attachData($event->data['coupon'], $filename);
 
         });
     }
