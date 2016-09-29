@@ -33,4 +33,55 @@ nav.navbar.topnavbar(role='navigation')
                     em.icon-lock
             // END lock screen
         // END Left navbar
+
+        // START Right Navbar
+        ul.nav.navbar-nav.navbar-right
+           // START Alert menu
+           li.dropdown.dropdown-list(uib-dropdown="")
+             a(uib-dropdown-toggle="")
+               em.fa.fa-tasks.text-inverse
+               //.label.label-danger 11
+             // START Dropdown menu
+             ul.dropdown-menu(class="animated flipInX")
+               li
+                 // START list group
+                 .list-group
+                   // list item
+                   a.list-group-item(ui-sref="app.admin.coupon", permission="", permission-only="['admin', 'executive.director']")
+                     .media-box
+                       .pull-left
+                         em.fa.fa-twitter.fa-2x.text-info
+                       .media-box-body.clearfix
+                           p.m0 Coupon codes
+                           p.m0.text-muted: small Generate coupon codes
+                   // list item
+                   a.list-group-item(ui-sref='app.mail')
+                     .media-box
+                       .pull-left
+                         em.fa.fa-mail-forward.fa-2x.text-warning
+                       .media-box-body.clearfix
+                           p.m0 Send mail
+                           p.m0.text-muted: small Send new emails
+                   // list item
+                   a.list-group-item(ui-sref='app.sms')
+                     .media-box
+                       .pull-left
+                         em.fa.fa-envelope-o.fa-2x.text-success
+                       .media-box-body.clearfix
+                           p.m0 Send sms
+                           p.m0.text-muted: small Send new sms
+
+                   // last list item
+                   a.list-group-item(href="api/auth/logout", ng-click="logout()")
+                     em.icon-lock.text-warning
+                     small(title="Logout") Logout
+                     //span.label.label-danger.pull-right 14
+                 // END list group
+             // END Dropdown menu
+           // END Alert menu
+           // Fullscreen (only desktops)
+           li.visible-lg
+              a(href='', toggle-fullscreen)
+                em.fa.fa-expand
+         // END Right Navbar
 // END Top Navbar

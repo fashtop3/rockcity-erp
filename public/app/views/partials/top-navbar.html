@@ -45,6 +45,82 @@
          <!-- END lock screen-->
       </ul>
       <!-- END Left navbar-->
+      <!-- START Right Navbar-->
+      <ul class="nav navbar-nav navbar-right">
+         <!-- START Alert menu-->
+         <li uib-dropdown="" class="dropdown dropdown-list">
+            <a uib-dropdown-toggle="">
+               <em class="fa fa-tasks text-inverse"></em>
+               <!--.label.label-danger 11-->
+            </a>
+            <!-- START Dropdown menu-->
+            <ul class="dropdown-menu animated flipInX">
+               <li>
+                  <!-- START list group-->
+                  <div class="list-group">
+                     <!-- list item-->
+                     <a ui-sref="app.admin.coupon" permission="" permission-only="['admin', 'executive.director']" class="list-group-item">
+                        <div class="media-box">
+                           <div class="pull-left">
+                              <em class="fa fa-twitter fa-2x text-info"></em>
+                           </div>
+                           <div class="media-box-body clearfix">
+                              <p class="m0">Coupon codes</p>
+                              <p class="m0 text-muted">
+                                 <small>Generate coupon codes</small>
+                              </p>
+                           </div>
+                        </div>
+                     </a>
+                     <!-- list item-->
+                     <a ui-sref="app.mail" class="list-group-item">
+                        <div class="media-box">
+                           <div class="pull-left">
+                              <em class="fa fa-mail-forward fa-2x text-warning"></em>
+                           </div>
+                           <div class="media-box-body clearfix">
+                              <p class="m0">Send mail</p>
+                              <p class="m0 text-muted">
+                                 <small>Send new emails</small>
+                              </p>
+                           </div>
+                        </div>
+                     </a>
+                     <!-- list item-->
+                     <a ui-sref="app.sms" class="list-group-item">
+                        <div class="media-box">
+                           <div class="pull-left">
+                              <em class="fa fa-envelope-o fa-2x text-success"></em>
+                           </div>
+                           <div class="media-box-body clearfix">
+                              <p class="m0">Send sms</p>
+                              <p class="m0 text-muted">
+                                 <small>Send new sms</small>
+                              </p>
+                           </div>
+                        </div>
+                     </a>
+                     <!-- last list item-->
+                     <a href="api/auth/logout" ng-click="logout()" class="list-group-item">
+                        <em class="icon-lock text-warning"></em>
+                        <small title="Logout">Logout</small>
+                        <!--span.label.label-danger.pull-right 14-->
+                     </a>
+                  </div>
+                  <!-- END list group-->
+               </li>
+            </ul>
+            <!-- END Dropdown menu-->
+         </li>
+         <!-- END Alert menu-->
+         <!-- Fullscreen (only desktops)-->
+         <li class="visible-lg">
+            <a href="" toggle-fullscreen="toggle-fullscreen">
+               <em class="fa fa-expand"></em>
+            </a>
+         </li>
+      </ul>
+      <!-- END Right Navbar-->
    </div>
 </nav>
 <!-- END Top Navbar-->

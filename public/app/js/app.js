@@ -7807,6 +7807,16 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                     }
                 }
             })
+            .state('app.admin.coupon', {
+                url: '/coupon',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('coupon.html')
+                    }
+                }
+            })
 
                         // CUSTOM RESOLVES
             //   Add your own resolves properties
@@ -12381,6 +12391,19 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
         }]);
 })();
+/**
+ * Created by dfash on 9/29/16.
+ */
+
+(function () {
+   'use strict';
+
+    angular
+        .module('app.order')
+        .controller('CouponController', ['$scope', function($scope) {
+
+        }]);
+});
 /**
  * Created by dfash on 5/18/16.
  */

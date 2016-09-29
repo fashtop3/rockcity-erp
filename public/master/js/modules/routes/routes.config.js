@@ -560,6 +560,16 @@
                     }
                 }
             })
+            .state('app.admin.coupon', {
+                url: '/coupon',
+                cache: false,
+                views: {
+                    '@app': {
+                        resolve: angular.extend(helper.resolveFor('datatables')),
+                        templateUrl: helper.basepath('coupon.html')
+                    }
+                }
+            })
 
                         // CUSTOM RESOLVES
             //   Add your own resolves properties
