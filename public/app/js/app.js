@@ -10674,6 +10674,12 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
                 vm.clearSlot();
                 vm.clearBulk();
+
+                if(vm.product.selected.timeable) {
+                    vm.durationChange();
+                } else {
+                    vm.clearDuration();
+                }
             };
 
             vm.addItemToCart = function() {
@@ -10691,6 +10697,10 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 //can package the whole price object here
                 vm.form.duration = vm.product.selected.prices[vm.price.index].duration;
                 vm.form.price = vm.product.selected.prices[vm.price.index][vm.form.period];
+            };
+
+            vm.clearDuration = function() {
+                vm.form.duration = null;
             };
 
             vm.onPeriodChange = function() {
