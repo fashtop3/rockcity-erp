@@ -49,7 +49,7 @@ class PromocodeController extends Controller
         $csv = 'ID,TYPE,CODE,REWARD,QUANTITY,EXPIRY'."\n";
         $result = $result->toArray();
         array_walk($result, function($coupon) use(&$csv) {
-            if($coupon['type']=='coupon') $coupon['type'] = 'COMMISSION';
+            if($coupon['type']=='COUPON') {$coupon['type'] = 'COMMISSION';}
             $csv .= "\"{$coupon['id']}\",\"{$coupon['type']}\",\"{$coupon['code']}\",\"{$coupon['reward']}\",\"{$coupon['quantity']}\",\"{$coupon['expiry_date']}\"";
             $csv .= "\n";
         });
