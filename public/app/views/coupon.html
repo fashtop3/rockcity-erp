@@ -3,19 +3,88 @@
     <small>Generate and auto download coupon code</small>
 </h3>
 
-<div class="row">
-    <!--<div class="col-xs-12 col-sm-12">-->
-    <div class="panel panel-default" ng-controller="CouponController">
-
-        <div class="panel-body">
-            <!--<div>-->
-            <!--<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>-->
-            <!--</div>-->
-
-            <div class="table-responsive">
-
+<div class="row" ng-controller="CouponController">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <small>Generated Coupon code will be sent to your mail.</small>
             </div>
+            <form novalidate ng-submit="generateCoupon()" class="form-horizontal" role="form">
+
+                <div class="panel-body">
+
+                    <div>
+                        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+                    </div>
+
+
+                    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="type" class="control-label col-sm-3">Type:<abbr title="required" class="text-danger">*</abbr></label>
+                            <div class="col-sm-7">
+                                <select name="type" id="type" class="form-control" ng-model="couponForm.type">
+                                    <option value="">--Choose--</option>
+                                    <option value="DISCOUNT">Discount</option>
+                                    <option value="COUPON">Commission</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="reward" class="control-label col-sm-3">Reward:<abbr title="required" class="text-danger">*</abbr></label>
+                            <div class="col-sm-7">
+                                <select ng-disabled="couponForm.type == null" name="reward" id="reward" class="form-control" ng-model="couponForm.reward">
+                                    <option value="">--Choose--</option>
+                                    <option ng-if="couponForm.type == 'DISCOUNT'" ng-repeat="i in getRange(100) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+                                    <option ng-if="couponForm.type == 'COUPON'" ng-repeat="i in getRange(10) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                   <fieldset>
+                       <div class="form-group">
+                           <label for="amount" class="control-label col-sm-3">Amount:<abbr title="required" class="text-danger">*</abbr></label>
+                           <div class="col-sm-7">
+                               <select name="quantity" id="amount" class="form-control" ng-model="couponForm.amount">
+                                   <option value="">--Choose--</option>
+                                   <option ng-repeat="i in getRange(50) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+                               </select>
+                           </div>
+                       </div>
+                   </fieldset>
+
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="quantity" class="control-label col-sm-3">Quantity:<abbr title="required" class="text-danger">*</abbr></label>
+                            <div class="col-sm-7">
+                                <select name="quantity" id="quantity" class="form-control" ng-model="couponForm.quantity">
+                                    <option value="">--Choose--</option>
+                                    <option ng-repeat="i in getRange(5) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="expiry_date" class="control-label col-sm-3">Expiry:</label>
+                            <div class="col-sm-7">
+                                <input type="datetime" id="expiry_date" name="expiry_date" ng-model="couponForm.expiry_date" class="form-control" />
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+
+                <div class="panel-footer">
+                    <button ng-disabled="disabled" class="btn btn-primary btn-block" type="submit">Generate</button>
+                </div>
+            </form>
         </div>
-        <!--</div>-->
     </div>
 </div>

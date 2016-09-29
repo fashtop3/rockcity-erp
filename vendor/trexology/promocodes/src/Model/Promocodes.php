@@ -10,7 +10,7 @@ class Promocodes extends Model
 {
 
     protected $guarded = [
-        'id','created_at','updated_at'
+        'created_at','updated_at'
     ];
 
     protected $table = 'promocodes';

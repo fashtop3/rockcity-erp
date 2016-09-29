@@ -168,12 +168,6 @@
     'use strict';
 
     angular
-        .module('app.panels', []);
-})();
-(function() {
-    'use strict';
-
-    angular
         .module('app.preloader', []);
 })();
 
@@ -219,6 +213,12 @@
           ]);
 })();
 
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels', []);
+})();
 (function(){
     'use strict';
 
@@ -6622,453 +6622,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 //    }
 //})();
 
-/**=========================================================
- * Collapse panels * [panel-collapse]
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('panelCollapse', panelCollapse);
-
-    function panelCollapse () {
-        var directive = {
-            controller: Controller,
-            restrict: 'A',
-            scope: false
-        };
-        return directive;
-    }
-
-    Controller.$inject = ['$scope', '$element', '$timeout', '$localStorage'];
-    function Controller ($scope, $element, $timeout, $localStorage) {
-      var storageKeyName = 'panelState';
-
-      // Prepare the panel to be collapsible
-      var $elem   = $($element),
-          parent  = $elem.closest('.panel'), // find the first parent panel
-          panelId = parent.attr('id');
-
-      // Load the saved state if exists
-      var currentState = loadPanelState( panelId );
-      if ( typeof currentState !== 'undefined') {
-        $timeout(function(){
-            $scope[panelId] = currentState; },
-          10);
-      }
-
-      // bind events to switch icons
-      $element.bind('click', function(e) {
-        e.preventDefault();
-        savePanelState( panelId, !$scope[panelId] );
-
-      });
-  
-      // Controller helpers
-      function savePanelState(id, state) {
-        if(!id) return false;
-        var data = angular.fromJson($localStorage[storageKeyName]);
-        if(!data) { data = {}; }
-        data[id] = state;
-        $localStorage[storageKeyName] = angular.toJson(data);
-      }
-      function loadPanelState(id) {
-        if(!id) return false;
-        var data = angular.fromJson($localStorage[storageKeyName]);
-        if(data) {
-          return data[id];
-        }
-      }
-    }
-
-})();
-
-/**=========================================================
- * Dismiss panels * [panel-dismiss]
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('panelDismiss', panelDismiss);
-
-    function panelDismiss () {
-
-        var directive = {
-            controller: Controller,
-            restrict: 'A'
-        };
-        return directive;
-
-    }
-
-    Controller.$inject = ['$scope', '$element', '$q', 'Utils'];
-    function Controller ($scope, $element, $q, Utils) {
-      var removeEvent   = 'panel-remove',
-          removedEvent  = 'panel-removed';
-
-      $element.on('click', function (e) {
-        e.preventDefault();
-
-        // find the first parent panel
-        var parent = $(this).closest('.panel');
-
-        removeElement();
-
-        function removeElement() {
-          var deferred = $q.defer();
-          var promise = deferred.promise;
-          
-          // Communicate event destroying panel
-          $scope.$emit(removeEvent, parent.attr('id'), deferred);
-          promise.then(destroyMiddleware);
-        }
-
-        // Run the animation before destroy the panel
-        function destroyMiddleware() {
-          if(Utils.support.animation) {
-            parent.animo({animation: 'bounceOut'}, destroyPanel);
-          }
-          else destroyPanel();
-        }
-
-        function destroyPanel() {
-
-          var col = parent.parent();
-          parent.remove();
-          // remove the parent if it is a row and is empty and not a sortable (portlet)
-          col
-            .filter(function() {
-            var el = $(this);
-            return (el.is('[class*="col-"]:not(.sortable)') && el.children('*').length === 0);
-          }).remove();
-
-          // Communicate event destroyed panel
-          $scope.$emit(removedEvent, parent.attr('id'));
-
-        }
-
-      });
-    }
-})();
-
-
-
-/**=========================================================
- * Refresh panels
- * [panel-refresh] * [data-spinner="standard"]
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('panelRefresh', panelRefresh);
-
-    function panelRefresh () {
-        var directive = {
-            controller: Controller,
-            restrict: 'A',
-            scope: false
-        };
-        return directive;
-
-    }
-
-    Controller.$inject = ['$scope', '$element'];
-    function Controller ($scope, $element) {
-      var refreshEvent   = 'panel-refresh',
-          whirlClass     = 'whirl',
-          defaultSpinner = 'standard';
-
-      // catch clicks to toggle panel refresh
-      $element.on('click', function (e) {
-        e.preventDefault();
-
-        var $this   = $(this),
-            panel   = $this.parents('.panel').eq(0),
-            spinner = $this.data('spinner') || defaultSpinner
-            ;
-
-        // start showing the spinner
-        panel.addClass(whirlClass + ' ' + spinner);
-
-        // Emit event when refresh clicked
-        $scope.$emit(refreshEvent, panel.attr('id'));
-
-      });
-
-      // listen to remove spinner
-      $scope.$on('removeSpinner', removeSpinner);
-
-      // method to clear the spinner when done
-      function removeSpinner (ev, id) {
-        if (!id) return;
-        var newid = id.charAt(0) === '#' ? id : ('#'+id);
-        angular
-          .element(newid)
-          .removeClass(whirlClass);
-      }
-    }
-})();
-
-
-
-/**=========================================================
- * Module panel-tools.js
- * Directive tools to control panels.
- * Allows collapse, refresh and dismiss (remove)
- * Saves panel state in browser storage
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('paneltool', paneltool);
-
-    paneltool.$inject = ['$compile', '$timeout'];
-    function paneltool ($compile, $timeout) {
-        var directive = {
-            link: link,
-            restrict: 'E',
-            scope: false
-        };
-        return directive;
-
-        function link(scope, element, attrs) {
-
-          var templates = {
-            /* jshint multistr: true */
-            collapse:'<a href="#" panel-collapse="" uib-tooltip="Collapse Panel" ng-click="{{panelId}} = !{{panelId}}"> \
-                        <em ng-show="{{panelId}}" class="fa fa-plus ng-no-animation"></em> \
-                        <em ng-show="!{{panelId}}" class="fa fa-minus ng-no-animation"></em> \
-                      </a>',
-            dismiss: '<a href="#" panel-dismiss="" uib-tooltip="Close Panel">\
-                       <em class="fa fa-times"></em>\
-                     </a>',
-            refresh: '<a href="#" panel-refresh="" data-spinner="{{spinner}}" uib-tooltip="Refresh Panel">\
-                       <em class="fa fa-refresh"></em>\
-                     </a>'
-          };
-
-          var tools = scope.panelTools || attrs;
-
-          $timeout(function() {
-            element.html(getTemplate(element, tools )).show();
-            $compile(element.contents())(scope);
-
-            element.addClass('pull-right');
-          });
-
-          function getTemplate( elem, attrs ){
-            var temp = '';
-            attrs = attrs || {};
-            if(attrs.toolCollapse)
-              temp += templates.collapse.replace(/{{panelId}}/g, (elem.parent().parent().attr('id')) );
-            if(attrs.toolDismiss)
-              temp += templates.dismiss;
-            if(attrs.toolRefresh)
-              temp += templates.refresh.replace(/{{spinner}}/g, attrs.toolRefresh);
-            return temp;
-          }
-        }// link
-    }
-
-})();
-
-/**=========================================================
- * Module: demo-panels.js
- * Provides a simple demo for panel actions
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .controller('PanelsCtrl', PanelsCtrl);
-
-    PanelsCtrl.$inject = ['$scope', '$timeout'];
-    function PanelsCtrl($scope, $timeout) {
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-
-          // PANEL COLLAPSE EVENTS
-          // ----------------------------------- 
-
-          // We can use panel id name for the boolean flag to [un]collapse the panel
-          $scope.$watch('panelDemo1',function(newVal){
-              
-              console.log('panelDemo1 collapsed: ' + newVal);
-
-          });
-
-
-          // PANEL DISMISS EVENTS
-          // ----------------------------------- 
-
-          // Before remove panel
-          $scope.$on('panel-remove', function(event, id, deferred){
-            
-            console.log('Panel #' + id + ' removing');
-            
-            // Here is obligatory to call the resolve() if we pretend to remove the panel finally
-            // Not calling resolve() will NOT remove the panel
-            // It's up to your app to decide if panel should be removed or not
-            deferred.resolve();
-          
-          });
-
-          // Panel removed ( only if above was resolved() )
-          $scope.$on('panel-removed', function(event, id){
-
-            console.log('Panel #' + id + ' removed');
-
-          });
-
-
-          // PANEL REFRESH EVENTS
-          // ----------------------------------- 
-
-          $scope.$on('panel-refresh', function(event, id) {
-            var secs = 3;
-            
-            console.log('Refreshing during ' + secs +'s #'+id);
-
-            $timeout(function(){
-              // directive listen for to remove the spinner 
-              // after we end up to perform own operations
-              $scope.$broadcast('removeSpinner', id);
-              
-              console.log('Refreshed #' + id);
-
-            }, 3000);
-
-          });
-
-          // PANELS VIA NG-REPEAT
-          // ----------------------------------- 
-
-          $scope.panels = [
-            {
-              id: 'panelRepeat1',
-              title: 'Panel Title 1',
-              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
-            },
-            {
-              id: 'panelRepeat2',
-              title: 'Panel Title 2',
-              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
-            },
-            {
-              id: 'panelRepeat3',
-              title: 'Panel Title 3',
-              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
-            }
-          ];
-        }
-
-    } //PanelsCtrl
-
-})();
-
-
-/**=========================================================
- * Drag and drop any panel based on jQueryUI portlets
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('portlet', portlet);
-
-    portlet.$inject = ['$timeout', '$localStorage'];
-    function portlet ($timeout, $localStorage) {
-      var storageKeyName = 'portletState';
-
-      return {
-        restrict: 'A',
-        link: link
-      };
-
-      /////////////
-
-      function link(scope, element) {
-          
-        // not compatible with jquery sortable
-        if(!$.fn.sortable) return;
-
-        element.sortable({
-          connectWith:          '[portlet]', // same like directive 
-          items:                'div.panel',
-          handle:               '.portlet-handler',
-          opacity:              0.7,
-          placeholder:          'portlet box-placeholder',
-          cancel:               '.portlet-cancel',
-          forcePlaceholderSize: true,
-          iframeFix:            false,
-          tolerance:            'pointer',
-          helper:               'original',
-          revert:               200,
-          forceHelperSize:      true,
-          update:               savePortletOrder,
-          create:               loadPortletOrder
-        });
-
-      }
-
-
-      function savePortletOrder(event/*, ui*/) {
-        var self = event.target;
-        var data = angular.fromJson($localStorage[storageKeyName]);
-        
-        if(!data) { data = {}; }
-
-        data[self.id] = $(self).sortable('toArray');
-
-        if(data) {
-          $timeout(function() {
-            $localStorage[storageKeyName] = angular.toJson(data);
-          });
-        }
-      }
-
-      function loadPortletOrder(event) {
-        var self = event.target;
-        var data = angular.fromJson($localStorage[storageKeyName]);
-
-        if(data) {
-          
-          var porletId = self.id,
-              panels   = data[porletId];
-
-          if(panels) {
-            var portlet = $('#'+porletId);
-            
-            $.each(panels, function(index, value) {
-               $('#'+value).appendTo(portlet);
-            });
-          }
-
-        }
-      }
-
-    }
-
-})();
- 
 (function() {
     'use strict';
 
@@ -9706,6 +9259,453 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
     }
 })();
 
+/**=========================================================
+ * Collapse panels * [panel-collapse]
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelCollapse', panelCollapse);
+
+    function panelCollapse () {
+        var directive = {
+            controller: Controller,
+            restrict: 'A',
+            scope: false
+        };
+        return directive;
+    }
+
+    Controller.$inject = ['$scope', '$element', '$timeout', '$localStorage'];
+    function Controller ($scope, $element, $timeout, $localStorage) {
+      var storageKeyName = 'panelState';
+
+      // Prepare the panel to be collapsible
+      var $elem   = $($element),
+          parent  = $elem.closest('.panel'), // find the first parent panel
+          panelId = parent.attr('id');
+
+      // Load the saved state if exists
+      var currentState = loadPanelState( panelId );
+      if ( typeof currentState !== 'undefined') {
+        $timeout(function(){
+            $scope[panelId] = currentState; },
+          10);
+      }
+
+      // bind events to switch icons
+      $element.bind('click', function(e) {
+        e.preventDefault();
+        savePanelState( panelId, !$scope[panelId] );
+
+      });
+  
+      // Controller helpers
+      function savePanelState(id, state) {
+        if(!id) return false;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        if(!data) { data = {}; }
+        data[id] = state;
+        $localStorage[storageKeyName] = angular.toJson(data);
+      }
+      function loadPanelState(id) {
+        if(!id) return false;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        if(data) {
+          return data[id];
+        }
+      }
+    }
+
+})();
+
+/**=========================================================
+ * Dismiss panels * [panel-dismiss]
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelDismiss', panelDismiss);
+
+    function panelDismiss () {
+
+        var directive = {
+            controller: Controller,
+            restrict: 'A'
+        };
+        return directive;
+
+    }
+
+    Controller.$inject = ['$scope', '$element', '$q', 'Utils'];
+    function Controller ($scope, $element, $q, Utils) {
+      var removeEvent   = 'panel-remove',
+          removedEvent  = 'panel-removed';
+
+      $element.on('click', function (e) {
+        e.preventDefault();
+
+        // find the first parent panel
+        var parent = $(this).closest('.panel');
+
+        removeElement();
+
+        function removeElement() {
+          var deferred = $q.defer();
+          var promise = deferred.promise;
+          
+          // Communicate event destroying panel
+          $scope.$emit(removeEvent, parent.attr('id'), deferred);
+          promise.then(destroyMiddleware);
+        }
+
+        // Run the animation before destroy the panel
+        function destroyMiddleware() {
+          if(Utils.support.animation) {
+            parent.animo({animation: 'bounceOut'}, destroyPanel);
+          }
+          else destroyPanel();
+        }
+
+        function destroyPanel() {
+
+          var col = parent.parent();
+          parent.remove();
+          // remove the parent if it is a row and is empty and not a sortable (portlet)
+          col
+            .filter(function() {
+            var el = $(this);
+            return (el.is('[class*="col-"]:not(.sortable)') && el.children('*').length === 0);
+          }).remove();
+
+          // Communicate event destroyed panel
+          $scope.$emit(removedEvent, parent.attr('id'));
+
+        }
+
+      });
+    }
+})();
+
+
+
+/**=========================================================
+ * Refresh panels
+ * [panel-refresh] * [data-spinner="standard"]
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelRefresh', panelRefresh);
+
+    function panelRefresh () {
+        var directive = {
+            controller: Controller,
+            restrict: 'A',
+            scope: false
+        };
+        return directive;
+
+    }
+
+    Controller.$inject = ['$scope', '$element'];
+    function Controller ($scope, $element) {
+      var refreshEvent   = 'panel-refresh',
+          whirlClass     = 'whirl',
+          defaultSpinner = 'standard';
+
+      // catch clicks to toggle panel refresh
+      $element.on('click', function (e) {
+        e.preventDefault();
+
+        var $this   = $(this),
+            panel   = $this.parents('.panel').eq(0),
+            spinner = $this.data('spinner') || defaultSpinner
+            ;
+
+        // start showing the spinner
+        panel.addClass(whirlClass + ' ' + spinner);
+
+        // Emit event when refresh clicked
+        $scope.$emit(refreshEvent, panel.attr('id'));
+
+      });
+
+      // listen to remove spinner
+      $scope.$on('removeSpinner', removeSpinner);
+
+      // method to clear the spinner when done
+      function removeSpinner (ev, id) {
+        if (!id) return;
+        var newid = id.charAt(0) === '#' ? id : ('#'+id);
+        angular
+          .element(newid)
+          .removeClass(whirlClass);
+      }
+    }
+})();
+
+
+
+/**=========================================================
+ * Module panel-tools.js
+ * Directive tools to control panels.
+ * Allows collapse, refresh and dismiss (remove)
+ * Saves panel state in browser storage
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('paneltool', paneltool);
+
+    paneltool.$inject = ['$compile', '$timeout'];
+    function paneltool ($compile, $timeout) {
+        var directive = {
+            link: link,
+            restrict: 'E',
+            scope: false
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+
+          var templates = {
+            /* jshint multistr: true */
+            collapse:'<a href="#" panel-collapse="" uib-tooltip="Collapse Panel" ng-click="{{panelId}} = !{{panelId}}"> \
+                        <em ng-show="{{panelId}}" class="fa fa-plus ng-no-animation"></em> \
+                        <em ng-show="!{{panelId}}" class="fa fa-minus ng-no-animation"></em> \
+                      </a>',
+            dismiss: '<a href="#" panel-dismiss="" uib-tooltip="Close Panel">\
+                       <em class="fa fa-times"></em>\
+                     </a>',
+            refresh: '<a href="#" panel-refresh="" data-spinner="{{spinner}}" uib-tooltip="Refresh Panel">\
+                       <em class="fa fa-refresh"></em>\
+                     </a>'
+          };
+
+          var tools = scope.panelTools || attrs;
+
+          $timeout(function() {
+            element.html(getTemplate(element, tools )).show();
+            $compile(element.contents())(scope);
+
+            element.addClass('pull-right');
+          });
+
+          function getTemplate( elem, attrs ){
+            var temp = '';
+            attrs = attrs || {};
+            if(attrs.toolCollapse)
+              temp += templates.collapse.replace(/{{panelId}}/g, (elem.parent().parent().attr('id')) );
+            if(attrs.toolDismiss)
+              temp += templates.dismiss;
+            if(attrs.toolRefresh)
+              temp += templates.refresh.replace(/{{spinner}}/g, attrs.toolRefresh);
+            return temp;
+          }
+        }// link
+    }
+
+})();
+
+/**=========================================================
+ * Module: demo-panels.js
+ * Provides a simple demo for panel actions
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .controller('PanelsCtrl', PanelsCtrl);
+
+    PanelsCtrl.$inject = ['$scope', '$timeout'];
+    function PanelsCtrl($scope, $timeout) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // PANEL COLLAPSE EVENTS
+          // ----------------------------------- 
+
+          // We can use panel id name for the boolean flag to [un]collapse the panel
+          $scope.$watch('panelDemo1',function(newVal){
+              
+              console.log('panelDemo1 collapsed: ' + newVal);
+
+          });
+
+
+          // PANEL DISMISS EVENTS
+          // ----------------------------------- 
+
+          // Before remove panel
+          $scope.$on('panel-remove', function(event, id, deferred){
+            
+            console.log('Panel #' + id + ' removing');
+            
+            // Here is obligatory to call the resolve() if we pretend to remove the panel finally
+            // Not calling resolve() will NOT remove the panel
+            // It's up to your app to decide if panel should be removed or not
+            deferred.resolve();
+          
+          });
+
+          // Panel removed ( only if above was resolved() )
+          $scope.$on('panel-removed', function(event, id){
+
+            console.log('Panel #' + id + ' removed');
+
+          });
+
+
+          // PANEL REFRESH EVENTS
+          // ----------------------------------- 
+
+          $scope.$on('panel-refresh', function(event, id) {
+            var secs = 3;
+            
+            console.log('Refreshing during ' + secs +'s #'+id);
+
+            $timeout(function(){
+              // directive listen for to remove the spinner 
+              // after we end up to perform own operations
+              $scope.$broadcast('removeSpinner', id);
+              
+              console.log('Refreshed #' + id);
+
+            }, 3000);
+
+          });
+
+          // PANELS VIA NG-REPEAT
+          // ----------------------------------- 
+
+          $scope.panels = [
+            {
+              id: 'panelRepeat1',
+              title: 'Panel Title 1',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            },
+            {
+              id: 'panelRepeat2',
+              title: 'Panel Title 2',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            },
+            {
+              id: 'panelRepeat3',
+              title: 'Panel Title 3',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            }
+          ];
+        }
+
+    } //PanelsCtrl
+
+})();
+
+
+/**=========================================================
+ * Drag and drop any panel based on jQueryUI portlets
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('portlet', portlet);
+
+    portlet.$inject = ['$timeout', '$localStorage'];
+    function portlet ($timeout, $localStorage) {
+      var storageKeyName = 'portletState';
+
+      return {
+        restrict: 'A',
+        link: link
+      };
+
+      /////////////
+
+      function link(scope, element) {
+          
+        // not compatible with jquery sortable
+        if(!$.fn.sortable) return;
+
+        element.sortable({
+          connectWith:          '[portlet]', // same like directive 
+          items:                'div.panel',
+          handle:               '.portlet-handler',
+          opacity:              0.7,
+          placeholder:          'portlet box-placeholder',
+          cancel:               '.portlet-cancel',
+          forcePlaceholderSize: true,
+          iframeFix:            false,
+          tolerance:            'pointer',
+          helper:               'original',
+          revert:               200,
+          forceHelperSize:      true,
+          update:               savePortletOrder,
+          create:               loadPortletOrder
+        });
+
+      }
+
+
+      function savePortletOrder(event/*, ui*/) {
+        var self = event.target;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        
+        if(!data) { data = {}; }
+
+        data[self.id] = $(self).sortable('toArray');
+
+        if(data) {
+          $timeout(function() {
+            $localStorage[storageKeyName] = angular.toJson(data);
+          });
+        }
+      }
+
+      function loadPortletOrder(event) {
+        var self = event.target;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+
+        if(data) {
+          
+          var porletId = self.id,
+              panels   = data[porletId];
+
+          if(panels) {
+            var portlet = $('#'+porletId);
+            
+            $.each(panels, function(index, value) {
+               $('#'+value).appendTo(portlet);
+            });
+          }
+
+        }
+      }
+
+    }
+
+})();
+ 
 (function() {
     'use strict';
 
@@ -10114,6 +10114,413 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             this.register = function() {
                 return $resource(baseURL + 'user', null, { 'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }}});
             }
+        }]);
+})();
+/**
+ * Created by dfash on 9/29/16.
+ */
+
+(function () {
+   'use strict';
+
+    angular
+        .module('app.order')
+        .controller('CouponController', ['$scope', 'couponFactory', function($scope, couponFactory) {
+            var vm = $scope;
+            //vm.types = [{label:'Discount',value:'DISCOUNT'}, {label:'Commission',value:'COUPON'}];
+            //vm.typeSelected = vm.types[0];
+            vm.couponForm = {type:null, amount:null, 'reward':null, quantity:null, expiry_date:''};
+            vm.disabled = false;
+            vm.alerts = [];
+            vm.closeAlert = function(index) {
+                vm.alerts.splice(index, 1);
+            };
+
+            vm.generateCoupon = function() {
+                vm.disabled = true;
+                couponFactory.code().generate(vm.couponForm,
+                    function (response) {
+                        vm.couponForm = {};
+                        vm.alerts[0] = {'type':'success', 'msg':response.data};
+                        vm.disabled = false;
+                    },
+                    function (response) {
+                        vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                        vm.disabled = false;
+                    }
+                )
+            };
+
+            vm.getRange = function(n) {
+                return new Array(parseInt(n));
+            };
+        }]);
+})();
+/**
+ * Created by dfash on 9/29/16.
+ */
+
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('couponFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
+            this.code = function() {
+                return $resource(baseURL + 'promocode/generate', null, {'generate':{method:'POST'}});
+            }
+        }]);
+})();
+/**
+ * Created by dfash on 5/18/16.
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
+            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
+
+                var vm = $scope;
+                
+                vm.alerts = [];
+                vm.passwordAlerts = [];
+
+                vm.profile = {_token: _token};
+
+                vm.reset = {_token: _token};
+
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+
+                $resource(baseURL + 'contacts').query().$promise.then(
+                    function (response) {
+                        vm.contacts = response;
+                    }
+                );
+
+                //profile
+                vm.profile = loginFactory.userData();
+
+                //uploader object
+                vm.uploader = new FileUploader({
+                    url: baseURL +'user/'+vm.profile.id+'/upload'
+                });
+
+                //upload
+                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
+
+                //upload
+                vm.uploader.onCompleteAll = function() {
+                    vm.uploader.clearQueue();
+                };
+
+
+                //submit profile form
+                vm.updateProfile = function() {
+                    $resource(baseURL + 'user/:id/edit', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.profile,
+                        function (response) {
+                            vm.alerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
+                            }
+                        }
+                    );
+
+                    //console.log(vm.profile);
+                    //vm.uploader.uploadAll();
+                };
+
+                vm.updatePassword = function() {
+                    $resource(baseURL + 'user/:id/edit?action=password', null, {'update':{method:'PUT'}})
+                        .update({'id':vm.profile.id}, vm.reset,
+                        function (response) {
+                            vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
+                            toaster.pop('success', 'Sent', response.data);
+                        },
+                        function (response) {
+                            if(response.status == 403) {
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':response.data};
+                                toaster.pop('error', 'Error', response.data);
+                            }
+                            else{
+                                vm.passwordAlerts[0] = {'type':'danger', 'msg':'Failed: contact administrator'};
+                                toaster.pop('error', 'Error', 'Failed: contact administrator');
+                            }
+                        }
+                    );
+                }
+            }]);
+})();
+/**
+ * Created by dfash on 6/19/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ClientFormController', [
+            '$scope', 'clientFactory', 'toaster', '$stateParams', '$rootScope', '$state', '$timeout',
+            function($scope, clientFactory, toaster, $stateParams, $rootScope, $state, $timeout) {
+
+                var vm = $scope;
+                vm.disableView = false;
+
+                vm.client = {name:'', address:'', title:'Mr', firstname:'', lastname:'', mobile:'', email:''};
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                if($state.is('app.client.edit')) {
+                    vm.disableView = false;
+                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
+                        .$promise.then(
+                        function(response) {
+                            vm.client = response;
+                        },
+                        function (response) {
+                            vm.disableView = true;
+                            if(response.status == 403){
+                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                            }
+                            else if(response.status == 404){
+                                vm.alerts[0] = {'type':'danger', 'msg': "Client not found!."};
+                            }
+                        }
+                    );
+                }
+
+                vm.clientSubmit = function() {
+                    toaster.pop('wait', 'Client', 'Processing your request');
+                    if(vm.client.id) {
+                        clientFactory.update().save({'id':vm.client.id}, vm.client,
+                            function(response) {
+                                toaster.pop('success', 'Client', response.data);
+                                $timeout(function(){
+                                    $state.go('app.client');
+                                }, 500);
+                            },
+                            function (response) {
+                                if(response.status == 403) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', response.data);
+                                }
+                            }
+                        );
+                    }
+                    else
+                    {
+                        clientFactory.clients().save(vm.client,
+                            function(response){
+                                toaster.pop('success', 'Client Registration', response.data);
+                                $timeout(function(){
+                                    $state.go('app.client');
+                                }, 1000);
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', response.data);
+                                }
+                                else if(response.status == 422) {
+                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
+                                    toaster.pop('error', 'Client', response.data);
+                                } else {
+                                    vm.alerts[0] = {'type':'danger', 'msg':'Server Error contact site administrator'};
+                                    toaster.pop('error', 'Client', 'Server Error contact site administrator');
+                                }
+                            }
+                        );
+                    }
+                };
+
+            }]);
+})();
+
+
+(function () {
+    angular
+        .module('app.order')
+        .service('ServerResponse', function() {
+            this.successResponse = function() {
+
+            };
+
+            this.responseError = function() {
+
+            }
+        });
+})();
+
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert', '$state',
+            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert, $state) {
+
+                var vm = $scope;
+
+                vm.showClient = false;
+                vm.clientMessage = "Loading...";
+
+                vm.alerts = [];
+                vm.closeAlert = function(index) {
+                    vm.alerts.splice(index, 1);
+                };
+
+                if(angular.isDefined($stateParams.id)) {
+
+                    //get client by id
+                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
+                        .$promise.then(
+                        function (response) {
+                            vm.client = response;
+                            vm.showClient = true;
+                        }, function (response) {
+                            if(response.status == 403) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        }
+                    )
+                }
+
+
+
+                activate();
+
+                ////////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    if($state.is('app.admin.clients')) {
+                        clientFactory.getAllClients().query().$promise.then(
+                            function(response){
+                                vm.clients = response;
+                                vm.showclient = true;
+                            },
+                            function(response) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+                    else {
+                        clientFactory.clients().query().$promise.then(
+                            function(response){
+                                vm.clients = response;
+                                vm.showclient = true;
+                            },
+                            function(response) {
+                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                            }
+                        );
+                    }
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(3).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(4).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(5).notSortable()
+                    ];
+
+                    vm.removeClient = removeClient;
+
+                    function removeClient($index)
+                    {
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this client?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    clientFactory.clients().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.clients.splice($index, 1);
+                                            vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Client has been deleted.', 'success');
+                                        },
+                                        function () {
+                                            vm.clientMessage = 'Server error.';
+                                            if(response.status == 403) {
+                                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
+                                            }
+                                            SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Client data is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+
+            }]);
+})();
+/**
+ * Created by dfash on 4/29/16.
+ */
+
+(function(){
+    'use strict';
+
+    angular
+        .module('app.order')
+        .service('clientFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+            this.getAllClients = function(){
+                return $resource(baseURL + "admin/clients");
+            };
+
+            this.update = function(){
+                return $resource(baseURL + "client/:id/edit", null, {
+                    'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                });
+            };
+
+            this.clients = function() {
+                return $resource(baseURL + 'client/:id', null, {
+                    'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
+                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
+                });
+            };
+
         }]);
 })();
 /**
@@ -12131,371 +12538,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
             }]);
 })();
 /**
- * Created by dfash on 6/19/16.
- */
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('ClientFormController', [
-            '$scope', 'clientFactory', 'toaster', '$stateParams', '$rootScope', '$state', '$timeout',
-            function($scope, clientFactory, toaster, $stateParams, $rootScope, $state, $timeout) {
-
-                var vm = $scope;
-                vm.disableView = false;
-
-                vm.client = {name:'', address:'', title:'Mr', firstname:'', lastname:'', mobile:'', email:''};
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-                if($state.is('app.client.edit')) {
-                    vm.disableView = false;
-                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
-                        .$promise.then(
-                        function(response) {
-                            vm.client = response;
-                        },
-                        function (response) {
-                            vm.disableView = true;
-                            if(response.status == 403){
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                            }
-                            else if(response.status == 404){
-                                vm.alerts[0] = {'type':'danger', 'msg': "Client not found!."};
-                            }
-                        }
-                    );
-                }
-
-                vm.clientSubmit = function() {
-                    toaster.pop('wait', 'Client', 'Processing your request');
-                    if(vm.client.id) {
-                        clientFactory.update().save({'id':vm.client.id}, vm.client,
-                            function(response) {
-                                toaster.pop('success', 'Client', response.data);
-                                $timeout(function(){
-                                    $state.go('app.client');
-                                }, 500);
-                            },
-                            function (response) {
-                                if(response.status == 403) {
-                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                    toaster.pop('error', 'Client', response.data);
-                                }
-                            }
-                        );
-                    }
-                    else
-                    {
-                        clientFactory.clients().save(vm.client,
-                            function(response){
-                                toaster.pop('success', 'Client Registration', response.data);
-                                $timeout(function(){
-                                    $state.go('app.client');
-                                }, 1000);
-                            },
-                            function(response) {
-                                if(response.status == 403) {
-                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                    toaster.pop('error', 'Client', response.data);
-                                }
-                                else if(response.status == 422) {
-                                    vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                    toaster.pop('error', 'Client', response.data);
-                                } else {
-                                    vm.alerts[0] = {'type':'danger', 'msg':'Server Error contact site administrator'};
-                                    toaster.pop('error', 'Client', 'Server Error contact site administrator');
-                                }
-                            }
-                        );
-                    }
-                };
-
-            }]);
-})();
-
-
-(function () {
-    angular
-        .module('app.order')
-        .service('ServerResponse', function() {
-            this.successResponse = function() {
-
-            };
-
-            this.responseError = function() {
-
-            }
-        });
-})();
-
-/**
- * Created by dfash on 4/29/16.
- */
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('ClientController', ['$scope', '$stateParams', 'clientFactory', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert', '$state',
-            function($scope, $stateParams, clientFactory, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert, $state) {
-
-                var vm = $scope;
-
-                vm.showClient = false;
-                vm.clientMessage = "Loading...";
-
-                vm.alerts = [];
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-                if(angular.isDefined($stateParams.id)) {
-
-                    //get client by id
-                    vm.client = clientFactory.clients().get({id: parseInt($stateParams.id, 10)})
-                        .$promise.then(
-                        function (response) {
-                            vm.client = response;
-                            vm.showClient = true;
-                        }, function (response) {
-                            if(response.status == 403) {
-                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                            }
-                        }
-                    )
-                }
-
-
-
-                activate();
-
-                ////////////////
-
-                function activate() {
-
-                    // Changing data
-
-                    if($state.is('app.admin.clients')) {
-                        clientFactory.getAllClients().query().$promise.then(
-                            function(response){
-                                vm.clients = response;
-                                vm.showclient = true;
-                            },
-                            function(response) {
-                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                            }
-                        );
-                    }
-                    else {
-                        clientFactory.clients().query().$promise.then(
-                            function(response){
-                                vm.clients = response;
-                                vm.showclient = true;
-                            },
-                            function(response) {
-                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                            }
-                        );
-                    }
-
-
-                    vm.dtOptions = DTOptionsBuilder.newOptions()
-                        .withDisplayLength(100)
-                        .withPaginationType('full_numbers');
-
-                    vm.dtColumnDefs = [
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(2).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(3).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(4).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(5).notSortable()
-                    ];
-
-                    vm.removeClient = removeClient;
-
-                    function removeClient($index)
-                    {
-                        (function() {
-                            SweetAlert.swal({
-                                title: 'Are you sure you want to delete this client?',
-                                text: 'Your will not be able to recover your selected data back!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, cancel pls!',
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm){
-                                if (isConfirm) {
-                                    clientFactory.clients().delete({'id':parseInt(vm.clients[$index].id)}).$promise.then(
-                                        function () {
-                                            vm.clients.splice($index, 1);
-                                            vm.alerts[0] = {'type':'success', 'msg':'Client removed successfully'};
-                                            SweetAlert.swal('Deleted!', 'Client has been deleted.', 'success');
-                                        },
-                                        function () {
-                                            vm.clientMessage = 'Server error.';
-                                            if(response.status == 403) {
-                                                vm.clientMessage = "Error: " + response.status + " " + response.statusText;
-                                            }
-                                            SweetAlert.swal('Cancelled', vm.clientMessage, 'error');
-                                        }
-                                    );
-                                } else {
-                                    SweetAlert.swal('Cancelled', 'Client data is safe :)', 'error');
-                                }
-                            });
-                        })();
-
-                    }
-
-                }
-
-            }]);
-})();
-/**
- * Created by dfash on 4/29/16.
- */
-
-(function(){
-    'use strict';
-
-    angular
-        .module('app.order')
-        .service('clientFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-
-            this.getAllClients = function(){
-                return $resource(baseURL + "admin/clients");
-            };
-
-            this.update = function(){
-                return $resource(baseURL + "client/:id/edit", null, {
-                    'save': {method:'PUT', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                });
-            };
-
-            this.clients = function() {
-                return $resource(baseURL + 'client/:id', null, {
-                    'save':{method:'POST', headers: { 'X-Requested-With' :'XMLHttpRequest' }},
-                    'delete':{method:'DELETE', headers: { 'X-Requested-With' :'XMLHttpRequest' }}
-                });
-            };
-
-        }]);
-})();
-/**
- * Created by dfash on 9/29/16.
- */
-
-(function () {
-   'use strict';
-
-    angular
-        .module('app.order')
-        .controller('CouponController', ['$scope', function($scope) {
-
-        }]);
-});
-/**
- * Created by dfash on 5/18/16.
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('DashboardController', ['loginFactory', '$scope', '$resource', 'baseURL', 'FileUploader', '_token', 'toaster',
-            function(loginFactory, $scope, $resource, baseURL, FileUploader, _token, toaster) {
-
-                var vm = $scope;
-                
-                vm.alerts = [];
-                vm.passwordAlerts = [];
-
-                vm.profile = {_token: _token};
-
-                vm.reset = {_token: _token};
-
-                vm.closeAlert = function(index) {
-                    vm.alerts.splice(index, 1);
-                };
-
-
-                $resource(baseURL + 'contacts').query().$promise.then(
-                    function (response) {
-                        vm.contacts = response;
-                    }
-                );
-
-                //profile
-                vm.profile = loginFactory.userData();
-
-                //uploader object
-                vm.uploader = new FileUploader({
-                    url: baseURL +'user/'+vm.profile.id+'/upload'
-                });
-
-                //upload
-                vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
-                    console.info('onErrorItem', fileItem, response, status, headers);
-                };
-
-                //upload
-                vm.uploader.onCompleteAll = function() {
-                    vm.uploader.clearQueue();
-                };
-
-
-                //submit profile form
-                vm.updateProfile = function() {
-                    $resource(baseURL + 'user/:id/edit', null, {'update':{method:'PUT'}})
-                        .update({'id':vm.profile.id}, vm.profile,
-                        function (response) {
-                            vm.alerts[0] = {'type':'success', 'msg':response.data};
-                            toaster.pop('success', 'Sent', response.data);
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.alerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Error', response.data);
-                            }
-                        }
-                    );
-
-                    //console.log(vm.profile);
-                    //vm.uploader.uploadAll();
-                };
-
-                vm.updatePassword = function() {
-                    $resource(baseURL + 'user/:id/edit?action=password', null, {'update':{method:'PUT'}})
-                        .update({'id':vm.profile.id}, vm.reset,
-                        function (response) {
-                            vm.passwordAlerts[0] = {'type':'success', 'msg':response.data};
-                            toaster.pop('success', 'Sent', response.data);
-                        },
-                        function (response) {
-                            if(response.status == 403) {
-                                vm.passwordAlerts[0] = {'type':'danger', 'msg':response.data};
-                                toaster.pop('error', 'Error', response.data);
-                            }
-                            else{
-                                vm.passwordAlerts[0] = {'type':'danger', 'msg':'Failed: contact administrator'};
-                                toaster.pop('error', 'Error', 'Failed: contact administrator');
-                            }
-                        }
-                    );
-                }
-            }]);
-})();
-/**
  * Created by dfash on 5/23/16.
  */
 
@@ -13224,225 +13266,6 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
         }]);
 })();
 /**
- * Created by dfash on 7/10/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('AssessmentConfigController', ['$scope', '$state', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
-            function ($scope, $state, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
-
-                var vm = $scope;
-
-                vm.config = {"enable":false, "starts": "", "ends": ""};
-                vm.configs = {};
-
-                activate();
-
-                ////////////////
-
-                vm.submitSettings = function () {
-                    if(angular.isDefined(vm.config.id)) {
-                        assessmentService.getConfig().update({'id':parseInt(vm.config.id)}, vm.config,
-                            function(response){
-                                $state.reload();
-                            },
-                            function(response) {
-                                if(response.status == 403) {
-                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
-                                }
-                            }
-                        );
-                    }
-                    else {
-                        assessmentService.getConfig().save(vm.config,
-                            function(response){
-                                $state.reload();
-                            },
-                            function(response) {
-                                if(response.status == 403) {
-                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
-                                }
-                            }
-                        );
-                    }
-                };
-
-                vm.editConfig = function($index) {
-                    vm.config.id = vm.configs[$index].id;
-                    vm.config.enable = vm.configs[$index].enable == 1 ? true : false;
-                    vm.config.starts = new Date(vm.configs[$index].starts);
-                    vm.config.ends = new Date(vm.configs[$index].ends);
-                };
-
-                vm.isUpdate = function($index) {
-                    return vm.config.id == vm.configs[$index].id;
-                };
-
-
-                /////////////
-
-                function activate() {
-
-                    // Changing data
-
-                    assessmentService.getConfig().query().$promise.then(
-                        function(response){
-                            vm.configs = response;
-                        },
-                        function(response) {
-                            vm.configsMessage = "Error: " + response.status + " " + response.statusText;
-                        }
-                    );
-
-
-                    vm.dtOptions = DTOptionsBuilder.newOptions()
-                        .withDisplayLength(100)
-                        .withPaginationType('full_numbers');
-
-                    vm.dtColumnDefs = [
-                        DTColumnDefBuilder.newColumnDef(0).notSortable(),
-                        DTColumnDefBuilder.newColumnDef(1),
-                        DTColumnDefBuilder.newColumnDef(2),
-                        DTColumnDefBuilder.newColumnDef(3).notSortable()
-                    ];
-
-                    vm.remove = remove;
-
-                    //TODO: add notification message
-                    function remove($index)
-                    {
-                        (function() {
-                            SweetAlert.swal({
-                                title: 'Are you sure you want to delete this Schedule?',
-                                text: 'Your will not be able to recover your selected data back!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, cancel pls!',
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm){
-                                if (isConfirm) {
-                                    assessmentService.getConfig().delete({'id':parseInt(vm.configs[$index].id)}).$promise.then(
-                                        function () {
-                                            vm.configs.splice($index, 1);
-                                            //vm.alerts[0] = {'type':'success', 'msg':'Schedule removed successfully'};
-                                            SweetAlert.swal('Deleted!', 'Schedule removed successfully', 'success');
-                                        },
-                                        function () {
-                                            vm.configMessage = 'Server error.';
-                                            if(response.status == 403) {
-                                                vm.configMessage = "Error: " + response.status + " " + response.statusText;
-                                            }
-                                            SweetAlert.swal('Cancelled', vm.configMessage, 'error');
-                                        }
-                                    );
-                                } else {
-                                    SweetAlert.swal('Cancelled', 'Schedule is safe :)', 'error');
-                                }
-                            });
-                        })();
-
-                    }
-
-                }
-
-            }]);
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.order')
-        .controller('AssessConfigDatePickerCtrl', AssessConfigDatePickerCtrl);
-
-    function AssessConfigDatePickerCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-            vm.today = function() {
-                vm.dt = new Date();
-            };
-            vm.today();
-
-            vm.clear = function () {
-                vm.dt = null;
-            };
-
-            // Disable weekend selection
-            vm.disabled = function(date, mode) {
-                return false;
-                //return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-            };
-
-            vm.toggleMin = function() {
-                vm.minDate = vm.minDate ? null : new Date();
-            };
-            vm.toggleMin();
-
-            vm.open = function($event) {
-                $event.preventDefault();
-                $event.stopPropagation();
-
-                vm.opened = true;
-            };
-
-            vm.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-            };
-
-            vm.initDate = new Date('2019-10-20');
-            vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            vm.format = vm.formats[0];
-        }
-    }
-})();
-
-
-/**
- * Created by dfash on 7/10/16.
- */
-
-(function () {
-    angular
-        .module('app.order')
-        .controller('AssessmentLogController', ['$scope', 'assessmentService', '$state', '$stateParams',
-            function ($scope, assessmentService, $state, $stateParams) {
-
-                $scope.datetostamp = function(date) {
-                    return new Date(date);
-                };
-
-                assessmentService.getConfig().get({id: parseInt($stateParams.id)}).$promise.then(
-                    function(response){
-                        $scope.configs = response;
-                    },
-                    function(response) {
-                        $state.go('app.assessment.config');
-                    }
-                );
-
-                assessmentService.log().query({"id":parseInt($stateParams.id)}).$promise.then(
-                    function(response) {
-                        $scope.records = response;
-                    },
-                    function () {
-                        $state.go('app.assessment.config');
-                    }
-                );
-            }
-        ]);
-})();
-/**
  * Created by dfash on 7/27/16.
  */
 (function() {
@@ -13744,6 +13567,225 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 }
 
             }]);
+})();
+/**
+ * Created by dfash on 7/10/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AssessmentConfigController', ['$scope', '$state', 'assessmentService', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'SweetAlert',
+            function ($scope, $state, assessmentService, DTOptionsBuilder, DTColumnDefBuilder, SweetAlert) {
+
+                var vm = $scope;
+
+                vm.config = {"enable":false, "starts": "", "ends": ""};
+                vm.configs = {};
+
+                activate();
+
+                ////////////////
+
+                vm.submitSettings = function () {
+                    if(angular.isDefined(vm.config.id)) {
+                        assessmentService.getConfig().update({'id':parseInt(vm.config.id)}, vm.config,
+                            function(response){
+                                $state.reload();
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                                }
+                            }
+                        );
+                    }
+                    else {
+                        assessmentService.getConfig().save(vm.config,
+                            function(response){
+                                $state.reload();
+                            },
+                            function(response) {
+                                if(response.status == 403) {
+                                    vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                                }
+                            }
+                        );
+                    }
+                };
+
+                vm.editConfig = function($index) {
+                    vm.config.id = vm.configs[$index].id;
+                    vm.config.enable = vm.configs[$index].enable == 1 ? true : false;
+                    vm.config.starts = new Date(vm.configs[$index].starts);
+                    vm.config.ends = new Date(vm.configs[$index].ends);
+                };
+
+                vm.isUpdate = function($index) {
+                    return vm.config.id == vm.configs[$index].id;
+                };
+
+
+                /////////////
+
+                function activate() {
+
+                    // Changing data
+
+                    assessmentService.getConfig().query().$promise.then(
+                        function(response){
+                            vm.configs = response;
+                        },
+                        function(response) {
+                            vm.configsMessage = "Error: " + response.status + " " + response.statusText;
+                        }
+                    );
+
+
+                    vm.dtOptions = DTOptionsBuilder.newOptions()
+                        .withDisplayLength(100)
+                        .withPaginationType('full_numbers');
+
+                    vm.dtColumnDefs = [
+                        DTColumnDefBuilder.newColumnDef(0).notSortable(),
+                        DTColumnDefBuilder.newColumnDef(1),
+                        DTColumnDefBuilder.newColumnDef(2),
+                        DTColumnDefBuilder.newColumnDef(3).notSortable()
+                    ];
+
+                    vm.remove = remove;
+
+                    //TODO: add notification message
+                    function remove($index)
+                    {
+                        (function() {
+                            SweetAlert.swal({
+                                title: 'Are you sure you want to delete this Schedule?',
+                                text: 'Your will not be able to recover your selected data back!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel pls!',
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm){
+                                if (isConfirm) {
+                                    assessmentService.getConfig().delete({'id':parseInt(vm.configs[$index].id)}).$promise.then(
+                                        function () {
+                                            vm.configs.splice($index, 1);
+                                            //vm.alerts[0] = {'type':'success', 'msg':'Schedule removed successfully'};
+                                            SweetAlert.swal('Deleted!', 'Schedule removed successfully', 'success');
+                                        },
+                                        function () {
+                                            vm.configMessage = 'Server error.';
+                                            if(response.status == 403) {
+                                                vm.configMessage = "Error: " + response.status + " " + response.statusText;
+                                            }
+                                            SweetAlert.swal('Cancelled', vm.configMessage, 'error');
+                                        }
+                                    );
+                                } else {
+                                    SweetAlert.swal('Cancelled', 'Schedule is safe :)', 'error');
+                                }
+                            });
+                        })();
+
+                    }
+
+                }
+
+            }]);
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('AssessConfigDatePickerCtrl', AssessConfigDatePickerCtrl);
+
+    function AssessConfigDatePickerCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            vm.today = function() {
+                vm.dt = new Date();
+            };
+            vm.today();
+
+            vm.clear = function () {
+                vm.dt = null;
+            };
+
+            // Disable weekend selection
+            vm.disabled = function(date, mode) {
+                return false;
+                //return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+            };
+
+            vm.toggleMin = function() {
+                vm.minDate = vm.minDate ? null : new Date();
+            };
+            vm.toggleMin();
+
+            vm.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                vm.opened = true;
+            };
+
+            vm.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+
+            vm.initDate = new Date('2019-10-20');
+            vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+            vm.format = vm.formats[0];
+        }
+    }
+})();
+
+
+/**
+ * Created by dfash on 7/10/16.
+ */
+
+(function () {
+    angular
+        .module('app.order')
+        .controller('AssessmentLogController', ['$scope', 'assessmentService', '$state', '$stateParams',
+            function ($scope, assessmentService, $state, $stateParams) {
+
+                $scope.datetostamp = function(date) {
+                    return new Date(date);
+                };
+
+                assessmentService.getConfig().get({id: parseInt($stateParams.id)}).$promise.then(
+                    function(response){
+                        $scope.configs = response;
+                    },
+                    function(response) {
+                        $state.go('app.assessment.config');
+                    }
+                );
+
+                assessmentService.log().query({"id":parseInt($stateParams.id)}).$promise.then(
+                    function(response) {
+                        $scope.records = response;
+                    },
+                    function () {
+                        $state.go('app.assessment.config');
+                    }
+                );
+            }
+        ]);
 })();
 /**
  * Created by dfash on 7/27/16.

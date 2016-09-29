@@ -233,7 +233,7 @@ Route::group(['middleware' => ['web'] ], function () {
         Route::get('/admin/clients', 'ClientController@getAllClients');
         Route::put('/admin/user/{id}', 'UserController@profileUpdateByAdmin');
 
-        Route::get('/promocode', 'PromocodeController@generate');
+        Route::post('/promocode/generate', 'PromocodeController@generate');
         Route::get('/promocode/reward', 'PromocodeController@getReward');
 
     });
