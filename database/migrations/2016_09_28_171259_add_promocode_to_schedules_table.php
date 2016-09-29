@@ -13,7 +13,7 @@ class AddPromocodeToSchedulesTable extends Migration
     public function up()
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->string('promocode');
+            $table->string('promocode')->after('client_id')->nullable();
         });
     }
 

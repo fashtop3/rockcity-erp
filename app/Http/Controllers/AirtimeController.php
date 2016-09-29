@@ -80,72 +80,77 @@ class AirtimeController extends Controller
      */
     public function store(Request $request)
     {
-
-        DB::beginTransaction();
-
         $client = $request->get('client');
         $marketer = $request->get('marketer');
         $cart = $request->get('cart');
 
-        $marketer = User::find($marketer['id']);
-        $client = Client::find($client['id']);
+        try{
+            DB::beginTransaction();
 
-        $airtimeSchedule = $request->get('sub');
-        $airtimeSchedule['user_id'] = $marketer->id;
-        $airtimeSchedule['client_id'] = $client->id;
+            $marketer = User::find($marketer['id']);
+            $client = Client::find($client['id']);
 
-        //create schedule
-        if($schedule = Schedule::create($airtimeSchedule)) {
+            $airtimeSchedule = $request->get('sub');
+            $airtimeSchedule['user_id'] = $marketer->id;
+            $airtimeSchedule['client_id'] = $client->id;
 
-            foreach($cart as $products){ //each array in the cart is a product
+            //create schedule
+            if($schedule = Schedule::create($airtimeSchedule)) {
 
-                $myProduct = ScheduleProduct::create([
-                    'schedule_id' => $schedule->id,
-                    'product_id' => $products['id']
-                ]);
+                foreach($cart as $products){ //each array in the cart is a product
 
-                foreach($products['subscriptions'] as $subscription) {
-
-                    if(!empty($subscription['schedule'])) {
-                        $sub_schedule = $subscription['schedule']; //copy
-                        unset($subscription['schedule']); //remove
-                    }
-
-                    $productSub = ScheduleProductSub::create([
-                        'schedule_product_id' => $myProduct->id,
-                        'subscription' => $subscription
+                    $myProduct = ScheduleProduct::create([
+                        'schedule_id' => $schedule->id,
+                        'product_id' => $products['id']
                     ]);
 
-                    if(!empty($sub_schedule)) {
-                        ScheduleProductSubDetail::create([
-                            'schedule_product_sub_id' => $productSub->id,
-                            'schedule' => $sub_schedule
+                    foreach($products['subscriptions'] as $subscription) {
+
+                        if(!empty($subscription['schedule'])) {
+                            $sub_schedule = $subscription['schedule']; //copy
+                            unset($subscription['schedule']); //remove
+                        }
+
+                        $productSub = ScheduleProductSub::create([
+                            'schedule_product_id' => $myProduct->id,
+                            'subscription' => $subscription
                         ]);
 
-                        unset($sub_schedule); //to avoid been available for the next loop
+                        if(!empty($sub_schedule)) {
+                            ScheduleProductSubDetail::create([
+                                'schedule_product_sub_id' => $productSub->id,
+                                'schedule' => $sub_schedule
+                            ]);
+
+                            unset($sub_schedule); //to avoid been available for the next loop
+                        }
                     }
                 }
+
+                ScheduleAlert::create(['schedule_id' => $schedule->id, 'token' => bcrypt(Carbon::now())]);
+
+                Schedule::setOrderNo($schedule);
+                $schedule->save();
+
+                //mail out the invoice
+//                try{
+//                    Event::fire(new ScheduleHasBeenPlaced($schedule));
+//                }
+//                catch(\Exception $e) {
+//                    return response('Error: Mail Server not reachable! try again or contact Administrator', 403);
+//                }
+
+
+                DB::commit();
+                return response(['data'=>'Order submitted successfully']);
             }
 
-            ScheduleAlert::create(['schedule_id' => $schedule->id, 'token' => bcrypt(Carbon::now())]);
+            return response('Order processing failed', 403);
 
-            Schedule::setOrderNo($schedule);
-            $schedule->save();
-
-            //mail out the invoice
-            try{
-                Event::fire(new ScheduleHasBeenPlaced($schedule));
-            }
-            catch(\Exception $e) {
-                return response('Error: Mail Server not reachable! try again or contact Administrator', 403);
-            }
-
-
-            DB::commit();
-            return response(['data'=>'Order submitted successfully']);
         }
-
-        return response('Order processing failed', 403);
+        catch(\Exception $e) {
+            return response('Server Error: contact site Administrator', 403);
+        }
     }
 
     /**
