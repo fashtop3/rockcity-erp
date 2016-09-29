@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Events\ScheduleHasBeenPlaced;
 use App\ProductTime;
+use App\Promocode;
 use App\Schedule;
 use App\ScheduleAlert;
 use App\ScheduleProduct;
@@ -96,6 +97,11 @@ class AirtimeController extends Controller
 
             //create schedule
             if($schedule = Schedule::create($airtimeSchedule)) {
+
+                if(!empty($airtimeSchedule['promocode']['discount']))
+                    Promocode::apply($airtimeSchedule['promocode']['discount']);
+                if(!empty($airtimeSchedule['promocode']['coupon']))
+                    Promocode::apply($airtimeSchedule['promocode']['coupon']);
 
                 foreach($cart as $products){ //each array in the cart is a product
 

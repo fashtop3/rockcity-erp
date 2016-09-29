@@ -156,7 +156,7 @@ Route::get('/login', function() {
 |
 */
 
-Route::get('/promocode', 'PromocodeController@generate');
+Route::get('/promocode/generate', 'PromocodeController@generate');
 Route::get('/promocode/reward', 'PromocodeController@getReward');
 
 Route::group(['middleware' => ['web'] ], function () {

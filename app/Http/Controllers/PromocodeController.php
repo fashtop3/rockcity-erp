@@ -11,19 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class PromocodeController extends Controller
 {
-    protected $promocode;
-
-    public function __construct()
-    {
-        $this->promocode = new Promocode();
-    }
 
     public function generate()
     {
-        $p = new Promocode();
-//        $p->generateAndSave(100, 10, 'DISCOUNT', Carbon::now()->addDays(20), 5);
-
-        $c = $p->reward('RFXU-ZXWT');
+//        $p = Promocode::generateAndSave(100, 10, 'DISCOUNT', Carbon::now()->addDays(20), 5);
+        $p = Promocode::generate(100);
+        return response($p);
     }
 
     public function getReward(Request $request)
@@ -33,16 +26,16 @@ class PromocodeController extends Controller
 
         try{
             if($action == 'discount') {
-                if($this->promocode->check($code, $action)) {
-                    return response([ 'data'=> $this->promocode->reward($code)]);
+                if(Promocode::check($code, $action)) {
+                    return response([ 'data'=> Promocode::reward($code)]);
                 }
                 else {
                     return response('Coupon code invalid', 403);
                 }
             }
             else if($action == 'coupon') {
-                if($this->promocode->check($code, $action)) {
-                    return response([ 'data'=> $this->promocode->reward($code)]);
+                if(Promocode::check($code, $action)) {
+                    return response([ 'data'=> Promocode::reward($code)]);
                 }
                 else {
                     return response('Coupon code invalid', 403);
@@ -54,5 +47,10 @@ class PromocodeController extends Controller
         }
 
         return response('invalid request', 403);
+    }
+
+    public function apply()
+    {
+        return response(Promocode::apply('RFXU-ZXWT', true));
     }
 }
