@@ -32,7 +32,7 @@ class CreateClientsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->unique(['user_id', 'name', 'email']);
+            $table->unique(['user_id', 'name']);
         });
     }
 

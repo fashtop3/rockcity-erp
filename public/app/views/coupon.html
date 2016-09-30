@@ -35,12 +35,12 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="reward" class="control-label col-sm-3">Reward:<abbr title="required" class="text-danger">*</abbr></label>
+                            <label for="reward" class="control-label col-sm-3">Reward(%):<abbr title="required" class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': formCoupon.reward.$error.required && !formCoupon.reward.$pristine}">
                                 <select ng-disabled="couponForm.type == null" name="reward" id="reward" required class="form-control" ng-model="couponForm.reward">
                                     <option value="">--Choose--</option>
-                                    <option ng-if="couponForm.type == 'DISCOUNT'" ng-repeat="i in getRange(100) track by $index" value="{{$index+1}}">{{$index+1}}</option>
-                                    <option ng-if="couponForm.type == 'COUPON'" ng-repeat="i in getRange(10) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+                                    <option ng-if="couponForm.type == 'DISCOUNT'" ng-repeat="i in getRange(100) track by $index" value="{{$index+1}}">{{$index+1}}%</option>
+                                    <option ng-if="couponForm.type == 'COUPON'" ng-repeat="i in getRange(10) track by $index" value="{{$index+1}}">{{$index+1}}%</option>
                                 </select>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="quantity" class="control-label col-sm-3">Quantity:<abbr title="required" class="text-danger">*</abbr></label>
+                            <label for="quantity" class="control-label col-sm-3">Frequency:<abbr title="required" class="text-danger">*</abbr></label>
                             <div class="col-sm-7" ng-class="{'has-error': formCoupon.quantity.$error.required && !formCoupon.quantity.$pristine}">
                                 <select name="quantity" id="quantity" class="form-control" ng-model="couponForm.quantity" required>
                                     <option value="">--Choose--</option>
