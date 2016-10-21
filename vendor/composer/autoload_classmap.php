@@ -34,6 +34,7 @@ return array(
     'CreateScheduleProductSubsTable' => $baseDir . '/database/migrations/2016_07_16_104150_create_schedule_product_subs_table.php',
     'CreateScheduleProductsTable' => $baseDir . '/database/migrations/2016_07_16_103503_create_schedule_products_table.php',
     'CreateSchedulesTable' => $baseDir . '/database/migrations/2016_05_24_072259_create_schedules_table.php',
+    'CreateSubscriptionAttachmentsTable' => $baseDir . '/database/migrations/2016_10_21_215208_create_subscription_attachments_table.php',
     'CreateTagsTable' => $baseDir . '/database/2016_05_26_032605_create_tags_table.php',
     'CreateTargetsTable' => $baseDir . '/database/migrations/2016_05_31_152336_create_targets_table.php',
     'CreateTasksTable' => $baseDir . '/database/migrations/2016_05_31_184109_create_tasks_table.php',

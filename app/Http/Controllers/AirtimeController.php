@@ -11,6 +11,7 @@ use App\ScheduleAlert;
 use App\ScheduleProduct;
 use App\ScheduleProductSub;
 use App\ScheduleProductSubDetail;
+use App\SubscriptionAttachment;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -81,6 +82,7 @@ class AirtimeController extends Controller
      */
     public function store(Request $request)
     {
+        $uploads = []; //holds uploaded filenames
         $client = $request->get('client');
         $marketer = $request->get('marketer');
         $cart = $request->get('cart');
@@ -111,28 +113,11 @@ class AirtimeController extends Controller
                     ]);
 
                     foreach($products['subscriptions'] as $subscription) {
-
-                        if(!empty($subscription['schedule'])) {
-                            $sub_schedule = $subscription['schedule']; //copy
-                            unset($subscription['schedule']); //remove
-                        }
-
-                        $productSub = ScheduleProductSub::create([
-                            'schedule_product_id' => $myProduct->id,
-                            'subscription' => $subscription
-                        ]);
-
-                        if(!empty($sub_schedule)) {
-                            ScheduleProductSubDetail::create([
-                                'schedule_product_sub_id' => $productSub->id,
-                                'schedule' => $sub_schedule
-                            ]);
-
-                            unset($sub_schedule); //to avoid been available for the next loop
-                        }
+                        $this->processSubscription($subscription, $myProduct, $uploads);
                     }
                 }
 
+                //create alert for cron jobs
                 ScheduleAlert::create(['schedule_id' => $schedule->id, 'token' => bcrypt(Carbon::now())]);
 
                 Schedule::setOrderNo($schedule);
@@ -140,22 +125,27 @@ class AirtimeController extends Controller
 
                 //mail out the invoice
                 try{
-                    Event::fire(new ScheduleHasBeenPlaced($schedule));
+//                    Event::fire(new ScheduleHasBeenPlaced($schedule));
                 }
                 catch(\Exception $e) {
+                    $this->cleanUploadsOnError($uploads);
                     return response('Error: Mail Server not reachable! try again or contact Administrator', 403);
                 }
 
 
                 DB::commit();
+//                return response('force error', 403);
                 return response(['data'=>'Order submitted successfully']);
             }
 
+            $this->cleanUploadsOnError($uploads);
             return response('Order processing failed', 403);
 
         }
         catch(\Exception $e) {
-            return response('Server Error: contact site Administrator', 403);
+            $this->cleanUploadsOnError($uploads);
+//            return response('Server Error: contact site Administrator', 403);
+            return response($e->getMessage(), 403);
         }
     }
 
@@ -414,6 +404,89 @@ class AirtimeController extends Controller
 
         //check listeners to understand hot it works
         Event::fire(new ScheduleHasBeenPlaced($schedule));
+    }
+
+
+    protected function processSubscriptionAttachments($sub_attachment, $productSub, &$uploads)
+    {
+        foreach ($sub_attachment as $file) {
+            $ext = '.unknown';
+            $x = explode('.', $file['filename']);
+            if (count($x)) {
+                $ext = $x[count($x) - 1];
+            }
+            $filename = md5(str_shuffle($file['filename'])) . '.' . $ext;
+            $filetype = $file['filetype'];
+            $filesize = $file['filesize'];
+            $path = storage_path() . '/app/public/airtime/' . $filename;
+//                                $fh = fopen($path, 'w');
+//                                fwrite($fh, base64_decode($file['base64']));
+            file_put_contents($path, base64_decode($file['base64']));
+            SubscriptionAttachment::create([
+                'schedule_product_sub' => $productSub->id,
+                'filename' => $filename,
+                'filesize' => $filesize,
+                'filetype' => $filetype
+            ]);
+            $uploads[] = $path;
+        }
+
+        return $uploads;
+    }
+
+    /**
+     * @param $uploads
+     */
+    protected function cleanUploadsOnError(&$uploads)
+    {
+        foreach ($uploads as $upload) {
+            if (file_exists($upload)) {
+                unlink($upload);
+            }
+        }
+    }
+
+
+    /**
+     * @param $subscription
+     * @param $myProduct
+     * @param $uploads
+     */
+    protected function processSubscription(&$subscription, &$myProduct, &$uploads)
+    {
+        //check if some slot are fixed.....
+        if (!empty($subscription['schedule'])) {
+            $sub_schedule = $subscription['schedule']; //copy
+            unset($subscription['schedule']); //remove it from sub array
+        }
+
+        //check if subscription has attachment
+        if (!empty($subscription['attachment'])) {
+            $sub_attachment = $subscription['attachment'];
+            unset($subscription['attachment']); //remove it from sub array
+        }
+
+        //create sub
+        $productSub = ScheduleProductSub::create([
+            'schedule_product_id' => $myProduct->id,
+            'subscription' => $subscription
+        ]);
+
+        //process save attachments
+        if (isset($sub_attachment)) {
+            $this->processSubscriptionAttachments($sub_attachment, $productSub, $uploads);
+        }
+
+
+        //then if slot are fixed save it to sub details table
+        if (!empty($sub_schedule)) {
+            ScheduleProductSubDetail::create([
+                'schedule_product_sub_id' => $productSub->id,
+                'schedule' => $sub_schedule
+            ]);
+
+            unset($sub_schedule);
+        }
     }
 
 
