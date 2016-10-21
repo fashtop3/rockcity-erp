@@ -16,6 +16,6 @@
     'use strict';
 
     angular
-        .module('app.order', ['ngFileUpload', 'app.bootstrapui'])
+        .module('app.order', ['ngFileUpload', 'app.bootstrapui', 'naif.base64'])
         .constant("baseURL", "/api/")
 })();
