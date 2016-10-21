@@ -415,7 +415,7 @@ class AirtimeController extends Controller
             if (count($x)) {
                 $ext = $x[count($x) - 1];
             }
-            $filename = md5(str_shuffle($file['filename']).time(0)) . '.' . $ext;
+            $filename = sha1(str_shuffle($file['filename']).time(0)) . '.' . $ext;
             $filetype = $file['filetype'];
             $filesize = $file['filesize'];
             $path = storage_path() . '/app/public/airtime/' . $filename;
