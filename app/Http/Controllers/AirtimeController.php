@@ -125,7 +125,7 @@ class AirtimeController extends Controller
 
                 //mail out the invoice
                 try{
-//                    Event::fire(new ScheduleHasBeenPlaced($schedule));
+                    Event::fire(new ScheduleHasBeenPlaced($schedule));
                 }
                 catch(\Exception $e) {
                     $this->cleanUploadsOnError($uploads);
