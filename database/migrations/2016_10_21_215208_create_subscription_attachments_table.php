@@ -14,10 +14,10 @@ class CreateSubscriptionAttachmentsTable extends Migration
     {
         Schema::create('subscription_attachments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('schedule_product')->unsigned();
-            $table->foreign('schedule_product')
+            $table->integer('schedule')->unsigned();
+            $table->foreign('schedule')
                 ->references('id')
-                ->on('schedule_products')
+                ->on('schedules')
                 ->onDelete('cascade');
             $table->integer('schedule_product_sub')->unsigned();
             $table->foreign('schedule_product_sub')

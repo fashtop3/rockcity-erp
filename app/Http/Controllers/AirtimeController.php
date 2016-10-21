@@ -113,7 +113,7 @@ class AirtimeController extends Controller
                     ]);
 
                     foreach($products['subscriptions'] as $subscription) {
-                        $this->processSubscription($subscription, $myProduct, $uploads);
+                        $this->processSubscription($subscription, $schedule, $myProduct, $uploads);
                     }
                 }
 
@@ -407,7 +407,7 @@ class AirtimeController extends Controller
     }
 
 
-    protected function processSubscriptionAttachments(&$myProduct, &$productSub, &$sub_attachment, &$uploads)
+    protected function processSubscriptionAttachments(&$schedule, &$productSub, &$sub_attachment, &$uploads)
     {
         foreach ($sub_attachment as $file) {
             $ext = '.unknown';
@@ -423,7 +423,7 @@ class AirtimeController extends Controller
 //                                fwrite($fh, base64_decode($file['base64']));
             file_put_contents($path, base64_decode($file['base64']));
             SubscriptionAttachment::create([
-                'schedule_product' => $myProduct->id,
+                'schedule' => $schedule->id,
                 'schedule_product_sub' => $productSub->id,
                 'filename' => $filename,
                 'filesize' => $filesize,
@@ -451,9 +451,10 @@ class AirtimeController extends Controller
     /**
      * @param $subscription
      * @param $myProduct
+     * @param $schedule
      * @param $uploads
      */
-    protected function processSubscription(&$subscription, &$myProduct, &$uploads)
+    protected function processSubscription(&$subscription, &$schedule, &$myProduct,  &$uploads)
     {
         //check if some slot are fixed.....
         if (!empty($subscription['schedule'])) {
@@ -475,7 +476,7 @@ class AirtimeController extends Controller
 
         //process save attachments
         if (isset($sub_attachment)) {
-            $this->processSubscriptionAttachments($myProduct, $productSub, $sub_attachment, $uploads);
+            $this->processSubscriptionAttachments($schedule, $productSub, $sub_attachment, $uploads);
         }
 
 
