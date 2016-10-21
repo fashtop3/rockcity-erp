@@ -81,6 +81,7 @@
         <!-- .panel-wrapper is the element to be collapsed-->
         <div uib-collapse="schedulePanel" class="panel-wrapper">
             <div class="panel-body">
+                <!--Slot configs-->
                 <div class="col-xs-12 col-sm-12">
 
                     <div class="form-group">
@@ -240,18 +241,44 @@
                                 <!--</div>-->
                             </div>
                         </div>
-
-                    <!-- display price-->
-                    <div class="form-group">
-                        <div class="pull-right">
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" style="width:150px;" value="{{form.fixSpotPrice | number:2}}" name="fixSpotPrice" id="fixSpotPrice" disabled />
-                            </div>
-                        </div>
-                        <div class="clear-fix"></div>
-                    </div>
-
                 </div>
+                <!--End Slot config-->
+                <div style="padding:20px"></div>
+                <!--slot Attachment-->
+                <div class="form-group" ng-controller="AirtimeSlotAttachment">
+                    <!--<label for="slotattachment" class="control-label">Attachment</label>-->
+                    <div class="col-sm-9" ng-class="{'has-error':airtimeForm.slotattachment.$error.maxsize}">
+                        <span class="btn btn-file">
+                        <input class="form-control" id="slotattachment" type="file" ng-model="attachment" name="slotattachment"
+                               base-sixty-four-input
+                               maxsize="3000"
+                               do-not-parse-if-oversize
+                               onloadstart="loadstart"
+                               onload="loading"
+                               onloadend="loadend"
+                               onprogress="progress"
+                               onerror="error"
+                               onabort="aborting"
+                               accept=".zip, .rar, .7z, image/*, audio/*, video/*"
+                        />
+                        </span>
+                        <span class="help-block" ng-show="airtimeForm.slotattachment.$error.maxsize">Files must not exceed 500KB</span>
+                    </div>
+                    <a ng-click="clear()" class="help-block col-sm-3 btn btn-warning btn-md">Clear</a>
+                    <span class="col-sm-12 help-block">Only [zip, rar, 7z, image, audio, video] formats are allowed.</span>
+                </div>
+                <!--End: SlotAttchment-->
+                <div style="padding:10px"></div>
+                <!-- display price-->
+                <div class="form-group">
+                    <div class="pull-right">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" style="width:150px;" value="{{form.fixSpotPrice | number:2}}" name="fixSpotPrice" id="fixSpotPrice" disabled />
+                        </div>
+                    </div>
+                    <div class="clear-fix"></div>
+                </div>
+                <!--End: display price-->
 
             </div>
             <div class="panel-footer">
@@ -341,8 +368,33 @@
                             </div>
                             <div class="clear-fix"></div>
                         </div>
-
                 </div>
+                <!--End Bulk config-->
+
+                <!--Bulk Attachment-->
+                <div class="col-xs-12 col-sm-12" ng-controller="AirtimeBulkAttachment">
+                    <div class="form-group">
+                        <label for="bulkattachment" class="col-sm-3 control-label">Attachment</label>
+                        <div class="col-sm-7" ng-class="{'has-error':airtimeForm.bulkattachment.$error.maxsize}">
+                            <input class="form-control" id="bulkattachment" type="file" ng-model="attachment" name="bulkattachment"
+                                   base-sixty-four-input
+                                   maxsize="3000"
+                                   onloadstart="loadstart"
+                                   onload="loading"
+                                   onloadend="loadend"
+                                   onprogress="progress"
+                                   onerror="error"
+                                   onabort="aborting"
+                                   accept=".zip, .rar, .7z, image/*, audio/*, video/*"
+                                   do-not-parse-if-oversize
+                            />
+                            <span class="help-block" ng-show="airtimeForm.bulkattachment.$error.maxsize">Files must not exceed 500KB</span>
+                        </div>
+                        <a ng-click="clear" class="help-block btn btn-warning btn-sm">Clear input</a>
+                        <span class="help-block">Only [zip, rar, 7z, image, audio, video] formats are allowed.</span>
+                    </div>
+                </div>
+                <!--end: bulkattachment-->
             </div>
             <div class="panel-footer">
                 <div class="row">
@@ -360,24 +412,43 @@
 
     <!--Attachement-->
      <!--START panel-->
-    <div id="attachPanel" ng-controller="AirtimeAttachment" class="panel panel-default">
-        <div ng-class="{'panel-heading-collapsed':attachPanel}" class="panel-heading">Attachment
-            <paneltool tool-collapse="tool-collapse" ng-init="attachPanel=true"></paneltool>
-        </div>
-        <!-- .panel-wrapper is the element to be collapsed-->
-        <div uib-collapse="attachPanel" class="panel-wrapper">
-            <div class="panel-body">
-                <div class="col-xs-12 col-sm-12">
-                    <div class="form-group">
-                        <label for="attachment">Upload Attachment</label>
-                        <input type="file" id="attachment" name="attachment">
-                        <p class="help-block">Only pdf and mp3 formats are allowed.</p>
-                    </div>
-                </div>
-            </div>
-            <!--<div class="panel-footer">Panel Footer</div>-->
-        </div>
-    </div>
-     END panel
+    <!--<div id="attachPanel" ng-controller="AirtimeAttachment" class="panel panel-default">-->
+        <!--<div ng-class="{'panel-heading-collapsed':attachPanel}" class="panel-heading">Attachment-->
+            <!--<paneltool tool-collapse="tool-collapse" ng-init="attachPanel=true"></paneltool>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; .panel-wrapper is the element to be collapsed&ndash;&gt;-->
+        <!--<div uib-collapse="attachPanel" class="panel-wrapper">-->
+            <!--<div class="panel-body">-->
+                <!--<div class="col-xs-12 col-sm-12" ng-controller="AirtimeAttachment">-->
+                    <!--<div class="form-group" ng-class="{'has-error':airtimeForm.attachment.$error.maxsize}">-->
+                        <!--<label for="attachment" class="control-label">Upload Attachment</label>-->
+                        <!--<input class="form-control" id="attachment" type="file" ng-model="attachment" name="attachment"-->
+                               <!--base-sixty-four-input-->
+                               <!--maxsize="3000"-->
+                               <!--do-not-parse-if-oversize-->
+                               <!--onloadstart="loadstart"-->
+                               <!--onload="loading"-->
+                               <!--onloadend="loadend"-->
+                               <!--onprogress="progress"-->
+                               <!--onerror="error"-->
+                               <!--onabort="aborting"-->
+                               <!--accept=".zip, .rar, .7z, image/*, audio/*, video/*"-->
+                        <!--/>-->
+                        <!--<a ng-click="attachment=null" class="help-block btn btn-default btn-sm">Clear input</a>-->
+                        <!--<span class="help-block">Only [zip, rar, 7z, image, audio, video] formats are allowed.</span>-->
+                        <!--<span class="help-block" ng-show="airtimeForm.attachment.$error.maxsize">Files must not exceed 500KB</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<div class="panel-footer">Panel Footer</div>&ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+     <!--END panel-->
+
+    <!--multiple-->
+    <!--base­sixty­four­input-->
+    <!--maxsize="5000"-->
+    <!--do­not­parse­if­oversize-->
+    <!--accept=".zip, .rar, .7z, image/*, audio/*, video/*"-->
 
 </div>

@@ -9724,7 +9724,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
     'use strict';
 
     angular
-        .module('app.order', ['ngFileUpload', 'app.bootstrapui'])
+        .module('app.order', ['ngFileUpload', 'app.bootstrapui', 'naif.base64'])
         .constant("baseURL", "/api/")
 })();
 
@@ -10312,8 +10312,33 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
     angular
         .module('app.order')
-        .controller('AirtimeAttachment', ['$scope', function($scope) {
+        .controller('AirtimeBulkAttachment', ['$scope', function($scope) {
+            $scope.attachment = null;
 
+            $scope.loadstart = function (e, reader, file) {
+                console.log('loadstart', file);
+            };
+
+            $scope.loading = function() {
+                console.log('loading');
+            };
+
+            $scope.loadend = function (e, reader, file, fileList, fileObjects, object) {
+                console.log('loadend', fileList, fileObjects, object);
+            };
+
+            $scope.progress = function(event, reader) {
+                var percent = (event.loaded*100)/event.total;
+                console.log(percent.toFixed(2)+'%');
+            };
+
+            $scope.error = function(error) {
+                console.log(error);
+            };
+
+            $scope.aborting = function(abort) {
+                console.log(abort);
+            }
         }]);
 
 })();
@@ -10350,11 +10375,14 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 slot_start_date: "",
                 slot_end_date: "",
                 fixSpotPrice: "",
+                slotAttachment:[],
 
                 broadcast: null,
                 bulk_start_date:'',
                 bulk_end_date:'',
                 bulkPrice: "",
+                bulkAttachment:[],
+
                 promocode: {'discount':null, 'coupon':null},
                 discount: '0',
                 commission: '0',
@@ -10380,6 +10408,25 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 vm.form.commission = arg.reward;
                 vm.form.promocode.coupon = arg.promocode;
                 vm.doDiscountCalc();
+            });
+
+            //when a slot file is uploaded
+            $scope.$on('slot-attachment-started', function(e, arg) {
+                vm.form.slotAttachment.push(arg.data);
+            });
+
+            //when a slot file is uploaded
+            $scope.$on('bulk-attachment-started', function(e, arg) {
+                vm.form.bulkAttachment.push(arg.data);
+            });
+
+            $scope.$on('clear-slot-attachment', function(e){
+                console.log('clearing slot attachment');
+                vm.form.slotAttachment = [];
+            });
+
+            $scope.$on('clear-bulk-attachment', function(e){
+                vm.form.bulkAttachment = [];
             });
 
             vm.periods = [{value:'premium', label:'Premium' }, {value:'regular', label:'Regular'}];
@@ -10416,10 +10463,12 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 vm.form.broadcast = 0;
                 vm.form.bulk_start_date = null;
                 vm.form.bulk_end_date = null;
+                vm.form.bulkAttachment = [];
                 vm.bulkRangeChanged();
             };
 
             vm.clearSlot = function() {
+                vm.form.slotAttachment = [];
                 vm.form.no_slots = 0;
                 vm.form.slot_start_date = null;
                 vm.form.slot_end_date = null;
@@ -10606,12 +10655,13 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 //pick bulkenddate
 
                 var data = {
+                    attachment: vm.form.bulkAttachment,
                     broadcast:vm.form.broadcast,
                     bulk_start_date:vm.form.bulk_start_date,
                     bulk_end_date:vm.form.bulk_end_date,
                     period: vm.form.period,
                     duration: vm.form.duration,
-                    amount: parseFloat(vm.form.bulkPrice),
+                    amount: parseFloat(vm.form.bulkPrice)
                 };
 
                 vm.addItemToCart(); //attempts adding item to cart
@@ -10644,6 +10694,7 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 //pick programmes fixtures (object) schedule
 
                 var data = {
+                    attachment: vm.form.slotAttachment,
                     slots: vm.form.no_slots,
                     slot_start_date: vm.form.slot_start_date,
                     slot_end_date: vm.form.slot_end_date,
@@ -10655,9 +10706,8 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                 };
                 var index = vm.cartItemIndex(vm.product.selected.id); //item obj created in vm.addItemToCart();
                 vm.cart[index].subscriptions.push(data);
-
                 vm.calcCartTotalPrice();
-
+                console.log(data);
                 vm.clearSlot();
             };
 
@@ -11560,6 +11610,52 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
 
         }]);
+})();
+/**
+ * Created by dfash on 10/21/16.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.order')
+        .controller('AirtimeSlotAttachment', ['$scope', function($scope) {
+            var vm = $scope;
+            $scope.attachment = null;
+
+            vm.clear = function() {
+                vm.attachment = null;
+                $scope.$emit('clear-slot-attachment');
+            };
+
+            $scope.loadstart = function (e, reader, file) {
+                console.log('loadstart', file);
+            };
+
+            $scope.loading = function() {
+                console.log('loading');
+            };
+
+            $scope.loadend = function (e, reader, file, fileList, fileObjects, fileObject) {
+                console.log('loadend', fileList, fileObjects, fileObject);
+                $scope.$emit('slot-attachment-started', {data:fileObject});
+            };
+
+            $scope.progress = function(event, reader) {
+                var percent = (event.loaded*100)/event.total;
+                console.log(percent.toFixed(2)+'%');
+            };
+
+            $scope.error = function(error) {
+                console.log(error);
+            };
+
+            $scope.aborting = function(abort) {
+                console.log(abort);
+            };
+        }]);
+
 })();
 /**
  * Created by dfash on 5/25/16.

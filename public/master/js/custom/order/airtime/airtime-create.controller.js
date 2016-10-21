@@ -31,11 +31,14 @@
                 slot_start_date: "",
                 slot_end_date: "",
                 fixSpotPrice: "",
+                slotAttachment:[],
 
                 broadcast: null,
                 bulk_start_date:'',
                 bulk_end_date:'',
                 bulkPrice: "",
+                bulkAttachment:[],
+
                 promocode: {'discount':null, 'coupon':null},
                 discount: '0',
                 commission: '0',
@@ -61,6 +64,25 @@
                 vm.form.commission = arg.reward;
                 vm.form.promocode.coupon = arg.promocode;
                 vm.doDiscountCalc();
+            });
+
+            //when a slot file is uploaded
+            $scope.$on('slot-attachment-started', function(e, arg) {
+                vm.form.slotAttachment.push(arg.data);
+            });
+
+            //when a slot file is uploaded
+            $scope.$on('bulk-attachment-started', function(e, arg) {
+                vm.form.bulkAttachment.push(arg.data);
+            });
+
+            $scope.$on('clear-slot-attachment', function(e){
+                console.log('clearing slot attachment');
+                vm.form.slotAttachment = [];
+            });
+
+            $scope.$on('clear-bulk-attachment', function(e){
+                vm.form.bulkAttachment = [];
             });
 
             vm.periods = [{value:'premium', label:'Premium' }, {value:'regular', label:'Regular'}];
@@ -97,10 +119,12 @@
                 vm.form.broadcast = 0;
                 vm.form.bulk_start_date = null;
                 vm.form.bulk_end_date = null;
+                vm.form.bulkAttachment = [];
                 vm.bulkRangeChanged();
             };
 
             vm.clearSlot = function() {
+                vm.form.slotAttachment = [];
                 vm.form.no_slots = 0;
                 vm.form.slot_start_date = null;
                 vm.form.slot_end_date = null;
@@ -287,12 +311,13 @@
                 //pick bulkenddate
 
                 var data = {
+                    attachment: vm.form.bulkAttachment,
                     broadcast:vm.form.broadcast,
                     bulk_start_date:vm.form.bulk_start_date,
                     bulk_end_date:vm.form.bulk_end_date,
                     period: vm.form.period,
                     duration: vm.form.duration,
-                    amount: parseFloat(vm.form.bulkPrice),
+                    amount: parseFloat(vm.form.bulkPrice)
                 };
 
                 vm.addItemToCart(); //attempts adding item to cart
@@ -325,6 +350,7 @@
                 //pick programmes fixtures (object) schedule
 
                 var data = {
+                    attachment: vm.form.slotAttachment,
                     slots: vm.form.no_slots,
                     slot_start_date: vm.form.slot_start_date,
                     slot_end_date: vm.form.slot_end_date,
@@ -336,9 +362,8 @@
                 };
                 var index = vm.cartItemIndex(vm.product.selected.id); //item obj created in vm.addItemToCart();
                 vm.cart[index].subscriptions.push(data);
-
                 vm.calcCartTotalPrice();
-
+                console.log(data);
                 vm.clearSlot();
             };
 

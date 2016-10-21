@@ -14,6 +14,7 @@
             <div uib-collapse="product{{item.id}}" class="panel-wrapper">
                 <div class="panel-body">
                     <div ng-repeat="sub in item.subscriptions">
+                        <!--Handle bulk-->
                         <div class="list-group" ng-if="sub.broadcast && sub.broadcast > 0">
                             <div class="list-group-item">
                                 <table class="wd-wide table-responsive">
@@ -32,6 +33,13 @@
                                                         <b>Bulk: </b> {{sub.broadcast}}; &nbsp;&nbsp;
                                                         <span ng-if="sub.duration"><b>Duration: </b> {{sub.duration}}</span>
                                                     </small>
+                                                </div><br />
+                                                <div ng-if="sub.attachment.length > 0">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item" ng-repeat="file in sub.attachment">
+                                                            <em class="fa fa-file text-warning"></em> {{file.filename}}
+                                                            <span class="badge info">{{(file.filesize)}}KB</span></li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
@@ -54,6 +62,8 @@
                                 </table>
                             </div>
                         </div>
+
+                        <!--Handle Slot-->
                         <div class="list-group" ng-if="!sub.broadcast">
                             <div class="list-group-item">
                                 <table class="wd-wide table-responsive">
@@ -96,6 +106,12 @@
                                                         <td ng-if="!schedule.tofix || schedule.tofix == '0'"><span class="text text-primary"><small>{{progStartTime(sub.period) | date:'h:mm a'}} - {{progEndTime(sub.period) | date:'h:mm a'}} </small></span></td>
                                                     </tr>
                                                 </table>
+                                            </div><br />
+                                            <div ng-if="sub.attachment.length > 0">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item" ng-repeat="file in sub.attachment">{{file.filename}}
+                                                        <span class="badge">{{(file.filesize/1000) | number:2}}MB</span></li>
+                                                </ul>
                                             </div>
                                         </td>
                                         <td class="wd-xs" valign="top">
