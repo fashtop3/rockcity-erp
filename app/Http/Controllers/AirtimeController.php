@@ -407,7 +407,7 @@ class AirtimeController extends Controller
     }
 
 
-    protected function processSubscriptionAttachments($sub_attachment, $productSub, &$uploads)
+    protected function processSubscriptionAttachments(&$myProduct, &$productSub, &$sub_attachment, &$uploads)
     {
         foreach ($sub_attachment as $file) {
             $ext = '.unknown';
@@ -415,7 +415,7 @@ class AirtimeController extends Controller
             if (count($x)) {
                 $ext = $x[count($x) - 1];
             }
-            $filename = md5(str_shuffle($file['filename'])) . '.' . $ext;
+            $filename = md5(str_shuffle($file['filename']).time(0)) . '.' . $ext;
             $filetype = $file['filetype'];
             $filesize = $file['filesize'];
             $path = storage_path() . '/app/public/airtime/' . $filename;
@@ -423,6 +423,7 @@ class AirtimeController extends Controller
 //                                fwrite($fh, base64_decode($file['base64']));
             file_put_contents($path, base64_decode($file['base64']));
             SubscriptionAttachment::create([
+                'schedule_product' => $myProduct->id,
                 'schedule_product_sub' => $productSub->id,
                 'filename' => $filename,
                 'filesize' => $filesize,
@@ -474,7 +475,7 @@ class AirtimeController extends Controller
 
         //process save attachments
         if (isset($sub_attachment)) {
-            $this->processSubscriptionAttachments($sub_attachment, $productSub, $uploads);
+            $this->processSubscriptionAttachments($myProduct, $productSub, $sub_attachment, $uploads);
         }
 
 
