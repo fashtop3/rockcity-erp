@@ -1,1 +1,281 @@
-"use strict";angular.module("angular-rickshaw",[]).directive("rickshaw",["$compile","$window",function(e,r){return{restrict:"EA",scope:{options:"=rickshawOptions",series:"=rickshawSeries",features:"=rickshawFeatures"},link:function(a,i,t){function s(){w.setSize(),w.render()}function n(e){var r=e.data,a=e.series;return e.series?void a.forEach(function(e){var a=e.key||e.name;if(!a)throw"series needs a key or a name";r.forEach(function(r){var i=r.key||r.name;if(!i)throw"data needs a key or a name";if(a==i){var t=["color","name","data"];t.forEach(function(a){r[a]&&(e[a]=r[a])})}})}):r}function o(){w&&k&&(n({data:a.series,series:k.series}),s())}function c(){if(w){if(a.options){for(var r in a.options)k[r]=a.options[r],console.log(r+"="+a.options[r]);k.element=u[0]}w.configure(k)}else f=angular.element(i),f.append(u),f.empty(),u=e("<div></div>")(a),f.append(u),k=angular.copy(a.options),k.element=u[0],k.series=a.series,w=new Rickshaw.Graph(k);if(a.features){if(a.features.hover){var t={graph:w};t.xFormatter=a.features.hover.xFormatter,t.yFormatter=a.features.hover.yFormatter,t.formatter=a.features.hover.formatter;new Rickshaw.Graph.HoverDetail(t)}if(a.features.palette)for(var n=new Rickshaw.Color.Palette({scheme:a.features.palette}),o=0;o<k.series.length;o++)k.series[o].color=n.color()}if(s(),a.features){if(a.features.xAxis&&!m){var c={graph:w};if(a.features.xAxis.timeUnit){var g=new Rickshaw.Fixtures.Time;c.timeUnit=g.unit(a.features.xAxis.timeUnit)}a.features.xAxis.tickFormat&&(c.tickFormat=a.features.xAxis.tickFormat),a.features.xAxis.ticksTreatment&&(c.ticksTreatment=a.features.xAxis.ticksTreatment),a.features.xAxis.time?(a.features.xAxis.time.local&&(c.timeFixture=new Rickshaw.Fixtures.Time.Local),m=new Rickshaw.Graph.Axis.Time(c)):m=new Rickshaw.Graph.Axis.X(c),m.render()}if(a.features.yAxis){var d={graph:w};if(a.features.yAxis.tickFormat){var v=a.features.yAxis.tickFormat;"string"==typeof v?d.tickFormat=Rickshaw.Fixtures.Number[v]:d.tickFormat=v}p||(p=new Rickshaw.Graph.Axis.Y(d),p.render())}if(a.features.legend){if(!h){h=e("<div></div>")(a),f.append(h);var x=new Rickshaw.Graph.Legend({graph:w,element:h[0]});if(a.features.legend.toggle){new Rickshaw.Graph.Behavior.Series.Toggle({graph:w,legend:x})}if(a.features.legend.highlight){new Rickshaw.Graph.Behavior.Series.Highlight({graph:w,legend:x})}}}else h&&(h.remove(),h=null);a.features.preview?l||(l=e("<div></div>")(a),f.append(l),new Rickshaw.Graph.RangeSlider.Preview({graph:w,element:l[0]})):l&&(l.remove(),l=null)}}var f,u,h,l,m,p,w,k,g=a.$watch("options",function(e,r){angular.equals(e,r)||c()},!0),d=a.$watchCollection("series",function(e,r){angular.equals(e,r)||o()},!0),v=a.$watch("features",function(e,r){angular.equals(e,r)||c()},!0);a.$on("$destroy",function(){g(),d(),v()}),angular.element(r).on("resize",function(){a.$broadcast("rickshaw::resize")}),a.$on("rickshaw::resize",function(){s()}),c()},controller:["$scope","$element","$attrs",function(e,r,a){}]}}]);
+/**
+ @toc
+
+ @param {Object} scope (attrs that must be defined on the scope (i.e. in the controller) - they can't just be defined in the partial html). REMEMBER: use snake-case when setting these on the partial!
+ TODO
+
+ @param {Object} attrs REMEMBER: use snake-case when setting these on the partial! i.e. my-attr='1' NOT myAttr='1'
+ TODO
+
+ @dependencies
+ TODO
+
+ @usage
+ partial / html:
+ TODO
+
+ controller / js:
+ TODO
+
+ //end: usage
+ */
+
+'use strict';
+
+/* global Rickshaw */
+
+angular.module('angular-rickshaw', [])
+        .directive('rickshaw', ['$compile', '$window', function($compile, $window) {
+            return {
+                restrict: 'EA',
+                scope: {
+                    options: '=rickshawOptions',
+                    series: '=rickshawSeries',
+                    features: '=rickshawFeatures'
+                },
+                // replace: true,
+                link: function(scope, element, attrs) {
+                    var mainEl;
+                    var graphEl;
+                    var legendEl;
+                    var previewEl;
+                    var xAxis;
+                    var yAxis;
+                    var graph;
+                    var settings;
+
+                    function redraw() {
+                        graph.setSize();
+                        graph.render();
+                    }
+
+                    function _splice(args) {
+                        var data = args.data;
+                        var series = args.series;
+
+                        if (!args.series) {
+                            return data;
+                        }
+
+                        series.forEach(function(s) {
+                            var seriesKey = s.key || s.name;
+                            if (!seriesKey) {
+                                throw "series needs a key or a name";
+                            }
+
+                            data.forEach(function(d) {
+                                var dataKey = d.key || d.name;
+                                if (!dataKey) {
+                                    throw "data needs a key or a name";
+                                }
+                                if (seriesKey == dataKey) {
+                                    var properties = ['color', 'name', 'data'];
+                                    properties.forEach(function(p) {
+                                        if (d[p]) {
+                                            s[p] = d[p];
+                                        }
+                                    });
+                                }
+                            } );
+                        });
+                    }
+
+                    function updateData() {
+                        if (graph && settings) {
+                            _splice({ data: scope.series, series: settings.series });
+                            redraw();
+                        }
+                    }
+
+                    function updateConfiguration() {
+                        if (!graph) {
+                            mainEl = angular.element(element);
+                            mainEl.append(graphEl);
+                            mainEl.empty();
+                            graphEl = $compile('<div></div>')(scope);
+                            mainEl.append(graphEl);
+
+                            settings = angular.copy(scope.options);
+                            settings.element = graphEl[0];
+                            settings.series = scope.series;
+
+                            graph = new Rickshaw.Graph(settings);
+                        }
+                        else {
+                            if (scope.options) {
+                                for (var key in scope.options) {
+                                    settings[key] = scope.options[key];
+                                    console.log(key + '=' + scope.options[key]);
+                                }
+                                settings.element = graphEl[0];
+                            }
+
+                            graph.configure(settings);
+                        }
+
+                        if (scope.features) {
+                            if (scope.features.hover) {
+                                var hoverConfig = {
+                                    graph: graph
+                                };
+                                hoverConfig.xFormatter = scope.features.hover.xFormatter;
+                                hoverConfig.yFormatter = scope.features.hover.yFormatter;
+                                hoverConfig.formatter = scope.features.hover.formatter;
+                                var hoverDetail = new Rickshaw.Graph.HoverDetail(hoverConfig);
+                            }
+
+                            if (scope.features.palette) {
+                                var palette = new Rickshaw.Color.Palette({scheme: scope.features.palette});
+                                for (var i = 0; i < settings.series.length; i++) {
+                                    settings.series[i].color = palette.color();
+                                }
+                            }
+                        }
+
+                        redraw();
+
+                        if (scope.features) {
+                            if (scope.features.xAxis) {
+                                if (!xAxis) {
+                                    var xAxisConfig = {
+                                        graph: graph
+                                    };
+                                    if (scope.features.xAxis.timeUnit) {
+                                        var time = new Rickshaw.Fixtures.Time();
+                                        xAxisConfig.timeUnit = time.unit(scope.features.xAxis.timeUnit);
+                                    }
+                                    if (scope.features.xAxis.tickFormat) {
+                                        xAxisConfig.tickFormat = scope.features.xAxis.tickFormat;
+                                    }
+                                    if (scope.features.xAxis.ticksTreatment) {
+                                        xAxisConfig.ticksTreatment = scope.features.xAxis.ticksTreatment;
+                                    }
+                                    if (scope.features.xAxis.time) {
+                                        if (scope.features.xAxis.time.local) {
+                                            xAxisConfig.timeFixture = new Rickshaw.Fixtures.Time.Local();
+                                        }
+                                        xAxis = new Rickshaw.Graph.Axis.Time(xAxisConfig);
+                                    }
+                                    else {
+                                        xAxis = new Rickshaw.Graph.Axis.X(xAxisConfig);
+                                    }
+                                    xAxis.render();
+                                }
+                                else {
+                                    // Update xAxis if Rickshaw allows it in future.
+                                }
+                            }
+                            else {
+                                // Remove xAxis if Rickshaw allows it in future.
+                            }
+
+                            if (scope.features.yAxis) {
+                                var yAxisConfig = {
+                                    graph: graph
+                                };
+                                if (scope.features.yAxis.tickFormat) {
+                                    var tickFormat = scope.features.yAxis.tickFormat;
+                                    if (typeof tickFormat === 'string'){
+                                        yAxisConfig.tickFormat = Rickshaw.Fixtures.Number[tickFormat];
+                                    } else {
+                                        yAxisConfig.tickFormat = tickFormat;
+                                    }
+                                }
+                                if (!yAxis) {
+                                    yAxis = new Rickshaw.Graph.Axis.Y(yAxisConfig);
+                                    yAxis.render();
+                                }
+                                else {
+                                    // Update yAxis if Rickshaw allows it in future.
+                                }
+                            }
+                            else {
+                                // Remove yAxis if Rickshaw allows it in future.
+                            }
+
+                            if (scope.features.legend) {
+                                if (!legendEl) {
+                                    legendEl = $compile('<div></div>')(scope);
+                                    mainEl.append(legendEl);
+
+                                    var legend = new Rickshaw.Graph.Legend({
+                                        graph: graph,
+                                        element: legendEl[0]
+                                    });
+                                    if (scope.features.legend.toggle) {
+                                        var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+                                            graph: graph,
+                                            legend: legend
+                                        });
+                                    }
+                                    if (scope.features.legend.highlight) {
+                                        var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
+                                            graph: graph,
+                                            legend: legend
+                                        });
+                                    }
+                                }
+                            }
+                            else {
+                                if (legendEl) {
+                                    legendEl.remove();
+                                    legendEl = null;
+                                }
+                            }
+
+                            if (scope.features.preview) {
+                                if (!previewEl) {
+                                    previewEl = $compile('<div></div>')(scope);
+                                    mainEl.append(previewEl);
+
+                                    new Rickshaw.Graph.RangeSlider.Preview({
+                                        graph: graph,
+                                        element: previewEl[0]
+                                    });
+                                }
+                            }
+                            else {
+                                if (previewEl) {
+                                    previewEl.remove();
+                                    previewEl = null;
+                                }
+                            }
+                        }
+                    }
+
+                    var optionsWatch = scope.$watch('options', function(newValue, oldValue) {
+                        if (!angular.equals(newValue, oldValue)) {
+                            updateConfiguration();
+                        }
+                    }, true);
+                    var seriesWatch = scope.$watchCollection('series', function(newValue, oldValue) {
+                        if (!angular.equals(newValue, oldValue)) {
+                            updateData();
+                        }
+                    }, true);
+                    var featuresWatch = scope.$watch('features', function(newValue, oldValue) {
+                        if (!angular.equals(newValue, oldValue)) {
+                            updateConfiguration();
+                        }
+                    }, true);
+
+                    scope.$on('$destroy', function() {
+                        optionsWatch();
+                        seriesWatch();
+                        featuresWatch();
+                    });
+
+                    angular.element($window).on('resize', function() {
+                        scope.$broadcast('rickshaw::resize');
+                    });
+
+                    scope.$on('rickshaw::resize', function() {
+                        redraw();
+                    });
+
+                    updateConfiguration();
+                },
+                controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+                }]
+            };
+        }]);
