@@ -23,11 +23,11 @@
 <section class="body">
 
         <!--start: header-->
-        <header class="jumbotron container-fluid">
+        <header class="jumbotron container-fluid" style="font-size: 11px; height: 150px">
             <div class="container">
                 <div class="row col-sm-8 col-sm-offset-2">
                     <div class="col-sm-4">
-                        <img src="/app/img/rockcity.png" alt="Rockcity Logo" />
+                        <img src="/app/img/rockcity.png" style="height: 80px" alt="Rockcity Logo" />
                     </div>
                     <div class="col-sm-8">
                         <address>

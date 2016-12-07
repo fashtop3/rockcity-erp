@@ -19,9 +19,14 @@
                     return ($scope.tab === checkTab);
                 };
 
-                $scope.select = function(setTab) {
-                    $scope.tab = setTab;
+                $scope.select = function(setTab, update) {
+                    if(typeof update === "undefined") { update = false}
+                    if(!update) {
+                        $scope.alerts = [];
+                        $scope.vehicleForm = {'_token': _token.data};
+                    }
 
+                    $scope.tab = setTab;
                 };
 
 

@@ -46,13 +46,15 @@
 
                     function modifyVehicle($index)
                     {
+                        /** set object variable from paren controller VehicleController */
                         vm.vehicleForm.id = vm.vehicles[$index].id;
                         vm.vehicleForm.name = vm.vehicles[$index].name;
                         vm.vehicleForm.reg = vm.vehicles[$index].reg;
                         vm.vehicleForm.eng = vm.vehicles[$index].eng;
                         vm.vehicleForm.colour = vm.vehicles[$index].colour;
 
-                        vm.select(2);
+                        /** call select from the parent controller VehicleController */
+                        vm.select(2, update=true);
                     }
 
                     function removeVehicle($index)

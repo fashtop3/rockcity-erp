@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddGradesToTaskReport' => $baseDir . '/database/migrations/2016_12_07_155301_add_grades_to_task_report.php',
     'AddPromocodeToSchedulesTable' => $baseDir . '/database/migrations/2016_09_28_171259_add_promocode_to_schedules_table.php',
     'CreateAssessmentPartOnesTable' => $baseDir . '/database/migrations/2016_07_07_144527_create_assessment_part_ones_table.php',
     'CreateAssessmentPartThreesTable' => $baseDir . '/database/migrations/2016_07_07_144545_create_assessment_part_threes_table.php',

@@ -14646,13 +14646,15 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
 
                     function modifyVehicle($index)
                     {
+                        /** set object variable from paren controller VehicleController */
                         vm.vehicleForm.id = vm.vehicles[$index].id;
                         vm.vehicleForm.name = vm.vehicles[$index].name;
                         vm.vehicleForm.reg = vm.vehicles[$index].reg;
                         vm.vehicleForm.eng = vm.vehicles[$index].eng;
                         vm.vehicleForm.colour = vm.vehicles[$index].colour;
 
-                        vm.select(2);
+                        /** call select from the parent controller VehicleController */
+                        vm.select(2, update=true);
                     }
 
                     function removeVehicle($index)
@@ -14746,9 +14748,14 @@ angular.module('mgcrea.ngStrap.tooltip', ['mgcrea.ngStrap.core', 'mgcrea.ngStrap
                     return ($scope.tab === checkTab);
                 };
 
-                $scope.select = function(setTab) {
-                    $scope.tab = setTab;
+                $scope.select = function(setTab, update) {
+                    if(typeof update === "undefined") { update = false}
+                    if(!update) {
+                        $scope.alerts = [];
+                        $scope.vehicleForm = {'_token': _token.data};
+                    }
 
+                    $scope.tab = setTab;
                 };
 
 

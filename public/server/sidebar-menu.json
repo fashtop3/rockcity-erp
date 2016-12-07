@@ -46,17 +46,6 @@
   },
 
   {
-    "text": "Assessment",
-    "permissions": ["staff"],
-    "icon": "fa fa-reorder",
-    "submenu": [
-      { "text": "Create", "sref": "app.assessment.create", "translate": "sidebar.nav.assessment.CREATE"},
-      { "text": "View", "sref": "app.assessment.view", "translate": "sidebar.nav.assessment.VIEW"}
-    ],
-    "translate": "sidebar.nav.assessment.MENU"
-  },
-
-  {
     "text": "Report Heading",
     "permissions" : ["staff", "driver"],
     "heading": "true",
@@ -72,6 +61,16 @@
     ],
     "icon": "fa fa-file-text",
     "translate": "report.nav.report.MENU"
+  },
+  {
+    "text": "Assessment",
+    "permissions": ["staff"],
+    "icon": "fa fa-reorder",
+    "submenu": [
+      { "text": "Create", "sref": "app.assessment.create", "translate": "sidebar.nav.assessment.CREATE"},
+      { "text": "View", "sref": "app.assessment.view", "translate": "sidebar.nav.assessment.VIEW"}
+    ],
+    "translate": "sidebar.nav.assessment.MENU"
   },
   {
     "text": "Driver's Report",
