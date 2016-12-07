@@ -26,6 +26,30 @@
                 </label>
             </div>
         </div>
+        <div class="form-group">
+
+            <label class="col-sm-2 control-label">
+                Self Grading
+            </label>
+
+            <div class="col-sm-10">
+                <label class="radio-inline">
+                    <input type="radio" required name="grade_{{$index}}" ng-model="task.grade"  value="A"> A
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" required name="grade_{{$index}}" ng-model="task.grade" value="B"> B
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" required name="grade_{{$index}}" ng-model="task.grade" value="C"> C
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" required name="grade_{{$index}}" ng-model="task.grade" value="D"> D
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" required name="grade_{{$index}}" ng-model="task.grade" value="E"> E
+                </label>
+            </div>
+        </div>
 
     </div>
 </fieldset>
