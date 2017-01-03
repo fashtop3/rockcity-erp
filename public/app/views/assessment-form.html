@@ -8,6 +8,14 @@
         Submission is opened from <strong>{{config.starts | date:'MMM d, y'}} - {{config.ends | date:'MMM d, y'}}</strong>
     </div>
 
+    <div class="pull-right" permission="" permission-only="'supervisor'">
+        <button title="Supervise" ng-disabled="!config.assessment.preview" ui-sref="app.admin.assessment-supervise({id: config.assessment.id})" type="button" class="btn btn-sm btn-danger">
+            <em class="fa fa-commenting"> Supervise</em>
+        </button>
+        <br />
+    </div>
+    <div class="clearfix"></div>
+
     <h3>
         PART 1
     </h3>

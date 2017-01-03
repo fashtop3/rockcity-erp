@@ -24,6 +24,7 @@
 
 
 
+
                 assessmentService.getActiveConfig().get().$promise.then(
                     function (response) {
                         vm.showTimeFrame = true;

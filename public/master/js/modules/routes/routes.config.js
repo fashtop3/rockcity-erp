@@ -410,10 +410,11 @@
                 resolve: angular.extend(helper.resolveFor('datatables')),
                 views: {
                     "@app": {
-                        templateUrl: helper.basepath('assessment-form.html')
+                        templateUrl: helper.basepath('assessment-form.html'),
+                        controller: 'AssessmentController'
                     }
-                },
-                controller: 'AssessmentController'
+                }
+                //controller: 'AssessmentController'
             })
             .state('app.assessment.view', {
                 url: '/view',
@@ -506,7 +507,7 @@
                 resolve: angular.extend(helper.resolveFor('datatables')),
             })
             .state('app.admin.assessment-log', {
-                url: '/record/:id',
+                url: '/AssLog/:id',
                 cache: false,
                 views: {
                     '@app': {

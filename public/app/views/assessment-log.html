@@ -22,12 +22,12 @@
                     <tbody>
                     <tr ng-repeat="record in records">
                         <td>{{ datetostamp(record.created_at) | date:'MMM d, y h:mm a' }}</td>
-                        <td><a>{{record.user.lastname+ ' ' +record.user.firstname}}</a></td>
+                        <td><a target="_blank" ui-sref="app.assessment.edit({id: record.id})" >{{record.user.lastname+ ' ' +record.user.firstname}}</a></td>
                         <td align="center">
-                            <button type="button" class="btn btn-sm btn-primary">
+                            <button title="Download" type="button" class="btn btn-sm btn-primary">
                                 <em class="fa fa-download"></em>
                             </button>
-                            <button ng-disabled="!record.preview || record.supervisor.preview" ui-sref="app.admin.assessment-supervise({id: record.id})" type="button" class="btn btn-sm btn-danger">
+                            <button title="Supervise" ng-disabled="!record.preview || record.supervisor.preview" ui-sref="app.admin.assessment-supervise({id: record.id})" type="button" class="btn btn-sm btn-danger">
                                 <em class="fa fa-commenting"></em>
                             </button>
                         </td>

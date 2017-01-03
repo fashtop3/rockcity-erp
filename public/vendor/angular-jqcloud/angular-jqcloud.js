@@ -1,1 +1,52 @@
-angular.module("angular-jqcloud",[]).directive("jqcloud",["$parse",function(r){var e=jQuery.fn.jQCloud.defaults.get(),o=[];for(var t in e)e.hasOwnProperty(t)&&o.push(t);return{restrict:"E",template:"<div></div>",replace:!0,scope:{words:"=words"},link:function(e,t,d){for(var n={},u=0,a=o.length;u<a;u++){var l=o[u],i=d[l]||t.attr(l);void 0!==i&&(n[l]=r(i)())}jQuery(t).jQCloud(e.words,n),e.$watchCollection("words",function(){e.$evalAsync(function(){var r=[];$.extend(r,e.words),jQuery(t).jQCloud("update",r)})}),t.bind("$destroy",function(){jQuery(t).jQCloud("destroy")})}}}]);
+/*!
+ * Angular jQCloud 1.0.2
+ * For jQCloud 2 (https://github.com/mistic100/jQCloud)
+ * Copyright 2014 Damien "Mistic" Sorel (http://www.strangeplanet.fr)
+ * Licensed under MIT (http://opensource.org/licenses/MIT)
+ */
+
+angular.module('angular-jqcloud', []).directive('jqcloud', ['$parse', function($parse) {
+  // get existing options
+  var defaults = jQuery.fn.jQCloud.defaults.get(),
+      jqcOptions = [];
+
+  for (var opt in defaults) {
+    if (defaults.hasOwnProperty(opt)) {
+      jqcOptions.push(opt);
+    }
+  }
+
+  return {
+    restrict: 'E',
+    template: '<div></div>',
+    replace: true,
+    scope: {
+      words: '=words'
+    },
+    link: function($scope, $elem, $attr) {
+      var options = {};
+
+      for (var i=0, l=jqcOptions.length; i<l; i++) {
+        var opt = jqcOptions[i];
+        var attr = $attr[opt] || $elem.attr(opt);
+        if (attr !== undefined) {
+          options[opt] = $parse(attr)();
+        }
+      }
+
+      jQuery($elem).jQCloud($scope.words, options);
+
+      $scope.$watchCollection('words', function() {
+        $scope.$evalAsync(function() {
+          var words = [];
+          $.extend(words,$scope.words);
+          jQuery($elem).jQCloud('update', words);
+        });
+      });
+
+      $elem.bind('$destroy', function() {
+        jQuery($elem).jQCloud('destroy');
+      });
+    }
+  };
+}]);
