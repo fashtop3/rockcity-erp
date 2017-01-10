@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
@@ -124,12 +125,17 @@ class AirtimeController extends Controller
                 $schedule->save();
 
                 //mail out the invoice
-                try{
-                    Event::fire(new ScheduleHasBeenPlaced($schedule));
-                }
-                catch(\Exception $e) {
-                    $this->cleanUploadsOnError($uploads);
-                    return response('Error: Mail Server not reachable! try again or contact Administrator', 403);
+                /**
+                 * this will only invoke mail-server in production mode
+                 */
+                if(!Config::get('app.debug')){
+                    try{
+                        Event::fire(new ScheduleHasBeenPlaced($schedule));
+                    }
+                    catch(\Exception $e) {
+                        $this->cleanUploadsOnError($uploads);
+                        return response('Error: Mail Server not reachable! try again or contact Administrator', 403);
+                    }
                 }
 
 
