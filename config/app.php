@@ -177,6 +177,22 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        /*
+        * Backpack Service Providers...
+        */
+        Backpack\Base\BaseServiceProvider::class,
+        Prologue\Alerts\AlertsServiceProvider::class,
+        Backpack\CRUD\CrudServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Barryvdh\Elfinder\ElfinderServiceProvider::class,
+        Backpack\Generators\GeneratorsServiceProvider::class,
+        Backpack\LangFileManager\LangFileManagerServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
+        Backpack\BackupManager\BackupManagerServiceProvider::class,
+        Backpack\LogManager\LogManagerServiceProvider::class,
+        Backpack\Settings\SettingsServiceProvider::class,
+
     ],
 
     /*
@@ -225,6 +241,14 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /*
+        * Backpack Service Providers...
+        */
+        'Alert' => 'Prologue\Alerts\Facades\Alert',
+        'CRUD' => Backpack\CRUD\CrudServiceProvider::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 
