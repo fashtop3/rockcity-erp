@@ -12,5 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('auth.login');
 });
+
+Route::get('/recover', "RecoverController@create")->name('user_recover');
+
+Auth::routes();
+
