@@ -21,6 +21,17 @@
 
 @endsection
 
+@section('content')
+
+    @yield('topnavbar', View::make("partials.topnavbar"))
+    @yield('aside', View::make("partials.aside"))
+    @yield('offsidebar', View::make("partials.offsidebar"))
+
+    @yield('section')
+
+    @yield('footer', View::make("partials.footer"))
+@endsection
+
 @section('vendor-script')
         <!-- MATCHMEDIA POLYFILL-->
     <script src="/vendor/matchMedia/matchMedia.js"></script>
@@ -39,4 +50,7 @@
 
     @yield('page-vendor')
 
+@endsection
+
+@section('copy-right')
 @endsection
