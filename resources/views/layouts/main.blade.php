@@ -1,15 +1,5 @@
 @extends('layouts.app')
 @section('head')
-    {{--<link rel="stylesheet" href="http://127.0.0.1:8001/app/css/custom.css"><link type="text/css" rel="stylesheet" href="vendor/loaders.css/loaders.css"><link type="text/css" rel="stylesheet" href="vendor/spinkit/css/spinkit.css"><link type="text/css" rel="stylesheet" href="vendor/whirl/dist/whirl.css"><script src="vendor/modernizr/modernizr.custom.js" async=""></script><link type="text/css" rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css"><link type="text/css" rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css"><script src="vendor/fastclick/lib/fastclick.js" async=""></script><script src="vendor/angular-file-upload/dist/angular-file-upload.js" async=""></script><script src="vendor/screenfull/dist/screenfull.js" async=""></script><script src="vendor/bootstrap-filestyle/src/bootstrap-filestyle.js" async=""></script><script src="vendor/animo.js/animo.js" async=""></script><script src="vendor/sparkline/index.js" async=""></script>--}}
-    {{--<script src="vendor/slimScroll/jquery.slimscroll.min.js" async=""></script>--}}
-    {{--<script src="vendor/jquery-classyloader/js/jquery.classyloader.min.js" async=""></script>--}}
-    {{--<link type="text/css" rel="stylesheet" href="vendor/angularjs-toaster/toaster.css">--}}
-    {{--<script src="vendor/angularjs-toaster/toaster.js" async=""></script>--}}
-    {{--<link type="text/css" rel="stylesheet" href="vendor/sweetalert/dist/sweetalert.css">--}}
-    {{--<script src="vendor/sweetalert/dist/sweetalert.min.js" async=""></script>--}}
-    {{--<script src="vendor/angular-sweetalert/SweetAlert.js" async=""></script>--}}
-    {{--<style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style>--}}
-
     <link rel="stylesheet" href="/vendor/animate.css/animate.min.css">
     <!-- WHIRL (spinners)-->
     <link rel="stylesheet" href="/vendor/whirl/dist/whirl.css">
@@ -23,13 +13,25 @@
 
 @section('content')
 
+    <!-- Blade for topnavbar -->
     @yield('topnavbar', View::make("partials.topnavbar"))
+
+    <!-- Blade for side menu -->
     @yield('aside', View::make("partials.aside"))
+    <!-- Blade for offside menu -->
     @yield('offsidebar', View::make("partials.offsidebar"))
+    <!-- Blade for main section -->
+    <section>
+        <!-- Page content-->
+        <div class="content-wrapper">
+            <!-- Main section-->
+            @yield('section')
+        </div>
+    </section>
 
-    @yield('section')
-
+    <!-- Blade for site footer -->
     @yield('footer', View::make("partials.footer"))
+
 @endsection
 
 @section('vendor-script')
