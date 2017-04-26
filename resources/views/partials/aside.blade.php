@@ -12,7 +12,7 @@
                             <!-- User picture-->
                             <div class="user-block-picture">
                                 <div class="user-block-status">
-                                    <img src="img/user/02.jpg" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle">
+                                    <img src="/app/img/user/02.jpg" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle">
                                     <div class="circle circle-success circle-lg"></div>
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
                     <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                 </li>
                 <li class="">
-                    <a href="{{ route('dashboard') }}" title="Dashboard" data-toggle="collapse">
+                    <a href="{{ route('dashboard') }}" title="Dashboard">
                         {{--<div class="pull-right label label-info">3</div>--}}
                         <em class="icon-speedometer"></em>
                         <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>

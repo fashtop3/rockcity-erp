@@ -25,7 +25,7 @@
             <li>Profile</li>
         </ol>
     </div>
-    <div class="row col-sm-12" autoscroll="false">
+    <div class="row col-sm-12">
         <div class="unwrap">
 
             <div style="background-image: url('/app/img/profile-bg.png')" class="bg-cover">
@@ -36,7 +36,7 @@
                     <p>Welcome to Rockcity FM Radio Portal</p><br/>
                 </div>
             </div>
-            <div permission permission-only="'approve.airtime'" class="text-center bg-gray-dark p-lg mb-xl">
+            <div class="text-center bg-gray-dark p-lg mb-xl">
                 <div class="row row-table">
                     <div class="col-xs-4 br">
                         <h3 class="m0">Active</h3>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-xs-4 br">
                         <!--<h3 class="m0">400</h3>-->
-                        <p class="m0"><a ui-sref="app.dashboard.update">
+                        <p class="m0"><a href="{{ route('profile', ['id'=>$user->id]) }}">
                                 <span class="hidden-xs">Update</span>
                             </a>
                         </p>
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <div class=" ">
+            <div class="">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
@@ -81,21 +81,21 @@
                             <!-- START User status-->
                             @foreach($contacts as $contact)
                                 <div class="media p mt0 list-group-item">
-                         <span class="pull-right">
-                            <span class="circle circle-success circle-lg"></span>
-                         </span>
-                         <span class="pull-left">
-                            <!-- Contact avatar-->
-                            <em class="media-object img-circle thumb32"></em>
-                         </span>
-                                    <!-- Contact info-->
-                         <span class="media-body">
-                            <span class="media-heading">
-                               <strong>{{ $contact['name'] }}</strong>
-                                <br>
-                               <small class="text-muted">{{ $contact['email'] }}</small>
-                            </span>
-                         </span>
+                                     <span class="pull-right">
+                                        <span class="circle circle-success circle-lg"></span>
+                                     </span>
+                                     <span class="pull-left">
+                                        <!-- Contact avatar-->
+                                        <em class="media-object img-circle thumb32"></em>
+                                     </span>
+                                                <!-- Contact info-->
+                                     <span class="media-body">
+                                        <span class="media-heading">
+                                           <strong>{{ $contact['name'] }}</strong>
+                                            <br>
+                                           <small class="text-muted">{{ $contact['email'] }}</small>
+                                        </span>
+                                     </span>
                                 </div>
                             @endforeach
                         </div>

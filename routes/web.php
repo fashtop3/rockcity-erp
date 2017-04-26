@@ -39,6 +39,8 @@ Route::get('/recover', "RecoverController@create")->name('user_recover');
  */
 Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/dashboard', 'Main\DashboardController@index')->name('dashboard');
+    Route::get('/profile/{id}', 'Main\UserController@edit')->name('profile');
+    Route::post('/profile/{id}', 'Main\UserController@update')->name('profile');
     Route::get('/mail', 'Main\MailController@create')->name('mail');
     Route::post('/mail', 'Main\MailController@store')->name('mail');
     Route::get('/sms', 'Main\MailController@create')->name('sms');

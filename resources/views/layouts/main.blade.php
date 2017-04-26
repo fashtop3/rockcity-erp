@@ -32,7 +32,7 @@
     <!-- Blade for site footer -->
     @yield('footer', View::make("partials.footer"))
 
-@endsection
+    @endsection
 
 @section('vendor-script')
         <!-- MATCHMEDIA POLYFILL-->
