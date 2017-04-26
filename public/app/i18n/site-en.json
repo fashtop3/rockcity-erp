@@ -1,17 +1,18 @@
 {
   "dashboard": {
-    "WELCOME": "Welcome to Angle!"
+    "WELCOME": "Welcome to Rockcity FM Radio Portal!"
   },
   "sidebar": {
     "WELCOME": "Welcome",
     "heading": {
       "HEADER": "Main Navigation",
-      "COMPONENTS": "Components",
-      "MORE": "More"
+      "REPORT": "Report Navigation",
+      "ADMIN": "Admin Section"
     },
     "nav": {
       "DASHBOARD": "Dashboard",
-      "WIDGETS": "Widgets",
+      "MAIL": "Send mail",
+      "SMS": "Send sms",
       "DOCUMENTATION": "Documentation",
       "element": {
         "ELEMENTS": "Elements",
