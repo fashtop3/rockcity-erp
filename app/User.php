@@ -15,8 +15,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password',
+        'firstname', 'lastname', 'email', 'password', 'upload'
     ];
+
+    const Contact_Developer = 'fashtop3@gmail.com';
+    const Contact_Admin = 'niran.malaolu@rockcityfmradio.com';
+    const Contact_ED = 'bukky.malaolu@rockcityfmradio.com';
+    const Contact_Account = 'yinka.adelowo@rockcityfmradio.com';
+    const Contact_Support = 'mpo@rockcityfmradio.com';
+    const Contact_Traffic = 'wale.ogunbiyi@rockcityfmradio.com';
+    const Contact_Marketing = 'olufunso.adeniran@rockcityfmradio.com';
 
     /**
      * The attributes that should be hidden for arrays.

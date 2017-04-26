@@ -37,8 +37,12 @@ Route::get('/recover', "RecoverController@create")->name('user_recover');
 /**
  * Manage authenticated user
  */
-Route::group(['prefix' => 'app', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/dashboard', 'Main\DashboardController@index')->name('dashboard');
+    Route::get('/mail', 'Main\MailController@create')->name('mail');
+    Route::post('/mail', 'Main\MailController@store')->name('mail');
+    Route::get('/sms', 'Main\MailController@create')->name('sms');
+    Route::post('/sms', 'Main\MailController@store')->name('sms');
 });
 
 Auth::routes();

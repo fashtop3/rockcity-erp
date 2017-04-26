@@ -25,83 +25,86 @@
             <li>Profile</li>
         </ol>
     </div>
-    <div class="unwrap">
+    <div class="row col-sm-12" autoscroll="false">
+        <div class="unwrap">
 
-        <div style="background-image: url(app/img/profile-bg.png)" class="bg-cover">
-            <div class="p-xl text-center text-inverse">
-                <!--<img src="app/img/user/{{profile.upload.filename}}" alt="Image" class="img-thumbnail img-circle thumb128" />-->
-                <h3 class="m0">{{profile.lastname+' '+profile.firstname}}</h3>
-                <!--<p>Lead director</p>-->
-                <p>Welcome to Rockcity FM Radio Portal</p><br/>
-            </div>
-        </div>
-        <div permission permission-only="'approve.airtime'" class="text-center bg-gray-dark p-lg mb-xl">
-            <div class="row row-table">
-                <div class="col-xs-4 br">
-                    <h3 class="m0">Active</h3>
-                    <p class="m0">Status</p>
+            <div style="background-image: url('/app/img/profile-bg.png')" class="bg-cover">
+                <div class="p-xl text-center text-inverse">
+                    {{--                <!--<img src="app/img/user/{{$user->upload.filename}}" alt="Image" class="img-thumbnail img-circle thumb128" />-->--}}
+                    <h3 class="m0">{{$user->lastname . ' ' . $user->firstname}}</h3>
+                    <!--<p>Lead director</p>-->
+                    <p>Welcome to Rockcity FM Radio Portal</p><br/>
                 </div>
-                <div class="col-xs-4 br">
-                    <!--<h3 class="m0">400</h3>-->
-                    <p class="m0"><a ui-sref="app.dashboard.update">
-                            <span class="hidden-xs">Update</span>
-                        </a>
-                    </p>
-                </div>
-                <!--<div class="col-xs-4">-->
-                <!--<h3 class="m0">100</h3>-->
-                <!--<p class="m0">Following</p>-->
-                <!--</div>-->
             </div>
-        </div>
-
-        <div class=" ">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="text-center">
-                        <h3 class="mt0">{{profile.lastname+' '+profile.firstname}}</h3>
-                        <!--<p>Lead director</p>-->
+            <div permission permission-only="'approve.airtime'" class="text-center bg-gray-dark p-lg mb-xl">
+                <div class="row row-table">
+                    <div class="col-xs-4 br">
+                        <h3 class="m0">Active</h3>
+                        <p class="m0">Status</p>
                     </div>
-                    <hr/>
-                    <ul class="list-unstyled ph-xl">
-                        <li>
-                            <em class="fa fa-envelope-o fa-fw mr-lg"></em>{{profile.email}}</li>
-                        <li>
-                            <em class="fa fa-dashboard fa-fw mr-lg"></em>Created: <small>{{profile.created_at | date:'MMM d, y'}}</small></li>
-                        <li>
-                            <em class="fa fa-dashboard fa-fw mr-lg"></em>Last Modified: <small>{{profile.updated_at | date:'MMM d, y'}}</small></li>
-                    </ul>
+                    <div class="col-xs-4 br">
+                        <!--<h3 class="m0">400</h3>-->
+                        <p class="m0"><a ui-sref="app.dashboard.update">
+                                <span class="hidden-xs">Update</span>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a href="#" class="pull-right">
-                        <em class="icon-plus text-muted"></em>
-                    </a>Contacts</div>
-                <div class="list-group">
-                    <!-- START User status-->
-                    <div class="media p mt0 list-group-item" ng-repeat="contact in contacts">
+
+            <div class=" ">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <h3 class="mt0">{{$user->lastname . ' ' . $user->firstname}}</h3>
+                            <!--<p>Lead director</p>-->
+                        </div>
+                        <hr/>
+                        <ul class="list-unstyled ph-xl">
+                            <li>
+                                <em class="fa fa-envelope-o fa-fw mr-lg"></em>{{$user->email}}</li>
+                            <li>
+                                <em class="fa fa-dashboard fa-fw mr-lg"></em>Created: <small>{{$user->created_at->diffForHumans()}}</small></li>
+                            <li>
+                                <em class="fa fa-dashboard fa-fw mr-lg"></em>Last Modified: <small>{{$user->updated_at->diffForHumans()}}</small></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a href="#" class="pull-right">
+                            <em class="icon-plus text-muted"></em>
+                        </a>Contacts</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <!-- START User status-->
+                            @foreach($contacts as $contact)
+                                <div class="media p mt0 list-group-item">
                          <span class="pull-right">
                             <span class="circle circle-success circle-lg"></span>
                          </span>
                          <span class="pull-left">
                             <!-- Contact avatar-->
-                            <em class="media-object img-circle thumb32" ></em>
+                            <em class="media-object img-circle thumb32"></em>
                          </span>
-                        <!-- Contact info-->
+                                    <!-- Contact info-->
                          <span class="media-body">
                             <span class="media-heading">
-                               <strong>{{contact.name}}</strong>
-                                <br />
-                               <small class="text-muted">{{contact.email}}</small>
+                               <strong>{{ $contact['name'] }}</strong>
+                                <br>
+                               <small class="text-muted">{{ $contact['email'] }}</small>
                             </span>
                          </span>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                    <!-- END User status-->
                 </div>
-            </div>
-        </div>
 
+            </div>
+
+        </div>
     </div>
 @endsection
 
