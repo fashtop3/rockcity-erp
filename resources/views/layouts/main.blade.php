@@ -50,6 +50,12 @@
     <!-- RTL demo-->
     <script src="/app/js/demo/demo-rtl.js"></script>
 
+
+    <!-- CLASSY LOADER-->
+    <script src="/vendor/jquery-classyloader/js/jquery.classyloader.min.js"></script>
+    <!-- MOMENT JS-->
+    <script src="/vendor/moment/min/moment-with-locales.min.js"></script>
+
     @yield('page-vendor')
 
 @endsection

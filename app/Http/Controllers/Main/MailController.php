@@ -24,7 +24,7 @@ class MailController extends Controller
      */
     public function create()
     {
-        //
+        return view('main.mail');
     }
 
     /**
