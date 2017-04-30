@@ -16,13 +16,14 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form role="form-horizontal" name="mailoutForm" ng-submit="sendMail()">
+                    <form class="form" name="mailoutForm" method="POST" action="{{ route('mail') }}">
+                        {{ csrf_field() }}
                         <div>
                             {{--<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>--}}
                         </div>
                         <div class="input-group form-group">
                             <span class="input-group-addon text-sm">To:</span>
-                            <select id="mail-data-select" class="form-control">
+                            <select id="mail-data-select" name="to" class="form-control">
                                 <option value="">--Choose--</option>
                                 <optgroup label="Alaskan/Hawaiian Time Zone">
                                     <option value="AK">Alaska</option>
@@ -32,25 +33,25 @@
 
                         </div>
 
-                        <div ng-show="mailbox.mail.cc" class="input-group form-group">
+                        <div id="cc-button" class="input-group form-group">
                             <span class="input-group-addon text-sm">CC:</span>
-                            <input ng-model="mail.cc" type="text" class="form-control" />
+                            <input name="cc" type="text" class="form-control" />
                         </div>
-                        <div ng-show="mailbox.mail.bcc" class="input-group form-group">
+                        <div id="bcc-button" class="input-group form-group">
                             <span class="input-group-addon text-sm">BCC:</span>
-                            <input ng-model="mail.bcc" type="text" class="form-control" />
+                            <input name="bcc" type="text" class="form-control" />
                         </div>
                         <div class="input-group form-group">
                             <span class="input-group-addon text-sm">Subject:</span>
-                            <input ng-model="mail.subject" type="text" class="form-control" required/>
+                            <input name="subject" type="text" class="form-control" required/>
                         </div>
 
                         <div class="row">
                             <!-- START action buttons-->
                             <div class="col-md-2 col-md-push-10">
                                 <div class="btn-group btn-group-sm mb pull-right">
-                                    <button type="button" ng-class="{'active':mailbox.mail.cc}" ng-click="mailbox.mail.cc = !mailbox.mail.cc" href="#" class="btn btn-default btn-sm">CC</button>
-                                    <button type="button" ng-class="{'active':mailbox.mail.bcc}" ng-click="mailbox.mail.bcc = !mailbox.mail.bcc" href="#" class="btn btn-default btn-sm">BCC</button>
+                                    <button type="button" onclick="$('#cc-button').toggle()"  href="javascript:void(0)" class="btn btn-default btn-sm">CC</button>
+                                    <button type="button" onclick="$('#bcc-button').toggle()"  href="javascript:void(0)" class="btn btn-default btn-sm">BCC</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -155,12 +156,13 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;">hello jhjwgit</div></div>
+                                        <textarea id="msg" hidden name="msg" cols="30" rows="10"></textarea>
+                                        <div id="editorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;">hello jhjwgit</div></div>
                                     {{--</div>--}}
                         </div>
 
                         <br/>
-                        <button type="submit" ng-disabled="mailoutForm.$invalid || disabled" class="btn btn-primary btn-sm mb">Send</button>
+                        <button id="submit" type="submit" class="btn btn-primary btn-sm mb">Send</button>
                             {{--<span ng-if="disabled">{{mailMsg}}</span>--}}
                     </form>
                 </div>
@@ -185,13 +187,19 @@
             // WYSIWYG
             // -----------------------------------
 
-            $('.wysiwyg').wysiwyg();
+            $('#editor').wysiwyg();
+
+            $('#submit').click(fgunction(e) {
+               $('#msg').val(($('#editorContent').cleanHtml()));
+            });
 
 
 
             $("#mail-data-select").select2({
                 theme: "bootstrap"
             });
+
+            $('#cc-button, #bcc-button').hide()
 
         });
     </script>

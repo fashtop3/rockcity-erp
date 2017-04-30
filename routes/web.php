@@ -42,7 +42,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/profile/{id}', 'Main\UserController@edit')->name('profile');
     Route::post('/profile/{id}', 'Main\UserController@update')->name('profile');
     Route::get('/mail', 'Main\MailController@create')->name('mail');
-    Route::post('/mail', 'Main\MailController@store')->name('mail');
+    Route::post('/mail', 'Main\MailController@sendCustomMail')->name('mail');
     Route::get('/sms', 'Main\MailController@create')->name('sms');
     Route::post('/sms', 'Main\MailController@store')->name('sms');
 });
