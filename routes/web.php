@@ -43,8 +43,8 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::post('/profile/{id}', 'Main\UserController@update')->name('profile');
     Route::get('/mail', 'Main\MailController@create')->name('mail');
     Route::post('/mail', 'Main\MailController@sendCustomMail')->name('mail');
-    Route::get('/sms', 'Main\MailController@create')->name('sms');
-    Route::post('/sms', 'Main\MailController@store')->name('sms');
+    Route::get('/sms', 'Main\SMSController@create')->name('sms');
+    Route::post('/sms', 'Main\SMSController@sendCustomSMS')->name('sms');
 });
 
 Auth::routes();

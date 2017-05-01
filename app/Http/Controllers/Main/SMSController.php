@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Main;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class SMSController extends Controller
 {
@@ -24,7 +26,42 @@ class SMSController extends Controller
      */
     public function create()
     {
-        //
+        return view('main.sms');
+    }
+
+    public function sendCustomSMS(Request $request)
+    {
+        //Todo: design mail template
+
+        dd($request->all());
+
+        $user = Auth::user();
+
+        $data['content'] = $request->get('msg');
+
+
+        try {
+//            \Mail::send('emails.mailout', $data, function ($message) use ($user, $request) {
+//
+//                $message->from($user->email, $user->getFullName());
+//                $message->to($request->get('to'));
+//                $message->subject($request->get('subject'));
+//
+//                if (!empty($request->get('cc')))
+//                    $message->cc($request->get('cc'));
+//
+//                if (!empty($request->get('bcc')))
+//                    $message->bcc($request->get('bcc'));
+//            });
+
+            Session::flash('success', 'SMS sent');
+
+        }
+        catch(\Exception $e) {
+            Session::flash('error', 'SMS sent');
+        }
+
+        return redirect()->back();
     }
 
     /**

@@ -189,7 +189,7 @@
 
             $('#editor').wysiwyg();
 
-            $('#submit').click(fgunction(e) {
+            $('#submit').click(function(e) {
                $('#msg').val(($('#editorContent').cleanHtml()));
             });
 
