@@ -6,9 +6,12 @@ use App\Models\Client;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+use Bican\Roles\Traits\HasRoleAndPermission;
+use Bican\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+
+class User extends Authenticatable implements HasRoleAndPermissionContract
 {
-    use Notifiable;
+    use Notifiable, HasRoleAndPermission;
 
     /**
      * The attributes that are mass assignable.

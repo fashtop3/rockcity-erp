@@ -178,6 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 
+        Bican\Roles\RolesServiceProvider::class,
+
         /*
         * Backpack Service Providers...
         */
