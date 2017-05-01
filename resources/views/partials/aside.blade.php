@@ -63,7 +63,7 @@
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('client') }}" title="Horizontal">
                                 <span>View & Search</span>
                             </a>
                         </li>

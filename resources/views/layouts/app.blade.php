@@ -16,10 +16,11 @@
     <link rel="stylesheet" href="/vendor/fontawesome/css/font-awesome.min.css">
     <!-- SIMPLE LINE ICONS-->
     <link rel="stylesheet" href="/vendor/simple-line-icons/css/simple-line-icons.css">
-    <!-- =============== BOOTSTRAP STYLES ===============-->
-    <link rel="stylesheet" href="/app/css/bootstrap.css" id="bscss">
 
     @yield('head')
+
+    <!-- =============== BOOTSTRAP STYLES ===============-->
+    <link rel="stylesheet" href="/app/css/bootstrap.css" id="bscss">
 
     <!-- =============== APP STYLES ===============-->
     <link rel="stylesheet" href="/app/css/app.css" id="maincss">

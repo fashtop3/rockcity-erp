@@ -6,7 +6,9 @@ use App\Http\Requests\ClientCreateRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Yajra\Datatables\Datatables;
 
 class ClientController extends Controller
 {
@@ -17,7 +19,24 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = auth()->user()->clients()->get();
+        return view('main.client.index', compact('clients'));
+    }
+
+
+    /**
+     * Process dataTable ajax response.
+     *
+     * @param \Yajra\Datatables\Datatables $datatables
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = auth()->user()->clients()->get();
+
+        return $datatables->collection($query)
+            ->addColumn('action', 'eloquent.tables.users-action')
+            ->make(true);
     }
 
     /**

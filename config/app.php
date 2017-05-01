@@ -180,6 +180,7 @@ return [
 
         Bican\Roles\RolesServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
+        Yajra\Datatables\ButtonsServiceProvider::class,
         Recca0120\LaravelTracy\LaravelTracyServiceProvider::class,
 
         /*
@@ -253,6 +254,8 @@ return [
         'CRUD' => Backpack\CRUD\CrudServiceProvider::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
+        'Datatables' => yajra\Datatables\Datatables::class,
 
     ],
 

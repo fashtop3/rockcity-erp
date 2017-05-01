@@ -30,6 +30,10 @@ class Client extends Model
         return $this->belongsTo(User::class);
     }
 
+//    public function contactPerson()
+//    {
+//        return $this->attributes['firstname'] . ' ' . $this->attributes['lastname'];
+//    }
 
     public static function mailExits($email)
     {
