@@ -179,6 +179,8 @@ return [
 
 
         Bican\Roles\RolesServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Recca0120\LaravelTracy\LaravelTracyServiceProvider::class,
 
         /*
         * Backpack Service Providers...

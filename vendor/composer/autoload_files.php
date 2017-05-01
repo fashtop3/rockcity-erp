@@ -18,4 +18,7 @@ return array(
     'bd9634f2d41831496de0d3dfe4c94881' => $vendorDir . '/symfony/polyfill-php56/bootstrap.php',
     'e7223560d890eab89cda23685e711e2c' => $vendorDir . '/psy/psysh/src/Psy/functions.php',
     '0c3c22e27afa83be19b4c938f4c6e9ea' => $vendorDir . '/spatie/laravel-backup/src/Helpers/functions.php',
+    '7745382c92b7799bf1294b1f43023ba2' => $vendorDir . '/tracy/tracy/src/shortcuts.php',
+    '948fab7911aa366553464041e4ab1b33' => $vendorDir . '/recca0120/terminal/src/helpers.php',
+    '28c326dc1cc904774a1a8347c16c58a8' => $vendorDir . '/recca0120/laravel-tracy/src/helpers.php',
 );
