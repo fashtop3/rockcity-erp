@@ -51,14 +51,14 @@
                     </a>
                 </li>
                 <li class=" ">
-                    <a href="#layout" title="Clients" data-toggle="collapse">
+                    <a href="#client" title="Clients" data-toggle="collapse">
                         <em class="icon-layers"></em>
                         <span>Clients</span>
                     </a>
-                    <ul id="layout" class="nav sidebar-subnav collapse">
+                    <ul id="client" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Clients</li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('client.create') }}" title="Horizontal">
                                 <span>Register</span>
                             </a>
                         </li>

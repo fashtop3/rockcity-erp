@@ -1,9 +1,6 @@
 @extends('layouts.main')
 
 @section('page-head')
-        <!-- SELECT2-->
-        <link rel="stylesheet" href="/vendor/select2/dist/css/select2.css">
-        <link rel="stylesheet" href="/vendor/select2-bootstrap-theme/dist/select2-bootstrap.css">
 @endsection
 
 @section('section')
@@ -45,35 +42,4 @@
 
 @section('page-vendor')
    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
-
-    <!-- WYSIWYG-->
-    <script src="/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
-    <script src="/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
-
-    <!-- SELECT2-->
-    <script src="/vendor/select2/dist/js/select2.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            // WYSIWYG
-            // -----------------------------------
-
-            $('#editor').wysiwyg();
-
-            $('#submit').click(function(e) {
-               $('#msg').val(($('#editorContent').cleanHtml()));
-            });
-
-
-
-            $("#mail-data-select").select2({
-                theme: "bootstrap"
-            });
-
-            $('#cc-button, #bcc-button').hide()
-
-        });
-    </script>
-
 @endsection

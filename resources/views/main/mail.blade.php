@@ -157,7 +157,7 @@
                                             </div>
                                         </div>
                                         <textarea id="msg" hidden name="msg" cols="30" rows="10"></textarea>
-                                        <div id="editorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;">hello jhjwgit</div></div>
+                                        <div id="editorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;"></div></div>
                                     {{--</div>--}}
                         </div>
 
