@@ -114,7 +114,19 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $client = Client::findOrFail($id);
+            $client->update($request->all());
+            Session::flash('success', 'Client profile updated.');
+        }
+        catch(\Exception $e)
+        {
+            Session::flash('error', "Client not found");
+            return redirect()-route('client');
+        }
+
+        return redirect()->back();
+
     }
 
     /**

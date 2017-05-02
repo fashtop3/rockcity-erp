@@ -27,7 +27,7 @@ class ProfileUpdateRequest extends FormRequest
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
 //            'email' => 'required|string|email|max:255|unique:users',
-            'new_password' => 'sometimes|confirmed',
+            'new_password' => 'sometimes|confirmed|nullable|string|min:6',
             'old_password' => 'required_with:new_password',
         ];
     }

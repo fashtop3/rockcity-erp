@@ -78,15 +78,15 @@ class UserController extends Controller
     {
 
         // recheck new pasword for valid input
-        if(!empty($request->get('new_password'))) {
-            $v = Validator::make($request->all(), [
-                'new_password' => 'string|min:6',
-            ]);
-
-            if($v->fails()) {
-                return redirect()->back()->withInput()->withErrors($v->errors()->all());
-            }
-        }
+//        if(!empty($request->get('new_password'))) {
+//            $v = Validator::make($request->all(), [
+//                'new_password' => 'string|min:6',
+//            ]);
+//
+//            if($v->fails()) {
+//                return redirect()->back()->withInput()->withErrors($v->errors()->all());
+//            }
+//        }
 
         try{
             $input = $request->all();
