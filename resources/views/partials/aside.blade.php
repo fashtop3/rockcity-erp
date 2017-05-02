@@ -77,7 +77,7 @@
                     <ul id="airtime" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Airtime</li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('airtime.create') }}" title="Horizontal">
                                 <span>Generate</span>
                             </a>
                         </li>

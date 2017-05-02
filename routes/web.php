@@ -56,6 +56,8 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/client/create', 'Main\ClientController@create')->name('client.create');
     Route::post('/client/create', 'Main\ClientController@store')->name('client.create');
 
+    //airtime
+    Route::get('/airtime/create', 'Airtime\GenerateController@create')->name('airtime.create');
 });
 
 Auth::routes();
