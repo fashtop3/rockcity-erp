@@ -14,7 +14,7 @@
 
     <div class="row">
         <!--<div class="col-xs-12 col-sm-12">-->
-        <div class="panel panel-default" ng-controller="ClientController">
+        <div class="panel panel-default">
             <div class="panel-body">
 
 
@@ -22,6 +22,7 @@
                     <table id="users-table" class="table table-striped table-hover">
                         <thead>
                         <tr>
+                            <th>S/N</th>
                             <th>Client</th>
                             <th>Contact Person</th>
                             <th>Address</th>
@@ -30,24 +31,29 @@
                             <th>Action</th>
                         </tr>
                         </thead>
-                        {{--<tbody>--}}
-                        {{--<tr ng-repeat="client in clients">--}}
-                            {{--<td>{{ client.name }}</td>--}}
-                            {{--<td>{{client.lastname+' '+client.firstname}}</td>--}}
-                            {{--<td>{{ client.street_no +' '+ client.street_name +', '+ client.town }}</td>--}}
-                            {{--<td>{{ client.mobile }}</td>--}}
-                            {{--<td>{{ client.email }}</td>--}}
-                            {{--<td>--}}
-                                {{--<a ui-sref="app.client.edit({id: client.id})" class="btn btn-sm btn-warning">--}}
-                                    {{--<em class="fa fa-edit"></em>--}}
-                                {{--</a>--}}
-                                {{--<button type="button" ng-click="removeClient($index)" class="btn btn-sm btn-danger">--}}
-                                    {{--<em class="fa fa-trash-o"></em>--}}
-                                {{--</button>--}}
-                            {{--</td>--}}
-                        {{--</tr>--}}
-                        {{--</tbody>--}}
+                        <tbody>
+                        @foreach($clients as $client)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $client->name }}</td>
+                            <td>{{$client->title . '. '. $client->lastname .' ' . $client->firstname}}</td>
+                            <td>{{ $client->street_no .' ' . $client->street_name .', '. $client->town }}</td>
+                            <td>{{ $client->mobile }}</td>
+                            <td>{{ $client->email }}</td>
+                            <td>
+                                <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn btn-sm btn-warning">
+                                    <em class="fa fa-edit"></em>
+                                </a>
+                                <a href="{{ route('client.destroy', ['id' => $client->id]) }}" type="button" onclick="return confirm('Are you sure you want to delete this client')" class="btn btn-sm btn-danger">
+                                    <em class="fa fa-trash-o"></em>
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
                     </table>
+
+                    {{ $clients->links() }}
                 </div>
             </div>
         </div>
@@ -65,24 +71,24 @@
     {{--<script src="/app/js/demo/demo-datatable.js"></script>--}}
 
     <script>
-        $(function () {
-            $('#users-table').dataTable({
-                serverSide: true,
-                processing: true,
-                ajax: '/app/client-data',
-                columns: [
-//                    {data: 'id'},
-                    {data: 'name'},
-                    {data: function(data) { return data['lastname'] + ' ' + data['firstname']}},
-                    {data: function(data) { return data['street_no'] + ' ' + data['street_name'] + ' ' + data['town']}},
-                    {data: 'mobile'},
-                    {data: 'email'},
-//                    {data: 'created_at'},
-//                    {data: 'updated_at'},
-                    {data: 'action', orderable: false, searchable: false}
-                ]
-            });
-
-        });
+//        $(function () {
+//            $('#users-table').dataTable({
+//                serverSide: true,
+//                processing: true,
+//                ajax: '/app/client-data',
+//                columns: [
+////                    {data: 'id'},
+//                    {data: 'name'},
+//                    {data: function(data) { return data['lastname'] + ' ' + data['firstname']}, orderable: false, searchable: true},
+//                    {data: function(data) { return data['street_no'] + ' ' + data['street_name'] + ' ' + data['town']}, orderable: false, searchable: true},
+//                    {data: 'mobile', orderable: false, searchable: true},
+//                    {data: 'email', orderable: false, searchable: true},
+////                    {data: 'created_at'},
+////                    {data: 'updated_at'},
+//                    {data: 'action', orderable: false, searchable: false}
+//                ]
+//            });
+//
+//        });
     </script>
 @endsection

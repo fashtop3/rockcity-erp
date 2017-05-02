@@ -19,7 +19,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = auth()->user()->clients()->get();
+        $clients = auth()->user()->clients()->paginate(100);
         return view('main.client.index', compact('clients'));
     }
 
@@ -35,7 +35,11 @@ class ClientController extends Controller
         $query = auth()->user()->clients()->get();
 
         return $datatables->collection($query)
-            ->addColumn('action', 'eloquent.tables.users-action')
+            ->addColumn('action', function ($query) {
+                return '<a href="'. route('client.edit', ['id' => $query->id]) .'" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></a> '
+                . ' <a href="'. route('client.edit', ['id' => $query->id]) .'" class="btn btn-sm btn-danger"><em class="fa fa-trash-o"></em></a>';
+            })
+//            ->addColumn('action', 'vendor.datatables.buttons.clients-action')
             ->make(true);
     }
 
@@ -78,7 +82,16 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $client = Client::findOrFail($id);
+        }
+        catch(\Exception $e)
+        {
+            Session::flash('error', "Client not found");
+            return redirect()-route('client');
+        }
+
+        return view('main.client.edit', compact('client'));
     }
 
     /**

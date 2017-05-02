@@ -22,6 +22,8 @@ http://keith-wood.name/localisation.html
     if (options == null) {
       options = {};
     }
+    options.pathPrefix = '/app/' + options.pathPrefix;
+    //console.log(options);
     wrappedSet = this;
     intermediateLangData = {};
     fileExtension = options.fileExtension || "json";

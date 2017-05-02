@@ -48,7 +48,7 @@
     <!-- LOCALIZE-->
     <script src="/vendor/jquery-localize-i18n/dist/jquery.localize.js"></script>
     <!-- RTL demo-->
-    <script src="/app/js/demo/demo-rtl.js"></script>
+    {{--<script src="/app/js/demo/demo-rtl.js"></script>--}}
 
 
     <!-- CLASSY LOADER-->

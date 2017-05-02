@@ -49,6 +49,10 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     //client
     Route::get('/client', 'Main\ClientController@index')->name('client');
     Route::get('/client-data', 'Main\ClientController@data');
+    Route::get('/client/{id}/edit', 'Main\ClientController@show')->name('client.edit');
+    Route::post('/client/{id}/edit', 'Main\ClientController@update')->name('client.edit');
+    Route::post('/client/{id}/destroy', 'Main\ClientController@show')->name('client.destroy');
+
     Route::get('/client/create', 'Main\ClientController@create')->name('client.create');
     Route::post('/client/create', 'Main\ClientController@store')->name('client.create');
 
