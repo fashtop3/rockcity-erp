@@ -44,4 +44,11 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     {
         return $this->hasMany(Client::class);
     }
+
+    public static function marketers()
+    {
+        $role = \App\Role::where('name', 'marketing')->get()->first();
+
+        return $role->users;
+    }
 }

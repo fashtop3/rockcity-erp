@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('page-head')
+        <!-- SELECT2-->
+        <link rel="stylesheet" href="/vendor/select2/dist/css/select2.css">
+        <link rel="stylesheet" href="/vendor/select2-bootstrap-theme/dist/select2-bootstrap.css">
 @endsection
 
 @section('section')
@@ -12,55 +15,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Basic Form (jquery.validate)</div>
                 <div class="panel-body">
-                    <form id="example-form" action="#">
-                        <div>
-                            <h4>Account
-                                <br>
-                                <small>Nam egestas, leo eu gravida tincidunt</small>
-                            </h4>
-                            <fieldset>
-                                <label for="userName">User name *</label>
-                                <input id="userName" name="userName" type="text" class="form-control required">
-                                <label for="password">Password *</label>
-                                <input id="password" name="password" type="text" class="form-control required">
-                                <label for="confirm">Confirm Password *</label>
-                                <input id="confirm" name="confirm" type="text" class="form-control required">
-                                <p>(*) Mandatory</p>
-                            </fieldset>
-                            <h4>Profile
-                                <br>
-                                <small>Nam egestas, leo eu gravida tincidunt</small>
-                            </h4>
-                            <fieldset>
-                                <label for="name">First name *</label>
-                                <input id="name" name="name" type="text" class="form-control required">
-                                <label for="surname">Last name *</label>
-                                <input id="surname" name="surname" type="text" class="form-control required">
-                                <label for="email">Email *</label>
-                                <input id="email" name="email" type="text" class="form-control required email">
-                                <label for="address">Address</label>
-                                <input id="address" name="address" type="text" class="form-control">
-                                <p>(*) Mandatory</p>
-                            </fieldset>
-                            <h4>Hints
-                                <br>
-                                <small>Nam egestas, leo eu gravida tincidunt</small>
-                            </h4>
-                            <fieldset>
-                                <p class="lead text-center">Almost there!</p>
-                            </fieldset>
-                            <h4>Finish
-                                <br>
-                                <small>Nam egestas, leo eu gravida tincidunt</small>
-                            </h4>
-                            <fieldset>
-                                <p class="lead">One last check</p>
-                                <div class="checkbox c-checkbox">
-                                    <label>
-                                        <input type="checkbox" required="required" name="terms">
-                                        <span class="fa fa-check"></span>I agree with the Terms and Conditions.</label>
-                                </div>
-                            </fieldset>
+                    <form id="airtime-form" action="#">
+                        <div id="airtime-slides">
+                            @include('main.airtime.wizards.client-marketer')
+                            @include('main.airtime.wizards.products')
+                            @include('main.airtime.wizards.remarks')
+                            @include('main.airtime.wizards.review')
                         </div>
                     </form>
                 </div>
@@ -71,12 +31,60 @@
 
 @section('page-vendor')
    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
-
+    <!-- SELECT2-->
+    <script src="/vendor/select2/dist/js/select2.js"></script>
     <!-- JQUERY VALIDATE-->
     <script src="/vendor/jquery-validation/dist/jquery.validate.js"></script>
     <!-- JQUERY STEPS-->
     <script src="/vendor/jquery.steps/build/jquery.steps.js"></script>
     <!-- Demo-->
-    <script src="/app/js/demo/demo-wizard.js"></script>
+    <script>
+        // Forms Demo
+        // -----------------------------------
+
+
+        (function(window, document, $, undefined){
+
+            $(function(){
+
+                // FORM EXAMPLE
+                // -----------------------------------
+                var form = $("#airtime-form");
+                form.validate({
+                    errorPlacement: function errorPlacement(error, element) { element.before(error); },
+                    rules: {
+                        confirm: {
+                            equalTo: "#password"
+                        }
+                    }
+                });
+                form.children("#airtime-slides").steps({
+                    headerTag: "h4.airtime-header",
+                    bodyTag: "div.wizard-body",
+                    transitionEffect: "slideLeft",
+                    onStepChanging: function (event, currentIndex, newIndex)
+                    {
+                        form.validate().settings.ignore = ":disabled,:hidden";
+                        return form.valid();
+                    },
+                    onFinishing: function (event, currentIndex)
+                    {
+                        form.validate().settings.ignore = ":disabled";
+                        return form.valid();
+                    },
+                    onFinished: function (event, currentIndex)
+                    {
+                        alert("Submitted!");
+
+                        // Submit form
+                        $(this).submit();
+                    }
+                });
+
+            });
+
+        })(window, document, window.jQuery);
+
+    </script>
 
 @endsection
