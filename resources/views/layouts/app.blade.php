@@ -17,6 +17,9 @@
     <!-- SIMPLE LINE ICONS-->
     <link rel="stylesheet" href="/vendor/simple-line-icons/css/simple-line-icons.css">
 
+    {{--<script src="/vendor/jquery/dist/jquery.js"></script>--}}
+    <script src="/vendor/jquery/dist/jquery.js"></script>
+
     @yield('head')
 
     <!-- =============== BOOTSTRAP STYLES ===============-->
@@ -24,6 +27,11 @@
 
     <!-- =============== APP STYLES ===============-->
     <link rel="stylesheet" href="/app/css/app.css" id="maincss">
+
+
+    @yield('vendor-head')
+
+    <!-- JQUERY-->
 </head>
 
 <body>
@@ -39,8 +47,8 @@
     <!-- =============== VENDOR SCRIPTS ===============-->
     <!-- MODERNIZR-->
     <script src="/vendor/modernizr/modernizr.custom.js"></script>
-    <!-- JQUERY-->
-    <script src="/vendor/jquery/dist/jquery.js"></script>
+    {{--<!-- JQUERY-->--}}
+    {{--<script src="/vendor/jquery/dist/jquery.js"></script>--}}
     <!-- BOOTSTRAP-->
     <script src="/vendor/bootstrap/dist/js/bootstrap.js"></script>
     <!-- STORAGE API-->

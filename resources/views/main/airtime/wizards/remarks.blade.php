@@ -2,6 +2,6 @@
     <br>
     <small>Add remarks</small>
 </h4>
-<div class="wizard-body">
+<section class="wizard-body">
     <p class="lead text-center">Almost there!</p>
-</div>
+</section>

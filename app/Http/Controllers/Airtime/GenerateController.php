@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Airtime;
 
+use App\Models\Airtime\Product;
+use App\Models\Airtime\ProductTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,9 +24,15 @@ class GenerateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('main.airtime.create');
+        $products = Product::with('prices')->get();
+        $time = ProductTime::first();
+
+        $step = $request->get('step', 0);
+        if($step < 0 || $step > 4) $step = 0;
+
+        return view('main.airtime.create')->with(['products' => $products, 'prog_time' => $time, 'step' => $step]);
     }
 
     /**
