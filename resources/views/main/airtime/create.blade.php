@@ -10,6 +10,7 @@
 
 <link rel="stylesheet" href="/vendor/jquery-ui/themes/smoothness/theme.css">
 <link rel="stylesheet" href="/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css">
+<link rel="stylesheet" href="/css/bootstrap-datepicker.min.css">
 
 <style>
     #airtime-wizard .content {
@@ -139,7 +140,8 @@
     <!-- JQUERY STEPS-->
     <script src="/vendor/jquery.steps/build/jquery.steps.js"></script>
 
-    <script src="/vendor/jquery-ui/ui/datepicker.js" id="uiMin"></script>
+    {{--<script src="/vendor/jquery-ui/ui/datepicker.js" id="uiMin"></script>--}}
+    <script src="/js/bootstrap-datepicker.min.js" id="uiMin"></script>
 
     <!-- Demo-->
     <script type="text/javascript">
@@ -169,8 +171,9 @@
                     bodyTag: "section.wizard-body",
                     transitionEffect: "slideLeft",
                     onInit: function() {
-//                        $('#slot_start_date').datepicker();
-                        $('.datepicker').datepicker();
+
+                        init_slot_dates();
+
                     },
                     onStepChanging: function (event, currentIndex, newIndex)
                     {
@@ -189,12 +192,14 @@
                         // Submit form
                         $(this).submit();
                     }
-                });
+                }).steps("next");
 
             });
 
 
         })(window, document, window.jQuery);
+
+
 
         $(document).ready(function () {
             $(".data-select2").select2({

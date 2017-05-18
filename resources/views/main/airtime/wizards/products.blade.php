@@ -112,29 +112,38 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-sm-6">
-                            <label for="duration" class="control-label">Start date <abbr class="text-danger" title="required">*</abbr></label>
-                            <p class="input-group">
-                                <input type="text" placeholder="start date" id="slot_start_date" name="slot_start_date"  class="form-control" />
-                                      <span class="input-group-btn">
-                                         <button type="button" class="btn btn-default">
-                                             <em class="fa fa-calendar"></em>
-                                         </button>
-                                      </span>
-                            </p>
+                        <div class="col-sm-8">
+                            <label for="duration" class="control-label">Date<abbr class="text-danger" title="required">*</abbr></label>
+                            <div class="input-group input-daterange">
+                                <input type="text" placeholder="start date" id="slot_start_date" name="slot_start_date" class="form-control" >
+                                <div class="input-group-addon">to</div>
+                                <input type="text" placeholder="end date" id="slot_end_date" name="slot_end_date" class="form-control" >
+                            </div>
                         </div>
 
-                        <div class="col-sm-6">
-                            <label for="duration" class="control-label">End date <abbr class="text-danger" title="required">*</abbr></label>
-                            <p class="input-group">
-                                <input type="text" name="slot_end_date" class="form-control" placeholder="end date" />
-                                      <span class="input-group-btn">
-                                         <button type="button" class="btn btn-default">
-                                             <em class="fa fa-calendar"></em>
-                                         </button>
-                                      </span>
-                            </p>
-                        </div>
+                        {{--<div class="col-sm-6">--}}
+                            {{--<label for="duration" class="control-label">Start date <abbr class="text-danger" title="required">*</abbr></label>--}}
+                            {{--<p class="input-group" id="slot_start_date">--}}
+                                {{--<input type="text" placeholder="start date"  name="slot_start_date"  class="form-control datepicker" />--}}
+                                      {{--<span class="input-group-addon">--}}
+                                         {{--<button type="button" class="btn btn-default">--}}
+                                             {{--<em class="fa fa-calendar"></em>--}}
+                                         {{--</button>--}}
+                                      {{--</span>--}}
+                            {{--</p>--}}
+                        {{--</div>--}}
+
+                        {{--<div class="col-sm-6">--}}
+                            {{--<label for="duration" class="control-label">End date <abbr class="text-danger" title="required">*</abbr></label>--}}
+                            {{--<p class="input-group" id="slot_end_date">--}}
+                                {{--<input type="text" name="slot_end_date" class="form-control" placeholder="end date" />--}}
+                                      {{--<span class="input-group-addon">--}}
+                                         {{--<button type="button" class="btn btn-default">--}}
+                                             {{--<em class="fa fa-calendar"></em>--}}
+                                         {{--</button>--}}
+                                      {{--</span>--}}
+                            {{--</p>--}}
+                        {{--</div>--}}
                     </div>
 
                     <br />
@@ -161,109 +170,114 @@
 
                     <div ng-if="btn.fixslot">
                         <div class="form-group">
-                            <div class="col-sm-6">
-                                <p class="input-group">
+                            <div class="col-md-4 col-xs-6">
+                                <p class="input-group" id="fix_date">
                                     <input type="text" placeholder="Slot date" name="fix_date" class="form-control" />
-                                          <span class="input-group-btn">
-                                             <button type="button" class="btn btn-default">
+                                          <span class="input-group-addon">
+                                             {{--<button type="button" class="btn btn-default">--}}
                                                  <em class="fa fa-calendar"></em>
-                                             </button>
+                                             {{--</button>--}}
                                           </span>
                                 </p>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-md-4 col-xs-6">
                                 <p class="input-group">
-                                    <select class="form-control" name="" id="">
-                                        <option value=""></option>
+                                    <select class="form-control" id="slots_select_no">
+                                        <option>--choose--</option>
                                     </select>
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default">
-                                            <em class="fa fa-arrow-down"></em>
-                                        </button>
-                                    </span>
+                                    {{--<span class="input-group-btn">--}}
+                                        {{--<button type="button" class="btn btn-default">--}}
+                                            {{--<em class="fa fa-arrow-down"></em>--}}
+                                        {{--</button>--}}
+                                    {{--</span>--}}
                                 </p>
                             </div>
                         </div>
 
                         <div class="form-group" ng-if="scheduleSlots.length">
-                            <!--<div class="table-responsive">-->
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th></th>
-                                    <th>Date</th>
-                                    <th>Slot</th>
-                                    <th>Fix <small>(optional)</small></th>
-                                    <th>Time <small>(*when fixed)</small></th>
-                                </tr>
-                                <tr ng-repeat="schedule in scheduleSlots">
-                                    <td width="3%"><a ng-click="removeSchedule($index)" ><em class="fa fa-remove text-danger"></em></a></td>
-                                    <td width="27%">@{{schedule.date | date:'d-MMM-y'}}</td>
-                                    <td width="5%" class="text-center">@{{schedule.slot}}</td>
-                                    <td width="20%">
-                                        <div>
-                                            <select class="form-control" ng-change="calcFixedPrice()" ng-init="schedule.tofix = '0'" ng-model="schedule.tofix" class="form-control" name="">
-                                                <option value="@{{$index + 1}}" ng-repeat="i in getSlotRange(schedule.slot) track by $index">@{{$index + 1}}</option>
-                                            </select>
-                                        </div>
-                                        <p ng-if="tofix" class="help-block">1 0f 6 set</p>
-                                    </td>
-                                    <td>
-                                        <div ng-if="schedule.tofix > 0">
+                            <div class="col-md-12 col-xs-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th></th>
+                                            <th>Date</th>
+                                            <th>Slot</th>
+                                            <th>Fix <small>(optional)</small></th>
+                                            <th>Time <small>(*when fixed)</small></th>
+                                        </tr>
+                                        <tr ng-repeat="schedule in scheduleSlots">
+                                            <td width="3%"><a ng-click="removeSchedule($index)" ><em class="fa fa-remove text-danger"></em></a></td>
+                                            <td width="27%">@{{schedule.date | date:'d-MMM-y'}}</td>
+                                            <td width="5%" class="text-center">@{{schedule.slot}}</td>
+                                            <td width="20%">
+                                                <div>
+                                                    <select class="form-control" ng-change="calcFixedPrice()" ng-init="schedule.tofix = '0'" ng-model="schedule.tofix" class="form-control" name="">
+                                                        <option value="@{{$index + 1}}" ng-repeat="i in getSlotRange(schedule.slot) track by $index">@{{$index + 1}}</option>
+                                                    </select>
+                                                </div>
+                                                <p ng-if="tofix" class="help-block">1 0f 6 set</p>
+                                            </td>
+                                            <td>
+                                                <div ng-if="schedule.tofix > 0">
 
-                                            <div ng-controller="SlotTimeModalCtrl as timeMod">
-                                                <!-- Modal inline template-->
-                                                <script type="text/ng-template" id="/myModalContent.html">
-                                                    <div class="modal-header">
-                                                        <button type="button" ng-click="cancel()" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-                                                        <h4 id="myModalLabel" class="modal-title">Set Slot time</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="text text-primary">
-                                                            <span ng-repeat="t in scheduleRef.times">@{{t | date:'h:mm a'}}, </span>
-                                                        </div>
-                                                        <p class="input-group" ng-repeat="i in getSlotRange(scheduleRef.tofix) track by $index"
-                                                           ng-init="box[$index] = true" ng-show="box[$index]">
-                                                            <input type="text" placeholder="time" class="form-control col-sm-2" ng-model="scheduleRef.times[$index]" name="time" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="1" data-arrow-behavior="picker">
+                                                    <div ng-controller="SlotTimeModalCtrl as timeMod">
+                                                        <!-- Modal inline template-->
+                                                        <script type="text/ng-template" id="/myModalContent.html">
+                                                            <div class="modal-header">
+                                                                <button type="button" ng-click="cancel()" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                                                                <h4 id="myModalLabel" class="modal-title">Set Slot time</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="text text-primary">
+                                                                    <span ng-repeat="t in scheduleRef.times">@{{t | date:'h:mm a'}}, </span>
+                                                                </div>
+                                                                <p class="input-group" ng-repeat="i in getSlotRange(scheduleRef.tofix) track by $index"
+                                                                   ng-init="box[$index] = true" ng-show="box[$index]">
+                                                                    <input type="text" placeholder="time" class="form-control col-sm-2" ng-model="scheduleRef.times[$index]" name="time" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="1" data-arrow-behavior="picker">
                                                                 <span class="input-group-btn">
                                                                 <button ng-disabled="!scheduleRef.times[$index]"  ng-click="box[$index] = false" type="button" class="btn btn-default">
                                                                     <em class="icon-pin"></em>
                                                                 </button>
                                                                 </span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button ng-click="ok()" class="btn btn-primary">OK</button><button ng-click="cancel()" class="btn btn-warning">Cancel</button>
-                                                    </div>
-                                                </script>
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button ng-click="ok()" class="btn btn-primary">OK</button><button ng-click="cancel()" class="btn btn-warning">Cancel</button>
+                                                            </div>
+                                                        </script>
 
-                                                <!-- Danger button with label -->
-                                                <button type="button" class="btn btn-labeled" ng-click="timeMod.open('sm', schedule)" ng-class="{'btn-danger':schedule.times.length != schedule.tofix, 'btn-success':schedule.times.length == schedule.tofix}" >
-                                                    <span class="btn-label" ng-if="schedule.times.length != schedule.tofix"><i class="fa fa-exclamation"></i></span>
-                                                    <span class="btn-label" ng-if="schedule.times.length == schedule.tofix"><i class="fa fa-check"></i></span>
-                                                    <em class="icon-clock"></em>
-                                                </button>
+                                                        <!-- Danger button with label -->
+                                                        <button type="button" class="btn btn-labeled" ng-click="timeMod.open('sm', schedule)" ng-class="{'btn-danger':schedule.times.length != schedule.tofix, 'btn-success':schedule.times.length == schedule.tofix}" >
+                                                            <span class="btn-label" ng-if="schedule.times.length != schedule.tofix"><i class="fa fa-exclamation"></i></span>
+                                                            <span class="btn-label" ng-if="schedule.times.length == schedule.tofix"><i class="fa fa-check"></i></span>
+                                                            <em class="icon-clock"></em>
+                                                        </button>
 
-                                                <button type="button" class="btn btn-warning btn-sm" ng-click="clearScheduleTimes(schedule)"><em class="icon-refresh"></em></button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                            <!--</div>-->
+                                                        <button type="button" class="btn btn-warning btn-sm" ng-click="clearScheduleTimes(schedule)"><em class="icon-refresh"></em></button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <!--End Slot config-->
 
                 <!-- display price-->
                 <div class="form-group">
-                    <div class="pull-right">
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" style="width:150px;" name="slot_price" id="slot_price" disabled />
+                    <div class="pull-right col-md-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon">NGN</span>
+                            <input type="text" readonly="" class="form-control" name="slot_price" id="slot_price">
                         </div>
                     </div>
                     <div class="clear-fix"></div>
                 </div>
                 <!--End: display price-->
+
+
 
             </div>
             <div class="panel-footer">
@@ -282,23 +296,27 @@
 
 <script>
 
-    function populate_duration($p_selected, $timeable) {
-        $duration.empty();
-        $.each($p_selected.prices, function (index, price) {
-//                   console.log(index, price);
-            $duration.append($("<option></option>")
-                    .attr("data-index", index)
-                    .attr("data-id", price.id)
-                    .attr("data-object", JSON.stringify(price))
-                    .attr("value", price.duration).text(price.duration));
-        });
-        $duration.find(':first').attr('selected', true);
-        $duration.trigger('change');
-        $timeable.show();
-    }
 
-    //main function
+    /**
+     * Product panel section
+     */
     $(function () {
+
+        function populate_duration($p_selected, $timeable) {
+            $duration.empty();
+            $.each($p_selected.prices, function (index, price) {
+//                   console.log(index, price);
+                $duration.append($("<option></option>")
+                        .attr("data-index", index)
+                        .attr("data-id", price.id)
+                        .attr("data-object", JSON.stringify(price))
+                        .attr("value", price.duration).text(price.duration));
+            });
+            $duration.find(':first').attr('selected', true);
+            $duration.trigger('change');
+            $timeable.show();
+        }
+
         var $timeable = $('#timable');
         var $tariff_div = $('#tariff-div');
         var $slotPanel = $('#slotPanel');
@@ -358,19 +376,97 @@
             }
         });
 
-        function open_slot()
-        {
+    });
 
-        }
+    /**
+     * Slot Panel section
+     */
+    $(function() {
+        var $slots = $('select#slots');
+        var $slots_select_no = $('#slots_select_no');
+        var disabled_fix_date = [];
+//        var $slot_start_date = $('#slot_start_date');
+//        var $slot_end_date = $('#slot_end_date');
+        var $slot_price = $('input#slot_price');
+
+
 
         $('select#slots').change(function() {
-            var $slots = $('select#slots');
             var no_slots = $slots.find(':selected').val();
             var total_slot_price = parseFloat(parseFloat($price.val()) * parseInt(no_slots));
 
-            $('input#slot_price').val(total_slot_price);
-            $('input#slot_price').number(true, 2);
+            var max_slot = $(this).find(':selected');
+            $slots_select_no.empty();
+            generate_fix_slot_select(parseInt(max_slot.val()));
+
+            $slot_price.val(total_slot_price);
+            $slot_price.number(true, 2);
         });
 
+        $slots_select_no.change(function () {
+//            this.disabled = true;
+            var no_slots = $slots.find(':selected').val();
+            var option_val = $(this).find(':selected').val();
+
+
+//            $slots_select_no.empty();
+//            generate_fix_slot_select(parseInt(no_slots - option_val));
+
+            //Todo: append to table here
+
+            console.log(disabled_fix_date);
+            $('#fix_date').datepicker('setDatesDisabled', disabled_fix_date);
+
+        });
+
+        $('#fix_date').datepicker()
+                .on('changeDate', function(e) {
+                    if(e.date != null || typeof e.date != "undefined") {
+                        disabled_fix_date[disabled_fix_date.length] = new Date(e.date.setDate(e.date.getDate() + 1));
+                    }
+                });
+
+        function generate_fix_slot_select(max_slot) {
+            $slots_select_no.append($('<option>--choose--</option>'));
+            for (var i = 1; i <= parseInt(max_slot); i++) {
+                $slots_select_no.append($('<option></option>').val(i).text(i));
+            }
+        }
     });
+
+    function init_slot_dates()  {
+
+        var start = (new Date()).toDateString();
+        $('#slot_start_date').datepicker({
+            'autoclose': true,
+            'format': 'mm-dd-yyyy',
+            'startDate': start
+        });
+        $('#slot_end_date').datepicker({
+            'autoclose': true,
+            'format': 'mm-dd-yyyy',
+            'startDate': start
+        });
+
+        $('#fix_date').datepicker({
+            'autoclose': true,
+            'format': 'mm-dd-yyyy',
+            'startDate': start
+        });
+
+        $('#slot_start_date').datepicker()
+                .on('changeDate', function(e) {
+                    $('#slot_end_date').datepicker('clearDates');
+                    $('#slot_end_date').datepicker('setStartDate', e.date);
+                    $('#fix_date').datepicker('clearDates');
+                    $('#fix_date').datepicker('setStartDate', e.date);
+                });
+
+        $('#slot_end_date').datepicker()
+                .on('changeDate', function(e) {
+                    $('#fix_date').datepicker('clearDates');
+                    $('#fix_date').datepicker('setEndDate', e.date);
+                });
+    }
+
 </script>
