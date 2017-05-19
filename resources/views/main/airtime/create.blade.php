@@ -9,8 +9,13 @@
 <script src="/js/jquery.number.min.js"></script>
 
 <link rel="stylesheet" href="/vendor/jquery-ui/themes/smoothness/theme.css">
-<link rel="stylesheet" href="/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css">
-<link rel="stylesheet" href="/css/bootstrap-datepicker.min.css">
+{{--<link rel="stylesheet" href="/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css">--}}
+{{--<link rel="stylesheet" href="/css/bootstrap-datepicker.min.css">--}}
+
+<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+{{--<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>--}}
+<script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 
 <style>
     #airtime-wizard .content {
@@ -141,7 +146,7 @@
     <script src="/vendor/jquery.steps/build/jquery.steps.js"></script>
 
     {{--<script src="/vendor/jquery-ui/ui/datepicker.js" id="uiMin"></script>--}}
-    <script src="/js/bootstrap-datepicker.min.js" id="uiMin"></script>
+    {{--<script src="/js/bootstrap-datepicker.min.js" id="uiMin"></script>--}}
 
     <!-- Demo-->
     <script type="text/javascript">
