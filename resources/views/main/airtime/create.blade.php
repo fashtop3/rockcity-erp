@@ -176,9 +176,7 @@
                     bodyTag: "section.wizard-body",
                     transitionEffect: "slideLeft",
                     onInit: function() {
-
-                        init_slot_dates();
-
+                        ProductSlot.configSlotDates();
                     },
                     onStepChanging: function (event, currentIndex, newIndex)
                     {
