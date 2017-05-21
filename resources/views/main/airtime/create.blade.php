@@ -148,6 +148,24 @@
     {{--<script src="/vendor/jquery-ui/ui/datepicker.js" id="uiMin"></script>--}}
     {{--<script src="/js/bootstrap-datepicker.min.js" id="uiMin"></script>--}}
 
+    <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+    <script src="/vendor/jquery-file-upload/jquery.ui.widget.js"></script>
+    <script src="/vendor/jquery-file-upload/jquery.fileupload.js"></script>
+    <!-- The File Upload processing plugin -->
+    <script src="/vendor/jquery-file-upload/jquery.fileupload-process.js"></script>
+    <!-- The File Upload image preview & resize plugin -->
+    <script src="/vendor/jquery-file-upload/jquery.fileupload-image.js"></script>
+    <!-- The File Upload audio preview plugin -->
+    <script src="/vendor/jquery-file-upload/jquery.fileupload-audio.js"></script>
+    <!-- The File Upload video preview plugin -->
+    <script src="/vendor/jquery-file-upload/jquery.fileupload-video.js"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="/vendor/jquery-file-upload/jquery.fileupload-validate.js"></script>
+    <!-- The File Upload user interface plugin -->
+    <script src="/vendor/jquery-file-upload/jquery.fileupload-ui.js"></script>
+    <!-- The main application script -->
+    <script src="/vendor/jquery-file-upload/main.js"></script>
+
     <!-- Demo-->
     <script type="text/javascript">
         // Forms Demo

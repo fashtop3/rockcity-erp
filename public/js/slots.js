@@ -16,6 +16,7 @@ var ProductSlot = {
          */
         ProductSlot._$timeable = $('#timable');
         ProductSlot._$timeable.hide();
+        ProductSlot._$price = $('input#price');
 
         var $tariff_div = $('#tariff-div');
         var $slotPanel = $('#slotPanel');
@@ -25,7 +26,6 @@ var ProductSlot = {
 
         $period = $('select#period');
         $duration = ProductSlot._$timeable.find("select#duration");
-        ProductSlot._$price = $('input#price');
 
 
         //when new product is selected

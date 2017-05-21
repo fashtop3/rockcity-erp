@@ -254,6 +254,26 @@
                     </div>
                 </div>
                 <!--End Slot config-->
+                <div style="padding:20px"></div>
+                <!--slot Attachment-->
+                <div class="">
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <p class="input-group">
+                                <input class="form-control" id="slotattachment" type="file" name="slotattachment_"
+                                       accept=".zip, .rar, .7z, image/*, audio/*, video/*"
+                                />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default">
+                                        <em class="fa fa-refresh"></em>
+                                    </button>
+                                  </span>
+                            </p>
+                            <span class="help-block" ng-show="airtimeForm.slotattachment.$error.maxsize">Files must not exceed 500KB</span>
+                        </div><br />
+                        <span class="col-sm-10">Only [zip, rar, 7z, image, audio, video formats are allowed.</span>
+                    </div>
+                </div>
 
                 <!-- display price-->
                 <div class="form-group">
@@ -272,9 +292,7 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-sm-4">
-                        <button type="button" ng-click="addSlot()"
-                                ng-disabled="!((form.no_slots > 0) && (form.slot_start_date) && (form.slot_end_date) && checkScheduleSlot())"
-                                class="btn btn-info btn-sm">Add Slot
+                        <button type="button" class="btn btn-info btn-sm">Add Slot
                         </button>
                     </div>
                 </div>
