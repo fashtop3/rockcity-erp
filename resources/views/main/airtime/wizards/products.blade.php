@@ -256,20 +256,17 @@
                 <!--End Slot config-->
                 <div style="padding:20px"></div>
                 <!--slot Attachment-->
-                <div class="">
+                <div id="slot-attachment">
                     <div class="form-group">
                         <div class="col-sm-8">
                             <p class="input-group">
-                                <input class="form-control" id="slotattachment" type="file" name="slotattachment_"
-                                       accept=".zip, .rar, .7z, image/*, audio/*, video/*"
-                                />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default">
+                                <span id="input-group-btn" class="input-group-addon">
+                                    {{--<button class="btn btn-default">--}}
                                         <em class="fa fa-refresh"></em>
-                                    </button>
+                                    {{--</button>--}}
                                   </span>
                             </p>
-                            <span class="help-block" ng-show="airtimeForm.slotattachment.$error.maxsize">Files must not exceed 500KB</span>
+                            <span class="help-block">Files must not exceed 500KB</span>
                         </div><br />
                         <span class="col-sm-10">Only [zip, rar, 7z, image, audio, video formats are allowed.</span>
                     </div>

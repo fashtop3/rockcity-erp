@@ -2,18 +2,33 @@ var ProductSlot = {
 
     products: {},
     prog_time: {},
+    slot_file_id: null,
     cart: {},
 
     init: function (products, progTime) {
+
+        'use strict';
 
         ProductSlot.products = products; // {!!$products !!};
         ProductSlot.prog_time = progTime;// {!! $prog_time !!};
         ProductSlot._slot_table = [];
 
-
         /**
          * Product panel section
          */
+        ProductSlot.__product_panel();
+
+        /**
+         * Slot Panel section
+         */
+        ProductSlot.__slot_panel();
+
+    },
+
+    __product_panel: function() {
+
+        'use strict';
+
         ProductSlot._$timeable = $('#timable');
         ProductSlot._$timeable.hide();
         ProductSlot._$price = $('input#price');
@@ -24,29 +39,29 @@ var ProductSlot = {
         $slotPanel.hide();
 
 
-        $period = $('select#period');
-        $duration = ProductSlot._$timeable.find("select#duration");
+        ProductSlot._$period = $('select#period');
+        ProductSlot._$duration = ProductSlot._$timeable.find("select#duration");
 
 
         //when new product is selected
         $('#product-data-select').change(function () {
             ProductSlot._$timeable.hide();
 
-            $period.trigger('change');
+            ProductSlot._$period.trigger('change');
         });
 
 
         //when period change
-        $period.change(function () {
+        ProductSlot._$period.change(function () {
             var p_index = $('#product-data-select').find(':selected').attr('data-index');
             ProductSlot._$p_selected = ProductSlot.products[p_index];
 //            console.log(ProductSlot._$p_selected);
             if (ProductSlot._$p_selected.timeable) {
                 ProductSlot._populate_duration(ProductSlot._$p_selected, ProductSlot._$timeable);
-                $duration.trigger('change');
+                ProductSlot._$duration.trigger('change');
             } else {
                 var product_price = ProductSlot._$p_selected.prices[0];
-                ProductSlot._$price.val(product_price[$period.find(':selected').val()]);
+                ProductSlot._$price.val(product_price[ProductSlot._$period.find(':selected').val()]);
                 ProductSlot._$price.number(true, 2);
 
                 $tariff_div.show();
@@ -54,12 +69,12 @@ var ProductSlot = {
         });
 
         //when duration change
-        $duration.change(function () {
-            var $s_duration = $duration.find(':selected');
+        ProductSlot._$duration.change(function () {
+            var $s_duration = ProductSlot._$duration.find(':selected');
             var product_price = $s_duration.attr('data-object');
             ProductSlot._$price.attr('data-object', product_price);
             var parsed_price = JSON.parse(product_price);
-            ProductSlot._$price.val(parsed_price[$period.find(':selected').val()]);
+            ProductSlot._$price.val(parsed_price[ProductSlot._$period.find(':selected').val()]);
             ProductSlot._$price.number(true, 2);
 
             $tariff_div.show();
@@ -68,15 +83,40 @@ var ProductSlot = {
 
         $(':radio[name=tariff]').change(function () {
             if ($(this).val() == 'slot') {
+
+                ProductSlot.slot_file_id = 'slot_file_'+ProductSlot._makeid();
+
+                $('input.slot-file-input').each(function(key) {
+                    if($(this).val() == '' || $(this).val() == null) {
+                        $(this).remove();
+                    } else {
+                        console.log($(this).val());
+                        $(this).hide();
+                    }
+                });
+
+                $('<input class="form-control slot-file-input" type="file"/>')
+                    .attr('name', ProductSlot.slot_file_id)
+                    .attr('id', ProductSlot.slot_file_id)
+                    .insertBefore($('div#slot-attachment span#input-group-btn'));
+
                 $slotPanel.show();
+                //initialize file-upload plugin
+                ProductSlot.__init_fileupload();
+
+                console.log(ProductSlot.slot_file_id);
+
                 $('select#slots').trigger('change');
             }
+            else {
+                $slotPanel.hide();
+            }
         });
+    },
 
+    __slot_panel: function() {
 
-        /**
-         * Slot Panel section
-         */
+        'use strict';
 
         ProductSlot._$slots_select_no = $('#slots_select_no');
         ProductSlot._$slots = $('select#slots');
@@ -123,7 +163,7 @@ var ProductSlot = {
             ProductSlot._calc_slot_price(ProductSlot._slot_table);
 
             //set time period for premium/regular
-            var period = $period.find(':selected').val();
+            var period = ProductSlot._$period.find(':selected').val();
             var start_str = period + '_start';
             var end_str = period + '_end';
 
@@ -258,6 +298,7 @@ var ProductSlot = {
             disabled_fix_date = [];
             $('#fix_date').data("DateTimePicker").disabledDates(null);
         }
+
     },
 
     _calc_slot_price: function (slots_list) {
@@ -311,17 +352,17 @@ var ProductSlot = {
     },
 
     _populate_duration: function (p_selected, timeable) {
-        $duration.empty();
+        ProductSlot._$duration.empty();
         $.each(p_selected.prices, function (index, price) {
 //                   console.log(index, price);
-            $duration.append($("<option></option>")
+            ProductSlot._$duration.append($("<option></option>")
                 .attr("data-index", index)
                 .attr("data-id", price.id)
                 .attr("data-object", JSON.stringify(price))
                 .attr("value", price.duration).text(price.duration));
         });
-        $duration.find(':first').attr('selected', true);
-        $duration.trigger('change');
+        ProductSlot._$duration.find(':first').attr('selected', true);
+        ProductSlot._$duration.trigger('change');
         timeable.show();
     },
 
@@ -389,5 +430,38 @@ var ProductSlot = {
             $('#add_fix_time').attr('disabled', true);
             $('#complete_slot_add').attr('disabled', true);
         }
+    },
+
+    _makeid: function () {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < 20; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    },
+
+    __init_fileupload: function() {
+        'use strict';
+
+        // Initialize the jQuery File Upload widget:
+        $('#airtime-wizard').fileupload({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            //url: '//jquery-file-upload.appspot.com/',
+            fileInput: $('input.slot-file-input'),
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            replaceFileInput: false,
+            maxFileSize: 20000000,// 20MB
+            //paramName: "file",
+            singleFileUploads: true,
+            add: function (e, data) {
+                console.log(data);
+
+                //$('input#uplist').remove();
+
+            }
+        });
     }
 };

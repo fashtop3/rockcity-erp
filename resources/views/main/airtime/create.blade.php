@@ -29,6 +29,11 @@
     }
 </style>
 
+<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+<link rel="stylesheet" href="/vendor/jquery-file-upload/css/jquery.fileupload.css">
+<link rel="stylesheet" href="/vendor/jquery-file-upload/css/jquery.fileupload-ui.css">
+
 @endsection
 
 @section('section')
@@ -121,7 +126,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading"></div>
                 <div class="panel-body">
-                    <form id="airtime-wizard" class="form-horizontal" action="#">
+
+                    <form id="airtime-wizard" class="form-horizontal" action="#" method="POST" enctype="multipart/form-data">
 
                         <div id="airtime-slides">
                             @include('main.airtime.wizards.client-marketer')
@@ -150,19 +156,14 @@
 
     <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
     <script src="/vendor/jquery-file-upload/jquery.ui.widget.js"></script>
+    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+    <script src="/vendor/jquery-file-upload/load-image.all.min.js"></script>
+    <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+    <script src="/vendor/jquery-file-upload//canvas-to-blob.min.js"></script>
+    <!-- blueimp Gallery script -->
+    <script src="/vendor/jquery-file-upload/jquery.blueimp-gallery.min.js"></script>
+    <!-- The basic File Upload plugin -->
     <script src="/vendor/jquery-file-upload/jquery.fileupload.js"></script>
-    <!-- The File Upload processing plugin -->
-    <script src="/vendor/jquery-file-upload/jquery.fileupload-process.js"></script>
-    <!-- The File Upload image preview & resize plugin -->
-    <script src="/vendor/jquery-file-upload/jquery.fileupload-image.js"></script>
-    <!-- The File Upload audio preview plugin -->
-    <script src="/vendor/jquery-file-upload/jquery.fileupload-audio.js"></script>
-    <!-- The File Upload video preview plugin -->
-    <script src="/vendor/jquery-file-upload/jquery.fileupload-video.js"></script>
-    <!-- The File Upload validation plugin -->
-    <script src="/vendor/jquery-file-upload/jquery.fileupload-validate.js"></script>
-    <!-- The File Upload user interface plugin -->
-    <script src="/vendor/jquery-file-upload/jquery.fileupload-ui.js"></script>
     <!-- The main application script -->
     <script src="/vendor/jquery-file-upload/main.js"></script>
 
