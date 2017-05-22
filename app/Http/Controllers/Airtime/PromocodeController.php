@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Airtime;
 
-use App\Airtime\Promocode;
+
+use App\Models\Airtime\Promocode;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

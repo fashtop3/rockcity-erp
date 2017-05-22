@@ -198,6 +198,11 @@ return [
         Backpack\LogManager\LogManagerServiceProvider::class,
         Backpack\Settings\SettingsServiceProvider::class,
 
+        /*
+         * Promocode
+         */
+        Trexology\Promocodes\PromocodesServiceProvider::class
+
     ],
 
     /*
@@ -256,6 +261,9 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
 
         'Datatables' => yajra\Datatables\Datatables::class,
+
+        //proomocode
+        'Promocodes' => Trexology\Promocodes\Facades\Promocodes::class,
 
     ],
 
