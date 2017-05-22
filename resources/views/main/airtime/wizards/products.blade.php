@@ -288,7 +288,7 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-info btn-sm">Add Slot
+                        <button type="button" id="add-slot-button" class="btn btn-info btn-sm">Add Slot
                         </button>
                     </div>
                 </div>
@@ -299,7 +299,7 @@
 
     <!--Bulk Option-->
     <!-- START panel-->
-    <div id="bulkPanel" class="panel panel-default" ng-if="product.selected.fixable" style="display: none">
+    <div id="bulkPanel" class="panel panel-default" style="display: none">
         <div class="panel-heading">Bulk Option</div>
 
         <!-- .panel-wrapper is the element to be collapsed-->
@@ -377,7 +377,7 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-sm-4">
-                        <button ng-click="addBulk()" ng-disabled="!(form.broadcast > 0 && form.bulk_end_date)" class="btn btn-info btn-sm">Add Bulk</button>
+                        <button id="add-bulk-button" type="button" class="btn btn-info btn-sm">Add Bulk</button>
                     </div>
                     <div class="col-sm-7">
                         <span class="help-block"><i class="fa fa-info-circle"></i> Please select airtime duration. </span>

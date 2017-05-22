@@ -10,9 +10,19 @@ var ProductSlot = {
 
         'use strict';
 
+        $.cookie.json = true;
+
+        ProductSlot.cart = $.cookie('cart');
+        if(typeof ProductSlot.cart == 'undefined') {
+            ProductSlot.cart = {};
+        }
+
+        //$.removeCookie('cart', { path: '/' });
+        console.log(ProductSlot.cart);
+
         ProductSlot.products = products; // {!!$products !!};
         ProductSlot.prog_time = progTime;// {!! $prog_time !!};
-        ProductSlot._slot_table = [];
+        ProductSlot._slot_schedule = [];
 
         /**
          * Product panel section
@@ -62,7 +72,9 @@ var ProductSlot = {
                 return;
             }
 
+            ProductSlot._product_index = p_index;
             ProductSlot._$p_selected = ProductSlot.products[p_index];
+
             console.log(ProductSlot._$p_selected);
             if (ProductSlot._$p_selected.timeable) {
                 ProductSlot._populate_duration(ProductSlot._$p_selected, ProductSlot._$timeable);
@@ -99,6 +111,8 @@ var ProductSlot = {
             ProductSlot._$price.number(true, 2);
 
             $tariff_div.show();
+            ProductSlot._$refresh_slot_button.trigger('click');
+            ProductSlot._$refresh_bulk_button.trigger('click');
         });
 
 
@@ -133,7 +147,7 @@ var ProductSlot = {
         ProductSlot._$slots = $('select#slots');
         ProductSlot._$slot_price = $('input#slot_price');
         ProductSlot._$isFixable = $('#isfixable');
-        ProductSlot._$_slot_table = $('#slot_table tbody');
+        ProductSlot._$_slot_schedule_table = $('#slot_table tbody');
         ProductSlot._$refresh_slot_button = $('#refresh_slot_button');
 
         var $complete_slot_add = $('#complete_slot_add');
@@ -171,7 +185,7 @@ var ProductSlot = {
 //
 //                ProductSlot._$slot_price.val(total_slot_price);
 //                ProductSlot._$slot_price.number(true, 2);
-            ProductSlot._calc_slot_price(ProductSlot._slot_table);
+            ProductSlot._calc_slot_price(ProductSlot._slot_schedule);
 
             //set time period for premium/regular
             var period = ProductSlot._$period.find(':selected').val();
@@ -258,9 +272,9 @@ var ProductSlot = {
             __row_slot_selection.going = ProductSlot._$slots_select_no.find(':selected').val();
 
             var copyObj = JSON.parse(JSON.stringify(__row_slot_selection));
-            ProductSlot._slot_table.push(copyObj);
+            ProductSlot._slot_schedule.push(copyObj);
 
-            ProductSlot._calc_slot_price(ProductSlot._slot_table);
+            ProductSlot._calc_slot_price(ProductSlot._slot_schedule);
 
             max_slot -= used_slot;
             ProductSlot._generate_fix_slot_select(parseInt(max_slot));
@@ -274,10 +288,10 @@ var ProductSlot = {
 
         $('table#slot_table').on('click', 'a.fix_slot_del', function () {
             var index = $(this).attr('data-index');
-            ProductSlot._slot_table.splice(index, 1);
-            console.log(index, ProductSlot._slot_table);
+            ProductSlot._slot_schedule.splice(index, 1);
+            console.log(index, ProductSlot._slot_schedule);
 
-            ProductSlot._calc_slot_price(ProductSlot._slot_table);
+            ProductSlot._calc_slot_price(ProductSlot._slot_schedule);
 //                load_slot_table(slot_table);
         });
 
@@ -288,8 +302,8 @@ var ProductSlot = {
             ProductSlot._$isFixable.attr('checked', false).change();
             $fix_slot_reset.trigger('click');
             clear_disabled_dates();
-            ProductSlot._slot_table = [];
-            ProductSlot._calc_slot_price(ProductSlot._slot_table);
+            ProductSlot._slot_schedule = [];
+            ProductSlot._calc_slot_price(ProductSlot._slot_schedule);
 
             ProductSlot._$slots.val(1).change();
             ProductSlot._$slots.attr('disabled', false);
@@ -306,6 +320,8 @@ var ProductSlot = {
             disabled_fix_date = [];
             $('#fix_date').data("DateTimePicker").disabledDates(null);
         }
+
+        ProductSlot.__add_slot(); //call to slot button
 
     },
 
@@ -350,30 +366,18 @@ var ProductSlot = {
 
             ProductSlot._$bulks.val(501).change();
         });
-
-
+        ProductSlot.__add_bulk(); //model add bulk button
     },
 
     _calc_slot_price: function (slots_list) {
 
-        ProductSlot._load_slot_table(ProductSlot._slot_table);
+        ProductSlot._load_slot_table(ProductSlot._slot_schedule);
 
-        var total_going = 0;
         var product_price = parseFloat(ProductSlot._$price.val());
         var no_slots = parseInt(ProductSlot._$slots.find(':selected').val());
         var total_slot_price = parseFloat(product_price * no_slots);
 
         for (var i = 0; i < slots_list.length; i++) {
-
-//                    if(i==0) {
-//                        for (var j=0; j<slots_list.length; j++) {
-//                            total_going += parseInt(slots_list[i].going);
-//                        }
-//                        if(total_going > no_slots) {
-//                            total_slot_price = parseFloat(product_price * total_going);
-//                        }
-//                    }
-
             var fixprice = slots_list[i].fixtimes.length * product_price;
             total_slot_price += ( (parseInt(ProductSlot._$p_selected.surcharge) / 100) * parseFloat(fixprice) );
         }
@@ -402,7 +406,7 @@ var ProductSlot = {
             $slot_data.append($('<td id="slot_going" width="5%" class="text-center">' + list[i].going + '</td>'));
             $slot_data.append($('<td id="slot_fixes" width="20%"> ' + list[i].fixtimes.length + ' of ' + list[i].going + ' set</td>'));
             $slot_data.append($('<td id="slot_fixtimes">' + list[i].fixtimes.join(', ') + '</td>'));
-            ProductSlot._$_slot_table.append($slot_data);
+            ProductSlot._$_slot_schedule_table.append($slot_data);
         }
     },
 
@@ -593,5 +597,73 @@ var ProductSlot = {
 
         //initialize file-upload plugin
         ProductSlot.__init_fileupload();
+    },
+
+    __add_slot: function(){
+        $('#add-slot-button').click(function () {
+           //collect all item into cart object array
+            if(typeof ProductSlot.cart['index_'+ProductSlot._product_index] == 'undefined') {
+                ProductSlot.cart['index_'+ProductSlot._product_index] = [];
+            }
+            //var cart_item = ProductSlot.cart['index_'+ProductSlot._product_index];
+
+            var duration = null;
+            if(ProductSlot._$duration.is(':visible')) {
+                duration = ProductSlot._$duration.val();
+            }
+
+            var subscription = {
+                product: JSON.parse(JSON.stringify(ProductSlot._$p_selected)),
+                period: ProductSlot._$period.val(),
+                duration: duration,
+                slots:ProductSlot._$slots.val(),
+                slot_start_date: $('#slot_start_date').data("DateTimePicker").date(),
+                slot_end_date: $('#slot_end_date').data("DateTimePicker").date(),
+                amount: parseFloat(ProductSlot._$slot_price.val()),
+                schedules: JSON.parse(JSON.stringify(ProductSlot._slot_schedule))
+            };
+
+            ProductSlot.cart['index_'+ProductSlot._product_index].push(subscription);
+
+            console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
+
+            ProductSlot._slot_schedule = [];// reset
+
+            $.cookie('cart', ProductSlot.cart, { expires: 7, path: '/' });
+            ProductSlot._$refresh_slot_button.trigger('click');
+        });
+    },
+
+    __add_bulk: function(){
+        $('#add-bulk-button').click(function () {
+            //collect all item into cart object array
+
+            if(typeof ProductSlot.cart['index_'+ProductSlot._product_index] == 'undefined') {
+                ProductSlot.cart['index_'+ProductSlot._product_index] = [];
+            }
+            //var cart_item = ProductSlot.cart['index_'+ProductSlot._product_index];
+
+            var duration = null;
+            if(ProductSlot._$duration.is(':visible')) {
+                duration = ProductSlot._$duration.val();
+            }
+
+            var subscription = {
+                product: JSON.parse(JSON.stringify(ProductSlot._$p_selected)),
+                period: ProductSlot._$period.val(),
+                duration: duration,
+                bulks:ProductSlot._$bulks.val(),
+                bulk_start_date: $('#bulk_start_date').data("DateTimePicker").date(),
+                bulk_end_date: $('#bulk_end_date').data("DateTimePicker").date(),
+                amount: parseFloat(ProductSlot._$bulk_price.val()),
+            };
+
+            ProductSlot.cart['index_'+ProductSlot._product_index].push(subscription);
+
+            console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
+
+            $.cookie('cart', ProductSlot.cart, { expires: 7, path: '/' });
+            ProductSlot._$refresh_bulk_button.trigger('click');
+        });
     }
 };

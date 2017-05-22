@@ -131,8 +131,22 @@
                             @include('main.airtime.wizards.review')
                         </div>
 
-                        <div id="cart">
+                        <!-- Cart container -->
+                        <div id="cart" style="display: none">
+                            <div class="cart-item" product-index="">
+                                <input type="hidden" name="item[]" />
+                                <input type="hidden" name="promocode" />
+                            </div>
 
+                            <div id="base">
+                                <input type="hidden" name="discount" />
+                                <input type="hidden" name="discountAmt" />
+                                <input type="hidden" name="commission" />
+                                <input type="hidden" name="commissionAmt" />
+                                <input type="hidden" name="subTotal" />
+                                <input type="hidden" name="grandTotal" />
+                                <input type="hidden" name="deleted_at" />
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -149,6 +163,9 @@
     <script src="/vendor/jquery-validation/dist/jquery.validate.js"></script>
     <!-- JQUERY STEPS-->
     <script src="/vendor/jquery.steps/build/jquery.steps.js"></script>
+
+    <!-- JQUERY Cookie -->
+    <script src="/vendor/jquery-cookie-master/jquery.cookie.js"></script>
 
     {{--<script src="/vendor/jquery-ui/ui/datepicker.js" id="uiMin"></script>--}}
     {{--<script src="/js/bootstrap-datepicker.min.js" id="uiMin"></script>--}}
