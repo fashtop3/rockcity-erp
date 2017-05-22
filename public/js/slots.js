@@ -10,15 +10,12 @@ var ProductSlot = {
 
         'use strict';
 
-        $.cookie.json = true;
+        //if($.cookie('cart') != null) {
+        //    ProductSlot.cart = JSON.parse($.cookie('cart'));
+        //}
 
-        ProductSlot.cart = $.cookie('cart');
-        if(typeof ProductSlot.cart == 'undefined') {
-            ProductSlot.cart = {};
-        }
-
-        //$.removeCookie('cart', { path: '/' });
-        console.log(ProductSlot.cart);
+        $.removeCookie('cart', { path: '/' });
+        //console.log(ProductSlot.cart);
 
         ProductSlot.products = products; // {!!$products !!};
         ProductSlot.prog_time = progTime;// {!! $prog_time !!};
@@ -585,11 +582,10 @@ var ProductSlot = {
             //remove file not added to cart
             if(!$(this).hasClass('added-to-cart')) {
                 $(this).remove();
-                console.log('here');
+                console.log('removed: not added to cart');
             }
         });
 
-        console.log('here22');
         $('<input class="form-control '+str+'-file-input" type="file"/>')
             .attr('name', ProductSlot[vName+'_id'])
             .attr('id', ProductSlot[vName+'_id'])
@@ -612,11 +608,23 @@ var ProductSlot = {
                 duration = ProductSlot._$duration.val();
             }
 
+            var slot_file_id = null;
+
+            if(ProductSlot.slot_file_id != null || ProductSlot.slot_file_id != '') {
+                var fileInputElem = $('input#'+ProductSlot.slot_file_id);
+                if(!(fileInputElem.val() == '' || fileInputElem.val() == null)) {
+                    fileInputElem.addClass('added-to-cart');
+                    fileInputElem.hide();
+                    slot_file_id = ProductSlot.slot_file_id;
+                }
+            }
+
             var subscription = {
-                product: JSON.parse(JSON.stringify(ProductSlot._$p_selected)),
+                product: ProductSlot._$p_selected.id,
                 period: ProductSlot._$period.val(),
                 duration: duration,
                 slots:ProductSlot._$slots.val(),
+                slot_file_id: ProductSlot.slot_file_id,
                 slot_start_date: $('#slot_start_date').data("DateTimePicker").date(),
                 slot_end_date: $('#slot_end_date').data("DateTimePicker").date(),
                 amount: parseFloat(ProductSlot._$slot_price.val()),
@@ -629,7 +637,8 @@ var ProductSlot = {
 
             ProductSlot._slot_schedule = [];// reset
 
-            $.cookie('cart', ProductSlot.cart, { expires: 7, path: '/' });
+            //$.removeCookie('cart', { path: '/' });
+            //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
             ProductSlot._$refresh_slot_button.trigger('click');
         });
     },
@@ -647,12 +656,23 @@ var ProductSlot = {
             if(ProductSlot._$duration.is(':visible')) {
                 duration = ProductSlot._$duration.val();
             }
+            var bulk_file_id = null;
+
+            if(ProductSlot.bulk_file_id != null || ProductSlot.bulk_file_id != '') {
+                var fileInputElem = $('input#'+ProductSlot.bulk_file_id);
+                if(!(fileInputElem.val() == '' || fileInputElem.val() == null)) {
+                    fileInputElem.addClass('added-to-cart');
+                    fileInputElem.hide();
+                    bulk_file_id = ProductSlot.bulk_file_id;
+                }
+            }
 
             var subscription = {
-                product: JSON.parse(JSON.stringify(ProductSlot._$p_selected)),
+                product: ProductSlot._$p_selected.id,
                 period: ProductSlot._$period.val(),
                 duration: duration,
                 bulks:ProductSlot._$bulks.val(),
+                bulk_file_id: bulk_file_id,
                 bulk_start_date: $('#bulk_start_date').data("DateTimePicker").date(),
                 bulk_end_date: $('#bulk_end_date').data("DateTimePicker").date(),
                 amount: parseFloat(ProductSlot._$bulk_price.val()),
@@ -662,7 +682,8 @@ var ProductSlot = {
 
             console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
 
-            $.cookie('cart', ProductSlot.cart, { expires: 7, path: '/' });
+            //$.removeCookie('cart', { path: '/' });
+            //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
             ProductSlot._$refresh_bulk_button.trigger('click');
         });
     }
