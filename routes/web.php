@@ -58,6 +58,8 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
 
     //airtime
     Route::get('/airtime/create', 'Airtime\GenerateController@create')->name('airtime.create');
+
+    Route::get('/api/promocode/reward', 'Airtime\PromocodeController@getReward');
 });
 
 Auth::routes();

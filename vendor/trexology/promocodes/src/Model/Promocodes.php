@@ -10,8 +10,8 @@ class Promocodes extends Model
 {
 
 	protected $guarded = [
-    'id','created_at','updated_at'
-  ];
+    	'created_at','updated_at'
+  	];
 
   protected $table = 'promocodes';
 
@@ -51,8 +51,9 @@ class Promocodes extends Model
      *
 	 * @return string
 	 */
-	public function randomize()
+	public static function randomize()
 	{
+		$instance = (new static);
 		$characters = config('promocodes.characters');
 		$separator  = config('promocodes.separator');
 		$mask       = config('promocodes.mask');
@@ -62,7 +63,7 @@ class Promocodes extends Model
 		$random = [];
 		$code   = '';
 
-		for ($i = 1; $i <= $this->length; $i++) {
+		for ($i = 1; $i <= $instance->length; $i++) {
 			$character = $characters[rand(0, strlen($characters) - 1)];
 			$random[]  = $character;
 		}
@@ -86,6 +87,7 @@ class Promocodes extends Model
 		return $code;
 	}
 
+
 	// /**
   //    * Your code will be validated to
   //    * be unique for one request
@@ -95,21 +97,16 @@ class Promocodes extends Model
 	//  *
 	//  * @return bool
 	//  */
-	public function validate($new)
+	public static function validate($new)
 	{
-		// if (count($collection) == 0 && count($this->codes) == 0) return true;
-
 		$count = Promocodes::where('code', $new)->count();
-		if ($count == 0) {
+
+		if ($count == 1) {
 			return true;
 		}
 		else{
 			return false;
 		}
-
-		// $combined = array_merge($collection, $this->codes);
-		//
-		// return !in_array($new, $combined);
 	}
 
 	/**
@@ -119,15 +116,15 @@ class Promocodes extends Model
 	 *
 	 * @return array
 	 */
-	public function generate($amount = 1)
+	public static function generate($amount = 1)
 	{
 		$collection = [];
 
 		for ($i = 1; $i <= $amount; $i++) {
-			$random = $this->randomize();
-
-			while (!$this->validate($random)) {
-				$random = $this->randomize();
+			$random = static::randomize();
+			while (static::validate($random)) {
+				dd('exists');
+				$random = static::randomize();
 			}
 
 			$collection[] = $random;
@@ -145,14 +142,17 @@ class Promocodes extends Model
 	 *
 	 * @return static
 	 */
-	public function generateAndSave($amount = 1, $reward = null)
+	public static function generateAndSave($amount = 1, $reward = null, $type = null, $expiry_date = null, $quantity = -1)
 	{
 		$data = collect([]);
 
-		foreach ($this->generate($amount) as $key => $code) {
+		foreach (static::generate($amount) as $key => $code) {
 			$promo = new Promocodes();
 			$promo->code = $code;
 			$promo->reward = $reward;
+			$promo->type = $type;
+			$promo->expiry_date = $expiry_date;
+			$promo->quantity = $quantity;
 			$promo->save();
 			$data->push($promo);
 		}
@@ -168,13 +168,18 @@ class Promocodes extends Model
 	 *
 	 * @return Promocodes / false
 	 */
-	public function generateCodeName($code, $reward = null)
+	public static function generateCodeName($code, $reward = null, $type = null, $expiry_date = null, $quantity = -1)
 	{
-		if ($this->validate($code)) {
-			$this->code = $code;
-			$this->reward = $reward;
-			$this->save();
-			return $this;
+		$instance = (new static);
+
+		if (!static::validate($code)) {
+			$instance->code = $code;
+			$instance->reward = $reward;
+			$instance->type = $type;
+			$instance->expiry_date = $expiry_date;
+			$instance->quantity = $quantity;
+			$instance->save();
+			return $instance;
 		}
 		else{
 			return false;
@@ -188,16 +193,27 @@ class Promocodes extends Model
 	 *
 	 * @return bool
 	 */
-	public function check($code)
+	public static function check($code, $type)
+	{
+		return Promocodes::where('code', $code)->where('type', $type)
+			// ->whereNull('is_used')
+			->where('quantity', '!=' , 0)
+			->where(function($q) {
+				$q->whereDate('expiry_date', '>' , Carbon::today())
+					->orWhereNull('expiry_date');
+			})
+			->count() > 0;
+	}
+
+	public static function reward($code)
 	{
 		return Promocodes::where('code', $code)
-		// ->whereNull('is_used')
-		->where('quantity', '!=' , 0)
-		->where(function($q) {
-					 $q->whereDate('expiry_date', '<' , Carbon::today())
-						 ->orWhereNull('expiry_date');
-		})
-		->count() > 0;
+			// ->whereNull('is_used')
+			->where('quantity', '!=' , 0)
+			->where(function($q) {
+				$q->whereDate('expiry_date', '>' , Carbon::today())
+					->orWhereNull('expiry_date');
+			})->first()->reward;
 	}
 
 	/**
