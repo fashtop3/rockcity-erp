@@ -17,7 +17,7 @@
                     <div class="form-group">
                         <label for="product" class="control-label">Product <abbr class="text-danger"
                                                                                  title="required">*</abbr></label>
-                        <select id="product-data-select" name="product_id" class="form-control data-select2" required>
+                        <select id="product-data-select" name="product_id" class="form-control data-select2">
                             <option></option>
                             @foreach($products as $product)
                                 <option data-index="{{$loop->index}}"
@@ -34,8 +34,7 @@
                             <div class="col-md-5 col-xs-12">
                                 <label for="airtimePeriod" class="control-label">Period <abbr class="text-danger"
                                                                                               title="required">*</abbr></label>
-                                <select ng-disabled="(form.no_slots > 0) || (form.broadcast > 0) || !product.selected"
-                                        name="period" id="period" class="form-control" required>
+                                <select name="period" id="period" class="form-control" required>
                                     <option value="premium">Premium</option>
                                     <option value="regular">Regular</option>
                                 </select>
@@ -60,10 +59,10 @@
                         {{--<label class="col-sm-2 control-label">Inline radios</label>--}}
                         <div class="col-sm-10">
                             <label class="radio-inline c-radio">
-                                <input id="tariff" name="tariff" value="slot" type="radio">
+                                <input id="tariff-slot" name="tariff" value="slot" type="radio">
                                 <span class="fa fa-circle"></span>Open Slot</label>
                             <label class="radio-inline c-radio">
-                                <input id="tariff" name="tariff" value="bulk" type="radio">
+                                <input id="tariff-bulk" name="tariff" value="bulk" type="radio">
                                 <span class="fa fa-circle"></span>Open Bulk</label>
                         </div>
                     </div>
@@ -91,7 +90,7 @@
 
     <!--Schedule Details-->
     <!-- START panel-->
-    <div id="slotPanel" style="display: none" class="panel panel-default" ng-class="{whirl:!form.price}">
+    <div id="slotPanel" style="display: none" class="panel panel-default">
         <div class="panel-heading">Slots</div>
         <!-- .panel-wrapper is the element to be collapsed-->
         <div class="panel-wrapper">
@@ -260,7 +259,7 @@
                     <div class="form-group">
                         <div class="col-sm-8">
                             <p class="input-group">
-                                <span id="input-group-btn" class="input-group-addon">
+                                <span id="slot-input-group-btn" class="input-group-addon">
                                     {{--<button class="btn btn-default">--}}
                                         <em class="fa fa-refresh"></em>
                                     {{--</button>--}}
@@ -291,6 +290,97 @@
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-info btn-sm">Add Slot
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END panel-->
+
+    <!--Bulk Option-->
+    <!-- START panel-->
+    <div id="bulkPanel" class="panel panel-default" ng-if="product.selected.fixable" style="display: none">
+        <div class="panel-heading">Bulk Option</div>
+
+        <!-- .panel-wrapper is the element to be collapsed-->
+        <div class="panel-wrapper">
+            <div class="panel-body">
+                <div class="col-xs-12 col-sm-12">
+                    <!-- if bulk is clicked -->
+
+                    <div class="form-group">
+                        <div class="col-sm-7">
+                            <label class="control-label">No. of Broadcasts <abbr class="text-danger" title="required">*</abbr></label>
+                            <p class="input-group">
+                                <select class="form-control" name="bulks" id="bulks">
+                                    @for($b = 0; $b<1500; $b++)
+                                        <option value="{{$b + 501}}">{{$b + 501}}</option>
+                                    @endfor
+                                </select>
+                                <span class="input-group-btn">
+                                         <button type="button" id="refresh_bulk_button" class="btn btn-default">
+                                             <em class="fa fa-refresh"></em>
+                                         </button>
+                                      </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Datetime example -->
+                    <div class="form-group" id="bulk-date-container">
+                        <div class="col-sm-8">
+                            <label for="duration" class="control-label">Date<abbr class="text-danger"
+                                                                                  title="required">*</abbr></label>
+                            <div class="input-group input-daterange">
+                                <input type="text" placeholder="start date" id="bulk_start_date" name="bulk_start_date"
+                                       class="form-control">
+                                <div class="input-group-addon">to</div>
+                                <input type="text" placeholder="end date" id="bulk_end_date" name="bulk_end_date"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding:20px"></div>
+                    <!--Bulk Attachment-->
+                    <div id="bulk-attachment">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <p class="input-group">
+                                <span id="bulk-input-group-btn" class="input-group-addon">
+                                    {{--<button class="btn btn-default">--}}
+                                    <em class="fa fa-refresh"></em>
+                                    {{--</button>--}}
+                                  </span>
+                                </p>
+                                <span class="help-block">Files must not exceed 500KB</span>
+                            </div>
+                            <br />
+                            <span class="col-sm-10">Only [zip, rar, 7z, image, audio, video formats are allowed.</span>
+                        </div>
+                    </div>
+
+                    <!-- display price-->
+                    <div class="form-group">
+                        <div class="pull-right col-md-3">
+                            <div class="input-group m-b">
+                                <span class="input-group-addon">NGN</span>
+                                <input type="text" readonly="" class="form-control" name="bulk_price" id="bulk_price">
+                            </div>
+                        </div>
+                        <div class="clear-fix"></div>
+                    </div>
+                </div>
+                <!--End Bulk config-->
+
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <button ng-click="addBulk()" ng-disabled="!(form.broadcast > 0 && form.bulk_end_date)" class="btn btn-info btn-sm">Add Bulk</button>
+                    </div>
+                    <div class="col-sm-7">
+                        <span class="help-block"><i class="fa fa-info-circle"></i> Please select airtime duration. </span>
                     </div>
                 </div>
             </div>

@@ -10,7 +10,6 @@
         <div class="panel-wrapper">
             <div class="panel-body">
                 <div class="col-xs-12 col-sm-12">
-
                     <div class="form-group">
                         <label class="control-label">Client's Name <abbr class="text-danger" title="required">*</abbr></label>
                         {{--<select id="client-data-select" name="client_id" class="form-control data-select2" required>--}}

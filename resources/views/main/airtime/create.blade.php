@@ -29,11 +29,6 @@
     }
 </style>
 
-<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-<link rel="stylesheet" href="/vendor/jquery-file-upload/css/jquery.fileupload.css">
-<link rel="stylesheet" href="/vendor/jquery-file-upload/css/jquery.fileupload-ui.css">
-
 @endsection
 
 @section('section')
@@ -135,6 +130,10 @@
                             @include('main.airtime.wizards.remarks')
                             @include('main.airtime.wizards.review')
                         </div>
+
+                        <div id="cart">
+
+                        </div>
                     </form>
                 </div>
             </div>
@@ -173,7 +172,6 @@
         // -----------------------------------
 
 
-
         (function(window, document, $, undefined){
 
             $(function(){
@@ -196,6 +194,7 @@
                     transitionEffect: "slideLeft",
                     onInit: function() {
                         ProductSlot.configSlotDates();
+                        ProductSlot.configBulkDates();
                     },
                     onStepChanging: function (event, currentIndex, newIndex)
                     {
@@ -215,6 +214,7 @@
                         $(this).submit();
                     }
                 }).steps("next");
+
 
             });
 

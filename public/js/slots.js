@@ -3,6 +3,7 @@ var ProductSlot = {
     products: {},
     prog_time: {},
     slot_file_id: null,
+    bulk_file_id: null,
     cart: {},
 
     init: function (products, progTime) {
@@ -19,9 +20,10 @@ var ProductSlot = {
         ProductSlot.__product_panel();
 
         /**
-         * Slot Panel section
+         * Slot/bulk Panel section
          */
         ProductSlot.__slot_panel();
+        ProductSlot.__bulk_panel();
 
     },
 
@@ -35,6 +37,7 @@ var ProductSlot = {
 
         var $tariff_div = $('#tariff-div');
         var $slotPanel = $('#slotPanel');
+        var $bulkPanel = $('#bulkPanel');
         $tariff_div.hide();
         $slotPanel.hide();
 
@@ -54,8 +57,13 @@ var ProductSlot = {
         //when period change
         ProductSlot._$period.change(function () {
             var p_index = $('#product-data-select').find(':selected').attr('data-index');
+            if(p_index == null || p_index == 'undefined') {
+                //Todo: refresh all blocks here
+                return;
+            }
+
             ProductSlot._$p_selected = ProductSlot.products[p_index];
-//            console.log(ProductSlot._$p_selected);
+            console.log(ProductSlot._$p_selected);
             if (ProductSlot._$p_selected.timeable) {
                 ProductSlot._populate_duration(ProductSlot._$p_selected, ProductSlot._$timeable);
                 ProductSlot._$duration.trigger('change');
@@ -65,6 +73,19 @@ var ProductSlot = {
                 ProductSlot._$price.number(true, 2);
 
                 $tariff_div.show();
+                //Todo: refresh slot and bulk panel
+                ProductSlot._$refresh_slot_button.trigger('click');
+                ProductSlot._$refresh_bulk_button.trigger('click');
+            }
+
+            if (!ProductSlot._$p_selected.fixable) {
+                $('#tariff-bulk').attr('disabled', true);
+                $('#tariff-slot').attr('checked', true).change();
+
+            } else {
+                $('#tariff-bulk').attr('disabled', false);
+                $('#tariff-bulk').attr('checked', false);
+                $('#tariff-slot').attr('checked', false);
             }
         });
 
@@ -84,33 +105,23 @@ var ProductSlot = {
         $(':radio[name=tariff]').change(function () {
             if ($(this).val() == 'slot') {
 
-                ProductSlot.slot_file_id = 'slot_file_'+ProductSlot._makeid();
-
-                $('input.slot-file-input').each(function(key) {
-                    if($(this).val() == '' || $(this).val() == null) {
-                        $(this).remove();
-                    } else {
-                        console.log($(this).val());
-                        $(this).hide();
-                    }
-                });
-
-                $('<input class="form-control slot-file-input" type="file"/>')
-                    .attr('name', ProductSlot.slot_file_id)
-                    .attr('id', ProductSlot.slot_file_id)
-                    .insertBefore($('div#slot-attachment span#input-group-btn'));
-
+                $bulkPanel.hide();
+                ProductSlot.__config_file_inputs('slot');
                 $slotPanel.show();
-                //initialize file-upload plugin
-                ProductSlot.__init_fileupload();
-
                 console.log(ProductSlot.slot_file_id);
-
                 $('select#slots').trigger('change');
             }
             else {
                 $slotPanel.hide();
+                ProductSlot.__config_file_inputs('bulk');
+                $bulkPanel.show();
+                console.log(ProductSlot.bulk_file_id);
+                $('select#bulks').trigger('change');
+
             }
+
+            ProductSlot._$refresh_slot_button.trigger('click');
+            ProductSlot._$refresh_bulk_button.trigger('click');
         });
     },
 
@@ -123,20 +134,20 @@ var ProductSlot = {
         ProductSlot._$slot_price = $('input#slot_price');
         ProductSlot._$isFixable = $('#isfixable');
         ProductSlot._$_slot_table = $('#slot_table tbody');
+        ProductSlot._$refresh_slot_button = $('#refresh_slot_button');
 
         var $complete_slot_add = $('#complete_slot_add');
         $complete_slot_add.attr('disabled', true);
         var max_slot = 0, used_slot = 0, max_used_slot = 0;
         var $fix_slot_reset = $('#fix_slot_reset');
 
-        var $refresh_slot_button = $('#refresh_slot_button');
         var $fix_date = $('#fix_date');
         var $fix_time = $('#fix_time');
         var $fixable_slot = $('#fixable_slot');
         var disabled_fix_date = [];
         var __row_slot_selection = {'date': null, 'going': null, 'fixtimes': []};
-
         var add_fix_time_counter = 0;
+        var slot_selection = {fixtimes: []};
 
         $('input#fix_date_input').keydown(function () {
             return false
@@ -174,7 +185,7 @@ var ProductSlot = {
             ProductSlot._toggle_slot_time_button();
         });
 
-        ProductSlot._$isFixable.click(function () {
+        ProductSlot._$isFixable.change(function () {
             if ($(this).is(':checked')) {
                 $fixable_slot.show();
                 ProductSlot._toggle_slot_time_button();
@@ -183,7 +194,6 @@ var ProductSlot = {
             $fixable_slot.hide();
         });
 
-        var slot_selection = {fixtimes: []};
         $('button#add_fix_time').click(function () {
 
             ProductSlot._$slots_select_no.attr('disabled', true);
@@ -221,10 +231,6 @@ var ProductSlot = {
         ProductSlot._$slots_select_no.change(function () {
             used_slot = $(this).find(':selected').val();
             ProductSlot._toggle_slot_time_button();
-        });
-
-        $fix_slot_reset.mouseover(function () {
-
         });
 
         $fix_slot_reset.click(function () {
@@ -266,7 +272,6 @@ var ProductSlot = {
 
         });
 
-
         $('table#slot_table').on('click', 'a.fix_slot_del', function () {
             var index = $(this).attr('data-index');
             ProductSlot._slot_table.splice(index, 1);
@@ -276,10 +281,11 @@ var ProductSlot = {
 //                load_slot_table(slot_table);
         });
 
-        $refresh_slot_button.click(function () {
+        ProductSlot._$refresh_slot_button.click(function () {
             $('#slot_start_date').data("DateTimePicker").clear();
             $('#slot_end_date').data("DateTimePicker").clear();
 
+            ProductSlot._$isFixable.attr('checked', false).change();
             $fix_slot_reset.trigger('click');
             clear_disabled_dates();
             ProductSlot._slot_table = [];
@@ -287,6 +293,8 @@ var ProductSlot = {
 
             ProductSlot._$slots.val(1).change();
             ProductSlot._$slots.attr('disabled', false);
+
+            ProductSlot.__config_file_inputs('slot');
         });
 
         $fix_time.datetimepicker()
@@ -298,6 +306,51 @@ var ProductSlot = {
             disabled_fix_date = [];
             $('#fix_date').data("DateTimePicker").disabledDates(null);
         }
+
+    },
+
+    __bulk_panel: function() {
+
+        'use strict';
+
+        ProductSlot._$bulks = $('select#bulks');
+        ProductSlot._$bulk_price = $('input#bulk_price');
+        ProductSlot._$bulk_start_date = $('#bulk_start_date');
+        ProductSlot._$bulk_end_date = $('#bulk_end_date');
+        ProductSlot._$refresh_bulk_button = $('#refresh_bulk_button');
+
+        $('#bulk-date-container').attr('disabled', true);
+
+
+
+        ProductSlot._$bulks.change(function () {
+
+            var max_bulk = $(this).find(':selected').val();
+
+            ProductSlot._calc_bulk_price();
+
+            //set time period for premium/regular
+            var period = ProductSlot._$period.find(':selected').val();
+            var start_str = period + '_start';
+            var end_str = period + '_end';
+
+//            console.log(prog_time[start_str], prog_time[end_str]);
+            ProductSlot._$bulk_start_date.data("DateTimePicker").minDate(new Date(ProductSlot.prog_time[start_str]));
+            ProductSlot._$bulk_end_date.data("DateTimePicker").maxDate(new Date(ProductSlot.prog_time[end_str]));
+
+        });
+
+
+        ProductSlot._$refresh_bulk_button.click(function () {
+            ProductSlot._$bulk_start_date.data("DateTimePicker").clear();
+            ProductSlot._$bulk_end_date.data("DateTimePicker").clear();
+
+            ProductSlot._calc_bulk_price();
+            ProductSlot.__config_file_inputs('bulk');
+
+            ProductSlot._$bulks.val(501).change();
+        });
+
 
     },
 
@@ -327,6 +380,16 @@ var ProductSlot = {
 
         ProductSlot._$slot_price.val(total_slot_price);
         ProductSlot._$slot_price.number(true, 2);
+    },
+
+    _calc_bulk_price: function () {
+
+        var product_price = parseFloat(ProductSlot._$price.val());
+        var no_bulks = parseInt(ProductSlot._$bulks.find(':selected').val());
+        var total_bulk_price = parseFloat(product_price * no_bulks);
+
+        ProductSlot._$bulk_price.val(total_bulk_price);
+        ProductSlot._$bulk_price.number(true, 2);
     },
 
     _load_slot_table: function (list) {
@@ -418,6 +481,44 @@ var ProductSlot = {
             });
     },
 
+    configBulkDates: function () {
+
+        $('#bulk_end_date').attr('disabled', true);
+        $('#bulk_start_date').keypress(function () {
+            return false;
+        });
+        $('#bulk_end_date').keypress(function () {
+            return false;
+        });
+
+        var start = (new Date()).toDateString();
+        $('#bulk_start_date').datetimepicker({
+            format: 'DD-MM-YYYY HH:mm',
+            'minDate': start,
+            'locale': 'en'
+        });
+
+        $('#bulk_end_date').datetimepicker({
+            format: 'DD-MM-YYYY HH:mm',
+            'minDate': start
+        });
+
+        $('#bulk_start_date').datetimepicker()
+            .on('dp.change', function (e) {
+                $('#bulk_end_date').data("DateTimePicker").clear();
+                if (e.date != null || typeof e.event != 'undefined') {
+                    $('#bulk_end_date').data("DateTimePicker").minDate(e.date);
+                    $('#bulk_end_date').attr('disabled', false);
+                }
+            });
+
+        $('#slot_end_date').datetimepicker()
+            .on('dp.change', function (e) {
+
+            });
+
+    },
+
     _toggle_slot_time_button: function () {
         var option_val = ProductSlot._$slots_select_no.find(':selected').val();
         var fix_time = $('#fix_date').data("DateTimePicker").date();
@@ -463,5 +564,34 @@ var ProductSlot = {
 
             }
         });
+    },
+
+    __config_file_inputs: function(str) {
+        var vName = str+'_file_';
+        ProductSlot[vName+'id'] = vName+ProductSlot._makeid();
+
+        $('input.'+str+'-file-input').each(function(key) {
+            if($(this).val() == '' || $(this).val() == null) {
+                $(this).remove();
+            } else {
+                console.log($(this).val());
+                $(this).hide();
+            }
+
+            //remove file not added to cart
+            if(!$(this).hasClass('added-to-cart')) {
+                $(this).remove();
+                console.log('here');
+            }
+        });
+
+        console.log('here22');
+        $('<input class="form-control '+str+'-file-input" type="file"/>')
+            .attr('name', ProductSlot[vName+'_id'])
+            .attr('id', ProductSlot[vName+'_id'])
+            .insertBefore($('div#'+str+'-attachment span#'+str+'-input-group-btn'));
+
+        //initialize file-upload plugin
+        ProductSlot.__init_fileupload();
     }
 };
