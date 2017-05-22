@@ -27,6 +27,11 @@
         padding: 15px;
         position: relative;
     }
+
+    li{
+        list-style: none;
+        list-style-type: none;
+    }
 </style>
 
 @endsection
@@ -145,7 +150,6 @@
                                 <input type="hidden" name="commissionAmt" />
                                 <input type="hidden" name="subTotal" />
                                 <input type="hidden" name="grandTotal" />
-                                <input type="hidden" name="deleted_at" />
                             </div>
                         </div>
                     </form>
@@ -216,6 +220,9 @@
                     onStepChanging: function (event, currentIndex, newIndex)
                     {
                         form.validate().settings.ignore = ":disabled,:hidden";
+                        if(newIndex == 2) {
+                            Pricing.init();
+                        }
                         return form.valid();
                     },
                     onFinishing: function (event, currentIndex)
@@ -231,7 +238,6 @@
                         $(this).submit();
                     }
                 }).steps("next");
-
 
             });
 

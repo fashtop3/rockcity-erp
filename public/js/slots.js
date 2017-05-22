@@ -66,6 +66,11 @@ var ProductSlot = {
             var p_index = $('#product-data-select').find(':selected').attr('data-index');
             if(p_index == null || p_index == 'undefined') {
                 //Todo: refresh all blocks here
+                $tariff_div.hide();
+                $bulkPanel.hide();
+                $slotPanel.hide();
+                ProductSlot._$refresh_slot_button.trigger('click');
+                ProductSlot._$refresh_bulk_button.trigger('click');
                 return;
             }
 
@@ -121,14 +126,15 @@ var ProductSlot = {
                 $slotPanel.show();
                 console.log(ProductSlot.slot_file_id);
                 $('select#slots').trigger('change');
+                //return;
             }
-            else {
+            else if ($(this).val() == 'bulk'){
                 $slotPanel.hide();
                 ProductSlot.__config_file_inputs('bulk');
                 $bulkPanel.show();
                 console.log(ProductSlot.bulk_file_id);
                 $('select#bulks').trigger('change');
-
+                //return;
             }
 
             ProductSlot._$refresh_slot_button.trigger('click');
@@ -686,5 +692,15 @@ var ProductSlot = {
             //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
             ProductSlot._$refresh_bulk_button.trigger('click');
         });
+    },
+
+    calc_cart_price: function () {
+        var total = 0;
+        for(var product in ProductSlot.cart) {
+           for(var i=0; i<ProductSlot.cart[product].length; i++) {
+               total += parseFloat(ProductSlot.cart[product][i].amount);
+           }
+        }
+        return total;
     }
 };
