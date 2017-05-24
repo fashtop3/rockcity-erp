@@ -12,11 +12,10 @@
                 <div class="col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Client's Name <abbr class="text-danger" title="required">*</abbr></label>
-                        {{--<select id="client-data-select" name="client_id" class="form-control data-select2" required>--}}
-                        <select id="client-data-select" name="client_id" class="form-control data-select2" >
+                        <select id="client-data-select" name="client_id" class="form-control data-select2" required>
                             <option></option>
                             @foreach(auth()->user()->clients()->get() as $client)
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                <option data-index="{{ $loop->index }}" value="{{ $client->id }}">{{ $client->name }}</option>
                             @endforeach
                             {{--<optgroup label="Alaskan/Hawaiian Time Zone">--}}
                                 {{--<option value="AK">Alaska </option>--}}
@@ -28,11 +27,10 @@
                    @if($user->isRoleAdmin())
                         <div class="form-group">
                             <label class="control-label">Marketer in Charge <abbr class="text-danger" title="required">*</abbr></label>
-                            {{--<select id="marketer-data-select" name="marketer_id" required class="form-control data-select2">--}}
-                            <select id="marketer-data-select" name="marketer_id"  class="form-control data-select2">
+                            <select id="marketer-data-select" name="marketer_id"  class="form-control data-select2" required>
                                 <option></option>
                                 @foreach(App\User::marketers() as $marketer)
-                                    <option value="{{ $marketer->id }}">{{ $marketer->lastname }} {{ $marketer->firstname }}</option>
+                                    <option data-index="{{ $loop->index }}" value="{{ $marketer->id }}">{{ $marketer->lastname }} {{ $marketer->firstname }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -45,3 +43,13 @@
     <!-- END panel-->
 </section>
 
+<script>
+    var clients = {!! auth()->user()->clients()->get() !!};
+    @if($user->isRoleAdmin())
+        var marketers = {!! App\User::marketers() !!};
+    @else
+        var marketers = null;
+    @endif
+</script>
+
+<script src="/js/client-marketer.js"></script>

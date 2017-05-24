@@ -228,6 +228,8 @@
                     bodyTag: "section.wizard-body",
                     transitionEffect: "slideLeft",
                     onInit: function() {
+                        ClientMarketer.init(clients, marketers);
+
                         ProductSlot.configSlotDates();
                         ProductSlot.configBulkDates();
                     },
@@ -236,6 +238,9 @@
                         form.validate().settings.ignore = ":disabled,:hidden";
                         if(newIndex == 2) {
                             Pricing.init();
+                        }
+                        if(newIndex == 3) {
+                            Review.init();
                         }
                         return form.valid();
                     },
@@ -251,7 +256,7 @@
                         // Submit form
                         $(this).submit();
                     }
-                }).steps("setStep", 2);
+                });//.steps("setStep", 3);
             });
 
 

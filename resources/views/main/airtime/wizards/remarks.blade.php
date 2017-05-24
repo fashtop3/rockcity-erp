@@ -66,11 +66,10 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <div class="checkbox">
-                    <label for="terms">
-                        <input type="checkbox" name="terms" id="terms" />
-                        I agree to the <a href="/privacy" target="_blank">terms and conditions</a> of Boot Communications Ltd
-                    </label>
+                <div class="checkbox c-checkbox">
+                    <label>
+                        <input type="checkbox" required="required" name="terms">
+                        <span class="fa fa-check"></span>I agree to the <a href="/privacy" target="_blank">terms and conditions</a> of Boot Communications Ltd.</label>
                 </div>
             </div>
         </div>
