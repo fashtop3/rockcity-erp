@@ -17,16 +17,16 @@
                         <div class="form-group">
                             <label for="discount" class="col-sm-3 control-label">Discount(%)</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="discount" id="discountCoupon" placeholder="Enter Coupon" />
-                                <span class="text-danger">@{{discountError}}</span>
+                                <input type="text" class="form-control" id="discountCoupon" placeholder="Enter Coupon" />
+                                <span class="text-danger" style="display: none"></span>
                             </div>
                         </div>
                         @if($user->isRoleAdmin() || $user->isRoleExecutiveDirector())
                             <div class="form-group">
                                 <label for="commission" class="col-sm-3 control-label">Commission(%)</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="commissionCoupon" name="commission" placeholder="Enter Coupon" />
-                                    <span class="text-danger">@{{commissionError}}</span>
+                                    <input type="text" class="form-control" id="commissionCoupon" placeholder="Enter Coupon" />
+                                    <span class="text-danger"></span>
                                 </div>
                             </div>
                         @endif
@@ -38,27 +38,27 @@
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     <span class="label label-purple pull-right">N@{{cartTotals | number:2}}</span>
-                                    Initial Amount
+                                    <span id="pricing-initial-amt">Initial Amount</span>
                                 </li>
                                 <li class="list-group-item">
                                     <span class="label label-danger pull-right">N@{{vat | number:2}}</span>
-                                    Vat(5%)
+                                    <span id="pricing-vat">Vat(5%)</span>
                                 </li>
                                 <li class="list-group-item">
                                     <span class="label label-warning pull-right">N@{{dsctAmnt | number:2}}</span>
-                                    Discount Amount (@{{form.discount}}%)
+                                    <span id="pricing-discount"></span>
                                 </li>
                                 <li class="list-group-item">
                                     <span class="label label-warning pull-right">N@{{commAmnt | number:2}}</span>
-                                    Commission Amount(@{{form.commission}}%)
+                                    <span id="pricing-commission">Commission Amount(@{{form.commission}}%)</span>
                                 </li>
                                 <li class="list-group-item">
                                     <span class="label label-success pull-right">N@{{totalWOComm | number:2}}</span>
-                                    Total Without Commission
+                                    <span id="pricing-wocom">Total Without Commission</span>
                                 </li>
                                 <li class="list-group-item">
                                     <span class="label label-inverse pull-right">N@{{totalWComm | number:2}}</span>
-                                    Total With Commission
+                                    <span id="pricing-wcom">Total With Commission</span>
                                 </li>
                             </ul>
                         </div>
@@ -78,4 +78,4 @@
     <!-- END panel-->
 </section>
 
-<script src="/js/coupon.js"></script>
+<script src="/js/pricing.js"></script>

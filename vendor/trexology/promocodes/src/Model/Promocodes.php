@@ -223,18 +223,20 @@ class Promocodes extends Model
 	 *
 	 * @return bool
 	 */
-	public function apply($code, $hard_check = false)
+	public static function apply($code, $hard_check = false)
 	{
 		$record = Promocodes::where('code', $code)
-		// ->whereNull('is_used')
-		->where('quantity', '!=' , 0) // -1 for infinite
-		->where(function($q) {
-					 $q->whereDate('expiry_date', '<' , Carbon::today())
-						 ->orWhereNull('expiry_date');
-		})
-		->first();
+			// ->whereNull('is_used')
+			->where('quantity', '!=' , 0) // -1 for infinite
+			->where(function($q) {
+				$q->whereDate('expiry_date', '>' , Carbon::today())
+					->orWhereNull('expiry_date');
+			})//->toSql();
+			->first();
+
 		//
 		if ($record) {
+
 			if ($record->quantity > 0) {
 				$record->quantity--;
 			}

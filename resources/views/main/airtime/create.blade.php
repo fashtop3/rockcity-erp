@@ -140,10 +140,10 @@
                         <div id="cart" style="display: none">
                             <div class="cart-item" product-index="">
                                 <input type="hidden" name="item[]" />
-                                <input type="hidden" name="promocode" />
                             </div>
 
                             <div id="base">
+                                <input type="hidden" name="promocode" />
                                 <input type="hidden" name="discount" />
                                 <input type="hidden" name="discountAmt" />
                                 <input type="hidden" name="commission" />
@@ -197,6 +197,20 @@
 
             $(function(){
 
+                $.fn.steps.setStep = function (step)
+                {
+                    var currentIndex = $(this).steps('getCurrentIndex');
+                    for(var i = 0; i < Math.abs(step - currentIndex); i++){
+                        if(step > currentIndex) {
+                            $(this).steps('next');
+                        }
+                        else{
+                            $(this).steps('previous');
+                        }
+                    }
+
+                };
+
                 // FORM EXAMPLE
                 // -----------------------------------
                 var form = $("#airtime-wizard");
@@ -237,8 +251,7 @@
                         // Submit form
                         $(this).submit();
                     }
-                }).steps("next");
-
+                }).steps("setStep", 2);
             });
 
 
