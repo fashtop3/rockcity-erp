@@ -94,7 +94,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <div class="list-group" id="bindingGroups">
+                <div class="list-group">
                     <div id="reviewBindings" data-bind="if: items">
                         <li data-bind="foreach: items">
                             <!-- START panel-->
@@ -140,59 +140,59 @@
                                             </div>
 
                                             <div class="list-group" data-bind="if: slots > 0">
-                                                <div class="">hello world</div>
+                                                <div class="list-group-item">
+                                                    <table class="wd-wide table-responsive">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="ph">
+                                                                    <span class="label label-info pull-right" data-bind="text: period"></span>
+                                                                    <h4 class="media-box-heading">SLOT <small data-bind="if: schedules.length > 0" class="text-muted">(Fixed)</small></h4>
+                                                                    <div class="text-muted text-inverse">
+                                                                        <small>
+                                                                            <b>Slot date: </b> <span data-bind="text: slot_start_date"></span>
+                                                                            <b> -- </b> <span data-bind="text: slot_end_date"></span>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="text-muted text-inverse">
+                                                                        <small><b>Programme: </b> <span data-bind="text: prog_start"></span> && <span data-bind="text: prog_end"></span> </small>
+                                                                    </div>
+                                                                    <div class="text-muted text-inverse"><small><b>Slot: </b> <span data-bind="text: slots"></span>; &nbsp;&nbsp;
+                                                                            <span data-bind="if: duration"><b>Duration: </b> <span data-bind="text: duration"></span></span>
+                                                                        </small></div>
+                                                                </div><br />
+                                                                <div class="table-responsive" data-bind="if: schedules.length > 0">
+                                                                    <table class="table table-bordered">
+                                                                        <tr>
+                                                                            <th>Date</th>
+                                                                            <th>Slot</th>
+                                                                            <th>Fixed</th>
+                                                                            <th>Time</th>
+                                                                        </tr>
+                                                                        <tbody>
+                                                                            <tr data-bind="foreach: { data: schedules, as: 'schedule' }">
+                                                                                <td> <span data-bind="text: schedule.date"></span></td>
+                                                                                <td><span data-bind="text: schedule.going"></span></td>
+                                                                                <td><span data-bind="text: schedule.fixtimes.length"></span></td>
+                                                                                <td data-bind="if: schedule.fixtimes.length > 0"><span class="text text-primary"> <small data-bind="text: schedule.fixtimes.join(', ')"></small> </span></td>
+                                                                                {{--<td data-bind="if: schedule.fixtimes.length == 0"><span class="text text-primary"><small> progStartTime(sub.period) -- progEndTime(sub.period)</small></span></td>--}}
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </td>
+                                                            <td class="wd-sm" valign="top">
+                                                                <div class="ph">
+                                                                    <!--<p class="m0">Price</p>-->
+                                                                    <small class="m0 text-info">
+                                                                        ₦<span data-bind="text: amount"></span></small>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                                {{--<div class="list-group-item">--}}
-                                                    {{--<table class="wd-wide table-responsive">--}}
-                                                        {{--<tbody>--}}
-                                                        {{--<tr>--}}
-                                                            {{--<td>--}}
-                                                                {{--<div class="ph">--}}
-                                                                    {{--<span class="label label-info pull-right" data-bind="text: period"></span>--}}
-                                                                    {{--<h4 class="media-box-heading">SLOT <small data-bind="if: schedules" class="text-muted">(Fixed)</small></h4>--}}
-                                                                    {{--<div class="text-muted text-inverse">--}}
-                                                                        {{--<small>--}}
-                                                                            {{--<b>Slot date: </b> <span data-bind="text: slot_start_date"></span>--}}
-                                                                            {{--<b> -- </b> <span data-bind="text: slot_end_date"></span>--}}
-                                                                        {{--</small>--}}
-                                                                    {{--</div>--}}
-                                                                    {{--<div class="text-muted text-inverse">--}}
-                                                                        {{--<small><b>Programme: </b> progStartTime && progEndTime(sub.period) </small>--}}
-                                                                    {{--</div>--}}
-                                                                    {{--<div class="text-muted text-inverse"><small><b>Slot: </b> sub.slots; &nbsp;&nbsp;--}}
-                                                                            {{--<span data-bind="if: duration"><b>Duration: </b> <span data-bind="text: duration"></span></span>--}}
-                                                                        {{--</small></div>--}}
-                                                                {{--</div><br />--}}
-                                                                {{--<div class="table-responsive" data-bind="if: schedules.length > 0">--}}
-                                                                    {{--<table class="table table-bordered">--}}
-                                                                        {{--<tr>--}}
-                                                                            {{--<th>Date</th>--}}
-                                                                            {{--<th>Slot</th>--}}
-                                                                            {{--<th>Fixed</th>--}}
-                                                                            {{--<th>Time</th>--}}
-                                                                        {{--</tr>--}}
-                                                                        {{--<tr data-bind="foreach: { data: schedules, as: 'schedule' }">--}}
-                                                                            {{--<td> <span data-bind="text: schedule.date"></span></td>--}}
-                                                                            {{--<td><span data-bind="text: schedule.going"></span></td>--}}
-                                                                            {{--<td><span data-bind="text: schedule.fixtimes.length"></span></td>--}}
-                                                                            {{--<td data-bind="if: schedule.fixtimes.length"><span class="text text-primary"> <small data-bind="text: schedule.fixtimes.join(', ')"></small> </span></td>--}}
-                                                                            {{--<td data-bind="if: schedule.fixtimes.length < 1"><span class="text text-primary"><small> progStartTime(sub.period) -- progEndTime(sub.period)</small></span></td>--}}
-                                                                        {{--</tr>--}}
-                                                                    {{--</table>--}}
-                                                                {{--</div>--}}
-                                                            {{--</td>--}}
-                                                            {{--<td class="wd-sm" valign="top">--}}
-                                                                {{--<div class="ph">--}}
-                                                                    {{--<!--<p class="m0">Price</p>-->--}}
-                                                                    {{--<small class="m0 text-info">--}}
-                                                                        {{--₦<span data-bind="text: subscriptions.amount"></span></small>--}}
-                                                                {{--</div>--}}
-                                                            {{--</td>--}}
-                                                        {{--</tr>--}}
-                                                        {{--</tbody>--}}
-                                                    {{--</table>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
                                         </div>
                                     </div>
                                     <div class="panel-footer">

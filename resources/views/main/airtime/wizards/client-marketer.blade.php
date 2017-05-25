@@ -9,6 +9,9 @@
         <!-- .panel-wrapper is the element to be collapsed-->
         <div class="panel-wrapper">
             <div class="panel-body">
+
+                {{--<input type="text" data-bind="value: slot_start_date" />--}}
+
                 <div class="col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Client's Name <abbr class="text-danger" title="required">*</abbr></label>

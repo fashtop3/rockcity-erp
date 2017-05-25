@@ -127,6 +127,7 @@
                 <div class="panel-heading"></div>
                 <div class="panel-body">
 
+{{--                    {{ $prog_time }}--}}
                     <form id="airtime-wizard" class="form-horizontal" action="#" method="POST" enctype="multipart/form-data">
 
                         {{--The name is <span data-bind="text: personName()"></span>--}}
@@ -203,8 +204,11 @@
 
             $(function(){
 
-                var CartReviewViewModel = {
-                    items: ko.observable(Review.cartitems)
+                AirtimeViewModel = {
+                    items: ko.observableArray(),
+
+                    slotButton: ko.observable(false),
+                    disableFixableSlots: ko.observable(true),
                 };
 
                 $.fn.steps.setStep = function (step)
@@ -239,7 +243,7 @@
                     transitionEffect: "slideLeft",
                     onInit: function() {
 
-                        ko.applyBindings(CartReviewViewModel);
+                        ko.applyBindings(AirtimeViewModel);
 
                         ClientMarketer.init(clients, marketers);
 
@@ -250,11 +254,17 @@
                     onStepChanging: function (event, currentIndex, newIndex)
                     {
                         form.validate().settings.ignore = ":disabled,:hidden";
+
+                        if(newIndex == 1) {
+//                            AirtimeViewModel.slot_start_date("225335");
+//                            console.log('wjhbfgkjwge');
+                        }
+
                         if(newIndex == 2) {
                             Pricing.init();
                         }
                         if(newIndex == 3) {
-                            Review.init(CartReviewViewModel);
+                            Review.init(AirtimeViewModel);
                         }
                         return form.valid();
                     },

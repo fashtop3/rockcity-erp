@@ -101,7 +101,7 @@
                     <div class="col-sm-6">
                         <label for="slots" class="control-label">Slot(s)</label>
                         <p class="input-group">
-                            <select ng-disabled="(form.no_slots > 0) || !form.price" name="slots" id="slots"
+                            <select name="slots" id="slots"
                                     class="form-control">
                                 @for($i = 1; $i<=500; $i++)
                                     <option value="{{$i}}">{{$i}}</option>
@@ -128,30 +128,6 @@
                                    class="form-control">
                         </div>
                     </div>
-
-                    {{--<div class="col-sm-6">--}}
-                    {{--<label for="duration" class="control-label">Start date <abbr class="text-danger" title="required">*</abbr></label>--}}
-                    {{--<p class="input-group" id="slot_start_date">--}}
-                    {{--<input type="text" placeholder="start date"  name="slot_start_date"  class="form-control datepicker" />--}}
-                    {{--<span class="input-group-addon">--}}
-                    {{--<button type="button" class="btn btn-default">--}}
-                    {{--<em class="fa fa-calendar"></em>--}}
-                    {{--</button>--}}
-                    {{--</span>--}}
-                    {{--</p>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-sm-6">--}}
-                    {{--<label for="duration" class="control-label">End date <abbr class="text-danger" title="required">*</abbr></label>--}}
-                    {{--<p class="input-group" id="slot_end_date">--}}
-                    {{--<input type="text" name="slot_end_date" class="form-control" placeholder="end date" />--}}
-                    {{--<span class="input-group-addon">--}}
-                    {{--<button type="button" class="btn btn-default">--}}
-                    {{--<em class="fa fa-calendar"></em>--}}
-                    {{--</button>--}}
-                    {{--</span>--}}
-                    {{--</p>--}}
-                    {{--</div>--}}
                 </div>
 
                 <br/>
@@ -162,19 +138,10 @@
                         <div class="checkbox c-checkbox needsclick">
                             <label class="needsclick">
                                 <input type="checkbox" id="isfixable" name="isfixable" value="isfixable" class="needsclick">
-                                <span class="fa fa-check"></span>Do you want to fix your slot (Fixed rates
-                                apply)</label>
+                                <span class="fa fa-check"></span>Do you want to fix your slot (Fixed rates apply)</label>
                         </div>
                     </div>
                 </div>
-
-                {{--<div class="form-group" ng-show="!product.selected.fixable" >--}}
-                {{--<div class="checkbox" >--}}
-                {{--<label class="text-warning">--}}
-                {{--<input type="checkbox" name="isfixable" ng-model="btn.fixslot" /> Programme Displacement (50% charges apply)--}}
-                {{--</label>--}}
-                {{--</div>--}}
-                {{--</div>--}}
 
 
                 <div id="fixable_slot" style="display: none">
@@ -190,7 +157,7 @@
                         </div>
                         <div class="col-md-3 col-xs-3">
                             <p class="input-group">
-                                <select class="form-control" id="slots_select_no">
+                                <select class="form-control" id="slots_select_no" data-bind="attr: { disabled: disableFixableSlots }">
                                     <option>---</option>
                                 </select>
                                     <span class="input-group-btn">
@@ -213,6 +180,7 @@
                                         </button>
                                     </span>
                             </p>
+                            <span id="time-chosen" class="help-block" style="color:red; display: none">Time chosen</span>
                         </div>
                         <div class="col-md-1 col-xs-1">
                             <button type="button" id="complete_slot_add" class="btn btn-success">
@@ -288,7 +256,7 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-sm-4">
-                        <button type="button" id="add-slot-button" class="btn btn-info btn-sm">Add Slot
+                        <button type="button" data-bind="enable: slotButton" id="add-slot-button" class="btn btn-info btn-sm">Add Slot
                         </button>
                     </div>
                 </div>

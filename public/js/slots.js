@@ -1,10 +1,30 @@
+function Schedule() {
+    this.date = null;
+    this.going = null;
+    this.fixtimes = [];
+}
+
+function SlotModel() {
+    var self = this;
+    self.period = '';
+    self.slots = 0;
+    self.slot_start_date = null;
+    self.slot_end_date = null;
+    self.isFixed = false;
+    self.schedules = [];
+}
+
+var slotModel = new SlotModel();
+
 var ProductSlot = {
 
     products: {},
     prog_time: {},
+    times: {start: new Date(), ends: new Date()},
     slot_file_id: null,
     bulk_file_id: null,
     cart: {},
+
 
     init: function (products, progTime) {
 
@@ -31,7 +51,6 @@ var ProductSlot = {
          */
         ProductSlot.__slot_panel();
         ProductSlot.__bulk_panel();
-
     },
 
     __product_panel: function() {
@@ -83,7 +102,7 @@ var ProductSlot = {
                 ProductSlot._$duration.trigger('change');
             } else {
                 var product_price = ProductSlot._$p_selected.prices[0];
-                ProductSlot._$price.val(product_price[ProductSlot._$period.find(':selected').val()]);
+                ProductSlot._$price.val(product_price[$(this).val()]);
                 ProductSlot._$price.number(true, 2);
 
                 $tariff_div.show();
@@ -101,6 +120,10 @@ var ProductSlot = {
                 $('#tariff-bulk').attr('checked', false);
                 $('#tariff-slot').attr('checked', false);
             }
+
+            ProductSlot.__set_times($(this).val()); //set prog time
+            console.log($(this).val());
+            slotModel.period = $(this).val();
         });
 
         //when duration change
@@ -162,9 +185,8 @@ var ProductSlot = {
         var $fix_time = $('#fix_time');
         var $fixable_slot = $('#fixable_slot');
         var disabled_fix_date = [];
-        var __row_slot_selection = {'date': null, 'going': null, 'fixtimes': []};
+        var schedule = new Schedule();
         var add_fix_time_counter = 0;
-        var slot_selection = {fixtimes: []};
 
         $('input#fix_date_input').keydown(function () {
             return false
@@ -182,77 +204,75 @@ var ProductSlot = {
             ProductSlot._$slots_select_no.empty();
             ProductSlot._generate_fix_slot_select(parseInt(max_slot));
 
-//                var product_price = parseFloat(ProductSlot._$price.val());
-//                var no_slots = parseInt(ProductSlot._$slots.find(':selected').val());
-//                var total_slot_price = parseFloat(product_price * no_slots);
-//
-//                ProductSlot._$slot_price.val(total_slot_price);
-//                ProductSlot._$slot_price.number(true, 2);
             ProductSlot._calc_slot_price(ProductSlot._slot_schedule);
 
-            //set time period for premium/regular
-            var period = ProductSlot._$period.find(':selected').val();
-            var start_str = period + '_start';
-            var end_str = period + '_end';
-
-//            console.log(prog_time[start_str], prog_time[end_str]);
-            $fix_time.data("DateTimePicker").minDate(new Date(ProductSlot.prog_time[start_str]));
-            $fix_time.data("DateTimePicker").maxDate(new Date(ProductSlot.prog_time[end_str]));
-
             ProductSlot._toggle_slot_time_button();
+            $('span#time-chosen').hide();
+
+            slotModel.slots = parseInt($(this).val());
+            ProductSlot.__enable_slot_button();
         });
 
         ProductSlot._$isFixable.change(function () {
             if ($(this).is(':checked')) {
+                ProductSlot.__set_times(ProductSlot._$period.val());
                 $fixable_slot.show();
                 ProductSlot._toggle_slot_time_button();
-                return;
+                slotModel.isFixed = true;
+            } else {
+                slotModel.isFixed = false;
+                $fixable_slot.hide();
             }
-            $fixable_slot.hide();
+            ProductSlot.__enable_slot_button();
         });
 
         $('button#add_fix_time').click(function () {
+            $('span#time-chosen').hide();
 
-            ProductSlot._$slots_select_no.attr('disabled', true);
+            //ProductSlot._$slots_select_no.attr('disabled', true);
             $('#fix_date_input').attr('disabled', true);
 
             var date = new Date($('#fix_time').data("DateTimePicker").date());
+            date.setSeconds(0);
             var timeStr = date.toLocaleTimeString();
             /*toTimeString();*/
 //
-            if (slot_selection.fixtimes.indexOf(timeStr) != -1) {
+
+            if (schedule.fixtimes.indexOf(timeStr) != -1) {
+                $('span#time-chosen').show();
                 console.log('Time chosen');
                 return;
             }
 //
-            slot_selection.date = (new Date($('#fix_date').data("DateTimePicker").date())).toDateString();
-            slot_selection.going = ProductSlot._$slots_select_no.find(':selected').val();
-            slot_selection.fixtimes.push(timeStr);
+            schedule.date = (new Date($('#fix_date').data("DateTimePicker").date())).toDateString();
+            schedule.going = ProductSlot._$slots_select_no.val();
+            schedule.fixtimes.push(timeStr);
 
-            __row_slot_selection = JSON.parse(JSON.stringify(slot_selection));
+            //__row_slot_selection = JSON.parse(JSON.stringify(slot_selection));
 
             if (!$('tr#display_slot').is(':visible')) {
                 $('tr#display_slot').show();
             }
-            $('tr#display_slot td#slot_date').text(slot_selection.date);
-            $('tr#display_slot td#slot_going').text(slot_selection.going);
-            $('tr#display_slot td#slot_fixes').html($('<p class="help-block"></p>').text(slot_selection.fixtimes.length + ' of ' + slot_selection.going + ' set'));
-            $('tr#display_slot td#slot_fixtimes').text(slot_selection.fixtimes.join(', '));
+            $('tr#display_slot td#slot_date').text(schedule.date);
+            $('tr#display_slot td#slot_going').text(schedule.going);
+            $('tr#display_slot td#slot_fixes').html($('<p class="help-block"></p>').text(schedule.fixtimes.length + ' of ' + schedule.going + ' set'));
+            $('tr#display_slot td#slot_fixtimes').text(schedule.fixtimes.join(', '));
 //
             ++add_fix_time_counter;
-            if (add_fix_time_counter == slot_selection.going) {
-                this.disabled = true;
+            //console.log('counter: ', add_fix_time_counter);
+            if (add_fix_time_counter >= schedule.going) {
+                $(this).attr('disabled', true);
             }
         });
 
         ProductSlot._$slots_select_no.change(function () {
-            used_slot = $(this).find(':selected').val();
+            used_slot = $(this).val();
             ProductSlot._toggle_slot_time_button();
         });
 
         $fix_slot_reset.click(function () {
-            slot_selection = {fixtimes: []};
-            __row_slot_selection = {'fixtimes': []};
+            add_fix_time_counter = 0;
+            schedule = new Schedule();
 
             ProductSlot._generate_fix_slot_select(parseInt(max_slot));
 
@@ -260,24 +280,25 @@ var ProductSlot = {
             $('#fix_time').data("DateTimePicker").clear();
 
             $('#fix_date_input').attr("disabled", false);
-            ProductSlot._$slots_select_no.attr("disabled", false);
+            //ProductSlot._$slots_select_no.attr("disabled", false);
 
 
             $('tr#display_slot').hide();
 
             ProductSlot._toggle_slot_time_button();
+            ProductSlot.__enable_slot_button();
         });
 
         $complete_slot_add.click(function () {
-            slot_selection = {fixtimes: []};
 
-            __row_slot_selection.date = (new Date($('#fix_date').data("DateTimePicker").date())).toDateString();
-            __row_slot_selection.going = ProductSlot._$slots_select_no.find(':selected').val();
+            schedule.date = (new Date($('#fix_date').data("DateTimePicker").date())).toDateString();
+            schedule.going = ProductSlot._$slots_select_no.val();
 
-            var copyObj = JSON.parse(JSON.stringify(__row_slot_selection));
-            ProductSlot._slot_schedule.push(copyObj);
+            //var copyObj = JSON.parse(JSON.stringify(__row_slot_selection));
+            //ProductSlot._slot_schedule.push(__row_slot_selection);
+            slotModel.schedules.push(schedule);
 
-            ProductSlot._calc_slot_price(ProductSlot._slot_schedule);
+            ProductSlot._calc_slot_price(slotModel.schedules);
 
             max_slot -= used_slot;
             ProductSlot._generate_fix_slot_select(parseInt(max_slot));
@@ -286,32 +307,37 @@ var ProductSlot = {
             $fix_date.data("DateTimePicker").disabledDates(disabled_fix_date);
 
             $fix_slot_reset.trigger('click');
-
+            $('span#time-chosen').hide();
+            ProductSlot.__enable_slot_button();
         });
 
         $('table#slot_table').on('click', 'a.fix_slot_del', function () {
             var index = $(this).attr('data-index');
-            ProductSlot._slot_schedule.splice(index, 1);
-            console.log(index, ProductSlot._slot_schedule);
+            slotModel.schedules.splice(index, 1);
+            console.log(index, slotModel.schedules);
 
-            ProductSlot._calc_slot_price(ProductSlot._slot_schedule);
+            ProductSlot._calc_slot_price(slotModel.schedules);
 //                load_slot_table(slot_table);
+            ProductSlot.__enable_slot_button();
         });
 
         ProductSlot._$refresh_slot_button.click(function () {
+            add_fix_time_counter = 0;
+            slotModel = new SlotModel();
+            schedule = new Schedule();
             $('#slot_start_date').data("DateTimePicker").clear();
             $('#slot_end_date').data("DateTimePicker").clear();
 
             ProductSlot._$isFixable.attr('checked', false).change();
             $fix_slot_reset.trigger('click');
             clear_disabled_dates();
-            ProductSlot._slot_schedule = [];
-            ProductSlot._calc_slot_price(ProductSlot._slot_schedule);
+            ProductSlot._calc_slot_price(slotModel.schedules);
 
             ProductSlot._$slots.val(1).change();
             ProductSlot._$slots.attr('disabled', false);
 
             ProductSlot.__config_file_inputs('slot');
+            ProductSlot._$isFixable.attr("disabled", true);
         });
 
         $fix_time.datetimepicker()
@@ -344,19 +370,8 @@ var ProductSlot = {
 
         ProductSlot._$bulks.change(function () {
 
-            var max_bulk = $(this).find(':selected').val();
-
+            var max_bulk = $(this).val();
             ProductSlot._calc_bulk_price();
-
-            //set time period for premium/regular
-            var period = ProductSlot._$period.find(':selected').val();
-            var start_str = period + '_start';
-            var end_str = period + '_end';
-
-//            console.log(prog_time[start_str], prog_time[end_str]);
-            ProductSlot._$bulk_start_date.data("DateTimePicker").minDate(new Date(ProductSlot.prog_time[start_str]));
-            ProductSlot._$bulk_end_date.data("DateTimePicker").maxDate(new Date(ProductSlot.prog_time[end_str]));
-
         });
 
 
@@ -374,7 +389,7 @@ var ProductSlot = {
 
     _calc_slot_price: function (slots_list) {
 
-        ProductSlot._load_slot_table(ProductSlot._slot_schedule);
+        ProductSlot._load_slot_table(slotModel.schedules);
 
         var product_price = parseFloat(ProductSlot._$price.val());
         var no_slots = parseInt(ProductSlot._$slots.find(':selected').val());
@@ -402,7 +417,7 @@ var ProductSlot = {
     _load_slot_table: function (list) {
         $('tr.slot_data').remove();
         for (var i = 0; i < list.length; i++) {
-            console.log(list, list.length);
+            //console.log(list, list.length);
             var $slot_data = $('<tr></tr>').addClass('slot_data');
             $slot_data.append($('<td width="3%"><a class="fix_slot_del" data-index="' + i + '" href="javascript:void(0)"><em class="fa fa-remove text-danger"></em></a></td>'));
             $slot_data.append($('<td width="27%">' + list[i].date + '</td>'));
@@ -457,8 +472,8 @@ var ProductSlot = {
 
         $('#fix_time').datetimepicker({
             format: 'HH:mm',
-            'minDate': start,
-            defaultDate: start
+            //'minDate': start
+            //maxDate: new Date("Fri May 26 2017 23:59:00 GMT+0100 (WAT)")
         });
 
         $('#slot_start_date').datetimepicker()
@@ -469,8 +484,10 @@ var ProductSlot = {
                 $('#fix_date').data("DateTimePicker").clear();
 
                 if (e.date != null || typeof e.event != 'undefined') {
+                    slotModel.slot_start_date = (new Date(e.date)).toDateString();
                     $('#slot_end_date').data("DateTimePicker").minDate(e.date);
-                    $('#fix_time').data("DateTimePicker").minDate(e.date);
+                    //$('#fix_time').data("DateTimePicker").minDate(e.date);
+                    ProductSlot._$isFixable.attr("disabled", false);
                 }
             });
 
@@ -478,14 +495,47 @@ var ProductSlot = {
             .on('dp.change', function (e) {
                 $('#fix_date').data("DateTimePicker").clear();
                 if (e.date != null || typeof e.event != 'undefined') {
-                    $('#fix_time').data("DateTimePicker").maxDate(e.date);
+                    slotModel.slot_end_date = (new Date(e.date)).toDateString();
+                    $('#fix_date').data("DateTimePicker").maxDate(e.date);
+                    ProductSlot.__enable_slot_button();
                 }
             });
 
         $('#fix_date').datetimepicker()
             .on('dp.change', function (e) {
-                $('#fix_time').data("DateTimePicker").clear();
+                //$('#fix_time').data("DateTimePicker").clear();
+                if (e.date != null || typeof e.event != 'undefined') {
+                    AirtimeViewModel.disableFixableSlots(false);
+                    ProductSlot._toggle_slot_time_button();
+                    //$('#fix_time').data("DateTimePicker").maxDate(e.date);
+                }
+                else {
+                    AirtimeViewModel.disableFixableSlots(true);
+                }
             });
+    },
+
+    __set_times: function (period) {
+        var start_str = period + '_start';
+        var end_str = period + '_end';
+
+//            console.log(prog_time[start_str], prog_time[end_str]);
+        ProductSlot.times.start = new Date(Date.parse(ProductSlot.prog_time[start_str]));
+        ProductSlot.times.end = new Date(Date.parse(ProductSlot.prog_time[end_str]));
+        //ProductSlot.times.end.setDate(ProductSlot.times.end.getDate() + 1);
+
+
+        //console.log('Start time: ' + ProductSlot.times.start, 'End time: ' + ProductSlot.times.end);
+
+        $('#fix_time').data("DateTimePicker").clear();
+        //
+        $('#fix_time').data("DateTimePicker").minDate(new Date(ProductSlot.times.start.toString()));
+        $('#fix_time').data("DateTimePicker").maxDate(new Date(ProductSlot.times.end.toString()));
+
+
+        console.log('Start picker: ' + (new Date($('#fix_time').data("DateTimePicker").minDate())).toLocaleTimeString(),
+            'End picker: ' + (new Date($('#fix_time').data("DateTimePicker").maxDate())).toString());
+
     },
 
     configBulkDates: function () {
@@ -527,10 +577,10 @@ var ProductSlot = {
     },
 
     _toggle_slot_time_button: function () {
-        var option_val = ProductSlot._$slots_select_no.find(':selected').val();
-        var fix_time = $('#fix_date').data("DateTimePicker").date();
+        var option_val = ProductSlot._$slots_select_no.val();
+        var fix_date = $('#fix_date').data("DateTimePicker").date();
 
-        if (option_val > 0 && fix_time) {
+        if (option_val > 0 && fix_date) {
             $('#add_fix_time').attr('disabled', false);
             $('#complete_slot_add').attr('disabled', false);
         }
@@ -625,24 +675,27 @@ var ProductSlot = {
                 }
             }
 
-            var subscription = {
-                product: ProductSlot._$p_selected.id,
-                period: ProductSlot._$period.val(),
-                duration: duration,
-                slots:ProductSlot._$slots.val(),
-                slot_file_id: slot_file_id,
-                slot_start_date: $('#slot_start_date').data("DateTimePicker").date(),
-                slot_end_date: $('#slot_end_date').data("DateTimePicker").date(),
-                amount: parseFloat(ProductSlot._$slot_price.val()),
-                schedules: JSON.parse(JSON.stringify(ProductSlot._slot_schedule))
-            };
 
-            ProductSlot.cart['index_'+ProductSlot._product_index].push(subscription);
+            //var subscription = {
+            //slotModel.product = ProductSlot._$p_selected.id;
+            //slotModel.period = ProductSlot._$period.val();
+            slotModel.duration = duration;
+            slotModel.slots = ProductSlot._$slots.val();
+            slotModel.slot_file_id =  slot_file_id;
+            slotModel.prog_start = ProductSlot.times.start.toLocaleTimeString();
+            slotModel.prog_end = ProductSlot.times.end.toLocaleTimeString();
+            //slotModel.slot_start_date = $('#slot_start_date').data("DateTimePicker").date();
+            //slotModel.slot_end_date = $('#slot_end_date').data("DateTimePicker").date();
+            slotModel.amount = parseFloat(ProductSlot._$slot_price.val());
+            //slotModel.schedules = JSON.parse(JSON.stringify(ProductSlot._slot_schedule))
+            //};
+
+            ProductSlot.cart['index_'+ProductSlot._product_index].push(slotModel);
 
             //console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
             console.log(ProductSlot.cart);
 
-            ProductSlot._slot_schedule = [];// reset
+            slotModel = new SlotModel(); //ProductSlot._slot_schedule = [];// reset
 
             //$.removeCookie('cart', { path: '/' });
             //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
@@ -704,5 +757,11 @@ var ProductSlot = {
            }
         }
         return total;
+    },
+
+    __enable_slot_button: function(){
+        var model = slotModel;
+        var val = (model.slots && model.slot_start_date && model.slot_end_date && !model.isFixed) || (model.isFixed && model.schedules.length > 0);
+        AirtimeViewModel.slotButton(val);
     }
 };
