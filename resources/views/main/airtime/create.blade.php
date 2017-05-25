@@ -129,6 +129,9 @@
 
                     <form id="airtime-wizard" class="form-horizontal" action="#" method="POST" enctype="multipart/form-data">
 
+                        {{--The name is <span data-bind="text: personName()"></span>--}}
+
+
                         <div id="airtime-slides">
                             @include('main.airtime.wizards.client-marketer')
                             @include('main.airtime.wizards.products')
@@ -161,6 +164,9 @@
 
 @section('page-vendor')
    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+
+    <script type='text/javascript' src='/bower_components/knockout/dist/knockout.js'></script>
+
     <!-- SELECT2-->
     <script src="/vendor/select2/dist/js/select2.js"></script>
     <!-- JQUERY VALIDATE-->
@@ -197,6 +203,10 @@
 
             $(function(){
 
+                var CartReviewViewModel = {
+                    items: ko.observable(Review.cartitems)
+                };
+
                 $.fn.steps.setStep = function (step)
                 {
                     var currentIndex = $(this).steps('getCurrentIndex');
@@ -228,10 +238,14 @@
                     bodyTag: "section.wizard-body",
                     transitionEffect: "slideLeft",
                     onInit: function() {
+
+                        ko.applyBindings(CartReviewViewModel);
+
                         ClientMarketer.init(clients, marketers);
 
                         ProductSlot.configSlotDates();
                         ProductSlot.configBulkDates();
+
                     },
                     onStepChanging: function (event, currentIndex, newIndex)
                     {
@@ -240,7 +254,7 @@
                             Pricing.init();
                         }
                         if(newIndex == 3) {
-                            Review.init();
+                            Review.init(CartReviewViewModel);
                         }
                         return form.valid();
                     },
