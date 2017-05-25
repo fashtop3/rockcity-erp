@@ -6,15 +6,29 @@ function Schedule() {
 
 function SlotModel() {
     var self = this;
-    self.period = '';
+    self.period = null;
     self.slots = 0;
+    self.duration = null;
     self.slot_start_date = null;
     self.slot_end_date = null;
     self.isFixed = false;
     self.schedules = [];
 }
 
+function BulkModel() {
+    var self = this;
+    self.product = null;
+    self.period = null;
+    self.duration = null;
+    self.bulks = 0;
+    self.bulk_start_date = null;
+    self.bulk_end_date = null;
+}
+
 var slotModel = new SlotModel();
+var schedule = new Schedule();
+var bulkModel = new BulkModel();
+
 
 var ProductSlot = {
 
@@ -29,10 +43,6 @@ var ProductSlot = {
     init: function (products, progTime) {
 
         'use strict';
-
-        //if($.cookie('cart') != null) {
-        //    ProductSlot.cart = JSON.parse($.cookie('cart'));
-        //}
 
         $.removeCookie('cart', { path: '/' });
         //console.log(ProductSlot.cart);
@@ -57,6 +67,7 @@ var ProductSlot = {
 
         'use strict';
 
+        ProductSlot._$product = $('#product-data-select');
         ProductSlot._$timeable = $('#timable');
         ProductSlot._$timeable.hide();
         ProductSlot._$price = $('input#price');
@@ -73,21 +84,21 @@ var ProductSlot = {
 
 
         //when new product is selected
-        $('#product-data-select').change(function () {
+        ProductSlot._$product.change(function () {
             ProductSlot._$timeable.hide();
 
-            ProductSlot._$period.trigger('change');
+            ProductSlot._$period.val('premium').change();
         });
 
 
         //when period change
         ProductSlot._$period.change(function () {
-            var p_index = $('#product-data-select').find(':selected').attr('data-index');
+            var p_index = ProductSlot._$product.find(':selected').attr('data-index');
+            $bulkPanel.hide();
+            $slotPanel.hide();
             if(p_index == null || p_index == 'undefined') {
                 //Todo: refresh all blocks here
                 $tariff_div.hide();
-                $bulkPanel.hide();
-                $slotPanel.hide();
                 ProductSlot._$refresh_slot_button.trigger('click');
                 ProductSlot._$refresh_bulk_button.trigger('click');
                 return;
@@ -100,7 +111,8 @@ var ProductSlot = {
             if (ProductSlot._$p_selected.timeable) {
                 ProductSlot._populate_duration(ProductSlot._$p_selected, ProductSlot._$timeable);
                 ProductSlot._$duration.trigger('change');
-            } else {
+            }
+            else {
                 var product_price = ProductSlot._$p_selected.prices[0];
                 ProductSlot._$price.val(product_price[$(this).val()]);
                 ProductSlot._$price.number(true, 2);
@@ -122,8 +134,6 @@ var ProductSlot = {
             }
 
             ProductSlot.__set_times($(this).val()); //set prog time
-            console.log($(this).val());
-            slotModel.period = $(this).val();
         });
 
         //when duration change
@@ -185,7 +195,7 @@ var ProductSlot = {
         var $fix_time = $('#fix_time');
         var $fixable_slot = $('#fixable_slot');
         var disabled_fix_date = [];
-        var schedule = new Schedule();
+
         var add_fix_time_counter = 0;
 
         $('input#fix_date_input').keydown(function () {
@@ -208,9 +218,6 @@ var ProductSlot = {
 
             ProductSlot._toggle_slot_time_button();
             $('span#time-chosen').hide();
-
-            slotModel.slots = parseInt($(this).val());
-            ProductSlot.__enable_slot_button();
         });
 
         ProductSlot._$isFixable.change(function () {
@@ -323,10 +330,9 @@ var ProductSlot = {
 
         ProductSlot._$refresh_slot_button.click(function () {
             add_fix_time_counter = 0;
-            slotModel = new SlotModel();
-            schedule = new Schedule();
             $('#slot_start_date').data("DateTimePicker").clear();
             $('#slot_end_date').data("DateTimePicker").clear();
+            ProductSlot.__refreshModels();
 
             ProductSlot._$isFixable.attr('checked', false).change();
             $fix_slot_reset.trigger('click');
@@ -338,6 +344,7 @@ var ProductSlot = {
 
             ProductSlot.__config_file_inputs('slot');
             ProductSlot._$isFixable.attr("disabled", true);
+            ProductSlot.__enable_slot_button();
         });
 
         $fix_time.datetimepicker()
@@ -369,22 +376,39 @@ var ProductSlot = {
 
 
         ProductSlot._$bulks.change(function () {
-
-            var max_bulk = $(this).val();
             ProductSlot._calc_bulk_price();
         });
 
 
         ProductSlot._$refresh_bulk_button.click(function () {
+
+            ProductSlot.__refreshModels();
             ProductSlot._$bulk_start_date.data("DateTimePicker").clear();
             ProductSlot._$bulk_end_date.data("DateTimePicker").clear();
+            ProductSlot._$bulk_start_date.data("DateTimePicker").minDate(new Date());
+
 
             ProductSlot._calc_bulk_price();
             ProductSlot.__config_file_inputs('bulk');
 
             ProductSlot._$bulks.val(501).change();
+            ProductSlot.__enable_bulk_button();
         });
         ProductSlot.__add_bulk(); //model add bulk button
+    },
+
+    __refreshModels: function() {
+        slotModel = new SlotModel();
+        schedule = new Schedule();
+        bulkModel = new BulkModel();
+
+        slotModel.product = ProductSlot._$p_selected.id;
+        slotModel.period = ProductSlot._$period.val();
+        slotModel.slots = parseInt(ProductSlot._$slots.val());
+
+        bulkModel.product = ProductSlot._$p_selected.id;
+        bulkModel.period = ProductSlot._$period.val();
+        bulkModel.bulks = parseInt(ProductSlot._$bulks.val());
     },
 
     _calc_slot_price: function (slots_list) {
@@ -453,6 +477,13 @@ var ProductSlot = {
 
     configSlotDates: function () {
 
+        $('#slot_start_date').keydown(function () {
+            return false;
+        });
+        $('#slot_end_date').keydown(function () {
+            return false;
+        });
+
         var start = (new Date()).toDateString();
         $('#slot_start_date').datetimepicker({
             format: 'DD-MM-YYYY',
@@ -488,12 +519,14 @@ var ProductSlot = {
                     $('#slot_end_date').data("DateTimePicker").minDate(e.date);
                     //$('#fix_time').data("DateTimePicker").minDate(e.date);
                     ProductSlot._$isFixable.attr("disabled", false);
+                    ProductSlot.__enable_slot_button();
                 }
             });
 
         $('#slot_end_date').datetimepicker()
             .on('dp.change', function (e) {
                 $('#fix_date').data("DateTimePicker").clear();
+                //slotModel.slot_end_date = null;
                 if (e.date != null || typeof e.event != 'undefined') {
                     slotModel.slot_end_date = (new Date(e.date)).toDateString();
                     $('#fix_date').data("DateTimePicker").maxDate(e.date);
@@ -506,12 +539,10 @@ var ProductSlot = {
                 //$('#fix_time').data("DateTimePicker").clear();
                 if (e.date != null || typeof e.event != 'undefined') {
                     AirtimeViewModel.disableFixableSlots(false);
-                    ProductSlot._toggle_slot_time_button();
                     //$('#fix_time').data("DateTimePicker").maxDate(e.date);
                 }
-                else {
-                    AirtimeViewModel.disableFixableSlots(true);
-                }
+                AirtimeViewModel.disableFixableSlots(true);
+                ProductSlot._toggle_slot_time_button();
             });
     },
 
@@ -540,11 +571,11 @@ var ProductSlot = {
 
     configBulkDates: function () {
 
-        $('#bulk_end_date').attr('disabled', true);
-        $('#bulk_start_date').keypress(function () {
+        //$('#bulk_end_date').attr('disabled', true);
+        $('#bulk_start_date').keydown(function () {
             return false;
         });
-        $('#bulk_end_date').keypress(function () {
+        $('#bulk_end_date').keydown(function () {
             return false;
         });
 
@@ -564,14 +595,19 @@ var ProductSlot = {
             .on('dp.change', function (e) {
                 $('#bulk_end_date').data("DateTimePicker").clear();
                 if (e.date != null || typeof e.event != 'undefined') {
+                    bulkModel.bulk_start_date = (new Date(e.date)).toDateString();
                     $('#bulk_end_date').data("DateTimePicker").minDate(e.date);
-                    $('#bulk_end_date').attr('disabled', false);
+                    //$('#bulk_end_date').attr('disabled', false);
+                    ProductSlot.__enable_bulk_button();
                 }
             });
 
-        $('#slot_end_date').datetimepicker()
+        $('#bulk_end_date').datetimepicker()
             .on('dp.change', function (e) {
-
+                if (e.date != null || typeof e.event != 'undefined') {
+                    bulkModel.bulk_end_date = (new Date(e.date)).toDateString();
+                    ProductSlot.__enable_bulk_button();
+                }
             });
 
     },
@@ -695,11 +731,12 @@ var ProductSlot = {
             //console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
             console.log(ProductSlot.cart);
 
-            slotModel = new SlotModel(); //ProductSlot._slot_schedule = [];// reset
+            ProductSlot.__refreshModels(); //ProductSlot._slot_schedule = [];// reset
 
             //$.removeCookie('cart', { path: '/' });
             //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
-            ProductSlot._$refresh_slot_button.trigger('click');
+            //ProductSlot._$refresh_slot_button.trigger('click');
+            ProductSlot._$period.val('premium').change();
         });
     },
 
@@ -727,25 +764,27 @@ var ProductSlot = {
                 }
             }
 
-            var subscription = {
-                product: ProductSlot._$p_selected.id,
-                period: ProductSlot._$period.val(),
-                duration: duration,
-                bulks:ProductSlot._$bulks.val(),
-                bulk_file_id: bulk_file_id,
-                bulk_start_date: $('#bulk_start_date').data("DateTimePicker").date(),
-                bulk_end_date: $('#bulk_end_date').data("DateTimePicker").date(),
-                amount: parseFloat(ProductSlot._$bulk_price.val())
-            };
 
-            ProductSlot.cart['index_'+ProductSlot._product_index].push(subscription);
+            bulkModel.product = ProductSlot._$p_selected.id;
+            //bulkModel.period = ProductSlot._$period.val();
+            bulkModel.duration = duration;
+            //bulkModel.bulks = ProductSlot._$bulks.val();
+            bulkModel.bulk_file_id = bulk_file_id;
+            bulkModel.prog_start = ProductSlot.times.start.toLocaleTimeString();
+            bulkModel.prog_end = ProductSlot.times.end.toLocaleTimeString();
+            //bulkModel.bulk_start_date = $('#bulk_start_date').data("DateTimePicker").date();
+            //bulkModel.bulk_start_date = $('#bulk_end_date').data("DateTimePicker").date();
+            bulkModel.amount = parseFloat(ProductSlot._$bulk_price.val());
+
+            ProductSlot.cart['index_'+ProductSlot._product_index].push(bulkModel);
 
             //console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
             console.log(ProductSlot.cart);
+            ProductSlot.__refreshModels();
 
             //$.removeCookie('cart', { path: '/' });
             //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
-            ProductSlot._$refresh_bulk_button.trigger('click');
+            ProductSlot._$period.val('premium').change();
         });
     },
 
@@ -763,5 +802,13 @@ var ProductSlot = {
         var model = slotModel;
         var val = (model.slots && model.slot_start_date && model.slot_end_date && !model.isFixed) || (model.isFixed && model.schedules.length > 0);
         AirtimeViewModel.slotButton(val);
+    },
+
+    __enable_bulk_button: function(){
+        var model = bulkModel;
+        //console.log((false && model.bulk_start_date && model.bulk_end_date));
+        var val = (model.bulks && model.bulk_start_date && model.bulk_end_date) || false;
+        //alert(val);
+        AirtimeViewModel.bulkButton(val);
     }
 };

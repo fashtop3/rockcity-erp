@@ -206,9 +206,13 @@
 
                 AirtimeViewModel = {
                     items: ko.observableArray(),
+                    number: function (val) {
+                        return $.number(val, 2);
+                    },
 
                     slotButton: ko.observable(false),
-                    disableFixableSlots: ko.observable(true),
+                    bulkButton: ko.observable(false),
+                    disableFixableSlots: ko.observable(true)
                 };
 
                 $.fn.steps.setStep = function (step)

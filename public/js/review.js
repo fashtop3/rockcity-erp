@@ -52,15 +52,16 @@ var Review = {
             var productIndex = cartIndex.slice("index_".length);
             var newItemObj = {
                 name: ProductSlot.products[productIndex].name,
-                subscriptions: cart[cartIndex],
-                subTotal: function () {
-                    var total = 0;
-                    for(var i = 0; i<cart[cartIndex].length; i++) {
-                        total += cart[cartIndex].amount;
-                    }
-                    return total;
-                }()
+                subscriptions: cart[cartIndex]
             };
+            newItemObj.subTotal = function () {
+                var total = 0;
+                for(var i = 0; i<newItemObj.subscriptions.length; i++) {
+                    total += parseFloat(newItemObj.subscriptions[i].amount);
+                }
+                return total;
+            }();
+
             Review.cartitems.push(newItemObj);
         }
 

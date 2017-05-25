@@ -256,8 +256,7 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-sm-4">
-                        <button type="button" data-bind="enable: slotButton" id="add-slot-button" class="btn btn-info btn-sm">Add Slot
-                        </button>
+                        <button type="button" data-bind="enable: slotButton" id="add-slot-button" class="btn btn-info btn-sm">Add Slot</button>
                     </div>
                 </div>
             </div>
@@ -345,7 +344,7 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-sm-4">
-                        <button id="add-bulk-button" type="button" class="btn btn-info btn-sm">Add Bulk</button>
+                        <button id="add-bulk-button" data-bind="enable: bulkButton" type="button" class="btn btn-info btn-sm">Add Bulk</button>
                     </div>
                     <div class="col-sm-7">
                         <span class="help-block"><i class="fa fa-info-circle"></i> Please select airtime duration. </span>
