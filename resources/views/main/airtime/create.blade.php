@@ -272,7 +272,7 @@
                     items: ko.observableArray([]),
                     cartTotals: ko.observable('0.00'),
                     allowEmptyCart: ko.observable(false),
-                    showDeleteButton: ko.observable(false),
+                    showDeleteButton: ko.observable(true),
 
                     number: function (val) {
                         return $.number(val, 2);
@@ -280,7 +280,11 @@
 
                     slotButton: ko.observable(false),
                     bulkButton: ko.observable(false),
-                    disableFixableSlots: ko.observable(true)
+                    disableFixableSlots: ko.observable(true),
+
+                    deleteSubscription: function(subIndex, itemObj) {
+                        Pricing.deleteSubscription(subIndex, itemObj);
+                    }
                 };
 
                 AirtimeViewModel.items.subscribe(function() {
@@ -418,7 +422,7 @@
             <div class="col-sm-12">
                 <div class="list-group">
                     <div id="reviewBindings" data-bind="if: items">
-                        <div data-bind="foreach: items">
+                        <div data-bind="foreach: { data: items, as: 'item' }">
                             <li>
                                 <!-- START panel-->
                                 <div id="" class="panel panel-default">
@@ -522,7 +526,7 @@
                                                                     <td class="wd-xs" valign="top">
                                                                         <div class="ph" data-bind="if: $root.showDeleteButton()">
                                                                             <p class="m0 text-muted">
-                                                                                <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><i class="fa fa-lg fa-trash-o"></i></a>
+                                                                                <a href="#" data-bind="click: $root.deleteSubscription.bind($data, $index(), item)"><i class="fa fa-lg fa-trash-o"></i></a>
                                                                             </p>
                                                                         </div>
                                                                     </td>

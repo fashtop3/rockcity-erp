@@ -186,7 +186,7 @@
                                     <br />
                                     <div class="row">
                                         <div class="col-sm-4 col-sm-push-4">
-                                            <button id="orderButton" class="btn btn-warning" ng-disabled="orderButton" type="submit">Place Order</button>
+                                            <button id="orderButton" class="btn btn-warning" type="submit">Place Order</button>
                                         </div>
                                     </div>
 
