@@ -284,11 +284,18 @@
                 };
 
                 AirtimeViewModel.items.subscribe(function() {
-                    var sum = 0;
+                    var sum = 0.00;
                     for(var i = 0; i<AirtimeViewModel.items().length; i++) {
                         sum += AirtimeViewModel.items()[i].subTotal;
                     }
+
                     $('span#carttotal-prev').text($.number(sum, 2));
+
+                    if(!AirtimeViewModel.items().length) {
+                        $('button#orderButton').attr('disabled', false);
+                    } else {
+                        $('button#orderButton').attr('disabled', true);
+                    }
                 });
 
                 $.fn.steps.setStep = function (step)
