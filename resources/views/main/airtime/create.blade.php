@@ -272,6 +272,7 @@
                     items: ko.observableArray([]),
                     cartTotals: ko.observable('0.00'),
                     allowEmptyCart: ko.observable(false),
+                    showDeleteButton: ko.observable(false),
 
                     number: function (val) {
                         return $.number(val, 2);
@@ -446,7 +447,7 @@
                                                                         </div>
                                                                     </td>
                                                                     <td class="wd-xs" valign="top">
-                                                                        <div class="ph">
+                                                                        <div data-bind="if: $root.showDeleteButton()" class="ph">
                                                                             <p class="m0 text-muted">
                                                                                 <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><i class="fa fa-lg fa-trash-o"></i></a>
                                                                             </p>
@@ -512,7 +513,7 @@
                                                                         </div>
                                                                     </td>
                                                                     <td class="wd-xs" valign="top">
-                                                                        <div class="ph">
+                                                                        <div class="ph" data-bind="if: $root.showDeleteButton()">
                                                                             <p class="m0 text-muted">
                                                                                 <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><i class="fa fa-lg fa-trash-o"></i></a>
                                                                             </p>
