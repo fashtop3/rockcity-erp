@@ -44,7 +44,7 @@
             <li class="dropdown dropdown-list">
                 <a href="javascript:void(0)" data-toggle="dropdown">
                     <em class="fa fa-1x fa-shopping-cart text-info"></em>
-                    <small  style="font-size: 10px" class="label label-danger">11</small>
+                    <span  style="font-size: 10px" class="label label-danger" data-bind="text: $root.items().length"></span>
                 </a>
                 <!-- START Dropdown menu-->
                 <ul class="dropdown-menu animated flipInX">
@@ -59,7 +59,7 @@
                                         <em class="fa fa-money fa-2x text-info"></em>
                                     </div>
                                     <div class="media-box-body clearfix">
-                                        <p class="m0">N0.00</p>
+                                        <p class="m0"><strong>₦<span id="carttotal-prev"></span></strong></p>
                                         {{--<p class="m0 text-muted">--}}
                                             {{--<small>1 Products</small>--}}
                                         {{--</p>--}}
@@ -73,26 +73,21 @@
                                         <em class="fa fa-tasks fa-2x text-success"></em>
                                     </div>
                                     <div class="media-box-body clearfix">
-                                        <p class="m0">1 Products</p>
+                                        <p class="m0"><span data-bind="text: $root.items().length"></span> Products</p>
                                         {{--<p class="m0 text-muted">--}}
                                             {{--<small>You have 10 new emails</small>--}}
                                         {{--</p>--}}
                                     </div>
                                 </div>
                             </a>
-                            <!-- list item-->
-                            <!-- last list item-->
-                            {{--<a href="#" class="list-group-item">--}}
-                                {{--<small>More notifications</small>--}}
-                                {{--<span class="label label-danger pull-right">14</span>--}}
-                            {{--</a>--}}
                             <div class="list-group-item" style="">
-                                <a href="javascript:void(0)"  class="pull-right clearfix" style="">
+                                <button data-bind="enable: allowEmptyCart" id="empty-cart" class="btn btn-sm btn-danger pull-right clearfix" style="">
                                     <small><i class="fa fa-2x fa-trash"></i> Empty</small>
-                                </a>
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#cartModal" class="pull-left" style="">
+                                </button>
+                                <button  data-toggle="modal" data-target="#cartModal" class="btn btn-sm btn-info pull-left" style="">
                                     <small><i class="fa fa-2x fa-opencart"></i> View</small>
-                                </a>
+                                </button>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                         <!-- END list group-->
@@ -262,13 +257,22 @@
         // Forms Demo
         // -----------------------------------
 
+        function init_cart_button() {
+            $('#empty-cart').click(function() {
+                Pricing.__emptyCart();
+                console.log('empty clicked');
+            });
+        }
 
         (function(window, document, $, undefined){
 
             $(function(){
 
                 AirtimeViewModel = {
-                    items: ko.observableArray(),
+                    items: ko.observableArray([]),
+                    cartTotals: ko.observable('0.00'),
+                    allowEmptyCart: ko.observable(false),
+
                     number: function (val) {
                         return $.number(val, 2);
                     },
@@ -277,6 +281,14 @@
                     bulkButton: ko.observable(false),
                     disableFixableSlots: ko.observable(true)
                 };
+
+                AirtimeViewModel.items.subscribe(function() {
+                    var sum = 0;
+                    for(var i = 0; i<AirtimeViewModel.items().length; i++) {
+                        sum += AirtimeViewModel.items()[i].subTotal;
+                    }
+                    $('span#carttotal-prev').text($.number(sum, 2));
+                });
 
                 $.fn.steps.setStep = function (step)
                 {
@@ -289,7 +301,6 @@
                             $(this).steps('previous');
                         }
                     }
-
                 };
 
                 // FORM EXAMPLE
@@ -309,6 +320,11 @@
                     bodyTag: "section.wizard-body",
                     transitionEffect: "slideLeft",
                     onInit: function() {
+//
+//                        var form1 = $(this);
+//                        form1.steps("setStep", 3);
+
+                        init_cart_button();
 
                         ko.applyBindings(AirtimeViewModel);
 
@@ -316,6 +332,7 @@
 
                         ProductSlot.configSlotDates();
                         ProductSlot.configBulkDates();
+
 
                     },
                     onStepChanging: function (event, currentIndex, newIndex)
@@ -325,13 +342,15 @@
                         if(newIndex == 1) {
 //                            AirtimeViewModel.slot_start_date("225335");
 //                            console.log('wjhbfgkjwge');
+                            AirtimeViewModel.allowEmptyCart(true);
                         }
 
                         if(newIndex == 2) {
                             Pricing.init();
+                            AirtimeViewModel.allowEmptyCart(false);
                         }
                         if(newIndex == 3) {
-                            Review.init(AirtimeViewModel);
+                            Review.init();
                         }
                         return form.valid();
                     },
@@ -369,19 +388,178 @@
     <div id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelLarge" aria-hidden="true" class="modal fade">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-info">
                     <button type="button" data-dismiss="modal" aria-label="Close" class="close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 id="myModalLabelLarge" class="modal-title">Modal title</h4>
+                    <h4 id="myModalLabelLarge" class="modal-title">Your Shopping Cart (<span data-bind="text: $root.items().length"></span> Product(s))</h4>
                 </div>
-                <div class="modal-body">...</div>
+                <div class="modal-body">
+                    <div data-bind="template: { name: 'cart-template' }"></div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
                 </div>
             </div>
         </div>
     </div>
-@endsection
 
+    <script type="text/html" id="cart-template">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="list-group">
+                    <div id="reviewBindings" data-bind="if: items">
+                        <div data-bind="foreach: items">
+                            <li>
+                                <!-- START panel-->
+                                <div id="" class="panel panel-default">
+                                    <div class="panel-heading" data-bind="text: name" ></div>
+                                    <div class="panel-wrapper">
+                                        <div class="panel-body">
+                                            <div id="item-container" data-bind="foreach: subscriptions">
+                                                <div class="list-group" data-bind="if: bulks>0" >
+                                                    <div class="list-group-item">
+                                                        <div class="table-responsive">
+                                                            <table class="wd-wide">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="ph">
+                                                                            <span class="label label-info pull-right" data-bind="text: period"></span>
+                                                                            <h4 class="media-box-heading">BULK</h4>
+                                                                            <div class="text-muted text-inverse">
+                                                                                <small>
+                                                                                    <b>Start: </b> <span data-bind="text: bulk_start_date"></span> &nbsp;&nbsp;
+                                                                                    <b>End: </b> <span data-bind="text: bulk_end_date"></span>
+                                                                                </small>
+                                                                            </div>
+                                                                            <div class="text-muted text-inverse">
+                                                                                <small><b>Programme: </b> <span data-bind="text: prog_start"></span> -- <span data-bind="text: prog_end"></span> </small>
+                                                                            </div>
+                                                                            <div class="text-muted text-inverse">
+                                                                                <small>
+                                                                                    <b>Bulk: </b> <span data-bind="text: bulks"></span> &nbsp;&nbsp;
+                                                                                    <span data-bind="if: duration"><b>Duration: </b> <span data-bind="text: duration"></span></span>
+                                                                                </small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="wd-xs" valign="top">
+                                                                        <div class="ph">
+                                                                            <p class="m0 text-muted">
+                                                                                <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><i class="fa fa-lg fa-trash-o"></i></a>
+                                                                            </p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="wd-sm">
+                                                                        <div class="ph">
+                                                                            <!--<p class="m0">Price</p>-->
+                                                                            <small class="m0 text-info">
+                                                                                ₦<span data-bind="text: $root.number(amount)"></span></small>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="list-group" data-bind="if: slots > 0">
+                                                    <div class="list-group-item">
+                                                        <div class="table-responsive">
+                                                            <table class="wd-wide">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="ph">
+                                                                            <span class="label label-info pull-right" data-bind="text: period"></span>
+                                                                            <h4 class="media-box-heading">SLOT <small data-bind="if: schedules.length > 0" class="text-muted">(Fixed)</small></h4>
+                                                                            <div class="text-muted text-inverse">
+                                                                                <small>
+                                                                                    <b>Slot date: </b> <span data-bind="text: slot_start_date"></span>
+                                                                                    <b> -- </b> <span data-bind="text: slot_end_date"></span>
+                                                                                </small>
+                                                                            </div>
+                                                                            <div class="text-muted text-inverse">
+                                                                                <small><b>Programme: </b> <span data-bind="text: prog_start"></span> -- <span data-bind="text: prog_end"></span> </small>
+                                                                            </div>
+                                                                            <div class="text-muted text-inverse"><small><b>Slot: </b> <span data-bind="text: slots"></span>; &nbsp;&nbsp;
+                                                                                    <span data-bind="if: duration"><b>Duration: </b> <span data-bind="text: duration"></span></span>
+                                                                                </small></div>
+                                                                        </div><br />
+                                                                        <div class="table-responsive" data-bind="if: schedules.length > 0">
+                                                                            <table class="table table-bordered">
+                                                                                <tr>
+                                                                                    <th>Date</th>
+                                                                                    <th>Slot</th>
+                                                                                    <th>Fixed</th>
+                                                                                    <th>Time</th>
+                                                                                </tr>
+                                                                                <tbody data-bind="foreach: { data: schedules, as: 'schedule' }">
+                                                                                <tr>
+                                                                                    <td> <span data-bind="text: schedule.date"></span></td>
+                                                                                    <td><span data-bind="text: schedule.going"></span></td>
+                                                                                    <td><span data-bind="text: schedule.fixtimes.length"></span></td>
+                                                                                    <td>
+                                                                                        <div data-bind="if: schedule.fixtimes.length > 0"><span class="text text-primary"> <small data-bind="text: schedule.fixtimes.join(', ')"></small> </span></div>
+                                                                                        <div data-bind="if: schedule.fixtimes.length == 0"><span class="text text-primary"><small> <span data-bind="text: $parent.prog_start"></span> -- <span data-bind="text: $parent.prog_end"></span></small></span></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="wd-xs" valign="top">
+                                                                        <div class="ph">
+                                                                            <p class="m0 text-muted">
+                                                                                <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><i class="fa fa-lg fa-trash-o"></i></a>
+                                                                            </p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="wd-sm" valign="top">
+                                                                        <div class="ph">
+                                                                            <!--<p class="m0">Price</p>-->
+                                                                            <small class="m0 text-info">
+                                                                                ₦<span data-bind="text: $root.number(amount)"></span></small>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="list-group-item">
+                                                <div class="media-box">
+                                                    <div class="pull-left">
+                                 <span class="fa-stack">
+                                    <em class="fa fa-circle fa-stack-2x text-purple"></em>
+                                    <em class="fa fa-money fa-stack-1x fa-inverse text-white"></em>
+                                 </span>
+                                                    </div>
+                                                    <div class="media-box-body clearfix">
+                                                        <p class="m0 pull-right text-inverse"> ₦ <span data-bind="text: $root.number(subTotal)"></span>
+                                                        </p>
+                                                        <div class="media-box-heading pull-left"><span class="text-purple m0">Total Amount: </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END panel-->
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+@endsection

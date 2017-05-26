@@ -44,9 +44,6 @@ var ProductSlot = {
 
         'use strict';
 
-        $.removeCookie('cart', { path: '/' });
-        //console.log(ProductSlot.cart);
-
         ProductSlot.products = products; // {!!$products !!};
         ProductSlot.prog_time = progTime;// {!! $prog_time !!};
         ProductSlot._slot_schedule = [];
@@ -226,6 +223,7 @@ var ProductSlot = {
                 $fixable_slot.show();
                 ProductSlot._toggle_slot_time_button();
                 slotModel.isFixed = true;
+                //ProductSlot
             } else {
                 slotModel.isFixed = false;
                 $fixable_slot.hide();
@@ -616,6 +614,10 @@ var ProductSlot = {
         var option_val = ProductSlot._$slots_select_no.val();
         var fix_date = $('#fix_date').data("DateTimePicker").date();
 
+        if(fix_date) {
+            ProductSlot._$slots_select_no.attr('disabled', false);
+        }
+
         if (option_val > 0 && fix_date) {
             $('#add_fix_time').attr('disabled', false);
             $('#complete_slot_add').attr('disabled', false);
@@ -737,6 +739,8 @@ var ProductSlot = {
             //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
             //ProductSlot._$refresh_slot_button.trigger('click');
             ProductSlot._$period.val('premium').change();
+            Pricing._display_cart_item(AirtimeViewModel);
+            AirtimeViewModel.allowEmptyCart(true);
         });
     },
 
@@ -785,6 +789,8 @@ var ProductSlot = {
             //$.removeCookie('cart', { path: '/' });
             //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
             ProductSlot._$period.val('premium').change();
+            Pricing._display_cart_item(AirtimeViewModel);
+            AirtimeViewModel.allowEmptyCart(true);
         });
     },
 

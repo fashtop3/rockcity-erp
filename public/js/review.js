@@ -1,14 +1,11 @@
 
 var Review = {
 
-    cartitems: [],
-
-    init: function(ViewModel) {
+    init: function() {
 
         Review.$item_container = $('#item-container');
         Review.__monitor();
         Review.__update_widgets();
-        Review.__display_cart_item(ViewModel);
         Review.__update_footer();
     },
 
@@ -43,28 +40,6 @@ var Review = {
 
         $('h5 strong#vat').html('NGN'+$('<span>'+Pricing.vat+'</span>').number(true, 2).html());
         $('h5 strong#totalWOComm').html('NGN'+$('<span>'+Pricing.grandTotal+'</span>').number(true, 2).html());
-    },
-
-    __display_cart_item: function(ViewModel) {
-        Review.cartitems = [];
-        var cart = ProductSlot.cart;
-        for(var cartIndex in cart) {
-            var productIndex = cartIndex.slice("index_".length);
-            var newItemObj = {
-                name: ProductSlot.products[productIndex].name,
-                subscriptions: cart[cartIndex]
-            };
-            newItemObj.subTotal = function () {
-                var total = 0;
-                for(var i = 0; i<newItemObj.subscriptions.length; i++) {
-                    total += parseFloat(newItemObj.subscriptions[i].amount);
-                }
-                return total;
-            }();
-
-            Review.cartitems.push(newItemObj);
-        }
-
-        ViewModel.items(Review.cartitems);
     }
+
 };

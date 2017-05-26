@@ -1,5 +1,6 @@
 var Pricing = {
 
+    cartitems: [],
     cartTotal:0,
     vat:0,
     discount:0,
@@ -11,13 +12,14 @@ var Pricing = {
     grandTotal:0,
     promocode: {discount:null, coupon:null},
 
-    init: function () {
+    init: function (ViewModel) {
         'use strict';
 
         Pricing.$discountCoupon = $('#discountCoupon');
         Pricing.$commissionCoupon = $('#commissionCoupon');
 
         Pricing.calculate_prices();
+        //Pricing._display_cart_item(ViewModel);
         Pricing.__plug_coupon_input();
     },
 
@@ -102,5 +104,35 @@ var Pricing = {
             });
 
         });
+    },
+
+    _display_cart_item: function(ViewModel) {
+        Pricing.cartitems = [];
+        var cart = ProductSlot.cart;
+        for(var cartIndex in cart) {
+            var productIndex = cartIndex.slice("index_".length);
+            var newItemObj = {
+                name: ProductSlot.products[productIndex].name,
+                subscriptions: cart[cartIndex]
+            };
+            newItemObj.subTotal = function () {
+                var total = 0;
+                for(var i = 0; i<newItemObj.subscriptions.length; i++) {
+                    total += parseFloat(newItemObj.subscriptions[i].amount);
+                }
+                return total;
+            }();
+
+            Pricing.cartitems.push(newItemObj);
+        }
+
+        ViewModel.items(Pricing.cartitems);
+    },
+
+    __emptyCart: function() {
+        ProductSlot.cart = [];
+        Pricing._display_cart_item(AirtimeViewModel);
+        AirtimeViewModel.allowEmptyCart(false);
     }
+
 };
