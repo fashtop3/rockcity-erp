@@ -15,8 +15,10 @@
 
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group">
-                        <label for="product" class="control-label">Product <abbr class="text-danger"
-                                                                                 title="required">*</abbr></label>
+                        <label for="product" class="control-label"
+                               data-toggle="tooltip" data-placement="top" title="" data-original-title="Add your tips here">Product
+                            <abbr class="text-danger" title="required">*</abbr>
+                        </label>
                         <select id="product-data-select" name="product_id" class="form-control data-select2">
                             <option></option>
                             @foreach($products as $product)
@@ -32,8 +34,10 @@
 
                             <!-- choose airtime period-->
                             <div class="col-md-5 col-xs-12">
-                                <label for="airtimePeriod" class="control-label">Period <abbr class="text-danger"
-                                                                                              title="required">*</abbr></label>
+                                <label for="airtimePeriod" class="control-label"
+                                       data-toggle="tooltip" data-placement="top" title="" data-original-title="Add your tips here">Period
+                                    <abbr class="text-danger" title="required">*</abbr>
+                                </label>
                                 <select name="period" id="period" class="form-control" required>
                                     <option value="premium">Premium</option>
                                     <option value="regular">Regular</option>

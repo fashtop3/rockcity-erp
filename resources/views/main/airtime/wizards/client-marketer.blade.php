@@ -5,9 +5,13 @@
 <section class="wizard-body">
     <!-- START panel-->
     <div id="clientPanel" class="panel panel-default">
-        <div class="panel-heading">Client Details</div>
+        <div class="panel-heading">Client Details
+            <a href="#" data-tool="panel-collapse" data-toggle="tooltip" title="" class="pull-right" data-original-title="Collapse Panel">
+                <em class="fa fa-minus"></em>
+            </a>
+        </div>
         <!-- .panel-wrapper is the element to be collapsed-->
-        <div class="panel-wrapper">
+        <div class="panel-wrapper collapse in" aria-expanded="true">
             <div class="panel-body">
 
                 {{--<input type="text" data-bind="value: slot_start_date" />--}}

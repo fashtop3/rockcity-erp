@@ -39,7 +39,71 @@
 @section('section')
     <h3>
         Generate Airtime
+        {{--pull-right--}}
+        <div class="nav navbar-nav navbar-right">
+            <li class="dropdown dropdown-list">
+                <a href="javascript:void(0)" data-toggle="dropdown">
+                    <em class="fa fa-1x fa-shopping-cart text-info"></em>
+                    <small  style="font-size: 10px" class="label label-danger">11</small>
+                </a>
+                <!-- START Dropdown menu-->
+                <ul class="dropdown-menu animated flipInX">
+                    <li>
+                        <!-- START list group-->
+                        <div class="list-group">
+                            <!-- list item-->
+                            <a href="#" class="list-group-item" data-toggle="modal" data-target="#cartModal">
+                                <div class="media-box">
+                                    <div class="pull-left">
+                                        {{--<em class="fa fa-twitter fa-2x text-info"></em>--}}
+                                        <em class="fa fa-money fa-2x text-info"></em>
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <p class="m0">N0.00</p>
+                                        {{--<p class="m0 text-muted">--}}
+                                            {{--<small>1 Products</small>--}}
+                                        {{--</p>--}}
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- list item-->
+                            <a href="#" class="list-group-item">
+                                <div class="media-box">
+                                    <div class="pull-left">
+                                        <em class="fa fa-tasks fa-2x text-success"></em>
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <p class="m0">1 Products</p>
+                                        {{--<p class="m0 text-muted">--}}
+                                            {{--<small>You have 10 new emails</small>--}}
+                                        {{--</p>--}}
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- list item-->
+                            <!-- last list item-->
+                            {{--<a href="#" class="list-group-item">--}}
+                                {{--<small>More notifications</small>--}}
+                                {{--<span class="label label-danger pull-right">14</span>--}}
+                            {{--</a>--}}
+                            <div class="list-group-item" style="">
+                                <a href="javascript:void(0)"  class="pull-right clearfix" style="">
+                                    <small><i class="fa fa-2x fa-trash"></i> Empty</small>
+                                </a>
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#cartModal" class="pull-left" style="">
+                                    <small><i class="fa fa-2x fa-opencart"></i> View</small>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- END list group-->
+                    </li>
+                </ul>
+                <!-- END Dropdown menu-->
+            </li>
+        </div>
+        <div class="clearfix"></div>
     </h3>
+
     <div class="row">
         <div class="col-md-12">
             {{--<div class="panel panel-default">--}}
@@ -121,7 +185,6 @@
                     {{--</form>--}}
                 {{--</div>--}}
             {{--</div>--}}
-
 
             <div class="panel panel-default">
                 <div class="panel-heading"></div>
@@ -302,4 +365,23 @@
 
     </script>
 
+    <!-- Modal Large-->
+    <div id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelLarge" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 id="myModalLabelLarge" class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">...</div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
