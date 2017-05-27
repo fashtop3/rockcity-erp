@@ -37,7 +37,7 @@ var ProductSlot = {
     times: {start: new Date(), ends: new Date()},
     slot_file_id: null,
     bulk_file_id: null,
-    cart: {},
+    cart: [],
 
 
     init: function (products, progTime) {
@@ -692,9 +692,9 @@ var ProductSlot = {
     __add_slot: function(){
         $('#add-slot-button').click(function () {
            //collect all item into cart object array
-            if(typeof ProductSlot.cart['index_'+ProductSlot._product_index] == 'undefined') {
-                ProductSlot.cart['index_'+ProductSlot._product_index] = [];
-            }
+           // if(typeof ProductSlot.cart['index_'+ProductSlot._product_index] == 'undefined') {
+           //     ProductSlot.cart['index_'+ProductSlot._product_index] = [];
+           // }
             //var cart_item = ProductSlot.cart['index_'+ProductSlot._product_index];
 
             var duration = null;
@@ -717,6 +717,8 @@ var ProductSlot = {
             //var subscription = {
             //slotModel.product = ProductSlot._$p_selected.id;
             //slotModel.period = ProductSlot._$period.val();
+            slotModel.product_index = ProductSlot._product_index;
+            slotModel.product = ProductSlot._$p_selected.id;
             slotModel.duration = duration;
             slotModel.slots = ProductSlot._$slots.val();
             slotModel.slot_file_id =  slot_file_id;
@@ -728,8 +730,8 @@ var ProductSlot = {
             //slotModel.schedules = JSON.parse(JSON.stringify(ProductSlot._slot_schedule))
             //};
 
-            ProductSlot.cart['index_'+ProductSlot._product_index].push(slotModel);
-
+            //ProductSlot.cart['index_'+ProductSlot._product_index].push(slotModel);
+            ProductSlot.__add_to_cart(slotModel);
             //console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
             console.log(ProductSlot.cart);
 
@@ -748,9 +750,9 @@ var ProductSlot = {
         $('#add-bulk-button').click(function () {
             //collect all item into cart object array
 
-            if(typeof ProductSlot.cart['index_'+ProductSlot._product_index] == 'undefined') {
-                ProductSlot.cart['index_'+ProductSlot._product_index] = [];
-            }
+            //if(typeof ProductSlot.cart['index_'+ProductSlot._product_index] == 'undefined') {
+            //    ProductSlot.cart['index_'+ProductSlot._product_index] = [];
+            //}
             //var cart_item = ProductSlot.cart['index_'+ProductSlot._product_index];
 
             var duration = null;
@@ -769,6 +771,7 @@ var ProductSlot = {
             }
 
 
+            bulkModel.product_index = ProductSlot._product_index;
             bulkModel.product = ProductSlot._$p_selected.id;
             //bulkModel.period = ProductSlot._$period.val();
             bulkModel.duration = duration;
@@ -780,8 +783,8 @@ var ProductSlot = {
             //bulkModel.bulk_start_date = $('#bulk_end_date').data("DateTimePicker").date();
             bulkModel.amount = parseFloat(ProductSlot._$bulk_price.val());
 
-            ProductSlot.cart['index_'+ProductSlot._product_index].push(bulkModel);
-
+            //ProductSlot.cart['index_'+ProductSlot._product_index].push(bulkModel);
+            ProductSlot.__add_to_cart(bulkModel);
             //console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
             console.log(ProductSlot.cart);
             ProductSlot.__refreshModels();
@@ -794,12 +797,57 @@ var ProductSlot = {
         });
     },
 
+    __add_to_cart: function(sub) {
+        var foundMatch = false;
+        if(ProductSlot.cart.length) {
+            for (var i = 0; i<ProductSlot.cart.length; i++) {
+                if(ProductSlot.cart[i].product_index ==  sub.product_index) {
+                    ProductSlot.cart[i].subscriptions.push(sub);
+                    ProductSlot.cart[i].subTotal = function (index) {
+                        var total = 0;
+                        for(var j = 0; j<ProductSlot.cart[index].subscriptions.length; j++) {
+                            total += parseFloat(ProductSlot.cart[index].subscriptions[j].amount);
+                        }
+                        return total;
+                    }(i);
+                    foundMatch = true;
+                    break;
+                }
+            }
+
+            if(foundMatch) {
+                return true;
+            }
+        }
+
+        var itemObj = {
+            product_index: sub.product_index,
+            name: ProductSlot.products[sub.product_index].name,
+            product: sub.product,
+            subscriptions: [sub]
+        };
+        itemObj.subTotal = function () {
+            var total = 0;
+            for(var i = 0; i<itemObj.subscriptions.length; i++) {
+                total += parseFloat(itemObj.subscriptions[i].amount);
+            }
+            return total;
+        }();
+
+        ProductSlot.cart.push(itemObj);
+        Pricing._display_cart_item();
+    },
+
     calc_cart_price: function () {
         var total = 0;
-        for(var product in ProductSlot.cart) {
-           for(var i=0; i<ProductSlot.cart[product].length; i++) {
-               total += parseFloat(ProductSlot.cart[product][i].amount);
-           }
+        for(var i = 0; i<ProductSlot.cart.length; i++) {
+            ProductSlot.cart[i].subTotal = 0.00;
+            if(ProductSlot.cart[i].subscriptions.length) {
+                for(var j=0; j<ProductSlot.cart[i].subscriptions.length; j++) {
+                    ProductSlot.cart[i].subTotal +=ProductSlot.cart[i].subscriptions[j].amount;
+                }
+            }
+           total += parseFloat(ProductSlot.cart[i].subTotal);
         }
         return total;
     },

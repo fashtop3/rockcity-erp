@@ -295,11 +295,13 @@
 
                     $('span#carttotal-prev').text($.number(sum, 2));
 
-                    if(!AirtimeViewModel.items().length) {
+                    if(AirtimeViewModel.items().length) {
                         $('button#orderButton').attr('disabled', false);
                     } else {
                         $('button#orderButton').attr('disabled', true);
                     }
+
+                    Pricing.calculate_prices();
                 });
 
                 $.fn.steps.setStep = function (step)
@@ -460,7 +462,7 @@
                                                                     <td class="wd-xs" valign="top">
                                                                         <div data-bind="if: $root.showDeleteButton()" class="ph">
                                                                             <p class="m0 text-muted">
-                                                                                <a href="" ng-click="deleteSubscription(cart.indexOf(item), item.subscriptions.indexOf(sub))"><i class="fa fa-lg fa-trash-o"></i></a>
+                                                                                <a href="#" data-bind="click: $root.deleteSubscription.bind($data, $index(), item)"><i class="fa fa-lg fa-trash-o"></i></a>
                                                                             </p>
                                                                         </div>
                                                                     </td>
