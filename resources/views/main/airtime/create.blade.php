@@ -335,8 +335,9 @@
                     transitionEffect: "slideLeft",
                     onInit: function() {
 //
-//                        var form1 = $(this);
-//                        form1.steps("setStep", 3);
+                        var wizform = $(this);
+                        var finishButton = wizform.find('a[href="#finish"]');
+                        finishButton.parent().addClass('disabled');
 
                         init_cart_button();
 
@@ -351,6 +352,7 @@
                     },
                     onStepChanging: function (event, currentIndex, newIndex)
                     {
+                        var wizform = $(this);
                         form.validate().settings.ignore = ":disabled,:hidden";
 
                         if(newIndex == 1) {
@@ -360,6 +362,11 @@
                         }
 
                         if(newIndex == 2) {
+                            if(!ProductSlot.cart.length) {
+                                wizform.steps("setStep", currentIndex);
+                                alert('Your cart is empty!! Please select a product');
+                                return false;
+                            }
                             Pricing.init();
                             AirtimeViewModel.allowEmptyCart(false);
                         }
