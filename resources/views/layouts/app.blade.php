@@ -28,6 +28,8 @@
     <!-- =============== APP STYLES ===============-->
     <link rel="stylesheet" href="/app/css/app.css" id="maincss">
 
+    <link rel="stylesheet" href="/bower_components/sweetalert2/dist/sweetalert2.min.css">
+
 
     @yield('vendor-head')
 
@@ -55,6 +57,9 @@
     <script src="/vendor/jQuery-Storage-API/jquery.storageapi.js"></script>
     <!-- PARSLEY-->
     <script src="/vendor/parsleyjs/dist/parsley.min.js"></script>
+    <!-- SWEETALERT2 -->
+    <script src="/bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
+
     @yield('vendor-script')
 
 

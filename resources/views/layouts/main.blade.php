@@ -56,6 +56,8 @@
     <!-- MOMENT JS-->
     <script src="/vendor/moment/min/moment-with-locales.min.js"></script>
 
+
+
     @yield('page-vendor')
 
 @endsection

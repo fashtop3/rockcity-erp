@@ -115,6 +115,7 @@ var Pricing = {
         ProductSlot.cart = [];
         Pricing._display_cart_item(AirtimeViewModel);
         AirtimeViewModel.allowEmptyCart(false);
+        Pricing.__return_view_to_selection();
     },
 
     deleteSubscription: function(subIndex, itemObj) {
@@ -124,7 +125,14 @@ var Pricing = {
         }
         AirtimeViewModel.items([]);
         AirtimeViewModel.items(ProductSlot.cart);
-        console.log(/*a, AirtimeViewModel.items().indexOf(b), */AirtimeViewModel.items());
+        console.log('deleting...from cart');
+        Pricing.__return_view_to_selection();
+    },
+
+    __return_view_to_selection : function() {
+        if (!ProductSlot.cart.length) {
+            wizform.steps("setStep", 1);
+        }
     }
 
 };

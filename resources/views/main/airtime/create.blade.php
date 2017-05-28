@@ -335,7 +335,7 @@
                     transitionEffect: "slideLeft",
                     onInit: function() {
 //
-                        var wizform = $(this);
+                        wizform = $(this); //set this to a global var
                         var finishButton = wizform.find('a[href="#finish"]');
                         finishButton.parent().addClass('disabled');
 
@@ -356,16 +356,17 @@
                         form.validate().settings.ignore = ":disabled,:hidden";
 
                         if(newIndex == 1) {
-//                            AirtimeViewModel.slot_start_date("225335");
-//                            console.log('wjhbfgkjwge');
                             AirtimeViewModel.allowEmptyCart(true);
                         }
 
                         if(newIndex == 2) {
-                            if(!ProductSlot.cart.length) {
-                                wizform.steps("setStep", currentIndex);
-                                alert('Your cart is empty!! Please select a product');
-                                return false;
+                            if(currentIndex == 1) {
+                                if(!ProductSlot.cart.length) {
+//                                wizform.steps("setStep", currentIndex);
+                                    swal('Oops...', "Your cart is empty!!! Please select a product", 'error');
+                                    console.log(event);
+                                    return false;
+                                }
                             }
                             Pricing.init();
                             AirtimeViewModel.allowEmptyCart(false);
