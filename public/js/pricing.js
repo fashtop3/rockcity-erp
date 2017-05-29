@@ -113,12 +113,17 @@ var Pricing = {
 
     __emptyCart: function() {
         ProductSlot.cart = [];
-        Pricing._display_cart_item(AirtimeViewModel);
+        $('input.added-to-cart').remove();
+        Pricing._display_cart_item();
         AirtimeViewModel.allowEmptyCart(false);
         Pricing.__return_view_to_selection();
     },
 
     deleteSubscription: function(subIndex, itemObj) {
+        var subToDel = ProductSlot.cart[ProductSlot.cart.indexOf(itemObj)].subscriptions[subIndex];
+        if(subToDel.file_id != null) {
+            $('input#'+subToDel.file_id).remove();
+        }
         ProductSlot.cart[ProductSlot.cart.indexOf(itemObj)].subscriptions.splice(subIndex, 1);
         if(ProductSlot.cart[ProductSlot.cart.indexOf(itemObj)].subscriptions.length == 0) {
             ProductSlot.cart.splice(ProductSlot.cart.indexOf(itemObj), 1);

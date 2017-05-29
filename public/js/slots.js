@@ -154,7 +154,7 @@ var ProductSlot = {
                 $bulkPanel.hide();
                 ProductSlot.__config_file_inputs('slot');
                 $slotPanel.show();
-                console.log(ProductSlot.slot_file_id);
+                console.log(ProductSlot.file_id);
                 $('select#slots').trigger('change');
                 //return;
             }
@@ -162,7 +162,7 @@ var ProductSlot = {
                 $slotPanel.hide();
                 ProductSlot.__config_file_inputs('bulk');
                 $bulkPanel.show();
-                console.log(ProductSlot.bulk_file_id);
+                console.log(ProductSlot.file_id);
                 $('select#bulks').trigger('change');
                 //return;
             }
@@ -646,7 +646,7 @@ var ProductSlot = {
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
             //url: '//jquery-file-upload.appspot.com/',
-            fileInput: $('input.slot-file-input'),
+            fileInput: $('input.file-input-upload'),
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             replaceFileInput: false,
             maxFileSize: 20000000,// 20MB
@@ -662,8 +662,8 @@ var ProductSlot = {
     },
 
     __config_file_inputs: function(str) {
-        var vName = str+'_file_';
-        ProductSlot[vName+'id'] = vName+ProductSlot._makeid();
+        var idName = str+'_file_id';
+        ProductSlot[idName]  = ProductSlot._makeid();
 
         $('input.'+str+'-file-input').each(function(key) {
             if($(this).val() == '' || $(this).val() == null) {
@@ -680,10 +680,11 @@ var ProductSlot = {
             }
         });
 
-        $('<input class="form-control '+str+'-file-input" type="file"/>')
-            .attr('name', ProductSlot[vName+'_id'])
-            .attr('id', ProductSlot[vName+'_id'])
-            .insertBefore($('div#'+str+'-attachment span#'+str+'-input-group-btn'));
+        var fileElem = $('<input class="form-control '+str+'-file-input file-input-upload" type="file"/>')
+            .attr('name', ProductSlot[idName])
+            .attr('id', ProductSlot[idName]);
+        fileElem.insertBefore($('div#'+str+'-attachment span#'+str+'-input-group-btn'));
+        //console.log(fileElem);
 
         //initialize file-upload plugin
         ProductSlot.__init_fileupload();
@@ -691,11 +692,6 @@ var ProductSlot = {
 
     __add_slot: function(){
         $('#add-slot-button').click(function () {
-           //collect all item into cart object array
-           // if(typeof ProductSlot.cart['index_'+ProductSlot._product_index] == 'undefined') {
-           //     ProductSlot.cart['index_'+ProductSlot._product_index] = [];
-           // }
-            //var cart_item = ProductSlot.cart['index_'+ProductSlot._product_index];
 
             var duration = null;
             if(ProductSlot._$duration.is(':visible')) {
@@ -705,14 +701,14 @@ var ProductSlot = {
             var slot_file_id = null;
 
             if(ProductSlot.slot_file_id != null || ProductSlot.slot_file_id != '') {
+                console.log('not empty file', ProductSlot.slot_file_id);
                 var fileInputElem = $('input#'+ProductSlot.slot_file_id);
                 if(!(fileInputElem.val() == '' || fileInputElem.val() == null)) {
                     fileInputElem.addClass('added-to-cart');
-                    fileInputElem.hide();
+                    //fileInputElem.hide();
                     slot_file_id = ProductSlot.slot_file_id;
                 }
             }
-
 
             //var subscription = {
             //slotModel.product = ProductSlot._$p_selected.id;
@@ -721,7 +717,7 @@ var ProductSlot = {
             slotModel.product = ProductSlot._$p_selected.id;
             slotModel.duration = duration;
             slotModel.slots = ProductSlot._$slots.val();
-            slotModel.slot_file_id =  slot_file_id;
+            slotModel.file_id =  slot_file_id;
             slotModel.prog_start = ProductSlot.times.start.toLocaleTimeString();
             slotModel.prog_end = ProductSlot.times.end.toLocaleTimeString();
             //slotModel.slot_start_date = $('#slot_start_date').data("DateTimePicker").date();
@@ -732,17 +728,14 @@ var ProductSlot = {
 
             //ProductSlot.cart['index_'+ProductSlot._product_index].push(slotModel);
             ProductSlot.__add_to_cart(slotModel);
-            //console.log(ProductSlot.cart['index_'+ProductSlot._product_index]);
-            console.log(ProductSlot.cart);
 
             ProductSlot.__refreshModels(); //ProductSlot._slot_schedule = [];// reset
 
-            //$.removeCookie('cart', { path: '/' });
-            //$.cookie('cart', JSON.stringify(ProductSlot.cart), { expires: 7, path: '/' });
-            //ProductSlot._$refresh_slot_button.trigger('click');
             ProductSlot._$period.val('premium').change();
             Pricing._display_cart_item(AirtimeViewModel);
             AirtimeViewModel.allowEmptyCart(true);
+
+            console.log(ProductSlot.cart);
         });
     },
 
@@ -750,10 +743,6 @@ var ProductSlot = {
         $('#add-bulk-button').click(function () {
             //collect all item into cart object array
 
-            //if(typeof ProductSlot.cart['index_'+ProductSlot._product_index] == 'undefined') {
-            //    ProductSlot.cart['index_'+ProductSlot._product_index] = [];
-            //}
-            //var cart_item = ProductSlot.cart['index_'+ProductSlot._product_index];
 
             var duration = null;
             if(ProductSlot._$duration.is(':visible')) {
@@ -770,13 +759,12 @@ var ProductSlot = {
                 }
             }
 
-
             bulkModel.product_index = ProductSlot._product_index;
             bulkModel.product = ProductSlot._$p_selected.id;
             //bulkModel.period = ProductSlot._$period.val();
             bulkModel.duration = duration;
             //bulkModel.bulks = ProductSlot._$bulks.val();
-            bulkModel.bulk_file_id = bulk_file_id;
+            bulkModel.file_id = bulk_file_id;
             bulkModel.prog_start = ProductSlot.times.start.toLocaleTimeString();
             bulkModel.prog_end = ProductSlot.times.end.toLocaleTimeString();
             //bulkModel.bulk_start_date = $('#bulk_start_date').data("DateTimePicker").date();

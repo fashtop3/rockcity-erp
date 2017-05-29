@@ -19,7 +19,7 @@
                                data-toggle="tooltip" data-placement="top" title="" data-original-title="Add your tips here">Product
                             <abbr class="text-danger" title="required">*</abbr>
                         </label>
-                        <select id="product-data-select" name="product_id" class="form-control data-select2">
+                        <select id="product-data-select" class="form-control data-select2">
                             <option></option>
                             @foreach($products as $product)
                                 <option data-index="{{$loop->index}}"
@@ -38,7 +38,7 @@
                                        data-toggle="tooltip" data-placement="top" title="" data-original-title="Add your tips here">Period
                                     <abbr class="text-danger" title="required">*</abbr>
                                 </label>
-                                <select name="period" id="period" class="form-control" required>
+                                <select id="period" class="form-control" required>
                                     <option value="premium">Premium</option>
                                     <option value="regular">Regular</option>
                                 </select>
@@ -50,7 +50,7 @@
                                                                                            title="required">*</abbr></label>
                                 <!--Todo: add required if selected product is timeable -->
                                 <!--Todo: disable if no_slots > 0) || (form.broadcast > 0 -->
-                                <select name="price" id="duration" class="form-control" required>
+                                <select id="duration" class="form-control" required>
                                 </select>
                                 <span class="help-block">Please select a duration. </span>
                             </div>
@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <div class="pull-right">
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" style="width:150px;" name="price" id="price"
+                                <input type="text" class="form-control" style="width:150px;" id="price"
                                        disabled/>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                     <div class="col-sm-6">
                         <label for="slots" class="control-label">Slot(s)</label>
                         <p class="input-group">
-                            <select name="slots" id="slots"
+                            <select id="slots"
                                     class="form-control">
                                 @for($i = 1; $i<=500; $i++)
                                     <option value="{{$i}}">{{$i}}</option>
@@ -125,10 +125,10 @@
                         <label for="duration" class="control-label">Date<abbr class="text-danger"
                                                                               title="required">*</abbr></label>
                         <div class="input-group input-daterange">
-                            <input type="text" placeholder="start date" id="slot_start_date" name="slot_start_date"
+                            <input type="text" placeholder="start date" id="slot_start_date"
                                    class="form-control">
                             <div class="input-group-addon">to</div>
-                            <input type="text" placeholder="end date" id="slot_end_date" name="slot_end_date"
+                            <input type="text" placeholder="end date" id="slot_end_date"
                                    class="form-control">
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                     <div class="form-group">
                         <div class="col-md-3 col-xs-3">
                             <p class="input-group" id="fix_date">
-                                <input type="text" id="fix_date_input" placeholder="Slot date" name="fix_date"
+                                <input type="text" id="fix_date_input" placeholder="Slot date"
                                        class="form-control"/>
                                           <span class="input-group-addon">
                                                  <em class="fa fa-calendar"></em>
@@ -173,7 +173,7 @@
                         </div>
                         <div class="col-md-4 col-xs-4">
                             <p class="input-group" id="fix_time">
-                                <input type="text" id="fix_time_input" placeholder="Slot time" name="fix_time" class="form-control"/>
+                                <input type="text" id="fix_time_input" placeholder="Slot time" class="form-control"/>
                                           <span class="input-group-addon">
                                               <em class="icon-clock"></em>
                                           </span>
@@ -245,10 +245,11 @@
 
                 <!-- display price-->
                 <div class="form-group">
+                    {{--<input type="file" name="test" />--}}
                     <div class="pull-right col-md-3">
                         <div class="input-group m-b">
                             <span class="input-group-addon">NGN</span>
-                            <input type="text" readonly="" class="form-control" name="slot_price" id="slot_price">
+                            <input type="text" readonly="" class="form-control" id="slot_price">
                         </div>
                     </div>
                     <div class="clear-fix"></div>
@@ -283,7 +284,7 @@
                         <div class="col-sm-7">
                             <label class="control-label">No. of Broadcasts <abbr class="text-danger" title="required">*</abbr></label>
                             <p class="input-group">
-                                <select class="form-control" name="bulks" id="bulks">
+                                <select class="form-control" id="bulks">
                                     @for($b = 0; $b<1500; $b++)
                                         <option value="{{$b + 501}}">{{$b + 501}}</option>
                                     @endfor
@@ -303,10 +304,10 @@
                             <label for="duration" class="control-label">Date<abbr class="text-danger"
                                                                                   title="required">*</abbr></label>
                             <div class="input-group input-daterange">
-                                <input type="text" placeholder="start date" id="bulk_start_date" name="bulk_start_date"
+                                <input type="text" placeholder="start date" id="bulk_start_date"
                                        class="form-control">
                                 <div class="input-group-addon">to</div>
-                                <input type="text" placeholder="end date" id="bulk_end_date" name="bulk_end_date"
+                                <input type="text" placeholder="end date" id="bulk_end_date"
                                        class="form-control">
                             </div>
                         </div>
@@ -336,7 +337,7 @@
                         <div class="pull-right col-md-3">
                             <div class="input-group m-b">
                                 <span class="input-group-addon">NGN</span>
-                                <input type="text" readonly="" class="form-control" name="bulk_price" id="bulk_price">
+                                <input type="text" readonly="" class="form-control" id="bulk_price">
                             </div>
                         </div>
                         <div class="clear-fix"></div>

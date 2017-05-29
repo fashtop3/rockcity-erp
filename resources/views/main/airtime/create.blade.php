@@ -101,92 +101,14 @@
 
     <div class="row">
         <div class="col-md-12">
-            {{--<div class="panel panel-default">--}}
-                {{--<div class="panel-heading"></div>--}}
-                {{--<div class="panel-body">--}}
-                    {{--<form id="airtime-wizard" method="POST" class="form-horizontal" action="{{ route('') }}" novalidate="novalidate">--}}
-                        {{--<div id="airtime-slides" role="application" class="wizard clearfix">--}}
-                            {{--<div class="steps clearfix"><ul role="tablist">--}}
-                                    {{--<li role="tab" class="first current" aria-disabled="false" aria-selected="true">--}}
-                                        {{--<a id="airtime-slides-t-0" href="#airtime-slides-h-0" aria-controls="airtime-slides-p-0"><span class="current-info audible">current step: </span><span class="number">1.</span> Client--}}
-                                        {{--<br>--}}
-                                        {{--<small>Choose client and marketer.</small>--}}
-                                    {{--</a></li><li role="tab" class="disabled" aria-disabled="true"><a id="airtime-slides-t-1" href="#airtime-slides-h-1" aria-controls="airtime-slides-p-1"><span class="number">2.</span> Products--}}
-                                        {{--<br>--}}
-                                        {{--<small>Add products and slots.</small>--}}
-                                    {{--</a></li><li role="tab" class="disabled" aria-disabled="true"><a id="airtime-slides-t-2" href="#airtime-slides-h-2" aria-controls="airtime-slides-p-2"><span class="number">3.</span> Remarks--}}
-                                        {{--<br>--}}
-                                        {{--<small>Add remarks</small>--}}
-                                    {{--</a></li><li role="tab" class="disabled last" aria-disabled="true"><a id="airtime-slides-t-3" href="#airtime-slides-h-3" aria-controls="airtime-slides-p-3"><span class="number">4.</span> Review--}}
-                                        {{--<br>--}}
-                                        {{--<small>Review and confirm your order.</small>--}}
-                                    {{--</a></li></ul>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="content clearfix">--}}
-                                {{--<section class="wizard-body body " id="airtime-slides-p-0" role="tabpanel" aria-labelledby="airtime-slides-h-0" aria-hidden="false">--}}
-                                    {{--<!-- START panel-->--}}
-                                    {{--<div id="clientPanel" class="panel panel-default">--}}
-                                        {{--<div class="panel-heading">Client Details</div>--}}
-                                        {{--<!-- .panel-wrapper is the element to be collapsed-->--}}
-                                        {{--<div class="panel-wrapper">--}}
-                                            {{--<div class="panel-body">--}}
-                                                {{--<div class="col-xs-12 col-sm-12">--}}
-
-                                                    {{--<div class="form-group">--}}
-                                                        {{--<label class="control-label">Client's Name <abbr class="text-danger" title="required">*</abbr></label>--}}
-
-                                                        {{--<select id="client-data-select" name="client_id" class="form-control data-select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">--}}
-                                                            {{--<option></option>--}}
-                                                            {{--<option value="48">Dj Speaky Media</option>--}}
-                                                            {{--<option value="1">Dynamic drive</option>--}}
-                                                            {{--<option value="53">eheruh</option>--}}
-
-
-
-                                                        {{--</select><span class="select2 select2-container select2-container--bootstrap" dir="ltr" style="width: inherit;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-client-data-select-container"><span class="select2-selection__rendered" id="select2-client-data-select-container" title=""></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>--}}
-                                                    {{--</div>--}}
-
-
-                                                    {{--<div class="form-group">--}}
-                                                        {{--<label class="control-label">Marketer in Charge <abbr class="text-danger" title="required">*</abbr></label>--}}
-
-                                                        {{--<select id="marketer-data-select" name="marketer_id" class="form-control data-select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">--}}
-                                                            {{--<option></option>--}}
-                                                            {{--<option value="1">Software Developer</option>--}}
-                                                            {{--<option value="15">Niran Malaolu</option>--}}
-                                                            {{--<option value="14">Bukky Malaolu</option>--}}
-                                                        {{--</select><span class="select2 select2-container select2-container--bootstrap" dir="ltr" style="width: inherit;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-marketer-data-select-container"><span class="select2-selection__rendered" id="select2-marketer-data-select-container" title=""></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>--}}
-                                                    {{--</div>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                            {{--<!--<div class="panel-footer">Panel Footer</div>-->--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<!-- END panel-->--}}
-                                {{--</section>--}}
-                            {{--</div>--}}
-                            {{--<div class="actions clearfix">--}}
-                                {{--<ul role="menu" aria-label="Pagination">--}}
-                                    {{--<li class="disabled" aria-disabled="true">--}}
-                                        {{--<button class="btn btn-default" type="submit" role="menuitem">Previous</button></li>--}}
-                                    {{--<li aria-hidden="false" aria-disabled="false">--}}
-                                        {{--<button class="btn btn-primary" type="submit" role="menuitem">Next</button>--}}
-                                    {{--</li><li aria-hidden="true" style="display: none;">--}}
-                                        {{--<button class="btn btn-primary" type="submit" role="menuitem">Finish</button></li>--}}
-                                {{--</ul>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</form>--}}
-                {{--</div>--}}
-            {{--</div>--}}
 
             <div class="panel panel-default">
                 <div class="panel-heading"></div>
                 <div class="panel-body">
 
 {{--                    {{ $prog_time }}--}}
-                    <form id="airtime-wizard" class="form-horizontal" action="#" method="POST" enctype="multipart/form-data">
+                    <form id="airtime-wizard" class="form-horizontal" action="{{ route('airtime.create') }}" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
 
                         {{--The name is <span data-bind="text: personName()"></span>--}}
 
@@ -201,7 +123,9 @@
                         <!-- Cart container -->
                         <div id="cart" style="display: none">
                             <div class="cart-item" product-index="">
-                                <input type="hidden" name="item[]" />
+                                <div data-bind="foreach: { data: items, as: 'item' }">
+                                    <input type="hidden" name="items[]" data-bind="value: JSON.stringify(item)" />
+                                </div>
                             </div>
 
                             <div id="base">
@@ -449,7 +373,7 @@
                                                                     <td>
                                                                         <div class="ph">
                                                                             <span class="label label-info pull-right" data-bind="text: period"></span>
-                                                                            <h4 class="media-box-heading">BULK</h4>
+                                                                            <h4 class="media-box-heading">BULK <span data-bind="if: file_id != null"><em class="text-primary fa fa-1x fa-file"></em></span></h4>
                                                                             <div class="text-muted text-inverse">
                                                                                 <small>
                                                                                     <b>Start: </b> <span data-bind="text: bulk_start_date"></span> &nbsp;&nbsp;
@@ -497,7 +421,7 @@
                                                                     <td>
                                                                         <div class="ph">
                                                                             <span class="label label-info pull-right" data-bind="text: period"></span>
-                                                                            <h4 class="media-box-heading">SLOT <small data-bind="if: schedules.length > 0" class="text-muted">(Fixed)</small></h4>
+                                                                            <h4 class="media-box-heading">SLOT <span data-bind="if: file_id != null"><em class="text-primary fa fa-1x fa-file"></em></span> <small data-bind="if: schedules.length > 0" class="text-muted">(Fixed)</small></h4>
                                                                             <div class="text-muted text-inverse">
                                                                                 <small>
                                                                                     <b>Slot date: </b> <span data-bind="text: slot_start_date"></span>
