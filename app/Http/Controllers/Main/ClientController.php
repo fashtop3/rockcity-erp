@@ -139,4 +139,16 @@ class ClientController extends Controller
     {
         //
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adminIndex()
+    {
+        $clients = Client::paginate(100);
+        return view('main.client.index', compact('clients'));
+    }
+
 }

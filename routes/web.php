@@ -64,6 +64,18 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/airtime/{id}/pdf', 'Airtime\GenerateController@topdf')->name('airtime.topdf');
 
     Route::get('/api/promocode/reward', 'Airtime\PromocodeController@getReward');
+
+    Route::group(['prefix'=>'admin'], function() {
+        Route::get('/client', 'Main\ClientController@adminIndex')->name('admin.client');
+
+        Route::get('/people', 'Main\AdminUserController@index')->name('admin.people');
+        Route::get('/people/create', 'Main\AdminUserController@create')->name('admin.people.create');
+        Route::post('/people/create', 'Main\AdminUserController@store')->name('admin.people.create');
+        Route::get('/people/{id}/edit', 'Main\AdminUserController@edit')->name('admin.people.edit');
+        Route::post('/people/{id}/edit', 'Main\AdminUserController@update')->name('admin.people.edit');
+        Route::get('/people/{id}/destroy', 'Main\AdminUserController@destroy')->name('admin.people.destroy');
+    });
+
 });
 
 Auth::routes();

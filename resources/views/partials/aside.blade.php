@@ -202,6 +202,31 @@
                         </li>
                     </ul>
                 </li>
+                <li class=" ">
+                    <a href="#people" title="Records" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>People</span>
+                    </a>
+                    <ul id="people" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">People</li>
+                        <li class=" ">
+                            <a href="{{ route('admin.people') }}" title="View and Search">
+                                <span>View and Search</span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a href="{{ route('admin.people.create') }}" title="Register">
+                                <span>Register</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" ">
+                    <a href="{{ route('admin.client') }}" title="Clients">
+                        <em class="icon-layers"></em>
+                        <span>Clients</span>
+                    </a>
+                </li>
             </ul>
             <!-- END sidebar nav-->
         </nav>

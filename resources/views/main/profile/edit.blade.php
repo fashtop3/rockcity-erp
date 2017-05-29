@@ -123,7 +123,7 @@
                             <div class="form-group has-feedback">
                                 <label class="col-sm-3 control-label">Old Password <abbr class="text-danger" title="Confirm password">*</abbr></label>
                                 <div class="col-sm-8">
-                                    <input placeholder="Enter Old password" name="old_password" ng-pattern="/^[!\$\@a-zA-Z0-9]{6,16}$/" class="form-control ng-untouched ng-valid ng-valid-pattern ng-not-empty ng-dirty ng-valid-parse" type="password">
+                                    <input placeholder="Enter Old password" name="old_password" class="form-control ng-untouched ng-valid ng-valid-pattern ng-not-empty ng-dirty ng-valid-parse" type="password">
                                     <span class="fa fa-lock form-control-feedback text-muted"></span>
                                     {{--<span ng-show="pwdForm.password.$dirty &amp;&amp; pwdForm.password.$error.pattern" class="text-danger ng-hide">Invalid password!.</span>--}}
                                 </div>
