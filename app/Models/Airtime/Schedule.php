@@ -47,11 +47,6 @@ class Schedule extends Model
         return unserialize($promocode);
     }
 
-    public function getCreatedAtAttribute($date)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->toAtomString();
-    }
-
     public function setOrderNo()
     {
         $month = Carbon::now()->format('n');

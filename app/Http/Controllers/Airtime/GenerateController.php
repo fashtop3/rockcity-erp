@@ -190,4 +190,21 @@ class GenerateController extends Controller
     {
         //
     }
+
+    public function topdf($id)
+    {
+        try {
+            $order = Schedule::findOrFail($id);
+        }
+        catch(\Exception $e) {
+
+            return redirect()->route('airtime.orders');
+        }
+
+        return view('main.airtime.pdf')->with(['order' => $order]);//
+
+
+        $pdf = PDF::loadView('pdf.airtime', compact('schedule'));
+        return $pdf->stream('airtime_order.pdf');
+    }
 }

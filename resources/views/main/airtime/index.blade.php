@@ -37,7 +37,7 @@
                         <tr>
                             <td><a href="{{ route('airtime.show', [$order->id]) }}" class="text-info" >{{ $order->order_no }}</a></td>
                             <td>{{ $order->user->lastname }}, {{ $order->user->firstname }}</td>
-                            <td>{{ $order->created_at }}</td>
+                            <td>{{ $order->created_at->toDayDateTimeString() }}</td>
                             <td class="text-center">
                                 @if(!$order->alert->approved)
                                     <label class="label label-info">No</label>
@@ -61,7 +61,7 @@
                             </td>
                             <td><strong>N{{ number_format($order->grandTotal, 2) }}</strong></td>
                             <td>
-                                <a href="/pdf/{{$order->id}}/airtime" target="_blank" class="btn btn-success btn-sm" ><em class="fa fa-file-pdf-o fa-sm"></em></a>
+                                <a href="{{ route('airtime.topdf', [$order->id]) }}" target="_blank" class="btn btn-success btn-sm" ><em class="fa fa-file-pdf-o fa-sm"></em></a>
                             </td>
                         </tr>
                         @endforeach

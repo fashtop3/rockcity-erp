@@ -61,6 +61,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/airtime/orders/{id}', 'Airtime\GenerateController@show')->name('airtime.show');
     Route::get('/airtime/create', 'Airtime\GenerateController@create')->name('airtime.create');
     Route::post('/airtime/create', 'Airtime\GenerateController@store')->name('airtime.create');
+    Route::get('/airtime/{id}/pdf', 'Airtime\GenerateController@topdf')->name('airtime.topdf');
 
     Route::get('/api/promocode/reward', 'Airtime\PromocodeController@getReward');
 });
