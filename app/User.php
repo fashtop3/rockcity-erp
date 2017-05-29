@@ -51,4 +51,14 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
 
         return $role->users;
     }
+
+    /**
+     * returns all airtime generated buy the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function schedules()
+    {
+        return $this->hasMany('App\Models\Airtime\Schedule');
+    }
 }
