@@ -66,7 +66,7 @@ var Pricing = {
             }).done(function(response) {
                 Pricing.discount = response.data;
                 Pricing.promocode.discount = code;
-                $(this).removeClass('has-error');
+                $(this).parent().removeClass('has-error');
                 $( this).next().hide();
             }).fail(function() {
                 Pricing.discount = 0;
