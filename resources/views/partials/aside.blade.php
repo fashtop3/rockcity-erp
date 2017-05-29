@@ -82,7 +82,7 @@
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('airtime.orders') }}" title="Horizontal">
                                 <span>View Orders</span>
                             </a>
                         </li>

@@ -20,7 +20,7 @@ class ScheduleProduct extends Model
 
     public function product()
     {
-//        return $this->belongsTo('App\Models\Airtime\Product');
+        return $this->belongsTo('App\Models\Airtime\Product');
     }
 
     public function setSubscriptionsAttribute($subscriptions) {
@@ -28,6 +28,6 @@ class ScheduleProduct extends Model
     }
 
     public function getSubscriptionsAttribute($subscriptions) {
-        return unserialize($subscriptions);
+        return collect(unserialize($subscriptions));
     }
 }

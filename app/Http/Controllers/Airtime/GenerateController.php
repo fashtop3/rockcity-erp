@@ -24,9 +24,32 @@ class GenerateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+
+        if($request->get('min') && $request->get('max')) {
+
+            $orders = auth()->user()->schedules()
+                ->latest()
+                ->search(Carbon::parse($request->get('min'))->toDateTimeString(), Carbon::parse($request->get('max'))->toDateTimeString())
+                ->currentUser()
+                ->with('user')
+                ->with('client')
+                ->with('alert')
+                ->paginate(100);
+        }
+        else {
+            $orders = auth()->user()->schedules()
+                ->currentUser()
+                ->with('user')
+                ->with('client')
+                ->with('alert')
+                ->paginate(100);
+        }
+
+
+        return view('main.airtime.index')->with(['orders' => $orders]);//
     }
 
     /**
@@ -122,7 +145,16 @@ class GenerateController extends Controller
      */
     public function show($id)
     {
-        //
+
+        try {
+            $order = Schedule::findOrFail($id);
+        }
+        catch(\Exception $e) {
+
+            return redirect()->route('airtime.orders');
+        }
+
+        return view('main.airtime.show')->with(['order' => $order]);//
     }
 
     /**
