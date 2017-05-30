@@ -93,4 +93,12 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     public function targets(){
         return $this->hasMany('App\Models\Admin\Target');
     }
+
+    public function myTargets(){
+        return $this->hasMany('App\Models\Admin\Target', 'marketer');
+    }
+
+    public function reports(){
+        return $this->hasMany('App\Models\Report\Report');
+    }
 }

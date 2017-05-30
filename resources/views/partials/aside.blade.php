@@ -100,12 +100,12 @@
                     <ul id="report" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Staff's Report</li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('report.create') }}" title="Horizontal">
                                 <span>Add new</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('report') }}" title="Horizontal">
                                 <span>View</span>
                             </a>
                         </li>

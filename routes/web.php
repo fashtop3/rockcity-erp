@@ -65,6 +65,15 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
 
     Route::get('/api/promocode/reward', 'Airtime\PromocodeController@getReward');
 
+    //report
+    Route::get('/report', 'Main\ReportController@index')->name('report');
+    Route::get('/report/create', 'Main\ReportController@create')->name('report.create');
+    Route::post('/report/create', 'Main\ReportController@store')->name('report.create');
+
+
+    /*
+     * Admin routes
+     */
     Route::group(['prefix'=>'admin'], function() {
         Route::get('/client', 'Main\ClientController@adminIndex')->name('admin.client');
 
