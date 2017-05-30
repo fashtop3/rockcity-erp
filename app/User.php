@@ -85,4 +85,8 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     {
         return $this->hasMany('App\Models\Airtime\Schedule');
     }
+
+    public function vehicles(){
+        return $this->hasMany('App\Models\Admin\Vehicle');
+    }
 }

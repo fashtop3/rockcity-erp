@@ -68,12 +68,21 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::group(['prefix'=>'admin'], function() {
         Route::get('/client', 'Main\ClientController@adminIndex')->name('admin.client');
 
+        //people route
         Route::get('/people', 'Main\AdminUserController@index')->name('admin.people');
         Route::get('/people/create', 'Main\AdminUserController@create')->name('admin.people.create');
         Route::post('/people/create', 'Main\AdminUserController@store')->name('admin.people.create');
         Route::get('/people/{id}/edit', 'Main\AdminUserController@edit')->name('admin.people.edit');
         Route::post('/people/{id}/edit', 'Main\AdminUserController@update')->name('admin.people.edit');
         Route::get('/people/{id}/delete', 'Main\AdminUserController@destroy')->name('admin.people.destroy');
+
+        //vehicle route
+        Route::get('/vehicle', 'RCAdmin\VehicleController@index')->name('admin.vehicle');
+        Route::get('/vehicle/create', 'RCAdmin\VehicleController@create')->name('admin.vehicle.create');
+        Route::post('/vehicle/create', 'RCAdmin\VehicleController@store')->name('admin.vehicle.create');
+        Route::get('/vehicle/{id}/edit', 'RCAdmin\VehicleController@edit')->name('admin.vehicle.edit');
+        Route::post('/vehicle/{id}/edit', 'RCAdmin\VehicleController@update')->name('admin.vehicle.edit');
+        Route::get('/vehicle/{id}/delete', 'RCAdmin\VehicleController@destroy')->name('admin.vehicle.destroy');
     });
 
 });

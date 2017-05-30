@@ -9,8 +9,14 @@
 
 @section('section')
     <h3>
-        People
+        Vehicle
     </h3>
+
+    <div>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('admin.vehicle.create') }}">Add Vehicle</a></li>
+        </ol>
+    </div>
 
     <div class="row">
         <div class="col-xs-12 col-md-12">
@@ -37,25 +43,25 @@
                     <table id="users-table" class="table table-striped table-hover">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Status</th>
-                            <th>Created</th>
+                            <th>Vehicle</th>
+                            <th>Registration No.</th>
+                            <th>Engine No.</th>
+                            <th>Colour</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($users as $user)
+                        @foreach($vehicles as $vehicle)
                         <tr>
-                            <td>{{ strtoupper($user->lastname). ', '. $user->firstname }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td><span class="text-{{ $user->status == 0? 'success':'danger' }}">{{ $user->status == 0? 'Active':'Blocked' }}</span></td>
-                            <td>{{ $user->created_at->toDayDateTimeString() }}</td>
+                            <td>{{ $vehicle->name }}</td>
+                            <td>{{ $vehicle->reg }}</td>
+                            <td>{{ $vehicle->eng  }}</td>
+                            <td>{{ $vehicle->colour }}</td>
                             <td>
-                                <a href="{{ route('admin.people.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-warning">
+                                <a href="{{ route('admin.vehicle.edit', ['id' => $vehicle->id]) }}" class="btn btn-sm btn-warning">
                                     <em class="fa fa-edit"></em>
                                 </a>
-                                <a href="{{ route('admin.people.destroy', ['id' => $user->id]) }}" type="button" class="btn btn-sm btn-danger delete-user">
+                                <a href="{{ route('admin.vehicle.destroy', ['id' => $vehicle->id]) }}" type="button" class="btn btn-sm btn-danger delete-vehicle">
                                     <em class="fa fa-trash-o"></em>
                                 </a>
                             </td>
@@ -64,7 +70,7 @@
                         </tbody>
                     </table>
 
-                    {{ $users->links() }}
+                    {{ $vehicles->links() }}
                 </div>
             </div>
         </div>
@@ -84,7 +90,7 @@
     <script>
 
         $(function() {
-            $('body').on('click', 'a.delete-user', function() {
+            $('body').on('click', 'a.delete-vehicle', function() {
                 var ret = false;
                 var self = $(this);
                 swal({

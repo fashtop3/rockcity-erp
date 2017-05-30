@@ -203,6 +203,25 @@
                     </ul>
                 </li>
                 <li class=" ">
+                    <a href="#vehicle" title="Vehicle" data-toggle="collapse">
+                        <em class="icon-layers"></em>
+                        <span>Vehicle</span>
+                    </a>
+                    <ul id="vehicle" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">People</li>
+                        <li class=" ">
+                            <a href="{{ route('admin.vehicle') }}" title="Manage">
+                                <span>Manage</span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a href="{{ route('admin.vehicle.create') }}" title="create">
+                                <span>Create</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" ">
                     <a href="#people" title="Records" data-toggle="collapse">
                         <em class="icon-layers"></em>
                         <span>People</span>
