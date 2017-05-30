@@ -83,6 +83,14 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
         Route::get('/vehicle/{id}/edit', 'RCAdmin\VehicleController@edit')->name('admin.vehicle.edit');
         Route::post('/vehicle/{id}/edit', 'RCAdmin\VehicleController@update')->name('admin.vehicle.edit');
         Route::get('/vehicle/{id}/delete', 'RCAdmin\VehicleController@destroy')->name('admin.vehicle.destroy');
+
+        //target route
+        Route::get('/target', 'RCAdmin\TargetController@index')->name('admin.target');
+        Route::get('/target/create', 'RCAdmin\TargetController@create')->name('admin.target.create');
+        Route::post('/target/create', 'RCAdmin\TargetController@store')->name('admin.target.create');
+        Route::get('/target/{id}/edit', 'RCAdmin\TargetController@edit')->name('admin.target.edit');
+        Route::post('/target/{id}/edit', 'RCAdmin\TargetController@update')->name('admin.target.edit');
+        Route::get('/target/{id}/delete', 'RCAdmin\TargetController@destroy')->name('admin.target.destroy');
     });
 
 });

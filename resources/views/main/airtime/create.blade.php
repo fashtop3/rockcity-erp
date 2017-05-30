@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('vendor-head')
-        <!-- SELECT2-->
+<!-- SELECT2-->
 <link rel="stylesheet" href="/vendor/select2/dist/css/select2.css">
 <link rel="stylesheet" href="/vendor/select2-bootstrap-theme/dist/select2-bootstrap.css">
 <link rel="stylesheet" href="/css/jquery-ui.min.css">

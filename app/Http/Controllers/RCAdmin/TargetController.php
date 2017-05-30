@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\RCAdmin;
 
-use App\Http\Requests\VehicleStoreRequest;
-use App\Http\Requests\VehicleUpdateRequest;
-use App\Models\Admin\Vehicle;
+use App\Http\Requests\TargetStoreRequest;
+use App\Models\Admin\Target;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class VehicleController extends Controller
+class TargetController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('role:admin|executive.director|administration.dept',
             ['only' => ['store', 'update', 'destroy']]);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +24,9 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicle::orderBy('id', 'desc')->paginate(100);
+        $targets = Target::orderBy('id', 'desc')->paginate(100);
 
-        return view('main.vehicle.index', compact('vehicles'));
+        return view('main.target.index', compact('targets'));
     }
 
     /**
@@ -37,22 +36,22 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        return view('main.vehicle.create');
+        return view('main.target.create');
     }
 
 
     /**
-     * @param VehicleStoreRequest $request
+     * @param TargetStoreRequest $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function store(VehicleStoreRequest $request)
+    public function store(TargetStoreRequest $request)
     {
         try{
-            auth()->user()->vehicles()->create($request->all());
-            Session::flash('success', 'Vehicle added successfully');
+            auth()->user()->targets()->create($request->all());
+            Session::flash('success', 'Target added successfully');
         }
         catch(\Exception $e) {
-            Session::flash('error', 'Failed to add new vehicle');
+            Session::flash('error', 'Failed to add new target');
             return redirect()->back()->withInput();
         }
 
@@ -79,51 +78,56 @@ class VehicleController extends Controller
     public function edit($id)
     {
         try{
-            $vehicle = Vehicle::findOrFail($id);
+            $target = Target::findOrFail($id);
         }
         catch(\Exception $e){
-            Session::flash('error', 'Vehicle not found');
+            Session::flash('error', 'Target not found');
             return redirect()->back();
         }
 
-        return view('main.vehicle.edit', compact('vehicle'));
+        return view('main.target.edit', compact('target'));
     }
 
 
     /**
-     * @param VehicleUpdateRequest $request
+     * @param TargetStoreRequest $request
      * @param $id
      * @return $this
      */
-    public function update(VehicleUpdateRequest $request, $id)
+    public function update(TargetStoreRequest $request, $id)
     {
         try{
-            $vehicle = Vehicle::findOrFail($id);
+            $target = Target::findOrFail($id);
 
-            $vehicle->update($request->all());
+            $target->update($request->all());
 
-            Session::flash('success', "Vehicle <strong>{$vehicle->name}->{$vehicle->reg}</strong> updated");
+            Session::flash('success', "Target updated");
         }
         catch(\Exception $e) {
 //            dd($e->getMessage());
-            Session::flash('error', "Vehicle update failed!");
+            Session::flash('error', "Target update failed!");
         }
 
         return redirect()->back()->withInput();
     }
 
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
-//        DB::beginTransaction();
+        DB::beginTransaction();
         try{
-            $vehicle = Vehicle::findOrFail($id);
+            $target = Target::findOrFail($id);
 
-            $vehicle->delete();
-            Session::flash('success', 'Vehicle deleted');
+            $target->delete();
+            Session::flash('success', 'Target deleted');
         }
         catch(\Exception $e) {
-            Session::flash('error', 'Vehicle not found');
+            Session::flash('error', 'Target not found');
         }
 
         return redirect()->back();

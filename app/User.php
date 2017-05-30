@@ -89,4 +89,8 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     public function vehicles(){
         return $this->hasMany('App\Models\Admin\Vehicle');
     }
+
+    public function targets(){
+        return $this->hasMany('App\Models\Admin\Target');
+    }
 }
