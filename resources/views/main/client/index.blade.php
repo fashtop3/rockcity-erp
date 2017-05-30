@@ -44,7 +44,7 @@
                                 <a href="{{ route('client.edit', ['id' => $client->id]) }}" class="btn btn-sm btn-warning">
                                     <em class="fa fa-edit"></em>
                                 </a>
-                                <a href="{{ route('client.destroy', ['id' => $client->id]) }}" type="button" onclick="return confirm('Are you sure you want to delete this client')" class="btn btn-sm btn-danger">
+                                <a href="{{ route('client.destroy', ['id' => $client->id]) }}" type="button" class="btn btn-sm btn-danger delete-client">
                                     <em class="fa fa-trash-o"></em>
                                 </a>
                             </td>
@@ -71,6 +71,31 @@
     {{--<script src="/app/js/demo/demo-datatable.js"></script>--}}
 
     <script>
+        $(function() {
+            $('body').on('click', 'a.delete-client', function() {
+                var ret = false;
+                var self = $(this);
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(function () {
+//                    swal(
+//                            'Deleted!',
+//                            'Your file has been deleted.',
+//                            'success'
+//                    );
+
+                    window.location.href = self.attr('href');
+                });
+
+                return false;
+            });
+        });
 //        $(function () {
 //            $('#users-table').dataTable({
 //                serverSide: true,

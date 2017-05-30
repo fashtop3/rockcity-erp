@@ -73,7 +73,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
         Route::post('/people/create', 'Main\AdminUserController@store')->name('admin.people.create');
         Route::get('/people/{id}/edit', 'Main\AdminUserController@edit')->name('admin.people.edit');
         Route::post('/people/{id}/edit', 'Main\AdminUserController@update')->name('admin.people.edit');
-        Route::get('/people/{id}/destroy', 'Main\AdminUserController@destroy')->name('admin.people.destroy');
+        Route::get('/people/{id}/delete', 'Main\AdminUserController@destroy')->name('admin.people.destroy');
     });
 
 });

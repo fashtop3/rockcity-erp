@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Client;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -11,7 +12,7 @@ use Bican\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
 class User extends Authenticatable implements HasRoleAndPermissionContract
 {
-    use Notifiable, HasRoleAndPermission;
+    use Notifiable, HasRoleAndPermission, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +20,7 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password', 'upload'
+        'firstname', 'lastname', 'email', 'password', 'upload', 'status'
     ];
 
     const Contact_Developer = 'fashtop3@gmail.com';
@@ -51,6 +52,29 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
 
         return $role->users;
     }
+
+    /**
+     * Relationship build
+     * a user belongsTo or say a user is having many roles in english terms
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role')->withTimestamps();
+    }
+
+    /**
+     * Relationship build
+     * a user belongsTo or say a user is having many permissions in english terms
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Permission')->withTimestamps();
+    }
+
 
     /**
      * returns all airtime generated buy the user

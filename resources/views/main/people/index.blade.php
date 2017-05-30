@@ -17,6 +17,21 @@
         <div class="panel panel-default">
             <div class="panel-body">
 
+                @if (Session::has('success'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{{ session('success') }}</li>
+                        </ul>
+                    </div>
+                @endif
+
+                @if (Session::has('error'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{{ session('error') }}</li>
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="table-responsive">
                     <table id="users-table" class="table table-striped table-hover">
@@ -40,7 +55,7 @@
                                 <a href="{{ route('admin.people.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-warning">
                                     <em class="fa fa-edit"></em>
                                 </a>
-                                <a href="{{ route('admin.people.destroy', ['id' => $user->id]) }}" type="button" onclick="return confirm('Are you sure you want to delete this client')" class="btn btn-sm btn-danger">
+                                <a href="{{ route('admin.people.destroy', ['id' => $user->id]) }}" type="button" class="btn btn-sm btn-danger delete-user">
                                     <em class="fa fa-trash-o"></em>
                                 </a>
                             </td>
@@ -67,6 +82,32 @@
     {{--<script src="/app/js/demo/demo-datatable.js"></script>--}}
 
     <script>
+
+        $(function() {
+            $('body').on('click', 'a.delete-user', function() {
+                var ret = false;
+                var self = $(this);
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(function () {
+//                    swal(
+//                            'Deleted!',
+//                            'Your file has been deleted.',
+//                            'success'
+//                    );
+
+                    window.location.href = self.attr('href');
+                });
+
+                return false;
+            });
+        });
 //        $(function () {
 //            $('#users-table').dataTable({
 //                serverSide: true,
@@ -86,5 +127,7 @@
 //            });
 //
 //        });
+
+
     </script>
 @endsection
