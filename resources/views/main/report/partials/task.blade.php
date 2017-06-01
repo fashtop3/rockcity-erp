@@ -7,7 +7,7 @@
 
         <div class="col-md-11">
             <!-- Wysiswyg editor-->
-            <div data-role="editor-toolbar" data-target=".editor" class="btn-toolbar btn-editor">
+            <div data-role="editor-toolbar1" data-target="#task-editor" class="btn-toolbar btn-editor">
                 <div class="btn-group dropdown">
                     <a data-toggle="dropdown" title="Font" class="btn btn-default">
                         <em class="fa fa-font"></em><b class="caret"></b>
@@ -101,8 +101,8 @@
                     </a>
                 </div>
             </div>
-            <textarea id="msg" hidden name="msg" cols="30" rows="10"></textarea>
-            <div id="editorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;"></div></div>
+            <textarea id="taskHtmlText" hidden name="task" cols="30" rows="10"></textarea>
+            <div id="taskHtmlTextEditorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;"></div></div>
         </div>
 
         <div class="form-group">
@@ -114,7 +114,7 @@
 
             <div class="col-sm-10">
                 <label class="radio-inline">
-                    <input type="radio" required name="completed" value="1"> Yes
+                    <input type="radio" required name="completed" checked value="1"> Yes
                 </label>
                 <label class="radio-inline">
                     <input type="radio" required name="completed" value="0"> No
@@ -132,7 +132,7 @@
                     <input type="radio" required name="grade"  value="A"> A
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" required name="grade" value="B"> B
+                    <input type="radio" required name="grade" checked value="B"> B
                 </label>
                 <label class="radio-inline">
                     <input type="radio" required name="grade" value="C"> C

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Main;
 
+use App\Http\Requests\ReportStoreRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class ReportController extends Controller
 {
@@ -45,9 +47,51 @@ class ReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReportStoreRequest $request)
     {
-        //
+//        dd($request->file());
+//        dd($request->all());
+
+        $task['htmlText'] = $request->get('task');
+        $task['completed'] = $request->get('completed');
+        $task['grade'] = $request->get('grade');
+
+        $challenge['htmlText'] = $request->get('challenge');
+
+        $remittance['target_id'] = $request->get('target_id');
+        $remittance['client'] = $request->get('client');
+        $remittance['amount'] = $request->get('amount');
+
+        try{
+            $report = auth()->user()->reports()->create([]);
+            if(!empty($task['task'])) {
+                $report->tasks()->create($task);
+            }
+
+            if(!empty($challenge['challenge'])) {
+                $report->challenges()->create($task);
+            }
+
+
+            $report->remittances()->create($remittance);
+
+//            $request->file('uploads')->store('staff/reports');
+            if(count($request->file())) {
+                foreach($request->file('uploads') as $file) {
+                    if($file->isValid()) {
+                        $filename = $file->store('staff/reports');
+                        $report->uploads()->create(['filename' => $filename]);
+                    }
+                }
+            }
+        }
+        catch(\Exception $e) {
+            if($e->getCode() == 23000) {
+                Session::flash('error', 'Integrity constraint violation');
+            }
+        }
+
+        return redirect()->route('report');
     }
 
     /**

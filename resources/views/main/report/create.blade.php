@@ -25,7 +25,7 @@
 
         <div class="panel-body helicopter" >
 
-            <form class="form-horizontal" action="{{ route('admin.target.create') }}" method="post" role="form" name="vehicleForm">
+            <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('report.create') }}" method="post" role="form" name="reportForm">
                 {{ csrf_field() }}
                 <div class="panel-body">
 
@@ -88,7 +88,7 @@
                 <div class="panel-footer text-center">
                     <!--<div class="form-group">-->
                     <!--<div class="col-sm-4 col-sm-offset-2">-->
-                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-primary" id="submit" type="submit">Save</button>
                     <!--</div>-->
                 </div>
             </form>
@@ -112,10 +112,16 @@
             // WYSIWYG
                 // -----------------------------------
 
-            $('.editor').wysiwyg();
+            $('#task-editor').wysiwyg({
+                toolbarSelector: '[data-role=editor-toolbar1]'
+            });
+            $('#challenge-editor').wysiwyg();
 
             $('#submit').click(function(e) {
-                $('#msg').val(($('#editorContent').cleanHtml()));
+                $('#taskHtmlText').val(($('#taskHtmlTextEditorContent').cleanHtml()));
+                $('#challengeHtmlText').val(($('#challengeHtmlTextEditorContent').cleanHtml()));
+
+                return true;
             });
 
             $(".data-select2").select2({

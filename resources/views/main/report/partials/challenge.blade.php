@@ -6,7 +6,7 @@
 
         <div class="col-md-11">
             <!-- Wysiswyg editor-->
-            <div data-role="editor-toolbar" data-target=".editor" class="btn-toolbar btn-editor">
+            <div data-role="editor-toolbar" data-target="#challenge-editor" class="btn-toolbar btn-editor">
                 <div class="btn-group dropdown">
                     <a data-toggle="dropdown" title="Font" class="btn btn-default">
                         <em class="fa fa-font"></em><b class="caret"></b>
@@ -100,8 +100,8 @@
                     </a>
                 </div>
             </div>
-            <textarea id="msg" hidden name="msg" cols="30" rows="10"></textarea>
-            <div id="editorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;"></div></div>
+            <textarea id="challengeHtmlText" hidden name="challenge" cols="30" rows="10"></textarea>
+            <div id="challengeHtmlTextEditorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;"></div></div>
         </div>
 
     </div>
