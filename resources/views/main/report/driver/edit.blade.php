@@ -2,12 +2,12 @@
 
 @section('section')
     <h3>
-        Vehicle
+        Driver's report
     </h3>
 
     <div>
         <ol class="breadcrumb">
-            <li><a href="{{ route('admin.target') }}">Targets</a></li>
+            <li><a href="{{ route('report.driver') }}">Reports</a></li>
             <li>Edit</li>
         </ol>
     </div>
@@ -19,7 +19,7 @@
 
         <div class="panel-body helicopter" >
 
-            <form class="form-horizontal" action="{{ route('admin.target.edit', [$target->id]) }}" method="post" role="form" name="vehicleForm">
+            <form class="form-horizontal" action="{{ route('report.driver.edit', [$report->id]) }}" method="post" role="form" name="vehicleForm">
                 {{ csrf_field() }}
                 <div class="panel-body">
 
@@ -49,7 +49,7 @@
                         </div>
                     @endif
 
-                    @include('main.target.partials.form')
+                    @include('main.report.partials.driver')
 
                 </div>
                 <div class="panel-footer text-center">

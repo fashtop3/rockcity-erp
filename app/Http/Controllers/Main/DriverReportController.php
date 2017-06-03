@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Main;
 
+use App\Http\Requests\DriverReportStoreRequest;
+use App\Models\Report\DriverReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class DriverReportController extends Controller
 {
@@ -14,7 +17,9 @@ class DriverReportController extends Controller
      */
     public function index()
     {
-        //
+        $reports = auth()->user()->driver_reports()->paginate(100);
+
+        return view('main.report.driver.index', compact('reports'));
     }
 
     /**
@@ -24,7 +29,7 @@ class DriverReportController extends Controller
      */
     public function create()
     {
-        //
+        return view('main.report.driver.create');
     }
 
     /**
@@ -33,9 +38,19 @@ class DriverReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DriverReportStoreRequest $request)
     {
-        //
+        try{
+
+            auth()->user()->driver_reports()->create($request->all());
+
+            Session::flash('success', 'Report saved');
+        }
+        catch(\Exception $e) {
+            Session::flash('error', 'Error saving report');
+        }
+
+        return redirect()->route('report.driver');
     }
 
     /**
@@ -46,7 +61,13 @@ class DriverReportController extends Controller
      */
     public function show($id)
     {
-        //
+        try{
+            $report = DriverReport::findOrFail($id);
+        } catch(\Exception $e) {
+            Session::flash('error', 'Report not found');
+            return redirect()->route('report.driver');
+        }
+        return view('main.report.driver.edit', compact('report'));
     }
 
     /**

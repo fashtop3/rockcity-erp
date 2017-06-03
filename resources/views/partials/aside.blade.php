@@ -140,12 +140,12 @@
                     <ul id="driver_rep" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Driver's Report</li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('report.driver.create') }}" title="Horizontal">
                                 <span>Add Report</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('report.driver') }}" title="Horizontal">
                                 <span>View</span>
                             </a>
                         </li>

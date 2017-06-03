@@ -14,7 +14,7 @@
 
     <div>
         <ol class="breadcrumb">
-            <li><a href="{{ route('report.staff.create') }}">Add Report</a></li>
+            <li><a href="{{ route('report.driver.create') }}">Add Report</a></li>
         </ol>
     </div>
 
@@ -44,22 +44,29 @@
                         <thead>
                         <tr>
 
-                            <th>Task</th>
-                            <th>Challenge</th>
-                            <th>Remittance</th>
-                            <th>Upload</th>
+                            <th>Vehicle</th>
                             <th>Created</th>
-                            {{--<th></th>--}}
+                            <th>Inspection</th>
+                            <th>Destination</th>
+                            <th>Notes</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($reports as $report)
                         <tr>
-                            <td><a>[{{ $report->tasks->count() }}]Read...</a></td>
-                            <td><a>[{{ $report->challenges->count() }}]Read...</a></td>
-                            <td><a>[{{ $report->remittances->count() }}]Read...</a></td>
-                            <td><a>[{{ $report->uploads->count() }}]Download....</a></td>
+                            <td>{{ $report->vehicle->name }}</td>
                             <td>{{ $report->created_at->toDayDateTimeString() }}</td>
+                            <td>{{ $report->info['time_inspect'] }}</td>
+                            <td>{{ $report->info['destination'] }}</td>
+                            <td>
+                                <a href="{{ route('report.driver.edit', ['id' => $report->id]) }}" class="btn btn-sm btn-warning">
+                                    <em class="fa fa-edit"></em>
+                                </a>
+                                <a href="{{ route('report.driver.destroy', ['id' => $report->id]) }}" type="button" class="btn btn-sm btn-danger delete-report">
+                                    <em class="fa fa-trash-o"></em>
+                                </a>
+                            </td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -85,7 +92,7 @@
     <script>
 
         $(function() {
-            $('body').on('click', 'a.delete-target', function() {
+            $('body').on('click', 'a.delete-report', function() {
                 var ret = false;
                 var self = $(this);
                 swal({

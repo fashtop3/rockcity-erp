@@ -51,7 +51,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/client-data', 'Main\ClientController@data');
     Route::get('/client/{id}/edit', 'Main\ClientController@show')->name('client.edit');
     Route::post('/client/{id}/edit', 'Main\ClientController@update')->name('client.edit');
-    Route::post('/client/{id}/destroy', 'Main\ClientController@show')->name('client.destroy');
+    Route::get('/client/{id}/destroy', 'Main\ClientController@destroy')->name('client.destroy');
 
     Route::get('/client/create', 'Main\ClientController@create')->name('client.create');
     Route::post('/client/create', 'Main\ClientController@store')->name('client.create');
@@ -66,13 +66,16 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/api/promocode/reward', 'Airtime\PromocodeController@getReward');
 
     //report
-    Route::get('/report/staff', 'Main\ReportController@index')->name('report.staff');
-    Route::get('/report/staff/create', 'Main\ReportController@create')->name('report.staff.create');
-    Route::post('/report/staff/create', 'Main\ReportController@store')->name('report.staff.create');
+    Route::get('/report/staff', 'Main\StaffReportController@index')->name('report.staff');
+    Route::get('/report/staff/create', 'Main\StaffReportController@create')->name('report.staff.create');
+    Route::post('/report/staff/create', 'Main\StaffReportController@store')->name('report.staff.create');
 
-    Route::get('/report/driver', 'Main\ReportController@index')->name('driver');
-    Route::get('/report/driver/create', 'Main\ReportController@create')->name('report.driver.create');
-    Route::post('/report/driver/create', 'Main\ReportController@store')->name('report.driver.create');
+    Route::get('/report/driver', 'Main\DriverReportController@index')->name('report.driver');
+    Route::get('/report/driver/create', 'Main\DriverReportController@create')->name('report.driver.create');
+    Route::post('/report/driver/create', 'Main\DriverReportController@store')->name('report.driver.create');
+    Route::get('/report/driver/{id}/edit', 'Main\DriverReportController@show')->name('report.driver.edit');
+    Route::post('/report/driver/{id}/edit', 'Main\DriverReportController@update')->name('report.driver.edit');
+    Route::get('/report/driver/{id}/destroy', 'Main\DriverReportController@destroy')->name('report.driver.destroy');
 
     /*
      * Admin routes
