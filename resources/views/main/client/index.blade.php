@@ -17,6 +17,7 @@
             <div class="panel panel-default">
             <div class="panel-body">
 
+                @include('partials.error')
 
                 <div class="table-responsive">
                     <table id="users-table" class="table table-striped table-hover">

@@ -23,21 +23,8 @@
             <div class="panel panel-default">
             <div class="panel-body">
 
-                @if (Session::has('success'))
-                    <div class="alert alert-success">
-                        <ul>
-                            <li>{{ session('success') }}</li>
-                        </ul>
-                    </div>
-                @endif
+                @include('partials.error')
 
-                @if (Session::has('error'))
-                    <div class="alert alert-danger">
-                        <ul>
-                            <li>{{ session('error') }}</li>
-                        </ul>
-                    </div>
-                @endif
 
                 <div class="table-responsive">
                     <table id="users-table" class="table table-striped table-hover">

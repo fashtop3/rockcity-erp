@@ -137,7 +137,20 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $client = Client::findOrFail($id);
+
+            $client->delete();
+            Session::flash('success', 'Client has been deleted');
+        }
+        catch(\Exception $e) {
+            Session::flash('error', 'Client not found');
+            if($e->getCode() == 403) {
+                Session::flash('error', $e->getMessage());
+            }
+        }
+        return redirect()->back();
     }
 
     /**
