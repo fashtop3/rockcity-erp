@@ -2,52 +2,29 @@
 
 @section('section')
     <h3>
-        Driver's report
+        Assessment
+        <small>Staff assessment portal</small>
     </h3>
 
     <div>
         <ol class="breadcrumb">
-            <li><a href="{{ route('report.driver') }}">Reports</a></li>
+            <li><a href="{{ route('assessment') }}">Records</a></li>
             <li>Edit</li>
         </ol>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <small>update selected target.</small>
+            <small>update selected record.</small>
         </div>
 
         <div class="panel-body helicopter" >
 
-            <form class="form-horizontal" action="{{ route('report.driver.edit', [$report->id]) }}" method="post" role="form" name="vehicleForm">
+            <form class="form-horizontal" action="{{ route('assessment.edit', [$report->id]) }}" method="post" role="form" name="vehicleForm">
                 {{ csrf_field() }}
                 <div class="panel-body">
 
-                    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if (Session::has('success'))
-                        <div class="alert alert-success">
-                            <ul>
-                                <li>{!! session('success') !!}</li>
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if (Session::has('error'))
-                        <div class="alert alert-danger">
-                            <ul>
-                                <li>{{ session('error') }}</li>
-                            </ul>
-                        </div>
-                    @endif
+                    @include('partials.error')
 
                     @include('main.report.partials.driver')
 

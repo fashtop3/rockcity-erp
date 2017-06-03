@@ -171,14 +171,6 @@
                         </fieldset>
 
                     </div>
-
-                    <div class="panel-footer" ng-if="!form.preview">
-                        <div class="pull-right">
-                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
-                            <button class="btn btn-primary" ng-disabled="form.preview" ng-click="submitPreview()" type="button">Save</button>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
                     <!--</form>-->
                 </div>
             </div>
@@ -355,13 +347,6 @@
 
                     </div>
 
-                    <div class="panel-footer" ng-if="!form.preview">
-                        <div class="pull-right">
-                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
-                            <button class="btn btn-primary" ng-click="submitPreview()" type="button" ng-disabled="form.preview">Save</button>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
                     <!--</form>-->
                 </div>
             </div>
@@ -433,13 +418,6 @@
 
                     </div> <!-- End page-body -->
 
-                    <div class="panel-footer" ng-if="!form.preview">
-                        <div class="pull-right">
-                            <!-- ng-disabled="!assessFormPart1.$invalid"-->
-                            <button class="btn btn-primary" ng-click="submitPreview()" ng-disabled="form.preview" type="button">Save</button>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
                     <!--</form>-->
                 </div>
             </div>

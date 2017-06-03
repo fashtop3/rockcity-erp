@@ -84,6 +84,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/assessment/{id}/edit', 'Assessment\AssessmentController@show')->name('assessment.edit');
     Route::post('/assessment/{id}/edit', 'Assessment\AssessmentController@update')->name('assessment.edit');
     Route::get('/assessment/{id}/destroy', 'Assessment\AssessmentController@destroy')->name('assessment.destroy');
+    Route::get('/assessment/{id}/supervise', 'Assessment\AssessmentController@supervise')->name('assessment.supervise');
 
 
     /*

@@ -9,12 +9,12 @@
 
 @section('section')
     <h3>
-        Reports
+        Assessment
+        <small>Staff assessment portal</small>
     </h3>
-
     <div>
         <ol class="breadcrumb">
-            <li><a href="{{ route('report.driver.create') }}">Add Report</a></li>
+            <li><a href="{{ route('assessment.create') }}">Add Record</a></li>
         </ol>
     </div>
 
@@ -31,27 +31,25 @@
                         <thead>
                         <tr>
 
-                            <th>Vehicle</th>
-                            <th>Created</th>
-                            <th>Inspection</th>
-                            <th>Destination</th>
-                            <th>Notes</th>
+                            <th>Date Added</th>
+                            <th>Last Modified</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($reports as $report)
+                        @foreach($assessments as $assessment)
                         <tr>
-                            <td>{{ $report->vehicle->name }}</td>
-                            <td>{{ $report->created_at->toDayDateTimeString() }}</td>
-                            <td>{{ $report->info['time_inspect'] }}</td>
-                            <td>{{ $report->info['destination'] }}</td>
+                            <td><a href="">{{ $assessment->created_at->toDayDateTimeString() }}</a></td>
+                            <td><a href="">{{ $assessment->updated_at->toDayDateTimeString() }}</a></td>
                             <td>
-                                <a href="{{ route('report.driver.edit', ['id' => $report->id]) }}" class="btn btn-sm btn-warning">
+                                <a href="{{ route('assessment.edit', ['id' => $assessment->id]) }}" class="btn btn-sm btn-warning">
                                     <em class="fa fa-edit"></em>
                                 </a>
-                                <a href="{{ route('report.driver.destroy', ['id' => $report->id]) }}" type="button" class="btn btn-sm btn-danger delete-report">
+                                <a href="{{ route('assessment.destroy', ['id' => $assessment->id]) }}" type="button" class="btn btn-sm btn-danger delete-report">
                                     <em class="fa fa-trash-o"></em>
+                                </a>
+                                <a target="_blank" href="{{ route('assessment.supervise', ['id' => $assessment->id]) }}" type="button" class="btn btn-sm btn-danger">
+                                    <em class="fa fa-commenting"></em>
                                 </a>
                             </td>
                         </tr>
@@ -59,7 +57,7 @@
                         </tbody>
                     </table>
 
-                    {{ $reports->links() }}
+                    {{ $assessments->links() }}
                 </div>
             </div>
         </div>

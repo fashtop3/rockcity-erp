@@ -29,11 +29,11 @@ class Assessment extends Model
 
     public function supervisor()
     {
-        return $this->hasOne('App\AssessmentSupervisor');
+        return $this->hasOne('App\Models\Assessment\AssessmentSupervisor');
     }
 
     public function config()
     {
-        return $this->belongsTo('App\AssessmentConfig');
+        return $this->belongsTo('App\Models\Assessment\AssessmentConfig');
     }
 }

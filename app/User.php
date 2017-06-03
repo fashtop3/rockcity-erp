@@ -112,4 +112,14 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     {
         return $this->hasMany('App\Models\Report\DriverReport');
     }
+
+    public function assessments() {
+
+        return $this->hasMany('App\Models\Assessment\Assessment');
+    }
+
+    public function supervise() {
+
+        return $this->hasMany('App\Models\Assessment\AssessmentSupervisor');
+    }
 }

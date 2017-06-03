@@ -3,56 +3,32 @@
 
 @section('section')
     <h3>
-        Reports
+        Assessment
+        <small>Staff assessment portal</small>
     </h3>
 
     <div>
         <ol class="breadcrumb">
-            <li><a href="{{ route('report.driver') }}">Reports</a></li>
-            <li>Add Report</li>
+            <li><a href="{{ route('assessment') }}">Records</a></li>
+            <li>Add Record</li>
         </ol>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <small>Add new Report</small>
+            <small>Add new Record</small>
         </div>
 
         <div class="panel-body helicopter" >
 
-            <form class="form-horizontal" novalidate action="{{ route('report.driver.create') }}" method="post" role="form" name="driverReportForm">
+            <form class="form-horizontal" novalidate action="{{ route('assessment.create') }}" method="post" role="form" name="driverReportForm">
                 {{ csrf_field() }}
                 <div class="panel-body">
 
-                    {{ $errors->has('vehicle_id') }}
+                    @include('partials.error')
 
-                    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
 
-                    @if (Session::has('success'))
-                        <div class="alert alert-success">
-                            <ul>
-                                <li>{{ session('success') }}</li>
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if (Session::has('error'))
-                        <div class="alert alert-danger">
-                            <ul>
-                                <li>{{ session('error') }}</li>
-                            </ul>
-                        </div>
-                    @endif
-
-                    @include('main.report.partials.driver')
+                    @include('main.assessment.partials.form')
 
                 </div>
 

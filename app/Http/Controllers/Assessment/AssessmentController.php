@@ -14,8 +14,8 @@ class AssessmentController extends Controller
      */
     public function index()
     {
-        $assessments =
-        return view('main.assessment.index');
+        $assessments = auth()->user()->assessments()->with('supervisor')->paginate(100);
+        return view('main.assessment.index', compact('assessments'));
     }
 
     /**
@@ -25,7 +25,7 @@ class AssessmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('main.assessment.create');
     }
 
     /**
