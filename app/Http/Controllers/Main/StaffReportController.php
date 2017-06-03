@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers\Main;
 
-use App\Http\Requests\ReportStoreRequest;
+use App\Http\Requests\StaffReportStoreRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
-class ReportController extends Controller
+class StaffReportController extends Controller
 {
-
-    public function __construct()
-    {
-//        $this->middleware('role:staff', ['only' => ['upload', 'store']]);
-//        $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['getReports']]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -43,14 +36,11 @@ class ReportController extends Controller
 
 
     /**
-     * @param ReportStoreRequest $request
+     * @param StaffReportStoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ReportStoreRequest $request)
+    public function store(StaffReportStoreRequest $request)
     {
-//        dd($request->file());
-//        dd($request->all());
-
         $task['htmlText'] = $request->get('task');
         $task['completed'] = $request->get('completed');
         $task['grade'] = $request->get('grade');
