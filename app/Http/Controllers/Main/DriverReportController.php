@@ -6,6 +6,7 @@ use App\Http\Requests\DriverReportStoreRequest;
 use App\Models\Report\DriverReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class DriverReportController extends Controller
@@ -32,11 +33,10 @@ class DriverReportController extends Controller
         return view('main.report.driver.create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param DriverReportStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(DriverReportStoreRequest $request)
     {
@@ -81,16 +81,28 @@ class DriverReportController extends Controller
         //
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param DriverReportStoreRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(DriverReportStoreRequest $request, $id)
     {
-        //
+//        dd($request->all());
+        try {
+            $report = DriverReport::findOrFail($id);
+            $report->update($request->all());
+            Session::flash('success', 'Report updated.');
+        }
+        catch(\Exception $e)
+        {
+//            dd($e->getMessage());
+            Session::flash('error', "Report not found");
+            return redirect()-route('report.driver');
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -101,6 +113,20 @@ class DriverReportController extends Controller
      */
     public function destroy($id)
     {
-        //
+//        DB::beginTransaction();
+        try{
+            $report = DriverReport::findOrFail($id);
+
+            $report->delete();
+            Session::flash('success', 'Report has been deleted');
+        }
+        catch(\Exception $e) {
+            Session::flash('error', 'Report not found');
+            if($e->getCode() == 403) {
+                Session::flash('error', $e->getMessage());
+            }
+        }
+
+        return redirect()->back();
     }
 }

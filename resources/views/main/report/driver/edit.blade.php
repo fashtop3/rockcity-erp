@@ -55,7 +55,7 @@
                 <div class="panel-footer text-center">
                     <!--<div class="form-group">-->
                     <!--<div class="col-sm-4 col-sm-offset-2">-->
-                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-primary" id="submit" type="submit">Save</button>
                     <!--</div>-->
                 </div>
             </form>
@@ -63,3 +63,4 @@
     </div>
 
     @endsection
+

@@ -1,3 +1,14 @@
+@section('vendor-head')
+        <!-- SELECT2-->
+<link rel="stylesheet" href="/vendor/select2/dist/css/select2.css">
+<link rel="stylesheet" href="/vendor/select2-bootstrap-theme/dist/select2-bootstrap.css">
+<link rel="stylesheet" href="/css/jquery-ui.min.css">
+
+<!-- datetimepicker-->
+<script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+@endsection
 
         <fieldset>
             <div class="form-group">
@@ -308,10 +319,56 @@
                     </div>
                     <textarea id="html_text" hidden name="html_text" cols="30" rows="10"></textarea>
                     <div id="EditorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;"></div>
-                        {!!  old('html_text', @$report->info['html_text']) !!}
+                        {!!  old('html_text', @$report->html_text) !!}
                     </div>
                 </div>
 
             </div>
         </fieldset>
 
+
+
+    @section('page-vendor')
+            <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+
+        <!-- WYSIWYG-->
+        <script src="/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
+        <script src="/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
+
+        <!-- SELECT2-->
+        <script src="/vendor/select2/dist/js/select2.js"></script>
+
+        <script>
+            $(function () {
+                // WYSIWYG
+                // -----------------------------------
+
+                $('#editor').wysiwyg();
+
+                $('#submit').click(function(e) {
+                    $('#html_text').val(($('#EditorContent').cleanHtml()));
+
+                    return true;
+                });
+
+                $(".data-select2").select2({
+                    theme: "bootstrap",
+                    width : '100%'
+                });
+
+                $('.picker').datetimepicker({
+                    format: 'hh:mm',
+                });
+
+                $('.picker').keydown(function(e) {
+                    if(e.keyCode == 9){
+                        return true;
+                    }
+                    return false;
+                });
+
+
+            });
+        </script>
+
+    @endsection

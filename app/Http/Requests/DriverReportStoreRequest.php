@@ -42,7 +42,7 @@ class DriverReportStoreRequest extends FormRequest
             'info.time_back' => 'required|string',
             'info.fuel_bl' => 'required|string',
             'info.fuel_bk' => 'required|string',
-            'html_text' => 'string|nullable'
+            'html_text' => 'sometimes|string|nullable'
         ];
     }
 }
