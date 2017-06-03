@@ -20,13 +20,13 @@
 
         <div class="panel-body helicopter" >
 
-            <form class="form-horizontal" action="{{ route('assessment.edit', [$assessment->id]) }}" method="post" role="form" name="vehicleForm">
+            <form class="form-horizontal" action="{{ route('assessment.edit', [$report->id]) }}" method="post" role="form" name="vehicleForm">
                 {{ csrf_field() }}
                 <div class="panel-body">
 
                     @include('partials.error')
 
-                    @include('main.assessment.partials.form')
+                    @include('main.assessment.partials.supervisor-form')
 
                 </div>
                 <div class="panel-footer text-center">

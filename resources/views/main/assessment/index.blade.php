@@ -39,8 +39,8 @@
                         <tbody>
                         @foreach($assessments as $assessment)
                         <tr>
-                            <td><a href="">{{ $assessment->created_at->toDayDateTimeString() }}</a></td>
-                            <td><a href="">{{ $assessment->updated_at->toDayDateTimeString() }}</a></td>
+                            <td><a href="{{ route('assessment.edit', ['id' => $assessment->id]) }}">{{ $assessment->created_at->toDayDateTimeString() }}</a></td>
+                            <td><a href="{{ route('assessment.edit', ['id' => $assessment->id]) }}">{{ $assessment->updated_at->toDayDateTimeString() }}</a></td>
                             <td>
                                 <a href="{{ route('assessment.edit', ['id' => $assessment->id]) }}" class="btn btn-sm btn-warning">
                                     <em class="fa fa-edit"></em>

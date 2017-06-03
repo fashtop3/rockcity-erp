@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Assessment;
 
+use App\Models\Assessment\Assessment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -47,7 +48,9 @@ class AssessmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $assessment = Assessment::find($id);
+
+        return view('main.assessment.edit', compact('assessment'));
     }
 
     /**
