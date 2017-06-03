@@ -137,7 +137,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        DB::beginTransaction();
+//        DB::beginTransaction();
         try{
             $client = Client::findOrFail($id);
 
