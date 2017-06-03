@@ -100,12 +100,12 @@
                     <ul id="report" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Staff's Report</li>
                         <li class=" ">
-                            <a href="{{ route('report.create') }}" title="Horizontal">
+                            <a href="{{ route('report.staff.create') }}" title="Horizontal">
                                 <span>Add new</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="{{ route('report') }}" title="Horizontal">
+                            <a href="{{ route('report.staff') }}" title="Horizontal">
                                 <span>View</span>
                             </a>
                         </li>
@@ -113,7 +113,7 @@
                 </li>
 
                 <li class=" ">
-                    <a href="#assessment" title="Report" data-toggle="collapse">
+                    <a href="#assessment" title="Assessment" data-toggle="collapse">
                         <em class="icon-layers"></em>
                         <span>Assessment</span>
                     </a>
@@ -133,7 +133,7 @@
                 </li>
 
                 <li class=" ">
-                    <a href="#driver_rep" title="Report" data-toggle="collapse">
+                    <a href="#driver_rep" title="Driver's Report" data-toggle="collapse">
                         <em class="icon-layers"></em>
                         <span>Driver's Report</span>
                     </a>

@@ -13,7 +13,7 @@
 
     <div>
         <ol class="breadcrumb">
-            <li><a href="{{ route('report') }}">Reports</a></li>
+            <li><a href="{{ route('report.staff') }}">Reports</a></li>
             <li>Add Report</li>
         </ol>
     </div>
@@ -25,7 +25,7 @@
 
         <div class="panel-body helicopter" >
 
-            <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('report.create') }}" method="post" role="form" name="reportForm">
+            <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('report.staff.create') }}" method="post" role="form" name="reportForm">
                 {{ csrf_field() }}
                 <div class="panel-body">
 

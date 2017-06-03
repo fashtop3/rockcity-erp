@@ -14,7 +14,7 @@
 
     <div>
         <ol class="breadcrumb">
-            <li><a href="{{ route('report.create') }}">Add Report</a></li>
+            <li><a href="{{ route('report.staff.create') }}">Add Report</a></li>
         </ol>
     </div>
 

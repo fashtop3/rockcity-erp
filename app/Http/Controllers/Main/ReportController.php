@@ -28,7 +28,7 @@ class ReportController extends Controller
             ->with('tasks')
             ->with('remittances')->latest()->paginate(100);
 
-        return view('main.report.index', compact('reports'));
+        return view('main.report.staff.index', compact('reports'));
     }
 
     /**
@@ -38,14 +38,13 @@ class ReportController extends Controller
      */
     public function create()
     {
-        return view('main.report.create');
+        return view('main.report.staff.create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ReportStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ReportStoreRequest $request)
     {
@@ -91,7 +90,7 @@ class ReportController extends Controller
             }
         }
 
-        return redirect()->route('report');
+        return redirect()->route('report.staff');
     }
 
     /**

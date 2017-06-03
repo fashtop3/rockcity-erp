@@ -66,10 +66,13 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/api/promocode/reward', 'Airtime\PromocodeController@getReward');
 
     //report
-    Route::get('/report', 'Main\ReportController@index')->name('report');
-    Route::get('/report/create', 'Main\ReportController@create')->name('report.create');
-    Route::post('/report/create', 'Main\ReportController@store')->name('report.create');
+    Route::get('/report/staff', 'Main\ReportController@index')->name('report.staff');
+    Route::get('/report/staff/create', 'Main\ReportController@create')->name('report.staff.create');
+    Route::post('/report/staff/create', 'Main\ReportController@store')->name('report.staff.create');
 
+    Route::get('/report/driver', 'Main\ReportController@index')->name('driver');
+    Route::get('/report/driver/create', 'Main\ReportController@create')->name('report.driver.create');
+    Route::post('/report/driver/create', 'Main\ReportController@store')->name('report.driver.create');
 
     /*
      * Admin routes
