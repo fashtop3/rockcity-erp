@@ -77,6 +77,15 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::post('/report/driver/{id}/edit', 'Main\DriverReportController@update')->name('report.driver.edit');
     Route::get('/report/driver/{id}/destroy', 'Main\DriverReportController@destroy')->name('report.driver.destroy');
 
+
+    Route::get('/assessment', 'Assessment\AssessmentController@index')->name('assessment');
+    Route::get('/assessment/create', 'Assessment\AssessmentController@create')->name('assessment.create');
+    Route::post('/assessment/create', 'Assessment\AssessmentController@store')->name('assessment.create');
+    Route::get('/assessment/{id}/edit', 'Assessment\AssessmentController@show')->name('assessment.edit');
+    Route::post('/assessment/{id}/edit', 'Assessment\AssessmentController@update')->name('assessment.edit');
+    Route::get('/assessment/{id}/destroy', 'Assessment\AssessmentController@destroy')->name('assessment.destroy');
+
+
     /*
      * Admin routes
      */

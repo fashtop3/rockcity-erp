@@ -18,8 +18,8 @@
                             </div>
                             <!-- Name and Job-->
                             <div class="user-block-info">
-                                <span class="user-block-name">Hello, Mike</span>
-                                <span class="user-block-role">Designer</span>
+                                <span class="user-block-name">Hello, {{ auth()->user()->lastname }}</span>
+                                {{--<span class="user-block-role">Designer</span>--}}
                             </div>
                         </div>
                     </div>
@@ -120,12 +120,12 @@
                     <ul id="assessment" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Assessment</li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('assessment.create') }}" title="Horizontal">
                                 <span>New form</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('assessment') }}" title="Horizontal">
                                 <span>View data</span>
                             </a>
                         </li>
