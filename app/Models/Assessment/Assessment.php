@@ -12,15 +12,15 @@ class Assessment extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function partOne() {
-        return $this->hasOne('App\AssessmentPartOne');
+        return $this->hasOne('App\Models\Assessment\AssessmentPartOne');
     }
 
     public function partTwo() {
-        return $this->hasOne('App\AssessmentPartTwo');
+        return $this->hasOne('App\Models\Assessment\AssessmentPartTwo');
     }
 
     public function partThree() {
-        return $this->hasOne('App\AssessmentPartThree');
+        return $this->hasOne('App\Models\Assessment\AssessmentPartThree');
     }
 
     public function user() {

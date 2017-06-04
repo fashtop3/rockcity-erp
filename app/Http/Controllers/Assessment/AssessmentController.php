@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Assessment;
 
 use App\Models\Assessment\Assessment;
+use App\Models\Assessment\AssessmentConfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Mockery\CountValidator\Exception;
 
 class AssessmentController extends Controller
 {
@@ -37,7 +41,39 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request->all());
+
+        DB::beginTransaction();
+
+        try{
+            $config =  AssessmentConfig::where('enable', 1)->first();
+            if(!$config) {
+                throw new Exception('No available assessment log', 403);
+            }
+
+            $assessment = $config->assessments()->create([
+                'user_id' => auth()->user()->id,
+                'preview' => 1
+            ]);
+
+            $assessment->partOne()->create($request->get('part_one'));
+            $assessment->partTwo()->create($request->get('part_two'));
+            $assessment->partThree()->create($request->get('part_three'));
+
+//            dd($assessment);
+
+            DB::commit();
+            Session::flash('success', 'Assessment record saved');
+        }
+        catch (\Exception $e) {
+            dd($e->getMessage());
+
+            if($e->getCode() == 23000) {
+                Session::flash('error', 'Integrity constraint violation: 1062 Duplicate entry');
+            }
+        }
+
+        return redirect()->back()->withInput();
     }
 
     /**
@@ -48,9 +84,7 @@ class AssessmentController extends Controller
      */
     public function show($id)
     {
-        $assessment = Assessment::find($id);
-
-        return view('main.assessment.edit', compact('assessment'));
+        //
     }
 
     /**
@@ -61,7 +95,14 @@ class AssessmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+            $assessment = Assessment::findOrFail($id);
+        }
+        catch(\Exception $e) {
+            Session::flash('error', 'error: no record found');
+            return redirect()->back();
+        }
+        return view('main.assessment.edit', compact('assessment'));
     }
 
     /**
@@ -73,7 +114,19 @@ class AssessmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $assessment = Assessment::findOrFail($id);
+            $assessment->partOne()->create($request->get('part_one'));
+            $assessment->partTwo()->create($request->get('part_two'));
+            $assessment->partThree()->create($request->get('part_three'));
+
+            Session::flash('success', 'Assessment record saved');
+        }
+        catch(\Exception $e) {
+            Session::flash('error', 'Update failed: contact administrator');
+        }
+
+        return redirect()->back()->withInput();
     }
 
     /**
