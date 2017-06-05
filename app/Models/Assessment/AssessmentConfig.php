@@ -27,7 +27,7 @@ class AssessmentConfig extends Model
 
     public function getStartsAttribute($date)
     {
-        return Carbon::parse($date)->toAtomString();
+        return Carbon::parse($date)->toFormattedDateString();
     }
 
     public function setEndsAttribute($date)
@@ -37,7 +37,7 @@ class AssessmentConfig extends Model
 
     public function getEndsAttribute($date)
     {
-        return Carbon::parse($date)->toAtomString();
+        return Carbon::parse($date)->toFormattedDateString();
     }
 
 

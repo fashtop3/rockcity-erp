@@ -34,6 +34,6 @@ class Assessment extends Model
 
     public function config()
     {
-        return $this->belongsTo('App\Models\Assessment\AssessmentConfig');
+        return $this->belongsTo('App\Models\Assessment\AssessmentConfig', 'assessment_config_id');
     }
 }

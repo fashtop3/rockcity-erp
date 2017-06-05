@@ -28,6 +28,14 @@
                     @include('partials.error')
 
 
+                    <div class="alert alert-warning">
+                        @if(isset($assessment))
+                            Submission is opened from <strong>{{ $assessment->config->starts }} - {{ $assessment->config->ends }}</strong>
+                        @else
+                            Submission is opened from <strong>{{ \App\Models\Assessment\AssessmentConfig::where('enable', 1)->first()->starts }} - {{ \App\Models\Assessment\AssessmentConfig::where('enable', 1)->first()->ends }}</strong>
+                        @endif
+                    </div>
+
                     @include('main.assessment.partials.form')
 
                 </div>

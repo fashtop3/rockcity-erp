@@ -20,15 +20,25 @@
 
         <div class="panel-body helicopter" >
 
+            @if(!isset($disable))
             <form class="form-horizontal" action="{{ route('assessment.edit', [$assessment->id]) }}" method="post" role="form" name="vehicleForm">
+            @endif
                 {{ csrf_field() }}
                 <div class="panel-body">
 
                     @include('partials.error')
 
+                    <div class="alert alert-warning">
+                        @if(isset($assessment))
+                            Submission is opened from <strong>{{ $assessment->config->starts }} - {{ $assessment->config->ends }}</strong>
+                        @else
+                            Submission is opened from <strong>{{ \App\Models\Assessment\AssessmentConfig::where('enable', 1)->first()->starts }} - {{ \App\Models\Assessment\AssessmentConfig::where('enable', 1)->first()->ends }}</strong>
+                        @endif
+                    </div>
                     @include('main.assessment.partials.form')
 
                 </div>
+                @if(!isset($disable))
                 <div class="panel-footer text-center">
                     <!--<div class="form-group">-->
                     <!--<div class="col-sm-4 col-sm-offset-2">-->
@@ -36,6 +46,7 @@
                     <!--</div>-->
                 </div>
             </form>
+                @endif
         </div>
     </div>
 

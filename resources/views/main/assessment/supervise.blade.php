@@ -2,25 +2,18 @@
 
 @section('section')
     <h3>
-        Assessment
-        <small>Staff assessment portal</small>
+        SUPERVISOR <small>Assessment</small>
     </h3>
 
-    <div>
-        <ol class="breadcrumb">
-            <li><a href="{{ route('assessment') }}">Records</a></li>
-            <li>Edit</li>
-        </ol>
-    </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <small>update selected record.</small>
+            <small>update supervisor record.</small>
         </div>
 
         <div class="panel-body helicopter" >
 
-            <form class="form-horizontal" action="{{ route('assessment.edit', [$report->id]) }}" method="post" role="form" name="vehicleForm">
+            <form class="form-horizontal" action="{{ route('assessment.edit', [$assessment->id]) }}" method="post" role="form" name="vehicleForm">
                 {{ csrf_field() }}
                 <div class="panel-body">
 
@@ -29,11 +22,13 @@
                     @include('main.assessment.partials.supervisor-form')
 
                 </div>
-                <div class="panel-footer text-center">
-                    <!--<div class="form-group">-->
-                    <!--<div class="col-sm-4 col-sm-offset-2">-->
-                    <button class="btn btn-primary" id="submit" type="submit">Save</button>
-                    <!--</div>-->
+
+                <div class="panel-footer" ng-if="!supervisor.preview">
+                    <div class="pull-right">
+                        <!-- ng-disabled="!assessFormPart1.$invalid"-->
+                        <button class="btn btn-primary" id="submit" type="button">Save</button>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </form>
         </div>
