@@ -96,6 +96,15 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
      * Admin routes
      */
     Route::group(['prefix'=>'admin'], function() {
+
+        Route::get('/assessment/logs', 'Assessment\AssessmentConfigController@index')->name('assessment.log');
+        Route::get('/assessment/logs/create', 'Assessment\AssessmentConfigController@create')->name('assessment.log.create');
+        Route::post('/assessment/logs/create', 'Assessment\AssessmentConfigController@store')->name('assessment.log.create');
+        Route::get('/assessment/logs/{id}/edit', 'Assessment\AssessmentConfigController@edit')->name('assessment.log.edit');
+        Route::post('/assessment/logs/{id}/edit', 'Assessment\AssessmentConfigController@update')->name('assessment.log.edit');
+        Route::get('/assessment/logs/{id}/data', 'Assessment\AssessmentConfigController@data')->name('assessment.log.data');
+        Route::get('/assessment/logs/{id}/destroy', 'Assessment\AssessmentConfigController@destroy')->name('assessment.log.destroy');
+
         Route::get('/client', 'Main\ClientController@adminIndex')->name('admin.client');
 
         //people route

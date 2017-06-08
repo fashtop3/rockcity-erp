@@ -164,19 +164,19 @@
                 </li>
 
                 <li class=" ">
-                    <a href="#records" title="Records" data-toggle="collapse">
+                    <a href="#records" title="Manage Assessment" data-toggle="collapse">
                         <em class="icon-layers"></em>
                         <span>Assessment</span>
                     </a>
                     <ul id="records" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Records</li>
+                        <li class="sidebar-subnav-header">Assessment</li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
-                                <span>Records</span>
+                            <a href="{{ route('assessment.log') }}" title="Horizontal">
+                                <span>Logs</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('assessment.log.create') }}" title="Horizontal">
                                 <span>Settings</span>
                             </a>
                         </li>
@@ -184,7 +184,7 @@
                 </li>
 
                 <li class=" ">
-                    <a href="#admin_report" title="Records" data-toggle="collapse">
+                    <a href="#admin_report" title="Reports" data-toggle="collapse">
                         <em class="icon-layers"></em>
                         <span>Reports</span>
                     </a>
@@ -208,7 +208,7 @@
                         <span>Target</span>
                     </a>
                     <ul id="target" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">People</li>
+                        <li class="sidebar-subnav-header">Target</li>
                         <li class=" ">
                             <a href="{{ route('admin.target') }}" title="Manage">
                                 <span>Manage</span>
@@ -227,7 +227,7 @@
                         <span>Vehicle</span>
                     </a>
                     <ul id="vehicle" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">People</li>
+                        <li class="sidebar-subnav-header">Vehicle</li>
                         <li class=" ">
                             <a href="{{ route('admin.vehicle') }}" title="Manage">
                                 <span>Manage</span>
@@ -241,7 +241,7 @@
                     </ul>
                 </li>
                 <li class=" ">
-                    <a href="#people" title="Records" data-toggle="collapse">
+                    <a href="#people" title="People" data-toggle="collapse">
                         <em class="icon-layers"></em>
                         <span>People</span>
                     </a>

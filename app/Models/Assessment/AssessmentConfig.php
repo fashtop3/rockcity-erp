@@ -25,20 +25,11 @@ class AssessmentConfig extends Model
         $this->attributes['starts'] = Carbon::parse($date);
     }
 
-    public function getStartsAttribute($date)
-    {
-        return Carbon::parse($date)->toFormattedDateString();
-    }
-
     public function setEndsAttribute($date)
     {
         $this->attributes['ends'] = Carbon::parse($date);
     }
 
-    public function getEndsAttribute($date)
-    {
-        return Carbon::parse($date)->toFormattedDateString();
-    }
 
 
     public static function checkResetAll($enable)
