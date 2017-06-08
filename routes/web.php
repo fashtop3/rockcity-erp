@@ -86,7 +86,10 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/assessment/{id}/destroy', 'Assessment\AssessmentController@destroy')->name('assessment.destroy');
 
     Route::get('/assessment/{id}/preview', 'Assessment\SupervisorController@show')->name('assessment.supervise');
-    Route::get('/assessment/{id}/comment', 'Assessment\SupervisorController@edit')->name('assessment.comment');
+    Route::get('/assessment/{id}/comment', 'Assessment\SupervisorController@create')->name('assessment.comment');
+    Route::post('/assessment/{id}/comment', 'Assessment\SupervisorController@store')->name('assessment.comment');
+    Route::get('/assessment/{id}/comment/edit', 'Assessment\SupervisorController@edit')->name('assessment.comment.edit');
+    Route::post('/assessment/{id}/comment/edit', 'Assessment\SupervisorController@update')->name('assessment.comment.edit');
 
 
     /*

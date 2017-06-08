@@ -13,7 +13,7 @@
 
         <div class="panel-body helicopter" >
 
-            <form class="form-horizontal" action="{{ route('assessment.edit', [$assessment->id]) }}" method="post" role="form" name="vehicleForm">
+            <form class="form-horizontal" action="{{ route('assessment.comment', [$assessment->id]) }}" method="post" role="form" name="superviseForm">
                 {{ csrf_field() }}
                 <div class="panel-body">
 
@@ -26,7 +26,7 @@
                 <div class="panel-footer" ng-if="!supervisor.preview">
                     <div class="pull-right">
                         <!-- ng-disabled="!assessFormPart1.$invalid"-->
-                        <button class="btn btn-primary" id="submit" type="button">Save</button>
+                        <button class="btn btn-primary" id="submit" type="submit">Save</button>
                     </div>
                     <div class="clearfix"></div>
                 </div>

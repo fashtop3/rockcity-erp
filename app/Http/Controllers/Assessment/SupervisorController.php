@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Assessment;
 
 use App\Models\Assessment\Assessment;
+use App\Models\Assessment\AssessmentSupervisor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class SupervisorController extends Controller
@@ -24,9 +26,16 @@ class SupervisorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        try{
+            $assessment = Assessment::findOrFail($id);
+        }
+        catch(\Exception $e) {
+            Session::flash('error', 'error: no record found');
+            return redirect()->back();
+        }
+        return view('main.assessment.supervise', compact('assessment'));
     }
 
     /**
@@ -35,9 +44,28 @@ class SupervisorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+//        DB::beginTransaction();
+        try{
+
+            $assessment = Assessment::findOrFail($id);
+            $input = $request->all();
+//            $input['assessment_id'] = $id;
+            $input['user_id'] = auth()->user()->id;
+            //Todo: update migration file for AssessmentSupervisor changed table preview col to default 1
+            $assessment->supervisor()->updateOrCreate(['assessment_id' => $id, 'user_id'=>auth()->user()->id], $input);
+
+            Session::flash('success', 'Comments saved');
+//            DB::commit();
+
+        }
+        catch(\Exception $e) {
+//            dd($e->getMessage());
+            Session::flash('error', 'Error saving Comment. contact administrator');
+        }
+
+        return redirect()->back()->withInput();
     }
 
     /**
