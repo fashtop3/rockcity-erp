@@ -28,14 +28,16 @@ class SupervisorController extends Controller
      */
     public function create($id)
     {
+        $supervisor = null;
         try{
             $assessment = Assessment::findOrFail($id);
+            $supervisor = $assessment->supervisor()->where('user_id', auth()->user()->id)->first();
         }
         catch(\Exception $e) {
             Session::flash('error', 'error: no record found');
             return redirect()->back();
         }
-        return view('main.assessment.supervise', compact('assessment'));
+        return view('main.assessment.supervise', compact('assessment', 'supervisor'));
     }
 
     /**
