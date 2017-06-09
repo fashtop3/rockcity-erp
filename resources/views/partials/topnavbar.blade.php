@@ -53,22 +53,15 @@
             <!-- START Right Navbar-->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Search icon-->
-                <li>
-                    <a href="#" data-search-open="">
-                        <em class="icon-magnifier"></em>
-                    </a>
-                </li>
-                <!-- Fullscreen (only desktops)-->
-                <li class="visible-lg">
-                    <a href="#" data-toggle-fullscreen="">
-                        <em class="fa fa-expand"></em>
-                    </a>
-                </li>
-                <!-- START Alert menu-->
+                {{--<li>--}}
+                    {{--<a href="#" data-search-open="">--}}
+                        {{--<em class="icon-magnifier"></em>--}}
+                    {{--</a>--}}
+                {{--</li>--}}
+                        <!-- START Alert menu-->
                 <li class="dropdown dropdown-list">
                     <a href="#" data-toggle="dropdown">
-                        <em class="icon-bell"></em>
-                        <div class="label label-danger">11</div>
+                        <em class="fa fa-tasks "></em>
                     </a>
                     <!-- START Dropdown menu-->
                     <ul class="dropdown-menu animated flipInX">
@@ -76,51 +69,46 @@
                             <!-- START list group-->
                             <div class="list-group">
                                 <!-- list item-->
-                                <a href="#" class="list-group-item">
+                                <a href="{{ route('promocode.create') }}" class="list-group-item">
                                     <div class="media-box">
                                         <div class="pull-left">
                                             <em class="fa fa-twitter fa-2x text-info"></em>
                                         </div>
                                         <div class="media-box-body clearfix">
-                                            <p class="m0">New followers</p>
+                                            <p class="m0">Coupon codes</p>
                                             <p class="m0 text-muted">
-                                                <small>1 new follower</small>
+                                                <small>Generate coupon codes</small>
                                             </p>
                                         </div>
                                     </div>
                                 </a>
                                 <!-- list item-->
-                                <a href="#" class="list-group-item">
+                                <a href="{{ route('mail') }}" class="list-group-item">
                                     <div class="media-box">
                                         <div class="pull-left">
                                             <em class="fa fa-envelope fa-2x text-warning"></em>
                                         </div>
                                         <div class="media-box-body clearfix">
-                                            <p class="m0">New e-mails</p>
+                                            <p class="m0">Send e-mails</p>
                                             <p class="m0 text-muted">
-                                                <small>You have 10 new emails</small>
+                                                <small>Send mail</small>
                                             </p>
                                         </div>
                                     </div>
                                 </a>
                                 <!-- list item-->
-                                <a href="#" class="list-group-item">
+                                <a href="{{ route('sms') }}" class="list-group-item">
                                     <div class="media-box">
                                         <div class="pull-left">
-                                            <em class="fa fa-tasks fa-2x text-success"></em>
+                                            <em class="fa fa-envelope fa-2x text-warning"></em>
                                         </div>
                                         <div class="media-box-body clearfix">
-                                            <p class="m0">Pending Tasks</p>
+                                            <p class="m0">Send sms</p>
                                             <p class="m0 text-muted">
-                                                <small>11 pending task</small>
+                                                <small>Send sms</small>
                                             </p>
                                         </div>
                                     </div>
-                                </a>
-                                <!-- last list item-->
-                                <a href="#" class="list-group-item">
-                                    <small>More notifications</small>
-                                    <span class="label label-danger pull-right">14</span>
                                 </a>
                             </div>
                             <!-- END list group-->
@@ -128,13 +116,20 @@
                     </ul>
                     <!-- END Dropdown menu-->
                 </li>
-                <!-- END Alert menu-->
-                <!-- START Offsidebar button-->
-                <li>
-                    <a href="#" data-toggle-state="offsidebar-open" data-no-persist="true">
-                        <em class="icon-notebook"></em>
+                <!-- Fullscreen (only desktops)-->
+                <li class="visible-lg">
+                    <a href="#" data-toggle-fullscreen="">
+                        <em class="fa fa-expand"></em>
                     </a>
                 </li>
+
+                <!-- END Alert menu-->
+                <!-- START Offsidebar button-->
+                {{--<li>--}}
+                    {{--<a href="#" data-toggle-state="offsidebar-open" data-no-persist="true">--}}
+                        {{--<em class="icon-notebook"></em>--}}
+                    {{--</a>--}}
+                {{--</li>--}}
                 <!-- END Offsidebar menu-->
             </ul>
             <!-- END Right Navbar-->

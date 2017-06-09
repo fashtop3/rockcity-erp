@@ -2,14 +2,42 @@
 
 namespace App\Http\Controllers\Airtime;
 
-
 use App\Models\Airtime\Promocode;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class PromocodeController extends Controller
 {
-    public function generate(Request/*PromocodeGenReq*/ $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('main.coupon.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         $amount = $request->get('amount');
         $reward = $request->get('reward');
@@ -24,17 +52,66 @@ class PromocodeController extends Controller
             $subject = $ty.' Coupon Generation Report @ '.Carbon::now()->toDateTimeString();
             $csv = $this->getCSVCoupon($coupon);
             try{
-                Event::fire(new CouponGeneratedEvent(['subject'=> $subject, 'coupon'=>$csv]));
+                //Todo: add event listeners
+//                Event::fire(new CouponGeneratedEvent(['subject'=> $subject, 'coupon'=>$csv]));
                 DB::commit();
-                return response(['data'=>'Coupon has been forwarded to your mail.']);
+                Session::flash('success', 'Coupon has been forwarded to your mail.');
             }
             catch(\Exception $e) {
-                return response('Failed: Mail server not reachable try again', 403);
+                Session::flash('error', 'Mail server not reachable try again');
+                return redirect()->back()->withInput();
             }
         }
         catch(\Exception $e) {
-            return response('Coupon code generation failed contact site Administrator', 403);
+            Session::flash('error', 'Coupon code generation failed contact site Administrator');
         }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 
     protected function getCSVCoupon($result) {
@@ -77,10 +154,5 @@ class PromocodeController extends Controller
         }
 
         return response('invalid request', 403);
-    }
-
-    public function apply()
-    {
-        return response(Promocode::apply('RFXU-ZXWT', true));
     }
 }

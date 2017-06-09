@@ -135,6 +135,12 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
         Route::get('/target/{id}/edit', 'RCAdmin\TargetController@edit')->name('admin.target.edit');
         Route::post('/target/{id}/edit', 'RCAdmin\TargetController@update')->name('admin.target.edit');
         Route::get('/target/{id}/delete', 'RCAdmin\TargetController@destroy')->name('admin.target.destroy');
+
+//        Route::get('/coupon', 'Main\StaffReportController@index')->name('report.staff');
+        Route::get('/coupon/create', 'Airtime\PromocodeController@create')->name('promocode.create');
+        Route::post('/coupon/create', 'Airtime\PromocodeController@store')->name('promocode.create');
+//        Route::post('/report/staff/create', 'Main\StaffReportController@store')->name('report.staff.create');
+
     });
 
 });
