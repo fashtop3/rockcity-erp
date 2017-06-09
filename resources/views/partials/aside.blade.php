@@ -191,12 +191,12 @@
                     <ul id="admin_report" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Reports</li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('admin.report.staff') }}" title="Horizontal">
                                 <span>Staff's Report</span>
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="#" title="Horizontal">
+                            <a href="{{ route('admin.report.driver') }}" title="Horizontal">
                                 <span>Driver's Report</span>
                             </a>
                         </li>

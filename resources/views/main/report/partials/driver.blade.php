@@ -24,7 +24,7 @@
                     {{--<span ng-show="!reportForm.brand.$pristine &amp;&amp; reportForm.brand.$error.required" class="text-danger">This field is required</span>--}}
                     <!--<span ng-show="!reportForm.brand.$pristine &amp;&amp; reportForm.brand.$error.pattern" class="text-danger">This field must be a valid name</span>-->
                     {{--Todo://add html to select2--}}
-                    <select id="marketer-data-select" name="vehicle_id"  class="form-control data-select2" required>
+                    <select {{ @$disabled }} id="marketer-data-select" name="vehicle_id"  class="form-control data-select2" required>
                         <option></option>
                         @foreach(App\Models\Admin\Vehicle::all() as $vehicle)
                             <option {{ old('vehicle_id', @$report->vehicle_id) == $vehicle->id?'selected=""':'' }} data-index="{{ $loop->index }}" value="{{ $vehicle->id }}">{{ $vehicle->name }}; Eng: {{ $vehicle->eng }}; Reg: {{ $vehicle->reg }}</option>
@@ -39,7 +39,7 @@
                 <label for="time_inspect" class="control-label col-sm-4">Time of inspection <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.time_inspect')?'has-error':'' }} ">
                     <p class="input-group picker" id="time_inspect">
-                        <input type="text" name="info[time_inspect]"  value="{{ old('info.time_inspect', @$report->info['time_inspect']) }}"  class="form-control"/>
+                        <input {{ @$disabled }} type="text" name="info[time_inspect]"  value="{{ old('info.time_inspect', @$report->info['time_inspect']) }}"  class="form-control"/>
                       <span class="input-group-addon">
                           <em class="icon-clock"></em>
                       </span>
@@ -52,7 +52,7 @@
             <div class="form-group">
                 <label for="water_level" class="control-label col-sm-4">Water level <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.water_level')?'has-error':'' }}">
-                    <select class="form-control" name="info[water_level]" id="water_level" required>
+                    <select {{ @$disabled }} class="form-control" name="info[water_level]" id="water_level" required>
                         <option value="">--Select water level--</option>
                         @for($i=0; $i<=100; $i++)
                             <option {{ old('info.water_level', @$report->info['water_level']) == $i ?'selected=""':'' }} value="{{ $i }}">{{ $i }}%</option>
@@ -66,7 +66,7 @@
             <div class="form-group">
                 <label for="oil_level" class="control-label col-sm-4">Oil level <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.oil_level')?'has-error':'' }}">
-                    <select class="form-control" name="info[oil_level]" id="oil_level" required>
+                    <select {{ @$disabled }} class="form-control" name="info[oil_level]" id="oil_level" required>
                         <option value="">--Select oil level--</option>
                         @for($i=0; $i<=100; $i++)
                             <option {{ old('info.oil_level', @$report->info['oil_level']) == $i ?'selected=""':'' }} value="{{ $i }}">{{ $i }}%</option>
@@ -80,7 +80,7 @@
             <div class="form-group">
                 <label for="fuel_level" class="control-label col-sm-4">Fuel level <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.fuel_level')?'has-error':'' }}">
-                    <select class="form-control" name="info[fuel_level]" id="fuel_level" required>
+                    <select {{ @$disabled }} class="form-control" name="info[fuel_level]" id="fuel_level" required>
                         <option value="">--Select fuel level--</option>
                         @foreach(['Empty','Quarter tank', 'Half tank', 'Full tank'] as $key=>$level)
                         <option {{ old('info.fuel_level', @$report->info['fuel_level']) == $level ?'selected=""':'' }}  value="{{ $level }}">{{ $level }}</option>
@@ -94,7 +94,7 @@
             <div class="form-group">
                 <label for="break_condition" class="control-label col-sm-4">Break condition <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.break_condition')?'has-error':'' }}">
-                    <select class="form-control" name="info[break_condition]" id="break_condition" required>
+                    <select {{ @$disabled }} class="form-control" name="info[break_condition]" id="break_condition" required>
                         <option value="">--Select break condition--</option>
                         @foreach(['Bad', 'Fair', 'Good'] as $key=>$condition)
                             <option {{ old('info.break_condition', @$report->info['break_condition']) == $condition ?'selected=""':'' }} value="{{ $condition }}">{{ $condition }}</option>
@@ -108,7 +108,7 @@
             <div class="form-group">
                 <label for="absorber_condition" class="control-label col-sm-4">Absorber condition <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.absorber_condition')?'has-error':'' }}">
-                    <select class="form-control" name="info[absorber_condition]" id="absorber_condition" required>
+                    <select {{ @$disabled }} class="form-control" name="info[absorber_condition]" id="absorber_condition" required>
                         <option value="">--Select absorber condition--</option>
                         @foreach(['Bad', 'Fair', 'Good'] as $key=>$condition)
                             <option {{ old('info.absorber_condition', @$report->info['absorber_condition']) == $condition ?'selected=""':'' }} value="{{ $condition }}">{{ $condition }}</option>
@@ -124,7 +124,7 @@
 
                 <div class="col-sm-7 {{ $errors->has('info.time_washed')?'has-error':'' }}">
                     <p class="input-group picker" id="time_washed">
-                        <input type="text" value="{{ old('info.time_washed', @$report->info['time_washed']) }}" name="info[time_washed]" class="form-control"/>
+                        <input {{ @$disabled }} type="text" value="{{ old('info.time_washed', @$report->info['time_washed']) }}" name="info[time_washed]" class="form-control"/>
                       <span class="input-group-addon">
                           <em class="icon-clock"></em>
                       </span>
@@ -137,7 +137,7 @@
             <div class="form-group">
                 <label for="passenger" class="control-label col-sm-4">Passenger name <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.passenger')?'has-error':'' }}">
-                    <input class=" form-control" autocomplete="off" type="text" name="info[passenger]" value="{{ old('info.passenger', @$report->info['passenger']) }}" id="passenger" required/>
+                    <input {{ @$disabled }} class=" form-control" autocomplete="off" type="text" name="info[passenger]" value="{{ old('info.passenger', @$report->info['passenger']) }}" id="passenger" required/>
                 </div>
             </div>
         </fieldset>
@@ -146,7 +146,7 @@
             <div class="form-group">
                 <label for="destination" class="control-label col-sm-4">Destination <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.destination')?'has-error':'' }}">
-                    <input class=" form-control" autocomplete="off" type="text" name="info[destination]" value="{{ old('info.destination', @$report->info['destination']) }}" id="destination" required/>
+                    <input {{ @$disabled }} class=" form-control" autocomplete="off" type="text" name="info[destination]" value="{{ old('info.destination', @$report->info['destination']) }}" id="destination" required/>
                 </div>
             </div>
         </fieldset>
@@ -155,7 +155,7 @@
             <div class="form-group">
                 <label for="millage_bl" class="control-label col-sm-4">Mileage before leaving office <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.millage_bl')?'has-error':'' }}">
-                    <input class=" form-control" autocomplete="off" type="text" name="info[millage_bl]" value="{{ old('info.millage_bl', @$report->info['millage_bl']) }}" id="millage_bl" required/>
+                    <input {{ @$disabled }} class=" form-control" autocomplete="off" type="text" name="info[millage_bl]" value="{{ old('info.millage_bl', @$report->info['millage_bl']) }}" id="millage_bl" required/>
                 </div>
             </div>
         </fieldset>
@@ -164,7 +164,7 @@
             <div class="form-group">
                 <label for="millage_rt" class="control-label col-sm-4">Mileage on return to office <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.millage_rt')?'has-error':'' }}">
-                    <input class=" form-control" autocomplete="off" type="text" name="info[millage_rt]" value="{{ old('info.millage_rt', @$report->info['millage_rt']) }}" id="millage_rt" required/>
+                    <input {{ @$disabled }} class=" form-control" autocomplete="off" type="text" name="info[millage_rt]" value="{{ old('info.millage_rt', @$report->info['millage_rt']) }}" id="millage_rt" required/>
                 </div>
             </div>
         </fieldset>
@@ -174,7 +174,7 @@
                 <label for="time_out" class="control-label col-sm-4">Time the vehicle left office <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.time_out')?'has-error':'' }}">
                     <p class="input-group picker" id="time_out">
-                        <input type="text" name="info[time_out]" value="{{ old('info.time_out', @$report->info['time_out']) }}" class="form-control"/>
+                        <input {{ @$disabled }} type="text" name="info[time_out]" value="{{ old('info.time_out', @$report->info['time_out']) }}" class="form-control"/>
                       <span class="input-group-addon">
                           <em class="icon-clock"></em>
                       </span>
@@ -188,7 +188,7 @@
                 <label for="time_back" class="control-label col-sm-4">Time the vehicle returned to office <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.time_back')?'has-error':'' }}">
                     <p class="input-group picker" id="time_back">
-                        <input type="text" name="info[time_back]" value="{{ old('info.time_back', @$report->info['time_back']) }}" class="form-control"/>
+                        <input {{ @$disabled }} type="text" name="info[time_back]" value="{{ old('info.time_back', @$report->info['time_back']) }}" class="form-control"/>
                       <span class="input-group-addon">
                           <em class="icon-clock"></em>
                       </span>
@@ -201,7 +201,7 @@
             <div class="form-group">
                 <label for="fuel_bl" class="control-label col-sm-4">Fuel Gauge before leaving <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.fuel_bl')?'has-error':'' }}">
-                    <input class=" form-control" autocomplete="off" type="text" name="info[fuel_bl]" value="{{ old('info.fuel_bl', @$report->info['fuel_bl']) }}" id="fuel_bl" required/>
+                    <input {{ @$disabled }} class=" form-control" autocomplete="off" type="text" name="info[fuel_bl]" value="{{ old('info.fuel_bl', @$report->info['fuel_bl']) }}" id="fuel_bl" required/>
                 </div>
             </div>
         </fieldset>
@@ -210,7 +210,7 @@
             <div class="form-group">
                 <label for="fuel_bk" class="control-label col-sm-4">Fuel Gauge on return <abbr class="text-danger" title="required">*</abbr></label>
                 <div class="col-sm-7 {{ $errors->has('info.fuel_bk')?'has-error':'' }}">
-                    <input class=" form-control" autocomplete="off" type="text" name="info[fuel_bk]" id="fuel_bk" value="{{ old('info.fuel_bk', @$report->info['fuel_bk']) }}" required/>
+                    <input {{ @$disabled }} class=" form-control" autocomplete="off" type="text" name="info[fuel_bk]" id="fuel_bk" value="{{ old('info.fuel_bk', @$report->info['fuel_bk']) }}" required/>
                 </div>
             </div>
         </fieldset>
@@ -318,7 +318,7 @@
                         </div>
                     </div>
                     <textarea id="html_text" hidden name="html_text" cols="30" rows="10"></textarea>
-                    <div id="EditorContent" style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;"></div>
+                    <div id="EditorContent" {{ @$disabled }} style="overflow:scroll; height:250px;max-height:250px" class="form-control wysiwyg mt-lg" contenteditable="true"><div style="text-align: left;"></div>
                         {!!  old('html_text', @$report->html_text) !!}
                     </div>
                 </div>

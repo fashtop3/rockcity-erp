@@ -23,6 +23,13 @@ class DriverReportController extends Controller
         return view('main.report.driver.index', compact('reports'));
     }
 
+    public function admin_index()
+    {
+        $reports = DriverReport::latest()->paginate(100);
+
+        return view('main.report.driver.admin-index', compact('reports'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -63,11 +70,12 @@ class DriverReportController extends Controller
     {
         try{
             $report = DriverReport::findOrFail($id);
+            $disabled = "disabled=''";
         } catch(\Exception $e) {
             Session::flash('error', 'Report not found');
             return redirect()->route('report.driver');
         }
-        return view('main.report.driver.edit', compact('report'));
+        return view('main.report.driver.show', compact('report', 'disabled'));
     }
 
     /**
@@ -78,7 +86,13 @@ class DriverReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+            $report = DriverReport::findOrFail($id);
+        } catch(\Exception $e) {
+            Session::flash('error', 'Report not found');
+            return redirect()->route('report.driver');
+        }
+        return view('main.report.driver.edit', compact('report'));
     }
 
 

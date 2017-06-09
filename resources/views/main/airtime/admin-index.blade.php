@@ -9,7 +9,7 @@
 
 @section('section')
     <h3>
-        Airtime
+        Admin/Index::Airtime Orders
     </h3>
 
     <div class="row">

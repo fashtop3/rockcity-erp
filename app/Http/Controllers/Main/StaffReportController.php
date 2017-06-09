@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Requests\StaffReportStoreRequest;
+use App\Models\Report\Report;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -22,6 +23,15 @@ class StaffReportController extends Controller
             ->with('remittances')->latest()->paginate(100);
 
         return view('main.report.staff.index', compact('reports'));
+    }
+
+    public function admin_index()
+    {
+        $reports = Report::with('challenges')
+            ->with('tasks')
+            ->with('remittances')->latest()->paginate(100);
+
+        return view('main.report.staff.admin-index', compact('reports'));
     }
 
     /**

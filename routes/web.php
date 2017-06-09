@@ -73,7 +73,8 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::get('/report/driver', 'Main\DriverReportController@index')->name('report.driver');
     Route::get('/report/driver/create', 'Main\DriverReportController@create')->name('report.driver.create');
     Route::post('/report/driver/create', 'Main\DriverReportController@store')->name('report.driver.create');
-    Route::get('/report/driver/{id}/edit', 'Main\DriverReportController@show')->name('report.driver.edit');
+    Route::get('/report/driver/{id}/show', 'Main\DriverReportController@show')->name('report.driver.show');
+    Route::get('/report/driver/{id}/edit', 'Main\DriverReportController@edit')->name('report.driver.edit');
     Route::post('/report/driver/{id}/edit', 'Main\DriverReportController@update')->name('report.driver.edit');
     Route::get('/report/driver/{id}/destroy', 'Main\DriverReportController@destroy')->name('report.driver.destroy');
 
@@ -98,6 +99,8 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
     Route::group(['prefix'=>'admin'], function() {
 
         Route::get('/airtime/orders', 'Airtime\GenerateController@admin_index')->name('admin.airtime.orders');
+        Route::get('/report/staff', 'Main\StaffReportController@admin_index')->name('admin.report.staff');
+        Route::get('/report/driver', 'Main\DriverReportController@admin_index')->name('admin.report.driver');
 
         Route::get('/assessment/logs', 'Assessment\AssessmentConfigController@index')->name('assessment.log');
         Route::get('/assessment/logs/create', 'Assessment\AssessmentConfigController@create')->name('assessment.log.create');
