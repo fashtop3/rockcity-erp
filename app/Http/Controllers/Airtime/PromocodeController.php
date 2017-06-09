@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Airtime;
 
+use App\Http\Requests\PromocodeStoreRequest;
 use App\Models\Airtime\Promocode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,19 +32,18 @@ class PromocodeController extends Controller
         return view('main.coupon.create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PromocodeStoreRequest $request
+     * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PromocodeStoreRequest $request)
     {
         $amount = $request->get('amount');
         $reward = $request->get('reward');
         $type = $request->get('type');
         $quantity = $request->get('quantity');
-        $expiry_date = $request->get('expiry_date') && Carbon::today()<$request->get('expiry_date') ? $request->get('expiry_date'):null;
+        $expiry_date = $request->get('expiry_date') && Carbon::today()<Carbon::parse($request->get('expiry_date')) ? Carbon::parse($request->get('expiry_date')):null;
 
         DB::beginTransaction();
         try{

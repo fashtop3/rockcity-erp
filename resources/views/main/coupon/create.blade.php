@@ -20,7 +20,7 @@
         <div class="panel-heading">
             <small>Generated Coupon code will be sent to your mail.</small>
         </div>
-        <form method="POST" action="{{ route('promocode.create') }}" name="formCoupon" class="form-horizontal" role="form">
+        <form novalidate method="POST" action="{{ route('promocode.create') }}" name="formCoupon" class="form-horizontal" role="form">
 
             {{ csrf_field() }}
 
@@ -34,8 +34,8 @@
                         <div class="col-sm-7">
                             <select name="type" id="type" class="form-control" required="" style="">
                                 <option value="">--Choose--</option>
-                                <option value="DISCOUNT">Discount</option>
-                                <option value="COUPON">Commission</option>
+                                <option {{ old('type') == 'DISCOUNT'? 'selected=""':'' }} value="DISCOUNT">Discount</option>
+                                <option {{ old('type') == 'COUPON'? 'selected=""':'' }} value="COUPON">Commission</option>
                             </select>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                             <select name="amount" id="amount" class="form-control " required="">
                                 <option value="">--Choose--</option>
                                 @for($j=1; $j<=50; $j++)
-                                    <option value="{{ $j }}">{{ $j }}</option>
+                                    <option {{ old('amount') == $j? 'selected=""':'' }} value="{{ $j }}">{{ $j }}</option>
                                 @endfor
                             </select>
                         </div>
@@ -73,7 +73,7 @@
                             <select name="quantity" id="quantity" class="form-control" required="">
                                 <option value="">--Choose--</option>
                                 @for($i=1; $i<=5; $i++)
-                                    <option value="{{ $i }}">{{ $i }}</option>
+                                    <option {{ old('quantity') == $i? 'selected=""':'' }} value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
@@ -118,7 +118,8 @@
                     for(var i=1; i<=100; i++){
                         reward.append($('<option>').val(i).text(i+'%'));
                     }
-                } else {
+                }
+                else if($(this).val() == "COUPON") {
                     for(var j=1; j<=10; j++){
                         reward.append($('<option>').val(j).text(j+'%'));
                     }
@@ -133,6 +134,8 @@
             });
 
             $('.picker').keydown(function(e) { if(e.keyCode == 9 || e.keyCode == 8 ) {return true;} return false;});
+
+            $('select#type').trigger('change');
         });
     </script>
 
