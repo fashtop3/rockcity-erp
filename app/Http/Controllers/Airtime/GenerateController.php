@@ -52,6 +52,30 @@ class GenerateController extends Controller
         return view('main.airtime.index')->with(['orders' => $orders]);//
     }
 
+    public function admin_index(Request $request)
+    {
+
+        if($request->get('min') && $request->get('max')) {
+
+            $orders = Schedule::latest()
+                ->search(Carbon::parse($request->get('min'))->toDateTimeString(), Carbon::parse($request->get('max'))->toDateTimeString())
+                ->with('user')
+                ->with('client')
+                ->with('alert')
+                ->paginate(100);
+        }
+        else {
+            $orders = Schedule::latest()
+                ->with('user')
+                ->with('client')
+                ->with('alert')
+                ->paginate(100);
+        }
+
+
+        return view('main.airtime.admin-index')->with(['orders' => $orders]);//
+    }
+
     /**
      * Show the form for creating a new resource.
      *

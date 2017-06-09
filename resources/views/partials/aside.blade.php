@@ -157,7 +157,7 @@
                 </li>
 
                 <li class=" ">
-                    <a href="#orders" title="Orders" data-toggle="collapse">
+                    <a href="{{ route('admin.airtime.orders') }}" title="Orders">
                         <em class="icon-layers"></em>
                         <span>Orders</span>
                     </a>

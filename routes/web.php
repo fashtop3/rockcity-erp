@@ -97,6 +97,8 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'GV']], function() {
      */
     Route::group(['prefix'=>'admin'], function() {
 
+        Route::get('/airtime/orders', 'Airtime\GenerateController@admin_index')->name('admin.airtime.orders');
+
         Route::get('/assessment/logs', 'Assessment\AssessmentConfigController@index')->name('assessment.log');
         Route::get('/assessment/logs/create', 'Assessment\AssessmentConfigController@create')->name('assessment.log.create');
         Route::post('/assessment/logs/create', 'Assessment\AssessmentConfigController@store')->name('assessment.log.create');
