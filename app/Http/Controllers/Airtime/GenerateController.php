@@ -19,6 +19,12 @@ use Illuminate\Support\Facades\Session;
 
 class GenerateController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:' . User::AirtimeRoles/*, ['only' => ['store']]*/);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,8 +32,6 @@ class GenerateController extends Controller
      */
     public function index(Request $request)
     {
-
-
         if($request->get('min') && $request->get('max')) {
 
             $orders = auth()->user()->schedules()

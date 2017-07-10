@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Assessment;
 
 use App\Models\Assessment\AssessmentConfig;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class AssessmentConfigController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:'. User::RegisterStaffRoles);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -15,7 +15,9 @@ class AdminUserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('role:admin|executive.director|administration.dept', ['only' => ['destroy']]);
+        $this->middleware('role:' . User::RegisterStaffRoles/*,
+            ['only' => ['create','store','destroy']]*/);
+        $this->middleware('permission:register.staff', ['store', 'update', 'destroy']);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Requests\ClientCreateRequest;
 use App\Models\Client;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,11 @@ use Yajra\Datatables\Datatables;
 
 class ClientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:' . User::RegisterStaffRoles, ['only' => ['adminIndex']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Bican\Roles\Exceptions\PermissionDeniedException;
+use Bican\Roles\Exceptions\RoleDeniedException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -44,6 +46,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof RoleDeniedException || $exception instanceof  PermissionDeniedException) {
+            return response()->view('errors.403');
+        }
         return parent::render($request, $exception);
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Requests\DriverReportStoreRequest;
 use App\Models\Report\DriverReport;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\Session;
 
 class DriverReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:driver');
+    }
+
     /**
      * Display a listing of the resource.
      *

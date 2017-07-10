@@ -4,6 +4,7 @@ namespace App\Http\Controllers\RCAdmin;
 
 use App\Http\Requests\TargetStoreRequest;
 use App\Models\Admin\Target;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,7 @@ class TargetController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:admin|executive.director|administration.dept',
+        $this->middleware('role:'. User::RegisterStaffRoles,
             ['only' => ['store', 'update', 'destroy']]);
     }
 

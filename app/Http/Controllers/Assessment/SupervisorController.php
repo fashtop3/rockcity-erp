@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Session;
 
 class SupervisorController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:supervisor');
+    }
+
     /**
      * Display a listing of the resource.
      *

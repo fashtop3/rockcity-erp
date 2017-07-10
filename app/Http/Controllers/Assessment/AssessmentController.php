@@ -12,6 +12,11 @@ use Mockery\CountValidator\Exception;
 
 class AssessmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:staff');
+    }
+
     /**
      * Display a listing of the resource.
      *

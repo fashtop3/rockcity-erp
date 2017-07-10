@@ -23,6 +23,12 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
         'firstname', 'lastname', 'email', 'password', 'upload', 'status'
     ];
 
+    const AirtimeRoles = "admin|ict|traffic|account|marketing|head.accounting|head.marketing|
+    executive.director|administration.dept";
+
+    const RegisterStaffRoles = "admin|executive.director|administration.dept";
+    const StaffOrDriverRoles = "staff|driver";
+
     const Contact_Developer = 'fashtop3@gmail.com';
     const Contact_Admin = 'niran.malaolu@rockcityfmradio.com';
     const Contact_ED = 'bukky.malaolu@rockcityfmradio.com';

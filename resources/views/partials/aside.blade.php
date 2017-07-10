@@ -69,6 +69,7 @@
                         </li>
                     </ul>
                 </li>
+                @if($user->isRole(\App\User::AirtimeRoles))
                 <li class=" ">
                     <a href="#airtime" title="Layouts" data-toggle="collapse">
                         <em class="icon-layers"></em>
@@ -88,10 +89,12 @@
                         </li>
                     </ul>
                 </li>
+                @endif
                 <li class="nav-heading ">
                     <span data-localize="sidebar.heading.REPORT">Report Navigation</span>
                 </li>
 
+                @if($user->isRole("staff"))
                 <li class=" ">
                     <a href="#report" title="Report" data-toggle="collapse">
                         <em class="icon-layers"></em>
@@ -131,7 +134,8 @@
                         </li>
                     </ul>
                 </li>
-
+                @endif
+                @if($user->isRole("driver"))
                 <li class=" ">
                     <a href="#driver_rep" title="Driver's Report" data-toggle="collapse">
                         <em class="icon-layers"></em>
@@ -151,120 +155,128 @@
                         </li>
                     </ul>
                 </li>
+                @endif
 
-                <li class="nav-heading ">
-                    <span data-localize="sidebar.heading.ADMIN">Admin Section</span>
-                </li>
+                @if($user->isRoleAdmin())
+                    <li class="nav-heading ">
+                        <span data-localize="sidebar.heading.ADMIN">Admin Section</span>
+                    </li>
 
-                <li class=" ">
-                    <a href="{{ route('admin.airtime.orders') }}" title="Orders">
-                        <em class="icon-layers"></em>
-                        <span>Orders</span>
-                    </a>
-                </li>
+                    <li class=" ">
+                        <a href="{{ route('admin.airtime.orders') }}" title="Orders">
+                            <em class="icon-layers"></em>
+                            <span>Orders</span>
+                        </a>
+                    </li>
 
-                <li class=" ">
-                    <a href="#records" title="Manage Assessment" data-toggle="collapse">
-                        <em class="icon-layers"></em>
-                        <span>Assessment</span>
-                    </a>
-                    <ul id="records" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Assessment</li>
-                        <li class=" ">
-                            <a href="{{ route('assessment.log') }}" title="Horizontal">
-                                <span>Logs</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="{{ route('assessment.log.create') }}" title="Horizontal">
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class=" ">
+                        <a href="#records" title="Manage Assessment" data-toggle="collapse">
+                            <em class="icon-layers"></em>
+                            <span>Assessment</span>
+                        </a>
+                        <ul id="records" class="nav sidebar-subnav collapse">
+                            <li class="sidebar-subnav-header">Assessment</li>
+                            <li class=" ">
+                                <a href="{{ route('assessment.log') }}" title="Horizontal">
+                                    <span>Logs</span>
+                                </a>
+                            </li>
+                            <li class=" ">
+                                <a href="{{ route('assessment.log.create') }}" title="Horizontal">
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <li class=" ">
-                    <a href="#admin_report" title="Reports" data-toggle="collapse">
-                        <em class="icon-layers"></em>
-                        <span>Reports</span>
-                    </a>
-                    <ul id="admin_report" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Reports</li>
+                    <li class=" ">
+                        <a href="#admin_report" title="Reports" data-toggle="collapse">
+                            <em class="icon-layers"></em>
+                            <span>Reports</span>
+                        </a>
+                        <ul id="admin_report" class="nav sidebar-subnav collapse">
+                            <li class="sidebar-subnav-header">Reports</li>
+
+                            <li class=" ">
+                                <a href="{{ route('admin.report.staff') }}" title="Horizontal">
+                                    <span>Staff's Report</span>
+                                </a>
+                            </li>
+                            <li class=" ">
+                                <a href="{{ route('admin.report.driver') }}" title="Horizontal">
+                                    <span>Driver's Report</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class=" ">
+                        <a href="#target" title="Target" data-toggle="collapse">
+                            <em class="icon-layers"></em>
+                            <span>Target</span>
+                        </a>
+                        <ul id="target" class="nav sidebar-subnav collapse">
+                            <li class="sidebar-subnav-header">Target</li>
+                            <li class=" ">
+                                <a href="{{ route('admin.target') }}" title="Manage">
+                                    <span>Manage</span>
+                                </a>
+                            </li>
+                            <li class=" ">
+                                <a href="{{ route('admin.target.create') }}" title="create">
+                                    <span>Create</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class=" ">
+                        <a href="#vehicle" title="Vehicle" data-toggle="collapse">
+                            <em class="icon-layers"></em>
+                            <span>Vehicle</span>
+                        </a>
+                        <ul id="vehicle" class="nav sidebar-subnav collapse">
+                            <li class="sidebar-subnav-header">Vehicle</li>
+                            <li class=" ">
+                                <a href="{{ route('admin.vehicle') }}" title="Manage">
+                                    <span>Manage</span>
+                                </a>
+                            </li>
+                            <li class=" ">
+                                <a href="{{ route('admin.vehicle.create') }}" title="create">
+                                    <span>Create</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class=" ">
+                        <a href="#people" title="People" data-toggle="collapse">
+                            <em class="icon-layers"></em>
+                            <span>People</span>
+                        </a>
+                        <ul id="people" class="nav sidebar-subnav collapse">
+                            <li class="sidebar-subnav-header">People</li>
+                            <li class=" ">
+                                <a href="{{ route('admin.people') }}" title="View and Search">
+                                    <span>View and Search</span>
+                                </a>
+                            </li>
+                            @if($user->isRole(\App\User::RegisterStaffRoles))
+                                <li class=" ">
+                                    <a href="{{ route('admin.people.create') }}" title="Register">
+                                        <span>Register</span>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                    @if($user->isRole(\App\User::RegisterStaffRoles))
                         <li class=" ">
-                            <a href="{{ route('admin.report.staff') }}" title="Horizontal">
-                                <span>Staff's Report</span>
+                            <a href="{{ route('admin.client') }}" title="Clients">
+                                <em class="icon-layers"></em>
+                                <span>Clients</span>
                             </a>
                         </li>
-                        <li class=" ">
-                            <a href="{{ route('admin.report.driver') }}" title="Horizontal">
-                                <span>Driver's Report</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" ">
-                    <a href="#target" title="Target" data-toggle="collapse">
-                        <em class="icon-layers"></em>
-                        <span>Target</span>
-                    </a>
-                    <ul id="target" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Target</li>
-                        <li class=" ">
-                            <a href="{{ route('admin.target') }}" title="Manage">
-                                <span>Manage</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="{{ route('admin.target.create') }}" title="create">
-                                <span>Create</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" ">
-                    <a href="#vehicle" title="Vehicle" data-toggle="collapse">
-                        <em class="icon-layers"></em>
-                        <span>Vehicle</span>
-                    </a>
-                    <ul id="vehicle" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Vehicle</li>
-                        <li class=" ">
-                            <a href="{{ route('admin.vehicle') }}" title="Manage">
-                                <span>Manage</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="{{ route('admin.vehicle.create') }}" title="create">
-                                <span>Create</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" ">
-                    <a href="#people" title="People" data-toggle="collapse">
-                        <em class="icon-layers"></em>
-                        <span>People</span>
-                    </a>
-                    <ul id="people" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">People</li>
-                        <li class=" ">
-                            <a href="{{ route('admin.people') }}" title="View and Search">
-                                <span>View and Search</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="{{ route('admin.people.create') }}" title="Register">
-                                <span>Register</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" ">
-                    <a href="{{ route('admin.client') }}" title="Clients">
-                        <em class="icon-layers"></em>
-                        <span>Clients</span>
-                    </a>
-                </li>
+                    @endif
+                @endif
             </ul>
             <!-- END sidebar nav-->
         </nav>

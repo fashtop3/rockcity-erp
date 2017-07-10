@@ -33,7 +33,15 @@
                     </div>
                 @endif
 
-                <div class="table-responsive">
+                    <?php
+                        if($user->isRole(\App\User::RegisterStaffRoles)) {
+                            $isRole = true;
+                        } else {
+                            $isRole = true;
+                        }
+                    ?>
+
+                    <div class="table-responsive">
                     <table id="users-table" class="table table-striped table-hover">
                         <thead>
                         <tr>
@@ -41,7 +49,9 @@
                             <th>Username</th>
                             <th>Status</th>
                             <th>Created</th>
+                            @if($isRole)
                             <th></th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -51,7 +61,8 @@
                             <td>{{ $user->email }}</td>
                             <td><span class="text-{{ $user->status == 0? 'success':'danger' }}">{{ $user->status == 0? 'Active':'Blocked' }}</span></td>
                             <td>{{ $user->created_at->toDayDateTimeString() }}</td>
-                            <td>
+                            @if($isRole)
+                                <td>
                                 <a href="{{ route('admin.people.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-warning">
                                     <em class="fa fa-edit"></em>
                                 </a>
@@ -59,6 +70,7 @@
                                     <em class="fa fa-trash-o"></em>
                                 </a>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                         </tbody>

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Session;
 
 class StaffReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:staff');
+    }
+
     /**
      * Display a listing of the resource.
      *
