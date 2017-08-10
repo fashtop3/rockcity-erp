@@ -4,7 +4,7 @@
          <!-- START panel-->
          <div class="panel panel-dark panel-flat">
             <div class="panel-heading text-center">
-               <a href="#">
+               <a href="{{ url('/') }}">
                   Rockcity FM Radio
                   {{--<img src="img/logo.png" alt="Image" class="block-center img-rounded">--}}
                </a>

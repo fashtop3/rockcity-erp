@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Mail\UserHasRegistered;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -73,8 +74,12 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        if($user) {
-            \Mail::to($user->email)->send(new UserHasRegistered($user));
+        try{
+            if($user) {
+//                \Mail::to($user)->send(new UserHasRegistered($user));
+                event(new UserHasRegistered($user));
+            }
+        }catch(\Exception $e) {
 
         }
 

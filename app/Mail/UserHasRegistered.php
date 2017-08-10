@@ -30,6 +30,7 @@ class UserHasRegistered extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.userReg');
+        return $this->from('no-reply@rockcityfmradio.com')
+                    ->view('emails.userReg');
     }
 }
