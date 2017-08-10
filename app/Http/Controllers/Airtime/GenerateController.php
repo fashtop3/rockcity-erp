@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Airtime;
 
+use App\Events\ScheduleHasBeenPlaced;
 use App\Models\Airtime\Product;
 use App\Models\Airtime\ProductTime;
 use App\Models\Airtime\Promocode;
@@ -147,19 +148,18 @@ class GenerateController extends Controller
                 if(!Config::get('app.debug')){
                     try{
                         //Todo: event handling for mail notifications
-//                        Event::fire(new ScheduleHasBeenPlaced($schedule));
+                        event(new ScheduleHasBeenPlaced($schedule));
                     }
                     catch(\Exception $e) {
 //                        $this->cleanUploadsOnError($uploads);
 //                        return response('Error: Mail Server not reachable! try again or contact Administrator', 403);
                     }
                 }
-
                 Session::flash('message', 'Your Order has been submitted for review');
             }
         }
         catch(\Exception $e) {
-            dd($e->getMessage());
+            Session::flash('message', 'Error');
         }
 
         return redirect()->route('airtime.create');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Main;
 
+use App\Events\SendReportToMailbox;
 use App\Http\Requests\StaffReportStoreRequest;
 use App\Models\Report\Report;
 use Illuminate\Http\Request;
@@ -88,6 +89,8 @@ class StaffReportController extends Controller
                     }
                 }
             }
+
+            $this->sendReportToMails($report);
         }
         catch(\Exception $e) {
             if($e->getCode() == 23000) {
@@ -96,6 +99,17 @@ class StaffReportController extends Controller
         }
 
         return redirect()->route('report.staff');
+    }
+
+    private function sendReportToMails($report)
+    {
+//        $report->user->toArray();
+//        $report->tasks->toArray();
+//        $report->challenges->toArray();
+//        $report->remittances->toArray();
+        $report['taskCount'] = 0;
+        $report['challengeCount'] = 0;
+        event(new SendReportToMailbox($report));
     }
 
     /**

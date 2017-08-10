@@ -4,7 +4,7 @@ namespace App\Listeners\AirtimeSchedule;
 
 use App\Events\ScheduleHasBeenPlaced;
 use App\Mailers\ScheduleMailer;
-use App\ScheduleAlert;
+use App\Models\Airtime\ScheduleAlert;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Airtime;
 
+use App\Events\CouponGeneratedEvent;
 use App\Http\Requests\PromocodeStoreRequest;
 use App\Models\Airtime\Promocode;
 use Carbon\Carbon;
@@ -53,7 +54,7 @@ class PromocodeController extends Controller
             $csv = $this->getCSVCoupon($coupon);
             try{
                 //Todo: add event listeners
-//                Event::fire(new CouponGeneratedEvent(['subject'=> $subject, 'coupon'=>$csv]));
+                event(new CouponGeneratedEvent(['subject'=> $subject, 'coupon'=>$csv]));
                 DB::commit();
                 Session::flash('success', 'Coupon has been forwarded to your mail.');
             }

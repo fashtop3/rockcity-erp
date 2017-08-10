@@ -10,8 +10,7 @@ namespace App\Listeners\AirtimeSchedule;
 
 
 use App\Events\ScheduleHasBeenPlaced;
-use App\Schedule;
-use App\ScheduleAlert;
+use App\Models\Airtime\ScheduleAlert;
 use Carbon\Carbon;
 
 abstract class Notifier

@@ -32,8 +32,8 @@ class OnCouponGenerated
     public function handle(CouponGeneratedEvent $event)
     {
         $text = 'New Generated Coupon! please find the attached file';
-        $this->mailer->raw($text, function($message) use($event)
-        {
+        $this->mailer->raw($text, function($message) use($event){
+
             $filename = 'Coupon_'.str_replace(' ', '_', Carbon::now()->toDateTimeString()).'.xls';
 
             $message->to(Auth::user()->email)
