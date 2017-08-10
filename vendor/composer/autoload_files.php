@@ -20,5 +20,7 @@ return array(
     '0c3c22e27afa83be19b4c938f4c6e9ea' => $vendorDir . '/spatie/laravel-backup/src/Helpers/functions.php',
     '7745382c92b7799bf1294b1f43023ba2' => $vendorDir . '/tracy/tracy/src/shortcuts.php',
     '948fab7911aa366553464041e4ab1b33' => $vendorDir . '/recca0120/terminal/src/helpers.php',
+    'c964ee0ededf28c96ebd9db5099ef910' => $vendorDir . '/guzzlehttp/promises/src/functions_include.php',
     '28c326dc1cc904774a1a8347c16c58a8' => $vendorDir . '/recca0120/laravel-tracy/src/helpers.php',
+    '37a3dc5111fe8f707ab4c132ef1dbc62' => $vendorDir . '/guzzlehttp/guzzle/src/functions_include.php',
 );
