@@ -142,6 +142,29 @@ class AssessmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $assessment = Assessment::find($id);
+
+            if(!$assessment) {
+                Session::flash('error', 'Record doesn\'t exists');
+                throw  new Exception;
+            }
+
+            if($assessment->preview) {
+                Session::flash('error', 'Record can no longer be removed');
+                throw  new Exception;
+            }
+
+            if($assessment->delete()) {
+                Session::flash('success', 'Record deleted successfully');
+            } else {
+                Session::flash('error', 'Failed to delete record!. contact the administrator');
+                throw  new Exception;
+            }
+        }
+        catch(\Exception $e) {
+        }
+        return redirect()->back();
     }
 }
