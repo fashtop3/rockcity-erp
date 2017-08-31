@@ -142,7 +142,7 @@ class AssessmentController extends Controller
      */
     public function destroy($id)
     {
-        DB::beginTransaction();
+//        DB::beginTransaction();
         try{
             $assessment = Assessment::find($id);
 
