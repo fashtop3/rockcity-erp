@@ -6,7 +6,11 @@ use App\Models\Assessment\AssessmentConfig;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Mockery\CountValidator\Exception;
 
 class AssessmentConfigController extends Controller
 {
@@ -45,7 +49,33 @@ class AssessmentConfigController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'enable' => 'required|boolean',
+            'starts' => 'required|date',
+            'ends' =>  'required|date'
+        ]);
+
+        try{
+            if($validator->fails()) {
+                Session::flash('error', 'Settings not valid');
+                throw new Exception;
+            }
+
+            $input =  $request->all();
+            $input['user_id'] = Auth::user()->id;
+
+            AssessmentConfig::checkResetAll($input['enable']);
+
+            AssessmentConfig::create($input);
+            //Todo: send mails to all staff
+            Session::flash('success', 'New settings enabled; notifications sent to all staff');
+
+        }
+        catch(\Exception $e) {
+
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -116,7 +146,25 @@ class AssessmentConfigController extends Controller
      */
     public function destroy($id)
     {
-        //
+//        DB::beginTransaction();
+
+        try{
+            $config = AssessmentConfig::find($id);
+
+            if(empty($config->assessments->toArray())) {
+                $config->forceDelete();
+            }
+            else {
+                $config->delete(); //soft deletes
+            }
+            Session::flash('success', 'Schedule deleted successfully');
+        }
+
+        catch(\Exception $e) {
+            Session::flash('error', 'Schedule not found');
+        }
+
+        return redirect()->back();
     }
 
     public function data($id)

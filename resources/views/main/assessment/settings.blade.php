@@ -33,13 +33,13 @@
                         @include('partials.error')
                         @include('main.assessment.partials.form-settings')
 
-                                <fieldset>
-                                    <div class="form-group pull-right">
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
+                            <fieldset>
+                                <div class="form-group pull-right">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
-                                </fieldset>
+                                </div>
+                            </fieldset>
                     </form>
                 </div>
 
