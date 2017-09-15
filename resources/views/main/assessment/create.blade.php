@@ -28,22 +28,24 @@
                     @include('partials.error')
 
 
-                    <div class="alert alert-warning">
-                        @if(isset($assessment))
-                            Submission is opened from <strong>{{ $assessment->config->starts }} - {{ $assessment->config->ends }}</strong>
+                        @if($assessment_open)
+                            <div class="alert alert-warning">
+                                Submission is opened from <strong>{{ $assessment_config->starts }} - {{ $assessment_config->ends }}</strong>
+                            </div>
+
+                            @include('main.assessment.partials.form')
+
                         @else
-                            Submission is opened from <strong>{{ \App\Models\Assessment\AssessmentConfig::where('enable', 1)->first()->starts }} - {{ \App\Models\Assessment\AssessmentConfig::where('enable', 1)->first()->ends }}</strong>
+                            Submission Closed.
                         @endif
-                    </div>
-
-                    @include('main.assessment.partials.form')
-
                 </div>
 
                 <div class="panel-footer text-center">
                     <!--<div class="form-group">-->
                     <!--<div class="col-sm-4 col-sm-offset-2">-->
-                    <button class="btn btn-primary" id="submit" type="submit">Save</button>
+                    @if($assessment_open)
+                        <button class="btn btn-primary" id="submit" type="submit">Save</button>
+                    @endif
                     <!--</div>-->
                 </div>
             </form>

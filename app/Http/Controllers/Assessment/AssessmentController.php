@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Assessment;
 
 use App\Models\Assessment\Assessment;
 use App\Models\Assessment\AssessmentConfig;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +36,10 @@ class AssessmentController extends Controller
      */
     public function create()
     {
-        return view('main.assessment.create');
+        $assessment_config = AssessmentConfig::where('enable', 1)->first();
+//        dd(Carbon::now() > $assessment_config->ends ? false : true);
+        $assessment_open = $assessment_config ? (Carbon::now() > $assessment_config->ends ? false : true) : false;
+        return view('main.assessment.create', compact('assessment_config', 'assessment_open'));
     }
 
     /**
